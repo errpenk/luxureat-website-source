@@ -1,0 +1,299 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Imperial Beluga | LuxurEat Maison</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "inverse-on-surface": "#313030",
+                  "tertiary-fixed": "#e2e2e2",
+                  "on-error-container": "#ffdad6",
+                  "background": "#000000",
+                  "inverse-surface": "#e5e2e1",
+                  "error-container": "#93000a",
+                  "on-tertiary": "#303030",
+                  "surface-container": "#20201f",
+                  "on-primary-container": "#005f59",
+                  "surface": "#131313",
+                  "tertiary": "#e5e5e5",
+                  "inverse-primary": "#006a64",
+                  "on-tertiary-fixed-variant": "#474747",
+                  "secondary-container": "#af8d11",
+                  "surface-dim": "#131313",
+                  "on-secondary": "#3c2f00",
+                  "secondary-fixed-dim": "#e9c349",
+                  "on-surface": "#e5e2e1",
+                  "secondary": "#e9c349",
+                  "primary-fixed": "#9bf2ea",
+                  "tertiary-fixed-dim": "#c6c6c6",
+                  "on-tertiary-container": "#545454",
+                  "on-surface-variant": "#bdc9c7",
+                  "surface-container-low": "#1c1b1b",
+                  "on-secondary-container": "#342800",
+                  "on-primary-fixed-variant": "#00504b",
+                  "on-background": "#e5e2e1",
+                  "surface-container-lowest": "#0e0e0e",
+                  "tertiary-container": "#c9c9c9",
+                  "on-tertiary-fixed": "#1b1b1b",
+                  "surface-variant": "#353535",
+                  "surface-tint": "#7ed5cd",
+                  "primary": "#9df5ec",
+                  "on-secondary-fixed-variant": "#574500",
+                  "on-secondary-fixed": "#241a00",
+                  "error": "#ffb4ab",
+                  "outline": "#889391",
+                  "secondary-fixed": "#ffe088",
+                  "surface-container-highest": "#353535",
+                  "outline-variant": "#3e4947",
+                  "primary-fixed-dim": "#7ed5cd",
+                  "surface-container-high": "#2a2a2a",
+                  "surface-bright": "#393939",
+                  "primary-container": "#81d8d0",
+                  "on-primary-fixed": "#00201e",
+                  "on-primary": "#003734",
+                  "on-error": "#690005"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0rem",
+                  "lg": "0rem",
+                  "xl": "0rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "unit": "8px",
+                  "section-gap": "120px",
+                  "container-max": "1440px",
+                  "gutter": "24px",
+                  "margin-desktop": "80px",
+                  "margin-mobile": "24px"
+          },
+          "fontFamily": {
+                  "label-lg": ["Montserrat"],
+                  "display-lg": ["Bodoni Moda"],
+                  "display-lg-mobile": ["Bodoni Moda"],
+                  "headline-md": ["Bodoni Moda"],
+                  "body-lg": ["Montserrat"],
+                  "label-sm": ["Montserrat"],
+                  "headline-sm": ["Bodoni Moda"],
+                  "headline-lg": ["Bodoni Moda"],
+                  "body-md": ["Montserrat"]
+          },
+          "fontSize": {
+                  "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                  "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                  "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
+                  "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                  "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                  "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                  "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                  "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #000000;
+      color: #e5e2e1;
+      -webkit-font-smoothing: antialiased;
+    }
+    .hero-mask {
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-nav {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(20px);
+    }
+    .stagger-in {
+      animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="selection:bg-primary/30">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Maison</a><a class="active" href="caviar.html">Caviar</a><a class="" href="rituals.html">Rituals</a><a class="" href="journal.html">Journal</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <div class="lux-actions">
+    <a href="private.html">Private Selection</a>
+    <a href="bag.html">Shopping Bag</a>
+    <span class="lux-lang"><a class="" href="../zh/caviar.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<!-- TopNavBar Component Execution -->
+
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen min-h-[800px] flex flex-col justify-end overflow-hidden">
+<div class="absolute inset-0 z-0 stagger-in" style="opacity: 0;">
+<img class="w-full h-full object-cover hero-mask" data-alt="A cinematic, ultra-high-definition close-up of Imperial Beluga caviar. The large, glossy, steel-grey pearls are piled elegantly onto a translucent white mother-of-pearl spoon. In the dark, moody background, two dimly lit candles and a bottle of luxury champagne are visible through a soft bokeh effect. The lighting is sophisticated and low-key, highlighting the oily sheen of the caviar as 'black gold' against an absolute black environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDKyZdxU0kGF8Vd-zMlJdzsTr4siYTL8YgOEAlYupJwzsaN5mzFBD-W_ipZxBtWxInFokoDgH7cm7h5-5QPLGoSz0vpME_P6a0qrr-Y2y2VakxcC3vg1EYL-3UDQPI2nYhxCq34ENlKNl-kNGcA5waTnTOm8fxAxjpJJWFQhjCZ50Ik9jZhh_NSGXX3ZlXzw_kTgXFOcEWhH_a2_7GLr7-x_Z81gogm3T6Cs5jofzP_2_UFZ86UPvvHCja9qW79efyY2ZcXBFvjUk">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+</div>
+<div class="relative z-10 px-margin-desktop max-w-container-max mx-auto w-full pb-32 stagger-in" style="opacity: 0;">
+<div class="max-w-2xl stagger-in">
+<span class="font-label-lg text-label-lg text-secondary tracking-[0.3em] uppercase block mb-4">Maison Reserve</span>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-2">Imperial Beluga</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12 italic">The Peak of Epicurean Luxury</p>
+<div class="flex flex-col md:flex-row items-center gap-8">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Maison Price</span>
+<span class="font-headline-md text-headline-md text-secondary">$350 / 30g</span>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<button class="flex-1 md:flex-none border border-secondary px-10 py-4 font-label-lg text-label-lg text-secondary uppercase tracking-widest hover:bg-secondary hover:text-on-secondary transition-all duration-500 active:scale-95">
+                Add to Cart
+              </button>
+<button class="flex-1 md:flex-none border border-primary px-10 py-4 font-label-lg text-label-lg text-primary uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500 active:scale-95">
+                Concierge Inquiry
+              </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Details Section -->
+<section class="py-section-gap px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter stagger-in" style="opacity: 0;">
+<div class="lg:col-span-5 space-y-24">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8 border-b-[0.5px] border-outline-variant pb-4">Tasting Profile</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+              Experience the pinnacle of the sturgeon's bounty. Our Imperial Beluga is characterized by its <span class="text-secondary">unmistakable buttery finish</span>, large steel-grey pearls that pop with a delicate resistance, and an oceanic depth that lingers long after the first tasting.
+            </p>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8 border-b-[0.5px] border-outline-variant pb-4">Origin &amp; Harvest</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+              Harvested from the pristine depths of the Caspian Sea heritage waters, each tin represents the <span class="text-secondary">20-year maturation</span> of the Huso Huso sturgeon. Our selection process is rigorous, ensuring only the most uniform pearls are branded with the Imperial seal.
+            </p>
+</div>
+</div>
+<div class="lg:col-span-1"></div>
+<div class="lg:col-span-6">
+<div class="relative aspect-[4/5] bg-surface-container-low overflow-hidden group">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" data-alt="A minimalist architectural shot of an Imperial Beluga caviar tin resting on a slab of dark, polished nero marquina marble. Beside it, a single mother-of-pearl spoon is placed with precision. The scene is shot with high-contrast studio lighting that creates sharp highlights on the gold-toned tin and deep shadows on the marble, evoking a gallery-like atmosphere in a luxury noir style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQG35wvIpjHg3dO9aAqS8DyvQTpm_WWe89Uo6iHhEKHas-8N69c_tKuMELvL0NFW0qe67sWPKN_oBqBfGL00mRsknlGPt-R0KXIgMB1bGemgFMJMROABnT66UaotrHNezYujj8ApVJUUurxkjkr9U6J4ThUGrsXg5252uPdSK34NlDj31o4BeSdPRJcrjgm8cA693wzq1WFWmmuYFd4Dt69JkeOLzViDCDn8NGdxRv6m4qijpjT2ZpSdk60u9WeLKAu1emAC3IBMk">
+<div class="absolute bottom-8 right-8 bg-black/80 backdrop-blur-md p-6 border-t-[0.5px] border-secondary">
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Reserve Batch No.</p>
+<p class="font-display-lg text-headline-md text-on-surface">HE-0824</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pairing Section -->
+<section class="bg-surface-container-lowest py-section-gap border-y-[0.5px] border-outline-variant">
+<div class="px-margin-desktop max-w-container-max mx-auto stagger-in" style="opacity: 0;">
+<div class="text-center mb-24">
+<h2 class="font-display-lg text-headline-lg text-on-surface mb-4">The Art of the Pairing</h2>
+<p class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-[0.2em]">Elevating the Experience</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="text-center group">
+<div class="mb-8 aspect-square flex items-center justify-center border-[0.5px] border-outline-variant group-hover:border-primary transition-colors duration-500">
+<span class="material-symbols-outlined text-6xl text-primary font-thin">wine_bar</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Vintage Champagne</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">The crisp acidity of a Blanc de Blancs cuts through the creamy texture of the pearls.</p>
+</div>
+<div class="text-center group">
+<div class="mb-8 aspect-square flex items-center justify-center border-[0.5px] border-outline-variant group-hover:border-primary transition-colors duration-500">
+<span class="material-symbols-outlined text-6xl text-primary font-thin">liquor</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Premium Vodka</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Chilled to near freezing, a clean neutral spirit allows the oceanic saltiness to shine.</p>
+</div>
+<div class="text-center group">
+<div class="mb-8 aspect-square flex items-center justify-center border-[0.5px] border-outline-variant group-hover:border-primary transition-colors duration-500">
+<span class="material-symbols-outlined text-6xl text-primary font-thin">spa</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-2">Mother-of-Pearl</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">To preserve the delicate flavor profile, use only non-reactive service ware.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Ritual of Service Section -->
+<section class="py-section-gap">
+<div class="px-margin-desktop max-w-container-max mx-auto stagger-in" style="opacity: 0;">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="order-2 lg:order-1 grid grid-cols-2 gap-4">
+<div class="aspect-[3/4] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A detailed close-up of a carved mother-of-pearl spoon resting on a dark linen napkin. The iridescence of the shell is captured with soft, directional lighting against a deep charcoal background, showcasing the artisanal craftsmanship and organic textures of luxury service-ware." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmATWC8-Wd1yng8-EUZvY9jZdTbpQu8tpAT7VeRaUsiwM4pzEOdMprJ1hiPv2A9b38FvL6BbqVHvfmTqFd2P_m8v_67SspNoJGljgNeheLHNuZcld5f0GRwAXic62Ux6qt_SFlmjTwHP0sWBO7ftycDJ3-jXA_MW_dII9WLKFtSn7nhavfVil7EeusjZa8Jsq4AAPjVhCLEQ9FNt4oOkZWX9LAQRra1szFveLxJiZfHSIo_bv_fQc5KPBixeFnT1tuaDTEPlE4pis">
+</div>
+<div class="aspect-[3/4] overflow-hidden mt-12">
+<img class="w-full h-full object-cover" data-alt="An assortment of luxury caviar tins in gold and silver, arranged artistically on a black marble surface with scattered mother-of-pearl spoons and crystal glassware. The composition uses high-contrast Luminous Noir styling, emphasizing the premium packaging and the 'Ritual of Service' theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5nzBWcTBNa6X7Vo61aOmU6wugtUwUu3Gxb-wumiWYodKCw7DoMFVY0oZp2_gA9lXB2c3ov0s9_wLPVff3abDSnJqJwABLZLr-lzdZfje7C-bzA7X_1_FiZr8UXnGHayvNtRxUUvJZKH41bzMCyD1PpXNgvYfArVffkYZQxflAXDhlv_A-jHthPCAJo7c5x5Xyg3ZLNg1HnEn31SkcIeVImzSOChtyArtj500F3ExSkBvUurl8uz1Xj4mwR5vFVyZ9OK99lCIxNno">
+</div>
+</div>
+<div class="order-1 lg:order-2 space-y-8 lg:pl-12">
+<span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase">The Ritual</span>
+<h2 class="font-display-lg text-display-lg text-on-surface">The Ritual of Service</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+              Consuming Imperial Beluga is not merely a meal; it is a ceremony. We provide the essential accouterments to ensure each pearl is respected. From hand-carved shell spoons to artisanal cooling vessels, every element is designed to uphold the Maison's standards of Italian excellence.
+            </p>
+<div class="pt-8">
+<button class="group flex items-center gap-4 text-primary font-label-lg text-label-lg uppercase tracking-widest">
+                Discover the Collection
+                <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component Execution -->
+
+<script>
+    // Simple intersection observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('stagger-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section > div').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+    });
+  </script>
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
+    <nav><a href="index.html">Maison</a><a href="caviar.html">Caviar</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>Privacy Policy · Terms of Sale · Shipping</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+</footer>
+<script src="../main.js"></script></body></html>

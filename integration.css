@@ -1,0 +1,116 @@
+.lux-header, .lux-header * { box-sizing: border-box; }
+.lux-header {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 78px;
+  padding: 12px clamp(22px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 24px;
+  align-items: center;
+  background: rgba(10, 10, 10, .82);
+  border-bottom: 1px solid rgba(233, 195, 73, .22);
+  backdrop-filter: blur(18px);
+  color: #e5e2e1;
+  font-family: Montserrat, Arial, sans-serif;
+}
+.lux-brand { display: inline-flex; align-items: center; width: 72px; height: 54px; }
+.lux-brand img { width: 64px; height: 64px; object-fit: contain; filter: invert(1) brightness(1.35); }
+.lux-nav, .lux-actions { display: flex; align-items: center; gap: clamp(12px, 1.6vw, 28px); }
+.lux-nav { justify-content: center; }
+.lux-actions { justify-content: flex-end; }
+.lux-nav a, .lux-actions a, .lux-lang {
+  color: #e5e2e1;
+  text-decoration: none;
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: .82;
+  white-space: nowrap;
+}
+.lux-header a:focus-visible, .lux-menu:focus-visible { outline: 1px solid #9df5ec; outline-offset: 4px; }
+.lux-nav a:hover, .lux-nav a.active, .lux-actions a:hover, .lux-lang a.active { color: #9df5ec; opacity: 1; }
+.lux-nav a.active { border-bottom: 1px solid #9df5ec; padding-bottom: 5px; }
+.lux-lang { display: inline-flex; gap: 7px; align-items: center; }
+.lux-menu { display: none; border: 1px solid rgba(233,195,73,.35); background: transparent; color: #e5e2e1; padding: 9px 12px; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
+.lux-modules {
+  padding: clamp(64px, 8vw, 110px) clamp(22px, 5vw, 80px);
+  background: #101010;
+  color: #e5e2e1;
+  font-family: Montserrat, Arial, sans-serif;
+}
+.lux-modules h2 {
+  margin: 0 0 28px;
+  font-family: "Bodoni Moda", Georgia, serif;
+  font-size: clamp(34px, 4vw, 58px);
+  font-weight: 400;
+}
+.lux-module-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.lux-module-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #171717;
+  color: #e5e2e1;
+  text-decoration: none;
+  padding-bottom: 16px;
+}
+.lux-module-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; border-bottom: 1px solid rgba(255,255,255,.08); }
+.lux-module-card span { padding: 0 16px; font-size: 18px; }
+.lux-module-card small { padding: 0 16px; color: #9df5ec; letter-spacing: .16em; text-transform: uppercase; }
+.lux-footer {
+  background: #070707;
+  color: #e5e2e1;
+  border-top: 1px solid rgba(233,195,73,.25);
+  padding: 72px clamp(22px, 5vw, 80px) 28px;
+  font-family: Montserrat, Arial, sans-serif;
+}
+.lux-footer-grid {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.25fr 1.4fr 1fr 1fr;
+  gap: 30px;
+}
+.lux-footer img { width: 96px; height: 96px; object-fit: contain; filter: invert(1) brightness(1.35); margin-bottom: 16px; }
+.lux-footer a, .lux-footer p {
+  display: block;
+  color: #bdc9c7;
+  text-decoration: none;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+.lux-footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; align-content: start; }
+.lux-footer-bottom { max-width: 1440px; margin: 38px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #bdc9c7; font-size: 13px; }
+body { padding-top: 0 !important; }
+body:has(.lux-nav.open) { overflow-x: hidden; }
+@media (max-width: 1080px) {
+  .lux-header { position: sticky; grid-template-columns: auto 1fr; }
+  .lux-actions { gap: 12px; }
+  .lux-nav {
+    grid-column: 1 / -1;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    order: 3;
+  }
+  .lux-nav.open { display: flex; }
+  .lux-nav.open { max-height: calc(100vh - 78px); overflow: auto; }
+  .lux-nav a { padding: 13px 0; border-top: 1px solid rgba(255,255,255,.08); }
+  .lux-menu { display: inline-flex; }
+  .lux-module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .lux-header { padding-inline: 18px; }
+  .lux-brand { width: 58px; }
+  .lux-brand img { width: 54px; height: 54px; }
+  .lux-lang { letter-spacing: .12em; }
+  .lux-actions > a { display: none; }
+  .lux-module-grid, .lux-footer-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,302 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Journal | LuxurEat Maison</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:wght@100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#9df5ec",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-container": "#20201f",
+                        "inverse-primary": "#006a64",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#131313",
+                        "surface": "#131313",
+                        "tertiary": "#e5e5e5",
+                        "primary-fixed": "#9bf2ea",
+                        "surface-container-high": "#2a2a2a",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-surface-variant": "#bdc9c7",
+                        "on-tertiary-container": "#545454",
+                        "primary-container": "#81d8d0",
+                        "tertiary-container": "#c9c9c9",
+                        "on-secondary-fixed": "#241a00",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary-container": "#af8d11",
+                        "on-primary-fixed": "#00201e",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-container": "#005f59",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-secondary-container": "#342800",
+                        "error-container": "#93000a",
+                        "on-secondary": "#3c2f00",
+                        "secondary": "#e9c349",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-tertiary": "#303030",
+                        "outline-variant": "#3e4947",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#393939",
+                        "surface-container-highest": "#353535",
+                        "background": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-variant": "#353535",
+                        "on-primary": "#003734",
+                        "on-background": "#e5e2e1",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "surface-tint": "#7ed5cd",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-fixed": "#ffe088",
+                        "outline": "#889391",
+                        "primary-fixed-dim": "#7ed5cd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-mobile": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px",
+                        "unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bodoni Moda"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "body-md": ["Montserrat"],
+                        "label-sm": ["Montserrat"],
+                        "label-lg": ["Montserrat"],
+                        "headline-sm": ["Bodoni Moda"],
+                        "body-lg": ["Montserrat"],
+                        "headline-md": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            color: #e5e2e1;
+            scroll-behavior: smooth;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            background-color: rgba(19, 19, 19, 0.8);
+        }
+        .article-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+        .article-card img {
+            filter: grayscale(100%);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-line {
+            position: relative;
+            overflow: hidden;
+        }
+        .reveal-line::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #9df5ec;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+        .reveal-line:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+    </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="font-body-md">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Maison</a><a class="" href="caviar.html">Caviar</a><a class="" href="rituals.html">Rituals</a><a class="active" href="journal.html">Journal</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <div class="lux-actions">
+    <a href="private.html">Private Selection</a>
+    <a href="bag.html">Shopping Bag</a>
+    <span class="lux-lang"><a class="" href="../zh/journal.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<!-- TopNavBar -->
+
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0 transition-all duration-1000 opacity-100">
+<div class="w-full h-full bg-cover bg-center grayscale opacity-60 scale-105 transition-transform duration-10000 ease-linear" data-alt="A cinematic, high-contrast black and white photograph of an artisanal caviar harvest. A pair of gloved hands gently handles a shimmering heap of dark, lustrous beluga sturgeon roe in a professional stainless steel kitchen. The lighting is dramatic, highlighting the individual pearls with sharp crystalline reflections, creating a mood of intense focus and timeless epicurean craftsmanship. The environment is dark and atmospheric, focusing purely on the ritual of the harvest." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQgDIJSTHb0B75pAIsExk7vkK4ZIThWWWS-C7WOLkGBtDR6Y8ahH7FiCjrjEurvEunCNNByjfspddM9jYWob8oW-DnQ8S1yWqOT1ewQ3De2vBm2lPfn4G7tj1rEPtDuHCIJZXPzUYRVZCiHAYG8pfOeaRc1soYaTFVWCJtPZaoreU2tgdONESDs2yJ4gk9ossBqu5dYskWNsYdoms3ouluPgBn6-_1rkfiVb248kClMX1VhsUuFV8KU0z8dg4dk-O_xvafQ2IV1ho')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile max-w-4xl transition-all duration-1000 opacity-100">
+<span class="font-label-lg text-label-lg uppercase tracking-[0.3em] text-primary mb-6 block">The Journal</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-8">Epicurean Rituals</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+                A chronicle of the world's most coveted delicacies, from the frozen depths of the Caspian to the sun-drenched hills of Piedmont.
+            </p>
+<div class="flex justify-center">
+<a class="w-12 h-12 flex items-center justify-center border border-primary rounded-full hover:bg-primary/10 transition-colors duration-500" href="#featured">
+<span class="material-symbols-outlined text-primary animate-bounce">arrow_downward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Main Content Grid -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mt-section-gap">
+<!-- Featured Article -->
+<section class="mb-section-gap" id="featured">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center transition-all duration-1000 opacity-100">
+<div class="lg:col-span-7 article-card group cursor-pointer">
+<div class="aspect-[16/10] overflow-hidden mb-8 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="A close-up, noir-style photograph of a silver tasting spoon lifting a small mound of glistening Ossetra caviar. The background is a deep, velvety black with soft bokeh light reflecting off the spoon's polished surface. The lighting is moody and directional, emphasizing the texture and depth of the caviar pearls against the pristine silver. A whisper of Tiffany Blue light catches the edge of the spoon, adding a modern luxury touch." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7anz-XTzA8rUvCwVCN3tnA2c2twxLvw5xTeZY8fdjIZx32wdxnrD3FxOkWKlNvm-lgNGcFXJCyBj6zyugVzHui1X1JEmJm2xV1CW1pVSRih5-WGvyDCI05Ag5b61L7EC6aMY72hjaavZ8QDnbAnLP8g_Ld-MkMHDgHqV6-zNhyFZDw_IcQgZ44UN1BVPwAqB8BghU0PrSUYfiL-_Yq2tfmk0qAvC5_uurJz-kivVfokBHxreXKApDBA_qKdUTevydltWgjTFXeRo">
+</div>
+</div>
+<div class="lg:col-span-5 lg:pl-12">
+<span class="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-4 block">Maison Heritage</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6 leading-tight">The Art of the Harvest</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">
+                        The ritual of the sturgeon harvest is a sacred tradition passed through generations of master salters. At LuxurEat, we treat every grain as a gemstone, preserving the delicate balance of minerality and creaminess that defines true excellence.
+                    </p>
+<a class="inline-flex items-center gap-4 group font-label-lg text-label-lg uppercase tracking-widest text-on-surface hover:text-primary transition-colors" href="#">
+                        Read Narrative
+                        <span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Secondary Grid -->
+<section class="mb-section-gap">
+<div class="flex justify-between items-end mb-16 border-b border-outline-variant/30 pb-8 transition-all duration-1000 opacity-100">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Seasonal Observations</h3>
+</div>
+<div class="hidden md:block">
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors" href="#">View Archive</a>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-gutter transition-all duration-1000 opacity-100">
+<!-- Article 1 -->
+<article class="article-card group cursor-pointer transition-all duration-1000 opacity-100">
+<div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="An atmospheric, architectural shot of a minimalist truffle storage cellar in Italy. Shelves of weathered dark wood hold rows of rough, earthy black winter truffles. The lighting is cool and low-key, with dramatic shadows that highlight the unique, brain-like texture of the fungi. The palette is dominated by dark charcoal, deep browns, and a subtle Tiffany Blue accent light on the far wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQy_7QgEhJXRb9TVE_qzhuDOz-7NCGBa_j5-U9QAjY-RgkJ2ZQHX_5SO79aYEFnsmh__rooT1ufKKtESdCxIDI6AKK5cskDxVD5oMSArK_A-w8eZYyBq6M901sPa1EICBL1VKmnbf8fDFvZoZ_WKcozP-dEw8yZPP_5H1A26D2NuC1k-Y5wKcxiXZD1R99ifx-tOOWICpWqnVpIrkftwymdfHoUs6G_63VZqke4f15-qB_VQ2iKl62ZxITlbpb4UVfs_kj11XG2E8">
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">Sourcing</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-4">Sourcing Excellence: The Alba Gold</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3 mb-6">
+                        An intimate look into our network of truffle hunters and the secret forests of Piedmont where the world's finest white diamonds are unearthed.
+                    </p>
+<div class="w-full h-[1px] bg-outline-variant/30 origin-left scale-x-100"></div>
+</article>
+<!-- Article 2 -->
+<article class="article-card group cursor-pointer transition-all duration-1000 opacity-100">
+<div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="A high-end, editorial flat-lay of a luxury dinner table set with minimalist black ceramic plates and crystal glassware. A small tin of LuxurEat caviar sits at the center, its lid slightly ajar to reveal the dark pearls. The lighting is soft and ambient, casting long, elegant shadows. The style is 'Luminous Noir', creating a sophisticated and exclusive dining atmosphere for elite connoisseurs." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAg7keSD5fHP8vQ477QdjOPGaMu0dEKrV3C-or5erPbi9FooRm3f-gqK9jsQmWVqRty8-JYMdaGQrZH09RfQKdhEbCW7r-8kA8Ow2g38LJWJSt-uLuompA3zl2DjXfylHLAFug2zSiBkisJovH4dz3kyg_RpayvCeghiRuxKbORpOPhWFWBW2M-d8RxRYsW9DZDxi0dPc5YtudATgrihhdU45o2T_6ZdY5FNOBxb3IaJRenUHk_a_444WorRvwedmX_ZWSCN4tQMM">
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">Epicurean Life</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-4">A Legacy of Taste: Modern Service</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3 mb-6">
+                        Redefining the table: why the traditional mother-of-pearl spoon remains the only vessel worthy of a true epicurean's palate.
+                    </p>
+<div class="w-full h-[1px] bg-outline-variant/30 origin-left scale-x-100"></div>
+</article>
+<!-- Article 3 -->
+<article class="article-card group cursor-pointer transition-all duration-1000 opacity-100">
+<div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5">
+<img class="w-full h-full object-cover" data-alt="A portrait of a master salt artisan in a dimly lit, high-tech curing room. The artisan is meticulously inspecting a batch of sturgeon roe, with focus and precision. The lighting highlights the fine details of the artisan's face and the delicate nature of the caviar. The aesthetic is clean and professional, using a low-saturation palette with deep shadows and surgical-grade lighting focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfbNuFAT9ZgIgOwkTaahfs0NsdQcBPQoxt-Ged22Ov4fxMRtVjhrlsSuvUvYzVnOnp1iayJXEui5QoYCH-gS85o09LHojk52rTWmcSRnQwnYDsBoE3T0gHFRY5J-HQn-deQqgNVuoCv6DxPqMp14M5CCpsJPaZZkTOA6uS8vrXJIEQRaae53cX__4tffkuuhWlz0MBpR7xO85jaPBJguBeZGYyP5rtfOFtBKVwS_-3WLRaNHYRm0aaKqUj-aYT5d412hKENpYGiok">
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">Craftsmanship</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-4">The Science of Salt: Malossol Mastery</h4>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-3 mb-6">
+                        Discover the 'Malossol' method, where less than 3% salt is used to enhance, not mask, the oceanic complexity of our sturgeon roe.
+                    </p>
+<div class="w-full h-[1px] bg-outline-variant/30 origin-left scale-x-100"></div>
+</article>
+</div>
+</section>
+<!-- Newsletter / Editorial Subscription -->
+
+</main>
+<!-- Footer -->
+
+<script>
+        // Simple parallax on scroll for hero
+        window.addEventListener('scroll', () => {
+            const scroll = window.pageYOffset;
+            const heroBg = document.querySelector('[style*="background-image"]');
+            if(heroBg) {
+                heroBg.style.transform = `translateY(${scroll * 0.4}px) scale(${1.05 + (scroll * 0.0001)})`;
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('article, section > div').forEach(el => {
+            el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
+    <nav><a href="index.html">Maison</a><a href="caviar.html">Caviar</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>Privacy Policy · Terms of Sale · Shipping</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+</footer>
+<script src="../main.js"></script></body></html>

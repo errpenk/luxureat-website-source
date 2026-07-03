@@ -1,0 +1,327 @@
+<!DOCTYPE html><html class="dark" lang="zh-CN" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>品鉴艺术 | LUXUREAT</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#690005",
+                    "surface-container": "#20201f",
+                    "on-primary-container": "#005f59",
+                    "secondary-fixed-dim": "#e9c349",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-background": "#e5e2e1",
+                    "inverse-primary": "#006a64",
+                    "tertiary-container": "#c9c9c9",
+                    "on-surface-variant": "#bdc9c7",
+                    "on-secondary": "#3c2f00",
+                    "surface-tint": "#7ed5cd",
+                    "on-primary-fixed-variant": "#00504b",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-container": "#af8d11",
+                    "outline": "#889391",
+                    "primary": "#9df5ec",
+                    "primary-fixed": "#9bf2ea",
+                    "on-tertiary-container": "#545454",
+                    "outline-variant": "#3e4947",
+                    "tertiary": "#e5e5e5",
+                    "on-secondary-fixed-variant": "#574500",
+                    "secondary-fixed": "#ffe088",
+                    "inverse-on-surface": "#313030",
+                    "on-primary-fixed": "#00201e",
+                    "on-primary": "#003734",
+                    "error-container": "#93000a",
+                    "surface-dim": "#131313",
+                    "surface-variant": "#353535",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "tertiary-fixed": "#e2e2e2",
+                    "surface-container-highest": "#353535",
+                    "primary-fixed-dim": "#7ed5cd",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-secondary-fixed": "#241a00",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#303030",
+                    "surface": "#131313",
+                    "primary-container": "#81d8d0",
+                    "on-surface": "#e5e2e1",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "surface-bright": "#393939",
+                    "surface-container-high": "#2a2a2a",
+                    "inverse-surface": "#e5e2e1",
+                    "secondary": "#e9c349",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#342800",
+                    "background": "#131313"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "section-gap": "120px",
+                    "margin-mobile": "24px",
+                    "margin-desktop": "80px",
+                    "gutter": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Montserrat"],
+                    "body-md": ["Montserrat"],
+                    "display-lg": ["Bodoni Moda"],
+                    "headline-sm": ["Bodoni Moda"],
+                    "body-lg": ["Montserrat"],
+                    "display-lg-mobile": ["Bodoni Moda"],
+                    "label-lg": ["Montserrat"],
+                    "headline-md": ["Bodoni Moda"],
+                    "headline-lg": ["Bodoni Moda"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                    "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background: rgba(19, 19, 19, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .line-draw {
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+        .line-draw.active {
+            width: 100px;
+        }
+    </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="bg-background text-on-background">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">品牌故事</a><a class="" href="caviar.html">鱼子酱系列</a><a class="active" href="rituals.html">品鉴艺术</a><a class="" href="journal.html">品牌志</a><a class="" href="gifting.html">礼赠合作</a><a class="" href="certification.html">品质认证</a><a class="" href="contact.html">联系我们</a></nav>
+  <div class="lux-actions">
+    <a href="contact.html">私享定制</a>
+    <a href="bag.html">购物袋</a>
+    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a class="" href="../en/rituals.html">EN</a></span>
+    <button class="lux-menu" type="button" data-open="关闭" data-closed="菜单" aria-expanded="false">菜单</button>
+  </div>
+</header>
+
+<!-- TopNavBar -->
+
+<main>
+<!-- Hero Section -->
+<section class="relative h-[90vh] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center scale-110" data-alt="A cinematic, high-contrast close-up shot of glossy black caviar grains resting on a mother-of-pearl spoon. The lighting is dramatic and moody, highlighting the iridescent textures of the spoon and the liquid sheen of the sturgeon roe. Deep shadows surround the subject, creating an atmosphere of intense luxury and culinary reverence. The overall palette is dominated by obsidian blacks, shimmering whites, and subtle cool tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBa7Oj2ngaBTd8Iwa6hlnDzlR0Ah9moJQm14y2JXwigY8KO1vo7EkCO0DxTOFWi3DnYQFE0QmMHVCzPIz1ras61KUDWb9x-bj83Kj-me7Hkpmf4FvyQmm8Kil2U4IXASh6UsnD97ybCsVGRrcZ9ktrA2BYqCEyy7gVCEzsPg7SnUZIdNOSxSbXPYqh9XATJWkbNbOeirxIXxGfWMfAuDRvDomkxMTU7bB-eUvi1m2VTltb3ifRAgqa0XDNH5LOzG5kLO6jwYNJu1ag')"></div>
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6 tracking-tighter">品鉴艺术</h1>
+<p class="max-w-2xl mx-auto font-body-lg text-body-lg text-on-surface-variant tracking-wide leading-relaxed">
+                    在这里，鱼子酱不仅是一道珍馐，更是一场关于感官、仪式与极致生活方式的朝圣。我们致力于将每一次开启，都升华为永恒的记忆。
+                </p>
+<div class="mt-12 flex justify-center">
+<div class="w-px h-24 bg-gradient-to-b from-primary to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Heritage Section (卓越传承) -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-5 reveal-on-scroll active">
+<span class="text-primary font-label-lg tracking-[0.3em] uppercase block mb-4">Craftsmanship</span>
+<h2 class="font-headline-lg text-headline-lg mb-8">卓越传承</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">
+                        源自意大利的精湛工艺，LUXUREAT 始终坚持最纯粹的传统。我们的每一粒鱼子酱都承载着时光的厚度，由工匠大师亲手挑选。
+                    </p>
+<div class="flex items-center gap-4 mb-10">
+<div class="h-px bg-primary line-draw active"></div>
+<span class="font-label-lg text-primary tracking-widest">'MALOSSOL' METHOD</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant/80 italic border-l border-outline-variant/30 pl-6">
+                        严格遵循“Malossol”低盐处理法，盐分含量控制在3%以内。这不仅仅是为了保鲜，更是为了精准捕捉鲟鱼子最本真的鲜甜与细腻的油脂芬芳。
+                    </p>
+</div>
+<div class="md:col-span-6 md:col-start-7 relative reveal-on-scroll active">
+<div class="aspect-[4/5] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl" data-alt="A vintage-inspired editorial photograph of an artisan's hands carefully inspecting golden and black sturgeon caviar in a minimalist, dimly lit Italian workshop. The aesthetic is clean and architectural, with soft directional lighting emphasizing the textures of the roe. The color palette is low-saturation, focusing on charcoal, graphite, and pale gold highlights." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAYgBK4VOpBPwSsJ8wL_Kn-YBt0tCxs9hZo8QuGiixjvAXDz0PuRavmTfjPM6bb1_mF-hllFDuAEOGE9r5hO9wr_BcBjnJbk6YxSEHb50GJy0rzXYXBkY2X4XCzD-ZrIVvgxiadoMHajM87OzsBEhbE6hyHMC6QSvL7VZCoxjbJF-_2I2ma-iERxPz-vPS4hJn127YN1bVc-6c6_RWHT2IM2Bz2puj0U5NHpuPTfWTzLVqCmGkglpznJBaedJ0YXlucbc8srgLxPMg')"></div>
+<div class="absolute -bottom-10 -left-10 w-64 h-64 border-l border-b border-primary/20 -z-10"></div>
+</div>
+</div>
+</section>
+<!-- The Art of Pairing (配餐艺术) -->
+<section class="bg-surface-container-low py-section-gap">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-20 reveal-on-scroll active">
+<h2 class="font-headline-lg text-headline-lg mb-4">配餐艺术</h2>
+<p class="font-label-lg text-primary tracking-[0.4em] uppercase">The Art of Pairing</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+<div class="reveal-on-scroll group cursor-pointer active">
+<div class="overflow-hidden mb-8 border border-outline-variant/10">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="A high-end luxury setup featuring a crystal glass of premium vintage champagne next to an open tin of caviar. The bubbles in the champagne are captured in sharp detail, shimmering against a dark charcoal background. The composition is asymmetrical and balanced, evoking the feeling of an exclusive private club. Lighting is focused and theatrical." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBoPRwxvQOmHqNT232yA2aUY2zRh1_cnBBvXcKRHewJ4aG_PfIFz8MXLQLsJiLIyUXslsOfWrXxfollJKQF6lQZQfCsqqVLbIZiJHunsWkso0aiISFUQcyq8_4wO9J3Gt25hLpv-iiHdTqLalW-P_sHArq8JlUO0ycSBH8zid4OLED2c4J6FFIv6GMMsKRoK5L5dWur-IHLjpXYq8hv7Zw8bHiNvjDBEhV7eZA6fU9Hu0wvOQ4k0uci3OHhrWTZdOOQ4ZT-wkRW13Y')"></div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">香槟之韵</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            选用年份干型香槟（Brut），其明亮的酸度与细腻的气泡能瞬间唤醒味蕾，完美中和鱼子酱饱满的油脂感，创造出和谐而深邃的味觉层次。
+                        </p>
+</div>
+<div class="reveal-on-scroll group cursor-pointer md:mt-24 active">
+<div class="overflow-hidden mb-8 border border-outline-variant/10">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="Close-up of a handcrafted mother-of-pearl spoon resting on a dark slate surface. The iridescent colors of the shell glow under a soft spotlight, contrasting with the matte texture of the stone. A single cluster of caviar pearls rests on the spoon. The image captures a sense of quiet elegance and ritual." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZQcq4hfiLU3hNPVytnsfWjFbSXPVMC0ZEe6Jo0kK6b7vRdcaEs3ISV22gseD6C-hcP_-8Er8ha6yZzwUFvnUXMiye9wgrs0mVPIJCsgrJ4hqtlDG_lMYdPdnPPpHg_rQ4kSoSoMBKB0vJwAV_7niM0AX1Yc-AEeuvZl8k8cuLTBQZHKeAPPZLu6dE00svFteMahQNJ-2gt8rqXByzIrJgj0kF-BM29DieNSBStG8btLmXTHvM3d1vdSLqFMsjHj7m8DVKZCXWZE8')"></div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">贝母触感</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            极致的品鉴必须拒绝任何金属器皿。唯有白贝母勺（Mother-of-pearl），才能确保不带入任何异味，守护鱼子酱最脆弱、最珍贵的原色原味。
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Ceremony (仪式感) - Bento Grid Style -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
+<div>
+<span class="text-primary font-label-lg tracking-[0.3em] uppercase block mb-4">The Ceremony</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg">仪式感</h2>
+</div>
+<div class="max-w-sm text-right hidden md:block">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        从冰镇的触感到舌尖的爆裂，每一阶段都是对生活艺术的敬礼。
+                    </p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-[300px]">
+<div class="md:col-span-2 md:row-span-2 bg-surface-container-high p-12 flex flex-col justify-end relative overflow-hidden group reveal-on-scroll active">
+<div class="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 bg-cover bg-center" data-alt="Macro photography of ice crystals forming on a dark metal surface, representing the perfect temperature control for caviar service. The aesthetic is cold, sharp, and luxurious." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuArTA1mThEQlgdeKhq1a1qk7BY1FOECljmMEQfow2mbJ-16zYvs7dwl6eCJBRVdHYePXDlrlbjx0P6W1fLwVMNFaj_pbhC0BoTOEH3bTI2TaSSms-d0eCsWci2zeN3jdYy0VT6HvU3aJxAD7NDrt94Nt2AZAg8CHN1OOpUnSTGRjsHHFxEBW7-tKOeRWC7Vp81Lyul15F6QZ_nmXjIBFIPABRiSKs_p0dgCt6dr7V7dxAPgrY1D-XnEQ1lgPePLR8I2lOAomEZLb5k')"></div>
+<div class="relative z-10">
+<span class="font-display-lg text-primary/30 text-[100px] leading-none block mb-4">01</span>
+<h4 class="font-headline-md text-headline-md mb-4">温控之魂</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">将罐体置于碎冰之上，保持在-2°C至2°C之间。这是开启“黑金”之门的第一把钥匙。</p>
+</div>
+</div>
+<div class="md:col-span-2 bg-surface-container flex items-center p-12 reveal-on-scroll active">
+<div class="flex-1">
+<span class="font-label-lg text-primary block mb-2">02</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">呼吸律动</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">开罐后静置5分钟，让沉睡的香气在空气中缓慢苏醒。</p>
+</div>
+<span class="material-symbols-outlined text-primary text-5xl opacity-20">airwave</span>
+</div>
+<div class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between reveal-on-scroll active">
+<div>
+<span class="font-label-lg text-primary block mb-2">03</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">虎口仪式</h4>
+</div>
+<p class="font-label-sm text-on-surface-variant">放置于虎口处，利用体温轻微加热。这是最古老也最奢华的私享方式。</p>
+</div>
+<div class="md:col-span-1 border border-primary/20 p-8 flex flex-col justify-between hover:bg-primary/5 transition-colors duration-500 reveal-on-scroll active">
+<div>
+<span class="font-label-lg text-primary block mb-2">04</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">舌尖绽放</h4>
+</div>
+<p class="font-label-sm text-on-surface-variant">用舌尖轻压，感受那一瞬间的破裂与随即涌出的深海醇香。</p>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-section-gap relative overflow-hidden">
+<div class="relative z-10 text-center px-margin-mobile">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-10">预约您的私享品鉴</h2>
+<button class="px-12 py-4 border border-primary text-primary font-label-lg uppercase tracking-[0.2em] hover:bg-primary hover:text-on-primary transition-all duration-500 group">
+                    立即预约
+                    <span class="material-symbols-outlined ml-2 align-middle group-hover:translate-x-2 transition-transform duration-300">trending_flat</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<script>
+        // Simple Intersection Observer for reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Also activate drawing lines if child exists
+                    const line = entry.target.querySelector('.line-draw');
+                    if (line) line.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.querySelector('.hero-gradient').previousElementSibling;
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.4}px) scale(1.1)`;
+            }
+        });
+    </script>
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
+    <nav><a href="index.html">品牌故事</a><a href="caviar.html">鱼子酱系列</a><a href="rituals.html">品鉴艺术</a><a href="journal.html">品牌志</a><a href="gifting.html">礼赠合作</a><a href="certification.html">品质认证</a><a href="contact.html">联系我们</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>隐私政策 · 销售条款 · 配送说明</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
+</footer>
+<script src="../main.js"></script></body></html>

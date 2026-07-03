@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="dark" lang="zh-CN" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>联系我们 | LUXUREAT</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&amp;family=Montserrat:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(157, 245, 236, 0.1);
+        }
+        .ghost-border {
+            border: 1px solid rgba(157, 245, 236, 0.3);
+            transition: all 0.3s ease;
+        }
+        .ghost-border:hover {
+            border-color: #9df5ec;
+            background: rgba(157, 245, 236, 0.05);
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #9df5ec !important;
+        }
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #3e4947; }
+        ::-webkit-scrollbar-thumb:hover { background: #9df5ec; }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#690005",
+                    "surface-container": "#20201f",
+                    "on-primary-container": "#005f59",
+                    "secondary-fixed-dim": "#e9c349",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-background": "#e5e2e1",
+                    "inverse-primary": "#006a64",
+                    "tertiary-container": "#c9c9c9",
+                    "on-surface-variant": "#bdc9c7",
+                    "on-secondary": "#3c2f00",
+                    "surface-tint": "#7ed5cd",
+                    "on-primary-fixed-variant": "#00504b",
+                    "surface-container-low": "#1c1b1b",
+                    "secondary-container": "#af8d11",
+                    "outline": "#889391",
+                    "primary": "#9df5ec",
+                    "primary-fixed": "#9bf2ea",
+                    "on-tertiary-container": "#545454",
+                    "outline-variant": "#3e4947",
+                    "tertiary": "#e5e5e5",
+                    "on-secondary-fixed-variant": "#574500",
+                    "secondary-fixed": "#ffe088",
+                    "inverse-on-surface": "#313030",
+                    "on-primary-fixed": "#00201e",
+                    "on-primary": "#003734",
+                    "error-container": "#93000a",
+                    "surface-dim": "#131313",
+                    "surface-variant": "#353535",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "tertiary-fixed": "#e2e2e2",
+                    "surface-container-highest": "#353535",
+                    "primary-fixed-dim": "#7ed5cd",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-secondary-fixed": "#241a00",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#303030",
+                    "surface": "#131313",
+                    "primary-container": "#81d8d0",
+                    "on-surface": "#e5e2e1",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "surface-bright": "#393939",
+                    "surface-container-high": "#2a2a2a",
+                    "inverse-surface": "#e5e2e1",
+                    "secondary": "#e9c349",
+                    "error": "#ffb4ab",
+                    "on-secondary-container": "#342800",
+                    "background": "#131313"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "section-gap": "120px",
+                    "margin-mobile": "24px",
+                    "margin-desktop": "80px",
+                    "gutter": "24px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Montserrat"],
+                    "body-md": ["Montserrat"],
+                    "display-lg": ["Bodoni Moda"],
+                    "headline-sm": ["Bodoni Moda"],
+                    "body-lg": ["Montserrat"],
+                    "display-lg-mobile": ["Bodoni Moda"],
+                    "label-lg": ["Montserrat"],
+                    "headline-md": ["Bodoni Moda"],
+                    "headline-lg": ["Bodoni Moda"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                    "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="font-body-md text-body-md selection:bg-primary/30">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">品牌故事</a><a class="" href="caviar.html">鱼子酱系列</a><a class="" href="rituals.html">品鉴艺术</a><a class="" href="journal.html">品牌志</a><a class="" href="gifting.html">礼赠合作</a><a class="" href="certification.html">品质认证</a><a class="active" href="contact.html">联系我们</a></nav>
+  <div class="lux-actions">
+    <a href="contact.html">私享定制</a>
+    <a href="bag.html">购物袋</a>
+    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a class="" href="../en/contact.html">EN</a></span>
+    <button class="lux-menu" type="button" data-open="关闭" data-closed="菜单" aria-expanded="false">菜单</button>
+  </div>
+</header>
+
+<!-- TopNavBar -->
+
+<main>
+<!-- Hero Section -->
+<section class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+
+<div class="relative z-10 text-center space-y-4">
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-widest uppercase">联系我们</h1>
+<p class="font-body-lg text-on-surface/60 max-w-2xl mx-auto px-margin-mobile">
+                    探索顶级鱼子酱的世界，我们的品鉴专家随时为您提供咨询。
+                </p>
+</div>
+</section>
+<!-- Main Content Grid -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left: Contact Form & HQ -->
+<div class="lg:col-span-7 space-y-16">
+<div>
+<h2 class="font-headline-lg text-primary mb-8">品牌咨询</h2>
+<form class="space-y-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">姓名 NAME</label>
+<input class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20" placeholder="请输入您的姓名" type="text">
+</div>
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">联系电话 PHONE</label>
+<input class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20" placeholder="请输入您的联系电话" type="tel">
+</div>
+</div>
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">电子邮箱 EMAIL</label>
+<input class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20" placeholder="example@luxureat.com" type="email">
+</div>
+<div class="relative border-b border-outline-variant py-2">
+<label class="block font-label-sm uppercase text-on-surface/40 mb-2">咨询内容 MESSAGE</label>
+<textarea class="w-full bg-transparent border-none p-0 text-on-surface focus:ring-0 placeholder-on-surface/20 resize-none" placeholder="请详细描述您的需求..." rows="4"></textarea>
+</div>
+<button class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-label-lg uppercase tracking-widest transition-transform active:scale-95" type="submit">
+                                发送信息 SEND MESSAGE
+                            </button>
+</form>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8">
+<div class="space-y-4">
+<h3 class="font-headline-sm text-secondary uppercase tracking-wider">总部地址 HQ</h3>
+<p class="font-body-md text-on-surface/70 leading-relaxed">
+                                上海市黄浦区外滩街道<br>
+                                中山东一路18号 401室<br>
+                                邮编: 200002
+                            </p>
+</div>
+<div class="space-y-4">
+<h3 class="font-headline-sm text-secondary uppercase tracking-wider">客户服务 CONTACT</h3>
+<p class="font-body-md text-on-surface/70 leading-relaxed">
+                                电话: +86 21 8888 8888<br>
+                                邮箱: concierge@luxureat.com<br>
+                                工作时间: 周一至周五 09:00 - 18:00
+                            </p>
+</div>
+</div>
+</div>
+<!-- Right: Service Cards -->
+<div class="lg:col-span-5 space-y-gutter">
+<!-- Concierge Card -->
+<div class="glass-panel p-10 space-y-6 group">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-primary">私享定制</h2>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="restaurant_menu">restaurant_menu</span>
+</div>
+<p class="text-on-surface/60 font-body-md leading-relaxed">
+                            为高端私人晚宴、庆典活动及艺术沙龙提供全方位的鱼子酱品鉴服务。我们的首席品鉴师将亲临现场，为您开启一段非凡的感官之旅。
+                        </p>
+<ul class="space-y-3 font-label-sm text-on-surface/40 uppercase tracking-widest">
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                                私人主厨预约
+                            </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                                珍稀品种预留
+                            </li>
+<li class="flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                                品鉴餐配建议
+                            </li>
+</ul>
+<a class="inline-block pt-4 text-primary font-label-lg tracking-widest border-b border-primary/30 hover:border-primary transition-all" href="#">咨询管家 CONCIERGE</a>
+</div>
+<!-- B2B Card -->
+<div class="glass-panel p-10 space-y-6 bg-surface-container-low/50 border-secondary/10">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-secondary">商务合作</h2>
+<span class="material-symbols-outlined text-secondary text-4xl" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<p class="text-on-surface/60 font-body-md leading-relaxed">
+                            LuxurEat 为全球奢华酒店、米其林餐厅及企业礼赠提供长期供应方案。我们致力于将极致的中国黑鱼子酱推向国际舞台。
+                        </p>
+<div class="flex gap-4">
+<div class="h-24 w-1/3 overflow-hidden rounded">
+<div class="w-full h-full bg-cover bg-center" data-alt="Close up of a luxury hotel lobby with minimalist dark marble floors and warm ambient lighting, representing a premium B2B partnership setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC6saEECdsrKK2WGHbaGlrwOJe83ITQRnVxHTpAXlre3Ib2YzPY_PV_gn-z2NKrv8aZvug4g2qwt6M8EZcnXEDgbo2N3v4CtQatqb348GG8YtmyJKkNJQVexJ0t1-7eNJirbB4a6p_Qijt9uJ_wYEBX7YbIpmbg766J1__HtcKO_gZgNAyJCCIhcFBQ6co0Wm2ixwoqIRSDixkRgij5cAe13O6f71msNjrb7nFL4ygiAuTRJyBpO02WNcXaO_T9UUeQ9N2WIWeX3dA')"></div>
+</div>
+<div class="h-24 w-1/3 overflow-hidden rounded">
+<div class="w-full h-full bg-cover bg-center" data-alt="A sophisticated corporate gift box featuring a gold logo on a matte black texture, surrounded by high-end packaging materials." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAid-od7ot0ef7LzZs30UrI-RFkArVZ3_xlD4gFX8MJSTnd5B0RF4wkBXJkXfb3PqBlsBZr9XmdC0jhvBP3xOnve5bAXwm7qUr7UndFTPbd6qbK5-aEE3Xvo5wuG-nbDpiksFT5AmblsSjkCjYLaezvw7sWkDxscK4K3cQyXkKgk69Mk3ZrxFOFqixfxXO52tZow5UG525mA5Lw1BdC1lyTJCbVHu1gQGjyyYzLPe9BTDSfNbHmqrZV-um96sl981vPmuq-OlMPsMw')"></div>
+</div>
+<div class="h-24 w-1/3 overflow-hidden rounded flex items-center justify-center bg-on-surface/5 border border-on-surface/10">
+<span class="text-label-sm text-on-surface/40 uppercase">View Port</span>
+</div>
+</div>
+<button class="w-full py-4 ghost-border text-secondary font-label-lg uppercase tracking-widest">
+                            申请商务目录 CATALOGUE
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Feed / Global Locations -->
+<section class="bg-surface-container-lowest/50 py-section-gap border-t border-outline-variant/10 overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center space-y-16">
+<div class="space-y-4">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tighter">全球足迹</h2>
+<p class="font-body-md text-on-surface/40 uppercase tracking-widest">Shanghai • Paris • Tokyo • New York</p>
+</div>
+<div class="relative h-[400px] w-full flex items-center justify-center">
+<div class="absolute inset-0 grayscale opacity-20 hover:opacity-40 transition-opacity duration-1000" data-alt="A stylized minimalist world map with glowing dots indicating major global luxury capitals like Shanghai, Paris, and New York, rendered in dark tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjqYcv3I7k2-MFXKOhWNYhR731YYGK61NfiJyLCErgj9dgt5RHZu8-wlX4MdXt-xfdFaHifkI3psY_6lNHNyx03REfPQscj1NweP8Qx3xm8ZHOQ_k4bmIpFuCqCZ3mWFb0Ftvppha6NLTj8t6FNI6sYcmZk92JMjoUXRWadZtl9PgDZNHXC1W7zcfwL4PZFymmJ5WKEbmQkZD9b2Q8XZE91utyy0Q2h96yifHJqyCB-YLLfrIHmO_LK6f3I7zDrL-jdDN5XCptGhY')"></div>
+<div class="relative z-10 glass-panel px-12 py-8 max-w-md">
+<p class="font-body-lg text-primary mb-2">LUXUREAT 授权精品店</p>
+<p class="font-body-md text-on-surface/70">寻找您附近的品鉴中心，体验现场开罐的醇厚质感。</p>
+<div class="mt-6 flex justify-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform" data-icon="location_on">location_on</span>
+<span class="font-label-lg tracking-widest text-on-surface">门店检索 LOCATOR</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<!-- Simple Hover Interaction Logic -->
+<script>
+        document.querySelectorAll('.ghost-border').forEach(button => {
+            button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
+            button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
+    <nav><a href="index.html">品牌故事</a><a href="caviar.html">鱼子酱系列</a><a href="rituals.html">品鉴艺术</a><a href="journal.html">品牌志</a><a href="gifting.html">礼赠合作</a><a href="certification.html">品质认证</a><a href="contact.html">联系我们</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>隐私政策 · 销售条款 · 配送说明</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
+</footer>
+<script src="../main.js"></script></body></html>

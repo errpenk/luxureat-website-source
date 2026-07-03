@@ -1,0 +1,328 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Your Selection | LuxurEat Maison</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353535",
+                        "surface-container-high": "#2a2a2a",
+                        "primary": "#9df5ec",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-background": "#e5e2e1",
+                        "primary-fixed-dim": "#7ed5cd",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353535",
+                        "primary-container": "#81d8d0",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "on-secondary-container": "#342800",
+                        "inverse-on-surface": "#313030",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#7ed5cd",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-bright": "#393939",
+                        "on-surface-variant": "#bdc9c7",
+                        "tertiary-container": "#c9c9c9",
+                        "secondary-fixed": "#ffe088",
+                        "secondary-container": "#af8d11",
+                        "on-primary-fixed": "#00201e",
+                        "on-secondary": "#3c2f00",
+                        "inverse-primary": "#006a64",
+                        "on-secondary-fixed": "#241a00",
+                        "outline": "#889391",
+                        "tertiary": "#e5e5e5",
+                        "surface": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-dim": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-container": "#005f59",
+                        "on-primary": "#003734",
+                        "primary-fixed": "#9bf2ea",
+                        "surface-container": "#20201f",
+                        "secondary-fixed-dim": "#e9c349",
+                        "background": "#131313",
+                        "outline-variant": "#3e4947",
+                        "on-tertiary": "#303030",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary": "#e9c349",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-tertiary-container": "#545454"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "section-gap": "120px",
+                        "margin-mobile": "24px",
+                        "unit": "8px",
+                        "margin-desktop": "80px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Montserrat"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "headline-lg": ["Bodoni Moda"],
+                        "label-lg": ["Montserrat"],
+                        "display-lg": ["Bodoni Moda"],
+                        "headline-sm": ["Bodoni Moda"],
+                        "headline-md": ["Bodoni Moda"],
+                        "body-lg": ["Montserrat"],
+                        "body-md": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
+                        "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                        "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(25, 25, 25, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(233, 195, 73, 0.1);
+        }
+        .gold-border-top {
+            border-top: 0.5px solid #e9c349;
+        }
+        .primary-btn {
+            border: 1px solid #e9c349;
+            color: #e9c349;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .primary-btn:hover {
+            background-color: #e9c349;
+            color: #131313;
+        }
+        .secondary-btn {
+            border: 1px solid #9df5ec;
+            color: #9df5ec;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .secondary-btn:hover {
+            background-color: #9df5ec;
+            color: #131313;
+        }
+    </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Maison</a><a class="" href="caviar.html">Caviar</a><a class="" href="rituals.html">Rituals</a><a class="" href="journal.html">Journal</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <div class="lux-actions">
+    <a href="private.html">Private Selection</a>
+    <a href="bag.html">Shopping Bag</a>
+    <span class="lux-lang"><a class="" href="../zh/bag.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<!-- TopNavBar -->
+
+<main class="pt-40 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Page Title -->
+<header class="mb-16">
+<h1 class="font-display-lg text-display-lg mb-4">Your Selection</h1>
+<div class="w-24 h-px bg-secondary"></div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Shopping Bag List -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Main Item -->
+<div class="flex flex-col md:flex-row gap-8 pb-12 border-b border-outline-variant/20 animate-fade-in">
+<div class="w-full md:w-64 h-64 overflow-hidden rounded-lg group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida/AP1WRLuIaDKHvPm2bVWMCIAerG66EHNY1XJYgrtUaDLqW34Rccailt7o0rVlGjxXzUZWD58ytf2RSucNJFlYPL5DIfhgoEcGe2aJ8IrTAAm0sRECqfSPOB1dET-iAHC9Cm9WFVYDaP-6eydqzr0SlSmJ1F0Yi3nScfpW22UxGYkuCFIcnVtfVD-VrYpq79Qe1ulmTk5F6_EVHIk2TCN1jvpo3kWt099sI-SAVBwzSAdnczK4dMjMloqhiiDIwg">
+</div>
+<div class="flex-1 flex flex-col justify-between py-2">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-sm text-label-sm text-secondary mb-2 uppercase tracking-widest">Huso Huso</p>
+<h2 class="font-headline-md text-headline-md mb-2">Imperial Beluga Caviar - 250g</h2>
+<p class="text-on-surface-variant font-body-md">Sustainably harvested. Hand-selected for grain size and color.</p>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">$2,480</p>
+</div>
+<div class="flex items-center justify-between mt-8">
+<div class="flex items-center border border-outline-variant/30 rounded-full px-4 py-2">
+<button class="hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="remove">remove</span>
+</button>
+<span class="mx-6 font-label-lg text-label-lg">1</span>
+<button class="hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+</button>
+</div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-error transition-colors font-label-sm uppercase tracking-tighter">
+<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
+                                Remove
+                            </button>
+</div>
+</div>
+</div>
+<!-- Shipping Message -->
+<div class="glass-panel p-6 flex items-center gap-4 border-l-4 border-secondary">
+<span class="material-symbols-outlined text-secondary" data-icon="ac_unit">ac_unit</span>
+<p class="font-body-md text-on-surface-variant">Your order is eligible for temperature-controlled express courier with <span class="text-secondary font-medium">Professional Cold-Chain Shipping</span>.</p>
+</div>
+</div>
+<!-- Order Summary -->
+<aside class="lg:col-span-4 sticky top-32">
+<div class="glass-panel p-10 flex flex-col gap-8">
+<h3 class="font-headline-sm text-headline-sm border-b border-outline-variant/20 pb-4">Order Summary</h3>
+<div class="space-y-4">
+<div class="flex justify-between text-on-surface-variant font-body-md">
+<span class="">Subtotal</span>
+<span class="">$2,480.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant font-body-md">
+<span class="">Shipping &amp; Handling</span>
+<span class="">$20.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant font-body-md">
+<span class="">Estimated Tax</span>
+<span class="">Calculated at checkout</span>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-outline-variant/20 pt-6">
+<span class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md text-secondary">$2,500.00</span>
+</div>
+<div class="space-y-4 mt-4">
+<button class="primary-btn w-full py-5 font-label-lg text-label-lg uppercase tracking-[0.2em] rounded-none">
+                            Proceed to Checkout
+                        </button>
+<button class="secondary-btn w-full py-5 font-label-lg text-label-lg uppercase tracking-[0.2em] rounded-none flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="support_agent">support_agent</span>
+                            Consult Concierge
+                        </button>
+</div>
+<div class="mt-4 flex justify-center items-center gap-4 opacity-50">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+<span class="font-label-sm text-label-sm">Secure Encrypted Checkout</span>
+</div>
+</div>
+</aside>
+</div>
+<!-- Recommendations Section -->
+<section class="mt-section-gap">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-md text-headline-md mb-2">Enhance the Experience</h2>
+<p class="text-on-surface-variant font-body-md">Essential accessories selected by our curators.</p>
+</div>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-secondary hover:opacity-70 transition-opacity flex items-center gap-2" href="#">
+                    Explore Accessories <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Rec 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] mb-6 overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="A macro photograph of an iridescent mother-of-pearl spoon resting on a dark slate surface, with soft light highlighting its pearlescent textures. The aesthetic is extremely high-end, minimalist, and captured in a dark studio setting. The colors are deep blacks, cool grays, and shimmering whites. Elegant and luxurious product photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLiKj1lyxIcfhzCyrvd1p9MamekqMqLH49yai788c0ZDr4bYUuzjbw8IhPREWInCygYZxv1k3vT4xcF9_ENh757KzvioFAe8u3geKj1xg2Z2Gopb_SZO_5Wu2kq7MrPRygJm72_Sjci-j61ALVnPIHRlFWbk6n5gR739Q9sLw2TB7epKLhHzXZaGdgiNB0QR4i4FIrsvjJGd0bZhr6-KX3stghLcfe4Nq7oHKqot4yXxFH-AdISnlJ91DCWCm-YGgkAIaZO7mXQp0')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-surface/80 backdrop-blur-md px-3 py-1 font-label-sm text-label-sm text-secondary uppercase border border-secondary/20">Essential</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1 group-hover:text-primary transition-colors">Mother-of-Pearl Spoon</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mb-2">Hand-Crafted / Artisan</p>
+<p class="font-body-md text-on-surface">$45</p>
+</div>
+<!-- Rec 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] mb-6 overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="A chilled bottle of vintage prestige cuvée champagne in a polished silver ice bucket. Condensation beads on the dark glass of the bottle. The scene is lit with warm, dramatic spots against an absolute black background. Professional luxury lifestyle photography, emphasizing craftsmanship and celebration. Global high-end aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA6qgBEDF6jg05563knHSsOsFKxknzrIyOH2cvAYdKwUG-hdfMHtdJM59lm5Bbywh9fgpME6vKv5aR_jwSIEItzKYvVgNNRnhqJ_Dq-AzP8gg8_PxuEzOPgNBrQE8HGgKhNZW9_fs5ykrOVeBJ5SnLnfaFa1vYg39ahQt2rrRgIJ3zypEXrBYTpJd4m7zibCzB7PJcPmp0a--FcU2jBASH9WWhQjJ6wfjyryNEuq2xwFHUl7o0YOxxNePVYiH6881vqPT2-WpLO1Fc')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-surface/80 backdrop-blur-md px-3 py-1 font-label-sm text-label-sm text-secondary uppercase border border-secondary/20">The Pairing</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1 group-hover:text-primary transition-colors">Maison Vintage Brut</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mb-2">Grand Cru / 2012</p>
+<p class="font-body-md text-on-surface">$320</p>
+</div>
+<!-- Rec 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[4/5] mb-6 overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="A luxury gourmet gift set presented in a matte black wooden box with gold foil lettering. Inside, small jars of premium truffles and gold-leaf sea salt are nestled in dark velvet padding. Soft, sophisticated lighting highlights the premium packaging and the gold accents. Minimalist and ultra-premium product photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDtcw9DWoHPdoDeKxG8bC2mGolZXk32wkuW9a8ApH5B29xlzUBgsZHP4cC5eIl3ufvqmciF2C_3U9tVigcq8LHVkRyq6Y5_2M0-gYRxRAvMkWMVDP2fXdPj7F3h8O3FgMwhmQZXaiNxyWgu-owVz6QZCxK3Xs5nPPegd10R4mOI7SHMtH1DlPlCo69l9Bx9q5LMPdVjGAfkkM0sSijoXfCIUsFiWpLkPw0anO_jh81lgMmC0OvSTB5TCxZEHW-6x_SzsLPCtNJKI94')"></div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-1 group-hover:text-primary transition-colors">Truffle Pairing Set</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant tracking-widest uppercase mb-2">Winter Black / White Alba</p>
+<p class="font-body-md text-on-surface">$185</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.98)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'scale(1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple scroll effect for Nav
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-xl');
+            } else {
+                nav.classList.remove('shadow-xl');
+            }
+        });
+    </script>
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
+    <nav><a href="index.html">Maison</a><a href="caviar.html">Caviar</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>Privacy Policy · Terms of Sale · Shipping</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+</footer>
+<script src="../main.js"></script></body></html>

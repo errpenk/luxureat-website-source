@@ -1,0 +1,271 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LuxurEat | B2B &amp; Gifting</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-container": "#af8d11",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#889391",
+                        "primary-fixed-dim": "#7ed5cd",
+                        "surface-tint": "#7ed5cd",
+                        "primary-container": "#81d8d0",
+                        "surface-variant": "#353535",
+                        "secondary": "#e9c349",
+                        "primary": "#9df5ec",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "tertiary-container": "#c9c9c9",
+                        "primary-fixed": "#9bf2ea",
+                        "on-primary-container": "#005f59",
+                        "inverse-primary": "#006a64",
+                        "secondary-fixed": "#ffe088",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-container-highest": "#353535",
+                        "surface": "#131313",
+                        "on-primary": "#003734",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#20201f",
+                        "outline-variant": "#3e4947",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#3c2f00",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-secondary-container": "#342800",
+                        "on-surface-variant": "#bdc9c7",
+                        "tertiary": "#e5e5e5",
+                        "on-primary-fixed": "#00201e",
+                        "surface-bright": "#393939",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#131313",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#241a00",
+                        "on-tertiary": "#303030",
+                        "on-tertiary-container": "#545454",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-surface": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "inverse-surface": "#e5e2e1"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "section-gap": "120px",
+                        "margin-desktop": "80px",
+                        "unit": "8px",
+                        "margin-mobile": "24px"
+                    },
+                    fontFamily: {
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "headline-sm": ["Bodoni Moda"],
+                        "headline-md": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "headline-lg": ["Bodoni Moda"],
+                        "label-lg": ["Montserrat"],
+                        "label-sm": ["Montserrat"]
+                    },
+                    fontSize: {
+                        "display-lg-mobile": ["40px", { lineHeight: "48px", fontWeight: "300" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "300" }],
+                        "headline-sm": ["24px", { lineHeight: "32px", fontWeight: "500" }],
+                        "headline-md": ["32px", { lineHeight: "40px", fontWeight: "400" }],
+                        "display-lg": ["72px", { lineHeight: "80px", letterSpacing: "-0.02em", fontWeight: "300" }],
+                        "headline-lg": ["48px", { lineHeight: "56px", fontWeight: "400" }],
+                        "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.1em", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #131313; color: #e5e2e1; }
+        .font-display { font-family: 'Bodoni Moda', serif; }
+        
+        /* Subtle image hover desaturation to full color */
+        .img-reveal { filter: grayscale(80%) contrast(1.1); transition: filter 0.8s ease; }
+        .img-reveal:hover { filter: grayscale(0%) contrast(1); }
+
+        /* Minimal Input Styles */
+        .minimal-input {
+            background: transparent; border: none; border-bottom: 1px solid #3e4947;
+            padding: 8px 0; border-radius: 0; outline: none; transition: border-color 0.3s;
+        }
+        .minimal-input:focus { border-bottom-color: #e9c349; box-shadow: none; }
+        
+        /* Custom scrollbar for elegance */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #131313; }
+        ::-webkit-scrollbar-thumb { background: #353535; }
+    </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Maison</a><a class="" href="caviar.html">Caviar</a><a class="" href="rituals.html">Rituals</a><a class="" href="journal.html">Journal</a><a class="active" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <div class="lux-actions">
+    <a href="private.html">Private Selection</a>
+    <a href="bag.html">Shopping Bag</a>
+    <span class="lux-lang"><a class="" href="../zh/gifting.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<!-- JSON Component: TopNavBar -->
+<!-- Navigation replaced by fixed nav -->
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative w-full min-h-[70vh] flex items-center justify-center border-b border-white/5 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-40" data-alt="A highly atmospheric, dark and moody macro photograph of an opulent table setting. In focus is an open, matte black caviar tin with subtle gold trim. Surrounding it are exquisite mother-of-pearl spoons and a fleeting glimpse of a crisp Tiffany blue silk ribbon resting on dark, heavily textured slate. The lighting is cinematic, with soft rim lights highlighting the pearls of caviar, embodying extreme luxury and high-contrast minimalism." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACj45Bif56FyFgQnuuc1kiyxJiCR0NdDNSlyTitpWjHAsANGhjcQWc0CR5BZsUT-89o5OvAWYU8otRJNYPOjUz5_Lw_9kuvELRpJ9ybJTffVKZLFYalKycjZ1ze2ZURcG-G7XHFB02JHxQjUzqgHQPhjCL5Pugr8HBCjk5Jdwda7c-81v13CeoXFJYtqd7kEdN04lW99AgKB5vZmC2cRm0dA5QUmwx9w1hOBp7GYboqFQbSDhjKScPFnnKv4_SrekEjeXTPnEs9mU')"></div>
+<!-- Gradient overlay for text readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto flex flex-col items-center gap-6 mt-12 pt-24">
+<span class="font-body-md text-label-lg text-primary uppercase tracking-[0.3em]">Bespoke &amp; Corporate</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">The Ritual of Giving</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mt-4">
+                    Elevate professional alliances and intimate relationships with the world's most exquisite caviar rituals. Curated presentations, immaculate sourcing, uncompromising standards.
+                </p>
+<button class="mt-8 border border-secondary text-secondary px-8 py-3 font-body-md text-label-lg uppercase tracking-widest hover:bg-secondary hover:text-on-secondary transition-all duration-500">
+                    Explore Collections
+                </button>
+</div>
+</section>
+<!-- Gift Box Customization (Bento Grid) -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-b border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div class="max-w-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-display mb-4">Curated Presentations</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">From intimate gestures to grand corporate statements, our presentation boxes are designed to honor the rarity of the black gold within.</p>
+</div>
+<a class="flex items-center gap-2 text-primary font-body-md text-label-sm uppercase tracking-widest hover:opacity-70 transition-opacity" href="#">
+                    View Full Catalog <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter auto-rows-fr">
+<!-- Featured Item (Spans 2 columns on desktop) -->
+<div class="md:col-span-2 group relative overflow-hidden bg-surface-container-low border border-white/5 min-h-[400px] flex flex-col justify-end p-8">
+<div class="absolute inset-0 bg-cover bg-center img-reveal z-0" data-alt="A pristine, eye-level studio shot of a massive, multi-tiered black luxury gift box, open to reveal three distinct tins of different caviar varieties resting on crushed ice. Beside them sits a set of crystal vodka flutes. The background is pure, deep black. The lighting is precise, creating subtle reflections on the crystal and highlighting the rich textures of the packaging. Minimalist, architectural composition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6_4LJSgbksLqlpc3bcG3UmA0w8_Kl_W3Qj5Xqc-J6idwMwiX4K1vIhCL_eOqy9uUf68tv5v3xg5vxu86fTHl2c0pHjQgd6R_NFcwPOJL0ivS6uoNO8uEs2T6_aPmcKJILBqDHZUSaQ-Iwh0N5FTELAdUWuHnOQLCtkIcpfqjIk_lTFva_csJNfqcga1iWl6DQxTADJ3NV2774_w8DB1GqszeU4VLx4s3ll1vvBEs9Ws_EgfjtL8ePH2mjRrsspF4D1c-281MfuNM')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-10"></div>
+<div class="relative z-20">
+<span class="inline-block px-3 py-1 border border-primary/30 text-primary font-body-md text-label-sm uppercase tracking-widest mb-4">The Grand Reserve</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2 font-display">Executive Trio Box</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Our most prestigious offering, featuring Beluga, Oscietra, and Sevruga, accompanied by mother-of-pearl service ware.</p>
+</div>
+</div>
+<!-- Standard Item -->
+<div class="group relative overflow-hidden bg-surface-container-low border border-white/5 min-h-[400px] flex flex-col justify-end p-8">
+<div class="absolute inset-0 bg-cover bg-center img-reveal z-0" data-alt="A top-down, tightly cropped shot of a single, sleek matte black rectangular presentation box containing one tin of premium Oscietra caviar and a single tasting spoon. The box is subtly debossed with a geometric pattern. The lighting casts long, dramatic shadows across a dark slate surface, emphasizing exclusivity and modern minimalism." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCI50MSpxsulUtRdxLWpqKRtJLdPPmIKK8eJutySmbtZMd4Ftrq6E-8T9xBi38vawX9u5WjANXwih3SQBPgnVR89FZBLy04DhCGdC1VRs06uQaN-XpYx_vHJbSvd7jrVn9Dq_YaEU2_9VD_-2rtBVudlkpSX4WeB0XbU6VxdLFM1Eu-OWNxV9OtbEOwOvmWthpr2Zcu1KvGnkzR6R3BsVzx-v5xXihAMQZAsSbbmYGdnMYrBrFJGQmeQrMRixoxn8UgVog-bBAeM3E')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-10"></div>
+<div class="relative z-20">
+<h3 class="font-headline-md text-headline-sm text-on-surface mb-2 font-display">The Initiation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A refined introduction to the LuxurEat portfolio.</p>
+</div>
+</div>
+<!-- Standard Item -->
+<div class="group relative overflow-hidden bg-surface-container-low border border-white/5 min-h-[400px] flex flex-col justify-end p-8">
+<div class="absolute inset-0 bg-cover bg-center img-reveal z-0" data-alt="A close-up shot focusing on the intricate customization of a luxury gift box. We see a person wearing a pristine white glove carefully sliding a custom-engraved gold plaque into a designated slot on a textured black box. The depth of field is shallow, blurring out the background to focus entirely on the craftsmanship and personalization process. High-end, gallery-like lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDRaCEYPbDOk-7sit4LaFoKzSUPecMRdLYdEQpx-5LSixbvNEUvHYKMCqqm0HTq8Nt30YXuTgWenH8YqL_6aw-twgv9mI24KvjGyb31TheAf5FoyxLp-BacE8WSJ21E5oGjXBO-j-NJ1lJVo6pinjFaNnoUN90-fYQTPVq5PYqAqMxVrxpCTa9TpKbc99u_rfHOP0sGqZ5rV8ZorGeiTodiMJwVxi5_6Nfl2Oh63PbmpLK5CKv8N1BeR4HQMWoNmQf11HTN74i9Va4')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent z-10"></div>
+<div class="relative z-20">
+<h3 class="font-headline-md text-headline-sm text-on-surface mb-2 font-display">Bespoke Engraving</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Personalized plaques for lasting impressions.</p>
+</div>
+</div>
+<!-- Wide Item -->
+<div class="md:col-span-2 group relative overflow-hidden bg-surface-container-low border border-white/5 min-h-[400px] flex items-center p-8">
+<div class="w-full md:w-1/2 pr-8 z-20">
+<span class="inline-block px-3 py-1 border border-secondary/30 text-secondary font-body-md text-label-sm uppercase tracking-widest mb-4">Volume Sourcing</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 font-display">Corporate Programs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Dedicated account management for seasonal gifting, client retention programs, and large-scale event fulfillment.</p>
+<button class="text-primary font-body-md text-label-sm uppercase tracking-widest border-b border-primary pb-1 hover:opacity-70 transition-opacity">
+                            Inquire Now
+                        </button>
+</div>
+<div class="hidden md:block absolute right-0 top-0 bottom-0 w-1/2 z-0">
+<div class="w-full h-full bg-cover bg-center img-reveal" data-alt="A highly stylized, symmetrical architectural composition showing rows of identical, immaculate black caviar tins lined up perfectly on long, dark glass shelves inside a climate-controlled vault. The lighting is cool and clinical yet extremely luxurious, emphasizing pristine inventory and scale. Subtle reflections create a sense of infinite depth." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXzT9S2pvtc0hXakKNG86KpiMMvcSwVVZdgoZyI7fUTykd20scQKyEdOuYBmOnrrDh-3KQN34_jA7oV9FBE-Gkxmd6YHccyAKoZuuaKeI8EeJztI7eYtHMMSMjKABrtzdXprOtlmjUI6HNuoNbhqn0ApB4gqWNDBu0LggP3KTzIxl0jUGos1qS1-zuUktr9g0rM2JmL9EOH7aI1uF-kEBkns7X1noXuo-7fJQWci3gCXpagRClMZBjf6LTk37JOl_QrSmkg3WtSIk')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low to-transparent"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Private Label Services (Asymmetric) -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto border-b border-white/5 overflow-hidden">
+<div class="flex flex-col md:flex-row items-center gap-16 md:gap-24">
+<div class="w-full md:w-5/12 order-2 md:order-1 flex flex-col items-start">
+<span class="text-secondary font-body-md text-label-sm uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+<span class="w-8 h-[1px] bg-secondary block"></span> Hospitality
+                    </span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-display mb-6 leading-tight">Private Label <br> &amp; Gastronomy</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">
+                        For elite hoteliers, Michelin-starred establishments, and private clubs, we offer comprehensive white-label curation. Elevate your culinary narrative with a caviar program bearing your own crest, backed by our unparalleled sourcing network.
+                    </p>
+<ul class="flex flex-col gap-4 mb-10 w-full">
+<li class="flex items-start gap-4 border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-primary font-light">verified</span>
+<div>
+<h4 class="font-body-md text-label-lg text-on-surface">Custom Tin Design</h4>
+<p class="font-body-md text-label-sm text-on-surface-variant mt-1">Bespoke lithography aligning with your brand identity.</p>
+</div>
+</li>
+<li class="flex items-start gap-4 border-b border-white/5 pb-4">
+<span class="material-symbols-outlined text-primary font-light">restaurant</span>
+<div>
+<h4 class="font-body-md text-label-lg text-on-surface">Staff Training Rituals</h4>
+<p class="font-body-md text-label-sm text-on-surface-variant mt-1">On-site masterclasses for perfect presentation.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="w-full md:w-7/12 order-1 md:order-2 relative">
+<!-- Decorative offset frame -->
+<div class="absolute -inset-4 border border-white/5 translate-x-4 translate-y-4 hidden md:block"></div>
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center img-reveal" data-alt="A cinematic, wide-angle shot of a high-end restaurant kitchen counter made of dark, polished marble. The focus is on a chef's hands, wearing subtle black gloves, carefully placing a custom-branded caviar tin onto a beautifully plated dish. The lighting is focused and dramatic, typical of a modern luxury dining establishment, highlighting the textures of the food and the pristine environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuBcRLs7cwv_PMy2K3eG8adoiiigCwQ0lQ45ep4iAQYiFzjTkoySkdxleccqk3D9USpxq8vU_QKdEPHIehLVoNHzjoHbmMZpwJCF6fr4bG0K6_xID2xz40DWEBK8MUa6P4Qf_6ZaqJplfdYdA78aQmb5iSwd3WZA5rXHFxD3S8mnmQsQaMkKzsK03PjpeiRaU8cvDZ0R8XwSIP0e2VKwO2jN0mn7Fw4UKHXuzgYi7JiZy1JI62b4OTtknjRUcc5iq4Qn7RX5QwlVs')"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Concierge (Invitation Card Form) -->
+</main>
+<!-- JSON Component: Footer -->
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
+    <nav><a href="index.html">Maison</a><a href="caviar.html">Caviar</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>Privacy Policy · Terms of Sale · Shipping</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+</footer>
+<script src="../main.js"></script></body></html>

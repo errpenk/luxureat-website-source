@@ -1,0 +1,298 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Contact the Concierge - LuxurEat Maison</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-tint": "#7ed5cd",
+                        "on-primary-fixed": "#00201e",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-primary": "#003734",
+                        "on-error": "#690005",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface-dim": "#131313",
+                        "on-primary-container": "#005f59",
+                        "surface-container": "#20201f",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-background": "#e5e2e1",
+                        "primary-container": "#81d8d0",
+                        "outline": "#889391",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#006a64",
+                        "background": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "surface": "#131313",
+                        "secondary": "#e9c349",
+                        "secondary-fixed": "#ffe088",
+                        "secondary-container": "#af8d11",
+                        "on-surface": "#e5e2e1",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary": "#e5e5e5",
+                        "primary-fixed": "#9bf2ea",
+                        "outline-variant": "#3e4947",
+                        "on-secondary-container": "#342800",
+                        "surface-bright": "#393939",
+                        "on-secondary-fixed": "#241a00",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-surface-variant": "#bdc9c7",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-fixed-dim": "#7ed5cd",
+                        "tertiary-container": "#c9c9c9",
+                        "on-tertiary": "#303030",
+                        "on-tertiary-container": "#545454",
+                        "surface-container-highest": "#353535",
+                        "on-secondary": "#3c2f00",
+                        "surface-variant": "#353535",
+                        "primary": "#9df5ec",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-tertiary-fixed": "#1b1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "unit": "8px",
+                        "margin-mobile": "24px",
+                        "gutter": "24px",
+                        "margin-desktop": "80px",
+                        "section-gap": "120px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "body-lg": ["Montserrat"],
+                        "headline-sm": ["Bodoni Moda"],
+                        "headline-md": ["Bodoni Moda"],
+                        "body-md": ["Montserrat"],
+                        "label-sm": ["Montserrat"],
+                        "label-lg": ["Montserrat"],
+                        "display-lg-mobile": ["Bodoni Moda"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "400" }],
+                        "display-lg": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "fontWeight": "300" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #000000; color: #e5e2e1; }
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.05);
+        }
+        .input-minimal {
+            background: transparent;
+            border: none;
+            border-bottom: 0.5px solid rgba(233, 195, 73, 0.3); /* Gold/Secondary tint */
+            color: #e5e2e1;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+        }
+        .input-minimal:focus {
+            outline: none;
+            border-bottom-color: #81d8d0; /* Tiffany Blue / Primary Container */
+            box-shadow: 0 1px 0 0 #81d8d0;
+        }
+        .input-label {
+            position: absolute;
+            top: 12px;
+            left: 0;
+            pointer-events: none;
+            transition: 0.3s ease all;
+            color: #889391; /* outline */
+        }
+        .input-minimal:focus ~ .input-label,
+        .input-minimal:not(:placeholder-shown) ~ .input-label {
+            top: -20px;
+            font-size: 10px;
+            color: #81d8d0;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        .btn-outline {
+            border: 1px solid #81d8d0;
+            color: #81d8d0;
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .btn-outline:hover {
+            background: #81d8d0;
+            color: #00201e;
+        }
+    </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Maison</a><a class="" href="caviar.html">Caviar</a><a class="" href="rituals.html">Rituals</a><a class="" href="journal.html">Journal</a><a class="" href="gifting.html">Gifting</a><a class="active" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <div class="lux-actions">
+    <a href="private.html">Private Selection</a>
+    <a href="bag.html">Shopping Bag</a>
+    <span class="lux-lang"><a class="" href="../zh/contact.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<!-- TopNavBar -->
+
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[120px]">
+<!-- Hero Section -->
+<section class="relative w-full min-h-[60vh] flex items-center justify-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+<!-- Background Imagery -->
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full opacity-40" data-alt="A highly atmospheric, dark and moody close-up photograph of a luxury concierge desk. The scene features a heavy slab of black marble, illuminated by a single, focused warm spotlight that highlights a subtle gold-rimmed pen and thick, textured cotton paper. The background fades into deep absolute black shadows. The aesthetic is extremely high-end, minimalist, and evokes exclusivity and bespoke Italian craftsmanship." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBE2kiv0wrknqzvXmDfr7JGTBcOCswFPRM37AD1qUYhjlgMVWHD93EyzGO_lV0Q-oPm4F0BgQQIFrej_GO5ObbfB5DFVcGREoOIxGHGWMTenMxyxI94dd1y1dz3NcPu9GHesarnhjjoHoqWTGYt2-uNKxljtJGopFhjzFHw2_W9EXZulN6muDqO_DhhdGM0SDazjPQ_L9FMAkPTglu_dZet6NYgwcT0_JR_Pu05BG1Cp574tsXdHXg4gk13VJwShbG7ozS0Ydtbibc')"></div>
+<!-- Gradient Overlay for legibility -->
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+</div>
+<div class="relative z-10 text-center max-w-3xl mx-auto flex flex-col items-center gap-6 mt-12">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Contact the Concierge</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    For bespoke inquiries, private allocations, or curating exceptional corporate experiences. Our dedicated team is at your disposal to ensure absolute perfection in every detail.
+                </p>
+</div>
+</section>
+<!-- Form & Details Section -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative z-20 -mt-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Contact Form -->
+<div class="lg:col-span-8 lg:col-start-3 glass-panel p-8 md:p-16 rounded-sm relative">
+<!-- Subtle decorative corner accents -->
+<div class="absolute top-0 left-0 w-8 h-8 border-t border-l border-secondary/30 pointer-events-none"></div>
+<div class="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-secondary/30 pointer-events-none"></div>
+<form class="flex flex-col gap-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<div class="relative">
+<input class="input-minimal w-full font-body-md text-body-md" id="firstName" placeholder=" " required="" type="text">
+<label class="input-label font-body-md text-body-md" for="firstName">First Name</label>
+</div>
+<div class="relative">
+<input class="input-minimal w-full font-body-md text-body-md" id="lastName" placeholder=" " required="" type="text">
+<label class="input-label font-body-md text-body-md" for="lastName">Last Name</label>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<div class="relative">
+<input class="input-minimal w-full font-body-md text-body-md" id="email" placeholder=" " required="" type="email">
+<label class="input-label font-body-md text-body-md" for="email">Email Address</label>
+</div>
+<div class="relative">
+<input class="input-minimal w-full font-body-md text-body-md" id="company" placeholder=" " type="text">
+<label class="input-label font-body-md text-body-md" for="company">Company (Optional)</label>
+</div>
+</div>
+<div class="relative">
+<select class="input-minimal w-full font-body-md text-body-md appearance-none bg-transparent cursor-pointer rounded-none focus:ring-0" id="inquiryType">
+<option class="bg-surface text-on-surface-variant" disabled="" hidden="" selected="" value="">Select Nature of Inquiry</option>
+<option class="bg-surface text-on-surface" value="private">Private Selection Allocation</option>
+<option class="bg-surface text-on-surface" value="corporate">Corporate Gifting</option>
+<option class="bg-surface text-on-surface" value="trade">Trade &amp; Hospitality</option>
+<option class="bg-surface text-on-surface" value="events">Bespoke Events</option>
+</select>
+<!-- Custom dropdown arrow -->
+<div class="absolute right-0 top-3 pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<div class="relative">
+<textarea class="input-minimal w-full font-body-md text-body-md resize-none pt-4" id="message" placeholder=" " required="" rows="4"></textarea>
+<label class="input-label font-body-md text-body-md" for="message">Your Message</label>
+</div>
+<div class="flex justify-end pt-4">
+<button class="btn-outline font-body-md text-label-lg tracking-widest uppercase px-12 py-4" type="submit">
+                                Submit Inquiry
+                            </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Global Presence -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-white/5">
+<h2 class="font-headline-md text-headline-md text-center text-on-surface mb-16 tracking-wide">Global Presence</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+<div class="flex flex-col items-center gap-4 group cursor-default">
+<span class="material-symbols-outlined text-secondary/70 text-4xl mb-2 group-hover:text-primary-container transition-colors duration-500">location_city</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Milan</h3>
+<p class="font-body-md text-label-sm text-on-surface-variant uppercase tracking-widest">Headquarters</p>
+<a class="font-body-md text-body-md text-on-surface mt-2 hover:text-primary-container transition-colors" href="mailto:milano@luxureat.com">milano@luxureat.com</a>
+</div>
+<div class="flex flex-col items-center gap-4 group cursor-default">
+<span class="material-symbols-outlined text-secondary/70 text-4xl mb-2 group-hover:text-primary-container transition-colors duration-500">business</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">New York</h3>
+<p class="font-body-md text-label-sm text-on-surface-variant uppercase tracking-widest">North America</p>
+<a class="font-body-md text-body-md text-on-surface mt-2 hover:text-primary-container transition-colors" href="mailto:ny@luxureat.com">ny@luxureat.com</a>
+</div>
+<div class="flex flex-col items-center gap-4 group cursor-default">
+<span class="material-symbols-outlined text-secondary/70 text-4xl mb-2 group-hover:text-primary-container transition-colors duration-500">apartment</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Shanghai</h3>
+<p class="font-body-md text-label-sm text-on-surface-variant uppercase tracking-widest">Asia Pacific</p>
+<a class="font-body-md text-body-md text-on-surface mt-2 hover:text-primary-container transition-colors" href="mailto:asia@luxureat.com">asia@luxureat.com</a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<script>
+        // Smooth scroll interaction for footer
+        document.querySelector('footer .font-display-lg').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
+    <nav><a href="index.html">Maison</a><a href="caviar.html">Caviar</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>Privacy Policy · Terms of Sale · Shipping</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+</footer>
+<script src="../main.js"></script></body></html>

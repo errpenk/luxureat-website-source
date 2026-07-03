@@ -1,0 +1,323 @@
+<!DOCTYPE html><html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LuxurEat | 您的购物袋</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for premium feel */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0e0e0e; }
+        ::-webkit-scrollbar-thumb { background: #3e4947; }
+        
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(19, 19, 19, 0.8);
+        }
+        
+        .ghost-border {
+            border: 0.5px solid rgba(157, 245, 236, 0.2);
+        }
+        
+        .premium-hover:hover {
+            border-color: #9df5ec;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#3e4947",
+                      "surface-container": "#20201f",
+                      "primary-container": "#81d8d0",
+                      "on-tertiary-fixed-variant": "#474747",
+                      "inverse-primary": "#006a64",
+                      "background": "#131313",
+                      "surface-tint": "#7ed5cd",
+                      "secondary-fixed": "#ffe088",
+                      "surface-variant": "#353535",
+                      "on-surface": "#e5e2e1",
+                      "surface-container-low": "#1c1b1b",
+                      "on-secondary-fixed-variant": "#574500",
+                      "on-secondary-fixed": "#241a00",
+                      "on-tertiary-fixed": "#1b1b1b",
+                      "on-secondary-container": "#342800",
+                      "outline": "#889391",
+                      "on-surface-variant": "#bdc9c7",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-primary-container": "#005f59",
+                      "tertiary": "#e5e5e5",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface": "#131313",
+                      "surface-container-highest": "#353535",
+                      "surface-bright": "#393939",
+                      "on-error-container": "#ffdad6",
+                      "surface-dim": "#131313",
+                      "secondary": "#e9c349",
+                      "secondary-fixed-dim": "#e9c349",
+                      "primary-fixed-dim": "#7ed5cd",
+                      "primary-fixed": "#9bf2ea",
+                      "on-tertiary": "#303030",
+                      "on-primary-fixed-variant": "#00504b",
+                      "inverse-surface": "#e5e2e1",
+                      "tertiary-fixed-dim": "#c6c6c6",
+                      "error-container": "#93000a",
+                      "primary": "#9df5ec",
+                      "tertiary-container": "#c9c9c9",
+                      "inverse-on-surface": "#313030",
+                      "on-secondary": "#3c2f00",
+                      "surface-container-high": "#2a2a2a",
+                      "secondary-container": "#af8d11",
+                      "on-background": "#e5e2e1",
+                      "error": "#ffb4ab",
+                      "on-primary-fixed": "#00201e",
+                      "on-tertiary-container": "#545454",
+                      "on-primary": "#003734",
+                      "on-error": "#690005"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "80px",
+                      "unit": "8px",
+                      "section-gap": "120px",
+                      "gutter": "24px",
+                      "container-max": "1440px",
+                      "margin-mobile": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Montserrat"],
+                      "label-lg": ["Montserrat"],
+                      "body-md": ["Montserrat"],
+                      "headline-lg": ["Bodoni Moda"],
+                      "label-sm": ["Montserrat"],
+                      "display-lg-mobile": ["Bodoni Moda"],
+                      "headline-sm": ["Bodoni Moda"],
+                      "display-lg": ["Bodoni Moda"],
+                      "headline-md": ["Bodoni Moda"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["48px", {"lineHeight": "56px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "display-lg-mobile": ["40px", {"lineHeight": "48px", "fontWeight": "300"}],
+                      "headline-sm": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "display-lg": ["72px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300"}],
+                      "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">品牌故事</a><a class="" href="caviar.html">鱼子酱系列</a><a class="" href="rituals.html">品鉴艺术</a><a class="" href="journal.html">品牌志</a><a class="" href="gifting.html">礼赠合作</a><a class="" href="certification.html">品质认证</a><a class="" href="contact.html">联系我们</a></nav>
+  <div class="lux-actions">
+    <a href="contact.html">私享定制</a>
+    <a href="bag.html">购物袋</a>
+    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a class="" href="../en/bag.html">EN</a></span>
+    <button class="lux-menu" type="button" data-open="关闭" data-closed="菜单" aria-expanded="false">菜单</button>
+  </div>
+</header>
+
+<!-- Top Navigation -->
+
+<main class="mt-32 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop min-h-screen">
+<!-- Header -->
+<header class="mb-16">
+<h2 class="font-headline-lg text-headline-lg mb-4">您的购物袋</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">为您甄选全球顶奢珍馐</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Side: Product List -->
+<div class="lg:col-span-8 space-y-gutter">
+<!-- Shopping Item 1 -->
+<div class="flex flex-col md:flex-row gap-6 p-6 ghost-border bg-surface-container-lowest hover:border-primary/40 transition-all duration-500 group duration-1000 opacity-100 translate-y-0">
+<div class="w-full md:w-48 h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0" data-alt="Close up high-resolution shot of premium Imperial Beluga Caviar in a dark obsidian tin. The glossy black pearls of caviar reflect soft studio lighting against a dark, minimalist background. The lighting is dramatic and luxurious, emphasizing the 'black gold' texture of the harvest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACXS3UvpDtOu5PkEa0HkJLQSv4y_kXrDAFBn2CilEA7GCHVv8pN0ynCjAbSPF6q4K-PkbD_mI47mL2gLCnWdTxbGm-dOoQmw3YtDuSs30UsDXRiN3tlM2LSeua6u1re9BTkmcvEUHqYXkjVjRtPMJzcIFLUM9kZLPd9s4Yznzjb6P6ParINFSEgh19rJ1lCcoBLEz406Ql5U6g4I-xu5GRAmZGbjIMjrffTzTAAv3ImfpWJbuCOXZvi6lcfedCdN7RhLFemarp1-A">
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm mb-1 uppercase tracking-wider">至臻帝王鲟鱼子酱</h3>
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">Imperial Beluga Caviar - 250g</p>
+<span class="font-label-sm text-label-sm border border-outline-variant/50 px-2 py-0.5 text-on-surface-variant">2024 春季新采</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">¥ 18,800</span>
+</div>
+<div class="flex justify-between items-end mt-8">
+<div class="flex items-center gap-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">数量</span>
+<div class="flex items-center border border-outline-variant/30">
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-sm">remove</span></button>
+<span class="w-12 text-center font-label-lg">1</span>
+<button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-sm">add</span></button>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm uppercase tracking-widest">
+<span class="material-symbols-outlined text-lg">delete</span>
+<span class="">移除</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty state placeholder or more items could go here -->
+</div>
+<!-- Right Side: Summary Section -->
+<div class="lg:col-span-4">
+<div class="sticky top-32 glass-panel p-8 ghost-border">
+<h3 class="font-headline-sm text-headline-sm mb-8 uppercase tracking-widest">订单摘要</h3>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">商品小计</span>
+<span class="">¥ 18,800</span>
+</div>
+<div class="flex justify-between font-body-md">
+<span class="text-on-surface-variant">专业全程冷链配送</span>
+<span class="">¥ 200</span>
+</div>
+<div class="flex flex-col gap-2 pt-2 text-primary">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">ac_unit</span>
+<span class="text-[10px] uppercase tracking-widest">严控 0°C - 4°C 恒温运输</span>
+</div>
+</div>
+<div class="border-t border-outline-variant/20 pt-4 mt-6 flex justify-between items-end">
+<span class="font-label-lg text-label-lg uppercase tracking-widest">应付总额</span>
+<span class="font-headline-md text-headline-md text-primary">¥ 19,000</span>
+</div>
+</div>
+<div class="space-y-4">
+<button class="w-full py-5 border border-primary text-primary font-label-lg uppercase tracking-[0.2em] hover:bg-primary hover:text-on-primary transition-all duration-500 active:scale-95">
+                            开始结算
+                        </button>
+<button class="w-full py-5 border border-outline-variant text-on-surface-variant font-label-lg uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:border-secondary hover:text-secondary transition-all duration-500">
+<span class="material-symbols-outlined">support_agent</span>
+                            咨询私人管家
+                        </button>
+</div>
+<p class="mt-8 text-[11px] text-on-surface-variant/60 leading-relaxed text-center uppercase tracking-wider">
+                        所有订单均由专属礼宾团队核实，确保运输品质完美无瑕。
+                    </p>
+</div>
+</div>
+</div>
+<!-- Recommended Section -->
+<section class="mt-section-gap mb-section-gap transition-all duration-1000 opacity-100 translate-y-0">
+<div class="flex justify-between items-end mb-12">
+<h3 class="font-headline-md text-headline-md uppercase tracking-wider">为您推荐</h3>
+<a class="font-label-lg text-label-lg text-primary border-b border-primary/20 pb-1 hover:border-primary transition-all" href="#">浏览全部配饰</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Recommended Item 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A pair of hand-crafted mother of pearl spoons for caviar serving. The iridescent spoons glow with a soft pearlescent sheen against a pitch-black velvet background. Minimalist composition with focus on the organic texture of the shell. Luxurious and high-contrast photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2P5yZoNq2-PBMLXeFcbruH1kXuUuYjkMfzKDIKD21IWS8cj0gPO1qmelr-FXL-acV_eTP1vy8o3A4GM_cEf7CbFJBvIC-lHvsziLOZ3iplbm7luEgBN6adnsaNysgBmwJOBwEXJi6SIVoBYAIc4NI1mnCc3W5B4wVTHPQtpnMbcldWMuiDawngtY4iNSVWWR0hreOxU8Hly_d_-706XymQuHqyuDgiHCwEVt1PrdI5fL_9VifYaPDt2uoGGeMYzvCFBOq47acuNM">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+<button class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm">加入清单</button>
+</div>
+</div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">手工打磨珍珠母贝匙</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">经典对装</p>
+<span class="font-body-md text-primary">¥ 1,280</span>
+</div>
+<!-- Recommended Item 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A chilled bottle of premium vintage Champagne sitting in a brushed silver ice bucket. Condensation drops on the glass bottle, reflecting the dim atmospheric lighting of a luxury lounge. The label is visible but slightly blurred to emphasize the mood. Dark, moody, high-end Italian photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAdvQdleYAsN8UYpwdMZHwnWbgcUDtdpGFWKWXj6I4SEE02s8aPf4txi8Rpn1-chBzWrO8914w5sx-2WEDKip-qC5r2bPujAoMIpbq3nWejA1XxdaO5pHuXsnPvkQPugM0_E-Vvl6d6b_YNERpu69jkWlW40vMcDgKuRh5rduZrycRhd_o3nUIJ0a5sm0gSODr_UOnhAj09zHnvw2DNfjnxNATC4OJ7w87gZJg5AhNewIQ_wKbxqHKc_mx-71usoOmX0uisxRI5Tw">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+<button class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm">加入清单</button>
+</div>
+</div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">Krug 陈年香槟</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Grand Cuvée 171ème Édition</p>
+<span class="font-body-md text-primary">¥ 2,850</span>
+</div>
+<!-- Recommended Item 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
+<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" data-alt="A minimalist solid silver caviar server with a double-walled ice chamber. The sleek, modern design features clean lines and a polished chrome finish. Set against a dark, moody stone surface with soft highlighting on the metallic edges. Architectural and refined luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbRm7T-vUyLcLqFrQuOXykQjzwhdpDRZMcSbGFjeVpdb76MZnZ28gQBKlrdLjIc_T6WjQjfb9fKyBVe5FExMY-kpE-b4sG25R8qhkpNGJAlJP28iPnyPtCbQYT5ZdpDuLAhtScGkzGtfa55QEl-UcC8bncCNITmhCjb8RDhdB8hzDBWSWgpLLudYILlxAIcaXTQ2fMzaUXyQJZUcPC8Rg_RqNGkNslWq8L7t_OuWsc9fIRvbrYWlI1r5EErsUZte_sRwyldQQwu0Q">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+<button class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm">加入清单</button>
+</div>
+</div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">现代主义银质冰镇座</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-2">纯银工艺</p>
+<span class="font-body-md text-primary">¥ 12,400</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<script>
+        // Micro-interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('mousedown', () => {
+                    btn.classList.add('scale-95');
+                });
+                btn.addEventListener('mouseup', () => {
+                    btn.classList.remove('scale-95');
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.classList.remove('scale-95');
+                });
+            });
+
+            // Smooth reveal animation for sections
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-10');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section, .p-6').forEach(el => {
+                el.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+                observer.observe(el);
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
+    <nav><a href="index.html">品牌故事</a><a href="caviar.html">鱼子酱系列</a><a href="rituals.html">品鉴艺术</a><a href="journal.html">品牌志</a><a href="gifting.html">礼赠合作</a><a href="certification.html">品质认证</a><a href="contact.html">联系我们</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>隐私政策 · 销售条款 · 配送说明</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
+</footer>
+<script src="../main.js"></script></body></html>

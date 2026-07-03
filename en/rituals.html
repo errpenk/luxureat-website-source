@@ -1,0 +1,247 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LuxurEat - Rituals &amp; Culture</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#af8d11",
+                        "surface-container-low": "#1c1b1b",
+                        "outline": "#889391",
+                        "primary-fixed-dim": "#7ed5cd",
+                        "surface-tint": "#7ed5cd",
+                        "primary-container": "#81d8d0",
+                        "surface-variant": "#353535",
+                        "secondary": "#e9c349",
+                        "primary": "#9df5ec",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-background": "#e5e2e1",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "tertiary-container": "#c9c9c9",
+                        "primary-fixed": "#9bf2ea",
+                        "on-primary-container": "#005f59",
+                        "inverse-primary": "#006a64",
+                        "secondary-fixed": "#ffe088",
+                        "on-primary-fixed-variant": "#00504b",
+                        "surface-container-highest": "#353535",
+                        "surface": "#131313",
+                        "on-primary": "#003734",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-container": "#20201f",
+                        "outline-variant": "#3e4947",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#3c2f00",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "on-secondary-container": "#342800",
+                        "on-surface-variant": "#bdc9c7",
+                        "tertiary": "#e5e5e5",
+                        "on-primary-fixed": "#00201e",
+                        "surface-bright": "#393939",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface-container-high": "#2a2a2a",
+                        "background": "#131313",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#241a00",
+                        "on-tertiary": "#303030",
+                        "on-tertiary-container": "#545454",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-surface": "#e5e2e1",
+                        "surface-dim": "#131313",
+                        "inverse-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "gutter": "24px",
+                        "section-gap": "120px",
+                        "margin-desktop": "80px",
+                        "unit": "8px",
+                        "margin-mobile": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "headline-sm": ["Bodoni Moda"],
+                        "headline-md": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "headline-lg": ["Bodoni Moda"],
+                        "label-lg": ["Montserrat"],
+                        "label-sm": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["40px", { "lineHeight": "48px", "fontWeight": "300" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0.01em", "fontWeight": "300" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                        "display-lg": ["72px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "300" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .ghost-border { border: 0.5px solid rgba(233, 195, 73, 0.3); } /* secondary with opacity */
+        .glass-panel { background: rgba(26, 26, 26, 0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Maison</a><a class="" href="caviar.html">Caviar</a><a class="active" href="rituals.html">Rituals</a><a class="" href="journal.html">Journal</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <div class="lux-actions">
+    <a href="private.html">Private Selection</a>
+    <a href="bag.html">Shopping Bag</a>
+    <span class="lux-lang"><a class="" href="../zh/rituals.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
+    <button class="lux-menu" type="button" data-open="Close" data-closed="Menu" aria-expanded="false">Menu</button>
+  </div>
+</header>
+
+<!-- TopNavBar -->
+
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center overflow-hidden h-screen">
+<div class="absolute inset-0 z-0" data-alt="A moody, close-up photograph of a mother-of-pearl spoon resting gently beside a crystal bowl of pristine black caviar on a bed of crushed ice. The lighting is dramatic and low-key, emphasizing the glossy texture of the roe and the iridescent sheen of the pearl spoon. Set against an absolute black background to convey extreme luxury, exclusivity, and culinary artistry. High contrast, desaturated tones with subtle golden reflections." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASf5mSltXjJxTO-RbFfXHERxzj9gwMpqmP4n5L2HVolmyBbUMibGeOBDtaDepqwTGwEMwVg6FmToN9wmCXFuDrvd0EQwFOzZauZQk-fHh-gFXSnHOzODwxVjbEBes-Px32CTuWAYx9HVPzHUSoGCklPBJFLXk3vrfyPGDXzXrxZ3axQlHfnHxXZ_CRk1qCg7w3B09whF_nlho66P4D5Yd35WMOGhq_sAtgHRUu4QkdkUN7N3dsbIPiN6FmPNdjiECNTItT5inxtvU')"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-10"></div>
+<div class="relative z-20 text-center px-gutter max-w-4xl mx-auto flex flex-col items-center gap-6">
+<span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase">The Art of Tasting</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Rituals &amp; Culture</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-4">Discover the heritage and precise traditions of caviar service. An epicurean journey requiring patience, respect, and the finest accoutrements.</p>
+</div>
+</section>
+<!-- How to Serve Guide -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row gap-gutter md:gap-24 items-center">
+<div class="w-full md:w-1/2 flex flex-col gap-8 order-2 md:order-1">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary">The Service</h2>
+<div class="flex flex-col gap-12 mt-4">
+<div class="flex gap-6 items-start">
+<span class="font-display-lg text-headline-lg text-surface-variant">01</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Temperature</h3>
+<p class="font-body-md text-body-md text-on-surface" style="opacity: 0;">Caviar should be served chilled, ideally between -2°C and 2°C. Present the tin resting over crushed ice, allowing it to acclimate slightly before tasting.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="font-display-lg text-headline-lg text-surface-variant">02</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">The Spoon</h3>
+<p class="font-body-md text-body-md text-on-surface">Never use metal, particularly silver, as it imparts an oxidative metallic flavor. Employ only mother-of-pearl, bone, or gold spoons to preserve the pure taste of the roe.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="font-display-lg text-headline-lg text-surface-variant">03</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">The Palate</h3>
+<p class="font-body-md text-body-md text-on-surface">Place a small amount on the back of the hand (the anatomical snuffbox) to warm it slightly. Roll the pearls against the roof of the mouth; do not chew immediately.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2 relative order-1 md:order-2">
+<div class="aspect-[3/4] w-full ghost-border relative overflow-hidden group">
+<img class="object-cover w-full h-full filter grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A top-down, minimalist shot of a silver caviar serving set consisting of an ice-filled crystal bowl holding a small, open black tin of caviar. Next to it rests a beautifully carved mother-of-pearl spoon. The surface beneath is dark, matte charcoal. The lighting is soft but directional, creating subtle highlights on the caviar beads and the spoon's iridescent surface. High-contrast, elegant, and perfectly arranged to illustrate correct serving protocols." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSWoiQeojehsaATMErkUI2gKUL4uNTKuNf5TsHWR5YdFJAJ1sCUbiQncqGw4OSnzSSmelzbbVeYktZxw3Qi5S0DPb6dLIfYAswZxoV4P9gJ8MqIo8R6wAm08V7ibjHa9yqx9yKcZl6VLVbOwbntAQjGDMUcIgXr8MtVUAxJag6jqDx-Qkd4ofpqa7IGwDDqm37iCRGtk3-heT-9CiDcd0EqZvP162HsUFaksLzBZdQSMorDqL8cFYPRJMIvNKcoQt0UMOg1jmZEXQ">
+</div>
+<!-- Decorative Diagram Elements -->
+<div class="absolute -right-12 top-1/4 w-24 h-[1px] bg-secondary opacity-50 hidden lg:block"></div>
+<div class="absolute -left-12 bottom-1/3 w-24 h-[1px] bg-secondary opacity-50 hidden lg:block"></div>
+</div>
+</div>
+</section>
+<!-- Pairings Bento -->
+<section class="bg-surface-container-low py-section-gap px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase block mb-4">Accompaniments</span>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Perfect Pairings</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+<!-- Champagne -->
+<div class="md:col-span-2 md:row-span-2 glass-panel p-8 relative overflow-hidden group flex flex-col justify-end">
+<div class="absolute inset-0 z-0" data-alt="A moody, elegant still life of a chilled bottle of vintage champagne next to two delicate crystal flutes, set against a dark background. Subtle, effervescent bubbles are visible in the poured glass. Next to the glasses is a small, understated tin of caviar. The lighting is low-key, with cool silvery tones reflecting off the glass and warm golden hints from the champagne label. Sophisticated and celebratory." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDE8IAh0_G1uTudHTZ2948Dm6Pge8FuAVgpPubsHtLGXZVGUVmozCuFT0yNPYKZKB1bM19J2sM7Fdh_L8yyf7BJAD4RPSEupDl_fPKog6SES2GA2_nT3du4GF-m201I6F9RAit_CDnWY9WjVyDorSTEFk_28X_91B_dXpVHp5-K4FhrHuccEkhDLBDR732eYB0QPEBVigm2-anfl-Ik_sG13Il8aDBQG8UyyV0ZZik2OtJ6tAcThzsG7U4hrHklkKt_0-5fqDHNzNk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-10 group-hover:opacity-80 transition-opacity duration-500"></div>
+<div class="relative z-20">
+<h3 class="font-headline-md text-headline-md text-secondary mb-2 text-on-surface">Champagne</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">The classic pairing. A crisp Blanc de Blancs cuts through the rich, buttery texture of the caviar, while the effervescence cleanses the palate between tastings.</p>
+</div>
+</div>
+<!-- Vodka -->
+<div class="md:col-span-1 md:row-span-1 glass-panel p-8 relative overflow-hidden group flex flex-col justify-end">
+<div class="absolute inset-0 z-0" data-alt="A minimalist composition showing an icy, frosted shot glass filled with clear premium vodka, resting on a dark slate surface. In the background, out of focus, is a glimpse of a black caviar tin. The image conveys coldness, purity, and traditional Russian pairing rituals. High contrast, cool blue and stark black tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB1NpU0WdCxYULLTHUSJY5YqU0e1f5NoWVeK7aCFjbJPkUNMUR6IJE_nlWDHSKzthWTXpZUFIUbcLyJoLsqRt6qUxtPeZyhjVy6e0f21CxRB8_WQP6DzrWwhTls4q2bvoOU2ZCYO--cxo4WbU5dlY0JNDk_QU9bIlJEeHB5vVUbQTierQrTSYGUfcfm8T1ZRtBPosaqCWck9xwsgrNfeFBMg4mJdeRNqKRR9sfgsrAp4Ha_BqS2S8zVWpK8f63yR3RUUszQxq4RSFw')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+<div class="relative z-20">
+<h3 class="font-headline-sm text-headline-sm text-secondary mb-2 text-on-surface">Vodka</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Ice-cold, neutral vodka provides a stark, pure contrast, allowing the complex oceanic flavors of the caviar to dominate.</p>
+</div>
+</div>
+<!-- Blinis -->
+<div class="md:col-span-1 md:row-span-1 glass-panel p-8 relative overflow-hidden group flex flex-col justify-end">
+<div class="absolute inset-0 z-0" data-alt="A close-up, textural shot of perfectly golden, warm blinis resting on a dark ceramic plate, accompanied by a small dollop of pristine white crème fraîche. The setting is dark and moody, emphasizing the contrast between the warm golden tones of the blinis and the rich black background. Subtle luxury food photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAkyWc3ptXSe6MAZ2Ri7abUwCbY5DZEFnxHwpe7346cFBoiXvkqn_OuHIcvopJo964uRiwYfKsIvn-zAMUX_OY4kdg-qme337kjOI2zoJjoBCjtDrhDniMjRzq9yOjTatCaulTkgVd7CJoT0sNhK_qyxal55SwitTzL9M8wwiZ5RlvStKGF8Nk7KRB5RHXmg-cLewPZmgpRAECKnUuOUAUaYYa5wv0JQk2eWYVla-S-F6Xqecw9soLgHgHn6ciNH-LVaXiKqwOezi8')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+<div class="relative z-20">
+<h3 class="font-headline-sm text-headline-sm text-secondary mb-2 text-on-surface">Blinis &amp; Crème</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Warm blinis and a touch of unsalted crème fraîche offer a neutral canvas for the roe's salinity.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Certifications -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop border-b border-white/5">
+<div class="max-w-4xl mx-auto text-center">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6">verified</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Commitment to Integrity</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+<div class="ghost-border p-8 hover:bg-surface-container-low transition-colors duration-300">
+<h4 class="font-label-lg text-label-lg text-secondary tracking-widest uppercase mb-4">CITES Certified</h4>
+<p class="font-body-md text-body-md text-on-surface">We strictly adhere to the Convention on International Trade in Endangered Species. Every tin is traceable, ensuring the protection and sustainability of sturgeon populations globally.</p>
+</div>
+<div class="ghost-border p-8 hover:bg-surface-container-low transition-colors duration-300">
+<h4 class="font-label-lg text-label-lg text-secondary tracking-widest uppercase mb-4">HACCP Compliant</h4>
+<p class="font-body-md text-body-md text-on-surface">Our processing facilities maintain the highest standard of hygiene and safety protocols. From extraction to curing, every step is monitored to guarantee absolute purity.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
+    <nav><a href="index.html">Maison</a><a href="caviar.html">Caviar</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>Privacy Policy · Terms of Sale · Shipping</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
+</footer>
+<script src="../main.js"></script></body></html>

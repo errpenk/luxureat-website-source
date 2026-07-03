@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        try {
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "secondary-container": "#af8d11",
+                            "surface-container-low": "#1c1b1b",
+                            "outline": "#889391",
+                            "primary-fixed-dim": "#7ed5cd",
+                            "surface-tint": "#7ed5cd",
+                            "primary-container": "#81d8d0",
+                            "surface-variant": "#353535",
+                            "secondary": "#e9c349",
+                            "primary": "#9df5ec",
+                            "tertiary-fixed-dim": "#c6c6c6",
+                            "on-background": "#e5e2e1",
+                            "on-tertiary-fixed": "#1b1b1b",
+                            "tertiary-container": "#c9c9c9",
+                            "primary-fixed": "#9bf2ea",
+                            "on-primary-container": "#005f59",
+                            "inverse-primary": "#006a64",
+                            "secondary-fixed": "#ffe088",
+                            "on-primary-fixed-variant": "#00504b",
+                            "surface-container-highest": "#353535",
+                            "surface": "#131313",
+                            "on-primary": "#003734",
+                            "on-error": "#690005",
+                            "surface-container-lowest": "#0e0e0e",
+                            "surface-container": "#20201f",
+                            "outline-variant": "#3e4947",
+                            "error": "#ffb4ab",
+                            "on-secondary": "#3c2f00",
+                            "inverse-on-surface": "#313030",
+                            "tertiary-fixed": "#e2e2e2",
+                            "on-tertiary-fixed-variant": "#474747",
+                            "on-secondary-container": "#342800",
+                            "on-surface-variant": "#bdc9c7",
+                            "tertiary": "#e5e5e5",
+                            "on-primary-fixed": "#00201e",
+                            "surface-bright": "#393939",
+                            "on-error-container": "#ffdad6",
+                            "on-secondary-fixed-variant": "#574500",
+                            "surface-container-high": "#2a2a2a",
+                            "background": "#131313",
+                            "error-container": "#93000a",
+                            "on-secondary-fixed": "#241a00",
+                            "on-tertiary": "#303030",
+                            "on-tertiary-container": "#545454",
+                            "secondary-fixed-dim": "#e9c349",
+                            "on-surface": "#e5e2e1",
+                            "surface-dim": "#131313",
+                            "inverse-surface": "#e5e2e1"
+                        },
+                        borderRadius: {
+                            DEFAULT: "0.25rem",
+                            lg: "0.5rem",
+                            xl: "0.75rem",
+                            full: "9999px"
+                        },
+                        spacing: {
+                            "container-max": "1440px",
+                            "gutter": "24px",
+                            "section-gap": "120px",
+                            "margin-desktop": "80px",
+                            "unit": "8px",
+                            "margin-mobile": "24px"
+                        },
+                        fontFamily: {
+                            "display-lg-mobile": ["Bodoni Moda"],
+                            "body-md": ["Montserrat"],
+                            "body-lg": ["Montserrat"],
+                            "headline-sm": ["Bodoni Moda"],
+                            "headline-md": ["Bodoni Moda"],
+                            "display-lg": ["Bodoni Moda"],
+                            "headline-lg": ["Bodoni Moda"],
+                            "label-lg": ["Montserrat"],
+                            "label-sm": ["Montserrat"]
+                        },
+                        fontSize: {
+                            "display-lg-mobile": ["40px", { lineHeight: "48px", fontWeight: "300" }],
+                            "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                            "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "0.01em", fontWeight: "300" }],
+                            "headline-sm": ["24px", { lineHeight: "32px", fontWeight: "500" }],
+                            "headline-md": ["32px", { lineHeight: "40px", fontWeight: "400" }],
+                            "display-lg": ["72px", { lineHeight: "80px", letterSpacing: "-0.02em", fontWeight: "300" }],
+                            "headline-lg": ["48px", { lineHeight: "56px", fontWeight: "400" }],
+                            "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.1em", fontWeight: "600" }],
+                            "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }]
+                        }
+                    }
+                }
+            }
+        } catch (_e) {}
+    </script>
+
+<link rel="stylesheet" href="../integration.css">
+</head>
+<body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img src="../assets/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">品牌故事</a><a class="" href="caviar.html">鱼子酱系列</a><a class="" href="rituals.html">品鉴艺术</a><a class="" href="journal.html">品牌志</a><a class="active" href="gifting.html">礼赠合作</a><a class="" href="certification.html">品质认证</a><a class="" href="contact.html">联系我们</a></nav>
+  <div class="lux-actions">
+    <a href="contact.html">私享定制</a>
+    <a href="bag.html">购物袋</a>
+    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a class="" href="../en/gifting.html">EN</a></span>
+    <button class="lux-menu" type="button" data-open="关闭" data-closed="菜单" aria-expanded="false">菜单</button>
+  </div>
+</header>
+
+
+<main class="flex-grow">
+<!-- Corporate Hero Section -->
+<section class="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-30" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACj45Bif56FyFgQnuuc1kiyxJiCR0NdDNSlyTitpWjHAsANGhjcQWc0CR5BZsUT-89o5OvAWYU8otRJNYPOjUz5_Lw_9kuvELRpJ9ybJTffVKZLFYalKycjZ1ze2ZURcG-G7XHFB02JHxQjUzqgHQPhjCL5Pugr8HBCjk5Jdwda7c-81v13CeoXFJYtqd7kEdN04lW99AgKB5vZmC2cRm0dA5QUmwx9w1hOBp7GYboqFQbSDhjKScPFnnKv4_SrekEjeXTPnEs9mU')"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+</div>
+<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto flex flex-col items-center gap-8">
+<span class="font-body-md text-label-lg text-primary uppercase tracking-[0.4em] mb-2">B2B 高端企业伙伴方案</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface leading-[1.1]">定义商务礼赠的<br/><span class="italic font-light">卓越标准</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto">
+                LuxurEat 为世界级企业与专业机构提供定制化的鱼子酱礼赠方案。从年度激励到重要战略伙伴关系，我们以无可挑剔的品质，成就您的品牌礼仪。
+            </p>
+<div class="flex flex-col sm:flex-row items-center gap-6 mt-4">
+<a class="bg-primary text-on-primary px-10 py-4 font-body-md text-label-lg uppercase tracking-widest hover:bg-primary-fixed transition-all duration-300 shadow-xl shadow-primary/10" href="#inquiry">
+                    立即获取企业画册
+                </a>
+<button class="border border-white/20 text-on-surface px-10 py-4 font-body-md text-label-lg uppercase tracking-widest hover:bg-white/5 transition-all">
+                    咨询专属顾问
+                </button>
+</div>
+</div>
+</section>
+<!-- Core Business Services -->
+<section class="w-full bg-surface-container-lowest py-section-gap border-y border-white/5">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="p-10 border border-white/5 bg-surface-container flex flex-col items-start gap-6 hover:border-primary/30 transition-all group">
+<span class="material-symbols-outlined text-4xl text-primary font-light">corporate_fare</span>
+<h3 class="font-headline-sm text-on-surface uppercase tracking-wider">大宗采购服务</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">针对年度大型活动、节假日员工激励及大客户维系，提供极具竞争力的规模采购价格与全国多点配送物流。</p>
+<ul class="text-xs uppercase tracking-widest text-primary/70 flex flex-col gap-2 mt-2">
+<li class="flex items-center gap-2">● 弹性起订量</li>
+<li class="flex items-center gap-2">● 专属折扣阶梯</li>
+<li class="flex items-center gap-2">● 全程冷链交付</li>
+</ul>
+</div>
+<div class="p-10 border border-white/5 bg-surface-container flex flex-col items-start gap-6 hover:border-primary/30 transition-all">
+<span class="material-symbols-outlined text-4xl text-primary font-light">branding_watermark</span>
+<h3 class="font-headline-sm text-on-surface uppercase tracking-wider">定制品牌服务</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">将您的企业视觉深度融入礼赠。从铭刻 Logo 的金属开启片到定制包装，让每一份礼物都成为品牌的延伸。</p>
+<ul class="text-xs uppercase tracking-widest text-primary/70 flex flex-col gap-2 mt-2">
+<li class="flex items-center gap-2">● 激光镭射铭刻</li>
+<li class="flex items-center gap-2">● 定制封皮与贺卡</li>
+<li class="flex items-center gap-2">● 品牌色彩内饰</li>
+</ul>
+</div>
+<div class="p-10 border border-white/5 bg-surface-container flex flex-col items-start gap-6 hover:border-primary/30 transition-all">
+<span class="material-symbols-outlined text-4xl text-primary font-light">workspace_premium</span>
+<h3 class="font-headline-sm text-on-surface uppercase tracking-wider">白标与餐饮供应</h3>
+<p class="text-on-surface-variant font-body-md leading-relaxed">为顶级酒店及会所提供白标定制。结合我们全球顶级的鱼子酱产源与您的品牌影响力，创造独一无二的产品叙事。</p>
+<ul class="text-xs uppercase tracking-widest text-primary/70 flex flex-col gap-2 mt-2">
+<li class="flex items-center gap-2">● 原产地直供</li>
+<li class="flex items-center gap-2">● 鱼子酱品鉴培训</li>
+<li class="flex items-center gap-2">● 长期供应合约</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Structured Corporate Gift Sets Gallery -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<span class="text-primary font-body-md text-label-sm uppercase tracking-widest mb-4 block">Selection Catalogue</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">企业级礼赠系列</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">针对不同层级的商务沟通需求，我们甄选了四款核心礼赠配置，展现专业与尊崇。</p>
+</div>
+<div class="hidden md:flex gap-4">
+<button class="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center hover:border-primary text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined">west</span></button>
+<button class="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center hover:border-primary text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined">east</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Set 1 -->
+<div class="group">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-low mb-6">
+<img alt="Premium Gift Set" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6_4LJSgbksLqlpc3bcG3UmA0w8_Kl_W3Qj5Xqc-J6idwMwiX4K1vIhCL_eOqy9uUf68tv5v3xg5vxu86fTHl2c0pHjQgd6R_NFcwPOJL0ivS6uoNO8uEs2T6_aPmcKJILBqDHZUSaQ-Iwh0N5FTELAdUWuHnOQLCtkIcpfqjIk_lTFva_csJNfqcga1iWl6DQxTADJ3NV2774_w8DB1GqszeU4VLx4s3ll1vvBEs9Ws_EgfjtL8ePH2mjRrsspF4D1c-281MfuNM"/>
+<div class="absolute top-4 left-4">
+<span class="px-3 py-1 bg-background/80 backdrop-blur text-[10px] text-primary uppercase tracking-widest border border-primary/20">Best Seller</span>
+</div>
+</div>
+<h4 class="text-label-lg font-bold text-on-surface uppercase tracking-widest mb-2">行政官 · 三部曲</h4>
+<p class="text-label-sm text-on-surface-variant mb-4">Beluga / Oscietra / Sevruga 三色珍藏 3x30g</p>
+<div class="flex items-center justify-between border-t border-white/5 pt-4">
+<span class="text-primary font-medium">适合：高层会议/年度礼赠</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">info</button>
+</div>
+</div>
+<!-- Set 2 -->
+<div class="group">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-low mb-6">
+<img alt="Starter Gift Set" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI50MSpxsulUtRdxLWpqKRtJLdPPmIKK8eJutySmbtZMd4Ftrq6E-8T9xBi38vawX9u5WjANXwih3SQBPgnVR89FZBLy04DhCGdC1VRs06uQaN-XpYx_vHJbSvd7jrVn9Dq_YaEU2_9VD_-2rtBVudlkpSX4WeB0XbU6VxdLFM1Eu-OWNxV9OtbEOwOvmWthpr2Zcu1KvGnkzR6R3BsVzx-v5xXihAMQZAsSbbmYGdnMYrBrFJGQmeQrMRixoxn8UgVog-bBAeM3E"/>
+</div>
+<h4 class="text-label-lg font-bold text-on-surface uppercase tracking-widest mb-2">序章 · 经典礼盒</h4>
+<p class="text-label-sm text-on-surface-variant mb-4">Oscietra 精选 50g 伴手礼盒</p>
+<div class="flex items-center justify-between border-t border-white/5 pt-4">
+<span class="text-primary font-medium">适合：品牌公关/新店启幕</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">info</button>
+</div>
+</div>
+<!-- Set 3 -->
+<div class="group">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-low mb-6">
+<img alt="Bespoke Set" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRaCEYPbDOk-7sit4LaFoKzSUPecMRdLYdEQpx-5LSixbvNEUvHYKMCqqm0HTq8Nt30YXuTgWenH8YqL_6aw-twgv9mI24KvjGyb31TheAf5FoyxLp-BacE8WSJ21E5oGjXBO-j-NJ1lJVo6pinjFaNnoUN90-fYQTPVq5PYqAqMxVrxpCTa9TpKbc99u_rfHOP0sGqZ5rV8ZorGeiTodiMJwVxi5_6Nfl2Oh63PbmpLK5CKv8N1BeR4HQMWoNmQf11HTN74i9Va4"/>
+</div>
+<h4 class="text-label-lg font-bold text-on-surface uppercase tracking-widest mb-2">铭刻 · 专属私享</h4>
+<p class="text-label-sm text-on-surface-variant mb-4">定制金属铭牌 + 50g 鱼子酱</p>
+<div class="flex items-center justify-between border-t border-white/5 pt-4">
+<span class="text-primary font-medium">适合：VIP 客户/周年庆典</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">info</button>
+</div>
+</div>
+<!-- Set 4 -->
+<div class="group">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-low mb-6">
+<img alt="Bulk Supply" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXzT9S2pvtc0hXakKNG86KpiMMvcSwVVZdgoZyI7fUTykd20scQKyEdOuYBmOnrrDh-3KQN34_jA7oV9FBE-Gkxmd6YHccyAKoZuuaKeI8EeJztI7eYtHMMSMjKABrtzdXprOtlmjUI6HNuoNbhqn0ApB4gqWNDBu0LggP3KTzIxl0jUGos1qS1-zuUktr9g0rM2JmL9EOH7aI1uF-kEBkns7X1noXuo-7fJQWci3gCXpagRClMZBjf6LTk37JOl_QrSmkg3WtSIk"/>
+</div>
+<h4 class="text-label-lg font-bold text-on-surface uppercase tracking-widest mb-2">甄选 · 餐饮供应</h4>
+<p class="text-label-sm text-on-surface-variant mb-4">多种级别鱼子酱散装/大桶装</p>
+<div class="flex items-center justify-between border-t border-white/5 pt-4">
+<span class="text-primary font-medium">适合：高端餐饮/私人厨宴</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">info</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Inquiry Form Section -->
+<section class="w-full bg-surface py-section-gap scroll-mt-20" id="inquiry">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col lg:flex-row gap-20">
+<div class="lg:w-1/2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">开启专业合作</h2>
+<div class="space-y-8">
+<p class="font-body-md text-on-surface-variant max-w-md">
+                        我们的企业顾问团队将在 24 小时内与您取得联系，提供定制建议书、报价单及样品试吃安排。
+                    </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2">
+<span class="text-primary font-bold text-headline-sm">1000+</span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant">全球合作机构</span>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-primary font-bold text-headline-sm">24h</span>
+<span class="text-xs uppercase tracking-widest text-on-surface-variant">冷链响应时间</span>
+</div>
+</div>
+<div class="pt-8 border-t border-white/5 space-y-4">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">phone_in_talk</span>
+<span class="text-on-surface font-body-md">企业专线: 400-888-0000</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">mail</span>
+<span class="text-on-surface font-body-md">corporate@luxureat.com</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:w-1/2 bg-surface-container-high p-8 md:p-12 border border-white/10">
+<form class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant">姓名</label>
+<input class="bg-surface border-white/10 text-on-surface focus:border-primary focus:ring-0" placeholder="您的姓名" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant">公司名称</label>
+<input class="bg-surface border-white/10 text-on-surface focus:border-primary focus:ring-0" placeholder="所属企业名称" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant">联系电话</label>
+<input class="bg-surface border-white/10 text-on-surface focus:border-primary focus:ring-0" placeholder="联系电话" type="tel"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant">需求类别</label>
+<select class="bg-surface border-white/10 text-on-surface focus:border-primary focus:ring-0">
+<option>企业大宗采购</option>
+<option>品牌联名定制</option>
+<option>餐饮供应/酒店合作</option>
+<option>私人高端宴请</option>
+</select>
+</div>
+<div class="flex flex-col gap-2 sm:col-span-2">
+<label class="text-[10px] uppercase tracking-widest text-on-surface-variant">备注信息</label>
+<textarea class="bg-surface border-white/10 text-on-surface focus:border-primary focus:ring-0 h-32" placeholder="请简述您的需求或大致预算范围..."></textarea>
+</div>
+<button class="sm:col-span-2 bg-secondary text-on-secondary py-4 font-body-md text-label-lg uppercase tracking-[0.2em] hover:bg-secondary-fixed transition-all" type="submit">
+                        提交咨询申请
+                    </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+
+
+
+
+
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
+    <nav><a href="index.html">品牌故事</a><a href="caviar.html">鱼子酱系列</a><a href="rituals.html">品鉴艺术</a><a href="journal.html">品牌志</a><a href="gifting.html">礼赠合作</a><a href="certification.html">品质认证</a><a href="contact.html">联系我们</a></nav>
+    <div><p>Rednote</p><p>WeChat</p><p>Douyin</p></div>
+    <div><p>concierge@luxureat.maison</p><p>隐私政策 · 销售条款 · 配送说明</p></div>
+  </div>
+  <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
+</footer>
+<script src="../main.js"></script></body></html>
