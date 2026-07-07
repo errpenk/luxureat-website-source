@@ -18,7 +18,7 @@ errpenk/luxureat-website-source
 
 - Chinese home: `zh/index.html`
 - English home: `en/index.html`
-- GitHub Pages entry: `index.html`
+- Static fallback entry: `index.html`
 
 ## WordPress Theme Publishing
 
