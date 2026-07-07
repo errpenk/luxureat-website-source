@@ -1,0 +1,75 @@
+name: Publish Theme Repository
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'zh/**'
+      - 'en/**'
+      - 'assets/**'
+      - 'integration.css'
+      - 'main.js'
+      - 'scripts/**'
+      - 'tools/**'
+      - '.github/workflows/publish-theme-repo.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: luxureat-theme-repo
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    env:
+      THEME_REPO_DEPLOY_KEY: ${{ secrets.THEME_REPO_DEPLOY_KEY }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build WordPress theme
+        run: |
+          node scripts/build-luxureat-theme.mjs "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE/.deploy"
+
+      - name: Verify built theme
+        run: |
+          node tools/verify-theme.mjs "$GITHUB_WORKSPACE/.deploy"
+
+      - name: Add GitHub deploy key
+        run: |
+          test -n "$THEME_REPO_DEPLOY_KEY"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$THEME_REPO_DEPLOY_KEY" > ~/.ssh/theme_repo_key
+          chmod 600 ~/.ssh/theme_repo_key
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
+      - name: Checkout theme repository
+        run: |
+          git clone git@github.com:errpenk/luxureat-wordpress-theme.git "$GITHUB_WORKSPACE/.publish/theme"
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
+
+      - name: Mirror generated theme files
+        run: |
+          rsync -a --delete \
+            --exclude='.git' \
+            "$GITHUB_WORKSPACE/.deploy/luxureat-static/" \
+            "$GITHUB_WORKSPACE/.publish/theme/"
+
+      - name: Commit and push theme repository
+        run: |
+          cd "$GITHUB_WORKSPACE/.publish/theme"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No theme repository changes to publish."
+            exit 0
+          fi
+          git add -A
+          git commit -m "Publish theme from ${GITHUB_SHA}"
+          git push origin main
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
