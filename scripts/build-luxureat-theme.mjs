@@ -142,7 +142,7 @@ Theme Name: LuxurEat Static
 Theme URI: https://github.com/errpenk/luxureat-website-source
 Author: LuxurEat
 Description: Static LuxurEat bilingual prototype packaged as a WordPress theme.
-Version: 1.0.2
+Version: 1.0.3
 Requires at least: 6.0
 Text Domain: luxureat-static
 */
@@ -173,6 +173,8 @@ function luxureat_static_aliases() {
         'journal.html' => 'zh/journal',
         'gifting' => 'zh/gifting',
         'gifting.html' => 'zh/gifting',
+        'certification' => 'zh/certification',
+        'certification.html' => 'zh/certification',
         'contact' => 'zh/contact',
         'contact.html' => 'zh/contact',
         'bag' => 'zh/bag',
@@ -192,15 +194,35 @@ function luxureat_static_normalize_path($path) {
     return $path ? $path : '';
 }
 
+function luxureat_static_pretty_paths() {
+    return array(
+        'zh' => '/',
+        'zh/caviar' => '/caviar/',
+        'zh/rituals' => '/rituals/',
+        'zh/journal' => '/journal/',
+        'zh/gifting' => '/gifting/',
+        'zh/certification' => '/certification/',
+        'zh/contact' => '/contact/',
+        'zh/bag' => '/bag/',
+        'en' => '/en/',
+        'en/caviar' => '/en/caviar/',
+        'en/rituals' => '/en/rituals/',
+        'en/journal' => '/en/journal/',
+        'en/gifting' => '/en/gifting/',
+        'en/contact' => '/en/contact/',
+        'en/private' => '/en/private/',
+        'en/bag' => '/en/bag/',
+    );
+}
+
 function luxureat_static_url($path = 'zh', $suffix = '') {
     $path = luxureat_static_normalize_path($path);
     $suffix = is_string($suffix) ? $suffix : '';
+    $pretty_paths = luxureat_static_pretty_paths();
 
-    if ($path === '' || $path === 'zh') {
-        $url = home_url('/');
-    } else {
-        $url = add_query_arg('luxureat_path', $path, home_url('/'));
-    }
+    $url = isset($pretty_paths[$path])
+        ? home_url($pretty_paths[$path])
+        : home_url('/' . $path . '/');
 
     return $url . $suffix;
 }
@@ -302,8 +324,16 @@ if ($path === '' || $path === '__home') {
 }
 
 if (isset($aliases[$path])) {
-    wp_safe_redirect(luxureat_static_url($aliases[$path]), 301);
-    exit;
+    $target_path = $aliases[$path];
+    $pretty_paths = luxureat_static_pretty_paths();
+    $canonical_request_path = isset($pretty_paths[$target_path]) ? trim($pretty_paths[$target_path], '/') : '';
+
+    if ($canonical_request_path === $path) {
+        $path = $target_path;
+    } else {
+        wp_safe_redirect(luxureat_static_url($target_path), 301);
+        exit;
+    }
 }
 
 if (!isset($routes[$path])) {
@@ -348,8 +378,8 @@ This package wraps the static bilingual LuxurEat website source from https://git
 ## Routes
 
 - \`/\` serves the Chinese home page.
-- Other routes use query URLs such as \`/?luxureat_path=zh/caviar\` and \`/?luxureat_path=en\`, so the site works even when the host does not forward pretty permalinks to WordPress.
-- Pretty routes such as \`/zh/\` and \`/en/caviar/\` are still registered and can work after the host rewrite layer is configured.
+- Default Chinese routes use root-level pretty URLs such as \`/caviar/\`, \`/rituals/\`, and \`/contact/\`.
+- English routes use \`/en/\`, \`/en/caviar/\`, and the rest of the \`/en/.../\` namespace.
 
 ## Notes
 

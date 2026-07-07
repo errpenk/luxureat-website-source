@@ -70,7 +70,10 @@ assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewr
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
-assert(functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php can build query-based route URLs');
+assert(functionsPhp.includes('function luxureat_static_pretty_paths('), 'functions.php defines canonical pretty route URLs');
+assert(functionsPhp.includes("'zh/caviar' => '/caviar/'"), 'functions.php maps the Chinese caviar route to /caviar/');
+assert(functionsPhp.includes("'en/caviar' => '/en/caviar/'"), 'functions.php maps the English caviar route to /en/caviar/');
+assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
 assert(indexPhp.includes('wp_safe_redirect'), 'index.php redirects root and alias routes');
@@ -78,7 +81,7 @@ assert(indexPhp.includes('status_header(404)'), 'index.php has a 404 branch');
 assert(indexPhp.includes('routes.php'), 'index.php loads the static route map');
 assert(!indexPhp.includes("wp_safe_redirect(home_url('/zh/')"), 'index.php does not redirect root to /zh/ when server rewrites are unavailable');
 assert(indexPhp.includes("$path = 'zh';"), 'index.php serves Chinese home at the site root');
-assert(!indexPhp.includes("home_url('/zh/") && !indexPhp.includes("home_url('/en/"), 'index.php does not link to pretty permalink routes');
+assert(indexPhp.includes('$path = $target_path;'), 'index.php can render alias routes that are already canonical pretty URLs');
 
 const routesPhp = read(path.join(themeDir, 'routes.php'));
 for (const route of expectedRoutes) {
