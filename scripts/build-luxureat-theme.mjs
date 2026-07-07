@@ -61,15 +61,29 @@ function phpRouteUrl(lang, slug, suffix = '') {
   return `<?php echo esc_url(luxureat_static_url('${routeKey(lang, slug)}', '${escapePhpString(suffix)}')); ?>`;
 }
 
+function hasUrlScheme(href) {
+  return /^[A-Za-z][A-Za-z0-9+.-]*:/.test(href.trimStart());
+}
+
+function stripKnownLocalIncludes(html) {
+  const localStylesheetTag = '<link rel="stylesheet" href="../integration.css">';
+  const scriptOpen = '<script src="../main.js">';
+  const scriptClose = '</script>';
+
+  return html
+    .split(localStylesheetTag)
+    .join('')
+    .split(`${scriptOpen}${scriptClose}`)
+    .join('');
+}
+
 function rewriteHref(href, currentLang) {
+  const trimmedHref = href.trimStart();
+
   if (
-    href.startsWith('#') ||
-    href.startsWith('http://') ||
-    href.startsWith('https://') ||
-    href.startsWith('mailto:') ||
-    href.startsWith('tel:') ||
-    href.startsWith('javascript:') ||
-    href.startsWith('data:') ||
+    trimmedHref.startsWith('#') ||
+    trimmedHref.startsWith('//') ||
+    hasUrlScheme(trimmedHref) ||
     href.includes('<?php')
   ) {
     return href;
@@ -91,8 +105,7 @@ function rewriteHref(href, currentLang) {
 function convertHtml(file, lang) {
   let html = fs.readFileSync(path.join(sourceDir, file), 'utf8');
 
-  html = html.replace(/<link\s+rel=["']stylesheet["']\s+href=["']\.\.\/integration\.css["']\s*\/?>\s*/gi, '');
-  html = html.replace(/<script\s+src=["']\.\.\/main\.js["']>\s*<\/script>\s*/gi, '');
+  html = stripKnownLocalIncludes(html);
 
   html = html.replace(/\b(src|href)=(["'])\.\.\/assets\/luxureat-logo\.png\2/g, (_match, attr, quote) => {
     return `${attr}=${quote}<?php echo esc_url(get_template_directory_uri() . '/assets/luxureat-logo.png'); ?>${quote}`;
