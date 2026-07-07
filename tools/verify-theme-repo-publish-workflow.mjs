@@ -6,6 +6,7 @@ const root = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
 const workflowPath = path.join(root, '.github/workflows/publish-theme-repo.yml');
 const oldSshWorkflowPath = path.join(root, '.github/workflows/deploy-theme.yml');
 const dependabotPath = path.join(root, '.github/dependabot.yml');
+const codeqlPath = path.join(root, '.github/workflows/codeql.yml');
 const docsPath = path.join(root, 'docs/deployer-for-git.md');
 
 const failures = [];
@@ -21,6 +22,7 @@ function read(file) {
 assert(fs.existsSync(workflowPath), '.github/workflows/publish-theme-repo.yml exists');
 assert(!fs.existsSync(oldSshWorkflowPath), 'legacy SSH deploy workflow is not present');
 assert(fs.existsSync(dependabotPath), '.github/dependabot.yml exists');
+assert(fs.existsSync(codeqlPath), '.github/workflows/codeql.yml exists');
 assert(fs.existsSync(docsPath), 'docs/deployer-for-git.md exists');
 
 const workflow = read(workflowPath);
@@ -46,6 +48,13 @@ assert(docs.includes('main'), 'docs mention the branch to install');
 const dependabot = read(dependabotPath);
 assert(dependabot.includes('package-ecosystem: github-actions'), 'Dependabot monitors GitHub Actions');
 assert(dependabot.includes('interval: weekly'), 'Dependabot checks GitHub Actions weekly');
+
+const codeql = read(codeqlPath);
+assert(codeql.includes('github/codeql-action/init@v4'), 'CodeQL workflow initializes the official GitHub action');
+assert(codeql.includes('github/codeql-action/analyze@v4'), 'CodeQL workflow runs the official analyzer');
+assert(codeql.includes('security-events: write'), 'CodeQL workflow can upload security results');
+assert(codeql.includes('javascript-typescript'), 'CodeQL scans JavaScript and TypeScript');
+assert(codeql.includes('php'), 'CodeQL scans PHP');
 
 if (failures.length) {
   console.error(`Theme repo publish workflow verification failed with ${failures.length} issue(s):`);
