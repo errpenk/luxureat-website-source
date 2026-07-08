@@ -160,7 +160,7 @@
 </header>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
 <!-- Shopping Bag List -->
-<div class="lg:col-span-8 space-y-12">
+<div class="lg:col-span-8 space-y-12" data-bag-list data-bag-locale="en" data-bag-shipping="20">
 <!-- Main Item -->
 <div class="flex flex-col md:flex-row gap-8 pb-12 border-b border-outline-variant/20 animate-fade-in">
 <div class="w-full md:w-64 h-64 overflow-hidden rounded-lg group">
@@ -205,11 +205,11 @@
 <div class="space-y-4">
 <div class="flex justify-between text-on-surface-variant font-body-md">
 <span class="">Subtotal</span>
-<span class="">$2,480.00</span>
+<span class="" data-bag-subtotal>$2,480.00</span>
 </div>
 <div class="flex justify-between text-on-surface-variant font-body-md">
 <span class="">Shipping &amp; Handling</span>
-<span class="">$20.00</span>
+<span class="" data-bag-shipping-total>$20.00</span>
 </div>
 <div class="flex justify-between text-on-surface-variant font-body-md">
 <span class="">Estimated Tax</span>
@@ -218,7 +218,7 @@
 </div>
 <div class="flex justify-between items-end border-t border-outline-variant/20 pt-6">
 <span class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface">Total</span>
-<span class="font-headline-md text-headline-md text-secondary">$2,500.00</span>
+<span class="font-headline-md text-headline-md text-secondary" data-bag-total>$2,500.00</span>
 </div>
 <div class="space-y-4 mt-4">
 <button class="primary-btn w-full py-5 font-label-lg text-label-lg uppercase tracking-[0.2em] rounded-none">
