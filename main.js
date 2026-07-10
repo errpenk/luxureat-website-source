@@ -548,8 +548,9 @@ function initLuxProductDetails() {
     maximumFractionDigits: currency === "$" ? 2 : 0,
   })}`;
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { back: "返回", close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", total: "总价", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
-    : { back: "Back", close: "Close", add: "Add to Cart", detail: "View Details", qty: "Qty", total: "Total", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+    ? { back: "返回", close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
+    : { back: "Back", close: "Close", add: "Add to Cart", detail: "View Details", qty: "Qty", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+  const totalLabel = (quantity) => document.documentElement.lang?.startsWith("zh") ? `${quantity}件总价` : `${quantity}-item total`;
   const galleryFor = (product) => {
     if (product.id.includes("beluga")) return galleries.beluga;
     if (product.id.includes("oscetra")) return galleries.oscetra;
@@ -582,7 +583,7 @@ function initLuxProductDetails() {
       return;
     }
     total.hidden = false;
-    total.textContent = `${labels.total}: ${formatMoney(addButton.dataset.bagCurrency || "$", amount * quantity)}`;
+    total.textContent = `${totalLabel(quantity)}: ${formatMoney(addButton.dataset.bagCurrency || "$", amount * quantity)}`;
   };
 
   const updateProductBagState = () => {
@@ -593,7 +594,7 @@ function initLuxProductDetails() {
     const quantity = window.LuxureatBag?.items().find((item) => item.id === product.id)?.quantity || 0;
     state.hidden = !quantity;
     const text = state.querySelector("[data-product-cart-text]");
-    const total = quantity > 1 ? ` · ${labels.total}: ${formatMoney(product.currency, product.amount * quantity)}` : "";
+    const total = quantity > 1 ? ` · ${totalLabel(quantity)}: ${formatMoney(product.currency, product.amount * quantity)}` : "";
     if (text) text.textContent = document.documentElement.lang?.startsWith("zh") ? `已加入购物袋：${quantity}${total}` : `In Cart: ${quantity}${total}`;
   };
 
@@ -655,6 +656,10 @@ function initLuxProductDetails() {
               </div>
             </article>`).join("")}
           </div>
+          <div class="lux-product-recent-nav">
+            <button type="button" data-product-recent-scroll="-1" aria-label="${escapeHtml(labels.back)}">←</button>
+            <button type="button" data-product-recent-scroll="1" aria-label="${escapeHtml(labels.detail)}">→</button>
+          </div>
           </div>
         </section>` : ""}
       </article>`;
@@ -680,6 +685,11 @@ function initLuxProductDetails() {
         render(previous, false);
         history.replaceState({ luxProduct: previous }, "", `#product-${previous}`);
       }
+      return;
+    }
+    const recentScroll = event.target.closest("[data-product-recent-scroll]");
+    if (recentScroll) {
+      detail.querySelector(".lux-product-recent-grid")?.scrollBy({ left: Number(recentScroll.dataset.productRecentScroll) * 320, behavior: "smooth" });
       return;
     }
     const galleryButton = event.target.closest("[data-product-gallery]");
@@ -909,13 +919,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const locale = () => document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const detailProductId = (item, lang) => {
+    const id = item.id || "";
+    if (id.includes("imperial-beluga")) return `${lang}-imperial-beluga`;
+    if (id.includes("royal-oscetra")) return `${lang}-royal-oscetra`;
+    if (id.includes("spoon")) return `${lang}-mother-of-pearl`;
+    if (id.includes("champagne")) return `${lang}-champagne`;
+    if (id.includes("ice-server")) return "zh-ice-server";
+    if (id.includes("truffle")) return "en-truffle";
+    return "";
+  };
 
   const itemHtml = (item, lang) => {
-    const lineTotal = item.quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? "总价" : "Total"} ${money(item.currency, item.price * item.quantity)}</small>` : "";
+    const lineTotal = item.quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${item.quantity}件总价` : `${item.quantity}-item total`} ${money(item.currency, item.price * item.quantity)}</small>` : "";
+    const detailId = detailProductId(item, lang);
     return `
     <div class="lux-bag-item flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${escapeHtml(item.id)}">
-      <div class="w-full md:w-48 h-48 overflow-hidden bg-surface-container">
+      <div class="lux-bag-image w-full md:w-48 h-48 overflow-hidden bg-surface-container">
         ${item.image ? `<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">` : ""}
+        ${detailId ? `<button class="lux-bag-detail" type="button" data-product-open="${escapeHtml(detailId)}">${lang === "zh" ? "查看详情" : "View Details"}</button>` : ""}
       </div>
       <div class="flex-1 flex flex-col justify-between">
         <div class="flex justify-between gap-6 items-start">

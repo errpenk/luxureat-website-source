@@ -170,7 +170,9 @@ assert(mainJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detai
 assert(mainJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
 assert(mainJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
 assert(mainJs.includes('data-product-total'), 'product details show multi-quantity totals');
+assert(mainJs.includes('data-product-recent-scroll') && mainJs.includes('scrollBy'), 'product-detail recommendations have horizontal arrow controls');
 assert(mainJs.includes('lux-bag-line-total'), 'bag items show multi-quantity totals');
+assert(mainJs.includes('${item.quantity}件总价') && mainJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
 assert(mainJs.includes('data-bag-quantity'), 'main.js carries selected product quantities into the bag');
 assert(mainJs.includes('initLuxFooterActions'), 'main.js initializes footer policy and social popups');
 assert(mainJs.includes('data-footer-modal'), 'main.js listens to footer modal buttons');
@@ -192,8 +194,11 @@ assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles t
 assert(integrationCss.includes('.lux-product-gallery'), 'integration.css styles product image galleries');
 assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles product quantity controls');
 assert(integrationCss.includes('.lux-product-recent-grid'), 'integration.css styles product-detail recommendation grids');
+assert(integrationCss.includes('.lux-product-recent-nav') && integrationCss.includes('scrollbar-width: none'), 'integration.css hides recommendation scrollbars and styles arrow controls');
 assert(integrationCss.includes('.lux-product-cart-state'), 'integration.css styles product-detail cart state');
-assert(integrationCss.includes('.lux-bag-item'), 'integration.css styles light bag item cards');
+assert(integrationCss.includes('.lux-reader-header') && integrationCss.includes('backdrop-filter: blur(16px)'), 'integration.css gives reader and product headers glass blur');
+assert(integrationCss.includes('.lux-product-panel::before'), 'integration.css gives product details a glass top layer');
+assert(integrationCss.includes('.lux-bag-item') && integrationCss.includes('.lux-bag-detail'), 'integration.css styles light bag item cards and image detail hover actions');
 assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles global footprint cards');
 assert(integrationCss.includes('[data-caviar-grid] [data-bag-add]'), 'integration.css gives product-card add buttons the heavier border');
 assert(integrationCss.includes('[data-caviar-grid] [data-product-open]'), 'integration.css gives product-card detail buttons the lighter border');
