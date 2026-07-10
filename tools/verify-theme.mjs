@@ -135,6 +135,9 @@ assert(mainJs.includes('data-caviar-filter'), 'main.js listens to caviar filter 
 assert(mainJs.includes('data-caviar-view'), 'main.js listens to caviar view buttons');
 assert(mainJs.includes('data-caviar-sort'), 'main.js listens to the caviar sort control');
 assert(mainJs.includes('data-caviar-sort-option'), 'main.js listens to explicit sort menu options');
+assert(mainJs.includes('initLuxReader'), 'main.js initializes the shared reading container');
+assert(mainJs.includes('data-reader-open'), 'main.js listens to reading-detail triggers');
+assert(mainJs.includes('data-info-popover'), 'main.js listens to gift scenario info buttons');
 assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
 assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
 assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
@@ -145,9 +148,33 @@ assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css d
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
 assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
+assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
+assert(integrationCss.includes('.lux-reader-cta'), 'integration.css styles card reading hover calls to action');
+assert(integrationCss.includes('.lux-info-popover'), 'integration.css styles the frosted gift scenario popover');
 
 const enRituals = read(path.join(themeDir, 'pages/en/rituals.php'));
 assert(!enRituals.includes('style="opacity: 0;">Caviar should be served chilled'), 'English rituals temperature copy is visible');
+
+const zhGifting = read(path.join(themeDir, 'pages/zh/gifting.php'));
+const enGifting = read(path.join(themeDir, 'pages/en/gifting.php'));
+assert(zhGifting.includes('data-info-popover'), 'Chinese gifting page marks scenario info buttons');
+assert(enGifting.includes('data-info-popover'), 'English gifting page marks scenario info buttons');
+
+const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
+const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
+assert(zhBag.includes('查看详情') && zhBag.includes('data-reader-open'), 'Chinese bag recommendations include view-details reader actions');
+assert(enBag.includes('View Details') && enBag.includes('data-reader-open'), 'English bag recommendations include view-details reader actions');
+
+const zhJournal = read(path.join(themeDir, 'pages/zh/journal.php'));
+const enJournal = read(path.join(themeDir, 'pages/en/journal.php'));
+assert(zhJournal.includes('data-reader-open="zh-harvest"'), 'Chinese journal opens the harvest reader');
+assert(enJournal.includes('data-reader-open="en-harvest"'), 'English journal opens the harvest reader');
+assert(zhJournal.includes('lux-reader-card'), 'Chinese journal cards expose hover reader actions');
+assert(enJournal.includes('lux-reader-card'), 'English journal cards expose hover reader actions');
+
+const zhRituals = read(path.join(themeDir, 'pages/zh/rituals.php'));
+assert(zhRituals.includes('data-reader-open="zh-champagne"'), 'Chinese rituals pairing cards open reader details');
+assert(enRituals.includes('data-reader-open="en-champagne"'), 'English rituals pairing cards open reader details');
 
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {

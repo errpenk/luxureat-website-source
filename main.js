@@ -205,6 +205,292 @@ initLuxCaviarControls();
   document.addEventListener("DOMContentLoaded", init);
 })();
 
+function initLuxReader() {
+  const triggers = document.querySelectorAll("[data-reader-open]");
+  if (!triggers.length) return;
+
+  const images = {
+    harvest: "https://lh3.googleusercontent.com/aida-public/AB6AXuC7anz-XTzA8rUvCwVCN3tnA2c2twxLvw5xTeZY8fdjIZx32wdxnrD3FxOkWKlNvm-lgNGcFXJCyBj6zyugVzHui1X1JEmJm2xV1CW1pVSRih5-WGvyDCI05Ag5b61L7EC6aMY72hjaavZ8QDnbAnLP8g_Ld-MkMHDgHqV6-zNhyFZDw_IcQgZ44UN1BVPwAqB8BghU0PrSUYfiL-_Yq2tfmk0qAvC5_uurJz-kivVfokBHxreXKApDBA_qKdUTevydltWgjTFXeRo",
+    truffle: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQy_7QgEhJXRb9TVE_qzhuDOz-7NCGBa_j5-U9QAjY-RgkJ2ZQHX_5SO79aYEFnsmh__rooT1ufKKtESdCxIDI6AKK5cskDxVD5oMSArK_A-w8eZYyBq6M901sPa1EICBL1VKmnbf8fDFvZoZ_WKcozP-dEw8yZPP_5H1A26D2NuC1k-Y5wKcxiXZD1R99ifx-tOOWICpWqnVpIrkftwymdfHoUs6G_63VZqke4f15-qB_VQ2iKl62ZxITlbpb4UVfs_kj11XG2E8",
+    service: "https://lh3.googleusercontent.com/aida-public/AB6AXuAAg7keSD5fHP8vQ477QdjOPGaMu0dEKrV3C-or5erPbi9FooRm3f-gqK9jsQmWVqRty8-JYMdaGQrZH09RfQKdhEbCW7r-8kA8Ow2g38LJWJSt-uLuompA3zl2DjXfylHLAFug2zSiBkisJovH4dz3kyg_RpayvCeghiRuxKbORpOPhWFWBW2M-d8RxRYsW9DZDxi0dPc5YtudATgrihhdU45o2T_6ZdY5FNOBxb3IaJRenUHk_a_444WorRvwedmX_ZWSCN4tQMM",
+    malossol: "https://lh3.googleusercontent.com/aida-public/AB6AXuDfbNuFAT9ZgIgOwkTaahfs0NsdQcBPQoxt-Ged22Ov4fxMRtVjhrlsSuvUvYzVnOnp1iayJXEui5QoYCH-gS85o09LHojk52rTWmcSRnQwnYDsBoE3T0gHFRY5J-HQn-deQqgNVuoCv6DxPqMp14M5CCpsJPaZZkTOA6uS8vrXJIEQRaae53cX__4tffkuuhWlz0MBpR7xO85jaPBJguBeZGYyP5rtfOFtBKVwS_-3WLRaNHYRm0aaKqUj-aYT5d412hKENpYGiok",
+    champagne: "https://lh3.googleusercontent.com/aida-public/AB6AXuBoPRwxvQOmHqNT232yA2aUY2zRh1_cnBBvXcKRHewJ4aG_PfIFz8MXLQLsJiLIyUXslsOfWrXxfollJKQF6lQZQfCsqqVLbIZiJHunsWkso0aiISFUQcyq8_4wO9J3Gt25hLpv-iiHdTqLalW-P_sHArq8JlUO0ycSBH8zid4OLED2c4J6FFIv6GMMsKRoK5L5dWur-IHLjpXYq8hv7Zw8bHiNvjDBEhV7eZA6fU9Hu0wvOQ4k0uci3OHhrWTZdOOQ4ZT-wkRW13Y",
+    spoon: "https://lh3.googleusercontent.com/aida-public/AB6AXuAZQcq4hfiLU3hNPVytnsfWjFbSXPVMC0ZEe6Jo0kK6b7vRdcaEs3ISV22gseD6C-hcP_-8Er8ha6yZzwUFvnUXMiye9wgrs0mVPIJCsgrJ4hqtlDG_lMYdPdnPPpHg_rQ4kSoSoMBKB0vJwAV_7niM0AX1Yc-AEeuvZl8k8cuLTBQZHKeAPPZLu6dE00svFteMahQNJ-2gt8rqXByzIrJgj0kF-BM29DieNSBStG8btLmXTHvM3d1vdSLqFMsjHj7m8DVKZCXWZE8",
+    ice: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbRm7T-vUyLcLqFrQuOXykQjzwhdpDRZMcSbGFjeVpdb76MZnZ28gQBKlrdLjIc_T6WjQjfb9fKyBVe5FExMY-kpE-b4sG25R8qhkpNGJAlJP28iPnyPtCbQYT5ZdpDuLAhtScGkzGtfa55QEl-UcC8bncCNITmhCjb8RDhdB8hzDBWSWgpLLudYILlxAIcaXTQ2fMzaUXyQJZUcPC8Rg_RqNGkNslWq8L7t_OuWsc9fIRvbrYWlI1r5EErsUZte_sRwyldQQwu0Q",
+  };
+  const articles = {
+    "zh-harvest": {
+      lang: "zh", eyebrow: "品牌传承", title: "采撷之艺", meta: "MASTERCLASS · 2024年10月",
+      image: images.harvest,
+      intro: "鱼子酱的采撷不是速度，而是判断。盐渍大师在温度、颗粒张力与成熟度之间寻找那个极窄的窗口。",
+      sections: [
+        ["鲟鱼的尊贵传承", "每一批鱼子酱都从产地记录开始，成熟度、粒径与油脂感决定它是否进入 LuxurEat 的精选序列。"],
+        ["Malossol 的克制", "低盐不是噱头，而是保留矿物感与乳香的方式。盐只负责托起风味，不掩盖鱼卵本身。"],
+      ],
+      related: ["zh-service", "zh-malossol", "zh-champagne"],
+    },
+    "zh-truffle": {
+      lang: "zh", eyebrow: "寻味溯源", title: "追求卓越：阿尔巴黄金", meta: "ATLAS · 皮埃蒙特",
+      image: images.truffle,
+      intro: "阿尔巴白松露的价值来自短暂季节与不可复制的土壤气息，它适合作为鱼子酱菜单的香气延伸。",
+      sections: [["产地筛选", "我们关注采收时间、湿度与香气完整度，只保留能在餐桌上清晰表达产区的批次。"]],
+      related: ["zh-harvest", "zh-service"],
+    },
+    "zh-service": {
+      lang: "zh", eyebrow: "精致生活", title: "味觉传承：现代侍酒服务", meta: "COURSE · 服务礼仪",
+      image: images.service,
+      intro: "真正好的服务，是让器具、温度与酒款都退到幕后，只留下鱼子酱的第一口冲击。",
+      sections: [["贝母匙", "贝母不带金属气味，能保护鱼子酱脆弱的原色原味，是餐桌上最小但最关键的器具。"]],
+      related: ["zh-champagne", "zh-mother-of-pearl"],
+    },
+    "zh-malossol": {
+      lang: "zh", eyebrow: "匠心工艺", title: "盐的科学：轻盐渍大师课", meta: "CRAFT · Malossol",
+      image: images.malossol,
+      intro: "低于 3% 的盐分让海洋感、坚果香与奶油质地自然展开，考验的是原料与师傅的稳定度。",
+      sections: [["低盐的边界", "盐分越克制，对冷链、成熟度和装罐时间的要求越高。"]],
+      related: ["zh-harvest", "zh-service"],
+    },
+    "zh-champagne": {
+      lang: "zh", eyebrow: "配餐艺术", title: "香槟之韵", meta: "PAIRING · Brut",
+      image: images.champagne,
+      intro: "年份干型香槟用酸度与气泡清理味蕾，让鱼子酱的油脂感变得更轻、更清晰。",
+      sections: [["选择方式", "优先选择酸度明亮、桶味克制的酒款，让酒体承担刷新口腔的角色。"]],
+      related: ["zh-mother-of-pearl", "zh-harvest"],
+    },
+    "zh-mother-of-pearl": {
+      lang: "zh", eyebrow: "品鉴器具", title: "贝母触感", meta: "SERVICE · Spoon",
+      image: images.spoon,
+      intro: "白贝母匙避免金属氧化味，是保护鱼子酱风味最简单也最有效的选择。",
+      sections: [["为什么不用金属", "银器会带来明显的金属尾韵，尤其会破坏低盐鱼子酱的细腻乳香。"]],
+      related: ["zh-service", "zh-champagne"],
+    },
+    "zh-ice-server": {
+      lang: "zh", eyebrow: "品鉴器具", title: "现代主义银质冰镇座", meta: "SERVICE · Ice",
+      image: images.ice,
+      intro: "双层冰镇座负责稳定温度，让开罐后的香气缓慢释放，而不是迅速失衡。",
+      sections: [["温度控制", "碎冰承托罐体，避免直接冻结鱼卵，同时让服务过程保持在理想区间。"]],
+      related: ["zh-harvest", "zh-mother-of-pearl"],
+    },
+    "en-harvest": {
+      lang: "en", eyebrow: "Maison Heritage", title: "The Art of the Harvest", meta: "MASTERCLASS · October 2024",
+      image: images.harvest,
+      intro: "Caviar harvesting is an act of judgment: temperature, pearl tension, maturity, and salting must meet in a narrow window.",
+      sections: [["The Heritage of the Sturgeon", "Every selection begins with traceability, maturity, pearl size, and the clean mineral finish that defines true service quality."], ["The Malossol Method", "Low salt supports flavor without covering the roe's natural creaminess and oceanic depth."]],
+      related: ["en-service", "en-malossol", "en-champagne"],
+    },
+    "en-truffle": {
+      lang: "en", eyebrow: "Sourcing", title: "Sourcing Excellence: The Alba Gold", meta: "ATLAS · Piedmont",
+      image: images.truffle,
+      intro: "Alba truffles carry a short season and unmistakable soil perfume, making them a natural aromatic extension of a caviar menu.",
+      sections: [["Source Discipline", "Harvest timing, humidity, and intact aroma decide whether a lot belongs on a LuxurEat table."]],
+      related: ["en-harvest", "en-service"],
+    },
+    "en-service": {
+      lang: "en", eyebrow: "Epicurean Life", title: "A Legacy of Taste: Modern Service", meta: "COURSE · Service",
+      image: images.service,
+      intro: "Great service lets the vessel, temperature, and wine step back so the first spoon of caviar can speak clearly.",
+      sections: [["Mother-of-Pearl", "Mother-of-pearl brings no metallic note, preserving the fragile texture and clean finish of the roe."]],
+      related: ["en-champagne", "en-mother-of-pearl"],
+    },
+    "en-malossol": {
+      lang: "en", eyebrow: "Craftsmanship", title: "The Science of Salt: Malossol Mastery", meta: "CRAFT · Malossol",
+      image: images.malossol,
+      intro: "Less than 3% salt exposes the roe's marine depth, nutty notes, and creamy texture, demanding better raw material and handling.",
+      sections: [["The Edge of Low Salt", "The less salt you use, the more cold-chain discipline and timing matter."]],
+      related: ["en-harvest", "en-service"],
+    },
+    "en-champagne": {
+      lang: "en", eyebrow: "Pairing", title: "Champagne", meta: "PAIRING · Brut",
+      image: images.champagne,
+      intro: "Vintage brut Champagne brings acidity and fine bubbles that refresh the palate between rich, saline tastes.",
+      sections: [["How to Choose", "Favor bright acidity and restrained oak so the wine cleanses rather than competes."]],
+      related: ["en-mother-of-pearl", "en-harvest"],
+    },
+    "en-mother-of-pearl": {
+      lang: "en", eyebrow: "Service Ware", title: "Mother-of-Pearl Spoon", meta: "SERVICE · Spoon",
+      image: images.spoon,
+      intro: "Mother-of-pearl is the simplest way to protect the roe from metallic flavors during service.",
+      sections: [["Why Not Metal", "Silver can leave an oxidative finish that overwhelms low-salt caviar's creamy delicacy."]],
+      related: ["en-service", "en-champagne"],
+    },
+    "en-ice-server": {
+      lang: "en", eyebrow: "Service Ware", title: "Modern Silver Ice Server", meta: "SERVICE · Ice",
+      image: images.ice,
+      intro: "A double-walled server stabilizes temperature after opening, keeping the tasting ritual calm and precise.",
+      sections: [["Temperature Control", "Crushed ice supports the tin without freezing the roe, preserving texture through service."]],
+      related: ["en-harvest", "en-mother-of-pearl"],
+    },
+  };
+
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[char]));
+  const labels = () => document.documentElement.lang?.startsWith("zh")
+    ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情" }
+    : { back: "Back", close: "Close", related: "Further Reading", read: "Read Details" };
+
+  const reader = document.createElement("div");
+  reader.className = "lux-reader";
+  reader.hidden = true;
+  reader.innerHTML = `
+    <div class="lux-reader-backdrop" data-reader-close></div>
+    <section class="lux-reader-panel" role="dialog" aria-modal="true" aria-labelledby="lux-reader-title">
+      <header class="lux-reader-header">
+        <button type="button" class="lux-reader-back" data-reader-back hidden></button>
+        <button type="button" class="lux-reader-close" data-reader-close></button>
+      </header>
+      <div class="lux-reader-body" tabindex="-1"></div>
+    </section>`;
+  document.body.appendChild(reader);
+
+  const body = reader.querySelector(".lux-reader-body");
+  const backButton = reader.querySelector("[data-reader-back]");
+  const closeButtons = reader.querySelectorAll("[data-reader-close]");
+  let currentId = "";
+  const stack = [];
+
+  const render = (id, push) => {
+    const article = articles[id];
+    if (!article) return;
+    if (push && currentId) stack.push(currentId);
+    currentId = id;
+    const copy = labels();
+
+    body.innerHTML = `
+      <article class="lux-reader-article">
+        <div class="lux-reader-hero" style="background-image:url('${escapeHtml(article.image)}')"></div>
+        <div class="lux-reader-copy">
+          <span class="lux-reader-eyebrow">${escapeHtml(article.eyebrow)}</span>
+          <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
+          <p class="lux-reader-meta">${escapeHtml(article.meta)}</p>
+          <p class="lux-reader-intro">${escapeHtml(article.intro)}</p>
+          ${article.sections.map(([heading, text]) => `
+            <section>
+              <h3>${escapeHtml(heading)}</h3>
+              <p>${escapeHtml(text)}</p>
+            </section>`).join("")}
+          <section class="lux-reader-related">
+            <div class="lux-reader-related-head">
+              <h3>${copy.related}</h3>
+            </div>
+            <div class="lux-reader-related-grid">
+              ${article.related.map((relatedId) => {
+                const item = articles[relatedId];
+                return item ? `
+                  <button type="button" data-reader-related="${escapeHtml(relatedId)}">
+                    <img src="${escapeHtml(item.image)}" alt="">
+                    <span>${escapeHtml(item.eyebrow)}</span>
+                    <strong>${escapeHtml(item.title)}</strong>
+                  </button>` : "";
+              }).join("")}
+            </div>
+          </section>
+        </div>
+      </article>`;
+
+    reader.hidden = false;
+    document.body.classList.add("lux-reader-open");
+    backButton.hidden = stack.length === 0;
+    backButton.textContent = copy.back;
+    reader.querySelector(".lux-reader-close").textContent = copy.close;
+    body.focus();
+    body.scrollTop = 0;
+  };
+
+  const open = (id) => {
+    stack.length = 0;
+    currentId = "";
+    render(id, false);
+  };
+  const close = () => {
+    reader.hidden = true;
+    document.body.classList.remove("lux-reader-open");
+    stack.length = 0;
+    currentId = "";
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-reader-open]");
+    if (!trigger || !articles[trigger.dataset.readerOpen]) return;
+    event.preventDefault();
+    open(trigger.dataset.readerOpen);
+  });
+  body.addEventListener("click", (event) => {
+    const related = event.target.closest("[data-reader-related]");
+    if (related) render(related.dataset.readerRelated, true);
+  });
+  backButton.addEventListener("click", () => {
+    const previous = stack.pop();
+    if (previous) render(previous, false);
+  });
+  closeButtons.forEach((button) => button.addEventListener("click", close));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !reader.hidden) close();
+  });
+}
+
+function initLuxInfoPopovers() {
+  const buttons = document.querySelectorAll("[data-info-popover]");
+  if (!buttons.length) return;
+
+  const popover = document.createElement("div");
+  popover.className = "lux-info-popover";
+  popover.hidden = true;
+  document.body.appendChild(popover);
+
+  let activeButton = null;
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[char]));
+
+  const close = () => {
+    popover.hidden = true;
+    if (activeButton) activeButton.setAttribute("aria-expanded", "false");
+    activeButton = null;
+  };
+  const place = (button) => {
+    const rect = button.getBoundingClientRect();
+    const top = Math.min(window.innerHeight - 150, rect.bottom + 12);
+    const left = Math.min(window.innerWidth - 280, Math.max(16, rect.right - 260));
+    popover.style.top = `${Math.max(16, top)}px`;
+    popover.style.left = `${left}px`;
+  };
+  const open = (button) => {
+    if (activeButton === button && !popover.hidden) {
+      close();
+      return;
+    }
+    if (activeButton) activeButton.setAttribute("aria-expanded", "false");
+    activeButton = button;
+    button.setAttribute("aria-expanded", "true");
+    popover.innerHTML = `<strong>${escapeHtml(button.dataset.infoTitle || "")}</strong><p>${escapeHtml(button.dataset.infoText || "")}</p>`;
+    place(button);
+    popover.hidden = false;
+  };
+
+  buttons.forEach((button) => {
+    button.type = "button";
+    button.setAttribute("aria-haspopup", "dialog");
+    button.setAttribute("aria-expanded", "false");
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      open(button);
+    });
+  });
+  document.addEventListener("click", (event) => {
+    if (!popover.contains(event.target)) close();
+  });
+  window.addEventListener("resize", close);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") close();
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initLuxReader();
+  initLuxInfoPopovers();
+});
+
 (() => {
   const key = "luxureatBag";
 

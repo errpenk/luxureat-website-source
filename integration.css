@@ -165,6 +165,197 @@
   pointer-events: auto;
 }
 .lux-back-to-top:hover { box-shadow: 0 10px 30px rgba(157,245,236,.24); }
+.lux-reader-open { overflow: hidden; }
+.lux-reader[hidden], .lux-info-popover[hidden] { display: none !important; }
+.lux-reader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 52px);
+}
+.lux-reader-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(12px);
+}
+.lux-reader-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1040px, 100%);
+  height: min(86vh, 980px);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border: 1px solid rgba(157, 245, 236, .18);
+  background: rgba(16, 16, 16, .92);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+  overflow: hidden;
+}
+.lux-reader-header {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+.lux-reader-back,
+.lux-reader-close {
+  min-width: 44px;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid rgba(157, 245, 236, .28);
+  color: #9df5ec;
+  font: 600 12px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.lux-reader-close { margin-left: auto; }
+.lux-reader-body {
+  min-height: 0;
+  overflow-y: auto;
+  outline: none;
+}
+.lux-reader-hero {
+  min-height: clamp(260px, 40vh, 470px);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(.85);
+}
+.lux-reader-copy {
+  width: min(760px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: clamp(34px, 6vw, 72px) 0;
+  color: #e5e2e1;
+}
+.lux-reader-eyebrow,
+.lux-reader-meta {
+  display: block;
+  color: #9df5ec;
+  font: 700 12px/1.4 Montserrat, Arial, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.lux-reader-copy h2 {
+  margin: 14px 0 10px;
+  font: 400 clamp(38px, 6vw, 72px)/1.05 "Bodoni Moda", Georgia, serif;
+}
+.lux-reader-intro {
+  margin: 32px 0 42px;
+  color: #d7dcda;
+  font: 300 clamp(18px, 2vw, 24px)/1.7 Montserrat, Arial, sans-serif;
+}
+.lux-reader-copy section { margin-top: 38px; }
+.lux-reader-copy h3 {
+  margin: 0 0 12px;
+  color: #e9c349;
+  font: 400 clamp(24px, 3vw, 34px)/1.15 "Bodoni Moda", Georgia, serif;
+}
+.lux-reader-copy p {
+  margin: 0;
+  color: #bdc9c7;
+  font: 400 16px/1.8 Montserrat, Arial, sans-serif;
+}
+.lux-reader-related {
+  padding-top: 46px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+.lux-reader-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.lux-reader-related-grid button {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  color: #e5e2e1;
+}
+.lux-reader-related-grid img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  filter: brightness(.72);
+}
+.lux-reader-related-grid span {
+  color: #9df5ec;
+  font: 700 10px/1.4 Montserrat, Arial, sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.lux-reader-related-grid strong {
+  font: 600 14px/1.4 Montserrat, Arial, sans-serif;
+}
+.lux-reader-card { position: relative; }
+.lux-reader-media { position: relative; }
+.lux-reader-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: rgba(0, 0, 0, .48);
+  opacity: 0;
+  transition: opacity .24s ease;
+}
+.lux-reader-card:hover .lux-reader-media::after,
+.lux-reader-card:focus-within .lux-reader-media::after { opacity: 1; }
+.lux-reader-cta {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 30;
+  transform: translate(-50%, -44%);
+  min-width: 132px;
+  min-height: 44px;
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 255, 255, .9);
+  background: rgba(0, 0, 0, .26);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  font: 600 13px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .24s ease, transform .24s ease, border-color .24s ease, color .24s ease;
+}
+.lux-reader-card:hover .lux-reader-cta,
+.lux-reader-card:focus-within .lux-reader-cta {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+.lux-reader-cta:hover {
+  border-color: #9df5ec;
+  color: #9df5ec;
+}
+.lux-info-popover {
+  position: fixed;
+  z-index: 10001;
+  width: min(260px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid rgba(157, 245, 236, .32);
+  background: rgba(24, 26, 26, .72);
+  color: #e5e2e1;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .38);
+}
+.lux-info-popover strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #9df5ec;
+  font: 700 12px/1.3 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.lux-info-popover p {
+  margin: 0;
+  color: #d7dcda;
+  font: 400 13px/1.65 Montserrat, Arial, sans-serif;
+}
 html.dark body {
   background: #131313;
   color: #e5e2e1;
@@ -196,4 +387,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-actions > a { display: none; }
   [data-caviar-grid].is-list [data-caviar-item] { grid-template-columns: 1fr; }
   .lux-module-grid, .lux-footer-grid { grid-template-columns: 1fr; }
+  .lux-reader { padding: 0; }
+  .lux-reader-panel { width: 100%; height: 100%; }
+  .lux-reader-related-grid { grid-template-columns: 1fr; }
 }
