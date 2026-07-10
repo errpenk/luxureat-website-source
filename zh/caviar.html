@@ -141,11 +141,16 @@
 <button type="button" data-caviar-view="grid" aria-pressed="true" aria-label="网格视图" class="material-symbols-outlined text-primary text-[20px]">grid_view</button>
 <button type="button" data-caviar-view="list" aria-pressed="false" aria-label="列表视图" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors text-[20px]">view_list</button>
 </div>
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 lux-sort-wrap">
 <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">排序:</span>
-<button type="button" data-caviar-sort="recommended" class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface uppercase tracking-widest hover:text-primary transition-colors" aria-label="切换排序方式">
+<button type="button" data-caviar-sort="recommended" class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface uppercase tracking-widest hover:text-primary transition-colors" aria-haspopup="listbox" aria-expanded="false" aria-label="排序方式">
                         <span data-caviar-sort-label>推荐排列</span> <span class="material-symbols-outlined text-[16px]">expand_more</span>
 </button>
+<div class="lux-sort-menu" data-caviar-sort-menu role="listbox" hidden>
+<button type="button" data-caviar-sort-option="recommended" role="option" aria-selected="true">推荐排列</button>
+<button type="button" data-caviar-sort-option="price-asc" role="option" aria-selected="false">价格升序</button>
+<button type="button" data-caviar-sort-option="price-desc" role="option" aria-selected="false">价格降序</button>
+</div>
 </div>
 </div>
 </section>

@@ -30,7 +30,10 @@ function initLuxCaviarControls() {
   const viewButtons = Array.from(controls.querySelectorAll("[data-caviar-view]"));
   const sortButton = controls.querySelector("[data-caviar-sort]");
   const sortLabel = controls.querySelector("[data-caviar-sort-label]");
+  const sortMenu = controls.querySelector("[data-caviar-sort-menu]");
+  const sortItems = Array.from(controls.querySelectorAll("[data-caviar-sort-option]"));
   const count = document.querySelector("[data-caviar-count]");
+  const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
 
   const activeButtonClasses = ["border-primary", "text-primary", "bg-primary/10"];
   const inactiveButtonClasses = ["border-outline-variant", "text-on-surface-variant"];
@@ -39,24 +42,24 @@ function initLuxCaviarControls() {
   const sortOptions = [
     {
       key: "recommended",
-      label: "推荐排列",
+      label: lang === "zh" ? "推荐排列" : "Recommended",
       compare: (a, b) => Number(a.dataset.recommendation) - Number(b.dataset.recommendation),
     },
     {
       key: "price-asc",
-      label: "价格升序",
+      label: lang === "zh" ? "价格升序" : "Price: Low to High",
       compare: (a, b) => Number(a.dataset.price) - Number(b.dataset.price),
     },
     {
       key: "price-desc",
-      label: "价格降序",
+      label: lang === "zh" ? "价格降序" : "Price: High to Low",
       compare: (a, b) => Number(b.dataset.price) - Number(a.dataset.price),
     },
   ];
 
   let activeFilter = "all";
   let activeView = "grid";
-  let activeSortIndex = 0;
+  let activeSortKey = "recommended";
 
   const setPressed = (buttons, activeButton, activeClasses, inactiveClasses) => {
     buttons.forEach((button) => {
@@ -91,19 +94,31 @@ function initLuxCaviarControls() {
   };
 
   const applySort = () => {
-    const option = sortOptions[activeSortIndex];
+    const option = sortOptions.find((item) => item.key === activeSortKey) || sortOptions[0];
     if (sortButton) {
       sortButton.dataset.caviarSort = option.key;
-      sortButton.setAttribute("aria-label", `切换排序方式，当前为${option.label}`);
+      sortButton.setAttribute("aria-expanded", "false");
+      sortButton.setAttribute("aria-label", `${lang === "zh" ? "排序方式" : "Sort by"}: ${option.label}`);
     }
     if (sortLabel) {
       sortLabel.textContent = option.label;
     }
+    sortItems.forEach((item) => {
+      const selected = item.dataset.caviarSortOption === option.key;
+      item.setAttribute("aria-selected", String(selected));
+      item.classList.toggle("is-selected", selected);
+    });
 
     items
       .slice()
       .sort(option.compare)
       .forEach((item) => grid.appendChild(item));
+  };
+
+  const setSortOpen = (open) => {
+    if (!sortButton || !sortMenu) return;
+    sortButton.setAttribute("aria-expanded", String(open));
+    sortMenu.hidden = !open;
   };
 
   filterButtons.forEach((button) => {
@@ -123,10 +138,25 @@ function initLuxCaviarControls() {
 
   if (sortButton) {
     sortButton.addEventListener("click", () => {
-      activeSortIndex = (activeSortIndex + 1) % sortOptions.length;
-      applySort();
+      setSortOpen(sortMenu?.hidden ?? true);
     });
   }
+
+  sortItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      activeSortKey = item.dataset.caviarSortOption || "recommended";
+      applySort();
+      setSortOpen(false);
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!controls.contains(event.target)) setSortOpen(false);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setSortOpen(false);
+  });
 
   applyFilter();
   applyView();
@@ -134,6 +164,46 @@ function initLuxCaviarControls() {
 }
 
 initLuxCaviarControls();
+
+(() => {
+  const key = `luxureatScroll:${location.pathname}`;
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+  const save = () => sessionStorage.setItem(key, String(window.scrollY || 0));
+  const restore = () => {
+    const y = Number(sessionStorage.getItem(key) || 0);
+    window.scrollTo(0, Number.isFinite(y) ? y : 0);
+  };
+
+  document.addEventListener("DOMContentLoaded", () => requestAnimationFrame(restore));
+  window.addEventListener("pagehide", save);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") save();
+  });
+})();
+
+(() => {
+  const lang = () => document.documentElement.lang?.startsWith("zh") ? "返回顶部" : "Back to top";
+
+  const init = () => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "lux-back-to-top";
+    button.setAttribute("aria-label", lang());
+    button.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">arrow_upward</span>';
+    document.body.appendChild(button);
+
+    const update = () => button.classList.toggle("visible", window.scrollY > 360);
+    button.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      sessionStorage.setItem(`luxureatScroll:${location.pathname}`, "0");
+    });
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  };
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
 
 (() => {
   const key = "luxureatBag";

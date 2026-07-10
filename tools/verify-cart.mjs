@@ -6,7 +6,15 @@ const store = new Map();
 const context = {
   document: {
     documentElement: { lang: 'en' },
+    body: { appendChild() {} },
     addEventListener() {},
+    createElement() {
+      return {
+        classList: { toggle() {} },
+        setAttribute() {},
+        addEventListener() {},
+      };
+    },
     querySelector() {
       return null;
     },
@@ -14,7 +22,13 @@ const context = {
       return [];
     },
   },
-  window: {},
+  window: {
+    addEventListener() {},
+    scrollTo() {},
+    scrollY: 0,
+  },
+  history: {},
+  location: { pathname: '/en/caviar.html' },
   localStorage: {
     getItem(key) {
       return store.get(key) ?? null;
@@ -25,6 +39,17 @@ const context = {
     removeItem(key) {
       store.delete(key);
     },
+  },
+  sessionStorage: {
+    getItem(key) {
+      return store.get(key) ?? null;
+    },
+    setItem(key, value) {
+      store.set(key, String(value));
+    },
+  },
+  requestAnimationFrame(callback) {
+    callback();
   },
   setTimeout,
 };

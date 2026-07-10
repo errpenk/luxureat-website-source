@@ -103,6 +103,72 @@
   min-height: 260px;
   aspect-ratio: 16 / 9;
 }
+.lux-sort-wrap { position: relative; }
+.lux-sort-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 60;
+  min-width: 220px;
+  padding: 8px;
+  border: 1px solid rgba(157, 245, 236, .22);
+  background: #20201f;
+  box-shadow: 0 8px 24px rgba(0,0,0,.32);
+}
+.lux-sort-menu[hidden] { display: none; }
+.lux-sort-menu button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 12px;
+  color: #e5e2e1;
+  font: 600 12px/1.2 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.lux-sort-menu button:hover,
+.lux-sort-menu button.is-selected {
+  background: rgba(157, 245, 236, .1);
+  color: #9df5ec;
+}
+.lux-sort-menu button.is-selected::after {
+  content: "check";
+  font-family: "Material Symbols Outlined";
+  font-size: 18px;
+  letter-spacing: 0;
+}
+.lux-back-to-top {
+  position: fixed;
+  right: clamp(18px, 3vw, 40px);
+  bottom: clamp(18px, 3vw, 40px);
+  z-index: 9998;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(157, 245, 236, .35);
+  background: #9df5ec;
+  color: #003734;
+  box-shadow: 0 8px 24px rgba(0,0,0,.34);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.lux-back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.lux-back-to-top:hover { box-shadow: 0 10px 30px rgba(157,245,236,.24); }
+html.dark body {
+  background: #131313;
+  color: #e5e2e1;
+}
 body { padding-top: 0 !important; }
 body:has(.lux-nav.open) { overflow-x: hidden; }
 @media (max-width: 1080px) {

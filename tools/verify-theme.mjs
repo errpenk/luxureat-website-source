@@ -119,6 +119,10 @@ assert(zhCaviar.includes('data-caviar-filter="baeri"'), 'Chinese caviar page has
 assert(zhCaviar.includes('data-caviar-view="grid"'), 'Chinese caviar page has a grid view button');
 assert(zhCaviar.includes('data-caviar-view="list"'), 'Chinese caviar page has a list view button');
 assert(zhCaviar.includes('data-caviar-sort'), 'Chinese caviar page has a sort control');
+assert(zhCaviar.includes('data-caviar-sort-menu'), 'Chinese caviar page has a collapsible sort menu');
+assert(zhCaviar.includes('data-caviar-sort-option="recommended"'), 'Chinese caviar sort menu has a recommended option');
+assert(zhCaviar.includes('data-caviar-sort-option="price-asc"'), 'Chinese caviar sort menu has a low-price option');
+assert(zhCaviar.includes('data-caviar-sort-option="price-desc"'), 'Chinese caviar sort menu has a high-price option');
 assert(zhCaviar.includes('data-caviar-grid'), 'Chinese caviar page marks the product grid');
 assert(zhCaviar.includes('data-caviar-item'), 'Chinese caviar page marks product cards');
 assert(zhCaviar.includes('data-species="beluga"'), 'Chinese caviar page marks Beluga product species');
@@ -130,12 +134,20 @@ assert(mainJs.includes('initLuxCaviarControls'), 'main.js initializes caviar fil
 assert(mainJs.includes('data-caviar-filter'), 'main.js listens to caviar filter buttons');
 assert(mainJs.includes('data-caviar-view'), 'main.js listens to caviar view buttons');
 assert(mainJs.includes('data-caviar-sort'), 'main.js listens to the caviar sort control');
+assert(mainJs.includes('data-caviar-sort-option'), 'main.js listens to explicit sort menu options');
+assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
+assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
 assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
 assert(mainJs.includes('.hidden ='), 'main.js hides filtered-out caviar product cards');
 
 const integrationCss = read(path.join(themeDir, 'integration.css'));
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
+assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
+assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
+
+const enRituals = read(path.join(themeDir, 'pages/en/rituals.php'));
+assert(!enRituals.includes('style="opacity: 0;">Caviar should be served chilled'), 'English rituals temperature copy is visible');
 
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {
