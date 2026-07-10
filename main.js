@@ -512,6 +512,19 @@ function initLuxProductDetails() {
     ice: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbRm7T-vUyLcLqFrQuOXykQjzwhdpDRZMcSbGFjeVpdb76MZnZ28gQBKlrdLjIc_T6WjQjfb9fKyBVe5FExMY-kpE-b4sG25R8qhkpNGJAlJP28iPnyPtCbQYT5ZdpDuLAhtScGkzGtfa55QEl-UcC8bncCNITmhCjb8RDhdB8hzDBWSWgpLLudYILlxAIcaXTQ2fMzaUXyQJZUcPC8Rg_RqNGkNslWq8L7t_OuWsc9fIRvbrYWlI1r5EErsUZte_sRwyldQQwu0Q",
     truffle: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQy_7QgEhJXRb9TVE_qzhuDOz-7NCGBa_j5-U9QAjY-RgkJ2ZQHX_5SO79aYEFnsmh__rooT1ufKKtESdCxIDI6AKK5cskDxVD5oMSArK_A-w8eZYyBq6M901sPa1EICBL1VKmnbf8fDFvZoZ_WKcozP-dEw8yZPP_5H1A26D2NuC1k-Y5wKcxiXZD1R99ifx-tOOWICpWqnVpIrkftwymdfHoUs6G_63VZqke4f15-qB_VQ2iKl62ZxITlbpb4UVfs_kj11XG2E8",
   };
+  const galleries = {
+    beluga: [
+      images.beluga,
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCDKyZdxU0kGF8Vd-zMlJdzsTr4siYTL8YgOEAlYupJwzsaN5mzFBD-W_ipZxBtWxInFokoDgH7cm7h5-5QPLGoSz0vpME_P6a0qrr-Y2y2VakxcC3vg1EYL-3UDQPI2nYhxCq34ENlKNl-kNGcA5waTnTOm8fxAxjpJJWFQhjCZ50Ik9jZhh_NSGXX3ZlXzw_kTgXFOcEWhH_a2_7GLr7-x_Z81gogm3T6Cs5jofzP_2_UFZ86UPvvHCja9qW79efyY2ZcXBFvjUk",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAQG35wvIpjHg3dO9aAqS8DyvQTpm_WWe89Uo6iHhEKHas-8N69c_tKuMELvL0NFW0qe67sWPKN_oBqBfGL00mRsknlGPt-R0KXIgMB1bGemgFMJMROABnT66UaotrHNezYujj8ApVJUUurxkjkr9U6J4ThUGrsXg5252uPdSK34NlDj31o4BeSdPRJcrjgm8cA693wzq1WFWmmuYFd4Dt69JkeOLzViDCDn8NGdxRv6m4qijpjT2ZpSdk60u9WeLKAu1emAC3IBMk",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuD5nzBWcTBNa6X7Vo61aOmU6wugtUwUu3Gxb-wumiWYodKCw7DoMFVY0oZp2_gA9lXB2c3ov0s9_wLPVff3abDSnJqJwABLZLr-lzdZfje7C-bzA7X_1_FiZr8UXnGHayvNtRxUUvJZKH41bzMCyD1PpXNgvYfArVffkYZQxflAXDhlv_A-jHthPCAJo7c5x5Xyg3ZLNg1HnEn31SkcIeVImzSOChtyArtj500F3ExSkBvUurl8uz1Xj4mwR5vFVyZ9OK99lCIxNno",
+    ],
+    oscetra: [images.oscetra, images.beluga, images.truffle],
+    spoon: [images.spoon, images.beluga, "https://lh3.googleusercontent.com/aida-public/AB6AXuAmATWC8-Wd1yng8-EUZvY9jZdTbpQu8tpAT7VeRaUsiwM4pzEOdMprJ1hiPv2A9b38FvL6BbqVHvfmTqFd2P_m8v_67SspNoJGljgNeheLHNuZcld5f0GRwAXic62Ux6qt_SFlmjTwHP0sWBO7ftycDJ3-jXA_MW_dII9WLKFtSn7nhavfVil7EeusjZa8Jsq4AAPjVhCLEQ9FNt4oOkZWX9LAQRra1szFveLxJiZfHSIo_bv_fQc5KPBixeFnT1tuaDTEPlE4pis"],
+    champagne: [images.champagne, images.beluga],
+    ice: [images.ice, images.champagne, images.spoon],
+    truffle: [images.truffle, images.oscetra],
+  };
   const products = {
     "zh-imperial-beluga": { title: "至臻帝王鲟鱼子酱", eyebrow: "Rare Harvest", desc: "源自帝王鲟的银灰色大颗粒，入口即化，呈现奶油、海洋与矿物的长尾。", price: "¥2,480", unit: "30G", image: images.beluga, id: "imperial-beluga-30g", subtitle: "Imperial Beluga / 30g", currency: "¥", amount: 2480, specs: ["Huso Huso", "3.2 - 3.5 MM", "Pearl Grey", "奶油/海洋/矿物"] },
     "zh-royal-oscetra": { title: "皇家奥西特拉鱼子酱", eyebrow: "Nutty Reserve", desc: "金棕色鱼子带来紧实颗粒感与烘焙坚果香，是进阶品鉴与商务宴请的稳妥选择。", price: "¥1,280", unit: "30G", image: images.oscetra, id: "royal-oscetra-30g", subtitle: "Royal Oscetra / 30g", currency: "¥", amount: 1280, specs: ["Acipenser Gueldenstaedtii", "2.8 - 3.1 MM", "Amber Gold", "坚果/黄油/海盐"] },
@@ -532,6 +545,15 @@ function initLuxProductDetails() {
   const copy = () => document.documentElement.lang?.startsWith("zh")
     ? { close: "关闭", add: "加入购物袋", qty: "数量", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
     : { close: "Close", add: "Add to Cart", qty: "Qty", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+  const galleryFor = (product) => {
+    if (product.id.includes("beluga")) return galleries.beluga;
+    if (product.id.includes("oscetra")) return galleries.oscetra;
+    if (product.id.includes("spoon")) return galleries.spoon;
+    if (product.id.includes("champagne")) return galleries.champagne;
+    if (product.id.includes("ice-server")) return galleries.ice;
+    if (product.id.includes("truffle")) return galleries.truffle;
+    return [product.image];
+  };
 
   const detail = document.createElement("div");
   detail.className = "lux-product-detail";
@@ -546,10 +568,16 @@ function initLuxProductDetails() {
     const product = products[id];
     if (!product) return;
     const labels = copy();
+    const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
     body.innerHTML = `
       <article>
         <section class="lux-product-hero">
-          <div class="lux-product-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}"></div>
+          <div class="lux-product-gallery">
+            <div class="lux-product-thumbs" aria-label="${escapeHtml(product.title)} gallery">
+              ${galleryImages.map((src, index) => `<button type="button" class="lux-product-thumb${index === 0 ? " is-active" : ""}" data-product-gallery="${index}" aria-label="${escapeHtml(product.title)} ${index + 1}"><img src="${escapeHtml(src)}" alt="${escapeHtml(product.title)} ${index + 1}"></button>`).join("")}
+            </div>
+            <div class="lux-product-image"><img data-product-main-image src="${escapeHtml(galleryImages[0] || product.image)}" alt="${escapeHtml(product.title)}"></div>
+          </div>
           <div class="lux-product-summary">
             <span>${escapeHtml(product.eyebrow)}</span>
             <h2 id="lux-product-title">${escapeHtml(product.title)}</h2>
@@ -557,9 +585,9 @@ function initLuxProductDetails() {
             <strong>${escapeHtml(product.price)} <small>/ ${escapeHtml(product.unit)}</small></strong>
             <div class="lux-product-purchase">
               <div class="lux-product-qty" aria-label="${escapeHtml(labels.qty)}">
-                <button type="button" data-product-quantity="-1"><span class="material-symbols-outlined" aria-hidden="true">remove</span></button>
+                <button type="button" data-product-quantity="-1" aria-label="${escapeHtml(labels.qty)} -">−</button>
                 <output data-product-quantity-value>1</output>
-                <button type="button" data-product-quantity="1"><span class="material-symbols-outlined" aria-hidden="true">add</span></button>
+                <button type="button" data-product-quantity="1" aria-label="${escapeHtml(labels.qty)} +">+</button>
               </div>
               <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${labels.add}</button>
             </div>
@@ -584,6 +612,18 @@ function initLuxProductDetails() {
     }
   };
   detail.addEventListener("click", (event) => {
+    const galleryButton = event.target.closest("[data-product-gallery]");
+    if (galleryButton) {
+      const thumbImage = galleryButton.querySelector("img");
+      const mainImage = detail.querySelector("[data-product-main-image]");
+      if (thumbImage && mainImage) {
+        mainImage.src = thumbImage.src;
+        mainImage.alt = thumbImage.alt;
+        detail.querySelectorAll("[data-product-gallery]").forEach((button) => button.classList.remove("is-active"));
+        galleryButton.classList.add("is-active");
+      }
+      return;
+    }
     const button = event.target.closest("[data-product-quantity]");
     if (!button) return;
     const output = detail.querySelector("[data-product-quantity-value]");
