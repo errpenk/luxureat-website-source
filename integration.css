@@ -112,6 +112,11 @@
   isolation: isolate;
   background: #101010;
 }
+.lux-full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
 .lux-dark-photo-block > *:not(.lux-dark-photo-bg) {
   position: relative;
   z-index: 1;
@@ -140,11 +145,51 @@
   opacity: .44;
   transform: scale(1.06);
 }
+.lux-bright-photo .lux-dark-photo-bg { opacity: .48; }
 .lux-photo-fade-bottom::after {
   background:
-    linear-gradient(to bottom, rgba(16,16,16,.2), rgba(16,16,16,.46) 48%, #101010 100%),
-    rgba(0,0,0,.42);
+    linear-gradient(to bottom, #101010 0%, rgba(16,16,16,.34) 18%, rgba(16,16,16,.48) 60%, #101010 100%),
+    rgba(0,0,0,.38);
 }
+.lux-hero-fade-both {
+  background: linear-gradient(to bottom, #101010 0%, rgba(16,16,16,.34) 18%, rgba(16,16,16,.42) 62%, #101010 100%) !important;
+}
+.lux-card-photo {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #171717;
+}
+.lux-card-photo > * {
+  position: relative;
+  z-index: 1;
+}
+.lux-card-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--lux-card-bg) center / cover;
+  opacity: .2;
+  filter: grayscale(1) contrast(1.08);
+  transform: scale(1.03);
+  transition: opacity .35s ease, transform .7s ease;
+}
+.lux-card-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0,0,0,.58);
+}
+.lux-card-photo:hover::before {
+  opacity: .34;
+  transform: scale(1.07);
+}
+.lux-card-photo-one { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDI95D4H3N8ISKIn4CP30WZlSRdlqhBKd1IC9yMCpcWcUEiTE_G45g5Zf4VUb20pB7OGvmHXAnaODY726JGfvja-8jDMQCUHIOcNzpFcBsWLlP5iW4sPVMgoK4VuTDRgyiiUhfcr4nxfqktFMW8sCTg_DbyE1nMiymFoecp9UXVThav8CYMi8lSk0YEWWyOVwXsfO8lREh3v5J0ffp2Ljo2TTZN4IPABAJjTvFenRYkegjwNBWbd0n2Pkbz6IHWD4pbQNGsr_leyxw"); }
+.lux-card-photo-two { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBoPRwxvQOmHqNT232yA2aUY2zRh1_cnBBvXcKRHewJ4aG_PfIFz8MXLQLsJiLIyUXslsOfWrXxfollJKQF6lQZQfCsqqVLbIZiJHunsWkso0aiISFUQcyq8_4wO9J3Gt25hLpv-iiHdTqLalW-P_sHArq8JlUO0ycSBH8zid4OLED2c4J6FFIv6GMMsKRoK5L5dWur-IHLjpXYq8hv7Zw8bHiNvjDBEhV7eZA6fU9Hu0wvOQ4k0uci3OHhrWTZdOOQ4ZT-wkRW13Y"); }
+.lux-card-photo-three { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADwWdrVYVRUkrlBm4W9LycdW_xNkYRwFyp73MClJI2A9wIndxAASUdmSBqgw-5w7wLCbcID5DEwutPNDv5D9wi9GrQOlW6wOEWICxWUQom4_MEzkhgA4CfvcVoZNRwlnAfMSzJqL0T-80HyzxCJEPLVJvj3V0Wgwf1rgIp8RF0HXI1aqalnAmgfM7xMSV18pld6Bp2BHfP6Oy1nBWmi7zDZly36ZnoaF4FmxOI4xCHypTTtiwins2yjgU7irJaRA2IzgHpoj7CuKI"); }
+.lux-card-photo-four { --lux-card-bg: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBE7ARWk_njftqnb8aC9fGuVZMZTq74j_LYXIhmdqqHDnK5f9ys54Rw5w-958ow_KbSD_9uO9C6mEBMRWufm5CSGGFz7wu9vg2SvVdOqERFc1kRGjzW9dL02FK_iSNWGXHSKQogw9whtXQJMUEESwgPV7sRJqwM98lOEfy88ixumv8KqKt3GTHpG8ouelqbUFLFCOoTVYF7V_lZOfzsfaHjhYXmQWTmb77d_dz0Gi2Wz6wwKUqkIzujQKH_08EadCCYK6HJccUPOrE"); }
 [data-caviar-item][hidden] { display: none !important; }
 [data-caviar-grid].is-list {
   display: flex;

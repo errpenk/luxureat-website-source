@@ -18,6 +18,7 @@ const expectedRoutes = [
   'zh/bag',
   'en',
   'en/caviar',
+  'en/products',
   'en/rituals',
   'en/journal',
   'en/gifting',
@@ -94,6 +95,7 @@ assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php pr
 assert(functionsPhp.includes('function luxureat_static_pretty_paths('), 'functions.php defines canonical pretty route URLs');
 assert(functionsPhp.includes("'zh/caviar' => '/caviar/'"), 'functions.php maps the Chinese caviar route to /caviar/');
 assert(functionsPhp.includes("'en/caviar' => '/en/caviar/'"), 'functions.php maps the English caviar route to /en/caviar/');
+assert(functionsPhp.includes("'en/products' => '/en/products/'"), 'functions.php maps the English products route to /en/products/');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
@@ -186,6 +188,9 @@ assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles prod
 assert(integrationCss.includes('[data-caviar-grid] [data-bag-add]'), 'integration.css gives product-card add buttons the heavier border');
 assert(integrationCss.includes('[data-caviar-grid] [data-product-open]'), 'integration.css gives product-card detail buttons the lighter border');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
+assert(integrationCss.includes('.lux-full-bleed'), 'integration.css supports full-width dark photo sections');
+assert(integrationCss.includes('.lux-hero-fade-both'), 'integration.css supports top-and-bottom hero fades');
+assert(integrationCss.includes('.lux-card-photo'), 'integration.css supports dark photo card backgrounds');
 assert(integrationCss.includes('font: 700 34px/1.1 Montserrat'), 'product-detail prices use a clearer non-hairline font');
 assert(integrationCss.includes('.lux-footer-modal'), 'integration.css styles footer light-background modals');
 assert(!integrationCss.includes('.lux-reader-layout .lux-reader-intro:first-letter'), 'article reader does not enlarge or recolor the first character');
@@ -199,13 +204,15 @@ const zhGifting = read(path.join(themeDir, 'pages/zh/gifting.php'));
 const enGifting = read(path.join(themeDir, 'pages/en/gifting.php'));
 assert(zhGifting.includes('data-info-popover'), 'Chinese gifting page marks scenario info buttons');
 assert(enGifting.includes('data-info-popover'), 'English gifting page marks scenario info buttons');
+assert(!zhGifting.includes('立即获取企业画册') && !zhGifting.includes('咨询专属顾问'), 'Chinese gifting hero removes the requested CTA controls');
+assert(!enGifting.includes('Explore Collections'), 'English gifting hero removes the matching CTA control');
 assert(zhGifting.includes('<strong>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
 assert(enGifting.includes('<strong>Reference Plan</strong>') && !enGifting.includes('<span>Professional Partnership</span>') && !enGifting.includes('Start a Corporate Program'), 'English gifting partner card mirrors the reference-plan wording');
 
 const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
 const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
 assert(zhBag.includes('浏览全部') && zhBag.includes("luxureat_static_url('zh/caviar'"), 'Chinese bag browse-all link goes to caviar');
-assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/caviar'"), 'English bag browse-all link goes to caviar');
+assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/products'"), 'English bag browse-all link goes to products');
 assert(zhBag.includes('查看详情') && zhBag.includes('data-product-open'), 'Chinese bag recommendations include product-detail actions');
 assert(enBag.includes('View Details') && enBag.includes('data-product-open'), 'English bag recommendations include product-detail actions');
 
@@ -219,17 +226,22 @@ assert(enJournal.includes('lux-reader-card'), 'English journal cards expose hove
 const zhRituals = read(path.join(themeDir, 'pages/zh/rituals.php'));
 assert(zhRituals.includes('data-reader-open="zh-champagne"'), 'Chinese rituals pairing cards open reader details');
 assert(enRituals.includes('data-reader-open="en-champagne"'), 'English rituals pairing cards open reader details');
-assert(zhRituals.includes("luxureat_static_url('zh/contact'"), 'Chinese rituals booking CTA links to contact');
-assert(enRituals.includes("luxureat_static_url('en/contact'"), 'English rituals booking CTA links to contact');
+assert(zhRituals.includes("luxureat_static_url('zh/caviar'"), 'Chinese rituals shopping CTA links to products');
+assert(enRituals.includes("luxureat_static_url('en/products'"), 'English rituals shopping CTA links to products');
 assert((zhRituals.match(/lux-dark-photo-block/g) || []).length >= 3, 'Chinese rituals ceremony cards use dark photo backgrounds');
 
 assert(zhCaviar.includes('data-product-open="zh-imperial-beluga"'), 'Chinese caviar product card opens product details');
 assert(zhCaviar.includes("luxureat_static_url('zh/rituals'"), 'Chinese caviar ritual CTA links to rituals');
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
+assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
 const enCaviar = read(path.join(themeDir, 'pages/en/caviar.php'));
 assert(enCaviar.includes('data-product-open="en-imperial-beluga"'), 'English caviar page opens product details');
 assert(enCaviar.includes("luxureat_static_url('en/rituals'"), 'English caviar ritual CTA links to rituals');
 assert((enCaviar.match(/lux-dark-photo-block/g) || []).length >= 3, 'English caviar pairing cards use dark photo backgrounds');
+const enProducts = read(path.join(themeDir, 'pages/en/products.php'));
+assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
+assert(enProducts.includes('data-product-open="en-royal-oscetra"'), 'English products page opens Oscetra product details');
+assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English products ritual CTA links to rituals');
 
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');
@@ -238,6 +250,7 @@ const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
 assert(zhHome.includes('data-product-open="zh-imperial-beluga"'), 'Chinese home shop CTA opens product detail');
 assert(enHome.includes('data-product-open="en-imperial-beluga"'), 'English home shop CTA opens product detail');
+assert(enHome.includes("luxureat_static_url('en/products'"), 'English navigation exposes the products page');
 assert(zhGifting.indexOf("luxureat_static_url('zh/certification'") < zhGifting.indexOf("luxureat_static_url('zh/gifting'"), 'Chinese nav puts certification before gifting');
 assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_static_url('zh/contact'"), 'Chinese gifting inquiry card links to contact');
 assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
