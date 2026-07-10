@@ -137,7 +137,10 @@ assert(mainJs.includes('data-caviar-sort'), 'main.js listens to the caviar sort 
 assert(mainJs.includes('data-caviar-sort-option'), 'main.js listens to explicit sort menu options');
 assert(mainJs.includes('initLuxReader'), 'main.js initializes the shared reading container');
 assert(mainJs.includes('data-reader-open'), 'main.js listens to reading-detail triggers');
-assert(mainJs.includes('data-info-popover'), 'main.js listens to gift scenario info buttons');
+assert(mainJs.includes('initLuxProductDetails'), 'main.js initializes shared product-detail views');
+assert(mainJs.includes('data-product-open'), 'main.js listens to product-detail triggers');
+assert(mainJs.includes('mouseenter'), 'main.js opens gift scenario info on hover');
+assert(mainJs.includes('lux-reader-layout'), 'main.js renders the editorial article reader layout');
 assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
 assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
 assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
@@ -149,6 +152,7 @@ assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css h
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
 assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
 assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
+assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles the shared product-detail view');
 assert(integrationCss.includes('.lux-reader-cta'), 'integration.css styles card reading hover calls to action');
 assert(integrationCss.includes('.lux-info-popover'), 'integration.css styles the frosted gift scenario popover');
 
@@ -162,8 +166,10 @@ assert(enGifting.includes('data-info-popover'), 'English gifting page marks scen
 
 const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
 const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
-assert(zhBag.includes('查看详情') && zhBag.includes('data-reader-open'), 'Chinese bag recommendations include view-details reader actions');
-assert(enBag.includes('View Details') && enBag.includes('data-reader-open'), 'English bag recommendations include view-details reader actions');
+assert(zhBag.includes('浏览全部') && zhBag.includes("luxureat_static_url('zh/caviar'"), 'Chinese bag browse-all link goes to caviar');
+assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/caviar'"), 'English bag browse-all link goes to caviar');
+assert(zhBag.includes('查看详情') && zhBag.includes('data-product-open'), 'Chinese bag recommendations include product-detail actions');
+assert(enBag.includes('View Details') && enBag.includes('data-product-open'), 'English bag recommendations include product-detail actions');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/journal.php'));
 const enJournal = read(path.join(themeDir, 'pages/en/journal.php'));
@@ -175,6 +181,21 @@ assert(enJournal.includes('lux-reader-card'), 'English journal cards expose hove
 const zhRituals = read(path.join(themeDir, 'pages/zh/rituals.php'));
 assert(zhRituals.includes('data-reader-open="zh-champagne"'), 'Chinese rituals pairing cards open reader details');
 assert(enRituals.includes('data-reader-open="en-champagne"'), 'English rituals pairing cards open reader details');
+assert(zhRituals.includes("luxureat_static_url('zh/contact'"), 'Chinese rituals booking CTA links to contact');
+assert(enRituals.includes("luxureat_static_url('en/contact'"), 'English rituals booking CTA links to contact');
+
+assert(zhCaviar.includes('data-product-open="zh-imperial-beluga"'), 'Chinese caviar product card opens product details');
+assert(zhCaviar.includes("luxureat_static_url('zh/rituals'"), 'Chinese caviar ritual CTA links to rituals');
+const enCaviar = read(path.join(themeDir, 'pages/en/caviar.php'));
+assert(enCaviar.includes('data-product-open="en-imperial-beluga"'), 'English caviar page opens product details');
+assert(enCaviar.includes("luxureat_static_url('en/rituals'"), 'English caviar ritual CTA links to rituals');
+
+const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
+const enHome = read(path.join(themeDir, 'pages/en/index.php'));
+assert(zhHome.includes('data-product-open="zh-imperial-beluga"'), 'Chinese home shop CTA opens product detail');
+assert(enHome.includes('data-product-open="en-imperial-beluga"'), 'English home shop CTA opens product detail');
+assert(zhGifting.indexOf("luxureat_static_url('zh/certification'") < zhGifting.indexOf("luxureat_static_url('zh/gifting'"), 'Chinese nav puts certification before gifting');
+assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_static_url('zh/contact'"), 'Chinese gifting inquiry card links to contact');
 
 assert(fs.existsSync(zipFile), 'theme zip exists');
 if (fs.existsSync(zipFile)) {

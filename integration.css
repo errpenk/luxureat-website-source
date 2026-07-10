@@ -356,6 +356,273 @@
   color: #d7dcda;
   font: 400 13px/1.65 Montserrat, Arial, sans-serif;
 }
+[data-info-popover] {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-grid;
+  place-items: center;
+}
+.lux-reader-panel {
+  width: min(1160px, 100%);
+  height: min(90vh, 1040px);
+  background: #131313;
+}
+.lux-reader-layout { min-height: 100%; background: #131313; }
+.lux-reader-layout .lux-reader-hero {
+  position: relative;
+  min-height: min(72vh, 760px);
+  display: flex;
+  align-items: flex-end;
+  background-size: cover;
+  background-position: center;
+}
+.lux-reader-layout .lux-reader-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(19,19,19,0) 0%, #131313 100%);
+}
+.lux-reader-hero-copy {
+  position: relative;
+  z-index: 1;
+  width: min(980px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 0 0 clamp(44px, 8vw, 96px);
+}
+.lux-reader-hero-copy h2 {
+  max-width: 900px;
+  margin: 16px 0 18px;
+  color: #e5e2e1;
+  font: italic 300 clamp(42px, 7vw, 78px)/1.05 "Bodoni Moda", Georgia, serif;
+}
+.lux-reader-layout .lux-reader-copy {
+  width: min(860px, calc(100% - 48px));
+  padding: clamp(56px, 8vw, 110px) 0;
+}
+.lux-reader-layout .lux-reader-intro:first-letter {
+  float: left;
+  margin: .1em .16em 0 0;
+  color: #e9c349;
+  font: 400 4.8em/0.8 "Bodoni Moda", Georgia, serif;
+}
+.lux-reader-related-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.lux-reader-related-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .56);
+  opacity: 0;
+  transition: opacity .22s ease;
+}
+.lux-reader-related-cta {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  transform: translate(-50%, -44%);
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.9);
+  color: #fff !important;
+  background: rgba(0,0,0,.28);
+  opacity: 0;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.lux-reader-related-grid button:hover .lux-reader-related-media::after,
+.lux-reader-related-grid button:focus-visible .lux-reader-related-media::after {
+  opacity: 1;
+}
+.lux-reader-related-grid button:hover .lux-reader-related-cta,
+.lux-reader-related-grid button:focus-visible .lux-reader-related-cta {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+.lux-product-detail[hidden] { display: none !important; }
+.lux-product-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 52px);
+}
+.lux-product-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.68);
+  backdrop-filter: blur(12px);
+}
+.lux-product-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  height: min(90vh, 1040px);
+  overflow: hidden;
+  background: #fcf9f8;
+  color: #1c1b1b;
+  border: 1px solid rgba(189,201,199,.5);
+}
+.lux-product-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0,106,100,.35);
+  color: #006a64;
+  background: rgba(252,249,248,.82);
+  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.lux-product-body {
+  height: 100%;
+  overflow-y: auto;
+  outline: none;
+}
+.lux-product-hero {
+  min-height: min(88vh, 820px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
+  gap: clamp(28px, 6vw, 88px);
+  align-items: center;
+  padding: clamp(32px, 6vw, 78px);
+}
+.lux-product-image {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #f6f3f2;
+}
+.lux-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s ease;
+}
+.lux-product-image:hover img { transform: scale(1.04); }
+.lux-product-summary {
+  display: grid;
+  gap: 24px;
+}
+.lux-product-summary span,
+.lux-product-specs span {
+  color: #006a64;
+  font: 700 12px/1.4 Montserrat, Arial, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.lux-product-summary h2 {
+  margin: 0;
+  color: #1c1b1b;
+  font: 600 clamp(42px, 6vw, 72px)/1.05 "Bodoni Moda", Georgia, serif;
+}
+.lux-product-summary p,
+.lux-product-story p {
+  margin: 0;
+  color: #3e4947;
+  font: 400 18px/1.7 Montserrat, Arial, sans-serif;
+}
+.lux-product-summary strong {
+  color: #006a64;
+  font: 500 32px/1 "Bodoni Moda", Georgia, serif;
+}
+.lux-product-summary small { color: #3e4947; font: 700 13px/1 Montserrat, Arial, sans-serif; }
+.lux-product-summary button {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 34px;
+  border: 2px solid #006a64;
+  color: #006a64;
+  font: 700 13px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.lux-product-summary button:hover { background: #006a64; color: #fff; }
+.lux-product-specs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  padding: 40px clamp(32px, 6vw, 78px);
+  background: #f6f3f2;
+  border-block: 1px solid rgba(189,201,199,.55);
+}
+.lux-product-specs div {
+  display: grid;
+  gap: 12px;
+  padding-left: 18px;
+  border-left: 1px solid #bdc9c7;
+}
+.lux-product-specs strong {
+  color: #1c1b1b;
+  font: 500 22px/1.25 "Bodoni Moda", Georgia, serif;
+}
+.lux-product-story {
+  width: min(780px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 110px) 0;
+}
+.lux-product-story h3 {
+  margin: 0 0 24px;
+  font: 500 clamp(32px, 4vw, 48px)/1.15 "Bodoni Moda", Georgia, serif;
+}
+.lux-partner-card {
+  position: relative;
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.1);
+  color: #e5e2e1;
+  text-decoration: none;
+}
+.lux-partner-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform .7s ease;
+}
+.lux-partner-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.46);
+}
+.lux-partner-card:hover .lux-partner-card-bg { transform: scale(1.05); }
+.lux-partner-card-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+  padding: 32px;
+}
+.lux-partner-card-content span {
+  color: #9df5ec;
+  font: 700 12px/1.4 Montserrat, Arial, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.lux-partner-card-content strong {
+  max-width: 420px;
+  font: 400 clamp(34px, 5vw, 54px)/1.12 "Bodoni Moda", Georgia, serif;
+}
+.lux-partner-card-content em {
+  min-width: 180px;
+  padding: 14px 24px;
+  border: 1px solid #e9c349;
+  color: #e9c349;
+  font: normal 700 12px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
 html.dark body {
   background: #131313;
   color: #e5e2e1;
@@ -390,4 +657,8 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-reader { padding: 0; }
   .lux-reader-panel { width: 100%; height: 100%; }
   .lux-reader-related-grid { grid-template-columns: 1fr; }
+  .lux-product-detail { padding: 0; }
+  .lux-product-panel { width: 100%; height: 100%; }
+  .lux-product-hero { grid-template-columns: 1fr; padding: 28px 20px 48px; }
+  .lux-product-specs { grid-template-columns: 1fr; padding-inline: 20px; }
 }

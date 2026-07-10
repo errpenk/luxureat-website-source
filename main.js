@@ -357,12 +357,15 @@ function initLuxReader() {
     const copy = labels();
 
     body.innerHTML = `
-      <article class="lux-reader-article">
-        <div class="lux-reader-hero" style="background-image:url('${escapeHtml(article.image)}')"></div>
+      <article class="lux-reader-layout">
+        <section class="lux-reader-hero" style="background-image:url('${escapeHtml(article.image)}')">
+          <div class="lux-reader-hero-copy">
+            <span class="lux-reader-eyebrow">${escapeHtml(article.eyebrow)}</span>
+            <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
+            <p class="lux-reader-meta">${escapeHtml(article.meta)}</p>
+          </div>
+        </section>
         <div class="lux-reader-copy">
-          <span class="lux-reader-eyebrow">${escapeHtml(article.eyebrow)}</span>
-          <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
-          <p class="lux-reader-meta">${escapeHtml(article.meta)}</p>
           <p class="lux-reader-intro">${escapeHtml(article.intro)}</p>
           ${article.sections.map(([heading, text]) => `
             <section>
@@ -378,7 +381,10 @@ function initLuxReader() {
                 const item = articles[relatedId];
                 return item ? `
                   <button type="button" data-reader-related="${escapeHtml(relatedId)}">
-                    <img src="${escapeHtml(item.image)}" alt="">
+                    <span class="lux-reader-related-media">
+                      <img src="${escapeHtml(item.image)}" alt="">
+                      <span class="lux-reader-related-cta">${copy.read}</span>
+                    </span>
                     <span>${escapeHtml(item.eyebrow)}</span>
                     <strong>${escapeHtml(item.title)}</strong>
                   </button>` : "";
@@ -472,10 +478,10 @@ function initLuxInfoPopovers() {
     button.type = "button";
     button.setAttribute("aria-haspopup", "dialog");
     button.setAttribute("aria-expanded", "false");
-    button.addEventListener("click", (event) => {
-      event.stopPropagation();
-      open(button);
-    });
+    button.addEventListener("mouseenter", () => open(button));
+    button.addEventListener("focus", () => open(button));
+    button.addEventListener("mouseleave", close);
+    button.addEventListener("blur", close);
   });
   document.addEventListener("click", (event) => {
     if (!popover.contains(event.target)) close();
@@ -486,9 +492,112 @@ function initLuxInfoPopovers() {
   });
 }
 
+function initLuxProductDetails() {
+  const triggers = document.querySelectorAll("[data-product-open]");
+  const images = {
+    beluga: "https://lh3.googleusercontent.com/aida-public/AB6AXuACJOnyTg87lVs0EJCu5fRU4HTMa17EXiWif-_i75wx6YuLlPpTlUwQiwdFkPLBhE5gXWVrGU04jUdKhTd3PZyQ8bpW4mSkIcPhMfmwfLClntQ4vY6NJOAkUb1bivTdXI2YitlmukK1D3dGNNAc9g0rboUlkemDceyJT1Btw5n3mxvGXpJcax2iqf2VFHX_HTTpZ0_isZ13U-FDO7Je8sxIZsTLFEBEIacseGoW2VqzxbwZ1rF1OohLNzwRwOuv7bjFFmj_ZFkv0MI",
+    oscetra: "https://lh3.googleusercontent.com/aida-public/AB6AXuBw_tDFhLpvYsM-QXpGZ1LlENLhyBbuXDFWoGotLU0shCFfsNIC3PfJmEYbC2sjUwEwrJvOFjhPdv3klNWbI3lo9ggNI9xeczWfnQCahE6pVj58uH2z_J8upHhFnzGm0rbGwDAy-H5sFaPfBzB98QvxUPHEq9JCsuO_rAtoOX11FRMIlt1iaeib6XCJ1IpoX2K9ihttS8BLMf5ZZVkr_nWpd-9xRNwnOOT38v50QuJ8jz1PhP-YouPd4QkysuGMfZM1pXUKiQDfGt8",
+    spoon: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2P5yZoNq2-PBMLXeFcbruH1kXuUuYjkMfzKDIKD21IWS8cj0gPO1qmelr-FXL-acV_eTP1vy8o3A4GM_cEf7CbFJBvIC-lHvsziLOZ3iplbm7luEgBN6adnsaNysgBmwJOBwEXJi6SIVoBYAIc4NI1mnCc3W5B4wVTHPQtpnMbcldWMuiDawngtY4iNSVWWR0hreOxU8Hly_d_-706XymQuHqyuDgiHCwEVt1PrdI5fL_9VifYaPDt2uoGGeMYzvCFBOq47acuNM",
+    champagne: "https://lh3.googleusercontent.com/aida-public/AB6AXuDAdvQdleYAsN8UYpwdMZHwnWbgcUDtdpGFWKWXj6I4SEE02s8aPf4txi8Rpn1-chBzWrO8914w5sx-2WEDKip-qC5r2bPujAoMIpbq3nWejA1XxdaO5pHuXsnPvkQPugM0_E-Vvl6d6b_YNERpu69jkWlW40vMcDgKuRh5rduZrycRhd_o3nUIJ0a5sm0gSODr_UOnhAj09zHnvw2DNfjnxNATC4OJ7w87gZJg5AhNewIQ_wKbxqHKc_mx-71usoOmX0uisxRI5Tw",
+    ice: "https://lh3.googleusercontent.com/aida-public/AB6AXuCbRm7T-vUyLcLqFrQuOXykQjzwhdpDRZMcSbGFjeVpdb76MZnZ28gQBKlrdLjIc_T6WjQjfb9fKyBVe5FExMY-kpE-b4sG25R8qhkpNGJAlJP28iPnyPtCbQYT5ZdpDuLAhtScGkzGtfa55QEl-UcC8bncCNITmhCjb8RDhdB8hzDBWSWgpLLudYILlxAIcaXTQ2fMzaUXyQJZUcPC8Rg_RqNGkNslWq8L7t_OuWsc9fIRvbrYWlI1r5EErsUZte_sRwyldQQwu0Q",
+    truffle: "https://lh3.googleusercontent.com/aida-public/AB6AXuBQy_7QgEhJXRb9TVE_qzhuDOz-7NCGBa_j5-U9QAjY-RgkJ2ZQHX_5SO79aYEFnsmh__rooT1ufKKtESdCxIDI6AKK5cskDxVD5oMSArK_A-w8eZYyBq6M901sPa1EICBL1VKmnbf8fDFvZoZ_WKcozP-dEw8yZPP_5H1A26D2NuC1k-Y5wKcxiXZD1R99ifx-tOOWICpWqnVpIrkftwymdfHoUs6G_63VZqke4f15-qB_VQ2iKl62ZxITlbpb4UVfs_kj11XG2E8",
+  };
+  const products = {
+    "zh-imperial-beluga": { title: "至臻帝王鲟鱼子酱", eyebrow: "Rare Harvest", desc: "源自帝王鲟的银灰色大颗粒，入口即化，呈现奶油、海洋与矿物的长尾。", price: "¥2,480", unit: "30G", image: images.beluga, id: "imperial-beluga-30g", subtitle: "Imperial Beluga / 30g", currency: "¥", amount: 2480, specs: ["Huso Huso", "3.2 - 3.5 MM", "Pearl Grey", "奶油/海洋/矿物"] },
+    "zh-royal-oscetra": { title: "皇家奥西特拉鱼子酱", eyebrow: "Nutty Reserve", desc: "金棕色鱼子带来紧实颗粒感与烘焙坚果香，是进阶品鉴与商务宴请的稳妥选择。", price: "¥1,280", unit: "30G", image: images.oscetra, id: "royal-oscetra-30g", subtitle: "Royal Oscetra / 30g", currency: "¥", amount: 1280, specs: ["Acipenser Gueldenstaedtii", "2.8 - 3.1 MM", "Amber Gold", "坚果/黄油/海盐"] },
+    "zh-mother-of-pearl": { title: "手工打磨珍珠母贝匙", eyebrow: "Service Ware", desc: "非金属贝母材质避免氧化味，保护鱼子酱最细腻的乳香与矿物尾韵。", price: "¥1,280", unit: "Set", image: images.spoon, id: "zh-spoons", subtitle: "经典对装", currency: "¥", amount: 1280, specs: ["Mother-of-Pearl", "Pair Set", "Hand Polished", "无金属气味"] },
+    "zh-champagne": { title: "Krug 陈年香槟", eyebrow: "Pairing", desc: "以明亮酸度和细腻气泡刷新味蕾，适合作为鱼子酱品鉴的经典搭配。", price: "¥2,850", unit: "Bottle", image: images.champagne, id: "zh-champagne", subtitle: "Grand Cuvée 171ème Édition", currency: "¥", amount: 2850, specs: ["Brut", "Grand Cuvée", "Chilled", "酸度/气泡/清爽"] },
+    "zh-ice-server": { title: "现代主义银质冰镇座", eyebrow: "Service Ware", desc: "双层冰镇结构稳定开罐后的服务温度，让鱼子酱保持清晰弹性。", price: "¥12,400", unit: "Piece", image: images.ice, id: "zh-ice-server", subtitle: "纯银工艺", currency: "¥", amount: 12400, specs: ["Silver", "Double Wall", "Crushed Ice", "稳定温控"] },
+    "en-imperial-beluga": { title: "Imperial Beluga Caviar", eyebrow: "Rare Harvest", desc: "Large steel-grey pearls from Huso Huso sturgeon, with a creamy finish and long oceanic minerality.", price: "$350", unit: "30G", image: images.beluga, id: "imperial-beluga-30g", subtitle: "Maison Reserve / 30g", currency: "$", amount: 350, specs: ["Huso Huso", "3.2 - 3.5 MM", "Pearl Grey", "Cream / Ocean / Mineral"] },
+    "en-mother-of-pearl": { title: "Mother-of-Pearl Spoon", eyebrow: "Service Ware", desc: "A non-reactive spoon that preserves the roe's clean flavor without metallic notes.", price: "$45", unit: "Set", image: images.spoon, id: "en-spoons", subtitle: "Hand-Crafted / Artisan", currency: "$", amount: 45, specs: ["Mother-of-Pearl", "Pair Set", "Hand Polished", "No Metallic Note"] },
+    "en-champagne": { title: "Maison Vintage Brut", eyebrow: "Pairing", desc: "Bright acidity and fine bubbles refresh the palate between rich caviar tastings.", price: "$320", unit: "Bottle", image: images.champagne, id: "en-champagne", subtitle: "Grand Cru / 2012", currency: "$", amount: 320, specs: ["Brut", "Grand Cru", "Chilled", "Acidity / Bubbles"] },
+    "en-truffle": { title: "Truffle Pairing Set", eyebrow: "Pairing", desc: "A dark, aromatic pairing set for menus that extend beyond the first spoon of caviar.", price: "$185", unit: "Set", image: images.truffle, id: "en-truffle-set", subtitle: "Winter Black / White Alba", currency: "$", amount: 185, specs: ["Winter Black", "White Alba", "Gift Set", "Aromatic Finish"] },
+  };
+  const hash = location.hash || "";
+  if (!triggers.length && !hash.startsWith("#product-")) return;
+
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[char]));
+  const copy = () => document.documentElement.lang?.startsWith("zh")
+    ? { close: "关闭", add: "加入购物袋", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
+    : { close: "Close", add: "Add to Cart", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+
+  const detail = document.createElement("div");
+  detail.className = "lux-product-detail";
+  detail.hidden = true;
+  detail.innerHTML = `<div class="lux-product-backdrop" data-product-close></div><section class="lux-product-panel" role="dialog" aria-modal="true" aria-labelledby="lux-product-title"><button class="lux-product-close" type="button" data-product-close></button><div class="lux-product-body" tabindex="-1"></div></section>`;
+  document.body.appendChild(detail);
+  const body = detail.querySelector(".lux-product-body");
+  const closeButton = detail.querySelector(".lux-product-close");
+  let openedByPush = false;
+
+  const render = (id, push) => {
+    const product = products[id];
+    if (!product) return;
+    const labels = copy();
+    body.innerHTML = `
+      <article>
+        <section class="lux-product-hero">
+          <div class="lux-product-image"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}"></div>
+          <div class="lux-product-summary">
+            <span>${escapeHtml(product.eyebrow)}</span>
+            <h2 id="lux-product-title">${escapeHtml(product.title)}</h2>
+            <p>${escapeHtml(product.desc)}</p>
+            <strong>${escapeHtml(product.price)} <small>/ ${escapeHtml(product.unit)}</small></strong>
+            <button type="button" data-bag-add data-bag-id="${escapeHtml(product.id)}" data-bag-title="${escapeHtml(product.title)}" data-bag-subtitle="${escapeHtml(product.subtitle)}" data-bag-price="${escapeHtml(product.amount)}" data-bag-currency="${escapeHtml(product.currency)}" data-bag-image="${escapeHtml(product.image)}">${labels.add}<span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </section>
+        <section class="lux-product-specs">
+          ${product.specs.map((value, index) => `<div><span>${escapeHtml(labels.specs[index])}</span><strong>${escapeHtml(value)}</strong></div>`).join("")}
+        </section>
+        <section class="lux-product-story">
+          <h3>${labels.story}</h3>
+          <p>${escapeHtml(product.desc)} ${escapeHtml(labels.note)}</p>
+        </section>
+      </article>`;
+    closeButton.textContent = labels.close;
+    detail.hidden = false;
+    document.body.classList.add("lux-reader-open");
+    body.focus();
+    body.scrollTop = 0;
+    if (push) {
+      history.pushState({ luxProduct: id }, "", `#product-${id}`);
+      openedByPush = true;
+    }
+  };
+  const close = () => {
+    detail.hidden = true;
+    document.body.classList.remove("lux-reader-open");
+    if (openedByPush) history.replaceState(null, "", `${location.pathname}${location.search}`);
+    openedByPush = false;
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-product-open]");
+    if (!trigger) return;
+    const productId = trigger.dataset.productOpen;
+    if (!products[productId]) return;
+    if (trigger.href && new URL(trigger.href, location.href).pathname !== location.pathname) return;
+    event.preventDefault();
+    render(productId, true);
+  });
+  detail.querySelectorAll("[data-product-close]").forEach((button) => button.addEventListener("click", close));
+  window.addEventListener("popstate", () => {
+    if (!detail.hidden) close();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !detail.hidden) close();
+  });
+
+  const initialId = hash.replace(/^#product-/, "");
+  if (products[initialId]) render(initialId, false);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initLuxReader();
   initLuxInfoPopovers();
+  initLuxProductDetails();
 });
 
 (() => {
