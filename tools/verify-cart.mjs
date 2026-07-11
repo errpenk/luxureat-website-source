@@ -8,6 +8,7 @@ const context = {
   document: {
     documentElement: { lang: 'en' },
     body: { appendChild() {} },
+    head: { appendChild() {} },
     addEventListener() {},
     createElement() {
       return {
@@ -29,7 +30,7 @@ const context = {
     scrollY: 0,
   },
   history: {},
-  location: { href: 'https://example.com/en/caviar.html', pathname: '/en/caviar.html' },
+  location: { href: 'https://example.com/en/caviar.html', origin: 'https://example.com', pathname: '/en/caviar.html', search: '' },
   localStorage: {
     getItem(key) {
       return store.get(key) ?? null;

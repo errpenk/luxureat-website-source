@@ -169,6 +169,40 @@ function initLuxCaviarControls() {
 initLuxCaviarControls();
 
 (() => {
+  const prefetched = new Set();
+
+  const hrefFor = (anchor) => {
+    const href = anchor?.getAttribute?.("href");
+    if (!href || href.startsWith("#") || anchor.target || anchor.hasAttribute("download")) return "";
+
+    const url = new URL(href, location.href);
+    if (url.origin !== location.origin || url.protocol !== "http:" && url.protocol !== "https:") return "";
+    if (url.pathname === location.pathname && url.search === location.search) return "";
+    if (!url.pathname.endsWith("/") && !url.pathname.endsWith(".html")) return "";
+
+    url.hash = "";
+    return url.href;
+  };
+
+  const prefetch = (target) => {
+    const anchor = target?.closest?.("a[href]");
+    const href = hrefFor(anchor);
+    if (!href || prefetched.has(href)) return;
+
+    prefetched.add(href);
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "document";
+    link.href = href;
+    document.head.appendChild(link);
+  };
+
+  document.addEventListener("pointerover", (event) => prefetch(event.target), { passive: true });
+  document.addEventListener("focusin", (event) => prefetch(event.target));
+  document.addEventListener("touchstart", (event) => prefetch(event.target), { passive: true });
+})();
+
+(() => {
   const key = `luxureatScroll:${location.pathname}`;
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 

@@ -19,6 +19,7 @@ errpenk/luxureat-website-source
 - Chinese home: `zh/index.html`
 - English home: `en/index.html`
 - Static fallback entry: `index.html`
+- React/shadcn migration workspace: `react-router-app/` (not deployed to the current static Pages preview)
 
 ## WordPress Theme Publishing
 

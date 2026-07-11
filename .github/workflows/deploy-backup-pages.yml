@@ -35,6 +35,7 @@ jobs:
             --exclude='.deploy' \
             --exclude='docs' \
             --exclude='qa' \
+            --exclude='react-router-app' \
             --exclude='scripts' \
             --exclude='tools' \
             --exclude='wordpress-plugins' \

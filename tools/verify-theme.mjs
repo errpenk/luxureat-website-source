@@ -184,6 +184,7 @@ assert(mainJs.includes('lux-reader-layout'), 'main.js renders the editorial arti
 assert(mainJs.includes('lux-reader-wide-image'), 'main.js renders the editorial article body images');
 assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
 assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
+assert(mainJs.includes('link.rel = "prefetch"') && mainJs.includes('pointerover') && mainJs.includes('touchstart'), 'main.js prefetches internal pages when users hover, focus, or touch links');
 assert(mainJs.includes('aria-pressed'), 'main.js updates pressed states for caviar toolbar buttons');
 assert(mainJs.includes('.hidden ='), 'main.js hides filtered-out caviar product cards');
 
