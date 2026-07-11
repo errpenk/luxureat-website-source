@@ -75,6 +75,8 @@ for (const file of [
   'main.js',
   'assets/luxureat-logo.png',
   'assets/wechat-qr.png',
+  'assets/article-images/harvest-hero.jpg',
+  'assets/article-images/champagne-hero.jpg',
   'assets/data/products.js',
   'screenshot.png',
   'README.md',
@@ -182,6 +184,7 @@ assert(mainJs.includes('data-footer-modal'), 'main.js listens to footer modal bu
 assert(mainJs.includes('mouseenter'), 'main.js opens gift scenario info on hover');
 assert(mainJs.includes('lux-reader-layout'), 'main.js renders the editorial article reader layout');
 assert(mainJs.includes('lux-reader-wide-image'), 'main.js renders the editorial article body images');
+assert(mainJs.includes('assets/article-images') && mainJs.includes('lux-reader-immersive') && mainJs.includes('lux-reader-quote'), 'main.js renders long-form reader articles with dedicated article images');
 assert(mainJs.includes('scrollRestoration'), 'main.js restores saved scroll positions manually');
 assert(mainJs.includes('lux-back-to-top'), 'main.js adds the back-to-top floating action button');
 assert(mainJs.includes('link.rel = "prefetch"') && mainJs.includes('pointerover') && mainJs.includes('touchstart'), 'main.js prefetches internal pages when users hover, focus, or touch links');
@@ -211,6 +214,8 @@ assert(integrationCss.includes('background: rgba(24,24,24,.34)'), 'reader header
 assert(integrationCss.includes('.lux-ceremony-copy'), 'ritual cards fade copy out before showing the reader CTA');
 assert(integrationCss.includes('.lux-products-main'), 'product listing pages can align their hero directly under the fixed navigation');
 assert(integrationCss.includes('.lux-reader-archive'), 'integration.css styles journal archive reader lists');
+assert(integrationCss.includes('.lux-reader-immersive') && integrationCss.includes('.lux-reader-quote') && integrationCss.includes('.lux-reader-section-reverse'), 'integration.css styles magazine-style long-form reader articles');
+assert(integrationCss.includes('.lux-dark-photo-block .lux-reader-cta'), 'integration.css centers reader detail buttons on dark photo cards');
 assert(integrationCss.includes('.lux-product-panel::before'), 'integration.css gives product details a glass top layer');
 assert(integrationCss.includes('.lux-bag-item') && integrationCss.includes('.lux-bag-detail'), 'integration.css styles light bag item cards and image detail hover actions');
 assert(!integrationCss.includes('background: rgba(143,47,36,.08)'), 'remove actions do not add a tinted background on hover');
