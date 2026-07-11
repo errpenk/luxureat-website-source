@@ -409,6 +409,11 @@ header:has(.lux-hero-fade-both) {
   pointer-events: none;
   background: rgba(24,24,24,.34);
   backdrop-filter: blur(16px) saturate(1.15);
+  opacity: 1;
+  transition: opacity .18s ease;
+}
+.lux-reader-panel.is-at-top::before {
+  opacity: 0;
 }
 .lux-reader-header {
   min-height: 56px;
@@ -581,13 +586,15 @@ header:has(.lux-hero-fade-both) {
   top: 50%;
 }
 .lux-dark-photo-block.lux-reader-card .lux-reader-cta {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  margin: 0 !important;
+  transform: translate(-50%, -50%) !important;
 }
 .lux-dark-photo-block.lux-reader-card:hover .lux-reader-cta,
 .lux-dark-photo-block.lux-reader-card:focus-within .lux-reader-cta {
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) !important;
 }
 .lux-info-popover {
   position: fixed;
@@ -766,7 +773,7 @@ header:has(.lux-hero-fade-both) {
   color: #fff !important;
   background: rgba(0,0,0,.28);
   opacity: 0;
-  transition: opacity .22s ease, transform .22s ease;
+  transition: opacity .22s ease, transform .22s ease, background .18s ease, color .18s ease, border-color .18s ease;
 }
 .lux-reader-related-grid button:hover .lux-reader-related-media::after,
 .lux-reader-related-grid button:focus-visible .lux-reader-related-media::after {
@@ -776,60 +783,91 @@ header:has(.lux-hero-fade-both) {
 .lux-reader-related-grid button:focus-visible .lux-reader-related-cta {
   opacity: 1;
   transform: translate(-50%, -50%);
+  border-color: #9df5ec;
+  background: #9df5ec;
+  color: #003734 !important;
+}
+.lux-reader-related-grid button:active .lux-reader-related-cta {
+  transform: translate(-50%, -50%) scale(.98);
 }
 .lux-reader-archive {
-  width: min(860px, calc(100% - 44px));
+  width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
-  padding: clamp(48px, 8vw, 88px) 0;
+  padding: clamp(58px, 8vw, 92px) 0;
+}
+.lux-reader-archive-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 40px;
 }
 .lux-reader-archive h2 {
-  margin: 0 0 28px;
+  margin: 0;
   color: #e5e2e1;
   font: 400 clamp(36px, 5vw, 58px)/1.1 "Bodoni Moda", Georgia, serif;
 }
-.lux-reader-archive-group {
-  margin-top: 34px;
+.lux-reader-archive-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
 }
-.lux-reader-archive-group > span {
-  display: block;
-  margin-bottom: 14px;
-  color: #9df5ec;
+.lux-reader-archive-tabs button {
+  color: #bdc9c7;
   font: 700 11px/1.4 Montserrat, Arial, sans-serif;
-  letter-spacing: .18em;
+  letter-spacing: .12em;
   text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 5px;
+  transition: color .18s ease, border-color .18s ease;
+}
+.lux-reader-archive-tabs button:hover,
+.lux-reader-archive-tabs button:focus-visible,
+.lux-reader-archive-tabs button.is-active {
+  color: #9df5ec;
+  border-color: #9df5ec;
 }
 .lux-reader-archive-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
 }
 .lux-reader-archive-card {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 16px;
-  align-items: center;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.035);
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
   text-align: left;
-  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  transition: transform .22s ease;
 }
 .lux-reader-archive-card:hover,
 .lux-reader-archive-card:focus-visible {
-  border-color: rgba(157,245,236,.48);
-  background: rgba(157,245,236,.08);
+  transform: translateY(-3px);
 }
 .lux-reader-archive-card:active { transform: scale(.99); }
+.lux-reader-archive-card[hidden] { display: none !important; }
+.lux-reader-archive-media {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 18px;
+  background: #20201f;
+}
 .lux-reader-archive-card img {
-  width: 120px;
-  aspect-ratio: 1.2;
+  width: 100%;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
-  filter: brightness(.75) saturate(.9);
+  filter: grayscale(1) brightness(.72);
+  transition: filter .55s ease, transform .7s ease;
+}
+.lux-reader-archive-card:hover img,
+.lux-reader-archive-card:focus-visible img {
+  filter: grayscale(.25) brightness(.88);
+  transform: scale(1.04);
 }
 .lux-reader-archive-copy > span,
 .lux-reader-archive-card small {
   display: block;
-  color: #9df5ec;
+  color: #e9c349;
   font: 700 10px/1.4 Montserrat, Arial, sans-serif;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -838,7 +876,12 @@ header:has(.lux-hero-fade-both) {
   display: block;
   margin: 7px 0;
   color: #e5e2e1;
-  font: 600 16px/1.35 Montserrat, Arial, sans-serif;
+  font: 400 22px/1.25 "Bodoni Moda", Georgia, serif;
+  transition: color .18s ease;
+}
+.lux-reader-archive-card:hover strong,
+.lux-reader-archive-card:focus-visible strong {
+  color: #9df5ec;
 }
 .lux-product-detail[hidden] { display: none !important; }
 .lux-product-detail {
@@ -1428,9 +1471,11 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-module-grid, .lux-footer-grid { grid-template-columns: 1fr; }
   .lux-reader { padding: 0; }
   .lux-reader-panel { width: 100%; height: 100%; }
+  .lux-reader-archive { width: min(100% - 36px, 420px); }
+  .lux-reader-archive-head { align-items: flex-start; flex-direction: column; }
+  .lux-reader-archive-tabs { gap: 16px; }
   .lux-reader-archive-grid { grid-template-columns: 1fr; }
-  .lux-reader-archive-card { grid-template-columns: 88px 1fr; }
-  .lux-reader-archive-card img { width: 88px; }
+  .lux-reader-archive-card img { width: 100%; }
   .lux-reader-related-grid { grid-template-columns: 1fr; }
   .lux-reader-section-split,
   .lux-reader-section-reverse { grid-template-columns: 1fr; }

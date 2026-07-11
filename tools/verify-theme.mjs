@@ -165,6 +165,7 @@ assert(mainJs.includes('data-caviar-sort-option'), 'main.js listens to explicit 
 assert(mainJs.includes('initLuxReader'), 'main.js initializes the shared reading container');
 assert(mainJs.includes('data-reader-open'), 'main.js listens to reading-detail triggers');
 assert(mainJs.includes('data-reader-archive') && mainJs.includes('lux-reader-archive'), 'main.js renders journal archive lists inside the shared reader');
+assert(mainJs.includes('data-reader-archive-filter') && mainJs.includes('syncReaderTop'), 'main.js filters the journal archive and hides reader glass at the top');
 assert(mainJs.includes('initLuxProductDetails'), 'main.js initializes shared product-detail views');
 assert(mainJs.includes('data-product-open'), 'main.js listens to product-detail triggers');
 assert(mainJs.includes('data-product-quantity'), 'main.js supports product-detail quantity controls');
@@ -211,6 +212,9 @@ assert(integrationCss.includes('inset: 0 -86px auto'), 'recommendation arrows si
 assert(integrationCss.includes('.lux-product-cart-state'), 'integration.css styles product-detail cart state');
 assert(integrationCss.includes('.lux-reader-panel::before') && integrationCss.includes('backdrop-filter: blur(16px)') && integrationCss.includes('border-bottom: 0'), 'integration.css gives reader and product headers glass blur without a divider line');
 assert(integrationCss.includes('background: rgba(24,24,24,.34)'), 'reader header uses dark glass instead of a light bar');
+assert(integrationCss.includes('.lux-reader-panel.is-at-top::before'), 'reader glass layer is hidden while the article is at the top');
+assert(integrationCss.includes('.lux-reader-related-grid button:active .lux-reader-related-cta'), 'related article read buttons have hover and active interactions');
+assert(integrationCss.includes('.lux-reader-archive-tabs') && integrationCss.includes('.lux-reader-archive-media'), 'journal archive uses the editorial grid with category tabs');
 assert(integrationCss.includes('.lux-ceremony-copy'), 'ritual cards fade copy out before showing the reader CTA');
 assert(integrationCss.includes('.lux-products-main'), 'product listing pages can align their hero directly under the fixed navigation');
 assert(integrationCss.includes('.lux-reader-archive'), 'integration.css styles journal archive reader lists');

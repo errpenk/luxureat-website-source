@@ -557,10 +557,14 @@ function initLuxReader() {
   document.body.appendChild(reader);
 
   const body = reader.querySelector(".lux-reader-body");
+  const panel = reader.querySelector(".lux-reader-panel");
   const backButton = reader.querySelector("[data-reader-back]");
   const closeButtons = reader.querySelectorAll("[data-reader-close]");
   let currentId = "";
   const stack = [];
+  const syncReaderTop = () => {
+    panel.classList.toggle("is-at-top", body.scrollTop <= 4);
+  };
 
   const showReader = (copy) => {
     reader.hidden = false;
@@ -570,29 +574,35 @@ function initLuxReader() {
     reader.querySelector(".lux-reader-close").textContent = copy.close;
     body.focus();
     body.scrollTop = 0;
+    syncReaderTop();
   };
 
   const renderArchive = (push) => {
     if (push && currentId) stack.push(currentId);
     currentId = "__archive";
     const copy = labels();
+    const groups = archiveGroups();
+    const allLabel = document.documentElement.lang?.startsWith("zh") ? "全部内容" : "All Collections";
+    const items = groups.flatMap(([title, ids]) => ids.map((id) => ({ id, title })));
     body.innerHTML = `
       <article class="lux-reader-archive">
-        <h2>${escapeHtml(copy.archive)}</h2>
-        ${archiveGroups().map(([title, ids]) => `
-          <section class="lux-reader-archive-group">
-            <span>${escapeHtml(title)}</span>
-            <div class="lux-reader-archive-grid">
-              ${ids.map((id) => {
-                const item = articles[id];
-                return item ? `
-                  <button type="button" class="lux-reader-archive-card" data-reader-archive-item="${escapeHtml(id)}">
-                    <img src="${escapeHtml(item.image)}" alt="">
-                    <span class="lux-reader-archive-copy"><span>${escapeHtml(item.eyebrow)}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.meta)}</small></span>
-                  </button>` : "";
-              }).join("")}
-            </div>
-          </section>`).join("")}
+        <div class="lux-reader-archive-head">
+          <h2>${escapeHtml(copy.archive)}</h2>
+          <div class="lux-reader-archive-tabs">
+            <button type="button" class="is-active" data-reader-archive-filter="all">${escapeHtml(allLabel)}</button>
+            ${groups.map(([title]) => `<button type="button" data-reader-archive-filter="${escapeHtml(title)}">${escapeHtml(title)}</button>`).join("")}
+          </div>
+        </div>
+        <div class="lux-reader-archive-grid">
+          ${items.map(({ id, title }) => {
+            const item = articles[id];
+            return item ? `
+              <button type="button" class="lux-reader-archive-card" data-reader-archive-item="${escapeHtml(id)}" data-reader-archive-category="${escapeHtml(title)}">
+                <span class="lux-reader-archive-media"><img src="${escapeHtml(item.image)}" alt=""></span>
+                <span class="lux-reader-archive-copy"><span>${escapeHtml(item.eyebrow)}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.meta)}</small></span>
+              </button>` : "";
+          }).join("")}
+        </div>
       </article>`;
     showReader(copy);
   };
@@ -700,7 +710,18 @@ function initLuxReader() {
     }
     const related = event.target.closest("[data-reader-related]");
     if (related) render(related.dataset.readerRelated, true);
+    const archiveFilter = event.target.closest("[data-reader-archive-filter]");
+    if (archiveFilter) {
+      const filter = archiveFilter.dataset.readerArchiveFilter || "all";
+      body.querySelectorAll("[data-reader-archive-filter]").forEach((button) => {
+        button.classList.toggle("is-active", button === archiveFilter);
+      });
+      body.querySelectorAll("[data-reader-archive-category]").forEach((card) => {
+        card.hidden = filter !== "all" && card.dataset.readerArchiveCategory !== filter;
+      });
+    }
   });
+  body.addEventListener("scroll", syncReaderTop, { passive: true });
   backButton.addEventListener("click", () => {
     const previous = stack.pop();
     if (previous === "__archive") renderArchive(false);
