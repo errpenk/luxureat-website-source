@@ -206,7 +206,7 @@ initLuxCaviarControls();
 })();
 
 function initLuxReader() {
-  const triggers = document.querySelectorAll("[data-reader-open]");
+  const triggers = document.querySelectorAll("[data-reader-open], [data-reader-archive]");
   if (!triggers.length) return;
 
   const images = {
@@ -271,6 +271,27 @@ function initLuxReader() {
       sections: [["温度控制", "碎冰承托罐体，避免直接冻结鱼卵，同时让服务过程保持在理想区间。"]],
       related: ["zh-harvest", "zh-mother-of-pearl", "zh-service"],
     },
+    "zh-breath": {
+      lang: "zh", eyebrow: "品鉴仪式", title: "呼吸律动", meta: "RITUAL · Rest",
+      image: images.champagne,
+      intro: "开罐后的几分钟，是香气从冷藏状态回到餐桌状态的缓慢苏醒。",
+      sections: [["静置的意义", "让鱼子酱在低温中短暂呼吸，海洋感与奶油感会更清晰，而不是被冰冷压住。"]],
+      related: ["zh-ice-server", "zh-champagne", "zh-palate"],
+    },
+    "zh-hand-warm": {
+      lang: "zh", eyebrow: "品鉴仪式", title: "虎口仪式", meta: "RITUAL · Warmth",
+      image: images.spoon,
+      intro: "把少量鱼子酱置于虎口，用体温轻微唤醒，是最私密也最古老的品鉴方式。",
+      sections: [["温度与肌理", "短暂升温会放大坚果香、海洋盐感与颗粒张力，让第一口更完整。"]],
+      related: ["zh-breath", "zh-mother-of-pearl", "zh-palate"],
+    },
+    "zh-palate": {
+      lang: "zh", eyebrow: "品鉴仪式", title: "舌尖绽放", meta: "RITUAL · Palate",
+      image: images.harvest,
+      intro: "不要急于咀嚼。用舌尖轻压，让鱼卵自然破裂，风味会更像一道缓慢展开的曲线。",
+      sections: [["入口节奏", "从矿物感、乳香到海洋尾韵，真正的层次来自克制的动作。"]],
+      related: ["zh-hand-warm", "zh-breath", "zh-service"],
+    },
     "en-harvest": {
       lang: "en", eyebrow: "Maison Heritage", title: "The Art of the Harvest", meta: "MASTERCLASS · October 2024",
       image: images.harvest,
@@ -320,14 +341,46 @@ function initLuxReader() {
       sections: [["Temperature Control", "Crushed ice supports the tin without freezing the roe, preserving texture through service."]],
       related: ["en-harvest", "en-mother-of-pearl", "en-service"],
     },
+    "en-breath": {
+      lang: "en", eyebrow: "Tasting Ritual", title: "Breathing Rhythm", meta: "RITUAL · Rest",
+      image: images.champagne,
+      intro: "The first minutes after opening let the aroma move from cellar-cold to table-ready.",
+      sections: [["Why Rest Matters", "A brief rest keeps the roe cold while allowing cream, brine, and minerality to become legible."]],
+      related: ["en-ice-server", "en-champagne", "en-palate"],
+    },
+    "en-hand-warm": {
+      lang: "en", eyebrow: "Tasting Ritual", title: "The Hand Ritual", meta: "RITUAL · Warmth",
+      image: images.spoon,
+      intro: "A small spoonful on the back of the hand warms gently, revealing texture before the first taste.",
+      sections: [["Temperature and Texture", "A controlled touch of warmth opens nutty notes, ocean salinity, and pearl tension."]],
+      related: ["en-breath", "en-mother-of-pearl", "en-palate"],
+    },
+    "en-palate": {
+      lang: "en", eyebrow: "Tasting Ritual", title: "Palate Release", meta: "RITUAL · Palate",
+      image: images.harvest,
+      intro: "Do not rush to chew. Let the pearls break slowly against the palate so the finish can unfold.",
+      sections: [["Pacing the First Bite", "Minerality, cream, and marine length appear most clearly when the gesture stays restrained."]],
+      related: ["en-hand-warm", "en-breath", "en-service"],
+    },
   };
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
   const labels = () => document.documentElement.lang?.startsWith("zh")
-    ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情", note: "品鉴笔记", noteText: "温度、器具与节奏共同决定入口的第一层印象；真正的奢华来自克制而准确的服务。" }
-    : { back: "Back", close: "Close", related: "Further Reading", read: "Read Details", note: "Tasting Notes", noteText: "Temperature, service ware, and pacing shape the first impression; luxury is restraint made precise." };
+    ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情", archive: "往期随笔", note: "品鉴笔记", noteText: "温度、器具与节奏共同决定入口的第一层印象；真正的奢华来自克制而准确的服务。" }
+    : { back: "Back", close: "Close", related: "Further Reading", read: "Read Details", archive: "Archive", note: "Tasting Notes", noteText: "Temperature, service ware, and pacing shape the first impression; luxury is restraint made precise." };
+  const archiveGroups = () => document.documentElement.lang?.startsWith("zh")
+    ? [
+      ["品牌与产地", ["zh-harvest", "zh-truffle"]],
+      ["服务与工艺", ["zh-service", "zh-malossol"]],
+      ["品鉴仪式", ["zh-champagne", "zh-mother-of-pearl", "zh-ice-server", "zh-breath", "zh-hand-warm", "zh-palate"]],
+    ]
+    : [
+      ["Maison & Origin", ["en-harvest", "en-truffle"]],
+      ["Service & Craft", ["en-service", "en-malossol"]],
+      ["Tasting Ritual", ["en-champagne", "en-mother-of-pearl", "en-ice-server", "en-breath", "en-hand-warm", "en-palate"]],
+    ];
 
   const reader = document.createElement("div");
   reader.className = "lux-reader";
@@ -348,6 +401,41 @@ function initLuxReader() {
   const closeButtons = reader.querySelectorAll("[data-reader-close]");
   let currentId = "";
   const stack = [];
+
+  const showReader = (copy) => {
+    reader.hidden = false;
+    document.body.classList.add("lux-reader-open");
+    backButton.hidden = stack.length === 0;
+    backButton.textContent = copy.back;
+    reader.querySelector(".lux-reader-close").textContent = copy.close;
+    body.focus();
+    body.scrollTop = 0;
+  };
+
+  const renderArchive = (push) => {
+    if (push && currentId) stack.push(currentId);
+    currentId = "__archive";
+    const copy = labels();
+    body.innerHTML = `
+      <article class="lux-reader-archive">
+        <h2>${escapeHtml(copy.archive)}</h2>
+        ${archiveGroups().map(([title, ids]) => `
+          <section class="lux-reader-archive-group">
+            <span>${escapeHtml(title)}</span>
+            <div class="lux-reader-archive-grid">
+              ${ids.map((id) => {
+                const item = articles[id];
+                return item ? `
+                  <button type="button" class="lux-reader-archive-card" data-reader-archive-item="${escapeHtml(id)}">
+                    <img src="${escapeHtml(item.image)}" alt="">
+                    <span class="lux-reader-archive-copy"><span>${escapeHtml(item.eyebrow)}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.meta)}</small></span>
+                  </button>` : "";
+              }).join("")}
+            </div>
+          </section>`).join("")}
+      </article>`;
+    showReader(copy);
+  };
 
   const render = (id, push) => {
     const article = articles[id];
@@ -404,13 +492,7 @@ function initLuxReader() {
         </div>
       </article>`;
 
-    reader.hidden = false;
-    document.body.classList.add("lux-reader-open");
-    backButton.hidden = stack.length === 0;
-    backButton.textContent = copy.back;
-    reader.querySelector(".lux-reader-close").textContent = copy.close;
-    body.focus();
-    body.scrollTop = 0;
+    showReader(copy);
   };
 
   const open = (id) => {
@@ -426,18 +508,32 @@ function initLuxReader() {
   };
 
   document.addEventListener("click", (event) => {
+    const archive = event.target.closest("[data-reader-archive]");
+    if (archive) {
+      event.preventDefault();
+      stack.length = 0;
+      currentId = "";
+      renderArchive(false);
+      return;
+    }
     const trigger = event.target.closest("[data-reader-open]");
     if (!trigger || !articles[trigger.dataset.readerOpen]) return;
     event.preventDefault();
     open(trigger.dataset.readerOpen);
   });
   body.addEventListener("click", (event) => {
+    const archived = event.target.closest("[data-reader-archive-item]");
+    if (archived) {
+      render(archived.dataset.readerArchiveItem, true);
+      return;
+    }
     const related = event.target.closest("[data-reader-related]");
     if (related) render(related.dataset.readerRelated, true);
   });
   backButton.addEventListener("click", () => {
     const previous = stack.pop();
-    if (previous) render(previous, false);
+    if (previous === "__archive") renderArchive(false);
+    else if (previous) render(previous, false);
   });
   closeButtons.forEach((button) => button.addEventListener("click", close));
   document.addEventListener("keydown", (event) => {

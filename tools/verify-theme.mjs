@@ -160,6 +160,7 @@ assert(mainJs.includes('data-caviar-sort'), 'main.js listens to the caviar sort 
 assert(mainJs.includes('data-caviar-sort-option'), 'main.js listens to explicit sort menu options');
 assert(mainJs.includes('initLuxReader'), 'main.js initializes the shared reading container');
 assert(mainJs.includes('data-reader-open'), 'main.js listens to reading-detail triggers');
+assert(mainJs.includes('data-reader-archive') && mainJs.includes('lux-reader-archive'), 'main.js renders journal archive lists inside the shared reader');
 assert(mainJs.includes('initLuxProductDetails'), 'main.js initializes shared product-detail views');
 assert(mainJs.includes('data-product-open'), 'main.js listens to product-detail triggers');
 assert(mainJs.includes('data-product-quantity'), 'main.js supports product-detail quantity controls');
@@ -198,6 +199,9 @@ assert(integrationCss.includes('.lux-product-recent-nav') && integrationCss.incl
 assert(integrationCss.includes('inset: 0 -86px auto'), 'recommendation arrows sit on both sides of the carousel');
 assert(integrationCss.includes('.lux-product-cart-state'), 'integration.css styles product-detail cart state');
 assert(integrationCss.includes('.lux-reader-header') && integrationCss.includes('backdrop-filter: blur(16px)') && integrationCss.includes('border-bottom: 0'), 'integration.css gives reader and product headers glass blur without a divider line');
+assert(integrationCss.includes('background: rgba(24,24,24,.58)'), 'reader header uses dark glass instead of a light bar');
+assert(integrationCss.includes('.lux-products-main'), 'product listing pages can align their hero directly under the fixed navigation');
+assert(integrationCss.includes('.lux-reader-archive'), 'integration.css styles journal archive reader lists');
 assert(integrationCss.includes('.lux-product-panel::before'), 'integration.css gives product details a glass top layer');
 assert(integrationCss.includes('.lux-bag-item') && integrationCss.includes('.lux-bag-detail'), 'integration.css styles light bag item cards and image detail hover actions');
 assert(!integrationCss.includes('background: rgba(143,47,36,.08)'), 'remove actions do not add a tinted background on hover');
@@ -237,12 +241,15 @@ const zhJournal = read(path.join(themeDir, 'pages/zh/journal.php'));
 const enJournal = read(path.join(themeDir, 'pages/en/journal.php'));
 assert(zhJournal.includes('data-reader-open="zh-harvest"'), 'Chinese journal opens the harvest reader');
 assert(enJournal.includes('data-reader-open="en-harvest"'), 'English journal opens the harvest reader');
+assert(zhJournal.includes('data-reader-archive'), 'Chinese journal archive opens inside the shared reader');
+assert(enJournal.includes('data-reader-archive'), 'English journal archive opens inside the shared reader');
 assert(zhJournal.includes('lux-reader-card'), 'Chinese journal cards expose hover reader actions');
 assert(enJournal.includes('lux-reader-card'), 'English journal cards expose hover reader actions');
 
 const zhRituals = read(path.join(themeDir, 'pages/zh/rituals.php'));
 assert(zhRituals.includes('data-reader-open="zh-champagne"'), 'Chinese rituals pairing cards open reader details');
 assert(enRituals.includes('data-reader-open="en-champagne"'), 'English rituals pairing cards open reader details');
+assert(zhRituals.includes('data-reader-open="zh-breath"') && zhRituals.includes('data-reader-open="zh-hand-warm"') && zhRituals.includes('data-reader-open="zh-palate"'), 'Chinese rituals ceremony cards open reader details');
 assert(zhRituals.includes("luxureat_static_url('zh/caviar'"), 'Chinese rituals shopping CTA links to products');
 assert(enRituals.includes("luxureat_static_url('en/products'"), 'English rituals shopping CTA links to products');
 assert(zhRituals.includes('即刻购买') && zhRituals.includes('系列产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
@@ -253,12 +260,14 @@ assert(zhCaviar.includes('data-product-open="zh-imperial-beluga"'), 'Chinese cav
 assert(zhCaviar.includes("luxureat_static_url('zh/rituals'"), 'Chinese caviar ritual CTA links to rituals');
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
 assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
+assert(zhCaviar.includes('lux-products-main'), 'Chinese product listing hero starts flush below the fixed nav');
 const enCaviar = read(path.join(themeDir, 'pages/en/caviar.php'));
 assert(enCaviar.includes('data-product-open="en-imperial-beluga"'), 'English caviar page opens product details');
 assert(enCaviar.includes("luxureat_static_url('en/rituals'"), 'English caviar ritual CTA links to rituals');
 assert((enCaviar.match(/lux-dark-photo-block/g) || []).length >= 3, 'English caviar pairing cards use dark photo backgrounds');
 const enProducts = read(path.join(themeDir, 'pages/en/products.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
+assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
 assert(enProducts.includes('data-product-open="en-royal-oscetra"'), 'English products page opens Oscetra product details');
 assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English products ritual CTA links to rituals');
 
