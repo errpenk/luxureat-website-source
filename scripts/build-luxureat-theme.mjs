@@ -84,18 +84,10 @@ function hasUrlScheme(href) {
 }
 
 function stripKnownLocalIncludes(html) {
-  const localStylesheetTag = '<link rel="stylesheet" href="../integration.css">';
-  const productDataTag = '<script src="../assets/data/products.js"></script>';
-  const scriptOpen = '<script src="../main.js">';
-  const scriptClose = '</script>';
-
   return html
-    .split(localStylesheetTag)
-    .join('')
-    .split(productDataTag)
-    .join('')
-    .split(`${scriptOpen}${scriptClose}`)
-    .join('');
+    .replace(/<link\s+rel=(["'])stylesheet\1\s+href=(["'])\.\.\/integration\.css(?:\?[^"']*)?\2\s*>/g, '')
+    .replace(/<script\s+src=(["'])\.\.\/assets\/data\/products\.js(?:\?[^"']*)?\1><\/script>/g, '')
+    .replace(/<script\s+src=(["'])\.\.\/main\.js(?:\?[^"']*)?\1><\/script>/g, '');
 }
 
 function rewriteHref(href, currentLang) {

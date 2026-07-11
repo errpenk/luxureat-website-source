@@ -522,6 +522,15 @@
   left: 50%;
   top: 50%;
 }
+.lux-dark-photo-block.lux-reader-card .lux-reader-cta {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -44%);
+}
+.lux-dark-photo-block.lux-reader-card:hover .lux-reader-cta,
+.lux-dark-photo-block.lux-reader-card:focus-within .lux-reader-cta {
+  transform: translate(-50%, -50%);
+}
 .lux-info-popover {
   position: fixed;
   z-index: 10001;
@@ -563,7 +572,7 @@
 .lux-reader-layout { min-height: 100%; background: #181818; }
 .lux-reader-layout .lux-reader-hero {
   position: relative;
-  min-height: min(72vh, 760px);
+  min-height: clamp(380px, 52vh, 580px);
   display: flex;
   align-items: flex-end;
   background-size: cover;
@@ -590,7 +599,7 @@
 }
 .lux-reader-layout .lux-reader-copy {
   width: min(860px, calc(100% - 48px));
-  padding: clamp(56px, 8vw, 110px) 0;
+  padding: clamp(42px, 6vw, 78px) 0;
 }
 .lux-reader-section {
   display: grid;
