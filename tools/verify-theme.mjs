@@ -230,6 +230,12 @@ assert(integrationCss.includes('font: 700 34px/1.1 Montserrat'), 'product-detail
 assert(integrationCss.includes('.lux-footer-modal'), 'integration.css styles footer light-background modals');
 assert(!integrationCss.includes('.lux-reader-layout .lux-reader-intro:first-letter'), 'article reader does not enlarge or recolor the first character');
 assert(integrationCss.includes('.lux-reader-cta'), 'integration.css styles card reading hover calls to action');
+assert(integrationCss.includes('transform: translate(-50%, -50%)') && integrationCss.includes('place-items: center'), 'reader detail buttons stay centered inside image cards');
+assert(integrationCss.includes('font: 400 clamp(18px, 2vw, 24px)/1.7 Montserrat'), 'reader quote uses regular body sizing instead of italic display type');
+assert(integrationCss.includes('.lux-bag-recommendations [data-bag-add]:hover') && integrationCss.includes('.lux-bag-recommendations [data-product-open]:active'), 'bag recommendation buttons have hover and active interactions');
+assert(integrationCss.includes('.lux-footprint-stage:has(.lux-footprint-card:hover)') && integrationCss.includes('transform: scale(1.025)'), 'global footprint cards brighten the background and scale gently on hover');
+assert(integrationCss.includes('section:has(.lux-hero-fade-both)') && integrationCss.includes('border-bottom-color: transparent'), 'photo heroes hide divider lines while fading into the page background');
+assert(integrationCss.includes('linear-gradient(to bottom, #131313 0%') && integrationCss.includes('transparent 100%)'), 'dark photo sections use page-color fade masks at their edges');
 assert(integrationCss.includes('.lux-info-popover'), 'integration.css styles the frosted gift scenario popover');
 
 const enRituals = read(path.join(themeDir, 'pages/en/rituals.php'));

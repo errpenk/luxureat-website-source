@@ -108,6 +108,25 @@
 .lux-footer-bottom { max-width: 1440px; margin: 38px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #bdc9c7; font-size: 13px; }
 .lux-footprint-card {
   min-height: 160px;
+  transition: transform .28s ease, border-color .28s ease, background .28s ease;
+  transform-origin: center;
+}
+.lux-footprint-card:hover,
+.lux-footprint-card:focus-within {
+  transform: scale(1.025);
+  border-color: rgba(157, 245, 236, .34);
+  background: rgba(24, 24, 24, .58);
+}
+.lux-footprint-stage [data-footprint-bg] {
+  opacity: .2;
+  filter: grayscale(1) brightness(.82);
+  transition: opacity .55s ease, filter .55s ease, transform .8s ease;
+}
+.lux-footprint-stage:has(.lux-footprint-card:hover) [data-footprint-bg],
+.lux-footprint-stage:has(.lux-footprint-card:focus-within) [data-footprint-bg] {
+  opacity: .38;
+  filter: grayscale(.25) brightness(1.08);
+  transform: scale(1.025);
 }
 .lux-footprint-heading,
 .lux-footprint-card summary {
@@ -141,7 +160,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: #101010;
+  background: #131313;
 }
 .lux-full-bleed {
   width: 100vw;
@@ -169,7 +188,7 @@
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(to bottom, rgba(16,16,16,.18), rgba(16,16,16,.82) 68%, #101010 100%),
+    linear-gradient(to bottom, #131313 0%, rgba(19,19,19,.42) 18%, rgba(19,19,19,.58) 64%, #131313 100%),
     rgba(0,0,0,.36);
 }
 .lux-dark-photo-block:hover .lux-dark-photo-bg {
@@ -179,11 +198,26 @@
 .lux-bright-photo .lux-dark-photo-bg { opacity: .48; }
 .lux-photo-fade-bottom::after {
   background:
-    linear-gradient(to bottom, #101010 0%, rgba(16,16,16,.34) 18%, rgba(16,16,16,.48) 60%, #101010 100%),
+    linear-gradient(to bottom, #131313 0%, rgba(19,19,19,.34) 16%, rgba(19,19,19,.48) 56%, rgba(19,19,19,.9) 86%, #131313 100%),
     rgba(0,0,0,.38);
 }
+.lux-dark-photo-block.lux-photo-fade-bottom {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+.lux-dark-photo-block.lux-photo-fade-bottom + section {
+  border-top-color: transparent !important;
+}
 .lux-hero-fade-both {
-  background: linear-gradient(to bottom, #101010 0%, rgba(16,16,16,.34) 18%, rgba(16,16,16,.42) 62%, #101010 100%) !important;
+  background: linear-gradient(to bottom, #131313 0%, rgba(19,19,19,.84) 8%, rgba(19,19,19,.34) 24%, rgba(19,19,19,.42) 66%, rgba(19,19,19,.88) 90%, #131313 100%) !important;
+}
+section:has(.lux-hero-fade-both),
+header:has(.lux-hero-fade-both) {
+  border-bottom-color: transparent !important;
+}
+.hero-mask {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 72%, transparent 100%) !important;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 72%, transparent 100%) !important;
 }
 .lux-card-photo {
   position: relative;
@@ -254,6 +288,28 @@
 [data-caviar-grid] [data-product-open]:hover {
   border-color: #9df5ec !important;
   color: #9df5ec !important;
+}
+.lux-bag-recommendations [data-bag-add],
+.lux-bag-recommendations [data-product-open] {
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.lux-bag-recommendations [data-bag-add]:hover,
+.lux-bag-recommendations [data-bag-add]:focus-visible {
+  background: #fff !important;
+  color: #101010 !important;
+  border-color: #fff !important;
+  transform: translateY(-2px);
+}
+.lux-bag-recommendations [data-product-open]:hover,
+.lux-bag-recommendations [data-product-open]:focus-visible {
+  background: #9df5ec !important;
+  color: #003734 !important;
+  border-color: #9df5ec !important;
+  transform: translateY(-2px);
+}
+.lux-bag-recommendations [data-bag-add]:active,
+.lux-bag-recommendations [data-product-open]:active {
+  transform: translateY(0) scale(.98);
 }
 .lux-sort-wrap { position: relative; }
 .lux-sort-menu {
@@ -492,10 +548,12 @@
   left: 50%;
   top: 50%;
   z-index: 30;
-  transform: translate(-50%, -44%);
+  transform: translate(-50%, -50%);
   min-width: 132px;
   min-height: 44px;
   padding: 12px 18px;
+  display: grid;
+  place-items: center;
   border: 1px solid rgba(255, 255, 255, .9);
   background: rgba(0, 0, 0, .26);
   color: #fff;
@@ -525,7 +583,7 @@
 .lux-dark-photo-block.lux-reader-card .lux-reader-cta {
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -44%);
+  transform: translate(-50%, -50%);
 }
 .lux-dark-photo-block.lux-reader-card:hover .lux-reader-cta,
 .lux-dark-photo-block.lux-reader-card:focus-within .lux-reader-cta {
@@ -681,6 +739,8 @@
   margin: clamp(48px, 7vw, 86px) auto;
   width: min(900px, 100%);
   text-align: center;
+  color: #d7dcda;
+  font: 400 clamp(18px, 2vw, 24px)/1.7 Montserrat, Arial, sans-serif;
 }
 .lux-reader-related-media {
   position: relative;
