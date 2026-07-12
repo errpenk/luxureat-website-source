@@ -598,7 +598,7 @@ function initLuxReader() {
             const item = articles[id];
             return item ? `
               <button type="button" class="lux-reader-archive-card" data-reader-archive-item="${escapeHtml(id)}" data-reader-archive-category="${escapeHtml(title)}">
-                <span class="lux-reader-archive-media"><img src="${escapeHtml(item.image)}" alt=""></span>
+                <span class="lux-reader-archive-media"><img src="${escapeHtml(item.image)}" alt=""><span class="lux-reader-archive-cta">${copy.read}</span></span>
                 <span class="lux-reader-archive-copy"><span>${escapeHtml(item.eyebrow)}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.meta)}</small></span>
               </button>` : "";
           }).join("")}

@@ -783,9 +783,15 @@ header:has(.lux-hero-fade-both) {
 .lux-reader-related-grid button:focus-visible .lux-reader-related-cta {
   opacity: 1;
   transform: translate(-50%, -50%);
+  border-color: rgba(255,255,255,.9);
+  background: rgba(0,0,0,.34);
+  color: #fff !important;
+}
+.lux-reader-related-grid button .lux-reader-related-cta:hover {
   border-color: #9df5ec;
   background: #9df5ec;
   color: #003734 !important;
+  transform: translate(-50%, -50%) scale(1.03);
 }
 .lux-reader-related-grid button:active .lux-reader-related-cta {
   transform: translate(-50%, -50%) scale(.98);
@@ -847,10 +853,19 @@ header:has(.lux-hero-fade-both) {
 .lux-reader-archive-card:active { transform: scale(.99); }
 .lux-reader-archive-card[hidden] { display: none !important; }
 .lux-reader-archive-media {
+  position: relative;
   display: block;
   overflow: hidden;
   margin-bottom: 18px;
   background: #20201f;
+}
+.lux-reader-archive-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .52);
+  opacity: 0;
+  transition: opacity .22s ease;
 }
 .lux-reader-archive-card img {
   width: 100%;
@@ -859,10 +874,43 @@ header:has(.lux-hero-fade-both) {
   filter: grayscale(1) brightness(.72);
   transition: filter .55s ease, transform .7s ease;
 }
+.lux-reader-archive-cta {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  transform: translate(-50%, -44%);
+  padding: 12px 18px;
+  border: 1px solid rgba(255,255,255,.9);
+  background: rgba(0,0,0,.34);
+  color: #fff;
+  opacity: 0;
+  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  letter-spacing: .12em;
+  transition: opacity .22s ease, transform .22s ease, background .18s ease, color .18s ease, border-color .18s ease;
+}
 .lux-reader-archive-card:hover img,
 .lux-reader-archive-card:focus-visible img {
   filter: grayscale(.25) brightness(.88);
   transform: scale(1.04);
+}
+.lux-reader-archive-media:hover::after,
+.lux-reader-archive-card:focus-visible .lux-reader-archive-media::after {
+  opacity: 1;
+}
+.lux-reader-archive-media:hover .lux-reader-archive-cta,
+.lux-reader-archive-card:focus-visible .lux-reader-archive-cta {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+.lux-reader-archive-media .lux-reader-archive-cta:hover {
+  border-color: #9df5ec;
+  background: #9df5ec;
+  color: #003734;
+  transform: translate(-50%, -50%) scale(1.03);
+}
+.lux-reader-archive-card:active .lux-reader-archive-cta {
+  transform: translate(-50%, -50%) scale(.98);
 }
 .lux-reader-archive-copy > span,
 .lux-reader-archive-card small {
