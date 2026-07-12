@@ -1101,6 +1101,11 @@ header:has(.lux-hero-fade-both) {
 .lux-product-qty button:hover {
   background: rgba(0,0,0,.05);
 }
+.lux-product-qty button:disabled {
+  opacity: .32;
+  cursor: not-allowed;
+  background: transparent;
+}
 .lux-product-qty output {
   min-width: 40px;
   text-align: center;
@@ -1283,7 +1288,25 @@ header:has(.lux-hero-fade-both) {
 .lux-bag-item .text-secondary { color: #8f6a00; }
 .lux-bag-item .text-primary { color: #006a64; }
 .lux-bag-item .text-on-surface-variant { color: #3e4947; }
-.lux-bag-item [data-bag-change] { color: #1c1b1b; }
+.lux-bag-item [data-bag-change] {
+  color: #1c1b1b !important;
+  background: transparent !important;
+}
+.lux-bag-item [data-bag-change] .material-symbols-outlined {
+  color: currentColor !important;
+}
+.lux-bag-item [data-bag-change]:not(:disabled):hover,
+.lux-bag-item [data-bag-change]:not(:disabled):focus-visible {
+  color: #006a64 !important;
+  background: rgba(0,106,100,.1) !important;
+}
+.lux-bag-item [data-bag-change]:not(:disabled):active {
+  color: #004d48 !important;
+}
+.lux-bag-item [data-bag-change]:disabled {
+  color: rgba(28,27,27,.28) !important;
+  cursor: not-allowed;
+}
 .lux-bag-item [data-bag-remove] {
   color: #3e4947 !important;
   transform-origin: center;

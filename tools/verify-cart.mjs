@@ -75,3 +75,8 @@ assert.equal(bag.items().length, 1);
 
 bag.remove('beluga-30g');
 assert.equal(bag.items().length, 0);
+
+bag.add({ id: 'oscetra-30g', title: 'Royal Oscetra', price: 180, currency: '$', quantity: 99 });
+assert.equal(bag.items()[0].quantity, 99);
+bag.change('oscetra-30g', 1);
+assert.equal(bag.items()[0].quantity, 99);

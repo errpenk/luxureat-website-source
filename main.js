@@ -810,6 +810,8 @@ function initLuxProductDetails() {
     ? { back: "返回", close: "关闭", add: "加入购物袋", detail: "查看详情", qty: "数量", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
     : { back: "Back", close: "Close", add: "Add to Cart", detail: "View Details", qty: "Qty", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat protects every tasting with cold-chain handling, batch records, and precise opening standards." };
   const totalLabel = (quantity) => document.documentElement.lang?.startsWith("zh") ? `${quantity}件总价` : `${quantity}-item total`;
+  const maxQuantity = () => window.LuxureatBag?.maxQuantity || 99;
+  const clampQuantity = (quantity) => Math.min(maxQuantity(), Math.max(1, Number(quantity) || 1));
   const galleryFor = (product) => {
     if (product.id.includes("beluga")) return galleries.beluga;
     if (product.id.includes("oscetra")) return galleries.oscetra;
@@ -843,6 +845,21 @@ function initLuxProductDetails() {
     }
     total.hidden = false;
     total.textContent = `${totalLabel(quantity)}: ${formatMoney(addButton.dataset.bagCurrency || "$", amount * quantity)}`;
+  };
+  const syncSelectedQuantity = (quantity) => {
+    const next = clampQuantity(quantity);
+    const output = detail.querySelector("[data-product-quantity-value]");
+    const addButton = detail.querySelector(".lux-product-purchase [data-bag-add]");
+    const minus = detail.querySelector('[data-product-quantity="-1"]');
+    const plus = detail.querySelector('[data-product-quantity="1"]');
+    if (output) {
+      output.value = String(next);
+      output.textContent = String(next);
+    }
+    if (addButton) addButton.dataset.bagQuantity = String(next);
+    if (minus) minus.disabled = next <= 1;
+    if (plus) plus.disabled = next >= maxQuantity();
+    updateSelectedTotal(next);
   };
 
   const updateProductBagState = () => {
@@ -925,7 +942,7 @@ function initLuxProductDetails() {
     backButton.textContent = labels.back;
     backButton.hidden = !productStack.length;
     closeButton.textContent = labels.close;
-    updateSelectedTotal(1);
+    syncSelectedQuantity(1);
     updateProductBagState();
     detail.hidden = false;
     document.body.classList.add("lux-reader-open");
@@ -965,15 +982,9 @@ function initLuxProductDetails() {
     }
     const button = event.target.closest("[data-product-quantity]");
     if (!button) return;
+    if (button.disabled) return;
     const output = detail.querySelector("[data-product-quantity-value]");
-    const addButton = detail.querySelector("[data-bag-add]");
-    const next = Math.max(1, Number(output?.value || output?.textContent || 1) + Number(button.dataset.productQuantity));
-    if (output) {
-      output.value = String(next);
-      output.textContent = String(next);
-    }
-    if (addButton) addButton.dataset.bagQuantity = String(next);
-    updateSelectedTotal(next);
+    syncSelectedQuantity(Number(output?.value || output?.textContent || 1) + Number(button.dataset.productQuantity));
   });
   const close = () => {
     detail.hidden = true;
@@ -1083,11 +1094,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 (() => {
   const key = "luxureatBag";
+  const maxQuantity = 99;
+  const clampQuantity = (quantity) => Math.min(maxQuantity, Math.max(1, Number(quantity) || 1));
 
   const read = () => {
     try {
       const items = JSON.parse(localStorage.getItem(key) || "[]");
-      return Array.isArray(items) ? items : [];
+      return Array.isArray(items) ? items.map((item) => ({ ...item, quantity: clampQuantity(item.quantity) })) : [];
     } catch (_) {
       return [];
     }
@@ -1107,10 +1120,11 @@ document.addEventListener("DOMContentLoaded", () => {
     price: Number(product.price) || 0,
     currency: product.currency || "$",
     image: product.image || "",
-    quantity: Math.max(1, Number(product.quantity) || 1),
+    quantity: clampQuantity(product.quantity),
   });
 
   const api = {
+    maxQuantity,
     items: read,
     add(product) {
       const next = cleanProduct(product || {});
@@ -1119,7 +1133,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const items = read();
       const existing = items.find((item) => item.id === next.id);
       if (existing) {
-        existing.quantity += next.quantity;
+        existing.quantity = clampQuantity(existing.quantity + next.quantity);
       } else {
         items.push(next);
       }
@@ -1127,7 +1141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     change(id, delta) {
       const items = read()
-        .map((item) => item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item);
+        .map((item) => item.id === id ? { ...item, quantity: clampQuantity(item.quantity + delta) } : item);
       return save(items);
     },
     remove(id) {
@@ -1189,8 +1203,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const itemHtml = (item, lang) => {
-    const lineTotal = item.quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${item.quantity}件总价` : `${item.quantity}-item total`} ${money(item.currency, item.price * item.quantity)}</small>` : "";
+    const quantity = clampQuantity(item.quantity);
+    const lineTotal = quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${quantity}件总价` : `${quantity}-item total`} ${money(item.currency, item.price * quantity)}</small>` : "";
     const detailId = detailProductId(item, lang);
+    const minDisabled = quantity <= 1 ? " disabled aria-disabled=\"true\"" : "";
+    const maxDisabled = quantity >= maxQuantity ? " disabled aria-disabled=\"true\"" : "";
     return `
     <div class="lux-bag-item flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${escapeHtml(item.id)}">
       <div class="lux-bag-image w-full md:w-48 h-48 overflow-hidden bg-surface-container">
@@ -1209,9 +1226,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="flex items-center gap-4">
             <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">${lang === "zh" ? "数量" : "Qty"}</span>
             <div class="flex items-center border border-outline-variant/30">
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${escapeHtml(item.id)}" type="button"><span class="material-symbols-outlined text-sm">remove</span></button>
-              <span class="w-12 text-center font-label-lg">${item.quantity}</span>
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${escapeHtml(item.id)}" type="button"><span class="material-symbols-outlined text-sm">add</span></button>
+              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${escapeHtml(item.id)}" type="button"${minDisabled}><span class="material-symbols-outlined text-sm">remove</span></button>
+              <span class="w-12 text-center font-label-lg">${quantity}</span>
+              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${escapeHtml(item.id)}" type="button"${maxDisabled}><span class="material-symbols-outlined text-sm">add</span></button>
             </div>
           </div>
           <button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm uppercase tracking-widest" data-bag-remove="${escapeHtml(item.id)}" type="button">
@@ -1264,6 +1281,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const changeButton = event.target.closest("[data-bag-change]");
     if (changeButton) {
+      if (changeButton.disabled) return;
       api.change(changeButton.dataset.bagId, Number(changeButton.dataset.bagChange));
       return;
     }
