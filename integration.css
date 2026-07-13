@@ -2061,7 +2061,7 @@ button,
   opacity: .9;
 }
 
-h1.zh-home-title {
+h1.zh-display-title {
   font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
   font-size: clamp(64px, 8.4vw, 120px) !important;
   line-height: .92 !important;
