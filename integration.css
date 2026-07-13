@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Alimama ShuHei";
+  src: url("assets/fonts/AlimamaShuHeiTi-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 .lux-header, .lux-header * { box-sizing: border-box; }
 .lux-header {
   position: fixed;
@@ -1528,6 +1535,16 @@ header:has(.lux-hero-fade-both) {
   font: 700 12px/1 Montserrat, Arial, sans-serif;
   letter-spacing: .12em;
   text-transform: uppercase;
+  transition: color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.lux-footer-modal-close:hover,
+.lux-footer-modal-close:focus-visible {
+  color: #9b2f28;
+  border-color: rgba(155,47,40,.45);
+  transform: scale(1.04);
+}
+.lux-footer-modal-close:active {
+  transform: scale(.98);
 }
 .lux-footer-modal-body { outline: none; }
 .lux-footer-modal-body h2 {
@@ -2112,13 +2129,22 @@ button,
   font: 400 14px/1.5 Montserrat, Arial, sans-serif !important;
 }
 .lux-account-close {
-  top: 14px !important;
-  right: 14px !important;
+  top: 34px !important;
+  right: 34px !important;
   z-index: 3 !important;
-  border: 1px solid #151818 !important;
+  border: 0 !important;
   border-radius: 0 !important;
-  background: #151818 !important;
-  color: #fbfaf7 !important;
+  background: transparent !important;
+  color: #151818 !important;
+  transition: color .18s ease, transform .18s ease !important;
+}
+.lux-account-close:hover,
+.lux-account-close:focus-visible {
+  color: #9b2f28 !important;
+  transform: scale(1.08) !important;
+}
+.lux-account-close:active {
+  transform: scale(.96) !important;
 }
 .lux-account-field {
   display: grid !important;
@@ -2153,10 +2179,11 @@ button,
   border-radius: 0;
   background: #fff;
   color: #66716f;
+  transition: border-color .18s ease, transform .18s ease;
 }
 .lux-account-input:focus-within {
   border-color: rgba(0,106,100,.5);
-  box-shadow: 0 0 0 3px rgba(157,245,236,.36);
+  transform: translateY(-1px);
 }
 .lux-account-input input {
   width: 100%;
@@ -2189,6 +2216,12 @@ button,
   font-size: 11px !important;
   line-height: 1 !important;
   white-space: nowrap !important;
+  transition: color .18s ease, transform .18s ease !important;
+}
+.lux-account-row a:hover,
+.lux-account-row a:focus-visible {
+  color: #006a64 !important;
+  transform: translateY(-1px);
 }
 .lux-account-submit {
   width: 100% !important;
@@ -2202,6 +2235,19 @@ button,
   background: #003734 !important;
   color: #9df5ec !important;
   font-size: 12px !important;
+  transition: background .18s ease, color .18s ease, transform .18s ease !important;
+}
+.lux-account-submit:hover,
+.lux-account-submit:focus-visible {
+  background: #00504b !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+.lux-account-submit:active,
+.lux-account-social button:active,
+.lux-account-toggle:active,
+.lux-account-logout:active {
+  transform: scale(.98) !important;
 }
 .lux-account-divider {
   margin: 24px 0 16px !important;
@@ -2229,6 +2275,16 @@ button,
   background: #fff !important;
   color: #2d3433 !important;
   font-size: 12px !important;
+  transition: border-color .18s ease, color .18s ease, background .18s ease, transform .18s ease !important;
+}
+.lux-account-social button:hover,
+.lux-account-social button:focus-visible,
+.lux-account-toggle:hover,
+.lux-account-toggle:focus-visible {
+  border-color: rgba(0,106,100,.45) !important;
+  color: #006a64 !important;
+  background: #f6fffe !important;
+  transform: translateY(-1px);
 }
 .lux-account-toggle {
   width: 100% !important;
@@ -2240,6 +2296,13 @@ button,
   margin-top: 10px !important;
   color: #8b2f28 !important;
   border-color: rgba(139,47,40,.22) !important;
+}
+.lux-account-logout:hover,
+.lux-account-logout:focus-visible {
+  color: #9b2f28 !important;
+  border-color: rgba(155,47,40,.5) !important;
+  background: #fff8f6 !important;
+  transform: translateY(-1px);
 }
 .lux-account-dialog .lux-lucide {
   width: 18px !important;
@@ -2265,4 +2328,12 @@ button,
   flex: 0 0 auto;
   color: #9df5ec;
   opacity: .9;
+}
+
+.zh-home-title {
+  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
+  font-size: clamp(76px, 9vw, 150px) !important;
+  line-height: .92 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
 }
