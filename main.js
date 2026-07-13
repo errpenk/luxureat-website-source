@@ -1303,54 +1303,46 @@ document.addEventListener("DOMContentLoaded", () => {
 (() => {
   const icons = {
     x: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>',
+    mail: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
+    lock: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>',
+    logIn: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line></svg>',
+    userPlus: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>',
     circle: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>',
     message: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>',
   };
 
   const modalHtml = () => {
-    const logoSrc = document.querySelector(".lux-brand img")?.src || "../assets/luxureat-logo.png";
-    const backdropSrc = logoSrc.replace(/assets\/luxureat-logo\.png(?:\?.*)?$/, "assets/images/lux-044.jpg");
     return `
     <div class="lux-account-modal" data-account-modal aria-hidden="true">
       <div class="lux-account-dialog" role="dialog" aria-modal="true" aria-labelledby="lux-account-title">
-        <section class="lux-account-visual" style="background-image: linear-gradient(90deg, rgba(0,0,0,.16), rgba(0,0,0,.62)), url('${backdropSrc}')" aria-hidden="true">
-          <div>
-            <div class="lux-account-mark"><img src="${logoSrc}" alt=""></div>
-            <div class="lux-account-brand">LuxurEat</div>
-          </div>
-          <p class="lux-account-quote">The luxury of taste:<br>Made In Italy,<br>Around the world.</p>
-        </section>
+        <button class="lux-account-close" type="button" data-account-close aria-label="Close">${icons.x}</button>
         <section class="lux-account-form">
-          <button class="lux-account-close" type="button" data-account-close aria-label="Close">
-            ${icons.x}
-          </button>
-          <div class="lux-account-head">
-            <div>
-              <h2 id="lux-account-title" data-account-title>Sign In</h2>
-              <p data-account-subtitle>Welcome back to the sanctuary of fine taste.</p>
-            </div>
-            <button class="lux-account-toggle" type="button" data-account-toggle>Create Account</button>
-          </div>
+          <header class="lux-account-head">
+            <span class="lux-account-icon">${icons.logIn}</span>
+            <h2 id="lux-account-title" data-account-title>Sign In</h2>
+            <p data-account-subtitle>Welcome back to your LuxurEat account.</p>
+          </header>
           <form>
             <label class="lux-account-field">
               <span>Email Address</span>
-              <input type="email" placeholder="concierge@luxureat.com" autocomplete="email">
+              <div class="lux-account-input">${icons.mail}<input type="email" placeholder="concierge@luxureat.com" autocomplete="email"></div>
             </label>
             <label class="lux-account-field">
               <span>Password</span>
-              <input type="password" placeholder="••••••••" autocomplete="current-password">
+              <div class="lux-account-input">${icons.lock}<input type="password" placeholder="••••••••" autocomplete="current-password"></div>
             </label>
             <div class="lux-account-row">
               <label><input type="checkbox"><span>Remember Me</span></label>
               <a href="contact.html">Forgot Password?</a>
             </div>
-            <button class="lux-account-submit" type="submit" data-account-submit>Enter the Vault</button>
+            <button class="lux-account-submit" type="submit" data-account-submit>${icons.logIn}<span>Sign In</span></button>
           </form>
           <div class="lux-account-divider">Or Sign In With</div>
           <div class="lux-account-social">
             <button type="button">${icons.circle}Google</button>
             <button type="button">${icons.message}WeChat</button>
           </div>
+          <button class="lux-account-toggle" type="button" data-account-toggle>${icons.userPlus}<span>Create Account</span></button>
         </section>
       </div>
     </div>`;
@@ -1395,9 +1387,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const submit = node.querySelector("[data-account-submit]");
       const creating = title.textContent === "Sign In";
       title.textContent = creating ? "Create Account" : "Sign In";
-      subtitle.textContent = creating ? "Join our inner circle of international connoisseurs." : "Welcome back to the sanctuary of fine taste.";
-      toggle.textContent = creating ? "Sign In" : "Create Account";
-      submit.textContent = creating ? "Begin Journey" : "Enter the Vault";
+      subtitle.textContent = creating ? "Create your LuxurEat account." : "Welcome back to your LuxurEat account.";
+      toggle.innerHTML = creating ? `${icons.logIn}<span>Sign In</span>` : `${icons.userPlus}<span>Create Account</span>`;
+      submit.innerHTML = creating ? `${icons.userPlus}<span>Create Account</span>` : `${icons.logIn}<span>Sign In</span>`;
     }
   });
 

@@ -2067,3 +2067,177 @@ button,
   .lux-account-toggle { margin-top: 0; text-align: left; }
   .lux-account-social { grid-template-columns: 1fr; }
 }
+
+/* Default light account dialog. Keep this last so it wins over older modal styling. */
+.lux-account-dialog {
+  width: min(430px, calc(100vw - 36px)) !important;
+  min-height: 0 !important;
+  display: block !important;
+  color: #1f2424 !important;
+  background: #fbfaf7 !important;
+  border: 1px solid rgba(31,36,36,.12) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 28px 90px rgba(0,0,0,.35) !important;
+}
+.lux-account-form {
+  min-height: 0 !important;
+  padding: 34px !important;
+  background: #fbfaf7 !important;
+}
+.lux-account-head {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+  margin: 0 42px 28px 0 !important;
+}
+.lux-account-icon {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #003734;
+  background: #9df5ec;
+}
+.lux-account-head h2 {
+  margin: 0 !important;
+  color: #151818 !important;
+  font: 600 30px/1.15 Montserrat, Arial, sans-serif !important;
+  letter-spacing: 0 !important;
+}
+.lux-account-head p {
+  margin: 0 !important;
+  color: #5c6765 !important;
+  font: 400 14px/1.5 Montserrat, Arial, sans-serif !important;
+}
+.lux-account-close {
+  top: 14px !important;
+  right: 14px !important;
+  border-color: rgba(31,36,36,.12) !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: #4b5553 !important;
+}
+.lux-account-field {
+  display: grid !important;
+  gap: 8px !important;
+  margin-bottom: 18px !important;
+}
+.lux-account-field span,
+.lux-account-row span,
+.lux-account-row a,
+.lux-account-divider,
+.lux-account-social button,
+.lux-account-toggle,
+.lux-account-submit {
+  font-family: Montserrat, Arial, sans-serif !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+}
+.lux-account-field span {
+  color: #4b5553 !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+}
+.lux-account-input {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 13px;
+  border: 1px solid rgba(31,36,36,.14);
+  border-radius: 6px;
+  background: #fff;
+  color: #66716f;
+}
+.lux-account-input:focus-within {
+  border-color: rgba(0,106,100,.5);
+  box-shadow: 0 0 0 3px rgba(157,245,236,.36);
+}
+.lux-account-input input {
+  width: 100%;
+  border: 0 !important;
+  background: transparent !important;
+  color: #151818 !important;
+  padding: 0 !important;
+  font: 400 14px/1.4 Montserrat, Arial, sans-serif !important;
+}
+.lux-account-input input:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+.lux-account-row {
+  align-items: center !important;
+  margin: 8px 0 22px !important;
+}
+.lux-account-row label {
+  align-items: center !important;
+}
+.lux-account-row input {
+  width: 15px !important;
+  height: 15px !important;
+  margin: 0 !important;
+  border-color: rgba(31,36,36,.28) !important;
+}
+.lux-account-row span,
+.lux-account-row a {
+  color: #4b5553 !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+.lux-account-submit {
+  width: 100% !important;
+  min-height: 48px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: #003734 !important;
+  color: #9df5ec !important;
+  font-size: 12px !important;
+}
+.lux-account-divider {
+  margin: 24px 0 16px !important;
+  color: #6f7a78 !important;
+  font-size: 11px !important;
+}
+.lux-account-divider::before,
+.lux-account-divider::after {
+  background: rgba(31,36,36,.12) !important;
+}
+.lux-account-social {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+}
+.lux-account-social button,
+.lux-account-toggle {
+  min-height: 42px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  border: 1px solid rgba(31,36,36,.14) !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  color: #2d3433 !important;
+  font-size: 12px !important;
+}
+.lux-account-toggle {
+  width: 100% !important;
+  margin-top: 12px !important;
+  text-align: center !important;
+}
+.lux-account-dialog .lux-lucide {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 auto;
+}
+.lux-account-icon .lux-lucide {
+  width: 22px !important;
+  height: 22px !important;
+}
