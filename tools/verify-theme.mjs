@@ -298,7 +298,7 @@ assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English product
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');
 assert(zhContact.includes('Italy • United States • Thailand • China'), 'Chinese contact footprint lists the requested countries');
-assert(zhContact.includes('上海市闵行区联明路389号A栋505室') && zhContact.includes('邮编: 201101'), 'Chinese contact HQ address is updated');
+assert(zhContact.includes('上海市闵行区') && zhContact.includes('联明路389号A栋 505室') && zhContact.includes('邮编: 201101'), 'Chinese contact HQ address is updated');
 assert(zhContact.includes('lux-footprint-heading') && !zhContact.includes('<details class="lux-footprint-card'), 'Chinese contact footprint cards are expanded by default');
 assert(zhContact.includes('local_dining') && zhContact.includes('temple_buddhist') && zhContact.includes('account_balance'), 'Chinese contact footprint uses country-specific icons');
 assert(zhContact.includes('info@truffleat.com') && zhContact.includes('tel:+393515111273') && zhContact.includes('https://www.truffleat.com'), 'Chinese contact Italy card has clickable contacts');
