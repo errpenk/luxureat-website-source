@@ -2070,11 +2070,33 @@ h1.zh-display-title {
 }
 
 .lux-latest-event {
+  position: relative;
+  overflow: hidden;
   padding: clamp(70px, 8vw, 108px) clamp(22px, 5vw, 80px);
-  background: #131313;
-  color: #e5e2e1;
+  background: #eeeae5;
+  color: #1f2424;
+}
+.lux-latest-event::before,
+.lux-latest-event::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: clamp(56px, 7vw, 110px);
+  pointer-events: none;
+  z-index: 0;
+}
+.lux-latest-event::before {
+  top: 0;
+  background: linear-gradient(180deg, #131313 0%, rgba(19,19,19,0) 100%);
+}
+.lux-latest-event::after {
+  bottom: 0;
+  background: linear-gradient(0deg, #131313 0%, rgba(19,19,19,0) 100%);
 }
 .lux-latest-event-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
@@ -2087,24 +2109,42 @@ h1.zh-display-title {
 }
 .lux-event-copy h2 {
   margin: 0;
-  color: #e5e2e1;
+  color: #e9c349;
   font: 700 clamp(30px, 3.4vw, 46px)/1.15 "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   letter-spacing: 0;
 }
 .lux-event-copy p {
   margin: 18px 0 0;
-  color: #bdc9c7;
+  color: #3e4947;
   font: 400 16px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 .lux-event-copy strong {
-  color: #fff;
+  color: #1f2424;
   font-weight: 700;
+}
+.lux-event-copy .lux-event-brand {
+  color: #006a64;
+  font-weight: 800;
 }
 .lux-event-meta {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #e5e2e1 !important;
+  width: fit-content;
+  margin: 18px 0 0;
+  color: #1f2424 !important;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .18s ease, transform .18s ease, text-decoration-color .18s ease;
+  transform-origin: left center;
+}
+.lux-event-meta:hover,
+.lux-event-meta:focus-visible {
+  color: #006a64 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  transform: scale(1.035);
 }
 .lux-event-meta .lux-lucide {
   width: 20px;
@@ -2118,15 +2158,6 @@ h1.zh-display-title {
   overflow: hidden;
   background: #050505;
   max-width: 520px;
-}
-.lux-event-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, #131313 0%, rgba(19,19,19,.36) 3%, rgba(19,19,19,0) 9%, rgba(19,19,19,0) 91%, rgba(19,19,19,.36) 97%, #131313 100%),
-    linear-gradient(180deg, #131313 0%, rgba(19,19,19,.34) 3%, rgba(19,19,19,0) 9%, rgba(19,19,19,0) 91%, rgba(19,19,19,.42) 97%, #131313 100%);
 }
 .lux-event-frame img {
   width: 100%;
