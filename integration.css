@@ -428,166 +428,6 @@ header:has(.lux-hero-fade-both) {
 .lux-back-to-top:hover { box-shadow: 0 10px 30px rgba(157,245,236,.24); }
 .lux-reader-open { overflow: hidden; }
 .lux-reader[hidden], .lux-info-popover[hidden] { display: none !important; }
-.lux-reader {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  display: grid;
-  place-items: center;
-  padding: clamp(16px, 4vw, 52px);
-}
-.lux-reader-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, .72);
-  backdrop-filter: blur(12px);
-}
-.lux-reader-panel {
-  position: relative;
-  z-index: 1;
-  width: min(1040px, 100%);
-  height: min(86vh, 980px);
-  display: block;
-  border: 1px solid rgba(157, 245, 236, .18);
-  background: rgba(16, 16, 16, .92);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
-  overflow: hidden;
-}
-.lux-reader-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 64px;
-  z-index: 3;
-  pointer-events: none;
-  background: rgba(24,24,24,.34);
-  backdrop-filter: blur(16px) saturate(1.15);
-  opacity: 1;
-  transition: opacity .18s ease;
-}
-.lux-reader-panel.is-at-top::before {
-  opacity: 0;
-}
-.lux-reader-header {
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 14px;
-  border-bottom: 0;
-  background: transparent;
-  backdrop-filter: none;
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 4;
-}
-.lux-reader-back,
-.lux-reader-close {
-  min-width: 44px;
-  min-height: 36px;
-  padding: 8px 12px;
-  border: 1px solid rgba(157, 245, 236, .28);
-  color: #9df5ec;
-  font: 600 12px/1 Montserrat, Arial, sans-serif;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
-}
-.lux-reader-close { margin-left: auto; }
-.lux-reader-back:hover,
-.lux-reader-back:focus-visible,
-.lux-reader-close:hover,
-.lux-reader-close:focus-visible,
-.lux-product-back:hover,
-.lux-product-back:focus-visible,
-.lux-product-close:hover,
-.lux-product-close:focus-visible {
-  background: #9df5ec;
-  border-color: #9df5ec;
-  color: #003734;
-}
-.lux-reader-back:active,
-.lux-reader-close:active,
-.lux-product-back:active,
-.lux-product-close:active {
-  transform: scale(.98);
-}
-.lux-reader-body {
-  min-height: 0;
-  overflow-y: auto;
-  outline: none;
-}
-.lux-reader-hero {
-  min-height: clamp(260px, 40vh, 470px);
-  background-size: cover;
-  background-position: center;
-  filter: saturate(.85);
-}
-.lux-reader-copy {
-  width: min(760px, calc(100% - 36px));
-  margin: 0 auto;
-  padding: clamp(34px, 6vw, 72px) 0;
-  color: #e5e2e1;
-}
-.lux-reader-eyebrow,
-.lux-reader-meta {
-  display: block;
-  color: #9df5ec;
-  font: 700 12px/1.4 Montserrat, Arial, sans-serif;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-.lux-reader-copy h2 {
-  margin: 14px 0 10px;
-  font: 400 clamp(38px, 6vw, 72px)/1.05 "Bodoni Moda", Georgia, serif;
-}
-.lux-reader-intro {
-  margin: 32px 0 42px;
-  color: #d7dcda;
-  font: 300 clamp(18px, 2vw, 24px)/1.7 Montserrat, Arial, sans-serif;
-}
-.lux-reader-copy section { margin-top: 38px; }
-.lux-reader-copy h3 {
-  margin: 0 0 12px;
-  color: #e9c349;
-  font: 400 clamp(24px, 3vw, 34px)/1.15 "Bodoni Moda", Georgia, serif;
-}
-.lux-reader-copy p {
-  margin: 0;
-  color: #bdc9c7;
-  font: 400 16px/1.8 Montserrat, Arial, sans-serif;
-}
-.lux-reader-related {
-  padding-top: 46px;
-  border-top: 1px solid rgba(255, 255, 255, .08);
-}
-.lux-reader-related-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.lux-reader-related-grid button {
-  display: grid;
-  gap: 8px;
-  text-align: left;
-  color: #e5e2e1;
-}
-.lux-reader-related-grid img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  filter: brightness(.72);
-}
-.lux-reader-related-grid span {
-  color: #9df5ec;
-  font: 700 10px/1.4 Montserrat, Arial, sans-serif;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-.lux-reader-related-grid strong {
-  font: 600 14px/1.4 Montserrat, Arial, sans-serif;
-}
 .lux-reader-card { position: relative; }
 .lux-reader-media { position: relative; }
 .lux-reader-media::after {
@@ -679,311 +519,6 @@ header:has(.lux-hero-fade-both) {
   display: inline-grid;
   place-items: center;
 }
-.lux-reader-panel {
-  width: min(1160px, 100%);
-  height: min(90vh, 1040px);
-  background: #181818;
-}
-.lux-reader-body {
-  height: 100%;
-}
-.lux-reader-layout { min-height: 100%; background: #181818; }
-.lux-reader-layout .lux-reader-hero {
-  position: relative;
-  min-height: clamp(380px, 52vh, 580px);
-  display: flex;
-  align-items: flex-end;
-  background-size: cover;
-  background-position: center;
-}
-.lux-reader-layout .lux-reader-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(24,24,24,0) 0%, #181818 100%);
-}
-.lux-reader-hero-copy {
-  position: relative;
-  z-index: 1;
-  width: min(980px, calc(100% - 48px));
-  margin: 0 auto;
-  padding: 0 0 clamp(44px, 8vw, 96px);
-}
-.lux-reader-hero-copy h2 {
-  max-width: 900px;
-  margin: 16px 0 18px;
-  color: #e5e2e1;
-  font: italic 300 clamp(42px, 7vw, 78px)/1.05 "Bodoni Moda", Georgia, serif;
-}
-.lux-reader-layout .lux-reader-copy {
-  width: min(860px, calc(100% - 48px));
-  padding: clamp(42px, 6vw, 78px) 0;
-}
-.lux-reader-section {
-  display: grid;
-  gap: 24px;
-}
-.lux-reader-section-split {
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 42%);
-  align-items: center;
-}
-.lux-reader-section-reverse {
-  grid-template-columns: minmax(220px, 42%) minmax(0, 1fr);
-}
-.lux-reader-section figure {
-  margin: 0;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, .08);
-  background: #20201f;
-}
-.lux-reader-section figure:not(.lux-reader-wide-image) {
-  aspect-ratio: 4 / 5;
-}
-.lux-reader-wide-image {
-  aspect-ratio: 16 / 9;
-  margin-top: 18px;
-}
-.lux-reader-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(.86) saturate(.9);
-  transition: transform .7s ease;
-}
-.lux-reader-section figure:hover img {
-  transform: scale(1.04);
-}
-.lux-reader-section p + p {
-  margin-top: 18px;
-}
-.lux-reader-immersive {
-  min-height: clamp(260px, 42vh, 460px);
-  display: grid;
-  place-items: center;
-  margin: clamp(52px, 7vw, 92px) -48px;
-  padding: 48px 24px;
-  position: relative;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-}
-.lux-reader-immersive::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(19,19,19,.92), rgba(19,19,19,.48), rgba(19,19,19,.92));
-}
-.lux-reader-immersive > span,
-.lux-reader-immersive > strong {
-  position: relative;
-  z-index: 1;
-  display: block;
-  text-align: center;
-}
-.lux-reader-immersive > span {
-  margin-bottom: 18px;
-  color: #e9c349;
-  font: 700 11px/1.4 Montserrat, Arial, sans-serif;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-}
-.lux-reader-immersive > strong,
-.lux-reader-quote {
-  color: #e5e2e1;
-  font: italic 300 clamp(34px, 5vw, 68px)/1.08 "Bodoni Moda", Georgia, serif;
-}
-.lux-reader-immersive > strong {
-  width: min(860px, calc(100% - 48px));
-}
-.lux-reader-quote {
-  margin: clamp(48px, 7vw, 86px) auto;
-  width: min(900px, 100%);
-  text-align: center;
-  color: #d7dcda;
-  font: 400 clamp(18px, 2vw, 24px)/1.7 Montserrat, Arial, sans-serif;
-}
-.lux-reader-related-media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-}
-.lux-reader-related-media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, .56);
-  opacity: 0;
-  transition: opacity .22s ease;
-}
-.lux-reader-related-cta {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
-  transform: translate(-50%, -44%);
-  padding: 10px 14px;
-  border: 1px solid rgba(255,255,255,.9);
-  color: #fff !important;
-  background: rgba(0,0,0,.28);
-  opacity: 0;
-  transition: opacity .22s ease, transform .22s ease, background .18s ease, color .18s ease, border-color .18s ease;
-}
-.lux-reader-related-grid button:hover .lux-reader-related-media::after,
-.lux-reader-related-grid button:focus-visible .lux-reader-related-media::after {
-  opacity: 1;
-}
-.lux-reader-related-grid button:hover .lux-reader-related-cta,
-.lux-reader-related-grid button:focus-visible .lux-reader-related-cta {
-  opacity: 1;
-  transform: translate(-50%, -50%);
-  border-color: rgba(255,255,255,.9);
-  background: rgba(0,0,0,.34);
-  color: #fff !important;
-}
-.lux-reader-related-grid button .lux-reader-related-cta:hover {
-  border-color: #9df5ec;
-  background: #9df5ec;
-  color: #003734 !important;
-  transform: translate(-50%, -50%) scale(1.03);
-}
-.lux-reader-related-grid button:active .lux-reader-related-cta {
-  transform: translate(-50%, -50%) scale(.98);
-}
-.lux-reader-archive {
-  width: min(1180px, calc(100% - 48px));
-  margin: 0 auto;
-  padding: clamp(58px, 8vw, 92px) 0;
-}
-.lux-reader-archive-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 24px;
-  margin-bottom: 40px;
-}
-.lux-reader-archive h2 {
-  margin: 0;
-  color: #e5e2e1;
-  font: 400 clamp(36px, 5vw, 58px)/1.1 "Bodoni Moda", Georgia, serif;
-}
-.lux-reader-archive-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-.lux-reader-archive-tabs button {
-  color: #bdc9c7;
-  font: 700 11px/1.4 Montserrat, Arial, sans-serif;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 5px;
-  transition: color .18s ease, border-color .18s ease;
-}
-.lux-reader-archive-tabs button:hover,
-.lux-reader-archive-tabs button:focus-visible,
-.lux-reader-archive-tabs button.is-active {
-  color: #9df5ec;
-  border-color: #9df5ec;
-}
-.lux-reader-archive-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 36px;
-}
-.lux-reader-archive-card {
-  display: block;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  transition: transform .22s ease;
-}
-.lux-reader-archive-card:hover,
-.lux-reader-archive-card:focus-visible {
-  transform: translateY(-3px);
-}
-.lux-reader-archive-card:active { transform: scale(.99); }
-.lux-reader-archive-card[hidden] { display: none !important; }
-.lux-reader-archive-media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  margin-bottom: 18px;
-  background: #20201f;
-}
-.lux-reader-archive-media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, .52);
-  opacity: 0;
-  transition: opacity .22s ease;
-}
-.lux-reader-archive-card img {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  filter: grayscale(1) brightness(.72);
-  transition: filter .55s ease, transform .7s ease;
-}
-.lux-reader-archive-cta {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
-  transform: translate(-50%, -44%);
-  padding: 12px 18px;
-  border: 1px solid rgba(255,255,255,.9);
-  background: rgba(0,0,0,.34);
-  color: #fff;
-  opacity: 0;
-  font: 700 12px/1 Montserrat, Arial, sans-serif;
-  letter-spacing: .12em;
-  transition: opacity .22s ease, transform .22s ease, background .18s ease, color .18s ease, border-color .18s ease;
-}
-.lux-reader-archive-card:hover img,
-.lux-reader-archive-card:focus-visible img {
-  filter: grayscale(.25) brightness(.88);
-  transform: scale(1.04);
-}
-.lux-reader-archive-media:hover::after,
-.lux-reader-archive-card:focus-visible .lux-reader-archive-media::after {
-  opacity: 1;
-}
-.lux-reader-archive-media:hover .lux-reader-archive-cta,
-.lux-reader-archive-card:focus-visible .lux-reader-archive-cta {
-  opacity: 1;
-  transform: translate(-50%, -50%);
-}
-.lux-reader-archive-media .lux-reader-archive-cta:hover {
-  border-color: #9df5ec;
-  background: #9df5ec;
-  color: #003734;
-  transform: translate(-50%, -50%) scale(1.03);
-}
-.lux-reader-archive-card:active .lux-reader-archive-cta {
-  transform: translate(-50%, -50%) scale(.98);
-}
-.lux-reader-archive-copy > span,
-.lux-reader-archive-card small {
-  display: block;
-  color: #e9c349;
-  font: 700 10px/1.4 Montserrat, Arial, sans-serif;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-.lux-reader-archive-card strong {
-  display: block;
-  margin: 7px 0;
-  color: #e5e2e1;
-  font: 400 22px/1.25 "Bodoni Moda", Georgia, serif;
-  transition: color .18s ease;
-}
-.lux-reader-archive-card:hover strong,
-.lux-reader-archive-card:focus-visible strong {
-  color: #9df5ec;
-}
 .lux-product-detail[hidden] { display: none !important; }
 .lux-product-detail {
   position: fixed;
@@ -1037,6 +572,18 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-product-back { left: 14px; }
 .lux-product-close { right: 14px; }
+.lux-product-back:hover,
+.lux-product-back:focus-visible,
+.lux-product-close:hover,
+.lux-product-close:focus-visible {
+  background: #9df5ec;
+  border-color: #9df5ec;
+  color: #003734;
+}
+.lux-product-back:active,
+.lux-product-close:active {
+  transform: scale(.98);
+}
 .lux-product-body {
   height: 100%;
   overflow-y: auto;
@@ -1633,18 +1180,6 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-actions > .lux-icon-action { display: inline-flex; }
   [data-caviar-grid].is-list [data-caviar-item] { grid-template-columns: 1fr; }
   .lux-module-grid, .lux-footer-grid { grid-template-columns: 1fr; }
-  .lux-reader { padding: 0; }
-  .lux-reader-panel { width: 100%; height: 100%; }
-  .lux-reader-archive { width: min(100% - 36px, 420px); }
-  .lux-reader-archive-head { align-items: flex-start; flex-direction: column; }
-  .lux-reader-archive-tabs { gap: 16px; }
-  .lux-reader-archive-grid { grid-template-columns: 1fr; }
-  .lux-reader-archive-card img { width: 100%; }
-  .lux-reader-related-grid { grid-template-columns: 1fr; }
-  .lux-reader-section-split,
-  .lux-reader-section-reverse { grid-template-columns: 1fr; }
-  .lux-reader-section-reverse figure { order: 2; }
-  .lux-reader-immersive { margin-inline: -24px; }
   .lux-product-detail { padding: 0; }
   .lux-product-panel { width: 100%; height: 100%; }
   .lux-product-hero { grid-template-columns: 1fr; padding: 28px 20px 48px; }
@@ -1719,7 +1254,6 @@ input,
 textarea,
 select,
 .lux-reader-copy p,
-.lux-reader-intro,
 .lux-reader-section p,
 .lux-product-summary p,
 .lux-product-story p,
@@ -1764,8 +1298,6 @@ button,
 .lux-module-card small,
 .lux-footprint-heading small,
 .lux-footprint-card summary small,
-.lux-reader-eyebrow,
-.lux-reader-meta,
 .lux-reader-archive-copy > span,
 .lux-reader-archive-card small,
 .lux-product-summary span,
@@ -2149,7 +1681,7 @@ h1.zh-display-title {
 .lux-event-meta .lux-lucide {
   width: 20px;
   height: 20px;
-  color: #9df5ec;
+  color: #006a64;
   flex: 0 0 auto;
 }
 .lux-event-frame {
@@ -2172,5 +1704,554 @@ h1.zh-display-title {
   .lux-event-frame,
   .lux-event-copy {
     max-width: none;
+  }
+}
+
+/* Light editorial reader, based on the local article template. */
+.lux-reader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 44px);
+}
+.lux-reader-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 9, 8, .58);
+  backdrop-filter: blur(10px);
+}
+.lux-reader-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100vw - 32px));
+  height: min(90vh, 1040px);
+  display: block;
+  border: 1px solid rgba(16,16,16,.18);
+  background: #f4f2ee;
+  box-shadow: 0 28px 90px rgba(0,0,0,.42);
+  overflow: hidden;
+}
+.lux-reader-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 62px;
+  z-index: 3;
+  pointer-events: none;
+  background: rgba(244,242,238,.82);
+  backdrop-filter: blur(12px);
+  opacity: 1;
+  transition: opacity .18s ease;
+}
+.lux-reader-panel.is-at-top::before {
+  opacity: 0;
+}
+.lux-reader-header {
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 4;
+}
+.lux-reader-back,
+.lux-reader-close {
+  min-width: 44px;
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid #101010;
+  background: #f4f2ee;
+  color: #101010;
+  font: 600 12px/1 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.lux-reader-close {
+  margin-left: auto;
+  font-weight: 700;
+}
+.lux-reader-back:hover,
+.lux-reader-back:focus-visible,
+.lux-reader-close:hover,
+.lux-reader-close:focus-visible {
+  background: #101010;
+  border-color: #101010;
+  color: #f4f2ee;
+}
+.lux-reader-close:hover,
+.lux-reader-close:focus-visible {
+  background: #9df5ec;
+  border-color: #9df5ec;
+  color: #003734;
+}
+.lux-reader-back:active,
+.lux-reader-close:active {
+  transform: scale(.98);
+}
+.lux-reader-body {
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  outline: none;
+  background: #f4f2ee;
+}
+.lux-reader-layout {
+  width: min(1180px, calc(100% - 40px));
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 72px 0 64px;
+  background: #f4f2ee;
+  color: #101010;
+}
+.lux-reader-rule {
+  height: 1px;
+  margin-bottom: 28px;
+  background: #101010;
+}
+.lux-reader-layout .lux-reader-hero {
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 40px;
+  align-items: end;
+  padding-bottom: 34px;
+  border-bottom: 1px solid #d7d2c8;
+  background: none !important;
+  filter: none;
+}
+.lux-reader-layout .lux-reader-hero::after {
+  content: none;
+}
+.lux-reader-hero-copy {
+  position: static;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+.lux-reader-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 34px;
+  color: #77736c;
+  font: 600 12px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.lux-reader-hero-copy h2 {
+  max-width: 760px;
+  margin: 0;
+  color: #101010;
+  font: 700 clamp(58px, 8vw, 112px)/.95 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  letter-spacing: 0;
+}
+.lux-reader-summary {
+  max-width: 500px;
+  margin: 28px 0 0;
+  color: #2b2a28;
+  font: 400 20px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+}
+.lux-reader-cover {
+  margin: 0;
+}
+.lux-reader-cover img {
+  width: 100%;
+  min-height: 480px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid #d7d2c8;
+  filter: saturate(.92) contrast(1.02);
+}
+.lux-reader-cover figcaption {
+  margin-top: 14px;
+  color: #77736c;
+  font: 600 12px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.lux-reader-content {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 720px) 1fr;
+  gap: 40px;
+  padding-top: 52px;
+}
+.lux-reader-aside {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  color: #77736c;
+  font: 600 13px/1.5 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.lux-reader-layout .lux-reader-copy {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  color: #2b2a28;
+}
+.lux-reader-section {
+  display: block;
+}
+.lux-reader-section + .lux-reader-section {
+  margin-top: 54px;
+}
+.lux-reader-layout .lux-reader-copy h3 {
+  margin: 0 0 16px;
+  color: #006a64;
+  font: 700 30px/1.18 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  letter-spacing: 0;
+}
+.lux-reader-layout .lux-reader-copy p {
+  margin: 0 0 24px;
+  color: #2b2a28;
+  font: 400 19px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+  letter-spacing: 0;
+}
+.lux-reader-copy .lux-reader-section:first-child p:first-of-type::first-letter {
+  float: left;
+  margin: 8px 10px 0 0;
+  color: #006a64;
+  font: 400 76px/.74 "Bodoni Moda", Georgia, "Times New Roman", serif;
+}
+.lux-reader-quote {
+  width: auto;
+  margin: 42px 0;
+  padding-left: 22px;
+  border-left: 1px solid #101010;
+  color: #101010;
+  text-align: left;
+  font: 400 32px/1.12 "Bodoni Moda", Georgia, "Times New Roman", serif !important;
+  letter-spacing: 0;
+}
+.lux-reader-pull {
+  align-self: start;
+  padding-top: 16px;
+  border-top: 1px solid #101010;
+  color: #77736c;
+  font: 400 14px/1.5 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+}
+.lux-reader-pull p {
+  margin: 0;
+  color: #77736c;
+  font: inherit !important;
+}
+.lux-reader-toc {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid #d7d2c8;
+}
+.lux-reader-toc span {
+  color: #77736c;
+  font: 600 12px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.lux-reader-toc a {
+  width: fit-content;
+  color: #77736c;
+  font: 700 17px/1.35 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif;
+  letter-spacing: 0;
+  transform-origin: left center;
+  transition: color .18s ease, transform .18s ease;
+}
+.lux-reader-toc a:hover,
+.lux-reader-toc a:focus-visible {
+  color: #006a64;
+  transform: scale(1.045);
+}
+.lux-reader-related {
+  width: min(940px, 100%);
+  margin: 56px auto 0;
+  padding-top: 34px;
+  border-top: 1px solid #d7d2c8;
+}
+.lux-reader-related h3 {
+  margin: 0 0 20px;
+  color: #101010;
+  font: 400 30px/1 "Bodoni Moda", Georgia, "Times New Roman", serif !important;
+  letter-spacing: 0;
+}
+.lux-reader-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.lux-reader-related-grid button {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  color: #101010;
+  background: transparent;
+}
+.lux-reader-related-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border: 0;
+  background: #070707;
+}
+.lux-reader-related-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  background: rgba(0, 0, 0, .48);
+  transition: opacity .22s ease;
+}
+.lux-reader-related-grid img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  filter: brightness(.82) saturate(.9) contrast(1.02);
+}
+.lux-reader-related-grid button > span:not(.lux-reader-related-media) {
+  color: #77736c;
+  font: 600 11px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+}
+.lux-reader-related-grid strong {
+  color: #101010;
+  font: 600 15px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+}
+.lux-reader-related-cta,
+.lux-reader-archive-cta {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  padding: 12px 18px;
+  border: 1px solid rgba(255,255,255,.96);
+  border-color: rgba(255,255,255,.96);
+  background: rgba(0,0,0,.12);
+  color: #fff !important;
+  letter-spacing: 0;
+  transition: opacity .22s ease, transform .22s ease, background .18s ease, color .18s ease, border-color .18s ease;
+}
+.lux-reader-related-cta {
+  min-width: 132px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font: 700 14px/1 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+}
+.lux-reader-archive-cta {
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+.lux-reader-related-grid button:hover .lux-reader-related-cta,
+.lux-reader-related-grid button:focus-visible .lux-reader-related-cta {
+  border-color: #9df5ec;
+  background: #9df5ec;
+  color: #003734 !important;
+  transform: translate(-50%, -50%);
+}
+.lux-reader-archive-media:hover .lux-reader-archive-cta,
+.lux-reader-archive-card:focus-visible .lux-reader-archive-cta {
+  opacity: 1;
+  border-color: rgba(255,255,255,.96);
+  background: rgba(0,0,0,.12);
+  color: #fff !important;
+  transform: translate(-50%, -50%);
+}
+.lux-reader-archive-media:hover .lux-reader-archive-cta:hover,
+.lux-reader-archive-card:focus-visible .lux-reader-archive-cta:hover {
+  opacity: 1;
+  border-color: #9df5ec;
+  background: #9df5ec;
+  color: #003734 !important;
+  transform: translate(-50%, -50%);
+}
+.lux-reader-archive {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(58px, 8vw, 92px) 0;
+  color: #101010;
+}
+.lux-reader-archive-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.lux-reader-archive h2 {
+  margin: 0;
+  color: #101010;
+  font: 400 clamp(36px, 5vw, 58px)/1.1 "Bodoni Moda", Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}
+.lux-reader-archive-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.lux-reader-archive-tabs button {
+  color: #77736c;
+  font: 700 11px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 5px;
+  transition: color .18s ease, border-color .18s ease;
+}
+.lux-reader-archive-tabs button:hover,
+.lux-reader-archive-tabs button:focus-visible,
+.lux-reader-archive-tabs button.is-active {
+  color: #101010;
+  border-color: #101010;
+}
+.lux-reader-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 36px;
+}
+.lux-reader-archive-card {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  color: #101010;
+  transition: transform .22s ease;
+}
+.lux-reader-archive-card:hover,
+.lux-reader-archive-card:focus-visible {
+  transform: translateY(-3px);
+}
+.lux-reader-archive-card:active {
+  transform: scale(.99);
+}
+.lux-reader-archive-card[hidden] {
+  display: none !important;
+}
+.lux-reader-archive-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 1px solid #d7d2c8;
+  background: #e8e4dc;
+}
+.lux-reader-archive-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .52);
+  opacity: 0;
+  transition: opacity .22s ease;
+}
+.lux-reader-archive-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: saturate(.9) contrast(1.02);
+  transition: filter .55s ease, transform .7s ease;
+}
+.lux-reader-archive-card:hover img,
+.lux-reader-archive-card:focus-visible img {
+  filter: saturate(1) contrast(1.04);
+  transform: scale(1.04);
+}
+.lux-reader-archive-media:hover::after,
+.lux-reader-archive-card:focus-visible .lux-reader-archive-media::after {
+  opacity: 1;
+}
+.lux-reader-archive-copy > span,
+.lux-reader-archive-card small {
+  display: block;
+  color: #77736c;
+  font: 700 10px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.lux-reader-archive-card strong {
+  display: block;
+  margin: 7px 0;
+  color: #101010;
+  font: 400 22px/1.25 "Bodoni Moda", Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+  transition: color .18s ease;
+}
+.lux-reader-archive-card:hover strong,
+.lux-reader-archive-card:focus-visible strong {
+  color: #006a64;
+}
+
+@media (max-width: 840px) {
+  .lux-reader {
+    padding: 0;
+  }
+  .lux-reader-panel {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .lux-reader-layout {
+    width: min(100% - 28px, 680px);
+    padding: 70px 0 44px;
+  }
+  .lux-reader-layout .lux-reader-hero,
+  .lux-reader-content,
+  .lux-reader-meta-grid {
+    grid-template-columns: 1fr;
+  }
+  .lux-reader-layout .lux-reader-hero {
+    min-height: 0;
+    gap: 28px;
+  }
+  .lux-reader-meta-grid {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .lux-reader-hero-copy h2 {
+    font-size: clamp(42px, 15vw, 72px) !important;
+    line-height: .92 !important;
+  }
+  .lux-reader-summary {
+    font-size: 17px !important;
+  }
+  .lux-reader-cover img {
+    min-height: 320px;
+  }
+  .lux-reader-content {
+    gap: 28px;
+    padding-top: 38px;
+  }
+  .lux-reader-archive {
+    width: min(100% - 36px, 420px);
+  }
+  .lux-reader-archive-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .lux-reader-archive-tabs {
+    gap: 16px;
+  }
+  .lux-reader-layout .lux-reader-copy p {
+    font-size: 17px !important;
+  }
+  .lux-reader-quote {
+    font-size: 28px !important;
+  }
+  .lux-reader-related-grid,
+  .lux-reader-archive-grid {
+    grid-template-columns: 1fr;
   }
 }

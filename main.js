@@ -614,43 +614,60 @@ function initLuxReader() {
     currentId = id;
     const copy = labels();
     const articleSections = article.sections.length ? article.sections : [[copy.note, copy.noteText]];
-    const contentImages = Array.from(new Set([
-      ...(article.media || []),
-      ...article.related.map((relatedId) => articles[relatedId]?.image).filter(Boolean),
-      article.image,
-    ].filter(Boolean)));
     const paragraphs = (content) => (Array.isArray(content) ? content : [content])
       .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
       .join("");
-    const sectionHtml = articleSections.map(([heading, content], index) => {
-      const image = contentImages[index % contentImages.length] || article.image;
-      const copyHtml = `<div><h3>${escapeHtml(heading)}</h3>${paragraphs(content)}</div>`;
-      if (index === 0) {
-        return `<section class="lux-reader-section lux-reader-section-split">${copyHtml}<figure><img src="${escapeHtml(image)}" alt=""></figure></section>`;
-      }
-      if (index === 1) {
-        return `<section class="lux-reader-section">${copyHtml}<figure class="lux-reader-wide-image"><img src="${escapeHtml(image)}" alt=""></figure></section>`;
-      }
-      return `<section class="lux-reader-section lux-reader-section-split lux-reader-section-reverse"><figure><img src="${escapeHtml(image)}" alt=""></figure>${copyHtml}</section>`;
-    }).join("");
+    const plainText = [article.intro, ...articleSections.flatMap(([, content]) => Array.isArray(content) ? content : [content])].join("");
+    const minutes = Math.max(4, Math.ceil(plainText.length / (article.lang === "zh" ? 450 : 900)));
+    const metaParts = article.meta.split("·").map((part) => part.trim()).filter(Boolean);
+    const readTime = article.lang === "zh" ? `${minutes} 分钟阅读` : `${minutes} min read`;
+    const issue = article.lang === "zh" ? "LuxurEat 志" : "LuxurEat Journal";
+    const metaItems = [issue, article.eyebrow, readTime, metaParts[1] || metaParts[0] || ""];
+    const asideRows = [
+      [article.lang === "zh" ? "栏目" : "Column", article.eyebrow],
+      [article.lang === "zh" ? "档案" : "Series", metaParts[0] || copy.archive],
+      [article.lang === "zh" ? "日期" : "Date", metaParts[1] || ""],
+    ].filter(([, value]) => value);
+    const tocLabel = article.lang === "zh" ? "目录" : "Contents";
+    const sectionHtml = articleSections.map(([heading, content], index) => `
+          <section class="lux-reader-section" id="lux-reader-section-${index}">
+            <h3>${escapeHtml(heading)}</h3>
+            ${paragraphs(content)}
+          </section>`).join("");
+    const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(heading)}</a>`).join("");
 
     body.innerHTML = `
       <article class="lux-reader-layout">
-        <section class="lux-reader-hero" style="background-image:url('${escapeHtml(article.image)}')">
+        <div class="lux-reader-rule"></div>
+        <section class="lux-reader-hero">
           <div class="lux-reader-hero-copy">
-            <span class="lux-reader-eyebrow">${escapeHtml(article.eyebrow)}</span>
+            <div class="lux-reader-meta-grid">
+              ${metaItems.map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+            </div>
             <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
-            <p class="lux-reader-meta">${escapeHtml(article.meta)}</p>
+            <p class="lux-reader-summary">${escapeHtml(article.intro)}</p>
           </div>
+          <figure class="lux-reader-cover">
+            <img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">
+            <figcaption>Figure 01 / ${escapeHtml(article.eyebrow)}</figcaption>
+          </figure>
         </section>
-        <div class="lux-reader-copy">
-          <p class="lux-reader-intro">${escapeHtml(article.intro)}</p>
-          ${sectionHtml}
-          <section class="lux-reader-immersive" style="background-image:url('${escapeHtml(contentImages[2] || article.image)}')">
-            <span>${escapeHtml(copy.note)}</span>
-            <strong>${escapeHtml(article.quote || copy.noteText)}</strong>
-          </section>
-          ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
+        <section class="lux-reader-content">
+          <aside class="lux-reader-aside">
+            ${asideRows.map(([label, value]) => `<span>${escapeHtml(label)}：${escapeHtml(value)}</span>`).join("")}
+          </aside>
+          <div class="lux-reader-copy">
+            ${sectionHtml}
+            ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
+          </div>
+          <aside class="lux-reader-pull">
+            <p>${escapeHtml(article.quote || copy.noteText)}</p>
+            <nav class="lux-reader-toc" aria-label="${escapeHtml(tocLabel)}">
+              <span>${escapeHtml(tocLabel)}</span>
+              ${tocHtml}
+            </nav>
+          </aside>
+        </section>
           <section class="lux-reader-related">
             <div class="lux-reader-related-head">
               <h3>${copy.related}</h3>
@@ -670,7 +687,6 @@ function initLuxReader() {
               }).join("")}
             </div>
           </section>
-        </div>
       </article>`;
 
     showReader(copy);
@@ -1171,7 +1187,9 @@ document.addEventListener("DOMContentLoaded", () => {
   })}`;
 
   const productImage = (button) => {
-    const source = button.closest("article, section, main") || document;
+    const source = button.closest("[data-bag-card], .lux-product-recent-card, [data-caviar-item], .lux-bag-recommendations .group, article")
+      || button.closest("section, main")
+      || document;
     const img = source.querySelector("img");
     if (img?.src) return img.src;
 

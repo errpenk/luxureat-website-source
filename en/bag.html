@@ -161,44 +161,7 @@
 </header>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
 <!-- Shopping Bag List -->
-<div class="lg:col-span-8 space-y-12" data-bag-list data-bag-locale="en" data-bag-shipping="20">
-<!-- Main Item -->
-<div class="flex flex-col md:flex-row gap-8 pb-12 border-b border-outline-variant/20 animate-fade-in">
-<div class="w-full md:w-64 h-64 overflow-hidden rounded-lg group">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="../assets/images/lux-001.jpg">
-</div>
-<div class="flex-1 flex flex-col justify-between py-2">
-<div class="flex justify-between items-start">
-<div>
-<p class="font-label-sm text-label-sm text-secondary mb-2 uppercase tracking-widest">Huso Huso</p>
-<h2 class="font-headline-md text-headline-md mb-2">Imperial Beluga Caviar - 250g</h2>
-<p class="text-on-surface-variant font-body-md">Sustainably harvested. Hand-selected for grain size and color.</p>
-</div>
-<p class="font-headline-sm text-headline-sm text-on-surface">$2,480</p>
-</div>
-<div class="flex items-center justify-between mt-8">
-<div class="flex items-center border border-outline-variant/30 rounded-full px-4 py-2">
-<button class="hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-sm" data-icon="remove">remove</span>
-</button>
-<span class="mx-6 font-label-lg text-label-lg">1</span>
-<button class="hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
-</button>
-</div>
-<button class="flex items-center gap-2 text-on-surface-variant hover:text-error transition-colors font-label-sm uppercase tracking-tighter">
-<span class="material-symbols-outlined text-lg" data-icon="delete">delete</span>
-                                Remove
-                            </button>
-</div>
-</div>
-</div>
-<!-- Shipping Message -->
-<div class="glass-panel p-6 flex items-center gap-4 border-l-4 border-secondary">
-<span class="material-symbols-outlined text-secondary" data-icon="ac_unit">ac_unit</span>
-<p class="font-body-md text-on-surface-variant">Your order is eligible for temperature-controlled express courier with <span class="text-secondary font-medium">Professional Cold-Chain Shipping</span>.</p>
-</div>
-</div>
+<div class="lg:col-span-8 space-y-12" data-bag-list data-bag-locale="en" data-bag-shipping="20"></div>
 <!-- Order Summary -->
 <aside class="lg:col-span-4 sticky top-32">
 <div class="glass-panel p-10 flex flex-col gap-8">
@@ -206,11 +169,11 @@
 <div class="space-y-4">
 <div class="flex justify-between text-on-surface-variant font-body-md">
 <span class="">Subtotal</span>
-<span class="" data-bag-subtotal>$2,480.00</span>
+<span class="" data-bag-subtotal>$0.00</span>
 </div>
 <div class="flex justify-between text-on-surface-variant font-body-md">
 <span class="">Shipping &amp; Handling</span>
-<span class="" data-bag-shipping-total>$20.00</span>
+<span class="" data-bag-shipping-total>$0.00</span>
 </div>
 <div class="flex justify-between text-on-surface-variant font-body-md">
 <span class="">Estimated Tax</span>
@@ -219,7 +182,7 @@
 </div>
 <div class="flex justify-between items-end border-t border-outline-variant/20 pt-6">
 <span class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface">Total</span>
-<span class="font-headline-md text-headline-md text-secondary" data-bag-total>$2,500.00</span>
+<span class="font-headline-md text-headline-md text-secondary" data-bag-total>$0.00</span>
 </div>
 <div class="space-y-4 mt-4">
 <button class="primary-btn w-full py-5 font-label-lg text-label-lg uppercase tracking-[0.2em] rounded-none">
@@ -299,35 +262,6 @@
 </main>
 <!-- Footer -->
 
-<script>
-        // Micro-interactions
-        document.querySelectorAll('button, a').forEach(el => {
-            el.addEventListener('mousedown', () => {
-                el.style.transform = 'scale(0.98)';
-            });
-            el.addEventListener('mouseup', () => {
-                el.style.transform = 'scale(1)';
-            });
-            el.addEventListener('mouseleave', () => {
-                el.style.transform = 'scale(1)';
-            });
-        });
-
-        // Simple scroll effect for Nav
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 20) {
-                nav.classList.add('shadow-xl');
-            } else {
-                nav.classList.remove('shadow-xl');
-            }
-        });
-    </script>
-
-
-
-
-
 <footer class="lux-footer">
   <div class="lux-footer-grid">
     <div><img src="../assets/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
@@ -338,4 +272,4 @@
   <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
 </footer>
 <script src="../assets/data/products.js?v=20260712-qtybounds1"></script>
-<script src="../main.js?v=20260712-qtybounds1"></script></body></html>
+<script src="../main.js?v=20260714-bag-image1"></script></body></html>
