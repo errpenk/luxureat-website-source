@@ -29,7 +29,7 @@ const pageInputs = [
 ];
 
 function ensureSource() {
-  for (const file of ['README.md', 'integration.css', 'main.js', 'assets/luxureat-logo.png', 'assets/wechat-qr.png', 'assets/data/products.js']) {
+  for (const file of ['README.md', 'integration.css', 'main.js', 'latest-event.js', 'assets/luxureat-logo.png', 'assets/wechat-qr.png', 'assets/data/products.js']) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -137,6 +137,7 @@ function stripKnownLocalIncludes(html) {
   return [
     ['link', 'href', '../integration.css'],
     ['script', 'src', '../assets/data/products.js'],
+    ['script', 'src', '../latest-event.js'],
     ['script', 'src', '../main.js'],
   ].reduce((source, args) => stripTagByAttr(source, ...args), html);
 }
@@ -344,6 +345,14 @@ function luxureat_static_assets() {
         filemtime($theme_dir . '/main.js'),
         true
     );
+
+    wp_enqueue_script(
+        'luxureat-latest-event',
+        $theme_uri . '/latest-event.js',
+        array(),
+        filemtime($theme_dir . '/latest-event.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_assets');
 
@@ -463,7 +472,7 @@ This package wraps the static bilingual LuxurEat website source from https://git
 ## Notes
 
 - The current version prioritizes visual fidelity and static routing.
-- Local assets, \`integration.css\`, and \`main.js\` are loaded through WordPress theme APIs.
+- Local assets, \`integration.css\`, \`latest-event.js\`, and \`main.js\` are loaded through WordPress theme APIs.
 - Photographic assets live in \`assets/images/\`; product copy and gallery data live in \`assets/data/products.js\`.
 `;
 }
@@ -477,6 +486,7 @@ function build() {
 
   fs.copyFileSync(path.join(sourceDir, 'integration.css'), path.join(themeDir, 'integration.css'));
   fs.copyFileSync(path.join(sourceDir, 'main.js'), path.join(themeDir, 'main.js'));
+  fs.copyFileSync(path.join(sourceDir, 'latest-event.js'), path.join(themeDir, 'latest-event.js'));
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');

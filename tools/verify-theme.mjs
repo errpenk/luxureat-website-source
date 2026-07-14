@@ -73,6 +73,7 @@ for (const file of [
   'routes.php',
   'integration.css',
   'main.js',
+  'latest-event.js',
   'assets/luxureat-logo.png',
   'assets/wechat-qr.png',
   'assets/article-images/harvest-hero.jpg',
@@ -90,6 +91,7 @@ assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the 
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
 assert(functionsPhp.includes('luxureat-product-data') && functionsPhp.includes("array('luxureat-product-data')"), 'functions.php loads product data before main.js');
+assert(functionsPhp.includes('luxureat-latest-event'), 'functions.php enqueues the latest event template script');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
@@ -129,6 +131,7 @@ for (const file of pageFiles) {
   assert(source.includes('wp_footer();'), `${rel} calls wp_footer()`);
   assert(!source.includes('../integration.css'), `${rel} does not link ../integration.css directly`);
   assert(!source.includes('../main.js'), `${rel} does not load ../main.js directly`);
+  assert(!source.includes('../latest-event.js'), `${rel} does not load ../latest-event.js directly`);
   assert(!source.includes('../assets/'), `${rel} does not use relative asset paths`);
   assert(!/href=["'][^"']*\.html(?:[#?][^"']*)?["']/.test(source), `${rel} has no .html internal hrefs`);
   assert(!source.includes("home_url('/zh/") && !source.includes("home_url('/en/"), `${rel} does not require pretty permalink routes`);
@@ -310,6 +313,9 @@ assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<deta
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
+const latestEventJs = read(path.join(themeDir, 'latest-event.js'));
+assert(zhHome.includes('data-latest-event'), 'Chinese home has the latest event mount point');
+assert(latestEventJs.includes('marca-china-2026.jpeg') && latestEventJs.includes('document.currentScript'), 'latest event script renders the event from theme-relative assets');
 assert(zhHome.includes('data-product-open="zh-imperial-beluga"'), 'Chinese home shop CTA opens product detail');
 assert(enHome.includes("luxureat_static_url('en/products', '#product-en-imperial-beluga')"), 'English home shop CTA opens product detail through products');
 assert(enHome.includes("luxureat_static_url('en/products'"), 'English navigation exposes the products page');
