@@ -105,7 +105,7 @@
         } catch (_e) {}
     </script>
 
-<link rel="stylesheet" href="../integration.css?v=20260713-event3">
+<link rel="stylesheet" href="../integration.css?v=20260714-hover-fix1">
 </head>
 <body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
 <header class="lux-header">
@@ -178,14 +178,14 @@
 <div class="max-w-2xl">
 <span class="text-primary font-body-md text-label-sm uppercase tracking-widest mb-4 block">Selection Catalogue</span>
 <h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">企业级礼赠系列</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">针对不同层级的商务沟通需求，我们甄选了四款核心礼赠配置，展现专业与尊崇。</p>
+<p class="font-body-md text-body-md text-on-surface-variant">针对不同层级的商务沟通需求，我们甄选了多款核心礼赠配置，展现专业与尊崇。</p>
 </div>
-<div class="hidden md:flex gap-4">
-<button class="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center hover:border-primary text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined">west</span></button>
-<button class="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center hover:border-primary text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined">east</span></button>
+<div class="hidden md:flex gap-4 lux-gift-nav">
+<button type="button" data-gift-scroll="-1" aria-label="上一组礼赠" disabled aria-disabled="true"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+<button type="button" data-gift-scroll="1" aria-label="下一组礼赠"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="lux-gift-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter" data-gift-grid>
 <!-- Set 1 -->
 <div class="group">
 <div class="relative aspect-[4/5] overflow-hidden bg-surface-container-low mb-6">
@@ -235,6 +235,18 @@
 <div class="flex items-center justify-between border-t border-white/5 pt-4">
 <span class="text-primary font-medium">适合：高端餐饮/私人厨宴</span>
 <button class="material-symbols-outlined text-on-surface-variant hover:text-primary" data-info-popover data-info-title="高端餐饮/私人厨宴" data-info-text="适合高端餐饮、私人厨宴和活动备餐，按服务人数配置容量，便于后厨稳定出品。" aria-label="查看适用场景说明">info</button>
+</div>
+</div>
+<!-- Set 5 -->
+<div class="group">
+<div class="relative aspect-[4/5] overflow-hidden bg-surface-container-low mb-6">
+<img alt="Daily Table Gift Set" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="../assets/images/lux-001.jpg"/>
+</div>
+<h4 class="text-label-lg font-bold text-on-surface uppercase tracking-widest mb-2">日常 · 私享餐桌</h4>
+<p class="text-label-sm text-on-surface-variant mb-4">Oscietra 30g + 贝母匙双人分享装</p>
+<div class="flex items-center justify-between border-t border-white/5 pt-4">
+<span class="text-primary font-medium">适合：家庭晚餐/周末小聚</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary" data-info-popover data-info-title="家庭晚餐/周末小聚" data-info-text="适合朋友到访、周末晚餐和小型家庭庆祝，份量轻巧，保留开罐仪式又不显得过于正式。" aria-label="查看适用场景说明">info</button>
 </div>
 </div>
 </div>
@@ -294,5 +306,5 @@
   </div>
   <div class="lux-footer-bottom">© 2024 LUXUREAT MAISON. 已获 CITES & FDA 认证.</div>
 </footer>
-<script src="../assets/data/products.js?v=20260712-qtybounds1"></script>
-<script src="../main.js?v=20260712-qtybounds1"></script></body></html>
+<script src="../assets/data/products.js?v=20260714-data-sync1"></script>
+<script src="../main.js?v=20260714-data-sync1"></script></body></html>

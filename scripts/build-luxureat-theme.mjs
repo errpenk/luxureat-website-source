@@ -83,11 +83,62 @@ function hasUrlScheme(href) {
   return /^[A-Za-z][A-Za-z0-9+.-]*:/.test(href.trimStart());
 }
 
+function attrIncludes(tag, attr, value) {
+  const marker = `${attr}=`;
+  let offset = 0;
+  while (offset < tag.length) {
+    const index = tag.indexOf(marker, offset);
+    if (index === -1) return false;
+    const quote = tag[index + marker.length];
+    if (quote !== '"' && quote !== "'") {
+      offset = index + marker.length;
+      continue;
+    }
+    const start = index + marker.length + 1;
+    const end = tag.indexOf(quote, start);
+    if (end === -1) return false;
+    if (tag.slice(start, end).startsWith(value)) return true;
+    offset = end + 1;
+  }
+  return false;
+}
+
+function stripTagByAttr(html, tagName, attr, value) {
+  let output = '';
+  let offset = 0;
+  const lower = html.toLowerCase();
+  const openNeedle = `<${tagName}`;
+  const closeNeedle = `</${tagName}>`;
+
+  while (offset < html.length) {
+    const start = lower.indexOf(openNeedle, offset);
+    if (start === -1) break;
+    const openEnd = html.indexOf('>', start);
+    if (openEnd === -1) break;
+    const tag = html.slice(start, openEnd + 1);
+    const end = tagName === 'script'
+      ? lower.indexOf(closeNeedle, openEnd + 1)
+      : openEnd;
+    if (end === -1) break;
+    const tagEnd = tagName === 'script' ? end + closeNeedle.length : end + 1;
+    if (attrIncludes(tag, attr, value)) {
+      output += html.slice(offset, start);
+      offset = tagEnd;
+    } else {
+      output += html.slice(offset, tagEnd);
+      offset = tagEnd;
+    }
+  }
+
+  return output + html.slice(offset);
+}
+
 function stripKnownLocalIncludes(html) {
-  return html
-    .replace(/<link\s+rel=(["'])stylesheet\1\s+href=(["'])\.\.\/integration\.css(?:\?[^"']*)?\2\s*>/g, '')
-    .replace(/<script\s+src=(["'])\.\.\/assets\/data\/products\.js(?:\?[^"']*)?\1><\/script>/g, '')
-    .replace(/<script\s+src=(["'])\.\.\/main\.js(?:\?[^"']*)?\1><\/script>/g, '');
+  return [
+    ['link', 'href', '../integration.css'],
+    ['script', 'src', '../assets/data/products.js'],
+    ['script', 'src', '../main.js'],
+  ].reduce((source, args) => stripTagByAttr(source, ...args), html);
 }
 
 function rewriteHref(href, currentLang) {
