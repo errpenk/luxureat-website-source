@@ -1,12 +1,15 @@
 (function () {
+  const assetBase = new URL("../", document.currentScript?.src || location.href);
+  const asset = (path) => new URL(path, assetBase).href;
+
   window.LUXUREAT_EVENT_DATA = {
     events: [
       {
         id: "marca-china-2026",
         status: "latest",
-        image: "../assets/media/events/marca-china-2026.png",
-        poster: "../assets/media/events/marca-china-2026-home.jpeg",
-        calendar: "../assets/marca-china-2026.ics",
+        image: asset("media/events/marca-china-2026.png"),
+        poster: asset("media/events/marca-china-2026-home.jpeg"),
+        calendar: asset("marca-china-2026.ics"),
         mapQuery: "广州市海珠区琶洲街道新港东路1000号保利世界贸易中心",
         zh: {
           posterAlt: "Marca China 2026 广州国际自有品牌展海报",
