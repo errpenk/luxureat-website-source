@@ -654,12 +654,10 @@ function initLuxInfoPopovers() {
 }
 
 function initLuxProductDetails() {
-  const triggers = document.querySelectorAll("[data-product-open]");
   const productData = window.LUXUREAT_PRODUCT_DATA || {};
   const galleries = productData.galleries || {};
   const products = productData.products || {};
   const hash = location.hash || "";
-  if (!triggers.length && !hash.startsWith("#product-")) return;
   if (!Object.keys(products).length) return;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -1384,6 +1382,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".lux-footer a[href^='mailto:']").forEach((node) => prependIcon(node, icons.mail));
     document.querySelectorAll(".lux-footer a[href^='tel:']").forEach((node) => prependIcon(node, icons.phone));
+    document.querySelectorAll(".lux-footprint-card a[href^='mailto:']").forEach((node) => prependIcon(node, icons.mail));
+    document.querySelectorAll(".lux-footprint-card a[href^='tel:']").forEach((node) => prependIcon(node, icons.phone));
     document.querySelectorAll(".lux-footer-social a").forEach((node) => prependIcon(node, icons.external));
     document.querySelectorAll(".lux-footer [data-footer-modal='wechat']").forEach((node) => prependIcon(node, icons.message));
     document.querySelectorAll(".lux-footer [data-footer-modal='privacy']").forEach((node) => prependIcon(node, icons.shield));

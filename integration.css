@@ -230,6 +230,17 @@
   color: #bdc9c7;
   font: 400 13px/1.55 Montserrat, Arial, sans-serif;
 }
+.lux-footprint-card .lux-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lux-footprint-card .lux-inline-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: #9df5ec;
+}
 .lux-footprint-card a:hover { color: #9df5ec; }
 .lux-dark-photo-block {
   position: relative;
@@ -480,7 +491,7 @@ header:has(.lux-hero-fade-both) {
 .lux-bag-recommendations [data-product-open]:hover,
 .lux-bag-recommendations [data-product-open]:focus-visible {
   background: #9df5ec !important;
-  color: #003734 !important;
+  color: #fff !important;
   border-color: #9df5ec !important;
   transform: translateY(-2px);
 }
@@ -1128,8 +1139,12 @@ header:has(.lux-hero-fade-both) {
   opacity: 1;
 }
 .lux-bag-detail:hover {
-  background: #fff;
-  color: #1c1b1b;
+  background: #9df5ec;
+  border-color: #9df5ec;
+  color: #fff;
+}
+.lux-bag-summary {
+  background: #181818 !important;
 }
 .lux-products-main {
   padding-top: 0 !important;
@@ -1799,6 +1814,22 @@ html[lang^="zh"] :is(
   letter-spacing: 0 !important;
 }
 
+html[lang^="zh"] .article-card h4,
+html[lang^="zh"] .lux-reader-archive-card strong {
+  color: #e9c349 !important;
+}
+html[lang^="zh"] .lux-reader-archive-card:hover strong,
+html[lang^="zh"] .lux-reader-archive-card:focus-visible strong {
+  color: #e9c349 !important;
+}
+
+html[lang^="zh"] .lux-reader-archive h2,
+html[lang^="zh"] .lux-reader-archive-card strong {
+  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
 .lux-latest-event {
   position: relative;
   overflow: hidden;
@@ -2379,7 +2410,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-archive-card img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   filter: saturate(.9) contrast(1.02);
   transition: filter .55s ease, transform .7s ease;

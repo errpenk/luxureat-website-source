@@ -138,7 +138,9 @@ for (const file of pageFiles) {
 }
 
 const zhCaviar = read(path.join(themeDir, 'pages/zh/caviar.php'));
+const zhGifting = read(path.join(themeDir, 'pages/zh/gifting.php'));
 assert(zhCaviar.includes('data-lux-caviar-controls'), 'Chinese caviar page marks the filter toolbar for caviar controls');
+assert(!zhGifting.includes('企业专线'), 'gift inquiry phone does not show the enterprise hotline label');
 assert(!zhCaviar.includes('top-[89px]'), 'Chinese caviar filter toolbar does not leave an 89px sticky gap under the header');
 assert(zhCaviar.includes('top-[78px]'), 'Chinese caviar filter toolbar sticks directly below the desktop header');
 assert(zhCaviar.includes('data-caviar-filter="all"'), 'Chinese caviar page has an all filter button');
@@ -173,6 +175,7 @@ assert(mainJs.includes('data-product-main-image'), 'main.js switches the product
 assert(mainJs.includes('lux-product-recent'), 'main.js renders product-detail recommendations');
 assert(mainJs.includes('data-product-open="${escapeHtml(key)}"'), 'product-detail recommendations can open other product details');
 assert(mainJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
+assert(!mainJs.includes('!triggers.length && !hash.startsWith("#product-")'), 'product detail listener handles dynamically rendered bag buttons');
 assert(mainJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
 assert(mainJs.includes('data-product-total'), 'product details show multi-quantity totals');
 assert(mainJs.includes('data-product-recent-scroll') && mainJs.includes('scrollBy'), 'product-detail recommendations have horizontal arrow controls');
@@ -224,8 +227,10 @@ assert(integrationCss.includes('.lux-reader-layout') && integrationCss.includes(
 assert(integrationCss.includes('.lux-dark-photo-block .lux-reader-cta'), 'integration.css centers reader detail buttons on dark photo cards');
 assert(integrationCss.includes('.lux-product-panel::before'), 'integration.css gives product details a glass top layer');
 assert(integrationCss.includes('.lux-bag-item') && integrationCss.includes('.lux-bag-detail'), 'integration.css styles light bag item cards and image detail hover actions');
+assert(integrationCss.includes('.lux-bag-summary') && integrationCss.includes('background: #181818'), 'bag order summary uses a softer dark background');
 assert(!integrationCss.includes('background: rgba(143,47,36,.08)'), 'remove actions do not add a tinted background on hover');
 assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles global footprint cards');
+assert(integrationCss.includes('.lux-footprint-card .lux-with-icon'), 'global footprint contact links receive mail and phone icons');
 assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] [data-bag-add]'), 'integration.css gives product-card add buttons the heavier border');
 assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] [data-product-open]'), 'integration.css gives product-card detail buttons the lighter border');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
@@ -240,6 +245,7 @@ assert(integrationCss.includes('transform: translate(-50%, -50%)') && integratio
 assert(integrationCss.includes('font: 400 32px/1.12 "Bodoni Moda"'), 'reader quote uses the current editorial display type');
 assert(integrationCss.includes('.lux-bag-recommendations [data-bag-add]:hover') && integrationCss.includes('.lux-bag-recommendations [data-product-open]:active'), 'bag recommendation buttons have hover and active interactions');
 assert(integrationCss.includes('.lux-footprint-stage:has(.lux-footprint-card:hover)') && integrationCss.includes('transform: scale(1.025)'), 'global footprint cards brighten the background and scale gently on hover');
+assert(integrationCss.includes('aspect-ratio: 4 / 3'), 'journal archive images use a 4:3 ratio');
 assert(integrationCss.includes('section:has(.lux-hero-fade-both)') && integrationCss.includes('border-bottom-color: transparent'), 'photo heroes hide divider lines while fading into the page background');
 assert(integrationCss.includes('linear-gradient(to bottom, #131313 0%') && integrationCss.includes('transparent 100%)'), 'dark photo sections use page-color fade masks at their edges');
 assert(integrationCss.includes('.lux-info-popover'), 'integration.css styles the frosted gift scenario popover');
@@ -247,7 +253,6 @@ assert(integrationCss.includes('.lux-info-popover'), 'integration.css styles the
 const enRituals = read(path.join(themeDir, 'pages/en/rituals.php'));
 assert(!enRituals.includes('style="opacity: 0;">Caviar should be served chilled'), 'English rituals temperature copy is visible');
 
-const zhGifting = read(path.join(themeDir, 'pages/zh/gifting.php'));
 const enGifting = read(path.join(themeDir, 'pages/en/gifting.php'));
 assert(zhGifting.includes('data-info-popover'), 'Chinese gifting page marks scenario info buttons');
 assert(enGifting.includes('data-info-popover'), 'English gifting page marks scenario info buttons');
