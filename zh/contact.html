@@ -17,14 +17,6 @@
             backdrop-filter: blur(20px);
             border: 0.5px solid rgba(157, 245, 236, 0.1);
         }
-        .ghost-border {
-            border: 1px solid rgba(157, 245, 236, 0.3);
-            transition: all 0.3s ease;
-        }
-        .ghost-border:hover {
-            border-color: #9df5ec;
-            background: rgba(157, 245, 236, 0.05);
-        }
         input:focus, textarea:focus {
             outline: none;
             border-color: #9df5ec !important;
@@ -132,10 +124,10 @@
 
 <link rel="stylesheet" href="../integration.css?v=20260714-product-grid3">
 </head>
-<body class="font-body-md text-body-md selection:bg-primary/30">
+<body class="font-body-md text-body-md selection:bg-primary/30 overflow-x-hidden">
 <header class="lux-header">
   <a class="lux-brand" href="index.html"><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">首页</a><a class="" href="caviar.html">系列产品</a><a class="" href="rituals.html">品鉴艺术</a><a class="" href="journal.html">品牌志</a><a class="" href="certification.html">品质认证</a><a class="" href="gifting.html">礼赠合作</a><a class="active" href="contact.html">联系我们</a></nav>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">首页</a><a class="" href="journal.html">关于我们</a><a class="" href="caviar.html">系列产品</a><a class="" href="rituals.html">食谱艺术</a><a class="" href="news.html">品牌新闻</a><a class="" href="certification.html">品质认证</a><a class="" href="gifting.html">礼赠合作</a><a class="active" href="contact.html">联系我们</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="购物袋"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="个人登录"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
@@ -149,11 +141,11 @@
 <main>
 <!-- Hero Section -->
 <section class="lux-dark-photo-block lux-photo-fade-bottom lux-bright-photo relative h-[60vh] flex items-center justify-center overflow-hidden">
-<div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/lux-024.jpg')"></div>
+<div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/contact-hero-consulting.png')"></div>
 
 <div class="relative z-10 text-center space-y-4">
 <h1 class="zh-display-title text-secondary">联系我们</h1>
-<p class="font-body-lg text-on-surface/60 max-w-2xl mx-auto px-margin-mobile">
+<p class="lux-page-hero-subtitle max-w-2xl mx-auto px-margin-mobile">
                     探索顶级鱼子酱的世界，我们的品鉴专家随时为您提供咨询。
                 </p>
 </div>
@@ -191,7 +183,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 pt-8">
 <div class="space-y-4">
-<h3 class="font-headline-sm text-secondary uppercase tracking-wider">总部地址 HQ</h3>
+<h3 class="font-headline-sm text-secondary uppercase tracking-wider">中国总部地址 CHINA HQ</h3>
 <p class="font-body-md text-on-surface/70 leading-relaxed">
                                 上海市闵行区<br>
                                 联明路389号A栋 505室<br>
@@ -200,50 +192,60 @@
 </div>
 <div class="space-y-4">
 <h3 class="font-headline-sm text-secondary uppercase tracking-wider">客户服务 CONTACT</h3>
-<p class="font-body-md text-on-surface/70 leading-relaxed">
-                                电话: <a class="inline text-on-surface hover:text-primary" href="tel:+8615721452475">+86 15721452475</a><br>
-                                邮箱: <a class="inline text-on-surface hover:text-primary" href="mailto:china@luxureat.com">china@luxureat.com</a><br>
-                                工作时间: 周一至周五 09:00 - 18:00
-                            </p>
+<div class="space-y-3 font-body-md text-on-surface/70">
+<a class="flex items-center gap-3 text-on-surface hover:text-primary transition-colors" href="tel:+8615721452475">
+<svg class="lux-lucide shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92z"></path></svg>
++86 15721452475
+</a>
+<a class="flex items-center gap-3 text-on-surface hover:text-primary transition-colors" href="mailto:china@luxureat.com">
+<svg class="lux-lucide shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+china@luxureat.com
+</a>
+</div>
 </div>
 </div>
 </div>
 <!-- Right: Service Cards -->
 <div class="lg:col-span-5 space-y-gutter">
-<!-- Concierge Card -->
+<!-- Product Consultation Card -->
 <div class="glass-panel p-10 space-y-6 group">
 <div class="flex justify-between items-start">
-<h2 class="font-headline-md text-primary">专属定制</h2>
+<h2 class="font-headline-md text-primary">产品与品鉴咨询</h2>
 <span class="material-symbols-outlined text-primary text-4xl" data-icon="restaurant_menu">restaurant_menu</span>
 </div>
 <p class="text-on-surface/60 font-body-md leading-relaxed">
-                            为高端私人晚宴、庆典活动及艺术沙龙提供全方位的鱼子酱品鉴服务。我们的首席品鉴师将亲临现场，为您开启一段非凡的感官之旅。
+                            从鱼子酱与松露产品选择，到储存、开罐、食用方式及食谱搭配，我们根据用餐场景与人数提供清晰建议，帮助您更准确地体验意大利风味。
                         </p>
 <ul class="space-y-3 font-label-sm text-on-surface/40 uppercase tracking-widest">
 <li class="flex items-center gap-2">
 <span class="w-1 h-1 bg-primary rounded-full"></span>
-                                私人主厨预约
+                                产品与规格选择
                             </li>
 <li class="flex items-center gap-2">
 <span class="w-1 h-1 bg-primary rounded-full"></span>
-                                珍稀品种预留
+                                储存与食用指导
                             </li>
 <li class="flex items-center gap-2">
 <span class="w-1 h-1 bg-primary rounded-full"></span>
-                                品鉴餐配建议
+                                食谱与餐桌搭配
                             </li>
 </ul>
-<a class="inline-block pt-4 text-primary font-label-lg tracking-widest border-b border-primary/30 hover:border-primary transition-all" href="#">咨询管家 CONCIERGE</a>
 </div>
 <!-- B2B Card -->
 <div class="glass-panel p-10 space-y-6 bg-surface-container-low/50 border-secondary/10">
 <div class="flex justify-between items-start">
-<h2 class="font-headline-md text-secondary">商务合作</h2>
+<h2 class="font-headline-md text-secondary">商务与供应合作</h2>
 <span class="material-symbols-outlined text-secondary text-4xl" data-icon="corporate_fare">corporate_fare</span>
 </div>
 <p class="text-on-surface/60 font-body-md leading-relaxed">
-                            LuxurEat 为全球奢华酒店、米其林餐厅及企业礼赠提供长期供应方案。我们致力于将极致的中国黑鱼子酱推向国际舞台。
+                            面向分销商、进口商、零售品牌、酒店餐饮与企业客户，提供自有品牌、OEM、批发采购、国际分销、稳定供应及商务礼赠方案。
                         </p>
+<ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-label-sm text-on-surface/40 uppercase tracking-widest">
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>自有品牌与 OEM</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>批发与进出口</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>酒店餐饮供应</li>
+<li class="flex items-center gap-2"><span class="w-1 h-1 bg-secondary rounded-full"></span>企业礼赠定制</li>
+</ul>
 <div class="flex gap-4">
 <div class="h-24 w-1/3 overflow-hidden rounded">
 <div class="w-full h-full bg-cover bg-center" data-alt="Close up of a luxury hotel lobby with minimalist dark marble floors and warm ambient lighting, representing a premium B2B partnership setting." style="background-image: url('../assets/media/brand/lux-031.jpg')"></div>
@@ -255,22 +257,19 @@
 <span class="text-label-sm text-on-surface/40 uppercase">View Port</span>
 </div>
 </div>
-<button class="w-full py-4 ghost-border text-secondary font-label-lg uppercase tracking-widest">
-                            申请商务目录 CATALOGUE
-                        </button>
 </div>
 </div>
 </div>
 </section>
 <!-- Social Feed / Global Locations -->
-<section class="bg-surface-container-lowest/50 py-section-gap border-t border-outline-variant/10 overflow-hidden">
+<section class="bg-surface-container-lowest/50 py-section-gap border-t border-outline-variant/10 overflow-hidden scroll-mt-24" id="global-footprint">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center space-y-16">
 <div class="space-y-4">
 <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tighter">全球足迹</h2>
 <p class="font-body-md text-on-surface/40 uppercase tracking-widest">Italy • United States • Thailand • China</p>
 </div>
 <div class="lux-footprint-stage relative min-h-[520px] w-full flex items-center justify-center py-12">
-<div class="absolute inset-0 bg-cover bg-center" data-footprint-bg data-alt="A stylized minimalist world map with glowing dots indicating major global luxury capitals like Shanghai, Paris, and New York, rendered in dark tones." style="background-image: url('../assets/media/brand/lux-016.jpg')"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-footprint-bg data-alt="LuxurEat 国际业务与全球足迹" style="background-image: url('../assets/media/journal/about-global-map.png')"></div>
 <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
 <article class="lux-footprint-card glass-panel p-6 text-left">
 <div class="lux-footprint-heading"><span class="material-symbols-outlined text-primary lux-footprint-icon">local_dining</span><strong>Italy</strong><small>Truffleat Srl</small></div>
@@ -308,28 +307,11 @@
 </main>
 <!-- Footer -->
 
-<!-- Simple Hover Interaction Logic -->
-<script>
-        document.querySelectorAll('.ghost-border').forEach(button => {
-            button.addEventListener('mousedown', () => button.style.transform = 'scale(0.98)');
-            button.addEventListener('mouseup', () => button.style.transform = 'scale(1)');
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
 
 <footer class="lux-footer">
   <div class="lux-footer-grid">
     <div><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>一场关于味觉的奥德赛，通过可持续发展的实践与毫不妥协的质量标准，为您搜寻世间罕有的绝世美味。</p></div>
-    <nav><a href="index.html">首页</a><a href="caviar.html">系列产品</a><a href="rituals.html">品鉴艺术</a><a href="journal.html">品牌志</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
+    <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/6Jn3PRYzjAy" target="_blank" rel="noopener">小红书</a><button type="button" data-footer-modal="wechat">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener">微博</a></div>
     <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
   </div>

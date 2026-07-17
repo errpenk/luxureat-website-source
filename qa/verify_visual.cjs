@@ -43,6 +43,10 @@ async function main() {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 
   await inspectOfficialPage(page, "/zh/index.html", "zh-home-desktop.png", "Chinese desktop home");
+  const desktopFlyout = page.locator(".lux-nav-item").nth(1).locator(".lux-nav-flyout");
+  await page.locator(".lux-nav-item").nth(1).hover();
+  await desktopFlyout.hover();
+  if (!await desktopFlyout.isVisible()) fail("desktop flyout disappears when moving into its links");
 
   await page.locator(".lux-lang a", { hasText: "EN" }).click();
   await page.waitForURL("**/en/index.html");
@@ -58,10 +62,15 @@ async function main() {
   await page.locator(".lux-menu").click();
   const isOpen = await page.locator(".lux-nav").evaluate((node) => node.classList.contains("open"));
   if (!isOpen) fail("mobile menu did not open");
+  if (await page.locator(".lux-nav-flyout:visible").count()) fail("mobile submenus should start collapsed");
+  await page.locator(".lux-nav-toggle").nth(1).click();
+  if (await page.locator(".lux-nav-flyout:visible").count() !== 1) fail("mobile submenu accordion did not open exactly one section");
   await page.screenshot({ path: path.join(QA_DIR, "zh-home-mobile-menu.png"), fullPage: true });
 
   await inspectOfficialPage(page, "/zh/caviar.html", "zh-caviar-mobile.png", "Chinese mobile caviar");
-  await inspectOfficialPage(page, "/en/private.html", "en-private-mobile.png", "English mobile private");
+  const productHero = await page.locator(".lux-products-main .lux-dark-photo-bg").first().evaluate((node) => getComputedStyle(node).backgroundImage);
+  if (!productHero.includes("products-hero-caviar.jpg")) fail("Chinese product hero image is missing");
+  await inspectOfficialPage(page, "/en/certification.html", "en-certification-mobile.png", "English mobile certification");
 
   await browser.close();
   console.log(`visual verification passed; screenshots written to ${QA_DIR}`);

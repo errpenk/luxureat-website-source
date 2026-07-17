@@ -38,7 +38,9 @@ function rgbNumbers(color) {
   const [r, g, b] = rgbNumbers(result.iconColor);
   assert(r <= 5 && g >= 100 && g <= 112 && b >= 94 && b <= 106, `latest event icon is not TrufflEat green: ${result.iconColor}`);
 
-  await page.goto(`${BASE_URL}/zh/journal.html#event-marca-china-2026`, { waitUntil: "domcontentloaded" });
+  const detailHref = await page.locator("[data-latest-event] .lux-event-detail-link").getAttribute("href");
+  assert(detailHref === "news.html#event-marca-china-2026", `event detail does not target Brand News: ${detailHref}`);
+  await page.goto(`${BASE_URL}/zh/news.html#event-marca-china-2026`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".lux-event-reader-article figure img");
   const readerImage = await page.locator(".lux-event-reader-article figure img").first().getAttribute("src");
   assert(readerImage.endsWith("/assets/media/events/marca-china-2026.png"), `event article detail image should stay unchanged: ${readerImage}`);

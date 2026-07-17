@@ -17,13 +17,12 @@ const expectedRoutes = [
   'zh/contact',
   'zh/bag',
   'en',
-  'en/caviar',
   'en/products',
   'en/rituals',
   'en/journal',
   'en/gifting',
+  'en/certification',
   'en/contact',
-  'en/private',
   'en/bag',
 ];
 
@@ -105,8 +104,10 @@ assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
 assert(functionsPhp.includes('function luxureat_static_pretty_paths('), 'functions.php defines canonical pretty route URLs');
 assert(functionsPhp.includes("'zh/caviar' => '/caviar/'"), 'functions.php maps the Chinese caviar route to /caviar/');
-assert(functionsPhp.includes("'en/caviar' => '/en/caviar/'"), 'functions.php maps the English caviar route to /en/caviar/');
 assert(functionsPhp.includes("'en/products' => '/en/products/'"), 'functions.php maps the English products route to /en/products/');
+assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'functions.php maps the English certification route');
+assert(functionsPhp.includes("'en/caviar' => 'en/products'"), 'legacy English caviar route redirects to products');
+assert(functionsPhp.includes("'en/private' => 'en/gifting'"), 'legacy English private route redirects to gifting');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
@@ -301,15 +302,13 @@ assert(zhCaviar.includes("luxureat_static_url('zh/rituals'"), 'Chinese caviar ri
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
 assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
 assert(zhCaviar.includes('lux-products-main'), 'Chinese product listing hero starts flush below the fixed nav');
-const enCaviar = read(path.join(themeDir, 'pages/en/caviar.php'));
-assert(enCaviar.includes('data-product-open="en-imperial-beluga"'), 'English caviar page opens product details');
-assert(enCaviar.includes('data-product-bind="en-imperial-beluga"'), 'English caviar page binds hero product data from products.js');
-assert(enCaviar.includes('Tasting Profile') && enCaviar.includes('Origin &amp; Harvest'), 'English caviar page keeps the editorial caviar layout');
 const enProducts = read(path.join(themeDir, 'pages/en/products.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
 assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
 assert(runtimeJs.includes('data-product-open="${escapeHtml(key)}"') && productDataJs.includes('"en-royal-oscetra"'), 'English products page renders Oscetra product details from product data');
 assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English products ritual CTA links to rituals');
+const enCertification = read(path.join(themeDir, 'pages/en/certification.php'));
+assert(enCertification.includes('Quality &amp; Certification') && enCertification.includes('Responsible Trade'), 'English certification page mirrors the Chinese certification page');
 
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');

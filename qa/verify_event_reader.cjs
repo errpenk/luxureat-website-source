@@ -1,4 +1,5 @@
 const { chromium } = require("playwright");
+const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8000";
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -10,7 +11,7 @@ function assert(condition, message) {
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
     for (const lang of ["zh", "en"]) {
       const page = await browser.newPage({ viewport });
-      await page.goto(`http://127.0.0.1:8770/${lang}/journal.html#event-marca-china-2026`, { waitUntil: "domcontentloaded" });
+      await page.goto(`${BASE_URL}/${lang}/news.html#event-marca-china-2026`, { waitUntil: "domcontentloaded" });
       await page.waitForSelector(".lux-reader:not([hidden]) .lux-event-reader");
 
       const result = await page.evaluate(() => {
@@ -42,9 +43,9 @@ function assert(condition, message) {
   }
 
   const home = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-  await home.goto("http://127.0.0.1:8770/zh/index.html", { waitUntil: "domcontentloaded" });
+  await home.goto(`${BASE_URL}/zh/index.html`, { waitUntil: "domcontentloaded" });
   const detailHref = await home.locator(".lux-event-detail-link").getAttribute("href");
-  assert(detailHref === "journal.html#event-marca-china-2026", `home event link is wrong: ${detailHref}`);
+  assert(detailHref === "news.html#event-marca-china-2026", `home event link is wrong: ${detailHref}`);
   await home.close();
 
   await browser.close();

@@ -18,6 +18,51 @@ function isAqua([r, g, b]) {
   const page = await browser.newPage({ viewport: { width: 1366, height: 900 } });
 
   await page.goto(`file://${path.resolve(__dirname, "../zh/journal.html")}`, { waitUntil: "domcontentloaded" });
+  const replacements = [
+    ["zh-truffle", "世界鱼子酱版图：主要生产国与产业发展", "caviar-world-map.png", 9, "更加多元化的全球产业格局", "5 分钟阅读"],
+    ["zh-service", "意大利鱼子酱市场：欧洲领先的生产中心与全球出口力量", "italian-caviar-market.png", 13, "鱼子酱产业发展的重要优势", "6 分钟阅读"],
+    ["zh-malossol", "鱼子酱礼仪：如何优雅地品尝鱼子酱", "caviar-etiquette-service.png", 4, "不会因为食用过多而影响体验", "2 分钟阅读"],
+  ];
+  for (const [id, title, imageName, sectionCount, closing, readTime] of replacements) {
+    const card = page.locator(`[data-reader-open="${id}"]`).first().locator("xpath=ancestor::*[contains(concat(' ', normalize-space(@class), ' '), ' lux-reader-card ')][1]");
+    assert((await card.locator("h4").textContent()).trim() === title, `${id} card title was not replaced`);
+    assert((await card.locator("img").getAttribute("src")).includes(imageName), `${id} card image was not replaced`);
+    await page.locator(`[data-reader-open="${id}"]`).first().evaluate((node) => node.click());
+    await page.waitForSelector(".lux-reader:not([hidden]) .lux-reader-layout");
+    const articleState = await page.evaluate(() => {
+      const root = document.querySelector(".lux-reader-body");
+      const inlineHeadings = [...root.querySelectorAll(".lux-reader-inline-heading")];
+      const indentQuote = root.querySelector(".lux-reader-indent-quote");
+      return {
+        title: root.querySelector("#lux-reader-title").textContent.trim(),
+        image: root.querySelector(".lux-reader-cover img").src,
+        sections: root.querySelectorAll(".lux-reader-copy .lux-reader-section:not(.lux-reader-section-opening)").length,
+        text: root.querySelector(".lux-reader-copy").textContent,
+        readTime: root.querySelector(".lux-reader-meta-grid span:nth-child(3)").textContent.trim(),
+        toc: [...root.querySelectorAll(".lux-reader-toc a")].map((link) => link.textContent.trim()),
+        inlineCount: inlineHeadings.length,
+        inlineColors: inlineHeadings.map((node) => getComputedStyle(node).color),
+        inlineWeights: inlineHeadings.map((node) => Number(getComputedStyle(node).fontWeight)),
+        quoteLines: indentQuote?.querySelectorAll("p").length || 0,
+        quoteIndent: indentQuote ? parseFloat(getComputedStyle(indentQuote).marginLeft) : 0,
+        quoteBorder: indentQuote ? parseFloat(getComputedStyle(indentQuote).borderLeftWidth) : 0,
+      };
+    });
+    assert(articleState.title === title, `${id} detail title was not replaced`);
+    assert(articleState.image.includes(imageName), `${id} detail image was not replaced`);
+    assert(articleState.sections === sectionCount, `${id} section count is wrong: ${articleState.sections}`);
+    assert(articleState.text.includes(closing), `${id} detail article is incomplete`);
+    assert(articleState.readTime === readTime, `${id} read time is wrong: ${articleState.readTime}`);
+    if (id === "zh-truffle") assert(articleState.toc.join("|") === "中国|意大利|伊朗|法国|北美|俄罗斯|阿联酋|西班牙|全球化发展的鱼子酱产业", `world atlas toc is wrong: ${articleState.toc}`);
+    if (id === "zh-service") {
+      assert(articleState.inlineCount === 6, `caviar types are not six inline headings: ${articleState.inlineCount}`);
+      assert(articleState.inlineColors.every((color) => color === "rgb(16, 16, 16)"), `caviar type headings are not black: ${articleState.inlineColors}`);
+      assert(articleState.inlineWeights.every((weight) => weight >= 700), `caviar type headings are not bold: ${articleState.inlineWeights}`);
+      assert(!articleState.toc.some((label) => ["Beluga", "Oscetra", "Sevruga", "白鲟鱼子酱", "西伯利亚鲟鱼子酱", "Kaluga"].includes(label)), "caviar types still appear in the toc");
+      assert(articleState.quoteLines === 7 && articleState.quoteIndent > 0 && articleState.quoteBorder > 0, "sales channels are not an indented quote");
+    }
+    await page.locator(".lux-reader-close").evaluate((node) => node.click());
+  }
   await page.locator('[data-reader-open="zh-malossol"]').first().evaluate((node) => node.click());
   await page.waitForSelector(".lux-reader:not([hidden]) .lux-reader-layout");
 
@@ -74,7 +119,7 @@ function isAqua([r, g, b]) {
   assert(result.pullFontSize <= 16, `reader pull quote should use original small size: ${result.pullFontSize}px`);
   assert(result.relatedCtaFontSize <= 16, `related CTA should use original small size: ${result.relatedCtaFontSize}px`);
   assert(result.tocCount >= 3, `reader toc is missing section links: ${result.tocCount}`);
-  assert(result.tocFirst === "低盐的边界", `reader toc first item is wrong: ${result.tocFirst}`);
+  assert(result.tocFirst === "优雅与传统", `reader toc first item is wrong: ${result.tocFirst}`);
   assert(parseFloat(result.relatedOpacity) < 0.02, `related CTA should be hidden before hover: ${result.relatedOpacity}`);
   assert(rgbNumbers(result.relatedBorder).every((value) => value > 240), `related CTA default border should be white: ${result.relatedBorder}`);
   assert(rgbNumbers(result.relatedBg).every((value) => value < 10), `related CTA default background should be transparent/dark: ${result.relatedBg}`);

@@ -106,12 +106,12 @@
         .glass-panel { background: rgba(26, 26, 26, 0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260714-reader-spacing1">
+<link rel="stylesheet" href="../integration.css?v=20260716-recipe-nav1">
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 <header class="lux-header">
   <a class="lux-brand" href="index.html"><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Home</a><a class="" href="caviar.html">Caviar</a><a class="" href="products.html">Products</a><a class="active" href="rituals.html">Rituals</a><a class="" href="journal.html">Journal</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a><a class="" href="private.html">Private Selection</a></nav>
+  <nav class="lux-nav" aria-label="navigation"><a class="" href="index.html">Home</a><a class="" href="journal.html">About Us</a><a class="" href="products.html">Products</a><a class="active" href="rituals.html">Recipe Art</a><a class="" href="news.html">Brand News</a><a class="" href="certification.html">Quality &amp; Certification</a><a class="" href="gifting.html">Gifting</a><a class="" href="contact.html">Contact</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="Shopping bag"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="Account sign in"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
@@ -125,7 +125,7 @@
 <main class="flex-grow">
 <!-- Hero Section -->
 <section class="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center overflow-hidden h-screen">
-<div class="absolute inset-0 z-0" data-alt="A moody, close-up photograph of a mother-of-pearl spoon resting gently beside a crystal bowl of pristine black caviar on a bed of crushed ice. The lighting is dramatic and low-key, emphasizing the glossy texture of the roe and the iridescent sheen of the pearl spoon. Set against an absolute black background to convey extreme luxury, exclusivity, and culinary artistry. High contrast, desaturated tones with subtle golden reflections." style="background-image: url('../assets/media/brand/lux-012.jpg')"></div>
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="Two people preparing a fresh Italian meal together" style="background-image: url('../assets/media/brand/rituals-hero-cooking.png')"></div>
 <div class="absolute inset-0 lux-hero-fade-both z-10"></div>
 <div class="relative z-20 text-center px-gutter max-w-4xl mx-auto flex flex-col items-center gap-6">
 <span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase">The Art of Tasting</span>
@@ -137,34 +137,40 @@
 <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
 <div class="flex flex-col md:flex-row gap-gutter md:gap-24 items-center">
 <div class="w-full md:w-1/2 flex flex-col gap-8 order-2 md:order-1">
-<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary">The Service</h2>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary">The LuxurEat Table</h2>
 <div class="flex flex-col gap-12 mt-4">
 <div class="flex gap-6 items-start">
 <span class="font-display-lg text-headline-lg text-surface-variant">01</span>
 <div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Temperature</h3>
-<p class="font-body-md text-body-md text-on-surface-variant">Caviar should be served chilled, ideally between -2°C and 2°C. Present the tin resting over crushed ice, allowing it to acclimate slightly before tasting.</p>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Italian Roots</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">From breakfast to dessert, these recipes follow the rhythm of the Italian table and bring LuxurEat truffles, caviar, and seasonal ingredients into every course.</p>
 </div>
 </div>
 <div class="flex gap-6 items-start">
 <span class="font-display-lg text-headline-lg text-surface-variant">02</span>
 <div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">The Spoon</h3>
-<p class="font-body-md text-body-md text-on-surface">Never use metal, particularly silver, as it imparts an oxidative metallic flavor. Employ only mother-of-pearl, bone, or gold spoons to preserve the pure taste of the roe.</p>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Ingredients First</h3>
+<p class="font-body-md text-body-md text-on-surface">Each dish begins with flavor at its source: carefully selected ingredients, precise heat, and techniques that let every element remain distinct.</p>
 </div>
 </div>
 <div class="flex gap-6 items-start">
 <span class="font-display-lg text-headline-lg text-surface-variant">03</span>
 <div>
-<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">The Palate</h3>
-<p class="font-body-md text-body-md text-on-surface">Place a small amount on the back of the hand (the anatomical snuffbox) to warm it slightly. Roll the pearls against the roof of the mouth; do not chew immediately.</p>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">From Craft to Table</h3>
+<p class="font-body-md text-body-md text-on-surface">Clear steps preserve the soul of Italian cooking while allowing LuxurEat specialties to feel equally natural at an everyday table or a formal gathering.</p>
 </div>
 </div>
+<nav class="lux-recipe-jump-nav" aria-label="Recipe categories">
+<a href="#breakfast"><span>01</span><strong>Breakfast</strong><b aria-hidden="true">↘</b></a>
+<a href="#first-courses"><span>02</span><strong>First Courses</strong><b aria-hidden="true">↘</b></a>
+<a href="#main-courses"><span>03</span><strong>Main Courses</strong><b aria-hidden="true">↘</b></a>
+<a href="#desserts"><span>04</span><strong>Desserts</strong><b aria-hidden="true">↘</b></a>
+</nav>
 </div>
 </div>
 <div class="w-full md:w-1/2 relative order-1 md:order-2">
 <div class="aspect-[3/4] w-full ghost-border relative overflow-hidden group">
-<img class="object-cover w-full h-full filter grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A top-down, minimalist shot of a silver caviar serving set consisting of an ice-filled crystal bowl holding a small, open black tin of caviar. Next to it rests a beautifully carved mother-of-pearl spoon. The surface beneath is dark, matte charcoal. The lighting is soft but directional, creating subtle highlights on the caviar beads and the spoon's iridescent surface. High-contrast, elegant, and perfectly arranged to illustrate correct serving protocols." src="../assets/media/brand/lux-046.jpg">
+<img class="object-cover w-full h-full filter grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A chef shaving fresh black truffle over handmade pasta" src="../assets/media/brand/craftsmanship-truffle-chef.png">
 </div>
 <!-- Decorative Diagram Elements -->
 <div class="absolute -right-12 top-1/4 w-24 h-[1px] bg-secondary opacity-50 hidden lg:block"></div>
@@ -172,44 +178,141 @@
 </div>
 </div>
 </section>
-<!-- Pairings Bento -->
-<section class="bg-surface-container-low py-section-gap px-margin-mobile md:px-margin-desktop">
+<!-- Breakfast Recipes -->
+<section class="bg-surface-container-low py-section-gap px-margin-mobile md:px-margin-desktop lux-recipe-anchor" id="breakfast">
 <div class="max-w-container-max mx-auto">
 <div class="text-center mb-16">
-<span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase block mb-4">Accompaniments</span>
-<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Perfect Pairings</h2>
+<span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase block mb-4">Breakfast Recipes</span>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Breakfast</h2>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
-<!-- Champagne -->
-<div class="md:col-span-2 md:row-span-2 glass-panel p-8 relative overflow-hidden group flex flex-col justify-end lux-reader-card cursor-pointer" data-reader-open="en-champagne">
-<div class="absolute inset-0 z-0" data-alt="A moody, elegant still life of a chilled bottle of vintage champagne next to two delicate crystal flutes, set against a dark background. Subtle, effervescent bubbles are visible in the poured glass. Next to the glasses is a small, understated tin of caviar. The lighting is low-key, with cool silvery tones reflecting off the glass and warm golden hints from the champagne label. Sophisticated and celebratory." style="background-image: url('../assets/media/brand/lux-043.jpg')"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-[480px]">
+<div class="glass-panel p-8 relative overflow-hidden group flex flex-col justify-end lux-reader-card cursor-pointer" data-reader-open="en-recipe-truffle-eggs">
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="Truffle eggs" style="background-image: url('../assets/media/journal/recipe-truffle-eggs.png')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-10 group-hover:opacity-80 transition-opacity duration-500"></div>
-<button type="button" class="lux-reader-cta" data-reader-open="en-champagne">Read Details</button>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-truffle-eggs">Read Recipe</button>
 <div class="relative z-20">
-<h3 class="font-headline-md text-headline-md text-secondary mb-2 text-on-surface">Champagne</h3>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-md">The classic pairing. A crisp Blanc de Blancs cuts through the rich, buttery texture of the caviar, while the effervescence cleanses the palate between tastings.</p>
+<h3 class="font-headline-md text-headline-md text-secondary mb-2 text-on-surface">Truffle Eggs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Fresh eggs and the deep aroma of truffle come together in a quick, elegant breakfast.</p>
 </div>
 </div>
-<!-- Vodka -->
-<div class="md:col-span-1 md:row-span-1 glass-panel p-8 relative overflow-hidden group flex flex-col justify-end lux-reader-card cursor-pointer" data-reader-open="en-service">
-<div class="absolute inset-0 z-0" data-alt="A minimalist composition showing an icy, frosted shot glass filled with clear premium vodka, resting on a dark slate surface. In the background, out of focus, is a glimpse of a black caviar tin. The image conveys coldness, purity, and traditional Russian pairing rituals. High contrast, cool blue and stark black tones." style="background-image: url('../assets/media/brand/lux-021.jpg')"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
-<button type="button" class="lux-reader-cta" data-reader-open="en-service">Read Details</button>
+<div class="glass-panel p-8 relative overflow-hidden group flex flex-col justify-end lux-reader-card cursor-pointer" data-reader-open="en-recipe-truffle-toast">
+<div class="absolute inset-0 z-0 bg-cover bg-center" data-alt="Poached egg and truffle toast" style="background-image: url('../assets/media/journal/recipe-truffle-toast.png')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent z-10"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-truffle-toast">Read Recipe</button>
 <div class="relative z-20">
-<h3 class="font-headline-sm text-headline-sm text-secondary mb-2 text-on-surface">Vodka</h3>
-<p class="font-body-md text-body-md text-on-surface-variant text-sm">Ice-cold, neutral vodka provides a stark, pure contrast, allowing the complex oceanic flavors of the caviar to dominate.</p>
+<h3 class="font-headline-md text-headline-md text-secondary mb-2 text-on-surface">Poached Egg and Truffle Toast</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Crisp golden toast, silky poached egg, and truffle create a layered Sunday brunch.</p>
 </div>
 </div>
-<!-- Blinis -->
-<div class="md:col-span-1 md:row-span-1 glass-panel p-8 relative overflow-hidden group flex flex-col justify-end lux-reader-card cursor-pointer" data-reader-open="en-mother-of-pearl">
-<div class="absolute inset-0 z-0" data-alt="A close-up, textural shot of perfectly golden, warm blinis resting on a dark ceramic plate, accompanied by a small dollop of pristine white crème fraîche. The setting is dark and moody, emphasizing the contrast between the warm golden tones of the blinis and the rich black background. Subtle luxury food photography." style="background-image: url('../assets/media/brand/lux-017.jpg')"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
-<button type="button" class="lux-reader-cta" data-reader-open="en-mother-of-pearl">Read Details</button>
-<div class="relative z-20">
-<h3 class="font-headline-sm text-headline-sm text-secondary mb-2 text-on-surface">Blinis &amp; Crème</h3>
-<p class="font-body-md text-body-md text-on-surface-variant text-sm">Warm blinis and a touch of unsalted crème fraîche offer a neutral canvas for the roe's salinity.</p>
 </div>
 </div>
+</section>
+<!-- First Courses -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto lux-recipe-anchor" id="first-courses">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
+<div>
+<span class="text-secondary font-label-lg tracking-[0.3em] uppercase block mb-4">First Courses</span>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg">First Courses</h2>
+</div>
+<div class="max-w-sm text-right hidden md:block">
+<p class="font-body-md text-body-md text-on-surface-variant">Fresh pasta, silky risotto, and woodland mushrooms open the table with the unmistakable aroma of truffle.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-[300px]">
+<div class="md:col-span-2 md:row-span-2 lux-dark-photo-block lux-course-card p-12 flex flex-col justify-end relative overflow-hidden group reveal-on-scroll lux-reader-card cursor-pointer active" data-reader-open="en-recipe-truffle-tagliolini">
+<div class="lux-dark-photo-bg" data-alt="Tagliolini with white or black truffle" style="background-image: url('../assets/media/journal/recipe-truffle-tagliolini.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-truffle-tagliolini">Read Recipe</button>
+<div class="lux-ceremony-copy relative z-10">
+<span class="font-display-lg text-secondary/30 text-[100px] leading-none block mb-4">01</span>
+<h4 class="font-headline-md text-headline-md mb-4">Tagliolini with Truffle</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Fresh egg pasta, butter, Parmesan, and generous truffle create an unforgettable aromatic first course.</p>
+</div>
+</div>
+<div class="md:col-span-2 lux-dark-photo-block lux-course-card lux-reader-card group flex items-center p-12 reveal-on-scroll cursor-pointer active" data-reader-open="en-recipe-truffle-ravioli">
+<div class="lux-dark-photo-bg" data-alt="Ravioli with truffle cream sauce" style="background-image: url('../assets/media/journal/recipe-truffle-ravioli.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-truffle-ravioli">Read Recipe</button>
+<div class="lux-ceremony-copy flex-1">
+<span class="font-label-lg text-secondary block mb-2">02</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">Truffle Cream Ravioli</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Tender filled pasta and a rich truffle cream sauce make a simple yet impressive special-occasion dish.</p>
+</div>
+</div>
+<div class="md:col-span-1 lux-dark-photo-block lux-course-card lux-reader-card group p-8 flex flex-col justify-between reveal-on-scroll cursor-pointer active" data-reader-open="en-recipe-black-truffle-risotto">
+<div class="lux-dark-photo-bg" data-alt="Black truffle risotto" style="background-image: url('../assets/media/journal/recipe-black-truffle-risotto.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-black-truffle-risotto">Read Recipe</button>
+<div class="lux-ceremony-copy">
+<span class="font-label-lg text-secondary block mb-2">03</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">Black Truffle Risotto</h4>
+</div>
+<p class="lux-ceremony-copy font-label-sm text-on-surface-variant">Silky Carnaroli rice carries the deep aroma of truffle in a refined, richly textured first course.</p>
+</div>
+<div class="md:col-span-1 lux-dark-photo-block lux-course-card lux-reader-card group p-8 flex flex-col justify-between transition-colors duration-500 reveal-on-scroll cursor-pointer active" data-reader-open="en-recipe-mushroom-soup">
+<div class="lux-dark-photo-bg" data-alt="Creamy mushroom soup" style="background-image: url('../assets/media/journal/recipe-mushroom-soup.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-mushroom-soup">Read Recipe</button>
+<div class="lux-ceremony-copy">
+<span class="font-label-lg text-secondary block mb-2">04</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">Creamy Mushroom Soup</h4>
+</div>
+<p class="lux-ceremony-copy font-label-sm text-on-surface-variant">A smooth, warming mushroom soup with woodland aromas, finished with croutons or truffle oil.</p>
+</div>
+</div>
+</section>
+<!-- Main Courses -->
+<section class="bg-surface-container-low py-section-gap lux-recipe-anchor" id="main-courses">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
+<div>
+<span class="text-secondary font-label-lg tracking-[0.3em] uppercase block mb-4">Main Courses</span>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg">Main Courses</h2>
+</div>
+<p class="max-w-sm text-right hidden md:block font-body-md text-body-md text-on-surface-variant">Beef, scallops, and shrimp meet the aroma of truffle in two refined compositions with a fresh, generous finish.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
+<article class="md:col-span-7 min-h-[520px] md:min-h-[620px] lux-dark-photo-block lux-main-course-card lux-reader-card group p-8 md:p-12 flex flex-col justify-end reveal-on-scroll cursor-pointer active" data-reader-open="en-recipe-beef-carpaccio-scallop-truffle">
+<div class="lux-dark-photo-bg" data-alt="Beef carpaccio with scallops and truffle" style="background-image: url('../assets/media/journal/recipe-beef-carpaccio-scallop-truffle.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-beef-carpaccio-scallop-truffle">Read Recipe</button>
+<div class="lux-ceremony-copy relative z-10 max-w-xl">
+<span class="font-label-lg text-secondary block mb-3">01</span>
+<h3 class="font-headline-md text-headline-md mb-4">Beef Carpaccio with Scallops and Truffle</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Tender scallops, delicate beef, and black truffle meet in a fresh, elegant composition.</p>
+</div>
+</article>
+<article class="md:col-span-5 md:mt-24 min-h-[460px] md:min-h-[540px] lux-dark-photo-block lux-main-course-card lux-reader-card group p-8 md:p-10 flex flex-col justify-end reveal-on-scroll cursor-pointer active" data-reader-open="en-recipe-shrimp-tartare-truffle">
+<div class="lux-dark-photo-bg" data-alt="Shrimp tartare with crisp vegetables and truffle" style="background-image: url('../assets/media/journal/recipe-shrimp-tartare-truffle.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-shrimp-tartare-truffle">Read Recipe</button>
+<div class="lux-ceremony-copy relative z-10">
+<span class="font-label-lg text-secondary block mb-3">02</span>
+<h3 class="font-headline-sm text-headline-sm mb-4">Shrimp Tartare with Crisp Vegetables and Truffle</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Sweet raw shrimp, crisp vegetables, and fragrant truffle create a light, layered dish.</p>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Desserts -->
+<section class="py-section-gap lux-recipe-anchor" id="desserts">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<header class="text-center mb-20 reveal-on-scroll active">
+<h2 class="font-headline-lg text-headline-lg mb-4">Desserts</h2>
+<p class="font-label-lg text-secondary tracking-[0.4em] uppercase">Dessert Recipes</p>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+<article class="reveal-on-scroll lux-reader-card lux-dessert-card group cursor-pointer md:mt-24 active" data-reader-open="en-recipe-sweet-bread-butter-caviar">
+<div class="overflow-hidden mb-8 border border-outline-variant/10 lux-reader-media">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="Sweet bread with butter and caviar" style="background-image: url('../assets/media/journal/recipe-sweet-bread-butter-caviar.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-sweet-bread-butter-caviar">Read Recipe</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">Sweet Bread with Butter and Caviar</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Soft, sweet brioche meets rich butter and savory caviar in an elegant contrast of sweetness, salinity, and texture.</p>
+</article>
+<article class="reveal-on-scroll lux-reader-card lux-dessert-card group cursor-pointer active" data-reader-open="en-recipe-truffle-tiramisu">
+<div class="overflow-hidden mb-8 border border-outline-variant/10 lux-reader-media">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="Truffle tiramisu" style="background-image: url('../assets/media/journal/recipe-truffle-tiramisu.png')"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="en-recipe-truffle-tiramisu">Read Recipe</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">Truffle Tiramisu</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Classic tiramisu's silky mascarpone meets the deep aroma of truffle in an unexpected, refined dessert.</p>
+</article>
 </div>
 </div>
 </section>
@@ -231,7 +334,7 @@
 </div>
 </section>
 <section class="lux-full-bleed lux-dark-photo-block lux-photo-fade-bottom py-section-gap relative overflow-hidden">
-<div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/lux-044.jpg')"></div>
+<div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/products-hero-caviar.jpg')"></div>
 <div class="relative z-10 text-center px-margin-mobile">
 <h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-10">Buy Now</h2>
 <a class="inline-flex px-12 py-4 border border-primary text-primary font-label-lg uppercase tracking-[0.2em] hover:bg-primary hover:text-on-primary transition-all duration-500 group active:scale-95" href="products.html">
@@ -250,15 +353,15 @@
 <footer class="lux-footer">
   <div class="lux-footer-grid">
     <div><img src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>An odyssey of taste, sourcing the rarest delicacies through sustainable practices and uncompromising quality standards.</p></div>
-    <nav><a href="index.html">Home</a><a href="caviar.html">Caviar</a><a href="products.html">Products</a><a href="rituals.html">Rituals</a><a href="journal.html">Journal</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a><a href="private.html">Private Selection</a></nav>
+    <nav><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a class="" href="certification.html">Quality &amp; Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/6Jn3PRYzjAy" target="_blank" rel="noopener">Rednote</a><button type="button" data-footer-modal="wechat">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener">Weibo</a></div>
     <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
   </div>
   <div class="lux-footer-bottom">© 2024 LuxurEat Maison. CITES & FDA Certified.</div>
 </footer>
 <script src="../assets/data/products.js?v=20260714-data-sync1"></script>
-<script src="../assets/data/journal.js?v=20260715-content1"></script>
-<script src="../assets/js/journal.js?v=20260715-content1"></script>
+<script src="../assets/data/journal.js?v=20260716-recipes4"></script>
+<script src="../assets/js/journal.js?v=20260716-recipes4"></script>
 <script src="../assets/data/brand.js?v=20260715-content1"></script>
 <script src="../assets/js/core.js?v=20260715-content1"></script>
 <script src="../assets/js/products.js?v=20260715-content1"></script>

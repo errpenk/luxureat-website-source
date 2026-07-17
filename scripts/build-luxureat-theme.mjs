@@ -18,13 +18,12 @@ const pageInputs = [
   ['zh', 'contact', 'zh/contact.html'],
   ['zh', 'bag', 'zh/bag.html'],
   ['en', 'index', 'en/index.html'],
-  ['en', 'caviar', 'en/caviar.html'],
   ['en', 'products', 'en/products.html'],
   ['en', 'rituals', 'en/rituals.html'],
   ['en', 'journal', 'en/journal.html'],
   ['en', 'gifting', 'en/gifting.html'],
+  ['en', 'certification', 'en/certification.html'],
   ['en', 'contact', 'en/contact.html'],
-  ['en', 'private', 'en/private.html'],
   ['en', 'bag', 'en/bag.html'],
 ];
 
@@ -256,8 +255,12 @@ function luxureat_static_aliases() {
         'contact.html' => 'zh/contact',
         'bag' => 'zh/bag',
         'bag.html' => 'zh/bag',
-        'private-selection' => 'en/private',
-        'private-selection.html' => 'en/private',
+        'en/caviar' => 'en/products',
+        'en/caviar.html' => 'en/products',
+        'en/private' => 'en/gifting',
+        'en/private.html' => 'en/gifting',
+        'private-selection' => 'en/gifting',
+        'private-selection.html' => 'en/gifting',
         'product-imperial-beluga' => 'zh/caviar',
         'product-imperial-beluga.html' => 'zh/caviar',
     );
@@ -282,13 +285,12 @@ function luxureat_static_pretty_paths() {
         'zh/contact' => '/contact/',
         'zh/bag' => '/bag/',
         'en' => '/en/',
-        'en/caviar' => '/en/caviar/',
         'en/products' => '/en/products/',
         'en/rituals' => '/en/rituals/',
         'en/journal' => '/en/journal/',
         'en/gifting' => '/en/gifting/',
+        'en/certification' => '/en/certification/',
         'en/contact' => '/en/contact/',
-        'en/private' => '/en/private/',
         'en/bag' => '/en/bag/',
     );
 }
@@ -335,6 +337,7 @@ function luxureat_static_assets() {
         array(),
         filemtime($theme_dir . '/integration.css')
     );
+
 
     wp_enqueue_script(
         'luxureat-product-data',
@@ -466,7 +469,7 @@ This package wraps the static bilingual LuxurEat website source from https://git
 
 - \`/\` serves the Chinese home page.
 - Default Chinese routes use root-level pretty URLs such as \`/caviar/\`, \`/rituals/\`, and \`/contact/\`.
-- English routes use \`/en/\`, \`/en/caviar/\`, and the rest of the \`/en/.../\` namespace.
+- English routes use \`/en/\`, \`/en/products/\`, and the rest of the \`/en/.../\` namespace.
 
 ## Notes
 

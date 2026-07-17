@@ -1,4 +1,5 @@
 const { chromium } = require("playwright");
+const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8000";
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -7,7 +8,7 @@ function assert(condition, message) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
-  await page.goto("http://127.0.0.1:8770/zh/caviar.html#product-zh-imperial-beluga", { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE_URL}/zh/caviar.html#product-zh-imperial-beluga`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".lux-product-detail:not([hidden]) .lux-product-qty");
 
   const plus = page.locator('.lux-product-qty [data-product-quantity="1"]');

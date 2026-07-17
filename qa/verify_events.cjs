@@ -38,17 +38,25 @@ const zhHome = read("zh/index.html");
 const enHome = read("en/index.html");
 const zhJournal = read("zh/journal.html");
 const enJournal = read("en/journal.html");
+const zhNews = read("zh/news.html");
+const enNews = read("en/news.html");
 const latestEvent = read("assets/js/events.js");
 const journal = read("assets/js/journal.js");
 const css = read("integration.css");
 
-[zhHome, enHome, zhJournal, enJournal].forEach((html) => {
+[zhHome, enHome, zhNews, enNews].forEach((html) => {
   assert(html.includes("assets/data/events.js"), "a bilingual page does not load shared event data");
 });
-assert(zhJournal.includes("data-recent-events"), "Chinese journal recent-events mount is missing");
-assert(enJournal.includes("data-recent-events"), "English journal recent-events mount is missing");
+assert(!zhJournal.includes("data-recent-events"), "Chinese journal still contains recent events");
+assert(!enJournal.includes("data-recent-events"), "English journal still contains recent events");
+assert(zhNews.includes("data-recent-events"), "Chinese brand-news event mount is missing");
+assert(enNews.includes("data-recent-events"), "English brand-news event mount is missing");
+assert(zhNews.includes('class="active" href="news.html">品牌新闻'), "Chinese brand-news navigation is not active");
+assert(enNews.includes('class="active" href="news.html">Brand News'), "English brand-news navigation is not active");
 assert(latestEvent.includes("LUXUREAT_EVENT_DATA"), "home latest event does not use shared event data");
 assert(latestEvent.includes("#event-${event.id}"), "home latest event detail hash is missing");
+assert(latestEvent.includes("news.html#event-${event.id}"), "home latest event does not point to Brand News");
+assert(!latestEvent.includes("journal.html#event-${event.id}"), "home latest event still points to About Us");
 assert(journal.includes("data-event-open"), "delegated event article opening is missing");
 assert(journal.includes("#event-"), "event hash opening is missing");
 assert(css.includes(".lux-narrative-link"), "shared narrative link styling is missing");

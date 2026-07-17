@@ -3,9 +3,11 @@ function initLuxReader() {
   const articles = articleData.articles || {};
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
   const eventMount = document.querySelector("[data-recent-events]");
+  const aboutMount = document.querySelector("[data-about-story]");
   const eventHash = decodeURIComponent(location.hash).replace(/^#event-/, "");
+  const readerHash = decodeURIComponent(location.hash).replace(/^#reader-/, "");
   const triggers = document.querySelectorAll("[data-reader-open], [data-reader-archive], [data-event-open]");
-  if (!triggers.length && !eventMount && !events.some((event) => event.id === eventHash)) return;
+  if (!triggers.length && !eventMount && !aboutMount && !events.some((event) => event.id === eventHash)) return;
   if (!Object.keys(articles).length && !events.length) return;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -29,6 +31,10 @@ function initLuxReader() {
   const eventLabels = lang === "zh"
     ? { kicker: "Maison Events", title: "最近活动", latest: "最新活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
     : { kicker: "Maison Events", title: "Recent Events", latest: "Latest Event", past: "Past Events", empty: "No past events yet", read: "View details" };
+  const aboutArticle = articles[`${lang}-about`];
+  const aboutLabels = lang === "zh"
+    ? { title: "关于我们", journal: "LuxurEat 志", story: "品牌故事", madeIn: "意大利制造", view: "查看大图", previous: "查看上一张图片", next: "查看下一张图片", slide: "左右滑动查看", close: "关闭", portrait: "Roberto Ugolini 肖像" }
+    : { title: "About Us", journal: "LuxurEat Journal", story: "Brand Story", madeIn: "Made in Italy", view: "View Full Size", previous: "View previous image", next: "View next image", slide: "Slide left or right", close: "Close", portrait: "Portrait of Roberto Ugolini" };
 
   const renderRecentEvents = () => {
     if (!eventMount) return;
@@ -54,37 +60,126 @@ function initLuxReader() {
               </span>
             </button>` : ""}
         </div>
-        <div class="lux-past-events">
+        ${past.length ? `<div class="lux-past-events">
           <h3>${eventLabels.past}</h3>
-          ${past.length ? `<div class="lux-past-events-grid">${past.map((event) => {
+          <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
             return `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img src="${escapeHtml(event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${escapeHtml(copy.articleTitle)}</strong></span></button>`;
-          }).join("")}</div>` : `<p class="lux-event-empty">${eventLabels.empty}</p>`}
-        </div>
+          }).join("")}</div>
+        </div>` : ""}
       </div>`;
   };
   renderRecentEvents();
 
+  const renderAboutStory = () => {
+    if (!aboutMount || !aboutArticle) return;
+    const [titleBrand, ...titleRest] = aboutArticle.title.split("｜");
+    const paragraphs = (content) => content.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
+    const sectionHtml = aboutArticle.sections.map(([heading, content], index) => {
+      const media = aboutArticle.sectionMedia[index] || [];
+      const figures = media.map((item) => `<figure>
+        <button type="button" class="lux-about-image-button" data-about-image="${escapeHtml(item.src)}" data-about-image-alt="${escapeHtml(item.alt)}" aria-label="${escapeHtml(aboutLabels.view)}: ${escapeHtml(item.alt)}">
+          <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}">
+          <span>${escapeHtml(aboutLabels.view)}</span>
+        </button>
+      </figure>`).join("");
+      const gallery = index === aboutArticle.sections.length - 1
+        ? `<div class="lux-about-carousel" data-about-carousel data-carousel-hint="${escapeHtml(aboutLabels.slide)}">
+            <button type="button" class="lux-about-carousel-arrow is-prev" data-about-carousel-step="-1" aria-label="${escapeHtml(aboutLabels.previous)}"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <div class="lux-about-carousel-track">${figures}</div>
+            <button type="button" class="lux-about-carousel-arrow is-next" data-about-carousel-step="1" aria-label="${escapeHtml(aboutLabels.next)}"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+          </div>`
+        : `<div class="lux-reader-section-media">${figures}</div>`;
+      return `<section class="lux-reader-section" id="lux-about-section-${index}">
+        <h3>${escapeHtml(heading)}</h3>
+        ${paragraphs(content)}
+        ${gallery}
+      </section>`;
+    }).join("");
+
+    aboutMount.innerHTML = `
+      <div class="lux-recent-events-inner">
+        <header class="lux-recent-events-head">
+          <span>Maison Story</span>
+          <h2>${escapeHtml(aboutLabels.title)}</h2>
+        </header>
+      </div>
+      <article class="lux-reader-layout">
+        <section class="lux-reader-hero">
+          <div class="lux-reader-hero-copy">
+            <div class="lux-reader-meta-grid"><span>${escapeHtml(aboutLabels.journal)}</span><span>${escapeHtml(aboutLabels.title)}</span><span>${escapeHtml(aboutLabels.story)}</span><span>${escapeHtml(aboutLabels.madeIn)}</span></div>
+            <h2><span class="lux-about-title-brand">${escapeHtml(titleBrand)}｜</span>${escapeHtml(titleRest.join("｜"))}</h2>
+            <p class="lux-reader-summary">${escapeHtml(aboutArticle.intro)}</p>
+          </div>
+          <figure class="lux-reader-cover">
+            <button type="button" class="lux-about-image-button" data-about-image="${escapeHtml(aboutArticle.image)}" data-about-image-alt="${escapeHtml(aboutLabels.portrait)}" aria-label="${escapeHtml(aboutLabels.view)}: ${escapeHtml(aboutLabels.portrait)}">
+              <img src="${escapeHtml(aboutArticle.image)}" alt="${escapeHtml(aboutLabels.portrait)}">
+              <span>${escapeHtml(aboutLabels.view)}</span>
+            </button>
+          </figure>
+        </section>
+        <section class="lux-reader-content lux-about-content">
+          <div class="lux-reader-copy">
+            <section class="lux-reader-section lux-reader-section-opening">${paragraphs(aboutArticle.opening)}</section>
+            ${sectionHtml}
+            <blockquote class="lux-reader-quote">${escapeHtml(aboutArticle.quote)}</blockquote>
+          </div>
+        </section>
+      </article>`;
+  };
+  renderAboutStory();
+
+  if (aboutMount) {
+    const lightbox = document.createElement("dialog");
+    lightbox.className = "lux-about-lightbox";
+    lightbox.innerHTML = `<button type="button" data-about-lightbox-close aria-label="${escapeHtml(aboutLabels.close)}">${escapeHtml(aboutLabels.close)}</button><img alt="">`;
+    document.body.appendChild(lightbox);
+
+    document.addEventListener("click", (event) => {
+      const imageTrigger = event.target.closest("[data-about-image]");
+      if (imageTrigger) {
+        const image = lightbox.querySelector("img");
+        image.src = imageTrigger.dataset.aboutImage;
+        image.alt = imageTrigger.dataset.aboutImageAlt || "";
+        lightbox.showModal();
+        return;
+      }
+
+      const carouselTrigger = event.target.closest("[data-about-carousel-step]");
+      if (carouselTrigger) {
+        const track = carouselTrigger.closest("[data-about-carousel]").querySelector(".lux-about-carousel-track");
+        track.scrollBy({ left: Number(carouselTrigger.dataset.aboutCarouselStep) * track.clientWidth * .8, behavior: "smooth" });
+        return;
+      }
+
+      if (event.target === lightbox || event.target.closest("[data-about-lightbox-close]")) lightbox.close();
+    });
+  }
+
   const syncReaderCards = () => {
     const seen = new Set();
     const sync = (node, article) => {
-      if (!node || seen.has(node)) return;
+      if (!node || seen.has(node) || node.closest(".lux-home-harvest")) return;
       seen.add(node);
       const image = node.querySelector("img");
       const background = node.querySelector(".lux-dark-photo-bg, [style*='background-image']");
       if (image) {
-        image.src = article.image;
-        image.alt = article.title;
+        image.src = article.cardImage || article.image;
+        image.alt = article.cardTitle || article.title;
+        if (article.cardPosition || article.coverPosition) image.style.objectPosition = article.cardPosition || article.coverPosition;
       } else if (background) {
-        background.style.backgroundImage = `url("${article.image}")`;
+        background.style.backgroundImage = `url("${article.cardImage || article.image}")`;
       }
       const heading = node.querySelector("h1,h2,h3,h4");
-      if (heading) heading.textContent = article.title;
+      if (heading) heading.textContent = article.cardTitle || article.title;
       const eyebrow = Array.from(node.querySelectorAll("span"))
         .find((span) => !span.closest("a,button") && !span.classList.contains("material-symbols-outlined") && /\D/.test(span.textContent.trim()) && span.textContent.trim().length < 64);
-      if (eyebrow) eyebrow.textContent = article.eyebrow;
+      if (eyebrow) eyebrow.textContent = article.cardEyebrow || article.eyebrow;
       const paragraph = node.querySelector("p");
-      if (paragraph) paragraph.textContent = article.cardText || article.intro;
+      if (paragraph) {
+        paragraph.textContent = article.cardText || article.intro;
+        paragraph.style.whiteSpace = article.cardText?.includes("\n") ? "pre-line" : "";
+      }
     };
 
     document.querySelectorAll("[data-reader-open]").forEach((trigger) => {
@@ -166,12 +261,58 @@ function initLuxReader() {
     if (push && currentId) stack.push(currentId);
     currentId = id;
     const copy = labels();
+    if (article.type === "recipe" && article.recipe) {
+      const recipe = article.recipe;
+      const recipeLabels = article.lang === "zh"
+        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分" }
+        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving" };
+      body.innerHTML = `
+        <article class="lux-recipe-reader">
+          <section class="lux-recipe-hero">
+            <figure><img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>
+            <div class="lux-recipe-intro">
+              <span>${escapeHtml(article.eyebrow)}</span>
+              <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
+              <p>${escapeHtml(article.intro)}</p>
+              <dl class="lux-recipe-facts">
+                <div><dt>${recipeLabels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div>
+                <div><dt>${recipeLabels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div>
+                <div><dt>${recipeLabels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div>
+              </dl>
+            </div>
+          </section>
+          <section class="lux-recipe-body">
+            <aside class="lux-recipe-ingredients">
+              <h3>${recipeLabels.ingredients}</h3>
+              <p>${escapeHtml(recipe.description)}</p>
+              <ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+            </aside>
+            <div class="lux-recipe-method">
+              <h3>${recipeLabels.method}</h3>
+              <ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
+            </div>
+          </section>
+          <section class="lux-recipe-nutrition">
+            <header><h3>${recipeLabels.nutrition}</h3></header>
+            <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
+          </section>
+        </article>`;
+      showReader(copy);
+      return;
+    }
     const articleSections = article.sections.length ? article.sections : [[copy.note, copy.noteText]];
+    const contentText = (item) => typeof item === "string" ? item : item?.lines?.join("") || item?.text || "";
     const paragraphs = (content) => (Array.isArray(content) ? content : [content])
-      .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+      .map((item) => item?.type === "strong"
+        ? `<p class="lux-reader-inline-heading"><strong>${escapeHtml(item.text)}</strong></p>`
+        : item?.type === "quote"
+          ? `<blockquote class="lux-reader-indent-quote">${item.lines.map((line, index) => `<p>${item.bold?.includes(index) ? `<strong>${escapeHtml(line)}</strong>` : escapeHtml(line)}</p>`).join("")}</blockquote>`
+          : `<p>${escapeHtml(item)}</p>`)
       .join("");
-    const plainText = [article.intro, ...articleSections.flatMap(([, content]) => Array.isArray(content) ? content : [content])].join("");
-    const minutes = Math.max(4, Math.ceil(plainText.length / (article.lang === "zh" ? 450 : 900)));
+    const opening = article.opening || [];
+    const plainText = [article.intro, ...opening, ...articleSections.flatMap(([, content]) => (Array.isArray(content) ? content : [content]).map(contentText))].join(" ");
+    const units = article.lang === "zh" ? plainText.replace(/\s/g, "").length / 300 : (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length / 200;
+    const minutes = Math.max(1, Math.ceil(units));
     const metaParts = article.meta.split("·").map((part) => part.trim()).filter(Boolean);
     const readTime = article.lang === "zh" ? `${minutes} 分钟阅读` : `${minutes} min read`;
     const issue = article.lang === "zh" ? "LuxurEat 志" : "LuxurEat Journal";
@@ -182,12 +323,21 @@ function initLuxReader() {
       [article.lang === "zh" ? "日期" : "Date", metaParts[1] || ""],
     ].filter(([, value]) => value);
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
-    const sectionHtml = articleSections.map(([heading, content], index) => `
+    const openingHtml = opening.length ? `<section class="lux-reader-section lux-reader-section-opening">${paragraphs(opening)}</section>` : "";
+    const sectionHtml = articleSections.map(([heading, content], index) => {
+      const media = article.sectionMedia?.[index] || [];
+      return `
           <section class="lux-reader-section" id="lux-reader-section-${index}">
             <h3>${escapeHtml(heading)}</h3>
             ${paragraphs(content)}
-          </section>`).join("");
-    const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(heading)}</a>`).join("");
+            ${media.length ? `<div class="lux-reader-section-media">${media.map((item, mediaIndex) => `
+              <figure>
+                <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || heading)}">
+                <figcaption>Figure ${String(mediaIndex + 1).padStart(2, "0")} / ${escapeHtml(heading)}</figcaption>
+              </figure>`).join("")}</div>` : ""}
+          </section>`;
+    }).join("");
+    const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(article.tocLabels?.[index] || heading)}</a>`).join("");
 
     body.innerHTML = `
       <article class="lux-reader-layout">
@@ -201,7 +351,7 @@ function initLuxReader() {
             <p class="lux-reader-summary">${escapeHtml(article.intro)}</p>
           </div>
           <figure class="lux-reader-cover">
-            <img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">
+            <img src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"${article.coverPosition ? ` style="object-position: ${escapeHtml(article.coverPosition)}"` : ""}>
             <figcaption>Figure 01 / ${escapeHtml(article.eyebrow)}</figcaption>
           </figure>
         </section>
@@ -210,6 +360,7 @@ function initLuxReader() {
             ${asideRows.map(([label, value]) => `<span>${escapeHtml(label)}：${escapeHtml(value)}</span>`).join("")}
           </aside>
           <div class="lux-reader-copy">
+            ${openingHtml}
             ${sectionHtml}
             ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
           </div>
@@ -296,7 +447,7 @@ function initLuxReader() {
     document.body.classList.remove("lux-reader-open");
     stack.length = 0;
     currentId = "";
-    if (location.hash.startsWith("#event-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
+    if (location.hash.startsWith("#event-") || location.hash.startsWith("#reader-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
   };
 
   document.addEventListener("click", (event) => {
@@ -349,6 +500,7 @@ function initLuxReader() {
     if (event.key === "Escape" && !reader.hidden) close();
   });
   if (events.some((event) => event.id === eventHash)) renderEvent(eventHash);
+  else if (articles[readerHash]) open(readerHash);
 }
 
 

@@ -4,11 +4,119 @@ const luxAsset = (path) => new URL(path, luxAssetBase).href;
 const luxNav = document.querySelector(".lux-nav");
 const luxMenu = document.querySelector(".lux-menu");
 
+const luxNavigation = {
+  zh: [
+    ["index.html", "首页", ["核心甄选资产", "品牌概览", "我们的价值观", "全球合作"]],
+    ["journal.html", "关于我们", ["品牌叙事", "本味之道"]],
+    ["caviar.html", "系列产品", ["产品全览"]],
+    ["rituals.html", "食谱艺术", ["食谱艺术", "意式风味食谱", "早餐", "第一道主食", "第二道主食", "甜品", "食材购买"]],
+    ["news.html", "品牌新闻", ["品牌新闻"]],
+    ["certification.html", "品质认证", ["品质承诺与权威认证", "责任采购与全球合规", "全球品质体系", "认证体系", "认证与品质标识"]],
+    ["gifting.html", "礼赠合作", ["商务共创", "国际市场定制", "企业合作方案", "中国经销合作", "开启专业合作"]],
+    ["contact.html", "联系我们", ["联系我们", "品牌咨询", "产品与品鉴咨询", "商务与供应合作", "全球足迹"]],
+  ],
+  en: [
+    ["index.html", "Home", ["Maison Overview", "Our Values", "Global Partnership"]],
+    ["journal.html", "About Us", ["Epicurean Rituals", "The Way of True Flavor"]],
+    ["products.html", "Products", ["Premium Products"]],
+    ["rituals.html", "Recipe Art", ["Rituals & Culture", "The LuxurEat Table", "Breakfast", "First Courses", "Main Courses", "Desserts", "Commitment to Integrity", "Buy Now"]],
+    ["news.html", "Brand News", ["Brand News"]],
+    ["certification.html", "Quality & Certification", ["Quality Promise", "Responsible Trade", "Global Quality System", "Certification System", "Certification Glossary"]],
+    ["gifting.html", "Gifting", ["The Ritual of Giving", "Curated Presentations", "Private Label"]],
+    ["contact.html", "Contact", ["Contact the Concierge", "Global Presence"]],
+  ],
+};
+
 if (luxNav && luxMenu) {
+  const language = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const currentPage = location.pathname.split("/").pop() || "index.html";
+  const pageItems = luxNavigation[language];
+
+  luxNav.replaceChildren(...pageItems.map(([href, label, sections], itemIndex) => {
+    const item = document.createElement("div");
+    item.className = "lux-nav-item";
+
+    const link = document.createElement("a");
+    link.href = href;
+    link.textContent = label;
+    link.classList.toggle("active", href === currentPage);
+    link.addEventListener("click", () => {
+      const target = new URL(href, location.href);
+      sessionStorage.setItem(`luxureatScroll:${target.pathname}`, "0");
+    });
+    item.appendChild(link);
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "lux-nav-toggle";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", `lux-nav-flyout-${itemIndex}`);
+    toggle.setAttribute("aria-label", language === "zh" ? `展开${label}子菜单` : `Expand ${label} submenu`);
+    toggle.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+    item.appendChild(toggle);
+
+    const flyout = document.createElement("div");
+    flyout.className = "lux-nav-flyout";
+    flyout.id = `lux-nav-flyout-${itemIndex}`;
+    flyout.setAttribute("aria-label", `${label} sections`);
+    sections.forEach((section, index) => {
+      const sectionLink = document.createElement("a");
+      sectionLink.href = `${href}#section-${index + 1}`;
+      sectionLink.textContent = section;
+      flyout.appendChild(sectionLink);
+    });
+    item.appendChild(flyout);
+
+    toggle.addEventListener("click", () => {
+      const expanded = !item.classList.contains("is-expanded");
+      luxNav.querySelectorAll(".lux-nav-item.is-expanded").forEach((node) => {
+        node.classList.remove("is-expanded");
+        node.querySelector(".lux-nav-toggle")?.setAttribute("aria-expanded", "false");
+      });
+      item.classList.toggle("is-expanded", expanded);
+      toggle.setAttribute("aria-expanded", String(expanded));
+    });
+    return item;
+  }));
+
+  const footerNav = document.querySelector(".lux-footer nav");
+  if (footerNav) {
+    footerNav.replaceChildren(...pageItems.map(([href, label]) => {
+      const link = document.createElement("a");
+      link.href = href;
+      link.textContent = label;
+      return link;
+    }));
+  }
+
+  const pairedPage = language === "zh"
+    ? currentPage === "caviar.html" ? "products.html" : currentPage
+    : currentPage === "products.html" ? "caviar.html" : currentPage;
+  const languageLinks = document.querySelectorAll(".lux-lang a");
+  if (languageLinks.length === 2 && pairedPage !== "bag.html") {
+    languageLinks[0].href = language === "zh" ? "#" : `../zh/${pairedPage}`;
+    languageLinks[1].href = language === "en" ? "#" : `../en/${pairedPage}`;
+  }
+
+  if (pageItems.some(([href]) => href === currentPage)) {
+    const headings = document.querySelectorAll("body > header:not(.lux-header) h1, main h1, main h2");
+    headings.forEach((heading, index) => {
+      heading.id ||= `section-${index + 1}`;
+      heading.classList.add("lux-section-anchor");
+    });
+    if (location.hash.startsWith("#section-")) {
+      requestAnimationFrame(() => document.querySelector(location.hash)?.scrollIntoView());
+    }
+  }
+
   const setOpen = (open) => {
     luxNav.classList.toggle("open", open);
     luxMenu.setAttribute("aria-expanded", String(open));
     luxMenu.textContent = open ? luxMenu.dataset.open : luxMenu.dataset.closed;
+    if (!open) {
+      luxNav.querySelectorAll(".lux-nav-item.is-expanded").forEach((item) => item.classList.remove("is-expanded"));
+      luxNav.querySelectorAll(".lux-nav-toggle").forEach((toggle) => toggle.setAttribute("aria-expanded", "false"));
+    }
   };
 
   luxMenu.addEventListener("click", () => {
@@ -17,6 +125,13 @@ if (luxNav && luxMenu) {
 
   luxNav.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => setOpen(false));
+  });
+
+  luxNav.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+      luxMenu.focus();
+    }
   });
 }
 
@@ -60,6 +175,11 @@ if (luxNav && luxMenu) {
 
   const save = () => sessionStorage.setItem(key, String(window.scrollY || 0));
   const restore = () => {
+    const target = location.hash && document.querySelector(location.hash);
+    if (target) {
+      target.scrollIntoView();
+      return;
+    }
     const y = Number(sessionStorage.getItem(key) || 0);
     window.scrollTo(0, Number.isFinite(y) ? y : 0);
   };
