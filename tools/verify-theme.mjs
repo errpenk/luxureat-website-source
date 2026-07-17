@@ -12,6 +12,7 @@ const expectedRoutes = [
   'zh/caviar',
   'zh/rituals',
   'zh/journal',
+  'zh/news',
   'zh/gifting',
   'zh/certification',
   'zh/contact',
@@ -20,6 +21,7 @@ const expectedRoutes = [
   'en/products',
   'en/rituals',
   'en/journal',
+  'en/news',
   'en/gifting',
   'en/certification',
   'en/contact',
@@ -104,7 +106,9 @@ assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
 assert(functionsPhp.includes('function luxureat_static_pretty_paths('), 'functions.php defines canonical pretty route URLs');
 assert(functionsPhp.includes("'zh/caviar' => '/caviar/'"), 'functions.php maps the Chinese caviar route to /caviar/');
+assert(functionsPhp.includes("'zh/news' => '/news/'"), 'functions.php maps the Chinese news route to /news/');
 assert(functionsPhp.includes("'en/products' => '/en/products/'"), 'functions.php maps the English products route to /en/products/');
+assert(functionsPhp.includes("'en/news' => '/en/news/'"), 'functions.php maps the English news route');
 assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'functions.php maps the English certification route');
 assert(functionsPhp.includes("'en/caviar' => 'en/products'"), 'legacy English caviar route redirects to products');
 assert(functionsPhp.includes("'en/private' => 'en/gifting'"), 'legacy English private route redirects to gifting');

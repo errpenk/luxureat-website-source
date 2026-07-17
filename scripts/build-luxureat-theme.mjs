@@ -8,24 +8,10 @@ const outputRoot = path.resolve(process.argv[3] || process.cwd());
 const themeDir = path.join(outputRoot, 'luxureat-static');
 const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
 
-const pageInputs = [
-  ['zh', 'index', 'zh/index.html'],
-  ['zh', 'caviar', 'zh/caviar.html'],
-  ['zh', 'rituals', 'zh/rituals.html'],
-  ['zh', 'journal', 'zh/journal.html'],
-  ['zh', 'gifting', 'zh/gifting.html'],
-  ['zh', 'certification', 'zh/certification.html'],
-  ['zh', 'contact', 'zh/contact.html'],
-  ['zh', 'bag', 'zh/bag.html'],
-  ['en', 'index', 'en/index.html'],
-  ['en', 'products', 'en/products.html'],
-  ['en', 'rituals', 'en/rituals.html'],
-  ['en', 'journal', 'en/journal.html'],
-  ['en', 'gifting', 'en/gifting.html'],
-  ['en', 'certification', 'en/certification.html'],
-  ['en', 'contact', 'en/contact.html'],
-  ['en', 'bag', 'en/bag.html'],
-];
+const pageInputs = ['zh', 'en'].flatMap((lang) => fs.readdirSync(path.join(sourceDir, lang))
+  .filter((file) => file.endsWith('.html'))
+  .sort()
+  .map((file) => [lang, path.basename(file, '.html'), `${lang}/${file}`]));
 
 function ensureSource() {
   for (const file of ['README.md', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.png', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
@@ -247,6 +233,8 @@ function luxureat_static_aliases() {
         'rituals.html' => 'zh/rituals',
         'journal' => 'zh/journal',
         'journal.html' => 'zh/journal',
+        'news' => 'zh/news',
+        'news.html' => 'zh/news',
         'gifting' => 'zh/gifting',
         'gifting.html' => 'zh/gifting',
         'certification' => 'zh/certification',
@@ -280,6 +268,7 @@ function luxureat_static_pretty_paths() {
         'zh/caviar' => '/caviar/',
         'zh/rituals' => '/rituals/',
         'zh/journal' => '/journal/',
+        'zh/news' => '/news/',
         'zh/gifting' => '/gifting/',
         'zh/certification' => '/certification/',
         'zh/contact' => '/contact/',
@@ -288,6 +277,7 @@ function luxureat_static_pretty_paths() {
         'en/products' => '/en/products/',
         'en/rituals' => '/en/rituals/',
         'en/journal' => '/en/journal/',
+        'en/news' => '/en/news/',
         'en/gifting' => '/en/gifting/',
         'en/certification' => '/en/certification/',
         'en/contact' => '/en/contact/',
