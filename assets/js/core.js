@@ -389,13 +389,19 @@ function initLuxPartnershipLightbox() {
   const close = () => dialog.open && dialog.close();
 
   triggers.forEach((trigger) => {
-    const sourceImage = trigger.querySelector("img");
+    const sourceImage = trigger.matches("img") ? trigger : trigger.querySelector("img");
     if (!sourceImage) return;
     trigger.setAttribute("aria-label", `${viewLabel}：${sourceImage.alt}`);
-    trigger.addEventListener("click", () => {
+    const open = () => {
       lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
       lightboxImage.alt = sourceImage.alt;
       dialog.showModal();
+    };
+    trigger.addEventListener("click", open);
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      open();
     });
   });
 

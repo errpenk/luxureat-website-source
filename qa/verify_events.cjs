@@ -25,7 +25,7 @@ const secondEvent = events?.find((item) => item.id === "marca-china-2026");
 assert(event, "Changsha 2026 event data is missing");
 assert(event.status === "latest", "Changsha 2026 must be the latest event");
 assert(secondEvent?.status === "latest", "Marca China 2026 must also be a latest event");
-assert(secondEvent?.zh?.articleTitle === "LuxurEat亮相广州国际自有品牌展", "Marca China Chinese title is wrong");
+assert(secondEvent?.zh?.articleTitle === "LuxurEat亮相广州国际自有品牌展。", "Marca China Chinese title is wrong");
 assert(events.filter((item) => item.status === "latest").length === 2, "Both current events must render as latest");
 assert(event.mapQuery === "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133", "Changsha map address is wrong");
 assert(event.mapHref?.includes("0xaa8729018b86a918"), "Changsha Google Maps link is wrong");

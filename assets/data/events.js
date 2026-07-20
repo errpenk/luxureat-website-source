@@ -81,7 +81,7 @@
         zh: {
           posterAlt: "Marca China 2026 广州国际自有品牌展海报",
           title: "意大利奢味，广州相见。",
-          articleTitle: "LuxurEat亮相广州国际自有品牌展",
+          articleTitle: "LuxurEat亮相广州国际自有品牌展。",
           eyebrow: "最近活动",
           date: "2026年9月8–9日",
           dateIso: "2026.09.08–09",

@@ -1336,6 +1336,7 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-products-main {
   padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 .lux-dark-photo-block.lux-reader-card:hover .lux-dark-photo-bg,
 .lux-dark-photo-block.lux-reader-card:focus-within .lux-dark-photo-bg {
@@ -2660,6 +2661,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   filter: saturate(.78) contrast(1.05);
   transform: rotate(var(--lux-card-angle));
   transition: filter .45s ease, transform .55s ease, box-shadow .45s ease;
+  cursor: zoom-in;
 }
 .lux-home-gifting-image img:nth-child(1) {
   z-index: 3;
@@ -2680,6 +2682,13 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   width: 46%;
   right: 0;
   bottom: 0;
+}
+.lux-home-gifting-image img:nth-child(4) {
+  --lux-card-angle: -1.4deg;
+  z-index: 4;
+  width: 56%;
+  left: -48%;
+  top: 38%;
 }
 .lux-home-gifting-image img:hover {
   z-index: 10;
@@ -2761,6 +2770,11 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
     background: none;
   }
   .lux-home-gifting-title { margin-top: 12px; }
+  .lux-home-gifting-image img:nth-child(4) {
+    width: 58%;
+    left: 1%;
+    top: 54%;
+  }
   .lux-home-gifting-intro { margin-top: 6px; }
   .lux-home-gifting-services {
     margin-top: 20px;
