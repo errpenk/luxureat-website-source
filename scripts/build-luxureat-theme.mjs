@@ -12,7 +12,7 @@ const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
 const pageInputs = pages.map(({ lang, slug, file }) => [lang, slug, file]);
 
 function ensureSource() {
-  for (const file of ['README.md', '.htaccess', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.png', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
+  for (const file of ['README.md', '.htaccess', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -161,7 +161,7 @@ function convertHtml(file, lang) {
 
   html = stripKnownLocalIncludes(html);
 
-  html = html.replace(/\b(src|href|data-lux-bg)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
+  html = html.replace(/\b(src|href|poster|data-lux-bg)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
     return `${attr}=${quote}${phpThemeAsset(assetPath)}${quote}`;
   });
   html = html.replace(/url\((['"]?)\.\.\/assets\/([^'")]+)\1\)/g, (_match, quote, assetPath) => {

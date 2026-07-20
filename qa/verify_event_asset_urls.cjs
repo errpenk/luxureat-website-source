@@ -19,11 +19,16 @@ const event = context.window.LUXUREAT_EVENT_DATA.events[0];
 
 assert.equal(
   event.poster,
-  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026-home.webp",
+  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026.jpg",
 );
 assert.equal(
   event.image,
-  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026.png",
+  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026.jpg",
 );
+assert.equal(
+  event.cardImage,
+  "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026-banner.webp",
+);
+assert.equal(event.previewImage, event.cardImage);
 
 console.log("event asset URL verification passed");

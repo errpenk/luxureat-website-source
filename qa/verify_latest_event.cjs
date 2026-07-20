@@ -1,8 +1,8 @@
 const { chromium } = require("playwright");
 
 const BASE_URL = process.env.BASE_URL || "http://127.0.0.1:8000";
-const expectedLocation = "广州保利世贸展览馆";
-const expectedMapQuery = "广州市海珠区琶洲街道新港东路1000号保利世界贸易中心";
+const expectedLocation = "长沙国际会展中心";
+const expectedMapHref = "https://www.google.com/maps/place//data=!4m2!3m1!1s0x342734ba371bc581:0xaa8729018b86a918?sa=X&ved=1t:8290&ictx=111";
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -26,24 +26,28 @@ function rgbNumbers(color) {
       title: section.querySelector("h2")?.textContent.trim(),
       poster: section.querySelector(".lux-event-frame img")?.getAttribute("src"),
       location: locationLink.textContent.trim(),
-      mapQuery: new URL(locationLink.href).searchParams.get("q"),
+      mapHref: locationLink.href,
+      slides: section.querySelectorAll(".lux-latest-event-slide").length,
+      controls: section.querySelectorAll("[data-event-carousel-step]").length,
       iconColor: getComputedStyle(icon).color,
     };
   });
 
-  assert(result.title === "意大利奢味，广州相见。", `latest event title did not render: ${result.title}`);
-  assert(result.poster.endsWith("/assets/media/events/marca-china-2026-home.webp"), `home event poster should use the full Marca poster: ${result.poster}`);
+  assert(result.title === "意大利风味，与长沙相遇。", `latest event title did not render: ${result.title}`);
+  assert(result.poster.endsWith("/assets/media/events/cifie-changsha-2026.jpg"), `home event poster should use the Changsha poster: ${result.poster}`);
   assert(result.location === expectedLocation, `latest event location mismatch: ${result.location}`);
-  assert(result.mapQuery === expectedMapQuery, `latest event map query mismatch: ${result.mapQuery}`);
+  assert(result.mapHref === expectedMapHref, `latest event map link mismatch: ${result.mapHref}`);
+  assert(result.slides === 2, `latest event carousel should contain two slides: ${result.slides}`);
+  assert(result.controls === 2, `latest event carousel controls are missing: ${result.controls}`);
   const [r, g, b] = rgbNumbers(result.iconColor);
   assert(r <= 5 && g >= 100 && g <= 112 && b >= 94 && b <= 106, `latest event icon is not TrufflEat green: ${result.iconColor}`);
 
   const detailHref = await page.locator("[data-latest-event] .lux-event-detail-link").getAttribute("href");
-  assert(detailHref === "news.html#event-marca-china-2026", `event detail does not target Brand News: ${detailHref}`);
-  await page.goto(`${BASE_URL}/zh/news.html#event-marca-china-2026`, { waitUntil: "domcontentloaded" });
+  assert(detailHref === "news.html#event-cifie-changsha-2026", `event detail does not target Brand News: ${detailHref}`);
+  await page.goto(`${BASE_URL}/zh/news.html#event-cifie-changsha-2026`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".lux-event-reader-article figure img");
   const readerImage = await page.locator(".lux-event-reader-article figure img").first().getAttribute("src");
-  assert(readerImage.endsWith("/assets/media/events/marca-china-2026.png"), `event article detail image should stay unchanged: ${readerImage}`);
+  assert(readerImage.endsWith("/assets/media/events/cifie-changsha-2026-banner.webp"), `event article detail image should use the wide expo banner: ${readerImage}`);
 
   await browser.close();
   console.log("latest event verification passed");

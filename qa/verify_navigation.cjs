@@ -34,4 +34,8 @@ assert(!fs.existsSync(path.join(root, "en/private.html")), "extra English privat
 const core = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is missing");
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
+assert(core.includes('["gifting.html", "礼赠合作", [["国际市场定制", 2], ["合作案例", 3]'), "Chinese gifting submenu is incorrect");
+assert(core.includes('["journal.html", "关于我们", [["关于我们", 1], ["品牌传承", 5]]'), "Chinese About Us submenu is incorrect");
+assert(core.includes('["contact.html", "联系我们", [["品牌咨询", 2], ["全球足迹", 5]]'), "Chinese contact submenu is incorrect");
+assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");
 console.log("navigation verification passed");

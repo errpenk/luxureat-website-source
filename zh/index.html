@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260718-performance">
+<html class="dark" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260720-layout-fix">
 <style>
     .fade-in-up {
         animation: fadeInUp 1s ease-out forwards;
@@ -17,7 +17,7 @@
     }
 </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260718-performance">
+<link rel="stylesheet" href="../integration.css?v=20260720-layout-fix">
 </head>
 <body class="antialiased bg-background text-on-background selection:bg-primary selection:text-on-primary">
 <!-- lux:header:start -->
@@ -38,16 +38,16 @@
 <!-- 1. Hero Section -->
 <header class="relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
-<img loading="lazy" decoding="async" alt="Premium Caviar Close-up" class="w-full h-full object-cover opacity-60 scale-105" src="../assets/media/brand/lux-044.jpg"/>
-<div class="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background"></div>
+<video class="lux-hero-video" autoplay muted loop playsinline preload="auto" poster="../assets/media/brand/home-hero-truffle-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-hero-truffle.mp4" type="video/mp4"></video>
+<div class="absolute inset-0 lux-hero-video-shade"></div>
 </div>
 <div class="lux-home-hero-content relative z-10 text-center max-w-5xl px-margin-mobile fade-in-up">
 <img decoding="async" fetchpriority="high" class="lux-home-hero-mark" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"/>
-<span class="inline-block text-[10px] md:text-[12px] tracking-[0.35em] text-primary mb-8 font-semibold">来自意大利。意大利制造，享誉全球</span>
+<span class="lux-hero-kicker">来自意大利。意大利制造，享誉全球</span>
 <h1 class="zh-display-title text-on-surface mb-8">
             意大利卓越品质的<br/><span class="text-secondary">至臻之艺</span>
 </h1>
-<p class="lux-page-hero-subtitle mb-12 max-w-2xl mx-auto">
+<p class="lux-page-hero-subtitle lux-hero-support mb-12 max-w-2xl mx-auto">
             欢迎来到LuxurEat——意大利卓越品质与精致品味的融合。探索地道风味，品味真正的意大利制造。<br/>
             我们的产品由一家为世界顶级餐厅供货的生产商精心制作，确保达到国际高级料理标准。
         </p>
@@ -66,7 +66,7 @@
 <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
 <div class="max-w-xl">
-<h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">核心甄选资产</h2>
+<h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">甄选产品目录</h2>
 <p class="text-on-surface-variant font-light leading-relaxed">我们严选全球最具商业价值与品鉴价值的顶级食材，为高端商务宴请与私人藏品提供极致选择。</p>
 </div>
 <a class="lux-narrative-link group" href="caviar.html">
@@ -110,14 +110,14 @@
 </div>
 </section>
 <!-- LuxurEat Group Overview -->
-<section class="lux-home-maison" aria-labelledby="lux-home-maison-title">
+<section class="lux-home-maison" aria-labelledby="section-5">
 <video class="lux-home-maison-media lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-maison-overview.m4v" type="video/mp4"></video>
 <div class="lux-home-maison-overlay" aria-hidden="true"></div>
 <div class="lux-home-maison-inner">
 <header class="lux-home-maison-head">
 <div>
 <span>Who We Are / 品牌概览</span>
-<h2 id="lux-home-maison-title">从意大利经验，<br/>到全球美食集团</h2>
+<h2 id="section-5">从意大利经验，<br/>到全球美食集团</h2>
 </div>
 <div class="lux-home-maison-intro">
 <p>LuxurEat是一家专注于美食领域的国际集团，主要经营松露、鱼子酱和高端食品。</p>
@@ -166,7 +166,7 @@
 <span class="lux-home-editorial-kicker text-primary text-[11px] uppercase tracking-[0.4em] font-semibold">GLOBAL PARTNERSHIP / 与我们合作</span>
 <span class="lux-home-editorial-folio">MAISON BUSINESS — 01</span>
 <h2 class="lux-home-gifting-title font-display text-5xl text-on-surface leading-tight">连接意大利制造，<br/><span class="text-secondary">共拓全球市场</span></h2>
-<figure class="lux-home-gifting-image"><img loading="lazy" decoding="async" alt="Bespoke Gifting" src="../assets/media/brand/gifting-plan-gifts.webp"/></figure>
+<figure class="lux-home-gifting-image" aria-label="LuxurEat 全球合作与展会图集"><img loading="lazy" decoding="async" alt="LuxurEat 意大利展会合作现场" src="../assets/media/brand/home-partnership-italy-fair.webp"/><img loading="lazy" decoding="async" alt="LuxurEat、CaviarEat 与 TrufflEat 展会团队" src="../assets/media/brand/home-partnership-fair.webp"/><img loading="lazy" decoding="async" alt="TrufflEat 意大利展馆合作现场" src="../assets/media/brand/home-partnership-italy-pavilion.webp"/></figure>
 <div class="lux-home-gifting-intro">
 <p class="text-on-surface-variant text-lg font-light leading-relaxed">我们正在全球范围内寻找分销商、渠道运营商和商业合作伙伴。从订单与定制项目，到特许经营与专业咨询，与LuxurEat一起将真正的意大利美味带向世界。</p>
 <a class="lux-action-copy inline-block px-12 py-5 border border-primary text-primary uppercase text-[11px] font-bold tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all duration-500" href="gifting.html">合作详情</a>
@@ -196,11 +196,11 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/data/products.js?v=20260718-performance"></script>
-<script defer src="../assets/data/events.js?v=20260718-performance"></script>
-<script defer src="../assets/js/events.js?v=20260718-performance"></script>
-<script defer src="../assets/data/journal.js?v=20260718-performance"></script>
-<script defer src="../assets/js/journal.js?v=20260718-performance"></script>
-<script defer src="../assets/js/products.js?v=20260718-performance"></script>
-<script defer src="../assets/js/core.js?v=20260718-performance"></script>
+<script defer src="../assets/data/products.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/data/events.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/events.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/data/journal.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/journal.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/products.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/core.js?v=20260720-layout-fix"></script>
 <!-- lux:scripts:end --></body></html>

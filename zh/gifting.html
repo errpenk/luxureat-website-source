@@ -7,9 +7,9 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260718-performance">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260720-layout-fix">
 
-<link rel="stylesheet" href="../integration.css?v=20260718-performance">
+<link rel="stylesheet" href="../integration.css?v=20260720-layout-fix">
 </head>
 <body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
 <!-- lux:header:start -->
@@ -34,9 +34,9 @@
 <div class="absolute inset-0 lux-hero-fade-both"></div>
 </div>
 <div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto flex flex-col items-center gap-8">
-<span class="font-body-md text-label-lg text-primary tracking-[0.3em] mb-2">自有品牌 · OEM 生产 · 批发合作</span>
+<span class="lux-hero-kicker">自有品牌 · OEM 生产 · 批发合作</span>
 <h1 class="zh-display-title text-on-surface">定义商务共创的<br/><span class="text-secondary">卓越标准</span></h1>
-<p class="lux-page-hero-subtitle max-w-3xl mx-auto">
+<p class="lux-page-hero-subtitle lux-hero-support max-w-3xl mx-auto">
                 LuxurEat 为分销商、零售商、酒店餐饮及国际品牌提供自有品牌、OEM、批发和进出口合作方案，以意大利制造连接可靠生产与全球市场。
             </p>
 </div>
@@ -100,10 +100,11 @@
 <li>定制食谱开发</li><li>定制包装与品牌呈现</li><li>灵活规格、尺寸和产量</li><li>意大利制造与全球出口</li>
 </ul>
 </article>
-<article class="lux-light-glass-card bg-surface/45 backdrop-blur-xl border border-white/10 p-8 min-h-[270px]">
+<article class="lux-light-glass-card lux-partners-card bg-surface/45 backdrop-blur-xl border border-white/10 p-8 min-h-[270px]">
 <span class="text-secondary text-label-sm uppercase tracking-[0.2em] block mb-6">02 / PARTNERS</span>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-5">合作对象</h3>
 <p class="text-on-surface-variant font-body-md leading-relaxed">面向全国及区域经销商、零售连锁、美食品牌与酒店餐饮，以不同渠道和市场目标配置产品组合。</p>
+<div class="lux-case-jump-wrap"><a class="lux-down-hover text-primary hover:text-secondary transition-colors" href="#partnership-cases">查看合作案例 <span aria-hidden="true">→</span></a></div>
 </article>
 <article class="lux-light-glass-card bg-surface/45 backdrop-blur-xl border border-white/10 p-8 min-h-[270px]">
 <span class="text-secondary text-label-sm uppercase tracking-[0.2em] block mb-6">03 / PROCESS</span>
@@ -114,9 +115,30 @@
 <span class="text-primary text-label-sm uppercase tracking-[0.2em] block mb-6">04 / COMPLIANCE</span>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-5">认证与市场准入</h3>
 <p class="text-on-surface-variant font-body-md leading-relaxed mb-5">产品可依据项目需求对接 Halal、OU Kosher、有机、BRCGS、IFS 与 FDA 等主要国际标准。</p>
-<a class="text-primary hover:text-secondary transition-colors" href="certification.html">查看品质认证 →</a>
+<a class="lux-down-hover text-primary hover:text-secondary transition-colors" href="certification.html">查看品质认证 <span aria-hidden="true">→</span></a>
 </article>
 </div>
+</div>
+</div>
+</section>
+<!-- Partnership cases adapted from LuxurEat's TrufflEAT franchising concepts. -->
+<section class="lux-partnership-cases" id="partnership-cases" aria-labelledby="section-3">
+<div class="lux-partnership-cases-inner">
+<header class="lux-partnership-cases-head">
+<div>
+<h2 id="section-3">合作案例</h2>
+<p>从高端餐饮到旅行零售，再到品牌定制与全球供应，LuxurEat 将意大利松露产品与不同渠道、场景及服务需求结合。</p>
+</div>
+</header>
+<div class="lux-partnership-cases-grid">
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/hotel-restaurant.webp" alt="TrufflEAT 五星级酒店餐厅合作概念"><span>查看大图</span></button><div><span>01 / HOSPITALITY</span><span class="material-symbols-outlined" aria-hidden="true">hotel</span></div><h3>酒店餐厅</h3><p>为五星级酒店屋顶、酒吧与餐厅设计灵活、舒适的餐饮空间。以新鲜意大利松露和精选食材打造高品质菜单，让客人在社交、商务餐叙与休闲场景中获得难忘体验。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/cruise-ship.webp" alt="TrufflEAT 豪华邮轮餐厅与精品店合作概念"><span>查看大图</span></button><div><span>02 / CRUISE</span><span class="material-symbols-outlined" aria-hidden="true">directions_boat</span></div><h3>邮轮</h3><p>将餐厅与精品店结合到豪华邮轮场景中。旅客既可购买 TrufflEAT® 产品，也可品尝船上现场烹制的新鲜松露菜单，从轻食到完整晚餐均可灵活配置。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/airport.jpg" alt="TrufflEAT 机场餐饮与购物合作概念"><span>查看大图</span></button><div><span>03 / AIRPORT</span><span class="material-symbols-outlined" aria-hidden="true">flight</span></div><h3>机场</h3><p>面向新一代旅客，将登机前的时间转化为 Food & Buy 餐饮与零售体验。在舒适空间中品尝松露美食，同时选购 TrufflEAT® 产品和礼盒。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/train-station.webp" alt="TrufflEAT 火车站精致外带餐饮合作概念"><span>查看大图</span></button><div><span>04 / STATION</span><span class="material-symbols-outlined" aria-hidden="true">train</span></div><h3>车站</h3><p>为旅行及商务客流提供快速但精致的松露美食，满足出发前的用餐与外带需求。合作方案也可增设 TrufflEAT® 产品店，完成餐饮与零售的结合。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/casino.webp" alt="TrufflEAT 娱乐场所互动餐饮合作概念"><span>查看大图</span></button><div><span>05 / ENTERTAINMENT</span><span class="material-symbols-outlined" aria-hidden="true">casino</span></div><h3>娱乐场所</h3><p>以快休闲餐饮和现场互动烹饪呈现新鲜、高品质的美食体验。宾客可品尝如艺术品般完成的菜肴，并在用餐后直接购买同系列产品。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/street-food.webp" alt="TrufflEAT 松露美食餐车合作概念"><span>查看大图</span></button><div><span>06 / FOOD TRUCK</span><span class="material-symbols-outlined" aria-hidden="true">local_shipping</span></div><h3>餐车</h3><p>以餐车形式将新鲜、轻盈、高品质的松露菜肴带入街头。方案不追求油腻的传统快餐，而是以新鲜及本地食材提供有趣而精致的用餐体验。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/private-label.webp" alt="TrufflEAT 私人品牌与企业合作"><span>查看大图</span></button><div><span>07 / PRIVATE LABEL</span><span class="material-symbols-outlined" aria-hidden="true">branding_watermark</span></div><h3>私人品牌</h3><p>以合作方的自有品牌定制产品线，品类包括松露酱、特级初榨橄榄油、零食与甜点、意面、调味酱及松露盐，支持品牌化呈现与市场销售。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/fresh-truffle.webp" alt="新鲜意大利松露全球供应"><span>查看大图</span></button><div><span>08 / IMPORT & EXPORT</span><span class="material-symbols-outlined" aria-hidden="true">flight_takeoff</span></div><h3>松露进出口</h3><p>向个人客户、创业者与零售商供应经认证的新鲜意大利松露。白松露与黑松露按季节供货，通过每日航空冷链发出，并由 DHL 提供全球 24–72 小时配送。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看原文 ↗</a></article>
 </div>
 </div>
 </section>
@@ -286,7 +308,7 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/data/brand.js?v=20260718-performance"></script>
-<script defer src="../assets/js/brand.js?v=20260718-performance"></script>
-<script defer src="../assets/js/core.js?v=20260718-performance"></script>
+<script defer src="../assets/data/brand.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/brand.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/core.js?v=20260720-layout-fix"></script>
 <!-- lux:scripts:end --></body></html>

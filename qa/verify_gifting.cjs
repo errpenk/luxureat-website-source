@@ -14,6 +14,11 @@ const assert = (condition, message) => { if (!condition) throw new Error(message
       sections: ["private-label", "core-services", "inquiry"].every((id) => document.getElementById(id)),
       oldB2BSection: Boolean(document.getElementById("b2b-partnership")),
       privateLabelCards: document.querySelectorAll("#private-label article").length,
+      caseJump: document.querySelector(".lux-partners-card .lux-case-jump-wrap a")?.getAttribute("href"),
+      partnershipCases: document.querySelectorAll("#partnership-cases .lux-partnership-cases-grid article").length,
+      partnershipLightboxTriggers: document.querySelectorAll("#partnership-cases [data-partnership-image]").length,
+      partnershipCaseImages: [...document.querySelectorAll("#partnership-cases article img")].map((image) => image.getAttribute("src")),
+      partnershipCaseLinks: [...document.querySelectorAll("#partnership-cases .lux-partnership-case-source")].map((link) => link.href),
       privateLabelCardClasses: [...document.querySelectorAll("#private-label article")].map((node) => node.className),
       privateLabelBackground: (() => {
         const image = document.querySelector("#private-label > div");
@@ -39,6 +44,13 @@ const assert = (condition, message) => { if (!condition) throw new Error(message
     assert(result.hero === "定义商务共创的卓越标准", `gifting hero was not updated: ${result.hero}`);
     assert(!result.oldB2BSection, "the standalone two-path section should be removed");
     assert(result.privateLabelCards === 4, "the four private-label information cards should be present");
+    assert(result.caseJump === "#partnership-cases", "the partnership-case jump link is missing");
+    assert(result.partnershipCases === 8, "all eight partnership cases should be present");
+    assert(result.partnershipLightboxTriggers === 8, "all eight partnership images should open in the lightbox");
+    assert(result.partnershipCaseImages.length === 8 && result.partnershipCaseImages.every((src) => src.includes("partnership-cases/")), "partnership case images are incomplete");
+    assert(result.partnershipCaseLinks.length === 8 && result.partnershipCaseLinks.every((href) => href === "https://luxureat.com/work-with-us/"), "partnership case source links are incomplete");
+    assert(result.text.includes("娱乐场所") && !result.text.includes("赌场"), "the entertainment venue case title is incorrect");
+    assert(!result.text.includes("Partnership Cases / 01–08"), "the partnership-case eyebrow should be removed");
     assert(result.privateLabelCardClasses.every((name) => name.includes("backdrop-blur") && !name.includes("border-t")), "private-label cards should be frosted and have no colored top border");
     assert(result.privateLabelBackground.includes("gifting-global-partnership.webp"), "private-label background was not applied");
     assert(result.coreBackground?.includes("value-ribbed-texture.webp"), "gray texture is missing");

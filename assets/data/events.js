@@ -5,6 +5,73 @@
   window.LUXUREAT_EVENT_DATA = {
     events: [
       {
+        id: "cifie-changsha-2026",
+        status: "latest",
+        image: asset("media/events/cifie-changsha-2026.jpg"),
+        cardImage: asset("media/events/cifie-changsha-2026-banner.webp"),
+        previewImage: asset("media/events/cifie-changsha-2026-banner.webp"),
+        poster: asset("media/events/cifie-changsha-2026.jpg"),
+        calendar: asset("cifie-changsha-2026.ics"),
+        mapQuery: "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133",
+        mapHref: "https://www.google.com/maps/place//data=!4m2!3m1!1s0x342734ba371bc581:0xaa8729018b86a918?sa=X&ved=1t:8290&ictx=111",
+        zh: {
+          posterAlt: "LuxurEat 亮相第十一届中国国际食品餐饮博览会海报",
+          title: "意大利风味，与长沙相遇。",
+          articleTitle: "意大利风味，与长沙相遇。",
+          eyebrow: "最近活动",
+          date: "2026年9月18日至20日",
+          dateIso: "2026.09.18–20",
+          location: "长沙国际会展中心",
+          city: "长沙",
+          category: "行业展会",
+          paragraphs: [
+            "2026年9月18日至20日，LuxurEat将携TrufflEat、CaviarEat与TinCaviar亮相长沙第十一届中国国际食品餐饮博览会。",
+            "作为贯穿食品餐饮上下游产业链的重要商务平台，本届展会规模达10万平方米，预计吸引超过20万人次到场。",
+            "LuxurEat将以松露、鱼子酱及意大利高端食品，呈现传统风味、精选品质与现代创新，并与餐饮、零售、经销及行业合作伙伴共同探索中国市场的新机遇。诚邀您莅临现场，与我们相见长沙。"
+          ],
+          intro: "2026年9月18日至20日，LuxurEat将携TrufflEat、CaviarEat与TinCaviar亮相长沙第十一届中国国际食品餐饮博览会。",
+          sections: [
+            ["贯穿产业链的商务平台", "作为贯穿食品餐饮上下游产业链的重要商务平台，本届展会规模达10万平方米，预计吸引超过20万人次到场。"],
+            ["意大利风味，精选呈现", "LuxurEat将以松露、鱼子酱及意大利高端食品，呈现传统风味、精选品质与现代创新，并与餐饮、零售、经销及行业合作伙伴共同探索中国市场的新机遇。"],
+            ["相见长沙", "诚邀您莅临现场，与我们相见长沙。"]
+          ],
+          quote: "意大利风味，与长沙相遇。",
+          tagline: "The Luxury of Taste, Made in Italy.",
+          closing: "诚邀您莅临现场，与我们相见长沙。",
+          detail: "查看详情",
+          mapTitle: "打开地图导航",
+          calendarTitle: "添加到日历"
+        },
+        en: {
+          posterAlt: "LuxurEat at the 11th China International Food & Catering Expo",
+          title: "Italian flavor meets Changsha.",
+          articleTitle: "Italian flavor meets Changsha.",
+          eyebrow: "Recent Event",
+          date: "September 18–20, 2026",
+          dateIso: "18–20.09.2026",
+          location: "Changsha International Convention and Exhibition Centre",
+          city: "Changsha",
+          category: "Trade Fair",
+          paragraphs: [
+            "From September 18 to 20, 2026, LuxurEat will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
+            "As a major business platform spanning the food and catering value chain, the expo will cover 100,000 square metres and is expected to welcome more than 200,000 visits.",
+            "Through truffles, caviar, and premium Italian foods, LuxurEat will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry. We warmly invite you to meet us in Changsha."
+          ],
+          intro: "From September 18 to 20, 2026, LuxurEat will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
+          sections: [
+            ["A platform across the value chain", "As a major business platform spanning the food and catering value chain, the expo will cover 100,000 square metres and is expected to welcome more than 200,000 visits."],
+            ["Italian flavor, thoughtfully selected", "Through truffles, caviar, and premium Italian foods, LuxurEat will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry."],
+            ["Meet us in Changsha", "We warmly invite you to meet us in Changsha."]
+          ],
+          quote: "Italian flavor meets Changsha.",
+          tagline: "The Luxury of Taste, Made in Italy.",
+          closing: "We warmly invite you to meet us in Changsha.",
+          detail: "View details",
+          mapTitle: "Open map directions",
+          calendarTitle: "Add to calendar"
+        }
+      },
+      {
         id: "marca-china-2026",
         status: "latest",
         image: asset("media/events/marca-china-2026.png"),
@@ -14,7 +81,7 @@
         zh: {
           posterAlt: "Marca China 2026 广州国际自有品牌展海报",
           title: "意大利奢味，广州相见。",
-          articleTitle: "LuxurEat 关注 Marca China 2026",
+          articleTitle: "LuxurEat亮相广州国际自有品牌展",
           eyebrow: "最近活动",
           date: "2026年9月8–9日",
           dateIso: "2026.09.08–09",

@@ -25,7 +25,7 @@ function assert(condition, message) {
         harvestDisplay: getComputedStyle(document.querySelector(".lux-home-harvest .lux-home-editorial-frame")).display,
         harvestNumberBackplate: getComputedStyle(document.querySelector(".lux-home-harvest .lux-home-editorial-frame"), "::before").backgroundColor,
         title: document.querySelector(".lux-home-harvest-copy h2")?.textContent.trim(),
-        coreTitle: [...document.querySelectorAll("h2")].find((node) => node.textContent.trim() === "核心甄选资产")?.textContent.trim(),
+        coreTitle: [...document.querySelectorAll("h2")].find((node) => node.textContent.trim() === "甄选产品目录")?.textContent.trim(),
         coreCards: document.querySelectorAll('[data-product-open="zh-imperial-beluga"], [data-product-open="zh-royal-oscetra"], [data-product-open="zh-ice-server"]').length,
       }));
 
@@ -41,7 +41,7 @@ function assert(condition, message) {
         assert(result.harvestNumberBackplate === "rgb(16, 16, 16)", `zh harvest number backplate is missing: ${result.harvestNumberBackplate}`);
       }
       assert(result.title === "我们的价值观", `zh values title is wrong: ${result.title}`);
-      assert(result.coreTitle === "核心甄选资产" && result.coreCards === 3, "zh core selection module changed unexpectedly");
+      assert(result.coreTitle === "甄选产品目录" && result.coreCards === 3, "zh selected product catalogue changed unexpectedly");
       await page.close();
   }
 

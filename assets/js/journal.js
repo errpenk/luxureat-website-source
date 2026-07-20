@@ -30,7 +30,7 @@ function initLuxReader() {
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const eventLabels = lang === "zh"
     ? { kicker: "Maison Events", title: "最近活动", latest: "最新活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
-    : { kicker: "Maison Events", title: "Recent Events", latest: "Latest Event", past: "Past Events", empty: "No past events yet", read: "View details" };
+    : { kicker: "Maison Events", title: "Recent Events", latest: "Latest Events", past: "Past Events", empty: "No past events yet", read: "View details" };
   const aboutArticle = articles[`${lang}-about`];
   const aboutLabels = lang === "zh"
     ? { title: "关于我们", journal: "LuxurEat 志", story: "品牌故事", madeIn: "意大利制造", view: "查看大图", previous: "查看上一张图片", next: "查看下一张图片", slide: "左右滑动查看", close: "关闭", portrait: "Roberto Ugolini 肖像" }
@@ -38,9 +38,8 @@ function initLuxReader() {
 
   const renderRecentEvents = () => {
     if (!eventMount) return;
-    const latest = events.find((event) => event.status === "latest");
+    const latest = events.filter((event) => event.status === "latest");
     const past = events.filter((event) => event.status === "past");
-    const latestCopy = latest?.[lang];
     eventMount.innerHTML = `
       <div class="lux-recent-events-inner">
         <header class="lux-recent-events-head">
@@ -49,22 +48,24 @@ function initLuxReader() {
         </header>
         <div class="lux-recent-events-latest">
           <h3>${eventLabels.latest}</h3>
-          ${latest && latestCopy ? `
-            <button type="button" class="lux-event-card" data-event-open="${escapeHtml(latest.id)}">
-              <img loading="lazy" decoding="async" src="${escapeHtml(latest.image)}" alt="${escapeHtml(latestCopy.articleTitle)}">
+          ${latest.map((event) => {
+            const copy = event[lang];
+            return copy ? `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}">
+              <img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}">
               <span class="lux-event-card-copy">
-                <small>${escapeHtml(latestCopy.dateIso)} · ${escapeHtml(latestCopy.city)}</small>
-                <strong>${escapeHtml(latestCopy.articleTitle)}</strong>
-                <span>${escapeHtml(latestCopy.intro)}</span>
+                <small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small>
+                <strong>${escapeHtml(copy.articleTitle)}</strong>
+                <span>${escapeHtml(copy.intro)}</span>
                 <span class="lux-narrative-link">${eventLabels.read}<span class="material-symbols-outlined">arrow_forward</span></span>
               </span>
-            </button>` : ""}
+            </button>` : "";
+          }).join("")}
         </div>
         ${past.length ? `<div class="lux-past-events">
           <h3>${eventLabels.past}</h3>
           <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
-            return `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${escapeHtml(copy.articleTitle)}</strong></span></button>`;
+            return `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${escapeHtml(copy.articleTitle)}</strong></span></button>`;
           }).join("")}</div>
         </div>` : ""}
       </div>`;
@@ -415,7 +416,7 @@ function initLuxReader() {
         </header>
         <div class="lux-event-reader-layout">
           <section class="lux-event-reader-article">
-            <figure><img loading="lazy" decoding="async" src="${escapeHtml(event.image)}" alt="${escapeHtml(article.articleTitle)}"></figure>
+            <figure><img loading="lazy" decoding="async" src="${escapeHtml(event.previewImage || event.image)}" alt="${escapeHtml(article.articleTitle)}"></figure>
             <div class="lux-event-reader-lead">
               <span>${escapeHtml(article.dateIso)}<br>${escapeHtml(article.city)}<br>${escapeHtml(article.category)}</span>
               <p>${escapeHtml(article.intro)}</p>

@@ -22,7 +22,7 @@ if ("IntersectionObserver" in window) {
   luxLazyBackgrounds.forEach(loadLuxBackground);
 }
 
-const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media");
+const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media, .lux-hero-video");
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   if ("IntersectionObserver" in window) {
     const videoObserver = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
@@ -33,6 +33,8 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   } else {
     luxBackgroundVideos.forEach((video) => video.play().catch(() => {}));
   }
+} else {
+  luxBackgroundVideos.forEach((video) => video.pause());
 }
 
 const updateLuxBagCount = () => {
@@ -59,24 +61,24 @@ const luxMenu = document.querySelector(".lux-menu");
 
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", ["核心甄选资产", "品牌概览", "我们的价值观", "全球合作"]],
-    ["journal.html", "关于我们", ["品牌叙事", "本味之道"]],
+    ["index.html", "首页", [["甄选产品目录", 4], ["品牌概览", 5], ["我们的价值观", 6], ["全球合作", 7]]],
+    ["journal.html", "关于我们", [["关于我们", 1], ["品牌传承", 5]]],
     ["caviar.html", "系列产品", ["产品全览"]],
-    ["rituals.html", "食谱艺术", ["食谱艺术", "意式风味食谱", "早餐", "第一道主食", "第二道主食", "甜品", "食材购买"]],
+    ["rituals.html", "食谱艺术", [["早餐", 3], ["第一道主食", 4], ["第二道主食", 5], ["甜品", 6]]],
     ["news.html", "品牌新闻", ["品牌新闻"]],
-    ["certification.html", "品质认证", ["品质承诺与权威认证", "责任采购与全球合规", "全球品质体系", "认证体系", "认证与品质标识"]],
-    ["gifting.html", "礼赠合作", ["商务共创", "国际市场定制", "企业合作方案", "中国经销合作", "开启专业合作"]],
-    ["contact.html", "联系我们", ["联系我们", "品牌咨询", "产品与品鉴咨询", "商务与供应合作", "全球足迹"]],
+    ["certification.html", "品质认证", [["责任采购与全球合规", 2], ["全球品质体系", 3], ["认证体系", 4], ["认证与品质标识", 5]]],
+    ["gifting.html", "礼赠合作", [["国际市场定制", 2], ["合作案例", 3], ["企业合作方案", 4], ["中国经销合作", 5], ["开启专业合作", 6]]],
+    ["contact.html", "联系我们", [["品牌咨询", 2], ["全球足迹", 5]]],
   ],
   en: [
-    ["index.html", "Home", ["Core Selections", "Maison Overview", "Our Values", "Global Partnership"]],
-    ["journal.html", "About Us", ["Brand Story", "The Way of True Flavor"]],
+    ["index.html", "Home", [["Selected Product Catalogue", 4], ["Maison Overview", 5], ["Our Values", 6], ["Global Partnership", 7]]],
+    ["journal.html", "About Us", [["About Us", 1], ["Brand Heritage", 5]]],
     ["products.html", "Products", ["Premium Products"]],
-    ["rituals.html", "Recipe Art", ["Recipe Art", "Italian Flavor Recipes", "Breakfast", "First Courses", "Main Courses", "Desserts", "Buy Now"]],
+    ["rituals.html", "Recipe Art", [["Breakfast", 3], ["First Courses", 4], ["Main Courses", 5], ["Desserts", 6]]],
     ["news.html", "Brand News", ["Brand News"]],
-    ["certification.html", "Certification", ["Quality Promise", "Responsible Trade", "Global Quality System", "Certification System", "Certification Glossary"]],
-    ["gifting.html", "Gifting", ["Business Collaboration", "International Market Solutions", "Business Partnership Solutions", "Distribution Partners", "Start a Professional Partnership"]],
-    ["contact.html", "Contact", ["Contact Us", "Brand Consultation", "Product & Tasting Consultation", "Business & Supply Partnerships", "Global Presence"]],
+    ["certification.html", "Certification", [["Responsible Trade", 2], ["Global Quality System", 3], ["Certification System", 4], ["Certification Glossary", 5]]],
+    ["gifting.html", "Gifting", [["International Market Solutions", 2], ["Partnership Cases", 3], ["Business Partnership Solutions", 4], ["Distribution Partners", 5], ["Start a Professional Partnership", 6]]],
+    ["contact.html", "Contact", [["Brand Consultation", 2], ["Global Presence", 5]]],
   ],
 };
 
@@ -124,9 +126,10 @@ if (luxNav && luxMenu) {
     flyout.id = `lux-nav-flyout-${itemIndex}`;
     flyout.setAttribute("aria-label", `${label} sections`);
     sections.forEach((section, index) => {
+      const [sectionLabel, targetIndex] = Array.isArray(section) ? section : [section, index + 1];
       const sectionLink = document.createElement("a");
-      sectionLink.href = `${pageHref(href)}#section-${index + 1}`;
-      sectionLink.textContent = section;
+      sectionLink.href = `${pageHref(href)}#section-${targetIndex}`;
+      sectionLink.textContent = sectionLabel;
       flyout.appendChild(sectionLink);
     });
     item.appendChild(flyout);
@@ -163,7 +166,7 @@ if (luxNav && luxMenu) {
   }
 
   if (pageItems.some(([href]) => href === currentPage)) {
-    const headings = document.querySelectorAll("body > header:not(.lux-header) h1, main h1, main h2");
+    const headings = document.querySelectorAll("body > header:not(.lux-header) h1, body > section h1, body > section h2, main h1, main h2");
     headings.forEach((heading, index) => {
       heading.id ||= `section-${index + 1}`;
       heading.classList.add("lux-section-anchor");
@@ -369,6 +372,38 @@ function initLuxGiftScroller() {
   requestAnimationFrame(sync);
 }
 
+function initLuxPartnershipLightbox() {
+  const triggers = [...document.querySelectorAll("[data-partnership-image]")];
+  if (!triggers.length || typeof HTMLDialogElement === "undefined") return;
+
+  const isChinese = document.documentElement.lang?.toLowerCase().startsWith("zh");
+  const viewLabel = isChinese ? "查看大图" : "View large image";
+  const closeLabel = isChinese ? "关闭大图" : "Close image";
+  const dialog = document.createElement("dialog");
+  dialog.className = "lux-partnership-lightbox";
+  dialog.setAttribute("aria-label", viewLabel);
+  dialog.innerHTML = `<button type="button" data-partnership-lightbox-close aria-label="${closeLabel}">×</button><img alt="">`;
+  document.body.appendChild(dialog);
+
+  const lightboxImage = dialog.querySelector("img");
+  const close = () => dialog.open && dialog.close();
+
+  triggers.forEach((trigger) => {
+    const sourceImage = trigger.querySelector("img");
+    if (!sourceImage) return;
+    trigger.setAttribute("aria-label", `${viewLabel}：${sourceImage.alt}`);
+    trigger.addEventListener("click", () => {
+      lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
+      lightboxImage.alt = sourceImage.alt;
+      dialog.showModal();
+    });
+  });
+
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog || event.target.closest("[data-partnership-lightbox-close]")) close();
+  });
+}
+
 function initLuxFooterActions() {
   const triggers = document.querySelectorAll("[data-footer-modal]");
   if (!triggers.length) return;
@@ -382,14 +417,14 @@ function initLuxFooterActions() {
       privacy: ["隐私政策", "我们仅收集咨询、订单与售后服务所需的信息，并用于客户沟通、冷链履约、合规记录与服务改进。未经许可，我们不会出售您的个人信息。"],
       terms: ["销售条款", "所有商品以确认订单与付款记录为准。鱼子酱等冷链商品因食品安全原因，发出后非质量问题不支持退换；如运输异常，请在签收后 24 小时内联系我们。"],
       shipping: ["配送说明", "我们采用 0-4°C 冷链包装与预约配送。发货前会确认收货时间，偏远地区或特殊活动订单将由顾问单独确认时效。"],
-      wechat: ["微信", "请扫描二维码联系 LuxurEat 中国顾问。"],
+      wechat: ["微信", "请扫描二维码联系 LuxurEat 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
     }
     : {
       close: "Close",
       privacy: ["Privacy Policy", "We collect only the information needed for inquiries, orders, after-sales support, cold-chain fulfillment, compliance records, and service improvement. We do not sell personal information."],
       terms: ["Terms of Sale", "Orders are confirmed by written order details and payment records. For food-safety reasons, shipped cold-chain goods are not returnable unless quality or transport issues are reported within 24 hours of delivery."],
       shipping: ["Shipping", "We ship with 0-4°C cold-chain packaging and scheduled delivery. Timing is confirmed before dispatch; remote areas and special-event orders are coordinated by a concierge."],
-      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat China concierge."],
+      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat China concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
     };
 
   const modal = document.createElement("div");
@@ -408,8 +443,10 @@ function initLuxFooterActions() {
   const open = (key) => {
     const item = copy[key];
     if (!item) return;
-    const qr = key === "wechat" ? `<img loading="lazy" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.png")}" alt="WeChat QR">` : "";
-    body.innerHTML = `<h2>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${qr}`;
+    const qr = key === "wechat" ? `<img loading="eager" fetchpriority="high" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.webp")}" alt="WeChat QR">` : "";
+    const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
+    body.classList.toggle("is-wechat", key === "wechat");
+    body.innerHTML = `<h2>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${note}${qr}`;
     closeButton.textContent = copy.close;
     modal.hidden = false;
     document.body.classList.add("lux-reader-open");
@@ -594,5 +631,6 @@ function initLuxFooterActions() {
 document.addEventListener("DOMContentLoaded", () => {
   initLuxInfoPopovers();
   initLuxGiftScroller();
+  initLuxPartnershipLightbox();
   initLuxFooterActions();
 });

@@ -80,7 +80,7 @@ for (const file of [
   'assets/js/journal.js',
   'assets/js/brand.js',
   'assets/media/brand/luxureat-logo.png',
-  'assets/media/brand/wechat-qr.png',
+  'assets/media/brand/wechat-qr.webp',
   'assets/media/journal/lux-032.jpg',
   'assets/media/brand/lux-029.jpg',
   'assets/data/products.js',
@@ -345,7 +345,7 @@ assert(integrationCss.includes('.lux-cert-system-overlay') && integrationCss.inc
 
 const zhContact = read(path.join(themeDir, 'pages/zh/contact.php'));
 assert(zhContact.includes('lux-dark-photo-block'), 'Chinese contact hero uses a dark photo background');
-assert(zhContact.includes('Italy • United States • Thailand • China'), 'Chinese contact footprint lists the requested countries');
+assert(zhContact.includes('意大利 • 美国 • 泰国 • 中国'), 'Chinese contact footprint localizes the requested countries');
 assert(zhContact.includes('上海市闵行区') && zhContact.includes('联明路389号A栋 505室') && zhContact.includes('邮编: 201101'), 'Chinese contact HQ address is updated');
 assert(zhContact.includes('lux-footprint-heading') && !zhContact.includes('<details class="lux-footprint-card'), 'Chinese contact footprint cards are expanded by default');
 assert(zhContact.includes('local_dining') && zhContact.includes('temple_buddhist') && zhContact.includes('account_balance'), 'Chinese contact footprint uses country-specific icons');
@@ -415,7 +415,7 @@ if (fs.existsSync(zipFile)) {
     assert(entries.includes('luxureat-static/index.php'), 'zip contains luxureat-static/index.php');
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
     assert(entries.includes('luxureat-static/assets/media/brand/luxureat-logo.png'), 'zip contains logo asset');
-    assert(entries.includes('luxureat-static/assets/media/brand/wechat-qr.png'), 'zip contains WeChat QR asset');
+    assert(entries.includes('luxureat-static/assets/media/brand/wechat-qr.webp'), 'zip contains WeChat QR asset');
     assert(entries.includes('luxureat-static/assets/data/products.js'), 'zip contains product data asset');
     assert(entries.some((entry) => entry.startsWith('luxureat-static/assets/media/brand/')), 'zip contains local image assets');
     assert(!entries.some((entry) => entry.startsWith('__MACOSX/')), 'zip has no __MACOSX metadata');

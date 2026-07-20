@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="dark" lang="zh-CN" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:wght@100..900&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260718-performance">
-<link rel="stylesheet" href="../integration.css?v=20260718-performance">
+<!DOCTYPE html><html class="dark" lang="zh-CN" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:wght@100..900&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260720-layout-fix">
+<link rel="stylesheet" href="../integration.css?v=20260720-layout-fix">
 </head><body class="font-body-md">
 <!-- lux:header:start -->
 <header class="lux-header">
@@ -20,14 +20,13 @@
 <!-- Hero Section -->
 <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0 transition-all duration-1000 opacity-100">
-<div class="w-full h-full bg-cover bg-center grayscale opacity-60 scale-105 transition-transform duration-10000 ease-linear" style="background-image: url('../assets/media/journal/lux-011.jpg')">
-</div>
+<video class="lux-hero-video" autoplay muted loop playsinline preload="auto" poster="../assets/media/brand/about-hero-chi-siamo-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-hero-chi-siamo.mp4" type="video/mp4"></video>
 <div class="absolute inset-0 lux-hero-fade-both"></div>
 </div>
 <div class="relative z-10 text-center px-margin-mobile max-w-4xl transition-all duration-1000 opacity-100">
-<span class="font-label-lg text-label-lg uppercase tracking-[0.3em] text-primary mb-6 block">我们的故事</span>
+<span class="lux-hero-kicker">我们的故事</span>
 <h1 class="zh-display-title text-on-surface mb-8">品牌叙事</h1>
-<p class="lux-page-hero-subtitle max-w-2xl mx-auto mb-12">
+<p class="lux-page-hero-subtitle lux-hero-support max-w-2xl mx-auto mb-12">
                 从意大利家族餐桌上的一份食谱，到世界各地餐桌上的真实风味，LuxurEat以松露、鱼子酱和精选高端食材，将代代相传的烹饪传统融入现代生活。每一款产品，都是经典食谱与创新表达之间的连接，让优质食材更自然地进入日常料理，也让意大利美食文化跨越地域，在每一次烹饪与分享中延续。
             </p>
 <div class="flex justify-center">
@@ -41,7 +40,7 @@
 <!-- Main Content Grid -->
 <section class="lux-about-story" id="about-us" data-about-story></section>
 <section class="lux-about-program lux-about-program--identity" id="luxureat-china">
-<video class="lux-about-program-media" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-china-operations.m4v" type="video/mp4"></video>
+<video class="lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-china-operations.m4v" type="video/mp4"></video>
 <div class="lux-about-program-overlay" aria-hidden="true"></div>
 <div class="lux-about-program-inner">
 <p class="lux-about-program-kicker">LUXUREAT CHINA · SHANGHAI</p>
@@ -68,7 +67,7 @@
 </div>
 </section>
 <section class="lux-about-program lux-about-program--audience" id="consumer-needs">
-<video class="lux-about-program-media" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-consumer-needs.m4v" type="video/mp4"></video>
+<video class="lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-consumer-needs.m4v" type="video/mp4"></video>
 <div class="lux-about-program-overlay" aria-hidden="true"></div>
 <div class="lux-about-program-inner">
 <p class="lux-about-program-kicker">CONSUMER NEEDS</p>
@@ -217,7 +216,7 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/data/journal.js?v=20260718-performance"></script>
-<script defer src="../assets/js/journal.js?v=20260718-performance"></script>
-<script defer src="../assets/js/core.js?v=20260718-performance"></script>
+<script defer src="../assets/data/journal.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/journal.js?v=20260720-layout-fix"></script>
+<script defer src="../assets/js/core.js?v=20260720-layout-fix"></script>
 <!-- lux:scripts:end --></body></html>
