@@ -20,7 +20,6 @@
     aboutMap: articleImage("about-global-map.png"),
     aboutCaviar: articleImage("about-caviar.webp"),
     aboutShrimp: articleImage("about-shrimp-tartare.webp"),
-    aboutBurger: articleImage("about-mediterranean-burger.webp"),
     caviarWorld: articleImage("caviar-world-map.webp"),
     italianCaviar: articleImage("italian-caviar-market.webp"),
     caviarEtiquette: articleImage("caviar-etiquette-service.webp"),
@@ -74,7 +73,6 @@
         [
           { src: images.aboutCaviar, alt: "LuxurEat（露意膳） 白鲟鱼子酱" },
           { src: images.aboutShrimp, alt: "LuxurEat（露意膳） 鲜虾塔塔产品" },
-          { src: images.aboutBurger, alt: "LuxurEat（露意膳） 地中海鱼肉饼" },
         ],
       ],
       quote: "将意大利的真实风味、优质食材与创新产品带向世界。",

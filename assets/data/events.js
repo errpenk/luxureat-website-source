@@ -80,7 +80,7 @@
         mapQuery: "广州市海珠区琶洲街道新港东路1000号保利世界贸易中心",
         zh: {
           posterAlt: "Marca China 2026 广州国际自有品牌展海报",
-          title: "意大利奢味，广州相见。",
+          title: "国际自有品牌展，广州相见。",
           articleTitle: "LuxurEat亮相广州国际自有品牌展。",
           eyebrow: "最近活动",
           date: "2026年9月8–9日",
@@ -90,7 +90,8 @@
           category: "行业展会",
           paragraphs: [
             "2026年9月8日至9日，LuxurEat（露意膳） 将携旗下 TrufflEat、CaviarEat、TinCaviar 等品牌亮相 MARCA CHINA 广州国际自有品牌展。",
-            "以纯正意大利风味与全球化供应能力，为买家提供更多可能。"
+            "MARCA CHINA 广州国际自有品牌展是中国极具影响力的自有品牌专业贸易展览会。展会聚焦食品及日用品领域，汇集超500家源头厂商与贴牌代工企业。",
+            "作为连接国际食品品牌、优质生产商与全球市场的平台，LuxurEat（露意膳）将以此次展会为窗口，持续发掘具有市场潜力的产品、供应资源与合作模式，推动高品质食品在中国与国际市场之间建立更清晰、更长久的连接。诚邀您莅临现场，与我们相见广州。"
           ],
           intro: "中国食品市场正向健康化、品质化、地域化与年轻化发展。LuxurEat（露意膳） 将在广州与专业买家及合作伙伴共同探索新的产品与商业机会。",
           sections: [
@@ -107,7 +108,7 @@
         },
         en: {
           posterAlt: "Marca China 2026 Private Label Fair Guangzhou poster",
-          title: "Italian luxury taste meets Guangzhou.",
+          title: "Here! International private label fair, Guangzhou.",
           articleTitle: "LuxurEat at Marca China 2026",
           eyebrow: "Recent Event",
           date: "September 8–9, 2026",
@@ -117,7 +118,8 @@
           category: "Trade Fair",
           paragraphs: [
             "On September 8–9, 2026, LuxurEat（露意膳） will present TrufflEat, CaviarEat, TinCaviar, and more at MARCA CHINA Private Label Fair.",
-            "With authentic Italian flavor and global supply capability, we bring buyers more possibilities."
+            "MARCA CHINA is one of China’s most influential professional trade exhibitions dedicated to private-label products, the event brings together more than 500 direct manufacturers and private-label production partners.",
+            "LuxurEat（露意膳）will use the exhibition to discover promising products, sourcing resources, and new partnership models, while fostering stronger and more enduring connections between premium food businesses in China and international markets."
           ],
           intro: "China's food market is moving toward healthier, higher-quality, more regional, and younger expressions. In Guangzhou, LuxurEat（露意膳） will explore new products and partnerships with professional buyers and industry partners.",
           sections: [
