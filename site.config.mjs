@@ -68,11 +68,10 @@ export const footer = {
   },
   en: {
     description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China（露意膳） brings Italian food culture and innovative experiences to China.",
-<<<<<<< HEAD
+
     copyright: "2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W",
-=======
-    copyright: "2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W｜ 91310000MAERED2X1W",
->>>>>>> e0a7809 (Update footer copyright information across multiple files to include unified social credit code.)
-    legal: [["privacy", "Privacy Policy"], ["terms", "Terms of Sale"], ["shipping", "Shipping"]],
+    legal: [
+      ["privacy", "Privacy Policy"], ["terms", "Terms of Sale"], ["shipping", "Shipping"]
+    ],
   },
 };
