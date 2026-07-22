@@ -380,6 +380,12 @@ ${byPath}
                 'logoutUrl' => wp_logout_url(home_url('/')),
             ));
         }
+        if ($handle === 'products') {
+            wp_localize_script('luxureat-products', 'LuxureatCheckout', array(
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('luxureat_checkout'),
+            ));
+        }
     }
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_assets');
@@ -480,6 +486,65 @@ function luxureat_static_account_ajax() {
 }
 add_action('wp_ajax_nopriv_luxureat_account', 'luxureat_static_account_ajax');
 add_action('wp_ajax_luxureat_account', 'luxureat_static_account_ajax');
+
+function luxureat_static_checkout_ajax() {
+    $is_zh = isset($_POST['lang']) && sanitize_key(wp_unslash($_POST['lang'])) === 'zh';
+    $message = function ($zh, $en) use ($is_zh) { return $is_zh ? $zh : $en; };
+    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_checkout')) {
+        wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
+    }
+    if (!function_exists('WC') || !function_exists('wc_get_product_id_by_sku')) {
+        wp_send_json_error(array('message' => $message('结算服务暂时不可用。', 'Checkout is temporarily unavailable.')), 503);
+    }
+    if (null === WC()->cart && function_exists('wc_load_cart')) {
+        wc_load_cart();
+    }
+    if (null === WC()->cart) {
+        wp_send_json_error(array('message' => $message('无法建立购物车。', 'Could not start the cart.')), 503);
+    }
+
+    $items = isset($_POST['items']) ? json_decode(wp_unslash($_POST['items']), true) : null;
+    if (!is_array($items) || !$items || count($items) > 20) {
+        wp_send_json_error(array('message' => $message('购物袋数据无效。', 'The bag data is invalid.')), 400);
+    }
+
+    $desired = array();
+    foreach ($items as $item) {
+        $sku = isset($item['sku']) ? sanitize_text_field($item['sku']) : '';
+        $quantity = isset($item['quantity']) ? absint($item['quantity']) : 0;
+        $product_id = $sku ? wc_get_product_id_by_sku($sku) : 0;
+        $product = $product_id ? wc_get_product($product_id) : false;
+        if (!$product || !$product->is_purchasable() || !$product->is_in_stock() || $quantity < 1 || $quantity > 99 || ($product->is_sold_individually() && $quantity > 1) || !$product->has_enough_stock($quantity)) {
+            wp_send_json_error(array('message' => $message('商品已下架或数量无效。', 'A product is unavailable or its quantity is invalid.')), 400);
+        }
+        $desired[$sku] = array('id' => $product_id, 'quantity' => isset($desired[$sku]) ? $desired[$sku]['quantity'] + $quantity : $quantity);
+        if ($desired[$sku]['quantity'] > 99 || !$product->has_enough_stock($desired[$sku]['quantity'])) {
+            wp_send_json_error(array('message' => $message('商品数量超出库存限制。', 'The requested quantity exceeds available stock.')), 400);
+        }
+    }
+
+    foreach (WC()->cart->get_cart() as $key => $cart_item) {
+        $sku = isset($cart_item['data']) ? $cart_item['data']->get_sku() : '';
+        if (!isset($desired[$sku])) {
+            WC()->cart->remove_cart_item($key);
+            continue;
+        }
+        if ((int) $cart_item['quantity'] !== $desired[$sku]['quantity']) {
+            WC()->cart->set_quantity($key, $desired[$sku]['quantity'], false);
+        }
+        unset($desired[$sku]);
+    }
+    foreach ($desired as $item) {
+        if (!WC()->cart->add_to_cart($item['id'], $item['quantity'])) {
+            wp_send_json_error(array('message' => $message('商品无法加入购物车。', 'A product could not be added to the cart.')), 400);
+        }
+    }
+    WC()->cart->calculate_totals();
+    WC()->cart->set_session();
+    wp_send_json_success(array('checkoutUrl' => wc_get_checkout_url()));
+}
+add_action('wp_ajax_nopriv_luxureat_checkout', 'luxureat_static_checkout_ajax');
+add_action('wp_ajax_luxureat_checkout', 'luxureat_static_checkout_ajax');
 
 function luxureat_static_account_language() {
     $language = isset($_GET['lang']) ? sanitize_key(wp_unslash($_GET['lang'])) : 'zh';

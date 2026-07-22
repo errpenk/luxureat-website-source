@@ -682,39 +682,32 @@ function initLuxProductDetails() {
 
     button.disabled = true;
     setMessage(message("正在连接安全结算…", "Connecting to secure checkout…"));
+    const timeout = new AbortController();
+    const timeoutId = setTimeout(() => timeout.abort(), 15000);
     try {
-      const productsResponse = await fetch("/wp-json/wc/store/v1/products?per_page=100", { credentials: "same-origin" });
-      if (!productsResponse.ok) throw new Error(message("无法读取商品目录。", "Could not load the product catalog."));
-      const wooProducts = await productsResponse.json();
-      const productsBySku = new Map(wooProducts.map((product) => [product.sku, product]));
-      const missing = items.find((item) => !productsBySku.has(item.sku));
-      if (missing) throw new Error(message(`商品“${missing.title}”尚未在 WooCommerce 上架。`, `“${missing.title}” is not available in WooCommerce yet.`));
-
-      let cartResponse = await fetch("/wp-json/wc/store/v1/cart", { credentials: "same-origin" });
-      if (!cartResponse.ok) throw new Error(message("无法建立购物车。", "Could not start the cart."));
-      let nonce = cartResponse.headers.get("Nonce");
-      let cart = await cartResponse.json();
-      const mutateCart = async (endpoint, body) => {
-        const response = await fetch(`/wp-json/wc/store/v1/cart/${endpoint}`, {
-          method: "POST",
-          credentials: "same-origin",
-          headers: { "Content-Type": "application/json", Nonce: nonce },
-          body: JSON.stringify(body),
-        });
-        const result = await response.json();
-        if (!response.ok) throw new Error(result.message || message("购物车同步失败。", "Cart sync failed."));
-        nonce = response.headers.get("Nonce") || nonce;
-        return result;
-      };
-
-      for (const item of cart.items || []) await mutateCart("remove-item", { key: item.key });
-      for (const item of items) {
-        await mutateCart("add-item", { id: productsBySku.get(item.sku).id, quantity: item.quantity });
-      }
-      location.href = "/checkout/";
+      const config = window.LuxureatCheckout;
+      if (!config?.ajaxUrl || !config?.nonce) throw new Error(message("请刷新页面后重试。", "Please refresh the page and try again."));
+      const body = new URLSearchParams({
+        action: "luxureat_checkout",
+        nonce: config.nonce,
+        lang,
+        items: JSON.stringify(items.map(({ sku, quantity }) => ({ sku, quantity }))),
+      });
+      const response = await fetch(config.ajaxUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body,
+        signal: timeout.signal,
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.data?.message || message("购物车同步失败。", "Cart sync failed."));
+      location.href = result.data.checkoutUrl;
     } catch (error) {
-      setMessage(error.message || message("暂时无法结算，请稍后再试。", "Checkout is temporarily unavailable."));
+      setMessage(error.name === "AbortError" ? message("连接超时，请重试。", "The connection timed out. Please try again.") : (error.message || message("暂时无法结算，请稍后再试。", "Checkout is temporarily unavailable.")));
       button.disabled = false;
+    } finally {
+      clearTimeout(timeoutId);
     }
   };
 

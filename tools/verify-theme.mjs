@@ -219,7 +219,7 @@ assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-accou
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
 assert(runtimeJs.includes('luxureat_account') && runtimeJs.includes('LuxureatAccount'), 'account modal submits to the localized WordPress account endpoint');
 assert(!runtimeJs.includes('lux-account-social') && !runtimeJs.includes('Or Sign In With') && !runtimeJs.includes('或使用以下方式登录'), 'account modal removes Google and WeChat sign-in controls');
-assert(runtimeJs.includes('/wp-json/wc/store/v1/products') && runtimeJs.includes('/wp-json/wc/store/v1/cart'), 'bag checkout synchronizes local items with the WooCommerce Store API');
+assert(runtimeJs.includes('luxureat_checkout') && runtimeJs.includes('LuxureatCheckout') && runtimeJs.includes('AbortController'), 'bag checkout uses one bounded WordPress request');
 assert(runtimeJs.includes('initLuxFooterActions'), 'runtime scripts initializes footer policy and social popups');
 assert(runtimeJs.includes('data-footer-modal'), 'runtime scripts listens to footer modal buttons');
 assert(runtimeJs.includes('mouseenter'), 'runtime scripts opens gift scenario info on hover');
