@@ -541,10 +541,47 @@ function luxureat_static_checkout_ajax() {
     }
     WC()->cart->calculate_totals();
     WC()->cart->set_session();
-    wp_send_json_success(array('checkoutUrl' => wc_get_checkout_url()));
+    $checkout_url = $is_zh ? wc_get_checkout_url() : add_query_arg('lang', 'en', wc_get_checkout_url());
+    wp_send_json_success(array('checkoutUrl' => $checkout_url));
 }
 add_action('wp_ajax_nopriv_luxureat_checkout', 'luxureat_static_checkout_ajax');
 add_action('wp_ajax_luxureat_checkout', 'luxureat_static_checkout_ajax');
+
+function luxureat_static_cart_item_images($images, $cart_item) {
+    $product = isset($cart_item['data']) ? $cart_item['data'] : false;
+    if (!$product instanceof WC_Product) {
+        return $images;
+    }
+    $files = array(
+        'imperial-beluga-30g' => 'lux-005.jpg',
+        'royal-oscetra-30g' => 'lux-030.jpg',
+        'mother-of-pearl-spoons' => 'lux-022.jpg',
+        'champagne' => 'lux-042.jpg',
+        'ice-server' => 'lux-039.jpg',
+    );
+    $sku = $product->get_sku();
+    if (!isset($files[$sku])) {
+        return $images;
+    }
+    $url = get_template_directory_uri() . '/assets/media/products/' . $files[$sku];
+    return array((object) array(
+        'id' => $product->get_id(),
+        'src' => $url,
+        'thumbnail' => $url,
+        'srcset' => '',
+        'sizes' => '',
+        'name' => $product->get_name(),
+        'alt' => $product->get_name(),
+    ));
+}
+add_filter('woocommerce_store_api_cart_item_images', 'luxureat_static_cart_item_images', 10, 2);
+
+function luxureat_static_remove_checkout_marketing_optin() {
+    if (function_exists('is_checkout') && is_checkout()) {
+        wp_dequeue_script('mailpoet-marketing-optin-block-frontend');
+    }
+}
+add_action('wp_enqueue_scripts', 'luxureat_static_remove_checkout_marketing_optin', 100);
 
 function luxureat_static_account_language() {
     $language = isset($_GET['lang']) ? sanitize_key(wp_unslash($_GET['lang'])) : 'zh';
@@ -601,7 +638,7 @@ function luxureat_static_defer_scripts($tag, $handle) {
 add_filter('script_loader_tag', 'luxureat_static_defer_scripts', 10, 2);
 
 function luxureat_static_cache_headers($headers) {
-    if (!is_admin() && !is_user_logged_in()) {
+    if (!is_admin() && !is_user_logged_in() && !is_account_page() && !is_cart() && !is_checkout()) {
         $headers['Cache-Control'] = 'public, max-age=300, stale-while-revalidate=86400';
     }
 
@@ -713,14 +750,19 @@ if (!defined('ABSPATH')) {
 
 status_header(200);
 $is_account_page = function_exists('is_account_page') && is_account_page();
-$account_language = $is_account_page && function_exists('luxureat_static_account_language') ? luxureat_static_account_language() : 'zh';
-$is_zh_account = $account_language === 'zh';
-if ($is_account_page && function_exists('switch_to_locale')) {
-    switch_to_locale($is_zh_account ? 'zh_CN' : 'en_US');
+$is_checkout_page = function_exists('is_checkout') && is_checkout();
+$is_customer_page = $is_account_page || $is_checkout_page;
+$page_language = $is_customer_page && function_exists('luxureat_static_account_language') ? luxureat_static_account_language() : 'zh';
+$is_zh_page = $page_language === 'zh';
+if ($is_customer_page && function_exists('switch_to_locale')) {
+    switch_to_locale($is_zh_page ? 'zh_CN' : 'en_US');
 }
 $account_endpoint = $is_account_page && function_exists('WC') && WC()->query ? WC()->query->get_current_endpoint() : '';
 $is_account_dashboard = $is_account_page && is_user_logged_in() && !$account_endpoint;
-$account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : get_permalink();
+$language_url = $is_checkout_page && function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : (function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : get_permalink());
+$body_classes = array();
+if ($is_account_dashboard) $body_classes[] = 'lux-account-dashboard-page';
+if ($is_checkout_page) $body_classes[] = 'lux-checkout-page';
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -728,29 +770,29 @@ $account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink(
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class($is_account_dashboard ? 'lux-wp-page-shell lux-account-dashboard-page' : 'lux-wp-page-shell'); ?>>
+<body <?php body_class(trim('lux-wp-page-shell ' . implode(' ', $body_classes))); ?>>
 <?php wp_body_open(); ?>
 <header class="lux-wp-page-header">
     <a class="lux-wp-page-brand" href="<?php echo esc_url(home_url('/')); ?>">
         <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/media/brand/luxureat-logo.png'); ?>" alt="LuxurEat">
         <span>LuxurEat <small>露意膳</small></span>
     </a>
-    <nav class="lux-wp-page-actions" aria-label="<?php echo esc_attr($is_zh_account ? '账户页导航' : 'Account page navigation'); ?>">
-        <?php if ($is_account_page) : ?>
-            <span class="lux-language-switch" aria-label="<?php echo esc_attr($is_zh_account ? '语言' : 'Language'); ?>">
-                <a href="<?php echo esc_url(add_query_arg('lang', 'zh', $account_url)); ?>"<?php echo $is_zh_account ? ' aria-current="page"' : ''; ?>>中文</a>
+    <nav class="lux-wp-page-actions" aria-label="<?php echo esc_attr($is_zh_page ? '页面导航' : 'Page navigation'); ?>">
+        <?php if ($is_customer_page) : ?>
+            <span class="lux-language-switch" aria-label="<?php echo esc_attr($is_zh_page ? '语言' : 'Language'); ?>">
+                <a href="<?php echo esc_url(add_query_arg('lang', 'zh', $language_url)); ?>"<?php echo $is_zh_page ? ' aria-current="page"' : ''; ?>>中文</a>
                 <i aria-hidden="true">/</i>
-                <a href="<?php echo esc_url(add_query_arg('lang', 'en', $account_url)); ?>"<?php echo !$is_zh_account ? ' aria-current="page"' : ''; ?>>EN</a>
+                <a href="<?php echo esc_url(add_query_arg('lang', 'en', $language_url)); ?>"<?php echo !$is_zh_page ? ' aria-current="page"' : ''; ?>>EN</a>
             </span>
         <?php endif; ?>
-        <a class="lux-wp-page-home" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($is_zh_account ? '返回首页' : 'Return to home'); ?></a>
+        <a class="lux-wp-page-home" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($is_zh_page ? '返回首页' : 'Return to home'); ?></a>
     </nav>
 </header>
 <main class="lux-wp-page-main">
 <?php while (have_posts()) : the_post(); ?>
     <header class="lux-wp-page-title">
-        <p><?php echo esc_html($is_zh_account ? '会员中心' : 'Maison Account'); ?></p>
-        <h1><?php echo esc_html($is_account_page ? ($is_zh_account ? '我的账户' : 'My account') : get_the_title()); ?></h1>
+        <p><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '安全结算' : 'Secure checkout') : ($is_zh_page ? '会员中心' : 'Maison Account')); ?></p>
+        <h1><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '确认订单' : 'Checkout') : ($is_account_page ? ($is_zh_page ? '我的账户' : 'My account') : get_the_title())); ?></h1>
     </header>
     <div class="lux-wp-page-content"><?php the_content(); ?></div>
 <?php endwhile; ?>

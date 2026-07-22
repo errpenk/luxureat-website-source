@@ -2597,7 +2597,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   filter: grayscale(.1) contrast(1) brightness(1.05);
 }
 .lux-home-harvest .lux-home-harvest-copy {
-  background: rgba(102, 100, 96, .42);
+  background: rgba(45, 44, 42, .82);
   backdrop-filter: blur(8px) saturate(1.1);
   -webkit-backdrop-filter: blur(8px) saturate(1.1);
   color: #f1eee8;
@@ -2612,7 +2612,17 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   border-top-color: rgba(241, 238, 232, .18);
 }
 .lux-home-harvest .lux-home-harvest-facts p {
-  color: rgba(241, 238, 232, .68) !important;
+  color: #f8f6f0 !important;
+  opacity: 1 !important;
+  font-size: 15px !important;
+  line-height: 1.7;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, .72);
+}
+.lux-home-harvest .lux-home-harvest-facts h4 {
+  color: #f3c93f !important;
+  font-size: clamp(22px, 2vw, 30px) !important;
+  font-weight: 650;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, .78);
 }
 .lux-home-harvest .lux-narrative-link {
   color: #c9a227;
@@ -2641,9 +2651,12 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 .lux-home-gifting-title {
   grid-column: 1 / 8;
   grid-row: 3;
-  z-index: 2;
+  z-index: 20;
   align-self: start;
   margin: 0;
+  position: relative;
+  color: #fff !important;
+  text-shadow: 0 3px 24px rgba(0, 0, 0, .95), 0 1px 3px rgba(0, 0, 0, .9);
 }
 .lux-home-gifting-image {
   grid-column: 5 / 10;
@@ -2667,7 +2680,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   cursor: zoom-in;
 }
 .lux-home-gifting-image img:nth-child(1) {
-  z-index: 3;
+  z-index: 8;
   width: 78%;
   top: 5%;
   left: 11%;
@@ -2707,8 +2720,14 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   justify-items: start;
   gap: 34px;
   padding-bottom: 4px;
+  position: relative;
+  z-index: 20;
 }
-.lux-home-gifting-intro p { margin: 0; }
+.lux-home-gifting-intro p {
+  margin: 0;
+  color: #f5f2ec !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .9);
+}
 .lux-home-gifting-services {
   grid-column: 10 / 13;
   grid-row: 3 / 5;
@@ -2717,6 +2736,8 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   gap: 36px;
   padding-left: clamp(22px, 3vw, 52px);
   border-left: 1px solid rgba(255, 255, 255, .1);
+  position: relative;
+  z-index: 20;
 }
 .lux-home-gifting-service {
   display: grid;
@@ -2769,8 +2790,8 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
     grid-row: auto;
   }
   .lux-home-harvest-copy {
-    padding: 18px 0 0;
-    background: none;
+    padding: 24px;
+    background: rgba(45, 44, 42, .88);
   }
   .lux-home-gifting-title { margin-top: 12px; }
   .lux-home-gifting-image img:nth-child(4) {
@@ -2784,6 +2805,22 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
     padding: 30px 0 0;
     border-top: 1px solid rgba(255, 255, 255, .1);
     border-left: 0;
+  }
+}
+
+@media (min-width: 901px) {
+  .lux-home-gifting-title {
+    width: fit-content;
+    max-width: min(760px, 58vw);
+    padding: clamp(16px, 2vw, 28px);
+    margin-left: clamp(-28px, -2vw, -12px);
+    background: linear-gradient(90deg, rgba(8, 8, 8, .9), rgba(8, 8, 8, .72) 72%, transparent);
+  }
+  .lux-home-gifting-intro {
+    padding: 24px;
+    margin-left: -24px;
+    background: rgba(8, 8, 8, .78);
+    backdrop-filter: blur(8px);
   }
 }
 
@@ -5079,6 +5116,17 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   padding: clamp(24px, 5vw, 56px);
   border: 1px solid rgba(31,36,36,.14);
   background: #fff;
+}
+.lux-checkout-page .lux-wp-page-main {
+  width: min(1380px, calc(100% - 48px));
+}
+.lux-checkout-page .lux-wp-page-content {
+  padding: clamp(20px, 3vw, 44px);
+}
+.lux-checkout-page .wc-block-components-order-summary-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .woocommerce-account.logged-in .lux-wp-page-content {
   padding: 0;

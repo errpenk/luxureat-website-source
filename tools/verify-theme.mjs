@@ -120,6 +120,8 @@ assert(functionsPhp.includes("'en/private' => 'en/gifting'"), 'legacy English pr
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
+assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('lux-005.jpg'), 'checkout cart items receive branded product images');
+assert(functionsPhp.includes("wp_dequeue_script('mailpoet-marketing-optin-block-frontend')"), 'checkout removes the duplicate MailPoet opt-in block');
 assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 
@@ -132,7 +134,7 @@ assert(indexPhp.includes("$path = 'zh';"), 'index.php serves Chinese home at the
 assert(indexPhp.includes('$path = $target_path;'), 'index.php can render alias routes that are already canonical pretty URLs');
 
 const pagePhp = read(path.join(themeDir, 'page.php'));
-assert(pagePhp.includes('the_content()') && pagePhp.includes("'lux-wp-page-shell lux-account-dashboard-page'"), 'page.php renders native WordPress and WooCommerce page content');
+assert(pagePhp.includes('the_content()') && pagePhp.includes("$body_classes[] = 'lux-account-dashboard-page'") && pagePhp.includes("$body_classes[] = 'lux-checkout-page'"), 'page.php renders branded native account and checkout content');
 assert(functionsPhp.includes('woocommerce_account_menu_items') && functionsPhp.includes("'orders' =>") && functionsPhp.includes("'edit-address' =>") && functionsPhp.includes("'edit-account' =>") && functionsPhp.includes("'customer-logout' =>"), 'customer account navigation is limited to the requested WooCommerce sections');
 assert(functionsPhp.includes('luxureat_static_account_language') && pagePhp.includes("add_query_arg('lang', 'zh'") && pagePhp.includes("add_query_arg('lang', 'en'"), 'account page defaults to Chinese and provides a bilingual switch');
 assert(functionsPhp.includes('woocommerce_get_endpoint_url') && functionsPhp.includes("add_query_arg('lang', luxureat_static_account_language()"), 'account endpoint links preserve the selected language');
@@ -252,6 +254,7 @@ assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the 
 assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
 assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles the shared product-detail view');
 assert(integrationCss.includes('.lux-product-gallery'), 'integration.css styles product image galleries');
+assert(integrationCss.includes('.lux-checkout-page') && integrationCss.includes('.lux-home-gifting-title'), 'checkout and homepage editorial layers receive branded styling');
 assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles product quantity controls');
 assert(integrationCss.includes('.lux-product-recent-grid'), 'integration.css styles product-detail recommendation grids');
 assert(integrationCss.includes('.lux-product-recent-nav') && integrationCss.includes('scrollbar-width: none'), 'integration.css hides recommendation scrollbars and styles arrow controls');
