@@ -117,6 +117,8 @@ assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'fun
 assert(functionsPhp.includes("'en/caviar' => 'en/products'"), 'legacy English caviar route redirects to products');
 assert(functionsPhp.includes("'en/private' => 'en/gifting'"), 'legacy English private route redirects to gifting');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
+assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
+assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
 assert(indexPhp.includes('wp_safe_redirect'), 'index.php redirects root and alias routes');
@@ -202,6 +204,10 @@ assert(runtimeJs.includes('data-product-recent-scroll') && runtimeJs.includes('s
 assert(runtimeJs.includes('lux-bag-line-total'), 'bag items show multi-quantity totals');
 assert(runtimeJs.includes('${item.quantity}件总价') && runtimeJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
 assert(runtimeJs.includes('data-bag-quantity'), 'runtime scripts carries selected product quantities into the bag');
+assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-account-newsletter'), 'account modal provides registration and optional newsletter consent');
+assert(runtimeJs.includes('luxureat_account') && runtimeJs.includes('LuxureatAccount'), 'account modal submits to the localized WordPress account endpoint');
+assert(!runtimeJs.includes('lux-account-social') && !runtimeJs.includes('Or Sign In With') && !runtimeJs.includes('或使用以下方式登录'), 'account modal removes Google and WeChat sign-in controls');
+assert(runtimeJs.includes('/wp-json/wc/store/v1/products') && runtimeJs.includes('/wp-json/wc/store/v1/cart'), 'bag checkout synchronizes local items with the WooCommerce Store API');
 assert(runtimeJs.includes('initLuxFooterActions'), 'runtime scripts initializes footer policy and social popups');
 assert(runtimeJs.includes('data-footer-modal'), 'runtime scripts listens to footer modal buttons');
 assert(runtimeJs.includes('mouseenter'), 'runtime scripts opens gift scenario info on hover');
@@ -218,6 +224,7 @@ assert(runtimeJs.includes('.hidden ='), 'runtime scripts hides filtered-out cavi
 const productDataJs = read(path.join(themeDir, 'assets/data/products.js'));
 assert(productDataJs.includes('window.LUXUREAT_PRODUCT_DATA'), 'product data is separated into assets/data/products.js');
 assert(productDataJs.includes('"zh-imperial-beluga"') && productDataJs.includes('"en-royal-oscetra"'), 'product data file contains bilingual product records');
+assert(productDataJs.includes('sku: "imperial-beluga-30g"') && productDataJs.includes('sku: "ice-server"'), 'bilingual product records map to WooCommerce SKUs');
 const articleDataJs = read(path.join(themeDir, 'assets/data/journal.js'));
 assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.includes('media/journal'), 'journal data is separated into assets/data/journal.js');
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
@@ -290,6 +297,7 @@ const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
 const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
 assert(zhBag.includes('浏览全部') && zhBag.includes("luxureat_static_url('zh/caviar'"), 'Chinese bag browse-all link goes to caviar');
 assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/products'"), 'English bag browse-all link goes to products');
+assert(zhBag.includes('data-bag-checkout') && enBag.includes('data-bag-checkout'), 'bilingual bag pages expose the WooCommerce checkout action');
 assert(runtimeJs.includes('renderRecommendations') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'bag recommendations render product-detail actions from product data');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/journal.php'));

@@ -34,7 +34,7 @@ function renderLuxProductCatalog() {
         </div>
         <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">${luxEscapeProductHtml(product.desc)}</p>
         <div class="mt-4 flex items-center gap-4">
-          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button">${labels.add}</button>
+          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button">${labels.add}</button>
           <button class="border border-outline-variant text-on-surface hover:border-primary hover:text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
         </div>
       </div>
@@ -63,6 +63,7 @@ function syncLuxProductBindings() {
     });
     root.querySelectorAll("[data-bag-add]").forEach((button) => {
       button.dataset.bagId = product.id;
+      button.dataset.bagSku = product.sku;
       button.dataset.bagTitle = product.title;
       button.dataset.bagSubtitle = product.subtitle;
       button.dataset.bagPrice = product.amount;
@@ -338,7 +339,7 @@ function initLuxProductDetails() {
                 <output data-product-quantity-value>1</output>
                 <button type="button" data-product-quantity="1" aria-label="${luxEscapeProductHtml(labels.qty)} +">+</button>
               </div>
-              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}">${labels.add}</button>
+              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}">${labels.add}</button>
             </div>
             <div class="lux-product-cart-state" data-product-cart-state hidden>
               <span data-product-cart-text></span>
@@ -362,7 +363,7 @@ function initLuxProductDetails() {
               <strong>${luxEscapeProductHtml(item.title)}</strong>
               <small>${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}</small>
               <div class="lux-product-recent-actions">
-                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}">${luxEscapeProductHtml(labels.add)}</button>
+                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}">${luxEscapeProductHtml(labels.add)}</button>
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
               </div>
             </article>`).join("")}
@@ -475,6 +476,7 @@ function initLuxProductDetails() {
   const liveProduct = (id) => liveProductEntry(id)?.[1];
   const cleanProduct = (product) => ({
     id: String(product.id || "").trim(),
+    sku: String(product.sku || product.id || "").trim(),
     title: String(product.title || "").trim(),
     subtitle: String(product.subtitle || "").trim(),
     price: Number(product.price ?? product.amount) || 0,
@@ -553,6 +555,7 @@ function initLuxProductDetails() {
 
   const productFromButton = (button) => ({
     id: button.dataset.bagId,
+    sku: button.dataset.bagSku,
     title: button.dataset.bagTitle,
     subtitle: button.dataset.bagSubtitle,
     price: button.dataset.bagPrice,
@@ -635,7 +638,7 @@ function initLuxProductDetails() {
         <div class="aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
           <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${luxEscapeProductHtml(product.image)}" alt="${luxEscapeProductHtml(product.title)}">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center gap-3">
-            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}">${copy.add}</button>
+            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}">${copy.add}</button>
             <button type="button" class="px-6 py-3 border border-primary text-primary font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-product-open="${luxEscapeProductHtml(key)}">${copy.detail}</button>
           </div>
         </div>
@@ -666,6 +669,55 @@ function initLuxProductDetails() {
     document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = money(currency, subtotal + shipping); });
   };
 
+  const checkout = async (button) => {
+    const lang = locale();
+    const items = read();
+    const feedback = document.querySelector("[data-bag-checkout-feedback]");
+    const message = (zh, en) => lang === "zh" ? zh : en;
+    const setMessage = (value) => { if (feedback) feedback.textContent = value; };
+    if (!items.length) {
+      setMessage(message("购物袋为空。", "Your shopping bag is empty."));
+      return;
+    }
+
+    button.disabled = true;
+    setMessage(message("正在连接安全结算…", "Connecting to secure checkout…"));
+    try {
+      const productsResponse = await fetch("/wp-json/wc/store/v1/products?per_page=100", { credentials: "same-origin" });
+      if (!productsResponse.ok) throw new Error(message("无法读取商品目录。", "Could not load the product catalog."));
+      const wooProducts = await productsResponse.json();
+      const productsBySku = new Map(wooProducts.map((product) => [product.sku, product]));
+      const missing = items.find((item) => !productsBySku.has(item.sku));
+      if (missing) throw new Error(message(`商品“${missing.title}”尚未在 WooCommerce 上架。`, `“${missing.title}” is not available in WooCommerce yet.`));
+
+      let cartResponse = await fetch("/wp-json/wc/store/v1/cart", { credentials: "same-origin" });
+      if (!cartResponse.ok) throw new Error(message("无法建立购物车。", "Could not start the cart."));
+      let nonce = cartResponse.headers.get("Nonce");
+      let cart = await cartResponse.json();
+      const mutateCart = async (endpoint, body) => {
+        const response = await fetch(`/wp-json/wc/store/v1/cart/${endpoint}`, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json", Nonce: nonce },
+          body: JSON.stringify(body),
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || message("购物车同步失败。", "Cart sync failed."));
+        nonce = response.headers.get("Nonce") || nonce;
+        return result;
+      };
+
+      for (const item of cart.items || []) await mutateCart("remove-item", { key: item.key });
+      for (const item of items) {
+        await mutateCart("add-item", { id: productsBySku.get(item.sku).id, quantity: item.quantity });
+      }
+      location.href = "/checkout/";
+    } catch (error) {
+      setMessage(error.message || message("暂时无法结算，请稍后再试。", "Checkout is temporarily unavailable."));
+      button.disabled = false;
+    }
+  };
+
   document.addEventListener("click", (event) => {
     const addButton = event.target.closest("[data-bag-add]");
     if (addButton) {
@@ -684,7 +736,13 @@ function initLuxProductDetails() {
     }
 
     const removeButton = event.target.closest("[data-bag-remove]");
-    if (removeButton) api.remove(removeButton.dataset.bagRemove);
+    if (removeButton) {
+      api.remove(removeButton.dataset.bagRemove);
+      return;
+    }
+
+    const checkoutButton = event.target.closest("[data-bag-checkout]");
+    if (checkoutButton) checkout(checkoutButton);
   });
 
   document.addEventListener("DOMContentLoaded", () => {
