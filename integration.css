@@ -2597,7 +2597,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   filter: grayscale(.1) contrast(1) brightness(1.05);
 }
 .lux-home-harvest .lux-home-harvest-copy {
-  background: rgba(45, 44, 42, .82);
+  background: rgba(102, 100, 96, .42);
   backdrop-filter: blur(8px) saturate(1.1);
   -webkit-backdrop-filter: blur(8px) saturate(1.1);
   color: #f1eee8;
@@ -2614,14 +2614,10 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 .lux-home-harvest .lux-home-harvest-facts p {
   color: #f8f6f0 !important;
   opacity: 1 !important;
-  font-size: 15px !important;
-  line-height: 1.7;
   text-shadow: 0 1px 12px rgba(0, 0, 0, .72);
 }
 .lux-home-harvest .lux-home-harvest-facts h4 {
   color: #f3c93f !important;
-  font-size: clamp(22px, 2vw, 30px) !important;
-  font-weight: 650;
   text-shadow: 0 2px 16px rgba(0, 0, 0, .78);
 }
 .lux-home-harvest .lux-narrative-link {
@@ -2680,7 +2676,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   cursor: zoom-in;
 }
 .lux-home-gifting-image img:nth-child(1) {
-  z-index: 8;
+  z-index: 3;
   width: 78%;
   top: 5%;
   left: 11%;
@@ -2790,8 +2786,8 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
     grid-row: auto;
   }
   .lux-home-harvest-copy {
-    padding: 24px;
-    background: rgba(45, 44, 42, .88);
+    padding: 18px 0 0;
+    background: none;
   }
   .lux-home-gifting-title { margin-top: 12px; }
   .lux-home-gifting-image img:nth-child(4) {
@@ -2805,22 +2801,6 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
     padding: 30px 0 0;
     border-top: 1px solid rgba(255, 255, 255, .1);
     border-left: 0;
-  }
-}
-
-@media (min-width: 901px) {
-  .lux-home-gifting-title {
-    width: fit-content;
-    max-width: min(760px, 58vw);
-    padding: clamp(16px, 2vw, 28px);
-    margin-left: clamp(-28px, -2vw, -12px);
-    background: linear-gradient(90deg, rgba(8, 8, 8, .9), rgba(8, 8, 8, .72) 72%, transparent);
-  }
-  .lux-home-gifting-intro {
-    padding: 24px;
-    margin-left: -24px;
-    background: rgba(8, 8, 8, .78);
-    backdrop-filter: blur(8px);
   }
 }
 
