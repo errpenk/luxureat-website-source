@@ -2683,7 +2683,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 }
 .lux-home-gifting-image img:nth-child(2) {
   --lux-card-angle: -2.2deg;
-  z-index: 1;
+  z-index: 5;
   width: 72%;
   top: 34%;
   left: 0;
