@@ -4980,6 +4980,90 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     border-left: 0;
   }
 }
+
+/* Native WordPress and WooCommerce pages. */
+.lux-wp-page-shell {
+  min-height: 100vh;
+  margin: 0;
+  background: #f7f6f2;
+  color: #1f2424;
+}
+.lux-wp-page-header {
+  min-height: 76px;
+  padding: 0 clamp(24px, 6vw, 88px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid rgba(31,36,36,.12);
+  background: #101212;
+}
+.lux-wp-page-brand,
+.lux-wp-page-home {
+  color: #fff;
+  text-decoration: none;
+  font-family: Montserrat, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.lux-wp-page-brand {
+  font-size: 18px;
+  font-weight: 600;
+}
+.lux-wp-page-brand span,
+.lux-wp-page-home {
+  color: #9df5ec;
+  font-size: 11px;
+}
+.lux-wp-page-main {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(56px, 8vw, 104px) 0;
+}
+.lux-wp-page-title {
+  margin-bottom: 40px;
+}
+.lux-wp-page-title p {
+  margin: 0 0 12px;
+  color: #006a64;
+  font: 600 11px/1.2 Montserrat, Arial, sans-serif;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.lux-wp-page-title h1 {
+  margin: 0;
+  font: 400 clamp(36px, 6vw, 68px)/1.05 Georgia, serif;
+}
+.lux-wp-page-content {
+  padding: clamp(24px, 5vw, 56px);
+  border: 1px solid rgba(31,36,36,.14);
+  background: #fff;
+}
+.lux-wp-page-content .woocommerce form .form-row input.input-text {
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid rgba(31,36,36,.22);
+}
+.lux-wp-page-content .woocommerce button.button,
+.lux-wp-page-content .woocommerce a.button {
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 0;
+  background: #004b47;
+  color: #fff;
+}
+@media (max-width: 640px) {
+  .lux-wp-page-header {
+    min-height: 68px;
+  }
+  .lux-wp-page-main {
+    width: min(100% - 28px, 1120px);
+    padding: 40px 0;
+  }
+  .lux-wp-page-content {
+    padding: 20px;
+  }
+}
 .lux-cert-card-back strong {
   color: #111;
   font: 700 14px/1.3 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;

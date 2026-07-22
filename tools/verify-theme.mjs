@@ -71,6 +71,7 @@ for (const file of [
   'style.css',
   '.htaccess',
   'index.php',
+  'page.php',
   'functions.php',
   'routes.php',
   'integration.css',
@@ -129,6 +130,9 @@ assert(indexPhp.includes('routes.php'), 'index.php loads the static route map');
 assert(!indexPhp.includes("wp_safe_redirect(home_url('/zh/')"), 'index.php does not redirect root to /zh/ when server rewrites are unavailable');
 assert(indexPhp.includes("$path = 'zh';"), 'index.php serves Chinese home at the site root');
 assert(indexPhp.includes('$path = $target_path;'), 'index.php can render alias routes that are already canonical pretty URLs');
+
+const pagePhp = read(path.join(themeDir, 'page.php'));
+assert(pagePhp.includes('the_content()') && pagePhp.includes("body_class('lux-wp-page-shell')"), 'page.php renders native WordPress and WooCommerce page content');
 
 const routesPhp = read(path.join(themeDir, 'routes.php'));
 for (const route of expectedRoutes) {
