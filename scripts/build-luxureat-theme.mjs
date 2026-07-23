@@ -358,7 +358,7 @@ function luxureat_static_woo_catalog() {
             'name' => $product->get_name(),
             'description' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
             'price' => (float) $product->get_price(),
-            'currency' => get_woocommerce_currency_symbol(),
+            'currency' => html_entity_decode(get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8'),
             'image' => $image_id ? wp_get_attachment_image_url($image_id, 'full') : '',
             'gallery' => $gallery,
             'stockStatus' => $product->get_stock_status(),

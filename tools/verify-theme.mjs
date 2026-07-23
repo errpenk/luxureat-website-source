@@ -122,6 +122,7 @@ assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('lux-005.jpg'), 'checkout cart items receive branded product images');
 assert(functionsPhp.includes('function luxureat_static_woo_catalog()') && functionsPhp.includes("'LuxureatWooCatalog'") && functionsPhp.includes("'stockQuantity'"), 'product pages receive live WooCommerce price, image, and stock data');
+assert(functionsPhp.includes("html_entity_decode(get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8')"), 'WooCommerce currency symbols render as characters rather than escaped HTML entities');
 assert(functionsPhp.includes("if ($product->get_image_id())") && functionsPhp.includes('return $images;'), 'checkout keeps WooCommerce product images when they exist');
 assert(functionsPhp.includes("$integration_registry->unregister('mailpoet')"), 'checkout removes the duplicate MailPoet opt-in block at registration');
 assert(functionsPhp.includes('luxureat_static_require_account_for_checkout') && functionsPhp.includes("!is_user_logged_in()"), 'checkout requires a signed-in customer on both direct and AJAX entry points');
