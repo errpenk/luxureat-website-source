@@ -546,8 +546,9 @@ function initLuxFooterActions() {
             </label>
             <label class="lux-account-field" data-account-password>
               <span>${text.password}</span>
-              <div class="lux-account-input">${icons.lock}<input name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="8" required></div>
+              <div class="lux-account-input">${icons.lock}<input name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="1" required></div>
             </label>
+            <input name="company" type="text" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
             <div class="lux-account-row" data-account-login-options>
               <label><input name="remember" type="checkbox" value="1"><span>${text.remember}</span></label>
               <a href="${luxEscapeCoreHtml(window.LuxureatAccount?.lostPasswordUrl || "#")}" data-account-forgot>${text.forgot}</a>
@@ -593,6 +594,7 @@ function initLuxFooterActions() {
     node.querySelector("[data-account-newsletter]").hidden = !creating;
     password.disabled = resetting;
     password.required = !resetting;
+    password.minLength = creating ? 12 : 1;
     password.autocomplete = creating ? "new-password" : "current-password";
     node.querySelector("[data-account-feedback]").textContent = "";
   };
@@ -608,13 +610,39 @@ function initLuxFooterActions() {
       return;
     }
 
-    const data = new URLSearchParams(new FormData(form));
-    data.set("action", "luxureat_account");
-    data.set("nonce", account.nonce);
-    data.set("mode", node.dataset.accountMode || "login");
-    data.set("lang", isZh() ? "zh" : "en");
     button.disabled = true;
     feedback.textContent = text.working;
+    const data = new URLSearchParams(new FormData(form));
+    const challenge = account.botChallenge;
+    if (!challenge || !window.crypto?.subtle) {
+      feedback.textContent = text.unavailable;
+      button.disabled = false;
+      return;
+    }
+    const random = new Uint8Array(16);
+    crypto.getRandomValues(random);
+    const botNonce = Array.from(random, (byte) => byte.toString(16).padStart(2, "0")).join("");
+    const encoder = new TextEncoder();
+    let botProof = -1;
+    for (let proof = 0; proof <= 1000000; proof += 1) {
+      const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(`${challenge}:${botNonce}:${proof}`)));
+      if (digest[0] === 0 && digest[1] < 16) {
+        botProof = proof;
+        break;
+      }
+    }
+    if (botProof < 0) {
+      feedback.textContent = text.unavailable;
+      button.disabled = false;
+      return;
+    }
+    data.set("action", "luxureat_account");
+    data.set("nonce", account.nonce);
+    data.set("bot_challenge", challenge);
+    data.set("bot_nonce", botNonce);
+    data.set("bot_proof", String(botProof));
+    data.set("mode", node.dataset.accountMode || "login");
+    data.set("lang", isZh() ? "zh" : "en");
     try {
       const response = await fetch(account.ajaxUrl, {
         method: "POST",

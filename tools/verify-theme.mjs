@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
@@ -130,6 +131,11 @@ assert(functionsPhp.includes('woocommerce_package_rates') && functionsPhp.includ
 assert(functionsPhp.includes('luxureat_static_restrict_test_payment') && functionsPhp.includes("unset($gateways['cheque'])") && functionsPhp.includes("current_user_can('manage_woocommerce')"), 'the temporary no-charge test payment is restricted to shop administrators');
 assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
+assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'botChallenge' => luxureat_static_bot_challenge()"), 'account requests require a signed proof-of-work bot challenge');
+assert(functionsPhp.includes('luxureat_static_strong_password') && functionsPhp.includes('strlen($password) < 12'), 'customer registration enforces a strong 12-character password');
+assert(functionsPhp.includes("add_filter('xmlrpc_enabled', '__return_false')") && functionsPhp.includes("'system.multicall'"), 'XML-RPC authentication and multicall are disabled');
+assert(functionsPhp.includes("'samesite' => 'Lax'") && functionsPhp.includes("add_action('set_logged_in_cookie'"), 'authentication cookies are reissued with SameSite=Lax');
+assert(functionsPhp.includes("'Content-Security-Policy'") && functionsPhp.includes("'X-Content-Type-Options'") && functionsPhp.includes("'Permissions-Policy'"), 'front-end responses include hardened security headers');
 
 const indexPhp = read(path.join(themeDir, 'index.php'));
 assert(indexPhp.includes('wp_safe_redirect'), 'index.php redirects root and alias routes');
@@ -227,6 +233,14 @@ assert(runtimeJs.includes('data-bag-quantity'), 'runtime scripts carries selecte
 assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-account-newsletter'), 'account modal provides registration and optional newsletter consent');
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
 assert(runtimeJs.includes('luxureat_account') && runtimeJs.includes('LuxureatAccount'), 'account modal submits to the localized WordPress account endpoint');
+assert(runtimeJs.includes('crypto.subtle.digest') && runtimeJs.includes('bot_challenge') && runtimeJs.includes('bot_nonce') && runtimeJs.includes('bot_proof'), 'account modal solves and submits the bot challenge');
+{
+  const token = '1700000000.challenge.signature';
+  const nonce = '0123456789abcdef0123456789abcdef';
+  let proof = 0;
+  while (!createHash('sha256').update(`${token}:${nonce}:${proof}`).digest('hex').startsWith('000')) proof += 1;
+  assert(proof <= 1_000_000, 'bot proof contract can be solved within the server limit');
+}
 assert(!runtimeJs.includes('lux-account-social') && !runtimeJs.includes('Or Sign In With') && !runtimeJs.includes('或使用以下方式登录'), 'account modal removes Google and WeChat sign-in controls');
 assert(runtimeJs.includes('luxureat_checkout') && runtimeJs.includes('LuxureatCheckout') && runtimeJs.includes('AbortController'), 'bag checkout uses one bounded WordPress request');
 assert(runtimeJs.includes('initLuxFooterActions'), 'runtime scripts initializes footer policy and social popups');

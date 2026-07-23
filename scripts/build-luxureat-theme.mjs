@@ -415,6 +415,7 @@ ${byPath}
             wp_localize_script('luxureat-core', 'LuxureatAccount', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('luxureat_account'),
+                'botChallenge' => luxureat_static_bot_challenge(),
                 'loggedIn' => is_user_logged_in(),
                 'lostPasswordUrl' => wp_lostpassword_url(home_url('/')),
                 'logoutUrl' => wp_logout_url(home_url('/')),
@@ -432,6 +433,56 @@ ${byPath}
     }
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_assets');
+
+function luxureat_static_bot_challenge() {
+    $payload = time() . '.' . wp_generate_password(16, false, false);
+    return $payload . '.' . hash_hmac('sha256', $payload, wp_salt('nonce'));
+}
+
+function luxureat_static_verify_bot_challenge() {
+    $token = isset($_POST['bot_challenge']) ? sanitize_text_field(wp_unslash($_POST['bot_challenge'])) : '';
+    $nonce = isset($_POST['bot_nonce']) ? sanitize_text_field(wp_unslash($_POST['bot_nonce'])) : '';
+    $proof = isset($_POST['bot_proof']) ? sanitize_text_field(wp_unslash($_POST['bot_proof'])) : '';
+    $parts = explode('.', $token);
+    if (
+        count($parts) !== 3 ||
+        !ctype_digit($parts[0]) ||
+        abs(time() - (int) $parts[0]) > 15 * MINUTE_IN_SECONDS ||
+        !hash_equals(hash_hmac('sha256', $parts[0] . '.' . $parts[1], wp_salt('nonce')), $parts[2]) ||
+        !preg_match('/^[a-f0-9]{32}$/', $nonce) ||
+        !ctype_digit($proof) ||
+        (int) $proof > 1000000 ||
+        substr(hash('sha256', $token . ':' . $nonce . ':' . $proof), 0, 3) !== '000'
+    ) {
+        return false;
+    }
+
+    $replay_key = 'lux_bot_' . hash('sha256', $token . ':' . $nonce . ':' . $proof);
+    if (get_transient($replay_key)) {
+        return false;
+    }
+    set_transient($replay_key, 1, 15 * MINUTE_IN_SECONDS);
+    return true;
+}
+
+function luxureat_static_strong_password($password, $email) {
+    if (
+        strlen($password) < 12 ||
+        !preg_match('/[a-z]/', $password) ||
+        !preg_match('/[A-Z]/', $password) ||
+        !preg_match('/[0-9]/', $password) ||
+        !preg_match('/[^A-Za-z0-9]/', $password)
+    ) {
+        return false;
+    }
+
+    $local_part = strtolower((string) strstr($email, '@', true));
+    if (strlen($local_part) >= 4 && strpos(strtolower($password), $local_part) !== false) {
+        return false;
+    }
+
+    return !preg_match('/(?:password|qwerty|123456|admin|luxureat)/i', $password);
+}
 
 function luxureat_static_mailpoet_subscribe($email) {
     if (!class_exists('\\MailPoet\\API\\API')) {
@@ -473,6 +524,9 @@ function luxureat_static_account_ajax() {
     if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_account')) {
         wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
     }
+    if (!empty($_POST['company']) || !luxureat_static_verify_bot_challenge()) {
+        wp_send_json_error(array('message' => $message('安全验证失败，请刷新页面后重试。', 'Security verification failed. Please refresh the page and try again.')), 403);
+    }
     if (is_user_logged_in()) {
         wp_send_json_success();
     }
@@ -495,13 +549,12 @@ function luxureat_static_account_ajax() {
         wp_send_json_success(array('message' => $message('如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。', 'If the email is registered, a reset link has been sent. Please check your inbox and spam folder.')));
     }
 
-    if (strlen($password) < 8) {
-        wp_send_json_error(array('message' => $message('请输入有效邮箱和至少 8 位密码。', 'Enter a valid email and a password of at least 8 characters.')), 400);
-    }
-
     if ($mode === 'register') {
         if (!function_exists('wc_create_new_customer') || get_option('woocommerce_enable_myaccount_registration') !== 'yes') {
             wp_send_json_error(array('message' => $message('暂未开放账号注册。', 'Account registration is not available yet.')), 403);
+        }
+        if (!luxureat_static_strong_password($password, $email)) {
+            wp_send_json_error(array('message' => $message('密码至少 12 位，并须包含大小写字母、数字和符号，且不能包含邮箱名或常见密码。', 'Use at least 12 characters with upper- and lowercase letters, a number, and a symbol. Do not use your email name or a common password.')), 400);
         }
         $user_id = wc_create_new_customer($email, '', $password);
         if (is_wp_error($user_id)) {
@@ -515,6 +568,9 @@ function luxureat_static_account_ajax() {
         wp_send_json_success();
     }
 
+    if ($password === '') {
+        wp_send_json_error(array('message' => $message('邮箱或密码不正确。', 'Incorrect email or password.')), 401);
+    }
     $user = get_user_by('email', $email);
     $credentials = array(
         'user_login' => $user ? $user->user_login : $email,
@@ -726,6 +782,12 @@ function luxureat_static_defer_scripts($tag, $handle) {
 add_filter('script_loader_tag', 'luxureat_static_defer_scripts', 10, 2);
 
 function luxureat_static_cache_headers($headers) {
+    $headers['Content-Security-Policy'] = "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests";
+    $headers['X-Frame-Options'] = 'SAMEORIGIN';
+    $headers['X-Content-Type-Options'] = 'nosniff';
+    $headers['Referrer-Policy'] = 'strict-origin-when-cross-origin';
+    $headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()';
+    $headers['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups';
     if (!is_admin() && !is_user_logged_in() && !is_account_page() && !is_cart() && !is_checkout()) {
         $headers['Cache-Control'] = 'public, max-age=300, stale-while-revalidate=86400';
     }
@@ -733,6 +795,49 @@ function luxureat_static_cache_headers($headers) {
     return $headers;
 }
 add_filter('wp_headers', 'luxureat_static_cache_headers');
+
+function luxureat_static_hide_server_version() {
+    header_remove('X-Powered-By');
+}
+add_action('send_headers', 'luxureat_static_hide_server_version', 999);
+remove_action('wp_head', 'wp_generator');
+add_filter('the_generator', '__return_empty_string');
+
+add_filter('xmlrpc_enabled', '__return_false');
+function luxureat_static_remove_xmlrpc_auth_methods($methods) {
+    foreach (array('system.multicall', 'wp.getUsersBlogs', 'blogger.getUsersBlogs', 'metaWeblog.getUsersBlogs') as $method) {
+        unset($methods[$method]);
+    }
+    return $methods;
+}
+add_filter('xmlrpc_methods', 'luxureat_static_remove_xmlrpc_auth_methods', 999);
+
+function luxureat_static_cookie_with_samesite($name, $value, $expire, $paths, $secure) {
+    if (headers_sent()) {
+        return;
+    }
+    foreach (array_unique(array_filter($paths)) as $path) {
+        setcookie($name, $value, array(
+            'expires' => (int) $expire,
+            'path' => $path,
+            'domain' => COOKIE_DOMAIN ?: '',
+            'secure' => (bool) $secure,
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ));
+    }
+}
+
+function luxureat_static_auth_cookie_samesite($cookie, $expire, $expiration, $user_id, $scheme) {
+    $name = $scheme === 'secure_auth' ? SECURE_AUTH_COOKIE : AUTH_COOKIE;
+    luxureat_static_cookie_with_samesite($name, $cookie, $expire, array(PLUGINS_COOKIE_PATH, ADMIN_COOKIE_PATH, COOKIEPATH, SITECOOKIEPATH), is_ssl());
+}
+add_action('set_auth_cookie', 'luxureat_static_auth_cookie_samesite', 999, 5);
+
+function luxureat_static_logged_in_cookie_samesite($cookie, $expire) {
+    luxureat_static_cookie_with_samesite(LOGGED_IN_COOKIE, $cookie, $expire, array(COOKIEPATH, SITECOOKIEPATH), is_ssl());
+}
+add_action('set_logged_in_cookie', 'luxureat_static_logged_in_cookie_samesite', 999, 2);
 
 function luxureat_static_register_routes() {
     foreach (array_keys(luxureat_static_routes()) as $route) {
