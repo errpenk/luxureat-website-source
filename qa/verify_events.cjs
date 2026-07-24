@@ -20,17 +20,21 @@ const context = {
 vm.runInNewContext(read("assets/data/events.js"), context);
 
 const events = context.window.LUXUREAT_EVENT_DATA?.events;
+const fhcEvent = events?.find((item) => item.id === "fhc-shanghai-2026");
 const event = events?.find((item) => item.id === "cifie-changsha-2026");
 const secondEvent = events?.find((item) => item.id === "marca-china-2026");
+const sialEvent = events?.find((item) => item.id === "sial-guangzhou-2026");
+assert(fhcEvent, "FHC Shanghai 2026 event data is missing");
 assert(event, "Changsha 2026 event data is missing");
 assert(event.status === "latest", "Changsha 2026 must be the latest event");
 assert(secondEvent?.status === "latest", "Marca China 2026 must also be a latest event");
+assert(sialEvent?.status === "latest", "SIAL Guangzhou 2026 must also be a latest event");
 assert(secondEvent?.zh?.articleTitle === "LuxurEat亮相广州国际自有品牌展。", "Marca China Chinese title is wrong");
-assert(events.filter((item) => item.status === "latest").length === 2, "Both current events must render as latest");
+assert(events.filter((item) => item.status === "latest").length === 4, "All four current events must render as latest");
 assert(event.mapQuery === "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133", "Changsha map address is wrong");
 assert(event.mapHref?.includes("0xaa8729018b86a918"), "Changsha Google Maps link is wrong");
 assert(
-  event.image === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026.jpg",
+  event.image === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026-poster.webp",
   "event image must resolve from the theme asset directory",
 );
 assert(
@@ -39,13 +43,21 @@ assert(
 );
 assert(event.previewImage === event.cardImage, "event detail preview must use the wide expo banner");
 assert(
-  event.poster === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026.jpg",
+  event.poster === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/cifie-changsha-2026-poster.webp",
   "event poster must resolve from the theme asset directory",
+);
+assert(
+  secondEvent.poster === "https://luxureat.cn/wp-content/themes/luxureat-static/assets/media/events/marca-china-2026-poster.webp",
+  "Marca China poster replacement is missing",
 );
 assert(event.zh?.articleTitle === "意大利风味，与长沙相遇。", "Chinese event title is wrong");
 assert(event.zh?.paragraphs?.join("").includes("诚邀您莅临现场，与我们相见长沙。"), "Chinese event copy is incomplete");
 assert(event.zh?.title && event.zh?.sections?.length >= 3, "Chinese event article is incomplete");
 assert(event.en?.title && event.en?.sections?.length >= 3, "English event article is incomplete");
+assert(fhcEvent.zh?.sections?.length === 4 && fhcEvent.en?.sections?.length === 4, "FHC bilingual article is incomplete");
+assert(sialEvent.zh?.sections?.length === 6 && sialEvent.en?.sections?.length === 6, "SIAL bilingual article is incomplete");
+assert(fhcEvent.previewImage?.endsWith("/fhc-shanghai-2026-banner.webp"), "FHC wide preview image is wrong");
+assert(sialEvent.previewImage?.endsWith("/sial-guangzhou-2026-banner.webp"), "SIAL wide preview image is wrong");
 
 const zhHome = read("zh/index.html");
 const enHome = read("en/index.html");

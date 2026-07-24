@@ -567,12 +567,28 @@ header:has(.lux-hero-fade-both) {
 .lux-product-catalog [data-caviar-item] > div:last-child {
   padding: 18px;
   border-top: 0 !important;
+  min-width: 0;
+}
+.lux-product-catalog [data-caviar-item] > div:last-child > div:first-child {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+}
+.lux-product-catalog [data-caviar-item] > div:last-child > .mt-4 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.lux-product-catalog [data-caviar-item] > div:last-child > .mt-4 button {
+  width: 100% !important;
+  min-width: 0;
+  white-space: normal;
 }
 .lux-product-catalog [data-caviar-item] h2 {
   margin: 0;
   color: #1c1b1b;
   font: 400 26px/1 "Bodoni Moda", "PingFang SC", "Microsoft YaHei", serif !important;
   letter-spacing: 0 !important;
+  overflow-wrap: anywhere;
 }
 .lux-product-catalog [data-caviar-item] h2 + span {
   color: #af8d11;
@@ -655,6 +671,12 @@ header:has(.lux-hero-fade-both) {
     grid-template-rows: minmax(320px, 1fr) auto;
   }
   .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .lux-product-catalog [data-caviar-item] > div:last-child > div:first-child,
+  .lux-product-catalog [data-caviar-item] > div:last-child > .mt-4 {
     grid-template-columns: 1fr;
   }
 }
@@ -1479,6 +1501,16 @@ header:has(.lux-hero-fade-both) {
   box-shadow: 0 24px 74px rgba(0,0,0,.42);
   padding: clamp(28px, 5vw, 48px);
 }
+.lux-footer-modal-body.is-legal {
+  max-height: min(74vh, 760px);
+  overflow: auto;
+  padding-right: 12px;
+  scrollbar-width: none;
+}
+.lux-footer-modal-body.is-legal::-webkit-scrollbar { display: none; }
+.lux-footer-modal-body.is-legal p {
+  white-space: pre-line;
+}
 .lux-footer-modal-close {
   position: absolute;
   top: 12px;
@@ -1898,6 +1930,21 @@ button,
   color: #66716f;
   transition: border-color .18s ease, transform .18s ease;
 }
+.lux-account-password-input {
+  grid-template-columns: 20px minmax(0, 1fr) 32px;
+}
+.lux-account-password-toggle {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
 .lux-account-input:focus-within {
   border-color: rgba(0,106,100,.5);
   transform: translateY(-1px);
@@ -1913,6 +1960,23 @@ button,
 .lux-account-input input:focus {
   outline: 0 !important;
   box-shadow: none !important;
+}
+.lux-account-password-hint,
+.lux-account-field-error {
+  color: #4b5553;
+  font: 500 12px/1.5 Montserrat, Arial, sans-serif;
+}
+@keyframes lux-account-warning-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+.lux-account-password-hint.is-shaking,
+.lux-account-field-error.is-shaking,
+.lux-account-feedback.is-shaking {
+  color: #8b2f28;
+  animation: lux-account-warning-shake .34s ease;
 }
 .lux-account-row {
   display: flex;
@@ -1934,22 +1998,47 @@ button,
   border-color: rgba(31,36,36,.28) !important;
 }
 .lux-account-row span,
-.lux-account-row a {
+.lux-account-row a,
+.lux-account-row button,
+.lux-account-existing,
+.lux-account-existing button {
   color: #4b5553 !important;
-  font-size: 11px !important;
-  line-height: 1 !important;
+  font: 400 12px/1.5 Montserrat, Arial, sans-serif !important;
   white-space: nowrap !important;
   transition: color .18s ease, transform .18s ease !important;
 }
 .lux-account-row a:hover,
-.lux-account-row a:focus-visible {
+.lux-account-row a:focus-visible,
+.lux-account-row button:hover,
+.lux-account-row button:focus-visible,
+.lux-account-existing button:hover,
+.lux-account-existing button:focus-visible {
   color: #006a64 !important;
   transform: translateY(-1px);
+}
+.lux-account-inline-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.lux-account-inline-actions button,
+.lux-account-existing button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.lux-account-existing {
+  margin: -2px 0 18px !important;
+  text-align: right;
 }
 .lux-account-dialog [hidden] {
   display: none !important;
 }
-.lux-account-newsletter {
+.lux-account-newsletter,
+.lux-account-consent {
   display: grid;
   grid-template-columns: 16px 1fr;
   align-items: start;
@@ -1959,10 +2048,25 @@ button,
   cursor: pointer;
   font: 400 12px/1.5 Montserrat, Arial, sans-serif;
 }
-.lux-account-newsletter input {
+.lux-account-newsletter input,
+.lux-account-consent input {
   width: 16px !important;
   height: 16px !important;
   margin: 1px 0 0 !important;
+}
+.lux-account-consent button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #006a64;
+  font: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 .lux-account-feedback {
   min-height: 18px;
@@ -2140,6 +2244,13 @@ html[lang^="zh"] .lux-reader-archive-card strong {
 .lux-latest-event-carousel {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 112px;
+  align-items: center;
+  gap: clamp(24px, 3vw, 48px);
+}
+.lux-latest-event-viewport {
+  min-width: 0;
   overflow: hidden;
 }
 .lux-latest-event-track {
@@ -2254,6 +2365,41 @@ html[lang^="zh"] .lux-reader-archive-card strong {
   font: 600 12px/1 Montserrat, Arial, sans-serif;
   text-align: center;
   letter-spacing: .08em;
+}
+.lux-event-thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: center;
+}
+.lux-event-thumbnails button {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(0,106,100,.22);
+  background: #d9d5cf;
+  opacity: .55;
+  cursor: pointer;
+  transform: scale(.94);
+  transition: opacity .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.lux-event-thumbnails button:hover,
+.lux-event-thumbnails button:focus-visible {
+  opacity: .86;
+  border-color: rgba(0,106,100,.62);
+}
+.lux-event-thumbnails button.is-active {
+  opacity: 1;
+  border-color: #006a64;
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,55,52,.2);
+}
+.lux-event-thumbnails img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 @media (prefers-reduced-motion: reduce) {
   .lux-latest-event-track { transition: none; }
@@ -3246,16 +3392,14 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   background: #f4f2ee;
 }
 .lux-about-carousel {
-  display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px;
-  gap: 14px;
-  align-items: center;
+  display: block;
   margin-top: 34px;
 }
 .lux-about-carousel-track {
   display: flex;
+  justify-content: center;
   gap: 18px;
-  overflow-x: auto;
+  overflow-x: hidden;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -3265,7 +3409,7 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   display: none;
 }
 .lux-about-carousel-track figure {
-  flex: 0 0 clamp(260px, 32vw, 360px);
+  flex: 0 1 360px;
   margin: 0;
   scroll-snap-align: start;
 }
@@ -3278,7 +3422,7 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   z-index: 2;
   width: 44px;
   height: 44px;
-  display: grid;
+  display: none;
   place-items: center;
   border: 1px solid rgba(255,255,255,.72);
   border-radius: 50%;
@@ -3607,12 +3751,23 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 
 @media (max-width: 860px) {
+  .lux-latest-event-carousel {
+    grid-template-columns: 1fr;
+  }
   .lux-latest-event-inner {
     grid-template-columns: 1fr;
   }
   .lux-event-frame,
   .lux-event-copy {
     max-width: none;
+  }
+  .lux-event-thumbnails {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .lux-event-thumbnails button {
+    width: min(96px, 22vw);
   }
 }
 

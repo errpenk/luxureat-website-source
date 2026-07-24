@@ -417,6 +417,8 @@ ${byPath}
                 'nonce' => wp_create_nonce('luxureat_account'),
                 'botChallenge' => luxureat_static_bot_challenge(),
                 'loggedIn' => is_user_logged_in(),
+                'bag' => is_user_logged_in() ? luxureat_static_get_bag(get_current_user_id()) : array(),
+                'bagNonce' => wp_create_nonce('luxureat_bag'),
                 'lostPasswordUrl' => wp_lostpassword_url(home_url('/')),
                 'logoutUrl' => wp_logout_url(home_url('/')),
             ));
@@ -466,23 +468,59 @@ function luxureat_static_verify_bot_challenge() {
 }
 
 function luxureat_static_strong_password($password, $email) {
-    if (
-        strlen($password) < 12 ||
-        !preg_match('/[a-z]/', $password) ||
-        !preg_match('/[A-Z]/', $password) ||
-        !preg_match('/[0-9]/', $password) ||
-        !preg_match('/[^A-Za-z0-9]/', $password)
-    ) {
-        return false;
-    }
-
-    $local_part = strtolower((string) strstr($email, '@', true));
-    if (strlen($local_part) >= 4 && strpos(strtolower($password), $local_part) !== false) {
-        return false;
-    }
-
-    return !preg_match('/(?:password|qwerty|123456|admin|luxureat)/i', $password);
+    return strlen($password) >= 12 && preg_match('/[A-Za-z]/', $password) && preg_match('/[0-9]/', $password);
 }
+
+function luxureat_static_sanitize_bag($items) {
+    if (!is_array($items)) {
+        return array();
+    }
+    $bag = array();
+    foreach (array_slice($items, 0, 20) as $item) {
+        $id = isset($item['id']) ? substr(sanitize_text_field($item['id']), 0, 120) : '';
+        $sku = isset($item['sku']) ? substr(sanitize_text_field($item['sku']), 0, 120) : '';
+        $quantity = isset($item['quantity']) ? absint($item['quantity']) : 0;
+        if ($id !== '' && $sku !== '' && $quantity >= 1 && $quantity <= 99) {
+            $bag[] = array('id' => $id, 'sku' => $sku, 'quantity' => $quantity);
+        }
+    }
+    return $bag;
+}
+
+function luxureat_static_get_bag($user_id) {
+    return luxureat_static_sanitize_bag(get_user_meta($user_id, 'luxureat_bag', true));
+}
+
+function luxureat_static_bag_ajax() {
+    if (!is_user_logged_in()) {
+        wp_send_json_error(array('message' => 'Authentication required.'), 401);
+    }
+    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_bag')) {
+        wp_send_json_error(array('message' => 'Invalid request.'), 403);
+    }
+    $items = isset($_POST['items']) ? json_decode(wp_unslash($_POST['items']), true) : null;
+    if (!is_array($items)) {
+        wp_send_json_error(array('message' => 'Invalid bag.'), 400);
+    }
+    update_user_meta(get_current_user_id(), 'luxureat_bag', luxureat_static_sanitize_bag($items));
+    wp_send_json_success();
+}
+add_action('wp_ajax_luxureat_bag', 'luxureat_static_bag_ajax');
+
+function luxureat_static_silence_account_admin_mail($return, $mail) {
+    $to = isset($mail['to']) ? (array) $mail['to'] : array();
+    $admin = strtolower((string) get_option('admin_email'));
+    $is_admin_recipient = array_filter($to, function ($recipient) use ($admin) {
+        return strpos(strtolower((string) $recipient), $admin) !== false;
+    });
+    $subject = isset($mail['subject']) ? wp_strip_all_tags($mail['subject']) : '';
+    if ($is_admin_recipient && preg_match('/new user registration|new subscriber|new subscription|password|(?:user|account|profile|email).*(?:modified|updated|changed|change|attempt)|新用户注册|新订阅者|密码|(?:用户|账户|资料|邮箱).*(?:修改|更新|更改|尝试)/i', $subject)) {
+        return true;
+    }
+    return $return;
+}
+add_filter('wp_send_new_user_notification_to_admin', '__return_false');
+add_filter('pre_wp_mail', 'luxureat_static_silence_account_admin_mail', 10, 2);
 
 function luxureat_static_mailpoet_subscribe($email) {
     if (!class_exists('\\MailPoet\\API\\API')) {
@@ -553,8 +591,11 @@ function luxureat_static_account_ajax() {
         if (!function_exists('wc_create_new_customer') || get_option('woocommerce_enable_myaccount_registration') !== 'yes') {
             wp_send_json_error(array('message' => $message('暂未开放账号注册。', 'Account registration is not available yet.')), 403);
         }
+        if (empty($_POST['consent'])) {
+            wp_send_json_error(array('message' => $message('请先阅读并同意用户服务协议和隐私政策。', 'Please read and agree to the Terms of Service and Privacy Policy.')), 400);
+        }
         if (!luxureat_static_strong_password($password, $email)) {
-            wp_send_json_error(array('message' => $message('密码至少 12 位，并须包含大小写字母、数字和符号，且不能包含邮箱名或常见密码。', 'Use at least 12 characters with upper- and lowercase letters, a number, and a symbol. Do not use your email name or a common password.')), 400);
+            wp_send_json_error(array('message' => $message('密码至少 12 位，并须包含字母和数字。', 'Use at least 12 characters with letters and numbers.')), 400);
         }
         $user_id = wc_create_new_customer($email, '', $password);
         if (is_wp_error($user_id)) {
@@ -609,6 +650,7 @@ function luxureat_static_checkout_ajax() {
     if (!is_array($items) || !$items || count($items) > 20) {
         wp_send_json_error(array('message' => $message('购物袋数据无效。', 'The bag data is invalid.')), 400);
     }
+    update_user_meta(get_current_user_id(), 'luxureat_bag', luxureat_static_sanitize_bag($items));
 
     $desired = array();
     foreach ($items as $item) {
@@ -648,6 +690,39 @@ function luxureat_static_checkout_ajax() {
 }
 add_action('wp_ajax_nopriv_luxureat_checkout', 'luxureat_static_checkout_ajax');
 add_action('wp_ajax_luxureat_checkout', 'luxureat_static_checkout_ajax');
+
+function luxureat_static_reduce_paid_bag($order_id) {
+    $order = function_exists('wc_get_order') ? wc_get_order($order_id) : false;
+    if (!$order || $order->get_meta('_luxureat_bag_reduced')) {
+        return;
+    }
+    $user_id = $order->get_user_id();
+    if (!$user_id) {
+        return;
+    }
+    $purchased = array();
+    foreach ($order->get_items() as $item) {
+        $product = $item->get_product();
+        $sku = $product ? $product->get_sku() : '';
+        if ($sku !== '') {
+            $purchased[$sku] = isset($purchased[$sku]) ? $purchased[$sku] + $item->get_quantity() : $item->get_quantity();
+        }
+    }
+    $bag = array_values(array_filter(array_map(function ($item) use (&$purchased) {
+        if (!isset($purchased[$item['sku']])) {
+            return $item;
+        }
+        $quantity = $item['quantity'] - $purchased[$item['sku']];
+        unset($purchased[$item['sku']]);
+        return $quantity > 0 ? array_merge($item, array('quantity' => $quantity)) : null;
+    }, luxureat_static_get_bag($user_id))));
+    update_user_meta($user_id, 'luxureat_bag', $bag);
+    $order->update_meta_data('_luxureat_bag_reduced', 1);
+    $order->save();
+}
+add_action('woocommerce_payment_complete', 'luxureat_static_reduce_paid_bag');
+add_action('woocommerce_order_status_processing', 'luxureat_static_reduce_paid_bag');
+add_action('woocommerce_order_status_completed', 'luxureat_static_reduce_paid_bag');
 
 function luxureat_static_require_account_for_checkout() {
     if (function_exists('is_checkout') && is_checkout() && !is_user_logged_in() && !wp_doing_ajax()) {

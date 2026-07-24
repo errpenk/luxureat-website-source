@@ -85,6 +85,8 @@ assert.equal(syncedProduct.available, false);
 
 bag.add({ id: 'beluga-30g', title: 'Imperial Beluga', price: 350, currency: '$' });
 bag.add({ id: 'beluga-30g', title: 'Imperial Beluga', price: 350, currency: '$' });
+assert.equal(store.has('luxureatBag'), false, 'guest bags must not persist in browser storage');
+assert.equal(store.has('luxureat_guest_bag'), true, 'guest bags survive navigation only in session storage');
 assert.equal(bag.items()[0].quantity, 2);
 assert.equal(bag.subtotal(), 700);
 

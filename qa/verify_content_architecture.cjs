@@ -62,6 +62,6 @@ assert(!fs.existsSync(path.join(root, "latest-event.js")), "legacy latest-event.
 
 const event = events.events.find((item) => item.id === "marca-china-2026");
 assert(event?.image?.endsWith("/marca-china-2026.png"), "latest event does not use supplied PNG");
-assert(event?.poster?.endsWith("/marca-china-2026-home.webp"), "latest event homepage poster is missing");
+assert(event?.poster?.endsWith("/marca-china-2026-poster.webp"), "latest event homepage poster is missing");
 
 console.log("content architecture verification passed");

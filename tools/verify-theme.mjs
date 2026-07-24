@@ -101,7 +101,7 @@ const functionsPhp = read(path.join(themeDir, 'functions.php'));
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
-assert(functionsPhp.includes("'zh/caviar' => array('product-data', 'products', 'core')"), 'functions.php uses the canonical page asset map');
+assert(functionsPhp.includes("'zh/caviar' => array('core', 'product-data', 'products')"), 'functions.php loads account state before cart initialization');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
 assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');
@@ -132,7 +132,10 @@ assert(functionsPhp.includes('luxureat_static_restrict_test_payment') && functio
 assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'botChallenge' => luxureat_static_bot_challenge()"), 'account requests require a signed proof-of-work bot challenge');
-assert(functionsPhp.includes('luxureat_static_strong_password') && functionsPhp.includes('strlen($password) < 12'), 'customer registration enforces a strong 12-character password');
+assert(functionsPhp.includes('strlen($password) >= 12') && functionsPhp.includes("preg_match('/[A-Za-z]/'") && functionsPhp.includes("preg_match('/[0-9]/'"), 'customer registration requires 12 characters with letters and numbers');
+assert(functionsPhp.includes("empty($_POST['consent'])") && functionsPhp.includes('Terms of Service and Privacy Policy'), 'customer registration enforces legal consent on the server');
+assert(functionsPhp.includes("get_user_meta($user_id, 'luxureat_bag'") && functionsPhp.includes("update_user_meta(get_current_user_id(), 'luxureat_bag'") && functionsPhp.includes('woocommerce_payment_complete'), 'signed-in bags persist per user and paid items are removed');
+assert(functionsPhp.includes("add_filter('wp_send_new_user_notification_to_admin', '__return_false')") && functionsPhp.includes("add_filter('pre_wp_mail', 'luxureat_static_silence_account_admin_mail'"), 'account activity emails to administrators are silenced');
 assert(functionsPhp.includes("add_filter('xmlrpc_enabled', '__return_false')") && functionsPhp.includes('luxureat_static_disable_xmlrpc_request') && functionsPhp.includes("'system.multicall'") && functionsPhp.includes("header_remove('X-Powered-By')"), 'XML-RPC authentication and multicall requests are disabled without exposing the PHP version');
 assert(functionsPhp.includes("cookie .= '; SameSite=Lax'") && functionsPhp.includes('header_register_callback'), 'authentication cookie headers receive SameSite=Lax immediately before sending');
 assert(functionsPhp.includes("'Content-Security-Policy'") && functionsPhp.includes("'X-Content-Type-Options'") && functionsPhp.includes("'Permissions-Policy'"), 'front-end responses include hardened security headers');
@@ -202,6 +205,7 @@ assert(zhCaviar.includes('data-caviar-grid'), 'Chinese caviar page marks the pro
 const runtimeJs = [
   'assets/js/core.js',
   'assets/js/products.js',
+  'assets/js/events.js',
   'assets/js/journal.js',
 ].map((file) => read(path.join(themeDir, file))).join('\n');
 const brandJs = read(path.join(themeDir, 'assets/js/brand.js'));
@@ -231,6 +235,12 @@ assert(runtimeJs.includes('lux-bag-line-total'), 'bag items show multi-quantity 
 assert(runtimeJs.includes('${item.quantity}件总价') && runtimeJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
 assert(runtimeJs.includes('data-bag-quantity'), 'runtime scripts carries selected product quantities into the bag');
 assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-account-newsletter'), 'account modal provides registration and optional newsletter consent');
+assert(runtimeJs.includes('data-account-consent') && runtimeJs.includes('data-footer-modal="privacy"'), 'registration requires the legal consent and opens the privacy text');
+assert(runtimeJs.includes('data-account-password-toggle') && runtimeJs.includes('is-shaking'), 'registration provides password visibility and invalid-password warning');
+assert(runtimeJs.includes('data-account-email-hint') && runtimeJs.includes('icons.eyeOff'), 'account forms provide shaking email validation and Lucide password visibility icons');
+assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
+assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
+assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
 assert(runtimeJs.includes('luxureat_account') && runtimeJs.includes('LuxureatAccount'), 'account modal submits to the localized WordPress account endpoint');
 assert(runtimeJs.includes('crypto.subtle.digest') && runtimeJs.includes('bot_challenge') && runtimeJs.includes('bot_nonce') && runtimeJs.includes('bot_proof'), 'account modal solves and submits the bot challenge');
@@ -253,6 +263,7 @@ assert(runtimeJs.includes('scrollRestoration'), 'runtime scripts restores saved 
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
 assert(runtimeJs.includes('Please sign in before continuing to checkout.') && runtimeJs.includes('window.LuxureatAccount?.loggedIn'), 'bag checkout prompts guests to sign in before syncing the cart');
+assert(!runtimeJs.includes('localStorage.getItem("luxureatBag")') && runtimeJs.includes('action: "luxureat_bag"'), 'bags no longer use shared browser storage and sync to the signed-in user');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
@@ -267,6 +278,7 @@ assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.i
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
 
 const integrationCss = read(path.join(themeDir, 'integration.css'));
+assert(integrationCss.includes('.lux-event-thumbnails button.is-active'), 'active event thumbnails receive an enlarged visual state');
 assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
 assert(integrationCss.includes('.lux-account-dashboard-page .woocommerce-MyAccount-content > p'), 'account dashboard hides the duplicated WooCommerce introduction');
 assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('AlimamaShuHeiTi-Bold.woff2'), 'Chinese headline typography uses the bundled Alimama font');
@@ -465,7 +477,8 @@ assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_st
 assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
 assert(['rednote.svg', 'wechat.svg', 'douyin.svg', 'weibo.svg'].every((icon) => zhHome.includes(`media/social/${icon}`) && enHome.includes(`media/social/${icon}`)), 'bilingual footers use all four supplied social SVG icons');
-assert(zhHome.includes('2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W') && enHome.includes('2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W'), 'bilingual footers use the updated 2026 copyright line');
+assert(zhHome.includes('© 2026 Luxureat China（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W'), 'Chinese footer keeps the copyright and social credit code on one line');
+assert(enHome.includes('© 2026 Luxureat China（露意膳）｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W'), 'English footer mirrors the one-line company copyright');
 assert(hasExactHref(zhHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
 assert(hasExactHref(enHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
 assert(zhHome.includes('mailto:china@luxureat.com?cc=roberto@truffleat.com') && zhHome.includes('roberto@truffleat.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer exposes both emails with China as recipient and Roberto in copy');

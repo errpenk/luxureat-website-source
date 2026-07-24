@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//LuxurEat//Events//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:fhc-shanghai-2026@luxureat.cn
+DTSTAMP:20260724T110000Z
+DTSTART;VALUE=DATE:20261110
+DTEND;VALUE=DATE:20261113
+SUMMARY:LuxurEat at FHC Shanghai Global Food Trade Show
+LOCATION:Booth N3A10\, Hall N3\, Shanghai New International Expo Centre
+DESCRIPTION:Meet LuxurEat\, TruffleEat\, CaviarEat and Ugolini at Booth N3A10 in Hall N3.
+END:VEVENT
+END:VCALENDAR

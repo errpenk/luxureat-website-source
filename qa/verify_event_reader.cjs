@@ -33,7 +33,7 @@ function assert(condition, message) {
 
       assert(result.title?.includes(lang === "zh" ? "意大利风味" : "Italian flavor"), `${lang} event title is wrong`);
       assert(result.image?.includes("assets/media/events/cifie-changsha-2026-banner.webp"), `${lang} event preview image is wrong`);
-      assert(result.indexImage?.includes("assets/media/events/cifie-changsha-2026.jpg"), `${lang} event index image should use the Changsha poster: ${result.indexImage}`);
+      assert(result.indexImage?.includes("assets/media/events/cifie-changsha-2026-poster.webp"), `${lang} event index image should use the Changsha poster: ${result.indexImage}`);
       assert(result.indexImageFit === "contain", `${lang} event index image should show the complete poster: ${result.indexImageFit}`);
       assert(result.sectionTitleFont.includes("Alimama ShuHei"), `${lang} event section title should use Alimama ShuHei: ${result.sectionTitleFont}`);
       assert(result.sections === 3, `${lang} event article sections are incomplete`);
@@ -45,7 +45,7 @@ function assert(condition, message) {
   const home = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   await home.goto(`${BASE_URL}/zh/index.html`, { waitUntil: "domcontentloaded" });
   const detailHref = await home.locator(".lux-event-detail-link").getAttribute("href");
-  assert(detailHref === "news.html#event-cifie-changsha-2026", `home event link is wrong: ${detailHref}`);
+  assert(detailHref === "news.html#event-fhc-shanghai-2026", `home event link is wrong: ${detailHref}`);
   await home.close();
 
   await browser.close();

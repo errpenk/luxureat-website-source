@@ -15,7 +15,8 @@ function syncLuxWooCatalog() {
     product.currency = live.currency || product.currency;
     product.available = Boolean(live.available);
     product.stockStatus = live.stockStatus || "outofstock";
-    product.stockQuantity = live.stockQuantity === null ? null : Number(live.stockQuantity);
+    const stockQuantity = Number(live.stockQuantity);
+    product.stockQuantity = live.stockQuantity !== null && Number.isFinite(stockQuantity) ? stockQuantity : null;
     product.maxQuantity = Math.max(0, Number(live.maxQuantity) || 0);
     if (live.image) {
       product.image = live.image;
@@ -38,6 +39,9 @@ function renderLuxProductCatalog() {
     ? { add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", badge: "限量珍藏" }
     : { add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", badge: "Limited Reserve" };
   const formatMoney = (product) => `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
+  const stockLabel = (product) => product.available === false
+    ? labels.unavailable
+    : Number.isFinite(product.stockQuantity) ? `${product.stockQuantity} ${labels.stock}` : "";
   const speciesFor = (key) => {
     if (key.includes("beluga")) return "beluga";
     if (key.includes("oscetra")) return "oscetra";
@@ -59,7 +63,7 @@ function renderLuxProductCatalog() {
           <span class="font-body-lg text-body-lg text-secondary">${luxEscapeProductHtml(formatMoney(product))} / ${luxEscapeProductHtml(product.unit)}</span>
         </div>
         <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">${luxEscapeProductHtml(product.desc)}</p>
-        <small class="font-label-sm text-label-sm uppercase tracking-widest ${product.available === false ? "text-error" : "text-primary"}">${product.available === false ? labels.unavailable : product.stockQuantity === null ? labels.inStock : `${product.stockQuantity} ${labels.stock}`}</small>
+        ${stockLabel(product) ? `<small class="font-label-sm text-label-sm uppercase tracking-widest ${product.available === false ? "text-error" : "text-primary"}">${luxEscapeProductHtml(stockLabel(product))}</small>` : ""}
         <div class="mt-4 flex items-center gap-4">
           <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
           <button class="border border-outline-variant text-on-surface hover:border-primary hover:text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
@@ -361,7 +365,7 @@ function initLuxProductDetails() {
             <h2 id="lux-product-title">${luxEscapeProductHtml(product.title)}</h2>
             <p>${luxEscapeProductHtml(product.desc)}</p>
             <strong class="lux-product-price">${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em></strong>
-            <small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : product.stockQuantity === null ? labels.inStock : `${product.stockQuantity} ${labels.stock}`)}</small>
+            ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
               <div class="lux-product-qty" aria-label="${luxEscapeProductHtml(labels.qty)}">
                 <button type="button" data-product-quantity="-1" aria-label="${luxEscapeProductHtml(labels.qty)} -">−</button>
@@ -492,8 +496,19 @@ function initLuxProductDetails() {
 }
 
 (() => {
-  const key = "luxureatBag";
   const maxQuantity = 99;
+  const guestBagKey = "luxureat_guest_bag";
+  const guestBag = () => {
+    try {
+      const items = JSON.parse(sessionStorage.getItem(guestBagKey) || "[]");
+      return Array.isArray(items) ? items : [];
+    } catch {
+      return [];
+    }
+  };
+  let bagItems = window.LuxureatAccount?.loggedIn && Array.isArray(window.LuxureatAccount.bag)
+    ? window.LuxureatAccount.bag
+    : guestBag();
   const clampQuantity = (quantity, limit = maxQuantity) => Math.min(Math.max(1, Number(limit) || 1), Math.max(1, Number(quantity) || 1));
   const locale = () => document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const liveProductEntry = (id, lang = locale()) => {
@@ -521,16 +536,29 @@ function initLuxProductDetails() {
   };
 
   const read = () => {
-    try {
-      const items = JSON.parse(localStorage.getItem(key) || "[]");
-      return Array.isArray(items) ? items.map(currentItem).filter((item) => item.id && item.title) : [];
-    } catch (_) {
-      return [];
-    }
+    return bagItems.map(currentItem).filter((item) => item.id && item.title);
   };
 
   const save = (items) => {
-    localStorage.setItem(key, JSON.stringify(items));
+    bagItems = items;
+    if (window.LuxureatAccount) window.LuxureatAccount.bag = items;
+    const account = window.LuxureatAccount;
+    if (!account?.loggedIn) {
+      sessionStorage.setItem(guestBagKey, JSON.stringify(items.map(({ id, sku, quantity }) => ({ id, sku, quantity }))));
+    }
+    if (account?.loggedIn && account.ajaxUrl && account.bagNonce) {
+      fetch(account.ajaxUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        keepalive: true,
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: new URLSearchParams({
+          action: "luxureat_bag",
+          nonce: account.bagNonce,
+          items: JSON.stringify(items.map(({ id, sku, quantity }) => ({ id, sku, quantity }))),
+        }),
+      }).catch(() => {});
+    }
     renderBag();
     document.dispatchEvent?.(new CustomEvent("lux-bag-change"));
     return items;
@@ -727,7 +755,7 @@ function initLuxProductDetails() {
         action: "luxureat_checkout",
         nonce: config.nonce,
         lang,
-        items: JSON.stringify(items.map(({ sku, quantity }) => ({ sku, quantity }))),
+        items: JSON.stringify(items.map(({ id, sku, quantity }) => ({ id, sku, quantity }))),
       });
       const response = await fetch(config.ajaxUrl, {
         method: "POST",

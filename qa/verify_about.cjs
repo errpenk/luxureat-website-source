@@ -56,6 +56,7 @@ function assert(condition, message) {
         carouselDisplay: getComputedStyle(track).display,
         carouselOverflow: track.scrollWidth - track.clientWidth,
         carouselScrollbar: getComputedStyle(track).scrollbarWidth,
+        arrowsHidden: [...carousel.querySelectorAll(".lux-about-carousel-arrow")].every((arrow) => getComputedStyle(arrow).display === "none"),
         carouselHintContent: getComputedStyle(carousel, "::before").content,
         lucidePaths: [...carousel.querySelectorAll(".lux-about-carousel-arrow svg path")].map((path) => path.getAttribute("d")),
         captionCount: story.querySelectorAll("figcaption").length,
@@ -79,16 +80,15 @@ function assert(condition, message) {
     assert(result.titleBrandColor === "rgb(10, 186, 181)", `LuxurEat title is not Tiffany blue: ${result.titleBrandColor}`);
     assert(result.productBorder === 1, `product image frame was not restored: ${result.productBorder}px`);
     assert(result.productBackground === result.storyBackground, `product frame background does not match page: ${result.productBackground}`);
-    assert(result.carouselCount === 3, `last gallery is not one three-image row: ${result.carouselCount}`);
+    assert(result.carouselCount === 2, `last gallery does not contain the two requested images: ${result.carouselCount}`);
     assert(result.carouselDisplay === "flex", `carousel track is not flex: ${result.carouselDisplay}`);
-    assert(result.carouselOverflow > 0, "carousel does not have horizontal movement");
+    assert(result.carouselOverflow <= 1, `centered image row still overflows: ${result.carouselOverflow}`);
+    assert(result.arrowsHidden, "carousel arrow UI is still visible");
     assert(result.carouselScrollbar === "none", `carousel scrollbar is visible: ${result.carouselScrollbar}`);
     assert(result.carouselHintContent === "none", `carousel hint is still visible: ${result.carouselHintContent}`);
     assert(result.lucidePaths.join("|") === "m15 18-6-6 6-6|m9 18 6-6-6-6", `carousel arrows are not Lucide chevrons: ${result.lucidePaths}`);
     assert(result.captionCount === 0, `image captions still exist: ${result.captionCount}`);
     if (viewport.width > 1000) assert(result.summaryWidth > 500, `about summary did not widen: ${result.summaryWidth}px`);
-    assert(result.arrowBoxes.every((box) => box.top < result.trackBox.bottom && box.bottom > result.trackBox.top), "carousel arrows are not in the image row");
-    assert(result.arrowBoxes[0].right <= result.trackBox.left && result.arrowBoxes[1].left >= result.trackBox.right, "carousel arrows are not outside the images");
     assert(result.firstGalleryHeights.length === 2, `first gallery image count is wrong: ${result.firstGalleryHeights}`);
     assert(Math.abs(result.firstGalleryHeights[0] - result.firstGalleryHeights[1]) <= 2, `first gallery images do not have equal heights: ${result.firstGalleryHeights}`);
     assert(result.overflow <= 6, `about section has horizontal overflow at ${viewport.width}px: ${result.overflow}px`);
@@ -121,11 +121,6 @@ function assert(condition, message) {
     assert(viewHover.color === "rgb(16, 16, 16)", `view-large-image hover text is not black: ${viewHover.color}`);
 
     const track = page.locator(".lux-about-carousel-track");
-    const beforeScroll = await track.evaluate((node) => node.scrollLeft);
-    await page.locator('[data-about-carousel-step="1"]').click();
-    await page.waitForTimeout(450);
-    const afterScroll = await track.evaluate((node) => node.scrollLeft);
-    assert(afterScroll > beforeScroll, "carousel next arrow does not move the gallery");
 
     await page.locator('[data-about-image-alt="LuxurEat 全球业务布局"]').click();
     assert(await page.locator(".lux-about-lightbox[open]").count() === 1, "image lightbox did not open");
@@ -178,6 +173,7 @@ function assert(condition, message) {
       carouselHintContent: getComputedStyle(story.querySelector(".lux-about-carousel"), "::before").content,
       trackBox: track.getBoundingClientRect().toJSON(),
       arrowBoxes: [...story.querySelectorAll(".lux-about-carousel-arrow")].map((arrow) => arrow.getBoundingClientRect().toJSON()),
+      arrowsHidden: [...story.querySelectorAll(".lux-about-carousel-arrow")].every((arrow) => getComputedStyle(arrow).display === "none"),
       overflow: story.scrollWidth - story.clientWidth,
     };
   });
@@ -188,8 +184,7 @@ function assert(condition, message) {
   assert(englishResult.captionCount === 0, `English image captions still exist: ${englishResult.captionCount}`);
   assert(englishResult.carouselHint === "Slide left or right", `wrong English carousel hint: ${englishResult.carouselHint}`);
   assert(englishResult.carouselHintContent === "none", `English carousel hint is still visible: ${englishResult.carouselHintContent}`);
-  assert(englishResult.arrowBoxes.every((box) => box.top < englishResult.trackBox.bottom && box.bottom > englishResult.trackBox.top), "English carousel arrows are not in the image row");
-  assert(englishResult.arrowBoxes[0].right <= englishResult.trackBox.left && englishResult.arrowBoxes[1].left >= englishResult.trackBox.right, "English carousel arrows are not outside the images");
+  assert(englishResult.arrowsHidden, "English carousel arrow UI is still visible");
   assert(englishResult.overflow <= 6, `English about section has horizontal overflow: ${englishResult.overflow}px`);
   await english.locator(".lux-about-story").screenshot({ path: "/tmp/luxureat-about-en-desktop.png" });
   await english.close();

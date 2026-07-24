@@ -9,13 +9,12 @@ function assert(condition, message) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-  await page.addInitScript(() => localStorage.removeItem("luxureatBag"));
   await page.goto(`${BASE_URL}/zh/bag.html`, { waitUntil: "domcontentloaded" });
 
   await page.locator('.lux-bag-recommendations [data-bag-id="zh-champagne"]').evaluate((node) => node.click());
   await page.locator('.lux-bag-recommendations [data-bag-id="zh-ice-server"]').evaluate((node) => node.click());
 
-  const items = await page.evaluate(() => JSON.parse(localStorage.getItem("luxureatBag") || "[]"));
+  const items = await page.evaluate(() => window.LuxureatBag.items());
   const champagne = items.find((item) => item.id === "zh-champagne");
   const iceServer = items.find((item) => item.id === "zh-ice-server");
 

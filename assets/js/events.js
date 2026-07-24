@@ -5,8 +5,8 @@
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const carouselLabels = lang === "zh"
-    ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动" }
-    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event" };
+    ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至" }
+    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show" };
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;",
   }[char]));
@@ -41,11 +41,16 @@
 
   section.innerHTML = `
     <div class="lux-latest-event-carousel" role="region" aria-roledescription="carousel" aria-label="${escapeHtml(carouselLabels.carousel)}">
-      <div class="lux-latest-event-track">${events.map(renderSlide).join("")}</div>
-      ${events.length > 1 ? `<div class="lux-event-carousel-controls">
-        <button type="button" data-event-carousel-step="-1" aria-label="${escapeHtml(carouselLabels.previous)}">${icons.previous}</button>
-        <span aria-live="polite"><b>1</b> / ${events.length}</span>
-        <button type="button" data-event-carousel-step="1" aria-label="${escapeHtml(carouselLabels.next)}">${icons.next}</button>
+      <div class="lux-latest-event-viewport">
+        <div class="lux-latest-event-track">${events.map(renderSlide).join("")}</div>
+        ${events.length > 1 ? `<div class="lux-event-carousel-controls">
+          <button type="button" data-event-carousel-step="-1" aria-label="${escapeHtml(carouselLabels.previous)}">${icons.previous}</button>
+          <span aria-live="polite"><b>1</b> / ${events.length}</span>
+          <button type="button" data-event-carousel-step="1" aria-label="${escapeHtml(carouselLabels.next)}">${icons.next}</button>
+        </div>` : ""}
+      </div>
+      ${events.length > 1 ? `<div class="lux-event-thumbnails" role="tablist" aria-label="${escapeHtml(carouselLabels.carousel)}">
+        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="eager" decoding="async" src="${escapeHtml(event.cardImage || event.banner || event.poster)}" alt=""></button>`).join("")}
       </div>` : ""}
     </div>`;
 
@@ -54,6 +59,7 @@
   const track = carousel.querySelector(".lux-latest-event-track");
   const slides = [...track.children];
   const counter = carousel.querySelector(".lux-event-carousel-controls b");
+  const thumbnails = [...carousel.querySelectorAll("[data-event-carousel-index]")];
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let index = 0;
   let timer;
@@ -64,6 +70,12 @@
       slide.inert = slideIndex !== index;
       slide.setAttribute("aria-hidden", slideIndex === index ? "false" : "true");
     });
+    thumbnails.forEach((thumbnail, thumbnailIndex) => {
+      const active = thumbnailIndex === index;
+      thumbnail.classList.toggle("is-active", active);
+      thumbnail.setAttribute("aria-selected", String(active));
+      thumbnail.tabIndex = active ? 0 : -1;
+    });
     counter.textContent = index + 1;
   };
   const stop = () => clearInterval(timer);
@@ -72,6 +84,12 @@
     if (!reduceMotion && !document.hidden) timer = setInterval(() => show(index + 1), 3000);
   };
   carousel.addEventListener("click", (event) => {
+    const thumbnail = event.target.closest("[data-event-carousel-index]");
+    if (thumbnail) {
+      show(Number(thumbnail.dataset.eventCarouselIndex));
+      start();
+      return;
+    }
     const button = event.target.closest("[data-event-carousel-step]");
     if (!button) return;
     show(index + Number(button.dataset.eventCarouselStep));

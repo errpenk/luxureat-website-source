@@ -1,4 +1,4 @@
-export const assetVersion = "20260720-brand-suffix";
+export const assetVersion = "20260724-carousel-cart-responsive";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -24,7 +24,7 @@ const page = (lang, slug, key, scripts) => ({
   key,
   file: `${lang}/${slug}.html`,
   route: slug === "index" ? lang : `${lang}/${slug}`,
-  scripts: [...scripts, "core"],
+  scripts: ["core", ...scripts],
 });
 
 export const pages = [
@@ -63,13 +63,13 @@ export const scripts = {
 export const footer = {
   zh: {
     description: "不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。",
-    copyright: "2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W",
+    copyright: "© 2026 Luxureat China（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W",
     legal: [["privacy", "隐私政策"], ["terms", "销售条款"], ["shipping", "配送说明"]],
   },
   en: {
     description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China（露意膳） brings Italian food culture and innovative experiences to China.",
 
-    copyright: "2026 LUXUREAT CHINA（露意膳）｜ 91310000MAERED2X1W",
+    copyright: "© 2026 Luxureat China（露意膳）｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W",
     legal: [
       ["privacy", "Privacy Policy"], ["terms", "Terms of Sale"], ["shipping", "Shipping"]
     ],
