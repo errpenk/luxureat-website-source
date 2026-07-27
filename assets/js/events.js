@@ -61,6 +61,7 @@
         <h2>${escapeHtml(carouselLabels.meet)}</h2>
         <p>${escapeHtml(carouselLabels.meetCopy)}</p>
         <a class="lux-narrative-link" href="news.html#exhibition-map">${escapeHtml(carouselLabels.map)}${icons.arrow}</a>
+        <small class="lux-meet-map-attribution">© OpenStreetMap contributors</small>
       </div>
     </div>`;
 
