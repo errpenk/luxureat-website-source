@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260724-cart-count-card-carousel-4">
+<html class="dark" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260727-final-layout-5">
 <style>
     .fade-in-up {
         animation: fadeInUp 1s ease-out forwards;
@@ -17,7 +17,7 @@
     }
 </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../integration.css?v=20260727-final-layout-5">
 </head>
 <body class="antialiased bg-background text-on-background selection:bg-primary selection:text-on-primary">
 <!-- lux:header:start -->
@@ -36,7 +36,7 @@
 <!-- Navigation -->
 
 <!-- 1. Hero Section -->
-<header class="relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
+<header class="lux-home-hero relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
 <video class="lux-hero-video" autoplay muted loop playsinline preload="auto" poster="../assets/media/brand/home-hero-truffle-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-hero-truffle.mp4" type="video/mp4"></video>
 <div class="absolute inset-0 lux-hero-video-shade"></div>
@@ -61,9 +61,9 @@
 </div>
 </div>
 </header>
-<section class="lux-latest-event" data-latest-event></section>
+<section class="lux-latest-event" id="meet-us" data-latest-event></section>
 <!-- 2. Strategic Categories (Commerce Focused) -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="selected-products">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
 <div class="max-w-xl">
 <h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">甄选产品目录</h2>
@@ -110,7 +110,7 @@
 </div>
 </section>
 <!-- LuxurEat Group Overview -->
-<section class="lux-home-maison" aria-labelledby="section-5">
+<section class="lux-home-maison" id="maison-overview" aria-labelledby="section-5">
 <video class="lux-home-maison-media lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-maison-overview.m4v" type="video/mp4"></video>
 <div class="lux-home-maison-overlay" aria-hidden="true"></div>
 <div class="lux-home-maison-inner">
@@ -159,6 +159,24 @@
 </div>
 </div>
 </section>
+<!-- Brand partnership timeline -->
+<section class="lux-home-timeline" id="brand-timeline" data-home-timeline aria-labelledby="home-timeline-title">
+<header><span>品牌里程 / 品牌历程</span><h2 id="home-timeline-title">传统、经验与创新</h2><p>从意大利美食传统出发，历经专业餐饮实践、产品研发与全球合作，我们以长期主义构建值得信赖的品牌、产品与服务网络。</p></header>
+<div class="lux-home-timeline-layout">
+<div class="lux-home-timeline-steps">
+<article data-timeline-step data-timeline-index="0" class="is-active"><span>品牌起点</span><h3>源于意大利美食热忱</h3><p>LuxurEat 的故事源于对意大利料理、优质原料与传统工艺的长期热爱。我们从真实风味与产地知识出发，逐步建立对松露、鱼子酱及高端食品的专业判断，并把尊重食材、尊重手艺的原则写入品牌根基。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini 与意大利松露"></article>
+<article data-timeline-step data-timeline-index="1"><span>二十余年经验</span><h3>专业经验不断沉淀</h3><p>二十余年的餐饮实践、产品研发以及与专业厨师和生产伙伴的合作，让我们更准确地理解风味、品质、稳定交付与渠道需求。每一次选品和合作，都以可持续的长期价值而非短期流行为判断标准。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="LuxurEat 意大利展馆与二十余年专业经验"></article>
+<article data-timeline-step data-timeline-index="2"><span>中国与全球</span><h3>连接中国与全球市场</h3><p>依托上海本地团队、意大利产地资源与国际供应网络，我们把进口合规、品质文件、冷链物流、品牌传播和渠道服务连接起来，让优秀产品能够以清晰、稳定且适合当地市场的方式抵达中国与全球客户。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat 中国与全球展会合作团队"></article>
+<article data-timeline-step data-timeline-index="3"><span>2026及未来</span><h3>共同塑造未来</h3><p>面向未来，LuxurEat 将继续以松露、鱼子酱与高端意大利食品为核心，拓展更丰富的产品、餐饮与品牌合作方案。我们期待与生产者、经销商、酒店餐饮及零售伙伴共同创造经得起时间检验的增长机会。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="LuxurEat 2026及未来全球市场合作"></article>
+</div>
+<figure class="lux-home-timeline-visual" aria-label="LuxurEat 品牌历程图集">
+<img data-timeline-image class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini 与意大利松露">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="意大利展馆与品牌发展">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat 国际团队与展会合作">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="LuxurEat 全球市场合作">
+</figure>
+</div>
+</section>
 <!-- 4. Bespoke Services -->
 <section class="lux-home-editorial lux-home-gifting" id="gifting-editorial">
 <div class="lux-home-editorial-frame">
@@ -196,11 +214,11 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/products.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/events.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/events.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/journal.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/journal.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/products.js?v=20260724-cart-count-card-carousel-4"></script>
+<script defer src="../assets/js/core.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/products.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/events.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/events.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/journal.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/journal.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/products.js?v=20260727-final-layout-5"></script>
 <!-- lux:scripts:end --></body></html>

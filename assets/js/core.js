@@ -22,7 +22,17 @@ if ("IntersectionObserver" in window) {
   luxLazyBackgrounds.forEach(loadLuxBackground);
 }
 
-const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media, .lux-hero-video");
+document.querySelectorAll("[data-content-search]").forEach((input) => {
+  const items = [...document.querySelectorAll(input.dataset.contentSearch || "")];
+  input.addEventListener("input", () => {
+    const term = input.value.trim().toLocaleLowerCase(document.documentElement.lang || "en");
+    items.forEach((item) => {
+      item.hidden = Boolean(term) && !item.textContent.toLocaleLowerCase(document.documentElement.lang || "en").includes(term);
+    });
+  });
+});
+
+const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media, .lux-hero-video, .lux-cert-capability-video");
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   if ("IntersectionObserver" in window) {
     const videoObserver = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
@@ -36,6 +46,80 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
 } else {
   luxBackgroundVideos.forEach((video) => video.pause());
 }
+
+document.querySelectorAll("[data-cert-quote-carousel]").forEach((carousel) => {
+  const quotes = [...carousel.querySelectorAll("[data-cert-quote]")];
+  const story = carousel.closest(".lux-cert-network-story");
+  const images = [...(story?.querySelectorAll("[data-cert-quote-image]") || [])];
+  const footers = [...carousel.querySelectorAll("[data-cert-quote-footer]")];
+  const status = carousel.querySelector("[data-cert-quote-status]");
+  let index = 0;
+  const show = (next) => {
+    index = (next + quotes.length) % quotes.length;
+    quotes.forEach((quote, quoteIndex) => {
+      quote.hidden = quoteIndex !== index;
+      quote.classList.toggle("is-active", quoteIndex === index);
+    });
+    images.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === index));
+    if (images[index]) story?.style.setProperty("--lux-cert-quote-background", `url("${images[index].currentSrc || images[index].src}")`);
+    footers.forEach((footer, footerIndex) => {
+      footer.hidden = footerIndex !== index;
+      footer.classList.toggle("is-active", footerIndex === index);
+    });
+    if (status) status.textContent = `${index + 1} / ${quotes.length}`;
+  };
+  carousel.querySelector("[data-cert-quote-prev]")?.addEventListener("click", () => show(index - 1));
+  carousel.querySelector("[data-cert-quote-next]")?.addEventListener("click", () => show(index + 1));
+  show(0);
+});
+
+if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  document.querySelectorAll("[data-cert-hover-image]").forEach((figure) => {
+    const source = figure.querySelector("img");
+    if (!source) return;
+    let preview;
+    let closeTimer;
+    figure.addEventListener("mouseenter", () => {
+      clearTimeout(closeTimer);
+      const rect = source.getBoundingClientRect();
+      preview?.remove();
+      preview = document.createElement("div");
+      preview.className = "lux-cert-hover-preview";
+      preview.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
+      const image = source.cloneNode();
+      image.removeAttribute("loading");
+      preview.append(image);
+      document.body.append(preview);
+      requestAnimationFrame(() => preview?.classList.add("is-open"));
+    });
+    figure.addEventListener("mouseleave", () => {
+      if (!preview) return;
+      const rect = source.getBoundingClientRect();
+      preview.classList.remove("is-open");
+      preview.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
+      closeTimer = setTimeout(() => {
+        preview?.remove();
+        preview = null;
+      }, 420);
+    });
+  });
+}
+
+document.querySelectorAll("[data-home-timeline]").forEach((timeline) => {
+  const steps = [...timeline.querySelectorAll("[data-timeline-step]")];
+  const images = [...timeline.querySelectorAll("[data-timeline-image]")];
+  const activate = (index) => {
+    steps.forEach((step, stepIndex) => step.classList.toggle("is-active", stepIndex === index));
+    images.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === index));
+  };
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      const active = entries.filter(({ isIntersecting }) => isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (active) activate(Number(active.target.dataset.timelineIndex) || 0);
+    }, { rootMargin: "-28% 0px -38%", threshold: [0, .25, .5, .75] });
+    steps.forEach((step) => observer.observe(step));
+  }
+});
 
 const updateLuxBagCount = () => {
   let count = 0;
@@ -55,24 +139,24 @@ const luxMenu = document.querySelector(".lux-menu");
 
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", [["甄选产品目录", 4], ["品牌概览", 5], ["我们的价值观", 6], ["全球合作", 7]]],
-    ["journal.html", "关于我们", [["关于我们", 1], ["品牌传承", 5]]],
-    ["caviar.html", "系列产品", ["产品全览"]],
-    ["rituals.html", "食谱艺术", [["早餐", 3], ["第一道主食", 4], ["第二道主食", 5], ["甜品", 6]]],
-    ["news.html", "品牌新闻", ["品牌新闻"]],
-    ["certification.html", "品质认证", [["责任采购与全球合规", 2], ["全球品质体系", 3], ["认证体系", 4], ["认证与品质标识", 5]]],
-    ["gifting.html", "礼赠合作", [["国际市场定制", 2], ["合作案例", 3], ["企业合作方案", 4], ["中国经销合作", 5], ["开启专业合作", 6]]],
-    ["contact.html", "联系我们", [["品牌咨询", 2], ["全球足迹", 5]]],
+    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品目录", "selected-products"], ["品牌概览", "maison-overview"], ["我们的价值观", "heritage-editorial"], ["品牌历程", "brand-timeline"], ["全球合作", "gifting-editorial"]]],
+    ["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]],
+    ["caviar.html", "系列产品", [["产品全览", "product-catalogue"]]],
+    ["rituals.html", "食谱艺术", [["早餐", "breakfast"], ["第一道主食", "first-courses"], ["第二道主食", "main-courses"], ["甜品", "desserts"]]],
+    ["news.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
+    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["认证与品质标识", "certification-glossary"]]],
+    ["gifting.html", "礼赠合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
+    ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Selected Product Catalogue", 4], ["Maison Overview", 5], ["Our Values", 6], ["Global Partnership", 7]]],
-    ["journal.html", "About Us", [["About Us", 1], ["Brand Heritage", 5]]],
-    ["products.html", "Products", ["Premium Products"]],
-    ["rituals.html", "Recipe Art", [["Breakfast", 3], ["First Courses", 4], ["Main Courses", 5], ["Desserts", 6]]],
-    ["news.html", "Brand News", ["Brand News"]],
-    ["certification.html", "Certification", [["Responsible Trade", 2], ["Global Quality System", 3], ["Certification System", 4], ["Certification Glossary", 5]]],
-    ["gifting.html", "Gifting", [["International Market Solutions", 2], ["Partnership Cases", 3], ["Business Partnership Solutions", 4], ["Distribution Partners", 5], ["Start a Professional Partnership", 6]]],
-    ["contact.html", "Contact", [["Brand Consultation", 2], ["Global Presence", 5]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Selected Product Catalogue", "selected-products"], ["Maison Overview", "maison-overview"], ["Our Values", "heritage-editorial"], ["Brand Journey", "brand-timeline"], ["Global Partnership", "gifting-editorial"]]],
+    ["journal.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Seasonal Notes", "seasonal-notes"]]],
+    ["products.html", "Products", [["Premium Products", "product-catalogue"]]],
+    ["rituals.html", "Recipe Art", [["Breakfast", "breakfast"], ["First Courses", "first-courses"], ["Main Courses", "main-courses"], ["Desserts", "desserts"]]],
+    ["news.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
+    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Certification Glossary", "certification-glossary"]]],
+    ["gifting.html", "Gifting", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
+    ["contact.html", "Contact", [["Brand Consultation", "brand-consultation"], ["Global Presence", "global-footprint"]]],
   ],
 };
 
@@ -122,7 +206,8 @@ if (luxNav && luxMenu) {
     sections.forEach((section, index) => {
       const [sectionLabel, targetIndex] = Array.isArray(section) ? section : [section, index + 1];
       const sectionLink = document.createElement("a");
-      sectionLink.href = `${pageHref(href)}#section-${targetIndex}`;
+      const sectionHash = typeof targetIndex === "number" ? `section-${targetIndex}` : targetIndex;
+      sectionLink.href = `${pageHref(href)}#${sectionHash}`;
       sectionLink.textContent = sectionLabel;
       flyout.appendChild(sectionLink);
     });
@@ -376,7 +461,7 @@ function initLuxPartnershipLightbox() {
   const dialog = document.createElement("dialog");
   dialog.className = "lux-partnership-lightbox";
   dialog.setAttribute("aria-label", viewLabel);
-  dialog.innerHTML = `<button type="button" data-partnership-lightbox-close aria-label="${closeLabel}">×</button><img alt="">`;
+  dialog.innerHTML = `<div class="lux-image-lightbox-frame"><button type="button" data-partnership-lightbox-close aria-label="${closeLabel}"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button><img alt=""></div>`;
   document.body.appendChild(dialog);
 
   const lightboxImage = dialog.querySelector("img");
@@ -613,6 +698,9 @@ info@luxureat.com`;
     newsletter: "我愿意接收 LuxurEat 的活动提醒和产品上新邮件（可选）",
     sendReset: "发送重置链接",
     resetSent: "如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。",
+    verificationSent: "验证邮件已发送，请打开邮件中的链接完成注册后再登录。",
+    verified: "邮箱验证成功，现在可以登录账号。",
+    verificationFailed: "邮箱验证链接无效或已过期，请重新注册。",
     unavailable: "账号服务暂未连接，请稍后再试。",
     working: "请稍候…",
     loginRequired: "请先登录账号，然后继续结算。",
@@ -640,6 +728,9 @@ info@luxureat.com`;
     newsletter: "Email me about LuxurEat events and new products (optional)",
     sendReset: "Send Reset Link",
     resetSent: "If the email is registered, a reset link has been sent. Please check your inbox and spam folder.",
+    verificationSent: "A verification email has been sent. Open its link to finish registration before signing in.",
+    verified: "Your email has been verified. You can now sign in.",
+    verificationFailed: "The verification link is invalid or expired. Please register again.",
     unavailable: "Account service is not connected yet. Please try again later.",
     working: "Please wait…",
     loginRequired: "Please sign in before continuing to checkout.",
@@ -666,7 +757,7 @@ info@luxureat.com`;
             </label>
             <label class="lux-account-field" data-account-password>
               <span>${text.password}</span>
-              <div class="lux-account-input lux-account-password-input">${icons.lock}<input name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="1" required><button type="button" class="lux-account-password-toggle" data-account-password-toggle aria-label="${text.showPassword}" title="${text.showPassword}">${icons.eye}</button></div>
+              <div class="lux-account-input lux-account-password-input">${icons.lock}<input name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="1" required><button type="button" class="lux-account-password-toggle" data-account-password-toggle aria-label="${text.showPassword}" title="${text.showPassword}">${icons.eyeOff}</button></div>
               <small class="lux-account-password-hint" data-account-password-hint hidden>${text.passwordHint}</small>
             </label>
             <input name="company" type="text" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
@@ -723,12 +814,12 @@ info@luxureat.com`;
     password.pattern = creating ? "(?=.*[A-Za-z])(?=.*\\d).{12,}" : "";
     password.autocomplete = creating ? "new-password" : "current-password";
     password.type = "password";
-    passwordToggle.innerHTML = icons.eye;
+    passwordToggle.innerHTML = icons.eyeOff;
     passwordToggle.setAttribute("aria-label", text.showPassword);
     passwordToggle.title = text.showPassword;
     consent.required = creating;
     node.querySelector("[data-account-feedback]").textContent = "";
-    node.querySelector("[data-account-feedback]").classList.remove("is-shaking");
+    node.querySelector("[data-account-feedback]").classList.remove("is-shaking", "is-success");
     node.querySelector("[data-account-email-hint]").hidden = true;
   };
 
@@ -776,6 +867,7 @@ info@luxureat.com`;
     }
 
     button.disabled = true;
+    feedback.classList.remove("is-success");
     feedback.textContent = text.working;
     const data = new URLSearchParams(new FormData(form));
     const challenge = account.botChallenge;
@@ -816,22 +908,37 @@ info@luxureat.com`;
         body: data,
       });
       const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.data?.message || text.unavailable);
+      if (!response.ok || !result.success) {
+        const message = result.data?.message || text.unavailable;
+        if (result.data?.field === "email") {
+          feedback.textContent = "";
+          emailHint.textContent = message;
+          emailHint.hidden = false;
+          shake(emailHint);
+          email.focus();
+        } else {
+          emailHint.hidden = true;
+          feedback.textContent = message;
+          shake(feedback);
+        }
+        button.disabled = false;
+        return;
+      }
       if (node.dataset.accountMode === "forgot") {
         feedback.textContent = result.data?.message || text.resetSent;
+        button.disabled = false;
+        return;
+      }
+      if (node.dataset.accountMode === "register" && result.data?.requiresVerification) {
+        feedback.textContent = result.data?.message || text.verificationSent;
+        feedback.classList.add("is-success");
         button.disabled = false;
         return;
       }
       location.reload();
     } catch (error) {
       feedback.textContent = error.message || text.unavailable;
-      if (/邮箱|email|password|密码/i.test(feedback.textContent)) {
-        emailHint.hidden = false;
-        emailHint.textContent = text.emailInvalid;
-        shake(emailHint);
-      } else {
-        shake(feedback);
-      }
+      shake(feedback);
       button.disabled = false;
     }
   };
@@ -855,7 +962,7 @@ info@luxureat.com`;
       setOpen(true);
       return;
     }
-    if (event.target.closest("[data-account-close]") || event.target === modal()) {
+    if (event.target.closest("[data-account-close]")) {
       setOpen(false);
       return;
     }
@@ -870,7 +977,7 @@ info@luxureat.com`;
       const password = node.querySelector("input[name='password']");
       const revealing = password.type === "password";
       password.type = revealing ? "text" : "password";
-      passwordToggle.innerHTML = revealing ? icons.eyeOff : icons.eye;
+      passwordToggle.innerHTML = revealing ? icons.eye : icons.eyeOff;
       passwordToggle.setAttribute("aria-label", revealing ? copy().hidePassword : copy().showPassword);
       passwordToggle.title = revealing ? copy().hidePassword : copy().showPassword;
       password.focus();
@@ -907,18 +1014,17 @@ info@luxureat.com`;
     }
     const feedback = form.querySelector("[data-account-feedback]");
     feedback.textContent = "";
-    feedback.classList.remove("is-shaking");
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal()?.classList.contains("is-open")) setOpen(false);
+    feedback.classList.remove("is-shaking", "is-success");
   });
 
   document.addEventListener("DOMContentLoaded", () => {
-    if (new URLSearchParams(location.search).get("account") !== "required") return;
+    const state = new URLSearchParams(location.search).get("account");
+    if (!["required", "verified", "verification-failed"].includes(state)) return;
     const node = ensureModal();
     setOpen(true);
-    node.querySelector("[data-account-feedback]").textContent = copy().loginRequired;
+    const feedback = node.querySelector("[data-account-feedback]");
+    feedback.textContent = state === "verified" ? copy().verified : state === "verification-failed" ? copy().verificationFailed : copy().loginRequired;
+    feedback.classList.toggle("is-success", state === "verified");
   });
 })();
 

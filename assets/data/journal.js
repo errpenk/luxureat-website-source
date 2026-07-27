@@ -17,7 +17,7 @@
     aboutDining: articleImage("about-trufflebar-dining.webp"),
     aboutBar: articleImage("about-trufflebar-bar.webp"),
     aboutProducts: articleImage("about-truffle-products.webp"),
-    aboutMap: articleImage("about-global-map.png"),
+    aboutMap: articleImage("about-global-map-cropped.png"),
     aboutCaviar: articleImage("about-caviar.webp"),
     aboutShrimp: articleImage("about-shrimp-tartare.webp"),
     caviarWorld: articleImage("caviar-world-map.webp"),

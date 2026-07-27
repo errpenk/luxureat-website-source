@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>LuxurEat Maison - The Art of Exceptional Taste</title>
-<link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260727-final-layout-5">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <style>
@@ -42,7 +42,7 @@
         ::-webkit-scrollbar-thumb { background: #353535; }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../integration.css?v=20260727-final-layout-5">
 </head>
 <body class="antialiased selection:bg-primary selection:text-on-primary">
 <!-- lux:header:start -->
@@ -61,7 +61,7 @@
 <!-- Navigation -->
 
 <!-- 1. Hero Section -->
-<header class="relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
+<header class="lux-home-hero relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
 <video class="lux-hero-video" autoplay muted loop playsinline preload="auto" poster="../assets/media/brand/home-hero-truffle-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-hero-truffle.mp4" type="video/mp4"></video>
 <div class="absolute inset-0 lux-hero-video-shade"></div>
@@ -86,9 +86,9 @@
 </div>
 </div>
 </header>
-<section class="lux-latest-event" data-latest-event></section>
+<section class="lux-latest-event" id="meet-us" data-latest-event></section>
 <!-- 2. Strategic Categories (Commerce Focused) -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="selected-products">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
 <div class="max-w-xl">
 <h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">Selected Product Catalogue</h2>
@@ -135,7 +135,7 @@
 </div>
 </section>
 <!-- LuxurEat Group Overview -->
-<section class="lux-home-maison" aria-labelledby="section-5">
+<section class="lux-home-maison" id="maison-overview" aria-labelledby="section-5">
 <video class="lux-home-maison-media lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-maison-overview.m4v" type="video/mp4"></video>
 <div class="lux-home-maison-overlay" aria-hidden="true"></div>
 <div class="lux-home-maison-inner">
@@ -184,6 +184,24 @@
 </div>
 </div>
 </section>
+<!-- Brand partnership timeline -->
+<section class="lux-home-timeline" id="brand-timeline" data-home-timeline aria-labelledby="home-timeline-title">
+<header><span>MAISON MILESTONES / OUR JOURNEY</span><h2 id="home-timeline-title">Tradition, Experience &amp; Innovation</h2><p>Beginning with Italian culinary tradition and shaped by professional hospitality, product development and global collaboration, we build trusted brands, products and services for the long term.</p></header>
+<div class="lux-home-timeline-layout">
+<div class="lux-home-timeline-steps">
+<article data-timeline-step data-timeline-index="0" class="is-active"><span>BRAND ORIGINS</span><h3>Born from a Passion for Italian Gastronomy</h3><p>LuxurEat began with a lasting appreciation for Italian cuisine, exceptional ingredients and traditional craftsmanship. Starting from authentic flavour and origin knowledge, we developed specialist judgement across truffles, caviar and premium foods while making respect for ingredients and makers a permanent part of the brand.</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini with Italian truffles"></article>
+<article data-timeline-step data-timeline-index="1"><span>MORE THAN 20 YEARS</span><h3>Experience Refined over Time</h3><p>More than two decades of hospitality practice, product development and collaboration with chefs and producers have sharpened our understanding of flavour, quality, dependable delivery and channel needs. Every selection is considered for enduring value rather than short-lived trends.</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="LuxurEat at the Italy Pavilion, reflecting more than twenty years of expertise"></article>
+<article data-timeline-step data-timeline-index="2"><span>CHINA AND THE WORLD</span><h3>Connecting China and Global Markets</h3><p>Our Shanghai team, Italian origin relationships and international supply network connect import compliance, quality documentation, cold-chain logistics, brand communication and channel service. This allows exceptional products to reach clients in China and worldwide with clarity, consistency and local relevance.</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat exhibition team connecting China and global markets"></article>
+<article data-timeline-step data-timeline-index="3"><span>2026 AND BEYOND</span><h3>Shaping What Comes Next</h3><p>Looking forward, LuxurEat will continue to build around truffles, caviar and premium Italian foods while developing richer product, hospitality and brand partnership solutions. We invite producers, distributors, hospitality groups and retailers to create durable opportunities for growth together.</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="LuxurEat global market partnerships for 2026 and beyond"></article>
+</div>
+<figure class="lux-home-timeline-visual" aria-label="LuxurEat brand journey gallery">
+<img data-timeline-image class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini with Italian truffles">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="Italian pavilion and brand development">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat international team and exhibition partnership">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="LuxurEat global market partnership">
+</figure>
+</div>
+</section>
 <!-- 4. Bespoke Services -->
 <section class="lux-home-editorial lux-home-gifting" id="gifting-editorial">
 <div class="lux-home-editorial-frame">
@@ -221,11 +239,11 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/products.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/events.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/events.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/journal.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/journal.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/products.js?v=20260724-cart-count-card-carousel-4"></script>
+<script defer src="../assets/js/core.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/products.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/events.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/events.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/journal.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/journal.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/products.js?v=20260727-final-layout-5"></script>
 <!-- lux:scripts:end --></body></html>

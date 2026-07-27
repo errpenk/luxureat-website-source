@@ -5,8 +5,8 @@
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const carouselLabels = lang === "zh"
-    ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至" }
-    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show" };
+    ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
+    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "Meet Us", meetCopy: "Explore upcoming and completed LuxurEat（露意膳） exhibitions across China.", map: "View exhibition map" };
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;",
   }[char]));
@@ -20,7 +20,9 @@
   const renderSlide = (event, index) => {
     const copy = event[lang];
     const mapHref = event.mapHref || `https://maps.apple.com/?q=${encodeURIComponent(event.mapQuery)}`;
-    const newsHref = `news.html#event-${event.id}`;
+    const newsHref = location.pathname.endsWith(".html")
+      ? `news.html#event-${event.id}`
+      : `${lang === "zh" ? "/news/" : "/en/news/"}#event-${event.id}`;
     return `<article class="lux-latest-event-slide" role="group" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">
@@ -52,6 +54,14 @@
       ${events.length > 1 ? `<div class="lux-event-thumbnails" role="tablist" aria-label="${escapeHtml(carouselLabels.carousel)}">
         ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="eager" decoding="async" src="${escapeHtml(event.poster)}" alt=""></button>`).join("")}
       </div>` : ""}
+    </div>
+    <div class="lux-meet-map">
+      <div class="lux-meet-map-card">
+        <span>EXHIBITION ATLAS</span>
+        <h2>${escapeHtml(carouselLabels.meet)}</h2>
+        <p>${escapeHtml(carouselLabels.meetCopy)}</p>
+        <a class="lux-narrative-link" href="news.html#exhibition-map">${escapeHtml(carouselLabels.map)}${icons.arrow}</a>
+      </div>
     </div>`;
 
   if (events.length < 2) return;

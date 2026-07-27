@@ -64,4 +64,21 @@ const event = events.events.find((item) => item.id === "marca-china-2026");
 assert(event?.image?.endsWith("/marca-china-2026.png"), "latest event does not use supplied PNG");
 assert(event?.poster?.endsWith("/marca-china-2026-poster.webp"), "latest event homepage poster is missing");
 
+const productRuntime = read("assets/js/products.js");
+assert(productRuntime.includes("const activeFilters = new Set()"), "product filters are not multi-select");
+assert(productRuntime.includes("activeFilters.has(item.dataset.species)"), "product cards do not consume multi-select state");
+
+const journalRuntime = read("assets/js/journal.js");
+assert(journalRuntime.includes("leaflet@1.9.4"), "Leaflet map runtime is missing");
+assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM China basemap is missing");
+assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
+assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
+assert(!journalRuntime.includes("webapi.amap.com"), "legacy AMap loader is still present");
+assert(journalRuntime.includes("caviareat-baerii-news.png"), "independent News Centre article is missing");
+for (const locale of ["zh", "en"]) {
+  const news = read(`${locale}/news.html`);
+  assert(news.includes("data-exhibition-map"), `${locale} exhibition map mount is missing`);
+  assert(news.includes("data-news-center"), `${locale} News Centre mount is missing`);
+}
+
 console.log("content architecture verification passed");

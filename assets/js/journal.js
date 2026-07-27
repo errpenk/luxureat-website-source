@@ -3,11 +3,13 @@ function initLuxReader() {
   const articles = articleData.articles || {};
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
   const eventMount = document.querySelector("[data-recent-events]");
+  const mapMount = document.querySelector("[data-exhibition-map]");
+  const newsMount = document.querySelector("[data-news-center]");
   const aboutMount = document.querySelector("[data-about-story]");
   const eventHash = decodeURIComponent(location.hash).replace(/^#event-/, "");
   const readerHash = decodeURIComponent(location.hash).replace(/^#reader-/, "");
   const triggers = document.querySelectorAll("[data-reader-open], [data-reader-archive], [data-event-open]");
-  if (!triggers.length && !eventMount && !aboutMount && !events.some((event) => event.id === eventHash)) return;
+  if (!triggers.length && !eventMount && !mapMount && !newsMount && !aboutMount && !events.some((event) => event.id === eventHash)) return;
   if (!Object.keys(articles).length && !events.length) return;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -29,12 +31,43 @@ function initLuxReader() {
     ];
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const eventLabels = lang === "zh"
-    ? { kicker: "Maison Events", title: "最近活动", latest: "最新活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
-    : { kicker: "Maison Events", title: "Recent Events", latest: "Latest Events", past: "Past Events", empty: "No past events yet", read: "View details" };
+    ? { kicker: "Maison Events", title: "展览活动", latest: "最新活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
+    : { kicker: "Maison Events", title: "Exhibitions & Events", latest: "Latest Events", past: "Past Events", empty: "No past events yet", read: "View details" };
+  const newsLabels = lang === "zh"
+    ? { kicker: "Maison Journal", title: "新闻中心", search: "搜索新闻", latest: "最新文章", read: "阅读详情", empty: "没有找到相关内容" }
+    : { kicker: "Maison Journal", title: "News Centre", search: "Search news", latest: "Latest Posts", read: "Read more", empty: "No matching stories found" };
   const aboutArticle = articles[`${lang}-about`];
   const aboutLabels = lang === "zh"
     ? { title: "关于我们", journal: "LuxurEat 志", story: "品牌故事", madeIn: "意大利制造", view: "查看大图", previous: "查看上一张图片", next: "查看下一张图片", slide: "左右滑动查看", close: "关闭", portrait: "Roberto Ugolini 肖像" }
     : { title: "About Us", journal: "LuxurEat Journal", story: "Brand Story", madeIn: "Made in Italy", view: "View Full Size", previous: "View previous image", next: "View next image", slide: "Slide left or right", close: "Close", portrait: "Portrait of Roberto Ugolini" };
+  const loadLeaflet = () => {
+    if (window.L) return Promise.resolve(window.L);
+    if (!document.querySelector('link[data-lux-leaflet]')) {
+      const stylesheet = document.createElement("link");
+      stylesheet.rel = "stylesheet";
+      stylesheet.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      stylesheet.integrity = "sha256-p4NxAoJBhIINfQ3yn+RltJ9VxSHxNSvHNxgynexlxs=";
+      stylesheet.crossOrigin = "";
+      stylesheet.dataset.luxLeaflet = "";
+      document.head.append(stylesheet);
+    }
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[data-lux-leaflet]');
+      if (existing) {
+        existing.addEventListener("load", () => resolve(window.L), { once: true });
+        existing.addEventListener("error", reject, { once: true });
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      script.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+      script.crossOrigin = "";
+      script.dataset.luxLeaflet = "";
+      script.addEventListener("load", () => resolve(window.L), { once: true });
+      script.addEventListener("error", reject, { once: true });
+      document.head.append(script);
+    });
+  };
 
   const renderRecentEvents = () => {
     if (!eventMount) return;
@@ -72,6 +105,133 @@ function initLuxReader() {
   };
   renderRecentEvents();
 
+  const renderExhibitionMap = () => {
+    if (!mapMount) return;
+    const mapLabels = lang === "zh"
+      ? { kicker: "展会图谱", title: "展会地图", intro: "查看 LuxurEat（露意膳）即将参与及已经结束的展会。将鼠标移至地点标记可预览，点击可打开对应活动详情。", upcoming: "即将开始", ended: "已结束", detail: "查看详情", reset: "返回中国地图视角", unavailable: "地图暂时无法加载，请稍后重试。" }
+      : { kicker: "Exhibition Atlas", title: "Exhibition Map", intro: "Explore upcoming and completed LuxurEat（露意膳） exhibitions. Hover over a location to preview it, then select the marker to open the event article.", upcoming: "Upcoming", ended: "Ended", detail: "View details", reset: "Reset to China view", unavailable: "The map is temporarily unavailable. Please try again shortly." };
+    const today = new Date();
+    const mappedEvents = events.filter((event) => Array.isArray(event.coordinates)).map((event) => ({
+      ...event,
+      isEnded: event.status === "past" || (event.endDate && new Date(`${event.endDate}T23:59:59`) < today),
+    }));
+    const groups = [...mappedEvents.reduce((result, event) => {
+      const key = event.coordinates.join(",");
+      const group = result.get(key) || { coordinates: event.coordinates, events: [] };
+      group.events.push(event);
+      result.set(key, group);
+      return result;
+    }, new Map()).values()];
+    const details = (group) => group.events.map((event) => {
+      const copy = event[lang];
+      const image = event.cardImage || event.previewImage || event.image;
+      return `<article style="--lux-map-event-image:url('${escapeHtml(image)}')"><small class="${event.isEnded ? "is-ended" : "is-upcoming"}">${event.isEnded ? mapLabels.ended : mapLabels.upcoming}</small><strong>${escapeHtml(copy.articleTitle)}</strong><span>${escapeHtml(copy.date)} · ${escapeHtml(copy.city)}</span><button type="button" data-event-open="${escapeHtml(event.id)}">${mapLabels.detail}</button></article>`;
+    }).join("");
+
+    mapMount.innerHTML = `<div class="lux-exhibition-map-head"><span>${mapLabels.kicker}</span><h2>${mapLabels.title}</h2><p>${mapLabels.intro}</p><div><span><i class="is-upcoming"></i>${mapLabels.upcoming}</span><span><i class="is-ended"></i>${mapLabels.ended}</span></div></div><div class="lux-amap-shell"><div class="lux-amap-canvas" data-osm-map role="application" aria-label="${escapeHtml(mapLabels.title)}"></div><button type="button" class="lux-map-reset" data-map-reset aria-label="${escapeHtml(mapLabels.reset)}" title="${escapeHtml(mapLabels.reset)}"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.42 1.42"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path><circle cx="12" cy="12" r="2"></circle></svg></button><div class="lux-map-popover" data-map-popover hidden></div></div>`;
+
+    const popover = mapMount.querySelector("[data-map-popover]");
+    const mapCanvas = mapMount.querySelector("[data-osm-map]");
+    const chinaBounds = [[18, 73], [54, 135]];
+    let hideTimer;
+    const showGroup = (group) => {
+      clearTimeout(hideTimer);
+      popover.innerHTML = details(group);
+      popover.hidden = false;
+    };
+    const hideGroup = () => {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => { popover.hidden = true; }, 480);
+    };
+    popover.addEventListener("mouseenter", () => clearTimeout(hideTimer));
+    popover.addEventListener("mouseleave", hideGroup);
+
+    loadLeaflet().then((L) => {
+      const map = L.map(mapCanvas, {
+        minZoom: 3,
+        maxZoom: 18,
+        zoomControl: true,
+        worldCopyJump: false,
+        scrollWheelZoom: false,
+        touchZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+      });
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+      const resetView = () => map.fitBounds(chinaBounds, { padding: [24, 24], animate: true });
+      resetView();
+      groups.forEach((group) => {
+        const ended = group.events.every((event) => event.isEnded);
+        const city = group.events.map((event) => event[lang].city).filter((value, index, values) => values.indexOf(value) === index).join("、");
+        const icon = L.divIcon({
+          className: "lux-osm-marker-wrap",
+          html: `<span class="lux-osm-marker ${ended ? "is-ended" : "is-upcoming"}"><span>${group.events.length}</span></span>`,
+          iconSize: [40, 48],
+          iconAnchor: [20, 44],
+        });
+        const marker = L.marker([group.coordinates[1], group.coordinates[0]], { icon, title: city, keyboard: true }).addTo(map);
+        marker.on("mouseover", () => showGroup(group));
+        marker.on("mouseout", hideGroup);
+        marker.on("click", () => {
+          showGroup(group);
+          renderEvent(group.events[0].id);
+        });
+        const markerElement = marker.getElement();
+        markerElement?.addEventListener("mouseenter", () => showGroup(group));
+        markerElement?.addEventListener("mouseleave", hideGroup);
+        markerElement?.addEventListener("focus", () => showGroup(group));
+        markerElement?.addEventListener("blur", hideGroup);
+      });
+      mapMount.querySelector("[data-map-reset]").addEventListener("click", resetView);
+    }).catch(() => {
+      mapCanvas.classList.add("is-unavailable");
+      mapCanvas.textContent = mapLabels.unavailable;
+    });
+  };
+  renderExhibitionMap();
+
+  const renderNewsCenter = () => {
+    if (!newsMount) return;
+    const story = lang === "zh" ? {
+      title: "CaviareEat Baerii 的产地与真实品质",
+      date: "2025年9月4日",
+      intro: "CaviareEat Baerii（西伯利亚鲟，Acipenser baerii）来自意大利、法国、德国与中国的精选养殖场，并以动物福利、可追溯性和环境可持续标准为基础。每一批产品均配有 CITES 文件并接受严格质量控制。",
+      sections: [
+        ["品鉴特征", "颜色从炭灰至深棕，并带有珍珠光泽；颗粒直径约 2.5–3.0 毫米。质地丝滑、奶油感细腻且富有弹性，风味优雅而持久，带有榛子、新鲜黄油与淡水气息。"],
+        ["适用渠道", "适合追求优雅与多用途鱼子酱的厨师及高端餐厅，也适用于甜咸创作、精品鸡尾酒、高端零售与私人品牌；Halal、Kosher 及有机市场可按需求提供相应方案。"],
+        ["享用方式", "经典搭配包括布里尼薄饼、酸奶油与水煮蛋；现代搭配可选择鞑靼、卡帕乔、生蚝或寿司；也可用于风味黄油、甜咸小食、白巧克力甜点，以及伏特加、金酒和柑橘浸泡酒等鸡尾酒。"],
+        ["规格与质量控制", "提供 1 千克原装罐，以及 10 克、30 克、50 克、125 克、250 克、500 克与 1 千克认证包装，可采用 CaviareEat 品牌或私人标签，全程冷链运输。所有批次遵循 HACCP、IFS 与 BRC 体系，并可按需求提供 Halal 与 Kosher 认证。"],
+      ],
+      closing: "CaviareEat Baerii 让鱼子酱在保持奢华感与可持续价值的同时更易融入专业餐饮与创意厨房。",
+      alt: "CaviareEat Royal Baerii 鱼子酱罐",
+    } : {
+      title: "Origin and Authenticity of CaviareEat Baerii",
+      date: "September 4, 2025",
+      intro: "Our Baerii caviar (Acipenser baerii) comes from selected farms in Italy, France, Germany, and China, all operating under exacting standards of animal welfare, traceability, and environmental sustainability. Every package is supported by CITES documentation and strict quality controls.",
+      sections: [
+        ["Tasting profile", "Its colour ranges from anthracite grey to deep brown with pearly reflections. The 2.5–3.0 mm eggs are silky, creamy and firm, with a delicate yet persistent flavour recalling hazelnut, fresh butter and freshwater notes."],
+        ["Who it is for", "CaviareEat Baerii suits chefs and gourmet restaurants seeking elegant versatility, pastry chefs and mixologists creating sweet-savoury dishes or premium cocktails, private-label and high-end retail programmes, and Halal, Kosher or organic markets on request."],
+        ["How to serve it", "Serve it traditionally on blinis with sour cream or hard-boiled egg; pair it with tartare, carpaccio, oysters or sushi; or use it in flavoured butter, sweet-savoury finger food, white-chocolate desserts, vodka, gin, citrus infusions and artisanal bitters."],
+        ["Formats and quality control", "Formats include an original 1 kg tin and certified 10 g, 30 g, 50 g, 125 g, 250 g, 500 g and 1 kg packs, under the CaviareEat label or private label, delivered through a complete cold chain. Every batch follows HACCP, IFS and BRC protocols, with Halal and Kosher certification available on request."],
+      ],
+      closing: "CaviareEat Baerii makes caviar more accessible and versatile without compromising luxury, safety or sustainability.",
+      alt: "CaviareEat Royal Baerii caviar tin",
+    };
+    newsMount.innerHTML = `
+      <div class="lux-news-center-inner">
+        <header class="lux-recent-events-head"><span>${newsLabels.kicker}</span><h2>${newsLabels.title}</h2></header>
+        <article class="lux-news-feature">
+          <figure><img loading="lazy" decoding="async" src="../assets/media/events/caviareat-baerii-news.png" alt="${escapeHtml(story.alt)}"></figure>
+          <div class="lux-news-feature-copy"><small>${escapeHtml(story.date)} · CaviareEat</small><h3>${escapeHtml(story.title)}</h3><p class="lux-news-lead">${escapeHtml(story.intro)}</p>${story.sections.map(([heading, copy]) => `<section><h4>${escapeHtml(heading)}</h4><p>${escapeHtml(copy)}</p></section>`).join("")}<blockquote>${escapeHtml(story.closing)}</blockquote></div>
+        </article>
+      </div>`;
+  };
+  renderNewsCenter();
+
   const renderAboutStory = () => {
     if (!aboutMount || !aboutArticle) return;
     const [titleBrand, ...titleRest] = aboutArticle.title.split("｜");
@@ -91,7 +251,10 @@ function initLuxReader() {
             <button type="button" class="lux-about-carousel-arrow is-next" data-about-carousel-step="1" aria-label="${escapeHtml(aboutLabels.next)}"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
           </div>`
         : `<div class="lux-reader-section-media">${figures}</div>`;
-      return `<section class="lux-reader-section" id="lux-about-section-${index}">
+      const divider = /传统、创新|Tradition, Innovation/i.test(heading)
+        ? `<figure class="lux-about-section-divider"><img loading="lazy" decoding="async" src="../assets/media/brand/about-aquaculture-divider.webp" alt="${escapeHtml(lang === "zh" ? "山水之间的可持续水产养殖场" : "Sustainable aquaculture among mountains and clear water")}"></figure>`
+        : "";
+      return `${divider}<section class="lux-reader-section" id="lux-about-section-${index}">
         <h3>${escapeHtml(heading)}</h3>
         ${paragraphs(content)}
         ${gallery}
@@ -133,7 +296,7 @@ function initLuxReader() {
   if (aboutMount) {
     const lightbox = document.createElement("dialog");
     lightbox.className = "lux-about-lightbox";
-    lightbox.innerHTML = `<button type="button" data-about-lightbox-close aria-label="${escapeHtml(aboutLabels.close)}">${escapeHtml(aboutLabels.close)}</button><img loading="lazy" decoding="async" alt="">`;
+    lightbox.innerHTML = `<div class="lux-image-lightbox-frame"><button type="button" data-about-lightbox-close aria-label="${escapeHtml(aboutLabels.close)}"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button><img loading="lazy" decoding="async" alt=""></div>`;
     document.body.appendChild(lightbox);
 
     document.addEventListener("click", (event) => {

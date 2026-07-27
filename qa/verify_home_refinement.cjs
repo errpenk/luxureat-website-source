@@ -12,6 +12,7 @@ const home = read("zh/index.html");
   "journal.html#reader-zh-harvest",
   "contact.html#global-footprint",
   "news.html#recent-events",
+  'id="meet-us"',
   ">合作详情</a>",
 ].forEach((value) => assert.ok(home.includes(value), `missing: ${value}`));
 
@@ -19,5 +20,7 @@ assert.ok(read("zh/contact.html").includes('id="global-footprint"'));
 assert.ok(read("zh/news.html").includes("brand-news-global.webp"));
 assert.ok(read("zh/rituals.html").includes(">食材购买</h2>"));
 assert.ok(read("assets/js/journal.js").includes('articles[readerHash]'));
+assert.ok(read("assets/js/events.js").includes('news.html#exhibition-map'));
+assert.ok(read("assets/js/events.js").includes("LuxurEat（露意膳）"));
 
 console.log("home refinement checks passed");

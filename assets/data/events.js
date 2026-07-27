@@ -13,6 +13,8 @@
         poster: asset("media/events/fhc-shanghai-2026.webp"),
         calendar: asset("fhc-shanghai-2026.ics"),
         mapQuery: "上海新国际博览中心, 上海市浦东新区龙阳路2345号",
+        coordinates: [121.56364, 31.21158],
+        endDate: "2026-11-12",
         zh: {
           posterAlt: "LuxurEat亮相第二十九届FHC上海环球食品展海报",
           title: "LuxurEat携旗下高端美食品牌亮相FHC上海环球食品展",
@@ -78,6 +80,8 @@
         calendar: asset("cifie-changsha-2026.ics"),
         mapQuery: "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133",
         mapHref: "https://www.google.com/maps/place//data=!4m2!3m1!1s0x342734ba371bc581:0xaa8729018b86a918?sa=X&ved=1t:8290&ictx=111",
+        coordinates: [113.12474, 28.15197],
+        endDate: "2026-09-20",
         zh: {
           posterAlt: "LuxurEat（露意膳） 亮相第十一届中国国际食品餐饮博览会海报",
           title: "意大利风味，与长沙相遇。",
@@ -142,6 +146,8 @@
         poster: asset("media/events/marca-china-2026-poster.webp"),
         calendar: asset("marca-china-2026.ics"),
         mapQuery: "广州市海珠区琶洲街道新港东路1000号保利世界贸易中心",
+        coordinates: [113.37055, 23.09831],
+        endDate: "2026-09-09",
         zh: {
           posterAlt: "Marca China 2026 广州国际自有品牌展海报",
           title: "国际自有品牌展，广州相见。",
@@ -208,6 +214,8 @@
         poster: asset("media/events/sial-guangzhou-2026.webp"),
         calendar: asset("sial-guangzhou-2026.ics"),
         mapQuery: "广州保利世贸博览馆, 广州市海珠区新港东路1000号",
+        coordinates: [113.37055, 23.09831],
+        endDate: "2026-09-05",
         zh: {
           posterAlt: "LuxurEat广州参加2026 SIAL西雅展海报",
           title: "LuxurEat广州：2026 SIAL西雅展",

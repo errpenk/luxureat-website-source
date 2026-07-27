@@ -113,12 +113,15 @@ function initLuxCaviarControls() {
     return;
   }
 
-  const filterButtons = Array.from(controls.querySelectorAll("[data-caviar-filter]"));
+  const filterButtons = Array.from(document.querySelectorAll("[data-caviar-filter]"));
   const viewButtons = Array.from(controls.querySelectorAll("[data-caviar-view]"));
   const sortButton = controls.querySelector("[data-caviar-sort]");
   const sortLabel = controls.querySelector("[data-caviar-sort-label]");
   const sortMenu = controls.querySelector("[data-caviar-sort-menu]");
   const sortItems = Array.from(controls.querySelectorAll("[data-caviar-sort-option]"));
+  const search = controls.querySelector("[data-caviar-search]");
+  const searchClear = controls.querySelector("[data-caviar-search-clear]");
+  const clearAll = document.querySelector("[data-caviar-clear]");
   const count = document.querySelector("[data-caviar-count]");
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
 
@@ -144,9 +147,10 @@ function initLuxCaviarControls() {
     },
   ];
 
-  let activeFilter = "all";
+  const activeFilters = new Set();
   let activeView = "grid";
   let activeSortKey = "recommended";
+  let searchTerm = "";
 
   const setPressed = (buttons, activeButton, activeClasses, inactiveClasses) => {
     buttons.forEach((button) => {
@@ -162,7 +166,9 @@ function initLuxCaviarControls() {
     let visibleCount = 0;
 
     items.forEach((item) => {
-      const matchesFilter = activeFilter === "all" || item.dataset.species === activeFilter;
+      const matchesSpecies = !activeFilters.size || activeFilters.has(item.dataset.species);
+      const matchesSearch = !searchTerm || item.textContent.toLocaleLowerCase(lang === "zh" ? "zh-CN" : "en").includes(searchTerm);
+      const matchesFilter = matchesSpecies && matchesSearch;
       item.hidden = !matchesFilter;
       if (matchesFilter) {
         visibleCount += 1;
@@ -172,6 +178,7 @@ function initLuxCaviarControls() {
     if (count) {
       count.textContent = String(visibleCount);
     }
+    grid.dataset.visibleCount = String(visibleCount);
   };
 
   const applyView = () => {
@@ -210,10 +217,41 @@ function initLuxCaviarControls() {
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      activeFilter = button.dataset.caviarFilter || "all";
-      setPressed(filterButtons, button, activeButtonClasses, inactiveButtonClasses);
+      const filter = button.dataset.caviarFilter || "all";
+      if (filter === "all") activeFilters.clear();
+      else if (activeFilters.has(filter)) activeFilters.delete(filter);
+      else activeFilters.add(filter);
+      filterButtons.forEach((item) => {
+        const itemFilter = item.dataset.caviarFilter || "all";
+        const isActive = itemFilter === "all" ? !activeFilters.size : activeFilters.has(itemFilter);
+        item.setAttribute("aria-pressed", String(isActive));
+        activeButtonClasses.forEach((className) => item.classList.toggle(className, isActive));
+        inactiveButtonClasses.forEach((className) => item.classList.toggle(className, !isActive));
+      });
       applyFilter();
     });
+  });
+
+  search?.addEventListener("input", () => {
+    searchTerm = search.value.trim().toLocaleLowerCase(lang === "zh" ? "zh-CN" : "en");
+    searchClear?.classList.toggle("is-visible", Boolean(search.value));
+    applyFilter();
+  });
+  searchClear?.addEventListener("click", () => {
+    if (!search) return;
+    search.value = "";
+    searchTerm = "";
+    searchClear.classList.remove("is-visible");
+    search.focus();
+    applyFilter();
+  });
+  clearAll?.addEventListener("click", () => {
+    activeFilters.clear();
+    searchTerm = "";
+    if (search) search.value = "";
+    searchClear?.classList.remove("is-visible");
+    filterButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.caviarFilter === "all")));
+    applyFilter();
   });
 
   viewButtons.forEach((button) => {

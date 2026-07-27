@@ -34,8 +34,38 @@ assert(!fs.existsSync(path.join(root, "en/private.html")), "extra English privat
 const core = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is missing");
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
-assert(core.includes('["gifting.html", "礼赠合作", [["国际市场定制", 2], ["合作案例", 3]'), "Chinese gifting submenu is incorrect");
-assert(core.includes('["journal.html", "关于我们", [["关于我们", 1], ["品牌传承", 5]]'), "Chinese About Us submenu is incorrect");
-assert(core.includes('["contact.html", "联系我们", [["品牌咨询", 2], ["全球足迹", 5]]'), "Chinese contact submenu is incorrect");
+assert(core.includes('["gifting.html", "礼赠合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"]'), "Chinese gifting submenu is incorrect");
+assert(core.includes('["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]'), "Chinese About Us submenu is incorrect");
+assert(core.includes('["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]'), "Chinese contact submenu is incorrect");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");
+
+const submenuTargets = {
+  zh: {
+    "index.html": ["meet-us", "selected-products", "maison-overview", "heritage-editorial", "brand-timeline", "gifting-editorial"],
+    "journal.html": ["about-us", "featured", "seasonal-notes"],
+    "caviar.html": ["product-catalogue"],
+    "rituals.html": ["breakfast", "first-courses", "main-courses", "desserts"],
+    "news.html": ["recent-events", "exhibition-map", "news-center"],
+    "certification.html": ["responsible-trade", "quality-system", "certification-system", "certification-glossary"],
+    "gifting.html": ["private-label", "partnership-cases", "business-partnership", "china-partnership", "inquiry"],
+    "contact.html": ["brand-consultation", "global-footprint"],
+  },
+  en: {
+    "index.html": ["meet-us", "selected-products", "maison-overview", "heritage-editorial", "brand-timeline", "gifting-editorial"],
+    "journal.html": ["about-us", "featured", "seasonal-notes"],
+    "products.html": ["product-catalogue"],
+    "rituals.html": ["breakfast", "first-courses", "main-courses", "desserts"],
+    "news.html": ["recent-events", "exhibition-map", "news-center"],
+    "certification.html": ["responsible-trade", "quality-system", "certification-system", "certification-glossary"],
+    "gifting.html": ["private-label", "partnership-cases", "business-partnership", "china-partnership", "inquiry"],
+    "contact.html": ["brand-consultation", "global-footprint"],
+  },
+};
+for (const [lang, pages] of Object.entries(submenuTargets)) {
+  for (const [file, targets] of Object.entries(pages)) {
+    const html = fs.readFileSync(path.join(root, lang, file), "utf8");
+    targets.forEach((target) => assert(new RegExp(`\\bid=["']${target}["']`).test(html), `${lang}/${file} is missing submenu target #${target}`));
+    targets.forEach((target) => assert(core.includes(`"${target}"`), `navigation config is missing #${target}`));
+  }
+}
 console.log("navigation verification passed");

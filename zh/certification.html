@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>品质与认证 | LuxurEat Maison</title>
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260727-final-layout-5">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <style>
@@ -17,7 +17,7 @@
         .hover-gold-glow:hover { box-shadow: 0 0 20px rgba(157, 245, 236, 0.1); }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../integration.css?v=20260727-final-layout-5">
 </head>
 <body class="text-on-surface">
 <!-- lux:header:start -->
@@ -49,7 +49,7 @@
 </header>
 <main class="max-w-container-max mx-auto px-margin-desktop py-section-gap">
 <!-- CITES Certification Section -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100">
+<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100" id="responsible-trade">
 <div class="order-2 md:order-1">
 <div class="inline-block border border-outline-variant px-4 py-1 mb-6">
 <span class="font-label-sm text-label-sm tracking-widest text-secondary">负责任的贸易</span>
@@ -75,7 +75,7 @@
 </div>
 </section>
 <!-- Cold Chain Logistics -->
-<section class="mb-section-gap lux-muted-block lux-cert-system-block p-12 md:p-24 border-t border-b border-outline-variant/10 transition-all duration-1000 opacity-100">
+<section class="mb-section-gap lux-muted-block lux-cert-system-block p-12 md:p-24 border-t border-b border-outline-variant/10 transition-all duration-1000 opacity-100" id="quality-system">
 <video class="lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/cert-quality-system.m4v" type="video/mp4"></video>
 <div class="lux-cert-system-overlay" aria-hidden="true"></div>
 <div class="max-w-3xl mx-auto text-center mb-16">
@@ -101,7 +101,7 @@
 </div>
 </section>
 <!-- Food Safety Section -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100">
+<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100" id="certification-system">
 <div class="aspect-[4/5] bg-surface-container-low border border-outline-variant/30 overflow-hidden relative">
 <div class="absolute inset-0 bg-cover bg-center" data-alt="LuxurEat 品质合作与共同坚持" data-lux-bg="../assets/media/brand/cert-our-commitment.webp"></div>
 </div>
@@ -132,8 +132,56 @@
 </div>
 </div>
 </section>
+<!-- Quality capability and global network -->
+<section class="lux-cert-capability" aria-labelledby="cert-capability-title">
+<video class="lux-cert-capability-video" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/cert-capability-background.m4v" type="video/mp4"></video>
+<span class="lux-cert-capability-overlay" aria-hidden="true"></span>
+<figure><img loading="lazy" decoding="async" src="../assets/media/brand/cert-quality-production.webp" alt="LuxurEat 松露原料与生产管理"></figure>
+<div class="lux-cert-capability-grid">
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.5.4 2.7-.2 3.8-1.3 1.1-1.1 1.8-2.5 1.3-3.8-1.3-.5-2.7.2-3.8 1.3-1.1 1.1-1.7 2.3-1.3 3.8Z"/></svg><h3 id="cert-capability-title">原料甄选</h3><p>审核产地、供应商与产品文件，从源头建立品质基础。</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l8 4V7l8 4v10"/><path d="M5 7V3h4v6"/><path d="M12 16h.01"/><path d="M16 16h.01"/></svg><h3>生产管理</h3><p>以食品安全体系及关键控制点管理生产全过程。</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="11" cy="11" r="3"/><path d="m13.5 13.5 3 3"/></svg><h3>批次追溯</h3><p>为正式进口产品建立批次、单证与流向记录。</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="m17 5-5 3-5-3"/><path d="m17 19-5-3-5 3"/><path d="M2 12h20"/><path d="m5 7 3 5-3 5"/><path d="m19 7-3 5 3 5"/></svg><h3>冷链控制</h3><p>按照产品特性管理运输、仓储与交付温度。</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg><h3>国际文件</h3><p>核验原产地、卫生、认证及进出口所需资料。</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></svg><h3>市场准入</h3><p>针对中国与国际市场完成标签及合规适配。</p></article>
+</div>
+</section>
+<section class="lux-cert-network" aria-labelledby="cert-network-title">
+<header><span>GLOBAL NETWORK</span><h2 id="cert-network-title">与专业伙伴一起，<em>守护每一次交付</em></h2><p>我们连接生产企业、认证机构、物流服务与渠道伙伴，让品质承诺落实到真实的供应链。</p></header>
+<div class="lux-cert-network-story">
+<blockquote data-cert-quote-carousel>
+<div class="lux-cert-quote-slides" aria-live="polite">
+<p data-cert-quote class="is-active">“可靠的合作不仅来自卓越产品，也来自清晰文件、稳定沟通和对每一个批次的共同负责。”</p>
+<p data-cert-quote hidden>“从产地审核到冷链交付，每一个可查验的步骤，都在为客户建立长期信任。”</p>
+<p data-cert-quote hidden>“真正稳定的全球供应，需要生产企业、物流服务与渠道伙伴对同一套品质标准保持共识。”</p>
+</div>
+<div class="lux-cert-quote-footers">
+<footer data-cert-quote-footer class="is-active">LuxurEat Quality Team<br/><span>上海 · 意大利</span></footer>
+<footer data-cert-quote-footer hidden>LuxurEat Compliance Team<br/><span>上海 · 意大利</span></footer>
+<footer data-cert-quote-footer hidden>LuxurEat Supply Network<br/><span>中国 · 全球</span></footer>
+</div>
+<div class="lux-cert-quote-nav"><button type="button" data-cert-quote-prev aria-label="上一条观点"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><span data-cert-quote-status>1 / 3</span><button type="button" data-cert-quote-next aria-label="下一条观点"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+</blockquote>
+<figure><img data-cert-quote-image class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/contact-global-network.webp" alt="LuxurEat 全球合作网络"><img data-cert-quote-image loading="lazy" decoding="async" src="../assets/media/brand/cert-responsible-trade.webp" alt="LuxurEat 负责任贸易协作"><img data-cert-quote-image loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access-lifestyle.webp" alt="LuxurEat 国际市场品质服务"></figure>
+</div>
+<div class="lux-cert-network-marks" aria-label="品质体系关键词"><span>CITES</span><span>HACCP</span><span>BRCGS</span><span>IFS</span><span>FDA</span></div>
+</section>
+<section class="lux-cert-results" aria-labelledby="cert-results-title">
+<header><span>VERIFIED QUALITY</span><h2 id="cert-results-title">稳定交付，<em>品质有据</em></h2><p>从文件审核到每一批产品，我们以可验证的流程支持客户长期合作。</p></header>
+<div class="lux-cert-results-lead">
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access-lifestyle.webp" alt="LuxurEat 品质与市场服务"></figure>
+<blockquote><p>“当品质标准能够被清楚理解、查验和追溯，产品才真正具备进入专业渠道的长期价值。”</p><footer>QUALITY &amp; COMPLIANCE<br/><span>LuxurEat China</span></footer></blockquote>
+</div>
+<div class="lux-cert-results-gallery">
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-our-commitment.webp" alt="LuxurEat 品质承诺"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-responsible-trade.webp" alt="负责任贸易"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access.webp" alt="国际市场准入"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/gifting-service-volume.webp" alt="专业供应服务"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="国际食品行业合作"></figure>
+</div>
+</section>
 <!-- Certification Glossary -->
-<section class="transition-all duration-1000 opacity-100">
+<section class="transition-all duration-1000 opacity-100" id="certification-glossary">
 <div class="text-center mb-16">
 <h2 class="font-headline-md text-headline-md mb-4">认证与品质标识 Glossary</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">以下标识用于说明不同产品可能涉及的安全、合规、可持续性与饮食标准；每项认证仅适用于带有相应文件或标识的产品。</p>
@@ -204,5 +252,5 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260724-cart-count-card-carousel-4"></script>
+<script defer src="../assets/js/core.js?v=20260727-final-layout-5"></script>
 <!-- lux:scripts:end --></body></html>

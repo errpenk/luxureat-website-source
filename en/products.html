@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="dark" lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260724-cart-count-card-carousel-4">
-<link rel="stylesheet" href="../integration.css?v=20260724-cart-count-card-carousel-4">
+<!DOCTYPE html><html class="dark" lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260727-final-layout-5">
+<link rel="stylesheet" href="../integration.css?v=20260727-final-layout-5">
 </head><body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col min-h-screen">
 <!-- lux:header:start -->
 <header class="lux-header">
@@ -35,16 +35,7 @@
 <!-- Filters & Sorting -->
 <section class="flex flex-col md:flex-row justify-between items-center gap-6 border-y border-white/10 py-4 sticky top-[78px] bg-background z-40" data-lux-caviar-controls>
 <div class="flex items-center gap-4 overflow-x-auto w-full md:w-auto hide-scrollbar">
-<div class="flex items-center gap-2 pr-4 border-r border-white/10 h-6">
-<span class="material-symbols-outlined text-[18px] text-on-surface-variant">filter_list</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Filter</span>
-</div>
-<div class="flex gap-2">
-<button type="button" data-caviar-filter="all" aria-pressed="true" class="px-4 py-1.5 border border-primary text-primary uppercase font-label-sm text-[10px] tracking-widest whitespace-nowrap bg-primary/10">All Species</button>
-<button type="button" data-caviar-filter="beluga" aria-pressed="false" class="px-4 py-1.5 border border-outline-variant text-on-surface-variant hover:text-primary hover:border-primary transition-colors uppercase font-label-sm text-[10px] tracking-widest whitespace-nowrap">Beluga</button>
-<button type="button" data-caviar-filter="oscetra" aria-pressed="false" class="px-4 py-1.5 border border-outline-variant text-on-surface-variant hover:text-primary hover:border-primary transition-colors uppercase font-label-sm text-[10px] tracking-widest whitespace-nowrap">Oscetra</button>
-<button type="button" data-caviar-filter="baeri" aria-pressed="false" class="px-4 py-1.5 border border-outline-variant text-on-surface-variant hover:text-primary hover:border-primary transition-colors uppercase font-label-sm text-[10px] tracking-widest whitespace-nowrap">Baeri</button>
-</div>
+<label class="lux-caviar-search"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" data-caviar-search placeholder="Search products" autocomplete="off" aria-label="Search products"><button type="button" class="lux-search-clear" data-caviar-search-clear aria-label="Clear search"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button></label>
 </div>
 <div class="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end">
 <div class="flex items-center gap-2">
@@ -66,8 +57,18 @@
 </div>
 </section>
 <!-- Product Grid -->
-<section class="lux-product-catalog grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-16" data-caviar-grid>
-</section>
+<div class="lux-product-browser" id="product-catalogue">
+<aside class="lux-product-filter-panel" aria-label="Product filters">
+<header><strong>Filter by</strong><button type="button" data-caviar-clear>Clear all</button></header>
+<section><h3>Species</h3><div class="lux-product-filter-list">
+<button type="button" data-caviar-filter="all" aria-pressed="true"><span aria-hidden="true"></span>All Species</button>
+<button type="button" data-caviar-filter="beluga" aria-pressed="false"><span aria-hidden="true"></span>Beluga</button>
+<button type="button" data-caviar-filter="oscetra" aria-pressed="false"><span aria-hidden="true"></span>Oscetra</button>
+<button type="button" data-caviar-filter="baeri" aria-pressed="false"><span aria-hidden="true"></span>Baeri</button>
+</div></section>
+</aside>
+<section class="lux-product-catalog grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-16" data-caviar-grid></section>
+</div>
 <section class="lux-product-notes">
 <p><strong>Cold Chain</strong>Maintained at 0°C - 4°C from dispatch to service for stable texture and aroma.</p>
 <p><strong>CITES Certified</strong>Every batch is supported by compliant documentation, traceable sourcing, and professional delivery standards.</p>
@@ -118,7 +119,7 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/data/products.js?v=20260724-cart-count-card-carousel-4"></script>
-<script defer src="../assets/js/products.js?v=20260724-cart-count-card-carousel-4"></script>
+<script defer src="../assets/js/core.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/data/products.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/products.js?v=20260727-final-layout-5"></script>
 <!-- lux:scripts:end --></body></html>

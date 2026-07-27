@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Quality &amp; Certification | LuxurEat Maison</title>
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260727-final-layout-5">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <style>
@@ -17,7 +17,7 @@
         .hover-gold-glow:hover { box-shadow: 0 0 20px rgba(157, 245, 236, 0.1); }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260724-cart-count-card-carousel-4">
+<link rel="stylesheet" href="../integration.css?v=20260727-final-layout-5">
 </head>
 <body class="text-on-surface">
 <!-- lux:header:start -->
@@ -49,7 +49,7 @@
 </header>
 <main class="max-w-container-max mx-auto px-margin-desktop py-section-gap">
 <!-- CITES Certification Section -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100">
+<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100" id="responsible-trade">
 <div class="order-2 md:order-1">
 <div class="inline-block border border-outline-variant px-4 py-1 mb-6">
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary">Responsible Trade</span>
@@ -75,7 +75,7 @@
 </div>
 </section>
 <!-- Cold Chain Logistics -->
-<section class="mb-section-gap lux-muted-block lux-cert-system-block p-12 md:p-24 border-t border-b border-outline-variant/10 transition-all duration-1000 opacity-100">
+<section class="mb-section-gap lux-muted-block lux-cert-system-block p-12 md:p-24 border-t border-b border-outline-variant/10 transition-all duration-1000 opacity-100" id="quality-system">
 <video class="lux-about-program-media" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/cert-quality-system.m4v" type="video/mp4"></video>
 <div class="lux-cert-system-overlay" aria-hidden="true"></div>
 <div class="max-w-3xl mx-auto text-center mb-16">
@@ -101,7 +101,7 @@
 </div>
 </section>
 <!-- Food Safety Section -->
-<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100">
+<section class="grid grid-cols-1 md:grid-cols-2 gap-section-gap items-center mb-section-gap transition-all duration-1000 opacity-100" id="certification-system">
 <div class="aspect-[4/5] bg-surface-container-low border border-outline-variant/30 overflow-hidden relative">
 <div class="absolute inset-0 bg-cover bg-center" data-alt="LuxurEat quality partnership and shared commitment" data-lux-bg="../assets/media/brand/cert-our-commitment.webp"></div>
 </div>
@@ -132,8 +132,56 @@
 </div>
 </div>
 </section>
+<!-- Quality capability and global network -->
+<section class="lux-cert-capability" aria-labelledby="cert-capability-title">
+<video class="lux-cert-capability-video" muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/cert-capability-background.m4v" type="video/mp4"></video>
+<span class="lux-cert-capability-overlay" aria-hidden="true"></span>
+<figure><img loading="lazy" decoding="async" src="../assets/media/brand/cert-quality-production.webp" alt="LuxurEat truffle ingredient and production management"></figure>
+<div class="lux-cert-capability-grid">
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.5.4 2.7-.2 3.8-1.3 1.1-1.1 1.8-2.5 1.3-3.8-1.3-.5-2.7.2-3.8 1.3-1.1 1.1-1.7 2.3-1.3 3.8Z"/></svg><h3 id="cert-capability-title">Ingredient Selection</h3><p>Origins, suppliers and product files are reviewed to establish quality at source.</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l8 4V7l8 4v10"/><path d="M5 7V3h4v6"/><path d="M12 16h.01"/><path d="M16 16h.01"/></svg><h3>Production Control</h3><p>Food-safety systems and critical control points guide the entire process.</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="11" cy="11" r="3"/><path d="m13.5 13.5 3 3"/></svg><h3>Batch Traceability</h3><p>Batch, document and movement records are maintained for imported products.</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="m17 5-5 3-5-3"/><path d="m17 19-5-3-5 3"/><path d="M2 12h20"/><path d="m5 7 3 5-3 5"/><path d="m19 7-3 5 3 5"/></svg><h3>Cold Chain</h3><p>Transport, storage and delivery temperatures follow each product's needs.</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg><h3>International Files</h3><p>Origin, health, certification and import-export documents are verified.</p></article>
+<article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/></svg><h3>Market Access</h3><p>Labels and compliance are adapted for China and international markets.</p></article>
+</div>
+</section>
+<section class="lux-cert-network" aria-labelledby="cert-network-title">
+<header><span>GLOBAL NETWORK</span><h2 id="cert-network-title">Protecting every delivery, <em>together</em></h2><p>We connect producers, certification bodies, logistics services and channel partners to turn quality commitments into a working supply chain.</p></header>
+<div class="lux-cert-network-story">
+<blockquote data-cert-quote-carousel>
+<div class="lux-cert-quote-slides" aria-live="polite">
+<p data-cert-quote class="is-active">“Reliable partnership comes not only from exceptional products, but from clear documents, consistent communication and shared responsibility for every batch.”</p>
+<p data-cert-quote hidden>“From origin review to cold-chain delivery, every verifiable step builds lasting trust for our clients.”</p>
+<p data-cert-quote hidden>“Truly dependable global supply requires producers, logistics services and channel partners to share the same quality standards.”</p>
+</div>
+<div class="lux-cert-quote-footers">
+<footer data-cert-quote-footer class="is-active">LuxurEat Quality Team<br/><span>Shanghai · Italy</span></footer>
+<footer data-cert-quote-footer hidden>LuxurEat Compliance Team<br/><span>Shanghai · Italy</span></footer>
+<footer data-cert-quote-footer hidden>LuxurEat Supply Network<br/><span>China · Global</span></footer>
+</div>
+<div class="lux-cert-quote-nav"><button type="button" data-cert-quote-prev aria-label="Previous statement"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><span data-cert-quote-status>1 / 3</span><button type="button" data-cert-quote-next aria-label="Next statement"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div>
+</blockquote>
+<figure><img data-cert-quote-image class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/contact-global-network.webp" alt="LuxurEat global partnership network"><img data-cert-quote-image loading="lazy" decoding="async" src="../assets/media/brand/cert-responsible-trade.webp" alt="LuxurEat responsible trade collaboration"><img data-cert-quote-image loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access-lifestyle.webp" alt="LuxurEat international quality service"></figure>
+</div>
+<div class="lux-cert-network-marks" aria-label="Quality system keywords"><span>CITES</span><span>HACCP</span><span>BRCGS</span><span>IFS</span><span>FDA</span></div>
+</section>
+<section class="lux-cert-results" aria-labelledby="cert-results-title">
+<header><span>VERIFIED QUALITY</span><h2 id="cert-results-title">Reliable delivery. <em>Quality proven.</em></h2><p>From document review to every product batch, verifiable processes support lasting client relationships.</p></header>
+<div class="lux-cert-results-lead">
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access-lifestyle.webp" alt="LuxurEat quality and market service"></figure>
+<blockquote><p>“When quality standards can be clearly understood, checked and traced, products gain the long-term value professional channels require.”</p><footer>QUALITY &amp; COMPLIANCE<br/><span>LuxurEat China</span></footer></blockquote>
+</div>
+<div class="lux-cert-results-gallery">
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-our-commitment.webp" alt="LuxurEat quality commitment"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-responsible-trade.webp" alt="Responsible trade"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access.webp" alt="International market access"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/gifting-service-volume.webp" alt="Professional supply service"></figure>
+<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="International food industry partnership"></figure>
+</div>
+</section>
 <!-- Certification Glossary -->
-<section class="transition-all duration-1000 opacity-100">
+<section class="transition-all duration-1000 opacity-100" id="certification-glossary">
 <div class="text-center mb-16">
 <h2 class="font-headline-md text-headline-md mb-4">Certification &amp; Quality Glossary</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">These marks explain safety, compliance, sustainability, and dietary standards that may apply to different products. Each certification applies only to products carrying the relevant documentation or mark.</p>
@@ -204,5 +252,5 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260724-cart-count-card-carousel-4"></script>
+<script defer src="../assets/js/core.js?v=20260727-final-layout-5"></script>
 <!-- lux:scripts:end --></body></html>

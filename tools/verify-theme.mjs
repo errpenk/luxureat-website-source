@@ -133,6 +133,10 @@ assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('ret
 assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
 assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'botChallenge' => luxureat_static_bot_challenge()"), 'account requests require a signed proof-of-work bot challenge');
 assert(functionsPhp.includes('strlen($password) >= 12') && functionsPhp.includes("preg_match('/[A-Za-z]/'") && functionsPhp.includes("preg_match('/[0-9]/'"), 'customer registration requires 12 characters with letters and numbers');
+assert(functionsPhp.includes('luxureat_static_send_verification') && functionsPhp.includes("'_luxureat_email_verified', '0'") && functionsPhp.includes("'requiresVerification' => true"), 'new customer accounts require email verification before login');
+assert(functionsPhp.includes("add_filter('authenticate', 'luxureat_static_require_verified_email'") && !functionsPhp.includes('wp_set_auth_cookie($user_id'), 'unverified customers cannot bypass the verification gate through native login');
+assert(functionsPhp.includes("add_filter('password_hint', 'luxureat_static_password_hint'") && functionsPhp.includes("add_action('validate_password_reset'"), 'password reset uses the same 12-character letters-and-numbers rule');
+assert(functionsPhp.includes("'field' => 'email'") && functionsPhp.includes('账号已存在，请登录或使用其他电子邮箱。'), 'account errors distinguish missing email, existing account, and password failures');
 assert(functionsPhp.includes("empty($_POST['consent'])") && functionsPhp.includes('Terms of Service and Privacy Policy'), 'customer registration enforces legal consent on the server');
 assert(functionsPhp.includes("get_user_meta($user_id, 'luxureat_bag'") && functionsPhp.includes("update_user_meta(get_current_user_id(), 'luxureat_bag'") && functionsPhp.includes('woocommerce_payment_complete'), 'signed-in bags persist per user and paid items are removed');
 assert(functionsPhp.includes("$paid_quantity = min($item['quantity'], $purchased[$item['sku']])") && functionsPhp.includes("$purchased[$item['sku']] -= $paid_quantity"), 'paid bags decrement the matching SKU by the purchased quantity');
@@ -239,8 +243,11 @@ assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-accou
 assert(runtimeJs.includes('data-account-consent') && runtimeJs.includes('data-footer-modal="privacy"'), 'registration requires the legal consent and opens the privacy text');
 assert(runtimeJs.includes('data-account-password-toggle') && runtimeJs.includes('is-shaking'), 'registration provides password visibility and invalid-password warning');
 assert(runtimeJs.includes('data-account-email-hint') && runtimeJs.includes('icons.eyeOff'), 'account forms provide shaking email validation and Lucide password visibility icons');
+assert(runtimeJs.includes('${icons.eyeOff}</button>') && runtimeJs.includes('revealing ? icons.eye : icons.eyeOff'), 'EyeOff represents hidden passwords and Eye represents visible passwords');
+assert(!runtimeJs.includes('event.target === modal()'), 'the account dialog closes only through its explicit close control');
 assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
 assert(runtimeJs.includes('src="${escapeHtml(event.poster)}"'), 'event thumbnails use the same square poster shown in the carousel');
+assert(runtimeJs.includes('"/en/news/"') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('news.html#event-${event.id}'), 'event details use static links locally and pretty bilingual routes in WordPress');
 assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
 assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
@@ -285,6 +292,8 @@ assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleus
 const integrationCss = read(path.join(themeDir, 'integration.css'));
 assert(integrationCss.includes('.lux-event-thumbnails button.is-active'), 'active event thumbnails receive an enlarged visual state');
 assert(integrationCss.includes('repeat(auto-fit, minmax(min(100%, 380px), 1fr))') && integrationCss.includes('contain: paint'), 'product cards stay contained and adjacent carousel slides are clipped');
+assert(integrationCss.includes('align-items: stretch') && integrationCss.includes('.lux-home-hero') && integrationCss.includes('min-height: 90svh'), 'product actions align and mobile home content expands without clipping');
+assert(integrationCss.includes('.lux-event-reader-article > figure img') && integrationCss.includes('object-fit: contain'), 'mobile event articles keep the complete poster centered');
 assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
 assert(integrationCss.includes('.lux-account-dashboard-page .woocommerce-MyAccount-content > p'), 'account dashboard hides the duplicated WooCommerce introduction');
 assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('AlimamaShuHeiTi-Bold.woff2'), 'Chinese headline typography uses the bundled Alimama font');
@@ -342,6 +351,8 @@ assert(!enRituals.includes('style="opacity: 0;">Caviar should be served chilled'
 const enGifting = read(path.join(themeDir, 'pages/en/gifting.php'));
 assert(zhGifting.includes('data-info-popover'), 'Chinese gifting page marks scenario info buttons');
 assert(enGifting.includes('data-info-popover'), 'English gifting page marks scenario info buttons');
+assert(zhGifting.includes('lux-collab-mosaic') && enGifting.includes('lux-collab-mosaic'), 'bilingual gifting pages include the contact image mosaic above partnership plans');
+assert(zhGifting.includes('lux-channel-showcase') && enGifting.includes('lux-channel-showcase'), 'bilingual gifting pages include the channel-services showcase');
 assert(!zhGifting.includes('立即获取企业画册') && !zhGifting.includes('咨询专属顾问'), 'Chinese gifting hero removes the requested CTA controls');
 assert(!enGifting.includes('Explore Collections'), 'English gifting hero removes the matching CTA control');
 assert(zhGifting.includes('>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
@@ -403,6 +414,14 @@ assert(enProducts.includes("luxureat_static_url('en/rituals'"), 'English product
 const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));
 const enCertification = read(path.join(themeDir, 'pages/en/certification.php'));
 assert(enCertification.includes('Quality &amp; Certification') && enCertification.includes('Responsible Trade'), 'English certification page mirrors the Chinese certification page');
+assert(zhCertification.includes('lux-cert-capability') && enCertification.includes('lux-cert-capability'), 'bilingual certification pages include the dark quality capability grid');
+assert(zhCertification.includes('lux-cert-network') && enCertification.includes('lux-cert-network'), 'bilingual certification pages include the global quality network story');
+assert(zhCertification.includes('lux-cert-results') && enCertification.includes('lux-cert-results'), 'bilingual certification pages include the quality results gallery');
+assert(integrationCss.includes('.lux-collab-mosaic') && integrationCss.includes('.lux-channel-showcase') && integrationCss.includes('.lux-cert-results-gallery'), 'integration.css styles the new reference-composed responsive sections');
+assert(zhCertification.includes('cert-capability-background.m4v') && enCertification.includes('cert-capability-background.m4v'), 'bilingual certification capability sections use the supplied optimized background video');
+assert(zhCertification.includes('cert-quality-production.webp') && enCertification.includes('cert-quality-production.webp'), 'bilingual certification capability sections use the supplied truffle production photo');
+assert(zhCertification.includes('data-cert-quote-carousel') && enCertification.includes('data-cert-quote-carousel'), 'bilingual certification network stories provide previous and next quote controls');
+assert(integrationCss.includes('width: 100vw') && integrationCss.includes('.lux-cert-capability-overlay'), 'new editorial sections fill the page and the capability video has a dark overlay');
 assert(enCertification.includes('ou-kosher-2026.png') && enCertification.includes('halal-2026.png') && enCertification.includes('vegan-2026.png') && enCertification.includes('excellent-taste-2025.avif') && enCertification.includes('fda-2026.png'), 'English certification page uses the refreshed certification assets');
 assert(zhCertification.includes('cert-quality-system.m4v') && enCertification.includes('cert-quality-system.m4v'), 'bilingual certification system sections use the compressed background film');
 const certificationVideo = path.join(themeDir, 'assets/media/brand/cert-quality-system.m4v');
@@ -465,6 +484,10 @@ assert(!zhGifting.includes('拥有食品进口资质') && !enGifting.includes('f
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
+assert(zhHome.includes('data-home-timeline') && enHome.includes('data-home-timeline'), 'bilingual homepages include the partnership history timeline');
+assert((zhHome.match(/data-timeline-step/g) || []).length === 4 && (enHome.match(/data-timeline-step/g) || []).length === 4, 'bilingual homepage timelines provide four matching milestones');
+assert(runtimeJs.includes('data-home-timeline') && runtimeJs.includes('data-cert-quote-carousel'), 'core runtime drives timeline image transitions and certification quote controls');
+assert(integrationCss.includes('.lux-home-timeline-visual') && integrationCss.includes('position: sticky'), 'homepage timeline keeps its image gallery visible while milestones scroll');
 assert(zhHome.includes('lux-home-maison-media') && enHome.includes('lux-home-maison-media') && zhHome.includes('home-maison-overview.m4v') && enHome.includes('home-maison-overview.m4v'), 'bilingual home overview sections use the isolated background film');
 const maisonVideo = path.join(themeDir, 'assets/media/brand/home-maison-overview.m4v');
 assert(fs.existsSync(maisonVideo) && fs.statSync(maisonVideo).size < 1.5 * 1024 * 1024, 'home overview background film stays below 1.5 MB');
