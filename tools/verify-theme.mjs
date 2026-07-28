@@ -110,6 +110,8 @@ assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewr
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
+assert(functionsPhp.includes("get_option('home')"), 'route URLs use the unfiltered WordPress home option');
+assert(!functionsPhp.includes('home_url($pretty_paths[$path])'), 'route URLs are not rewritten by language-plugin home_url filters');
 assert(functionsPhp.includes('function luxureat_static_pretty_paths('), 'functions.php defines canonical pretty route URLs');
 assert(functionsPhp.includes("'zh/caviar' => '/caviar/'"), 'functions.php maps the Chinese caviar route to /caviar/');
 assert(functionsPhp.includes("'zh/news' => '/news/'"), 'functions.php maps the Chinese news route to /news/');

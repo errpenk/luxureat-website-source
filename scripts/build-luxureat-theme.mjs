@@ -302,10 +302,12 @@ function luxureat_static_url($path = 'zh', $suffix = '') {
     $path = luxureat_static_normalize_path($path);
     $suffix = is_string($suffix) ? $suffix : '';
     $pretty_paths = luxureat_static_pretty_paths();
+    $home = untrailingslashit((string) get_option('home'));
 
-    $url = isset($pretty_paths[$path])
-        ? home_url($pretty_paths[$path])
-        : home_url('/' . $path . '/');
+    $route = isset($pretty_paths[$path])
+        ? $pretty_paths[$path]
+        : '/' . $path . '/';
+    $url = $home . $route;
 
     return $url . $suffix;
 }
@@ -318,7 +320,7 @@ function luxureat_static_current_path() {
 
     $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '/';
     $request_path = parse_url($request_uri, PHP_URL_PATH);
-    $home_path = parse_url(home_url('/'), PHP_URL_PATH);
+    $home_path = parse_url((string) get_option('home'), PHP_URL_PATH);
 
     $request_path = is_string($request_path) ? $request_path : '/';
     $home_path = is_string($home_path) ? $home_path : '/';
