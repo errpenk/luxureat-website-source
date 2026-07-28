@@ -4,6 +4,9 @@
   if (!section || !events.length) return;
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const newsIndexHref = location.protocol === "file:" || location.pathname.endsWith(".html")
+    ? "news.html"
+    : lang === "zh" ? "/news/" : "/en/news/";
   const carouselLabels = lang === "zh"
     ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
     : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "About Us", meetCopy: "Explore upcoming and completed LuxurEat exhibitions across China.", map: "View exhibition map" };
@@ -38,9 +41,7 @@
   const renderSlide = (event, index) => {
     const copy = event[lang];
     const mapHref = event.mapHref || `https://maps.apple.com/?q=${encodeURIComponent(event.mapQuery)}`;
-    const newsHref = location.pathname.endsWith(".html")
-      ? `news.html#event-${event.id}`
-      : `${lang === "zh" ? "/news/" : "/en/news/"}#event-${event.id}`;
+    const newsHref = `${newsIndexHref}#event-${event.id}`;
     return `<article class="lux-latest-event-slide" role="group" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">
@@ -79,7 +80,7 @@
         <span>EXHIBITION ATLAS</span>
         <h2>${escapeHtml(carouselLabels.meet)}</h2>
         <p>${escapeHtml(carouselLabels.meetCopy)}</p>
-        <a class="lux-narrative-link" href="news.html#exhibition-map">${escapeHtml(carouselLabels.map)}${icons.arrow}</a>
+        <a class="lux-narrative-link" href="${newsIndexHref}#exhibition-map">${escapeHtml(carouselLabels.map)}${icons.arrow}</a>
       </div>
       <aside class="lux-meet-map-summary" aria-label="${escapeHtml(atlasLabels.title)}">
         <dl>${regionStats.map(([city, count, months]) => `<div><dt><span>${escapeHtml(months)}</span>${escapeHtml(city)}</dt><dd><b>${count}</b> ${escapeHtml(atlasLabels.count)}</dd></div>`).join("")}</dl>

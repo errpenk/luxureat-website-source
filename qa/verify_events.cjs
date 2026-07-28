@@ -82,7 +82,8 @@ assert(latestEvent.includes("LUXUREAT_EVENT_DATA"), "home latest event does not 
 assert(latestEvent.includes("setInterval(() => show(index + 1), 3000)"), "home event autoplay is not set to three seconds");
 assert(latestEvent.includes("data-event-carousel-step"), "home event carousel controls are missing");
 assert(latestEvent.includes("#event-${event.id}"), "home latest event detail hash is missing");
-assert(latestEvent.includes("news.html#event-${event.id}"), "home latest event does not point to Brand News");
+assert(latestEvent.includes("const newsIndexHref = location.protocol") && latestEvent.includes("`${newsIndexHref}#event-${event.id}`"), "home latest event does not resolve Brand News for static and WordPress routes");
+assert(latestEvent.includes('href="${newsIndexHref}#exhibition-map"'), "home exhibition map does not resolve Brand News for static and WordPress routes");
 assert(!latestEvent.includes("journal.html#event-${event.id}"), "home latest event still points to About Us");
 assert(journal.includes("data-event-open"), "delegated event article opening is missing");
 assert(journal.includes("#event-"), "event hash opening is missing");

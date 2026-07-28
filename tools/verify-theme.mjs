@@ -249,7 +249,7 @@ assert(runtimeJs.includes('${icons.eyeOff}</button>') && runtimeJs.includes('rev
 assert(!runtimeJs.includes('event.target === modal()'), 'the account dialog closes only through its explicit close control');
 assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
 assert(runtimeJs.includes('src="${escapeHtml(event.poster)}"'), 'event thumbnails use the same square poster shown in the carousel');
-assert(runtimeJs.includes('"/en/news/"') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('news.html#event-${event.id}'), 'event details use static links locally and pretty bilingual routes in WordPress');
+assert(runtimeJs.includes('"/en/news/"') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`${newsIndexHref}#event-${event.id}`') && runtimeJs.includes('href="${newsIndexHref}#exhibition-map"'), 'event details use static links locally and pretty bilingual routes in WordPress');
 assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
 assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
