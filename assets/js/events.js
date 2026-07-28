@@ -6,7 +6,10 @@
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const carouselLabels = lang === "zh"
     ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
-    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "Meet Us", meetCopy: "Explore upcoming and completed LuxurEat（露意膳） exhibitions across China.", map: "View exhibition map" };
+    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "About Us", meetCopy: "Explore upcoming and completed LuxurEat exhibitions across China.", map: "View exhibition map" };
+  const atlasLabels = lang === "zh"
+    ? { title: "各地区展会数量与月份", count: "场展览" }
+    : { title: "Exhibitions by region and month", count: "exhibitions" };
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;",
   }[char]));
@@ -17,6 +20,21 @@
     previous: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>',
     next: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>',
   };
+  const monthFormatter = new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en", { month: lang === "zh" ? "numeric" : "short" });
+  const regionStats = [...events.reduce((stats, event) => {
+    const city = event[lang].city;
+    const current = stats.get(city) || { count: 0, months: new Set() };
+    current.count += 1;
+    current.months.add(new Date(`${event.endDate}T00:00:00`).getMonth());
+    stats.set(city, current);
+    return stats;
+  }, new Map())]
+    .map(([city, data]) => [city, data.count, [...data.months]
+      .sort((a, b) => a - b)
+      .map((month) => monthFormatter.format(new Date(2026, month, 1)))
+      .map((month) => lang === "zh" ? month : month.toUpperCase())
+      .join(" · ")])
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const renderSlide = (event, index) => {
     const copy = event[lang];
     const mapHref = event.mapHref || `https://maps.apple.com/?q=${encodeURIComponent(event.mapQuery)}`;
@@ -56,13 +74,16 @@
       </div>` : ""}
     </div>
     <div class="lux-meet-map">
+      <video class="lux-meet-map-video" autoplay muted loop playsinline preload="metadata" poster="../assets/media/events/exhibition-atlas-globe-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/events/exhibition-atlas-globe.mp4" type="video/mp4"></video>
       <div class="lux-meet-map-card">
         <span>EXHIBITION ATLAS</span>
         <h2>${escapeHtml(carouselLabels.meet)}</h2>
         <p>${escapeHtml(carouselLabels.meetCopy)}</p>
         <a class="lux-narrative-link" href="news.html#exhibition-map">${escapeHtml(carouselLabels.map)}${icons.arrow}</a>
-        <small class="lux-meet-map-attribution">© OpenStreetMap contributors</small>
       </div>
+      <aside class="lux-meet-map-summary" aria-label="${escapeHtml(atlasLabels.title)}">
+        <dl>${regionStats.map(([city, count, months]) => `<div><dt><span>${escapeHtml(months)}</span>${escapeHtml(city)}</dt><dd><b>${count}</b> ${escapeHtml(atlasLabels.count)}</dd></div>`).join("")}</dl>
+      </aside>
     </div>`;
 
   if (events.length < 2) return;

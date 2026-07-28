@@ -2840,9 +2840,10 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   text-shadow: 0 3px 24px rgba(0, 0, 0, .95), 0 1px 3px rgba(0, 0, 0, .9);
 }
 .lux-home-gifting-image {
-  grid-column: 5 / 10;
+  grid-column: 4 / 11;
   grid-row: 3 / 5;
-  min-height: 650px;
+  z-index: 10;
+  min-height: 780px;
   overflow: visible;
   position: relative;
   isolation: isolate;
@@ -2862,30 +2863,30 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 }
 .lux-home-gifting-image img:nth-child(1) {
   z-index: 3;
-  width: 78%;
-  top: 5%;
-  left: 11%;
+  width: 72%;
+  top: 2%;
+  left: 16%;
 }
 .lux-home-gifting-image img:nth-child(2) {
   --lux-card-angle: -2.2deg;
   z-index: 5;
-  width: 72%;
+  width: 66%;
   top: 34%;
-  left: 0;
+  left: 2%;
 }
 .lux-home-gifting-image img:nth-child(3) {
   --lux-card-angle: 2.2deg;
   z-index: 6;
-  width: 46%;
+  width: 50%;
   right: 0;
   bottom: 0;
 }
 .lux-home-gifting-image img:nth-child(4) {
   --lux-card-angle: -1.4deg;
-  z-index: 4;
-  width: 56%;
-  left: -48%;
-  top: 38%;
+  z-index: 8;
+  width: 50%;
+  left: -16%;
+  top: 43%;
 }
 .lux-home-gifting-image img:hover {
   z-index: 10;
@@ -2986,6 +2987,218 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
     padding: 30px 0 0;
     border-top: 1px solid rgba(255, 255, 255, .1);
     border-left: 0;
+  }
+}
+
+/* July 28 filter handle, exhibition hierarchy, and partnership metrics. */
+.lux-product-browser {
+  position: relative;
+}
+.lux-product-filter-panel header strong,
+.lux-product-filter-panel header button,
+.lux-product-filter-panel h3 {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  font-weight: 700 !important;
+  letter-spacing: .02em !important;
+}
+
+.lux-latest-event-carousel::before {
+  content: none;
+}
+.lux-event-city-mark {
+  z-index: 3;
+  top: 12px;
+  right: clamp(30px, 5vw, 86px);
+  bottom: auto;
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  color: rgba(0,106,100,.14);
+  text-align: right;
+  text-shadow: none;
+}
+.lux-event-city-mark em {
+  font: 700 clamp(44px, 5.8vw, 88px)/.9 Montserrat, sans-serif;
+  letter-spacing: .06em;
+  font-style: normal;
+}
+.lux-event-city-mark strong {
+  font-size: clamp(42px, 5.4vw, 82px);
+  line-height: .9;
+}
+.lux-event-city-mark span {
+  font-size: clamp(14px, 1.45vw, 23px);
+  line-height: 1;
+}
+.lux-latest-event-inner {
+  z-index: auto;
+}
+.lux-event-frame,
+.lux-event-copy {
+  position: relative;
+  z-index: 4;
+}
+.lux-event-carousel-controls,
+.lux-event-thumbnails {
+  z-index: 5;
+}
+.lux-latest-event-inner,
+.lux-event-carousel-controls,
+.lux-event-thumbnails {
+  position: relative;
+  z-index: 2;
+}
+
+.lux-event-detail-link {
+  background: transparent !important;
+  transform-origin: left center;
+}
+.lux-event-detail-link:hover,
+.lux-event-detail-link:focus-visible {
+  color: #087f78 !important;
+  background: transparent !important;
+  border-color: currentColor !important;
+  transform: scale(1.035);
+}
+.lux-map-popover button:hover,
+.lux-map-popover button:focus-visible {
+  color: #9df5ec !important;
+  background: transparent !important;
+  border-color: currentColor !important;
+  transform: scale(1.035);
+}
+
+.lux-home-gifting-intro {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.lux-home-gifting-intro p {
+  color: #fff !important;
+  -webkit-text-stroke: .35px rgba(0,0,0,.9);
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px 0 rgba(0,0,0,.85),
+    1px -1px 0 rgba(0,0,0,.85),
+    -1px 1px 0 rgba(0,0,0,.85),
+    1px 1px 0 rgba(0,0,0,.85),
+    0 3px 14px #000;
+}
+
+.lux-home-why {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.lux-home-why::before {
+  content: "CHINA PARTNERSHIP";
+  position: absolute;
+  z-index: 0;
+  top: 2%;
+  right: -1.5%;
+  color: rgba(7,127,120,.06);
+  font: 700 clamp(54px, 8.5vw, 150px)/.85 Montserrat, sans-serif;
+  letter-spacing: -.05em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.lux-home-why::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -9vw;
+  bottom: -11vw;
+  width: clamp(260px, 38vw, 660px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(203,165,28,.2);
+  border-radius: 50%;
+  background:
+    linear-gradient(90deg, transparent 49.8%, rgba(7,127,120,.12) 50%, transparent 50.2%),
+    linear-gradient(transparent 49.8%, rgba(7,127,120,.12) 50%, transparent 50.2%),
+    radial-gradient(circle, transparent 0 42%, rgba(203,165,28,.14) 42.2% 42.5%, transparent 42.7%);
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+.lux-home-why > * {
+  position: relative;
+  z-index: 1;
+}
+.lux-home-why-copy {
+  position: relative;
+}
+.lux-home-why-copy::before {
+  content: none;
+  display: block;
+  margin-bottom: 18px;
+  color: rgba(7,127,120,.48);
+  font: 700 9px/1.4 Montserrat, sans-serif;
+  letter-spacing: .22em;
+}
+.lux-home-why-metrics {
+  gap: clamp(24px, 4vw, 64px);
+  border: 0;
+}
+.lux-home-why-metrics > div {
+  position: relative;
+  min-height: 0;
+  padding: 18px 0 0;
+}
+.lux-home-why-metrics > div::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 2px;
+  background: #cba51c;
+}
+.lux-home-why-metrics > div + div {
+  border: 0;
+}
+.lux-home-why-metrics strong {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .lux-event-city-mark {
+    top: 58px;
+    right: 10px;
+    bottom: auto;
+    left: auto;
+  }
+  .lux-event-city-mark strong {
+    font-size: clamp(34px, 11vw, 52px);
+  }
+  .lux-event-city-mark span {
+    font-size: 10px;
+  }
+  .lux-latest-event-carousel::before {
+    top: 18px;
+    right: 10px;
+    font-size: clamp(30px, 9vw, 46px);
+  }
+  .lux-home-why::before {
+    top: 24px;
+    right: -36%;
+    font-size: 60px;
+  }
+  .lux-home-why-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .lux-home-why-metrics > div {
+    padding: 14px 0 0;
+  }
+  .lux-home-why-metrics strong {
+    font-size: clamp(25px, 8vw, 36px);
+  }
+  .lux-home-why-metrics span {
+    font-size: 10px;
   }
 }
 
@@ -7529,6 +7742,8 @@ body {
   align-items: start;
 }
 .lux-home-timeline-steps {
+  box-sizing: border-box;
+  padding-left: clamp(96px, 9vw, 132px);
   position: relative;
 }
 .lux-home-timeline-steps::before {
@@ -7536,7 +7751,7 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 9px;
+  left: calc(clamp(96px, 9vw, 132px) + 9px);
   width: 1px;
   background: linear-gradient(#e9c349, rgba(157,245,236,.25));
 }
@@ -7899,20 +8114,27 @@ body {
   margin-top: clamp(48px, 6vw, 82px);
   padding: 0;
   border-top: 0;
-  background: url("assets/media/events/exhibition-map-background.webp") center / cover no-repeat;
+  background-color: #131313;
+  background-image:
+    linear-gradient(rgba(3, 14, 13, .42), rgba(3, 14, 13, .7)),
+    url("assets/media/events/exhibition-atlas-globe-poster.webp");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply, luminosity;
   color: #f4f2ee;
 }
 .lux-latest-event .lux-meet-map::after {
   display: block;
   inset: 0 auto 0 0;
-  width: min(82%, 1080px);
+  width: 100%;
   height: auto;
-  z-index: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, .88) 0%, rgba(0, 0, 0, .64) 44%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(19,19,19,.9) 0%, rgba(19,19,19,.58) 50%, rgba(19,19,19,.5) 100%);
 }
 .lux-latest-event .lux-meet-map-card {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: min(1180px, calc(100% - 48px));
   min-height: inherit;
   padding: clamp(24px, 3vw, 36px) 0;
@@ -7938,11 +8160,14 @@ body {
   border-color: #9df5ec;
   border-bottom: 1px solid currentColor;
 }
+.lux-latest-event .lux-meet-map-card > span {
+  color: #9df5ec;
+}
 .lux-latest-event .lux-meet-map-attribution {
   position: absolute;
   right: 12px;
   bottom: 8px;
-  z-index: 2;
+  z-index: 3;
   color: rgba(15, 22, 22, .68);
   font: 400 10px/1.2 Montserrat, Arial, sans-serif;
 }
@@ -8070,4 +8295,1845 @@ html[lang^="en"] .lux-account-row button {
   .lux-event-carousel-controls {
     transform: none;
   }
+}
+
+/* July 28 homepage alignment and mobile catalogue controls. */
+.lux-latest-event .lux-meet-map-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 80px;
+}
+.lux-latest-event .lux-meet-map-card .lux-narrative-link {
+  color: #e9c349;
+  border-color: #e9c349;
+  transition: color .2s ease, border-color .2s ease;
+}
+.lux-latest-event .lux-meet-map-card .lux-narrative-link:hover,
+.lux-latest-event .lux-meet-map-card .lux-narrative-link:focus-visible {
+  color: #9df5ec;
+  border-color: #9df5ec;
+}
+.lux-meet-map-summary {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: max(24px, calc((100vw - 1440px) / 2 + 80px));
+  width: min(400px, 30vw);
+  padding: 0;
+  color: #f4f2ee;
+  text-align: right;
+  transform: translateY(-50%);
+  text-shadow: none;
+}
+.lux-meet-map-summary dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+.lux-meet-map-summary dl div {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 18px;
+}
+.lux-meet-map-summary dt {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font: 500 17px/1.4 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+}
+.lux-meet-map-summary dt span {
+  min-width: 56px;
+  color: #f4f2ee;
+  font: inherit;
+  letter-spacing: normal;
+}
+.lux-meet-map-summary dd {
+  min-width: 86px;
+  margin: 0;
+  color: rgba(244,242,238,.7);
+  font-size: 12px;
+}
+.lux-meet-map-summary dd b {
+  color: #e9c349;
+  font-size: 18px;
+}
+.lux-selected-products-kicker {
+  display: block;
+  margin-bottom: 14px;
+  color: #9df5ec;
+  font: 600 11px/1.4 Montserrat, sans-serif;
+  letter-spacing: .3em;
+}
+.lux-map-reset {
+  border-color: #fff !important;
+  background: #fff !important;
+  color: #111 !important;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .15s ease;
+}
+.lux-map-reset:hover,
+.lux-map-reset:focus-visible {
+  border-color: #111 !important;
+  background: #111 !important;
+  color: #fff !important;
+}
+.lux-map-reset:active {
+  transform: scale(1.07);
+}
+.lux-product-filter-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--lux-filter-width);
+  padding: 15px 18px;
+  border: 1px solid rgba(157,245,236,.5);
+  color: #9df5ec;
+  font: 600 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.lux-product-filter-toggle .material-symbols-outlined {
+  transition: transform .2s ease;
+}
+.lux-product-filter-toggle[aria-expanded="true"] .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+.lux-product-filter-panel[hidden] {
+  display: none !important;
+}
+.lux-product-browser:has(.lux-product-filter-panel[hidden]) {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.lux-home-market-system {
+  scroll-margin-top: 78px;
+  padding: clamp(84px, 9vw, 144px) clamp(28px, 5vw, 84px);
+  background: #131313;
+  color: #f1eee8;
+}
+.lux-home-market-system > header,
+.lux-home-market-system-layout {
+  width: min(100%, 1600px);
+  margin-inline: auto;
+}
+.lux-home-market-system > header {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
+  gap: 20px clamp(36px, 6vw, 96px);
+  align-items: end;
+  max-width: none;
+  margin: 0 auto clamp(46px, 6vw, 82px);
+  text-align: left;
+}
+.lux-home-market-system > header > span:first-child {
+  display: block;
+  grid-column: 1 / -1;
+  color: #9df5ec;
+  font: 700 11px/1.4 Montserrat, sans-serif;
+  letter-spacing: .28em;
+}
+.lux-home-market-system > header h2 {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0;
+  color: #f1eee8;
+  font: 500 clamp(42px, 5.4vw, 76px)/1.05 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+}
+.lux-home-market-system > header h2 em {
+  color: #cba51c;
+  font-style: normal;
+}
+.lux-home-market-system > header p {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0;
+  color: rgba(248, 246, 240, .88);
+  font: 400 16px/1.8 Montserrat, "PingFang SC", sans-serif;
+}
+.lux-home-market-system-layout {
+  display: grid;
+  grid-template-columns: minmax(360px, .9fr) minmax(0, 1.35fr);
+  gap: clamp(28px, 4vw, 62px);
+  align-items: stretch;
+}
+.lux-home-market-collage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: minmax(300px, 1fr) 150px;
+  gap: 12px;
+  min-height: 650px;
+}
+.lux-home-market-collage > figure,
+.lux-home-market-collage > button {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #171715;
+  color: inherit;
+}
+.lux-home-market-collage > button {
+  cursor: pointer;
+}
+.lux-home-market-collage-main {
+  grid-row: 1 / 3;
+}
+.lux-home-market-collage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter .45s ease, transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.lux-home-market-collage > figure:hover img {
+  filter: brightness(1.13);
+  transform: scale(1.045);
+}
+.lux-home-market-collage > button:focus-visible {
+  outline: 2px solid #9df5ec;
+  outline-offset: -4px;
+}
+.lux-home-market-watermark {
+  position: absolute;
+  z-index: 0;
+  top: 36px;
+  right: 0;
+  width: 56%;
+  color: rgba(255,255,255,.12);
+  font: 700 clamp(96px, 8.2vw, 144px)/.82 "Alimama ShuHei", "Noto Sans SC", Montserrat, sans-serif;
+  letter-spacing: -.1em;
+  white-space: normal;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+.lux-home-market-collage > .lux-home-market-stat {
+  display: grid;
+  place-content: center;
+  background: #cba51c;
+  color: #fff;
+  text-align: center;
+  transition: background-color .3s ease, color .3s ease;
+}
+.lux-home-market-collage > .lux-home-market-stat:hover,
+.lux-home-market-collage > .lux-home-market-stat:focus-visible {
+  background: #9df5ec;
+  color: #061b19;
+}
+.lux-home-market-stat strong {
+  font: 500 clamp(34px, 3vw, 48px)/1 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+}
+.lux-home-market-stat span {
+  margin-top: 12px;
+  font: 600 13px/1.4 Montserrat, "PingFang SC", sans-serif;
+  letter-spacing: .08em;
+}
+.lux-home-market-stat .lux-home-market-learn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: max-content;
+  margin: 18px auto 0;
+  padding-bottom: 3px;
+  border-bottom: 1px solid currentColor;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  transition: gap .2s ease, letter-spacing .2s ease;
+}
+.lux-home-market-stat .lux-home-market-learn:hover,
+.lux-home-market-stat:hover .lux-home-market-learn,
+.lux-home-market-stat:focus-visible .lux-home-market-learn {
+  gap: 14px;
+  letter-spacing: .26em;
+}
+.lux-home-market-stat .lux-home-market-learn i {
+  font-style: normal;
+  transition: transform .2s ease;
+}
+.lux-home-market-stat .lux-home-market-learn:hover i,
+.lux-home-market-stat:hover .lux-home-market-learn i,
+.lux-home-market-stat:focus-visible .lux-home-market-learn i {
+  transform: translateX(4px);
+}
+.lux-home-market-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  perspective: 1400px;
+}
+.lux-market-feature {
+  --lux-market-image: none;
+  position: relative;
+  min-height: 320px;
+  border: 0;
+  background-color: #131313;
+  color: #fff;
+  transform-style: preserve-3d;
+  transition: transform .72s cubic-bezier(.2,.72,.2,1);
+}
+.lux-market-feature:nth-child(1) {
+  --lux-market-image: url("assets/media/brand/values-italian-heritage.webp");
+}
+.lux-market-feature:nth-child(2) {
+  --lux-market-image: url("assets/media/brand/values-contemporary-craft.webp");
+}
+.lux-market-feature:nth-child(3) {
+  --lux-market-image: url("assets/media/brand/values-sustainability.webp");
+}
+.lux-market-feature:nth-child(4) {
+  --lux-market-image: url("assets/media/brand/values-responsible-practice.webp");
+}
+.lux-market-feature:hover {
+  z-index: 2;
+  transform: rotateY(180deg);
+}
+.lux-market-feature:focus-visible {
+  z-index: 2;
+  outline: 2px solid #9df5ec;
+  outline-offset: -3px;
+  transform: rotateY(180deg);
+}
+.lux-market-card-front,
+.lux-market-card-back {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.lux-market-card-front {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 3.2vw, 52px);
+  background-image:
+    linear-gradient(rgba(19,19,19,.68), rgba(19,19,19,.68)),
+    var(--lux-market-image);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+}
+.lux-market-card-back {
+  background-image: var(--lux-market-image);
+  transform: rotateY(180deg);
+}
+.lux-meet-map-video {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 46%;
+  filter: saturate(.68) contrast(1.05) brightness(.58);
+}
+.lux-market-card-front > span {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: #087f78;
+  color: #fff;
+}
+.lux-home-market-features h3 {
+  margin: 0 0 14px;
+  font: 500 24px/1.2 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+}
+.lux-home-market-features p {
+  max-width: 28ch;
+  margin: 0;
+  color: rgba(255,255,255,.82);
+  line-height: 1.65;
+}
+.lux-home-market-features small {
+  margin-top: auto;
+  padding-top: 28px;
+  color: #e9c349;
+  font: 600 11px/1.4 Montserrat, sans-serif;
+  letter-spacing: .2em;
+}
+
+.lux-home-services {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(88px, 8vw, 132px) 0;
+  background: #f2efe9;
+  color: #151515;
+}
+.lux-home-services::before {
+  content: "SERVICES";
+  position: absolute;
+  z-index: -2;
+  top: clamp(44px, 4.5vw, 72px);
+  right: clamp(-46px, 1vw, 18px);
+  color: rgba(21,21,21,.045);
+  font: 700 clamp(112px, 13vw, 220px)/.8 Montserrat, sans-serif;
+  letter-spacing: -.065em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.lux-home-services::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 84% 17%, transparent 0 76px, rgba(8,127,120,.14) 77px 78px, transparent 79px),
+    radial-gradient(circle at 91% 19%, transparent 0 126px, rgba(203,165,28,.13) 127px 128px, transparent 129px),
+    linear-gradient(90deg, transparent, rgba(203,165,28,.26), transparent) 87% 208px / 300px 1px no-repeat;
+  pointer-events: none;
+}
+.lux-home-services-inner {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  padding-inline: 80px;
+}
+.lux-home-services-inner::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: -174px;
+  left: -118px;
+  width: 250px;
+  height: 250px;
+  border: 1px solid rgba(203,165,28,.32);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 36px rgba(8,127,120,.055),
+    0 0 0 37px rgba(8,127,120,.18);
+  pointer-events: none;
+}
+.lux-home-services-inner::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 38px;
+  left: -18px;
+  width: 150px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(203,165,28,.6));
+  pointer-events: none;
+}
+.lux-home-services header {
+  margin-bottom: clamp(44px, 5vw, 72px);
+}
+.lux-home-services header > span {
+  display: block;
+  margin-bottom: 18px;
+  color: #cba51c;
+  font: 600 11px/1.2 Montserrat, sans-serif;
+  letter-spacing: .3em;
+}
+.lux-home-services h2 {
+  margin: 0;
+  font: 500 56px/1.08 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  letter-spacing: -.035em;
+}
+.lux-home-services h2 em {
+  color: #cba51c;
+  font-style: normal;
+}
+.lux-home-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.2vw, 32px);
+}
+.lux-home-service-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: clamp(220px, 20vw, 300px) auto;
+  overflow: hidden;
+  border: 1px solid #d8d3ca;
+  border-radius: 0;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+.lux-home-service-card::before {
+  content: "01";
+  position: absolute;
+  z-index: 3;
+  top: 24px;
+  right: 24px;
+  color: rgba(255,255,255,.86);
+  font: 600 11px/1 Montserrat, sans-serif;
+  letter-spacing: .24em;
+}
+.lux-home-service-card:nth-child(2)::before {
+  content: "02";
+}
+.lux-home-service-card:nth-child(3)::before {
+  content: "03";
+}
+.lux-home-service-card::after {
+  content: "";
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 28px;
+  height: 28px;
+  border-right: 1px solid rgba(203,165,28,.5);
+  border-bottom: 1px solid rgba(203,165,28,.5);
+  pointer-events: none;
+}
+.lux-home-service-card figure {
+  position: relative;
+  min-height: 230px;
+  margin: 0;
+  overflow: hidden;
+}
+.lux-home-service-card figure::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(255,255,255,.28);
+  pointer-events: none;
+}
+.lux-home-service-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .45s ease;
+}
+.lux-home-service-card > div {
+  position: relative;
+  min-height: 220px;
+  padding: 48px 34px 28px;
+}
+.lux-home-service-card .material-symbols-outlined {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  background: #087f78;
+  color: #fff;
+  font-size: 25px;
+  transform: translate(-50%, -50%);
+}
+.lux-home-service-card h3 {
+  margin: 0 0 14px;
+  font: 500 23px/1.25 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+}
+.lux-home-service-card p {
+  min-height: 3.3em;
+  margin: 0;
+  color: #696b69;
+  line-height: 1.65;
+}
+.lux-home-service-card b {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 24px;
+  color: #087f78;
+  font-size: 13px;
+  font-weight: 600;
+  transform-origin: left center;
+  transition: color .22s ease, transform .22s ease;
+}
+.lux-home-service-card b i {
+  font-style: normal;
+  transition: transform .2s ease;
+}
+.lux-home-service-card:hover img {
+  transform: scale(1.035);
+}
+.lux-home-service-card:hover b i {
+  transform: translateX(4px);
+}
+.lux-home-service-card:hover b,
+.lux-home-service-card:focus-visible b {
+  color: #cba51c;
+  transform: scale(1.045);
+}
+.lux-home-service-card:focus-visible {
+  outline: 3px solid #087f78;
+  outline-offset: 3px;
+}
+
+.lux-home-global-reach {
+  padding: 20px clamp(28px, 5vw, 84px);
+  border-top: 1px solid #dad6cf;
+  border-bottom: 1px solid #dad6cf;
+  background: #f2efe9;
+  color: #2b2b29;
+}
+.lux-home-global-reach > div {
+  display: flex;
+  box-sizing: border-box;
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+.lux-home-global-reach p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.lux-home-global-reach ul {
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lux-home-global-reach li {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-left: -7px;
+  overflow: hidden;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(26,31,30,.34),
+    0 4px 12px rgba(26,31,30,.1);
+  transition: transform .2s ease;
+}
+.lux-home-global-reach li:hover {
+  z-index: 2;
+  transform: scale(1.1);
+}
+.lux-home-global-reach li img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lux-about-vr {
+  margin: clamp(54px, 7vw, 96px) 0;
+  border: 1px solid #d6d0c6;
+  background: #111;
+}
+.lux-about-vr iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.lux-about-vr figcaption {
+  display: flex;
+  padding: 16px 20px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #f2efe9;
+  color: #242422;
+  font-size: 13px;
+}
+.lux-about-vr figcaption a {
+  flex: 0 0 auto;
+  color: #087f78;
+  font-weight: 600;
+  text-decoration: none;
+}
+.lux-about-vr figcaption a:hover,
+.lux-about-vr figcaption a:focus-visible {
+  color: #cba51c;
+}
+
+@media (max-width: 900px) {
+  .lux-home-timeline-visual {
+    height: clamp(260px, 36vh, 380px);
+    min-height: 0;
+  }
+  .lux-home-market-system-layout {
+    grid-template-columns: 1fr;
+  }
+  .lux-home-market-system > header {
+    grid-template-columns: 1fr;
+  }
+  .lux-home-market-system > header > span:first-child {
+    grid-column: auto;
+  }
+  .lux-home-market-collage {
+    min-height: 520px;
+  }
+  .lux-home-services-grid {
+    grid-template-columns: 1fr;
+  }
+  .lux-home-service-card {
+    grid-template-columns: minmax(220px, .8fr) 1fr;
+    grid-template-rows: none;
+  }
+  .lux-home-service-card > div {
+    min-height: 220px;
+    padding-top: 36px;
+  }
+  .lux-home-service-card .material-symbols-outlined {
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+  .lux-home-global-reach > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .lux-home-gifting-title {
+    z-index: 30;
+    margin-bottom: -42px;
+    pointer-events: none;
+  }
+  .lux-home-gifting-image {
+    min-height: clamp(620px, 170vw, 760px);
+    aspect-ratio: auto;
+    z-index: 10;
+  }
+  .lux-home-gifting-image img:nth-child(1) {
+    width: 94%;
+    top: 0;
+    left: 3%;
+  }
+  .lux-home-gifting-image img:nth-child(2) {
+    width: 82%;
+    top: 31%;
+    left: -3%;
+  }
+  .lux-home-gifting-image img:nth-child(3) {
+    width: 72%;
+    right: -3%;
+    bottom: 2%;
+  }
+  .lux-home-gifting-image img:nth-child(4) {
+    z-index: 8;
+    width: 76%;
+    top: 68%;
+    left: 5%;
+  }
+}
+@media (max-width: 767px) {
+  .lux-latest-event .lux-meet-map {
+    background-position: center;
+    background-size: cover;
+  }
+  .lux-latest-event .lux-meet-map-card {
+    width: 100%;
+    padding-inline: 24px;
+  }
+  .lux-meet-map-summary {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+    margin: 0 24px 28px;
+    transform: none;
+  }
+  .lux-product-filter-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 18px;
+    border: 1px solid rgba(157,245,236,.5);
+    color: #9df5ec;
+    font: 600 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .lux-product-filter-toggle .material-symbols-outlined {
+    transition: transform .2s ease;
+  }
+  .lux-product-filter-toggle[aria-expanded="true"] .material-symbols-outlined {
+    transform: rotate(180deg);
+  }
+  .lux-product-filter-panel[hidden] {
+    display: none !important;
+  }
+  .lux-home-market-system {
+    padding: 72px 20px;
+  }
+  .lux-home-market-system > header h2 {
+    font-size: 40px;
+  }
+  .lux-home-market-collage {
+    grid-template-rows: 310px 120px;
+    min-height: 0;
+  }
+  .lux-home-market-features {
+    grid-template-columns: 1fr;
+  }
+  .lux-market-feature {
+    min-height: 280px;
+  }
+  .lux-home-market-watermark {
+    top: 92px;
+    right: 0;
+    width: 100%;
+    font-size: clamp(58px, 16vw, 72px);
+    text-align: right;
+    white-space: normal;
+  }
+  .lux-home-services {
+    padding: 72px 0;
+  }
+  .lux-home-services::before {
+    top: 68px;
+    right: -28px;
+    font-size: 76px;
+    opacity: .7;
+  }
+  .lux-home-services::after {
+    opacity: .55;
+    background:
+      radial-gradient(circle at 90% 12%, transparent 0 48px, rgba(8,127,120,.14) 49px 50px, transparent 51px),
+      radial-gradient(circle at 102% 15%, transparent 0 86px, rgba(203,165,28,.13) 87px 88px, transparent 89px);
+  }
+  .lux-home-services-inner {
+    padding-inline: 24px;
+  }
+  .lux-home-services-inner::before {
+    bottom: -132px;
+    left: -112px;
+    width: 190px;
+    height: 190px;
+  }
+  .lux-home-services-inner::after {
+    bottom: 24px;
+    left: -24px;
+    width: 92px;
+  }
+  .lux-home-services header {
+    margin-bottom: 38px;
+  }
+  .lux-home-services h2 {
+    font-size: 36px;
+  }
+  .lux-home-service-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 230px auto;
+  }
+  .lux-home-service-card::before {
+    top: 20px;
+    right: 20px;
+  }
+  .lux-home-service-card > div {
+    min-height: 220px;
+    padding: 50px 26px 28px;
+  }
+  .lux-home-service-card .material-symbols-outlined {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .lux-home-global-reach {
+    padding: 22px 24px;
+  }
+  .lux-home-global-reach ul {
+    flex-wrap: wrap;
+    padding-left: 6px;
+  }
+  .lux-about-vr {
+    margin-block: 42px;
+  }
+  .lux-about-vr iframe {
+    aspect-ratio: 4 / 5;
+  }
+  .lux-about-vr figcaption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lux-meet-map-video {
+    display: none;
+  }
+  .lux-home-market-collage img {
+    transition: none;
+  }
+  .lux-market-feature {
+    transition: none;
+  }
+  .lux-home-service-card img,
+  .lux-home-service-card b i {
+    transition: none;
+  }
+}
+
+/* Homepage editorial decoration and contrast refinements. */
+.lux-latest-event-carousel {
+  isolation: isolate;
+}
+.lux-latest-event-carousel::before {
+  content: "EXHIBITION";
+  position: absolute;
+  z-index: -2;
+  top: -36px;
+  right: clamp(76px, 10vw, 170px);
+  color: rgba(0,106,100,.055);
+  font: 700 clamp(96px, 13vw, 210px)/.8 Montserrat, sans-serif;
+  letter-spacing: -.07em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.lux-latest-event-carousel::after {
+  content: none;
+}
+.lux-latest-event-slide {
+  position: relative;
+  isolation: isolate;
+}
+.lux-event-city-mark {
+  position: absolute;
+  z-index: 4;
+  left: clamp(-18px, -1vw, 0px);
+  bottom: clamp(14px, 2.6vw, 38px);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: rgba(0,106,100,.2);
+  text-shadow: 0 1px 0 rgba(255,255,255,.72);
+  pointer-events: none;
+}
+.lux-event-city-mark strong {
+  font: 700 clamp(78px, 10vw, 152px)/.78 "Alimama ShuHei", "AlimamaShuHeiTi-Bold", "Noto Sans SC", sans-serif;
+  letter-spacing: -.04em;
+}
+.lux-event-city-mark span {
+  font: 700 clamp(20px, 2.1vw, 32px)/1 Montserrat, sans-serif;
+  letter-spacing: .12em;
+}
+@media (min-width: 768px) {
+  .lux-latest-event-slide {
+    box-sizing: border-box;
+    padding-bottom: clamp(96px, 8vw, 132px);
+  }
+  .lux-event-city-mark {
+    bottom: 12px;
+  }
+}
+
+.lux-home-timeline::before {
+  content: "BRAND JOURNEY";
+  position: absolute;
+  z-index: 0;
+  top: clamp(82px, 8vw, 126px);
+  right: clamp(-70px, 2vw, 28px);
+  color: rgba(255,255,255,.035);
+  font: 700 clamp(84px, 11vw, 176px)/.82 Montserrat, sans-serif;
+  letter-spacing: -.065em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.lux-home-timeline::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 76px;
+  right: -112px;
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(157,245,236,.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 48px rgba(233,195,73,.035);
+  pointer-events: none;
+}
+.lux-home-timeline > header,
+.lux-home-timeline-layout {
+  position: relative;
+  z-index: 1;
+}
+.lux-home-timeline-steps article::after {
+  content: "起源";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: auto;
+  left: -30px;
+  color: rgba(233,195,73,0);
+  font: 700 clamp(34px, 4.4vw, 66px)/1 "Alimama ShuHei", "Noto Sans SC", sans-serif;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transform: translate(-92%, -50%);
+  transition: color .45s ease, transform .6s cubic-bezier(.22,.61,.36,1);
+  pointer-events: none;
+}
+html[lang^="zh"] .lux-home-timeline-steps article:nth-child(2)::after { content: "经验"; }
+html[lang^="zh"] .lux-home-timeline-steps article:nth-child(3)::after { content: "合作"; }
+html[lang^="zh"] .lux-home-timeline-steps article:nth-child(4)::after { content: "愿景"; }
+html[lang^="en"] .lux-home-timeline-steps article:nth-child(1)::after { content: "ORIGIN"; }
+html[lang^="en"] .lux-home-timeline-steps article:nth-child(2)::after { content: "EXPERIENCE"; }
+html[lang^="en"] .lux-home-timeline-steps article:nth-child(3)::after { content: "PARTNERSHIP"; }
+html[lang^="en"] .lux-home-timeline-steps article:nth-child(4)::after { content: "VISION"; }
+html[lang^="en"] .lux-home-timeline-steps article::after {
+  box-sizing: border-box;
+  width: clamp(86px, 7.5vw, 118px);
+  font-family: Montserrat, sans-serif;
+  font-size: clamp(16px, 1.8vw, 28px);
+  line-height: .92;
+  letter-spacing: .08em;
+  overflow-wrap: anywhere;
+  text-align: right;
+  white-space: normal;
+}
+.lux-home-timeline-steps article.is-active::after {
+  color: rgba(233,195,73,.34);
+  transform: translate(-100%, -50%);
+}
+.lux-home-timeline-steps article > * {
+  position: relative;
+  z-index: 1;
+}
+.lux-home-timeline-steps article > span {
+  position: static;
+}
+.lux-home-timeline-steps article > span::after {
+  content: "01";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: 0;
+  color: rgba(233,195,73,0);
+  font: 700 clamp(104px, 12vw, 176px)/1 Montserrat, sans-serif;
+  letter-spacing: -.08em;
+  transform: translate(18px, -50%) scale(.9);
+  transition: color .45s ease, transform .6s cubic-bezier(.22,.61,.36,1);
+  pointer-events: none;
+}
+.lux-home-timeline-steps article:nth-child(2) > span::after { content: "02"; }
+.lux-home-timeline-steps article:nth-child(3) > span::after { content: "03"; }
+.lux-home-timeline-steps article:nth-child(4) > span::after { content: "04"; }
+.lux-home-timeline-steps article.is-active > span::after {
+  color: rgba(233,195,73,.085);
+  transform: translate(0, -50%) scale(1);
+}
+.lux-home-timeline-steps article {
+  background: none;
+}
+
+.lux-home-gifting-image img:nth-child(4) {
+  z-index: 4;
+  width: 60%;
+  top: 31%;
+  left: -42%;
+}
+.lux-home-gifting-services {
+  gap: 0;
+  padding: 26px clamp(20px, 2.2vw, 34px);
+  border-left: 1px solid rgba(255,255,255,.42);
+  background: linear-gradient(105deg, rgba(6,8,8,.58), rgba(6,8,8,.3));
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.12),
+    0 20px 48px rgba(0,0,0,.2);
+  backdrop-filter: blur(14px) saturate(.72);
+  -webkit-backdrop-filter: blur(14px) saturate(.72);
+}
+.lux-home-gifting-service {
+  grid-template-columns: 46px 1fr;
+  gap: 16px;
+  padding-block: 24px;
+}
+.lux-home-gifting-service + .lux-home-gifting-service {
+  border-top: 1px solid rgba(255,255,255,.4);
+}
+.lux-home-gifting-service > .material-symbols-outlined {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(233,195,73,.8);
+  border-radius: 50%;
+  background: rgba(0,0,0,.76);
+  color: #e9c349 !important;
+  font-size: 24px;
+  text-shadow: none;
+}
+.lux-home-gifting-service div > span:first-child {
+  color: #fff !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,.8);
+}
+.lux-home-gifting-service div > span:last-child {
+  color: rgba(255,255,255,.78) !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 900px) {
+  .lux-latest-event-carousel::before {
+    top: 14px;
+    right: -24px;
+    font-size: 82px;
+  }
+  .lux-latest-event-carousel::after {
+    left: -58px;
+    width: 220px;
+    height: 130px;
+  }
+  .lux-home-timeline::before {
+    top: 92px;
+    right: -36px;
+    font-size: 74px;
+  }
+  .lux-home-timeline::after {
+    top: 70px;
+    right: -142px;
+    width: 240px;
+    height: 240px;
+  }
+  .lux-home-timeline-steps article::after {
+    right: 8px;
+    font-size: 112px;
+  }
+  .lux-home-gifting-image img:nth-child(4) {
+    z-index: 4;
+    top: 16%;
+    left: -10%;
+    width: 92%;
+    height: 40%;
+    object-fit: cover;
+  }
+  .lux-home-gifting-services {
+    margin-top: 24px;
+    padding: 12px 22px;
+    border-top: 1px solid rgba(255,255,255,.42);
+    border-left: 1px solid rgba(255,255,255,.42);
+  }
+}
+
+@media (max-width: 520px) {
+  .lux-home-timeline::before {
+    top: 104px;
+    font-size: 58px;
+  }
+  .lux-home-timeline-steps article::after {
+    right: 0;
+    font-size: 88px;
+  }
+  .lux-home-gifting-image img:nth-child(4) {
+    top: 18%;
+    left: -12%;
+    width: 96%;
+    height: 34%;
+  }
+}
+
+#selected-products {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+#selected-products::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  top: clamp(58px, 7vw, 108px);
+  right: 0;
+  width: clamp(220px, 30vw, 440px);
+  height: clamp(132px, 18vw, 248px);
+  opacity: .5;
+  background:
+    repeating-linear-gradient(90deg, rgba(157,245,236,.13) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.045) 0 1px, transparent 1px 34px);
+  mask-image: linear-gradient(135deg, transparent 4%, #000 38%, transparent 94%);
+  -webkit-mask-image: linear-gradient(135deg, transparent 4%, #000 38%, transparent 94%);
+  pointer-events: none;
+}
+#selected-products::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: clamp(120px, 12vw, 174px);
+  right: clamp(18px, 4vw, 72px);
+  width: clamp(170px, 24vw, 340px);
+  height: 42px;
+  border: 0;
+  background:
+    linear-gradient(90deg, rgba(233,195,73,.48), transparent) 0 0 / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, rgba(157,245,236,.38) 0 1px, transparent 1px 26px) 0 100% / 100% 13px no-repeat;
+  pointer-events: none;
+}
+#selected-products > .grid > .group {
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+}
+#selected-products > .grid > .group::before {
+  content: "01";
+  position: absolute;
+  z-index: 4;
+  top: 18px;
+  right: auto;
+  left: 18px;
+  padding: 8px 9px 8px 11px;
+  border-left: 2px solid #e9c349;
+  background: rgba(7,8,8,.72);
+  color: #e9c349;
+  font: 600 11px/1 Montserrat, sans-serif;
+  letter-spacing: .24em;
+  pointer-events: none;
+}
+#selected-products > .grid > .group:nth-child(2)::before { content: "02"; }
+#selected-products > .grid > .group:nth-child(3)::before { content: "03"; }
+#selected-products > .grid > .group::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border: 0;
+  background:
+    linear-gradient(90deg, #e9c349 0 58px, transparent 58px) left top / 100% 2px no-repeat,
+    linear-gradient(180deg, #e9c349 0 58px, transparent 58px) left top / 2px 100% no-repeat,
+    linear-gradient(270deg, #9df5ec 0 46px, transparent 46px) right bottom / 100% 1px no-repeat,
+    linear-gradient(0deg, #9df5ec 0 46px, transparent 46px) right bottom / 1px 100% no-repeat;
+  opacity: .72;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+#selected-products > .grid > .group:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  #selected-products::before {
+    top: 86px;
+    right: -40px;
+    width: 230px;
+    height: 144px;
+  }
+  #selected-products::after {
+    top: 138px;
+    width: 170px;
+    height: 34px;
+  }
+}
+
+.lux-collab-bolt .lux-lucide {
+  width: 52%;
+  height: 52%;
+}
+
+@media (max-width: 767px) {
+  .lux-home-timeline-steps {
+    padding-left: 58px;
+  }
+  .lux-home-timeline-steps::before {
+    left: 67px;
+  }
+  .lux-home-timeline-steps article::after {
+    left: -22px;
+    right: auto;
+    font-size: 26px;
+  }
+  html[lang^="en"] .lux-home-timeline-steps article::after {
+    font-size: 10px;
+    letter-spacing: .04em;
+  }
+  .lux-event-city-mark {
+    left: 4px;
+    bottom: 2px;
+    gap: 7px;
+  }
+  .lux-event-city-mark strong {
+    font-size: clamp(40px, 13vw, 58px);
+  }
+  .lux-event-city-mark span {
+    font-size: 11px;
+    letter-spacing: .08em;
+  }
+  .lux-home-gifting-image {
+    min-height: clamp(520px, 142vw, 610px);
+  }
+  .lux-home-gifting-image img:nth-child(1) {
+    width: 78%;
+    top: 0;
+    left: 11%;
+  }
+  .lux-home-gifting-image img:nth-child(2) {
+    width: 62%;
+    top: 26%;
+    left: 0;
+  }
+  .lux-home-gifting-image img:nth-child(3) {
+    width: 58%;
+    right: 0;
+    bottom: 2%;
+  }
+  .lux-home-gifting-image img:nth-child(4) {
+    width: 61%;
+    height: auto;
+    top: 49%;
+    left: 6%;
+  }
+}
+
+/* Partnership advantage, placed between the brand journey and global partnership. */
+.lux-home-why {
+  display: grid;
+  grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr);
+  gap: clamp(48px, 7vw, 112px);
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  padding: clamp(76px, 9vw, 138px) max(28px, calc((100vw - 1600px) / 2));
+  align-items: center;
+  background: #f2efe9;
+  color: #171715;
+}
+.lux-home-why-media {
+  position: relative;
+  min-height: clamp(480px, 42vw, 680px);
+}
+.lux-home-why-media figure {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(23,23,21,.14);
+  background: #ddd8cf;
+}
+.lux-home-why-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .65s ease;
+}
+.lux-home-why-media figure:hover img {
+  transform: scale(1.035);
+}
+.lux-home-why-main {
+  inset: 0 18% 0 0;
+}
+.lux-home-why-inset {
+  right: 0;
+  bottom: 8%;
+  width: 48%;
+  height: 48%;
+  box-shadow: 0 20px 48px rgba(21,20,18,.18);
+}
+.lux-home-why-copy > span {
+  color: #087f78;
+  font: 700 10px/1.4 Montserrat, "PingFang SC", sans-serif;
+  letter-spacing: .24em;
+}
+.lux-home-why-copy h2 {
+  max-width: 13ch;
+  margin: 14px 0 18px;
+  font: 500 clamp(40px, 4.8vw, 72px)/1.03 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+}
+.lux-home-why-copy > p {
+  max-width: 720px;
+  margin: 0;
+  color: #616865;
+  line-height: 1.75;
+}
+.lux-home-why-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+  padding-block: 26px;
+  border-block: 1px solid rgba(23,23,21,.14);
+}
+.lux-home-why-benefits article {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 4px 12px;
+  align-items: center;
+}
+.lux-home-why-benefits i {
+  grid-row: 1 / 3;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 50%;
+  background: #087f78;
+  color: #fff;
+  font-size: 20px;
+}
+.lux-home-why-benefits strong {
+  font-size: 14px;
+}
+.lux-home-why-benefits small {
+  color: #777d7a;
+  font-size: 11px;
+  line-height: 1.45;
+}
+.lux-home-why-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 28px;
+  border: 1px solid rgba(23,23,21,.12);
+}
+.lux-home-why-metrics > div {
+  display: grid;
+  gap: 5px;
+  min-height: 112px;
+  padding: 22px;
+  align-content: center;
+}
+.lux-home-why-metrics > div + div {
+  border-left: 1px solid rgba(23,23,21,.12);
+}
+.lux-home-why-metrics strong {
+  color: #cba51c;
+  font: 600 clamp(28px, 3vw, 44px)/1 Montserrat, sans-serif;
+}
+.lux-home-why-metrics span {
+  color: #616865;
+  font-size: 12px;
+}
+.lux-home-why-copy > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 13px 18px;
+  background: #7d1832;
+  color: #fff;
+  font: 700 11px/1 Montserrat, "PingFang SC", sans-serif;
+  letter-spacing: .08em;
+  text-decoration: none;
+  transition: background-color .22s ease, transform .22s ease;
+}
+.lux-home-why-copy > a:hover,
+.lux-home-why-copy > a:focus-visible {
+  background: #087f78;
+  transform: translateY(-2px);
+}
+.lux-home-why-copy > a .lux-lucide {
+  width: 18px;
+  height: 18px;
+}
+
+/* July 28 quality gallery, event layering, and partnership refinements. */
+[data-cert-hover-image] {
+  position: relative;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+[data-cert-hover-image] img {
+  transition: transform .5s cubic-bezier(.2,.75,.25,1);
+}
+[data-cert-hover-image]:hover img,
+[data-cert-hover-image]:focus-visible img {
+  transform: scale(1.025);
+}
+
+.lux-cert-media-carousel {
+  position: relative;
+  isolation: isolate;
+  cursor: zoom-in;
+}
+.lux-cert-capability > .lux-cert-media-carousel [data-cert-media-slide] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  object-fit: cover;
+  transform: scale(1.018);
+  transition: opacity .42s ease, transform .65s ease;
+}
+.lux-cert-capability > .lux-cert-media-carousel [data-cert-media-slide].is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+.lux-cert-media-nav {
+  position: absolute;
+  z-index: 3;
+  right: 22px;
+  bottom: 22px;
+  display: flex;
+  gap: 12px;
+}
+.lux-cert-media-nav button {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 50%;
+  background: rgba(12,17,17,.5);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color .2s ease, color .2s ease, transform .2s ease;
+}
+.lux-cert-media-nav button:hover,
+.lux-cert-media-nav button:focus-visible {
+  background: #9df5ec;
+  color: #071313;
+  transform: scale(1.06);
+}
+.lux-cert-media-nav .lux-lucide {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.lux-event-detail-link {
+  padding: 12px 16px;
+  transform-origin: left center;
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.lux-event-detail-link:hover,
+.lux-event-detail-link:focus-visible {
+  color: #071313 !important;
+  background: #9df5ec;
+  border-color: #9df5ec;
+  transform: scale(1.04);
+}
+.lux-map-popover button {
+  transform-origin: left center;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.lux-map-popover button:hover,
+.lux-map-popover button:focus-visible {
+  background: #9df5ec;
+  color: #071313;
+  border-color: #9df5ec;
+  transform: scale(1.04);
+}
+
+@media (min-width: 768px) {
+  .lux-latest-event-slide {
+    padding-bottom: 0;
+  }
+}
+.lux-event-city-mark {
+  z-index: 0;
+  left: 0;
+  bottom: 8px;
+}
+.lux-latest-event-inner,
+.lux-event-carousel-controls,
+.lux-event-thumbnails {
+  position: relative;
+  z-index: 2;
+}
+
+.lux-home-gifting-intro {
+  width: min(100%, 640px);
+  padding: clamp(22px, 2.6vw, 38px);
+  background: rgba(7,10,10,.72);
+  box-shadow: 0 20px 52px rgba(0,0,0,.28);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+.lux-home-gifting-intro p {
+  position: relative;
+  z-index: 1;
+  color: #fff !important;
+  text-shadow: 0 2px 14px rgba(0,0,0,.9);
+}
+
+.lux-home-why-copy > a {
+  background: #07564f;
+}
+.lux-home-why-copy > a:hover,
+.lux-home-why-copy > a:focus-visible {
+  background: #e9c349;
+  color: #071313;
+  transform: translateY(-2px) scale(1.025);
+}
+
+@media (max-width: 640px) {
+  .lux-cert-media-nav {
+    right: 14px;
+    bottom: 14px;
+  }
+  .lux-cert-media-nav button {
+    width: 46px;
+    height: 46px;
+  }
+  .lux-home-gifting-intro {
+    box-sizing: border-box;
+    padding: 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  .lux-home-why {
+    grid-template-columns: 1fr;
+    padding-inline: max(20px, calc((100vw - 720px) / 2));
+  }
+  .lux-home-why-media {
+    min-height: clamp(430px, 88vw, 620px);
+  }
+}
+@media (max-width: 600px) {
+  .lux-home-why {
+    width: 100%;
+    padding-inline: 16px;
+    padding-block: 64px;
+  }
+  .lux-home-why-media {
+    min-height: 420px;
+  }
+  .lux-home-why-main {
+    inset: 0 12% 0 0;
+  }
+  .lux-home-why-inset {
+    width: 54%;
+    height: 44%;
+  }
+  .lux-home-why-benefits,
+  .lux-home-why-metrics {
+    grid-template-columns: 1fr;
+  }
+  .lux-home-why-benefits article {
+    padding-block: 8px;
+  }
+  .lux-home-why-metrics > div + div {
+    border-top: 1px solid rgba(23,23,21,.12);
+    border-left: 0;
+  }
+}
+
+/* Final cascade for the July 28 filter, events, and partnership pass. */
+.lux-product-browser {
+  position: relative;
+}
+.lux-product-filter-panel header strong,
+.lux-product-filter-panel header button,
+.lux-product-filter-panel h3 {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+  font-weight: 700 !important;
+  letter-spacing: .02em !important;
+}
+
+.lux-latest-event-carousel::before {
+  content: none;
+}
+.lux-event-city-mark {
+  z-index: 3;
+  top: 12px;
+  right: clamp(30px, 5vw, 86px);
+  bottom: auto;
+  left: auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  color: rgba(0,106,100,.14);
+  text-align: right;
+  text-shadow: none;
+}
+.lux-event-city-mark em {
+  font: 700 clamp(44px, 5.8vw, 88px)/.9 Montserrat, sans-serif;
+  letter-spacing: .06em;
+  font-style: normal;
+}
+.lux-event-city-mark strong {
+  font-size: clamp(42px, 5.4vw, 82px);
+  line-height: .9;
+}
+.lux-event-city-mark span {
+  font-size: clamp(14px, 1.45vw, 23px);
+  line-height: 1;
+}
+.lux-latest-event-inner {
+  z-index: auto;
+}
+.lux-event-frame,
+.lux-event-copy {
+  position: relative;
+  z-index: 4;
+}
+.lux-event-carousel-controls,
+.lux-event-thumbnails {
+  z-index: 5;
+}
+
+.lux-event-detail-link:hover,
+.lux-event-detail-link:focus-visible {
+  color: #087f78 !important;
+  background: transparent !important;
+  border-color: currentColor !important;
+  transform: scale(1.035);
+}
+.lux-map-popover button:hover,
+.lux-map-popover button:focus-visible {
+  color: #9df5ec !important;
+  background: transparent !important;
+  border-color: currentColor !important;
+  transform: scale(1.035);
+}
+
+.lux-home-gifting-intro {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.lux-home-gifting-intro p {
+  color: #fff !important;
+  -webkit-text-stroke: .35px rgba(0,0,0,.9);
+  paint-order: stroke fill;
+  text-shadow:
+    -1px -1px 0 rgba(0,0,0,.85),
+    1px -1px 0 rgba(0,0,0,.85),
+    -1px 1px 0 rgba(0,0,0,.85),
+    1px 1px 0 rgba(0,0,0,.85),
+    0 3px 14px #000;
+}
+
+.lux-home-why-metrics {
+  gap: clamp(24px, 4vw, 64px);
+  border: 0;
+}
+.lux-home-why-metrics > div {
+  min-height: 0;
+  padding: 18px 0 0;
+}
+.lux-home-why-metrics > div + div {
+  border: 0;
+}
+
+@media (max-width: 767px) {
+  .lux-event-city-mark {
+    top: clamp(300px, 84vw, 350px);
+    right: 10px;
+    bottom: auto;
+    left: auto;
+  }
+  .lux-event-city-mark strong {
+    font-size: clamp(34px, 11vw, 52px);
+  }
+  .lux-event-city-mark em {
+    font-size: clamp(30px, 9vw, 46px);
+  }
+  .lux-event-city-mark span {
+    font-size: 10px;
+  }
+  .lux-home-why-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .lux-home-why-metrics > div {
+    padding: 14px 0 0;
+  }
+  .lux-home-why-metrics > div + div {
+    border: 0;
+  }
+}
+
+/* July 28 China partnership and responsive filter rollback. */
+.lux-latest-event-carousel::before {
+  content: "EXHIBITION";
+  position: absolute;
+  z-index: -2;
+  top: -36px;
+  right: clamp(76px, 10vw, 170px);
+  color: rgba(0,106,100,.055);
+  font: 700 clamp(96px, 13vw, 210px)/.8 Montserrat, sans-serif;
+  letter-spacing: -.07em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.lux-latest-event-inner {
+  z-index: 2;
+}
+
+.lux-home-why::before {
+  content: "CHINA PARTNERSHIP";
+}
+.lux-home-why-copy::before {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .lux-product-filter-toggle {
+    display: none !important;
+  }
+}
+
+/* July 28 control sizing, event alignment, and anchored mobile filters. */
+.lux-home-why-copy > a {
+  padding: 20px 48px;
+  font: 700 18px/27px Montserrat, "PingFang SC", sans-serif;
+  letter-spacing: .3em;
+}
+
+.lux-event-detail-link {
+  padding: 12px 0;
+}
+
+@media (max-width: 767px) {
+  .lux-product-filter-panel:not([hidden]) {
+    position: fixed !important;
+    z-index: 41;
+    top: var(--lux-filter-panel-top, 276px) !important;
+    right: auto !important;
+    left: var(--lux-filter-panel-left, 24px) !important;
+    box-sizing: border-box;
+    width: var(--lux-filter-panel-width, calc(100vw - 48px)) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    max-height: calc(100vh - var(--lux-filter-panel-top, 276px) - 16px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* July 28 submenu, card links, event CTA, and compact map attribution. */
+.lux-home-maison-grid b {
+  display: inline-block;
+  width: max-content;
+  transform-origin: left center;
+  transition: color .2s ease, transform .2s ease;
+}
+.lux-home-maison-grid > a:hover b,
+.lux-home-maison-grid > a:focus-visible b {
+  transform: scale(1.045);
+}
+
+.lux-event-detail-link:hover,
+.lux-event-detail-link:focus-visible {
+  color: #071313 !important;
+  background: #9df5ec !important;
+  border-color: #9df5ec !important;
+  transform: scale(1.04);
+}
+
+.lux-amap-canvas .leaflet-control-attribution {
+  box-sizing: border-box;
+  width: auto !important;
+  max-width: calc(100% - 20px);
+  margin: 0 !important;
+  padding: 3px 6px !important;
+  color: #303633 !important;
+  background: rgba(255, 255, 255, .82) !important;
+  box-shadow: none !important;
+  font: 10px/1.35 Arial, sans-serif !important;
+  white-space: nowrap;
+}
+.lux-amap-canvas .leaflet-control-attribution a {
+  color: #303633 !important;
+  text-decoration: none;
+}
+
+.lux-map-popover button:hover,
+.lux-map-popover button:focus-visible {
+  color: #071313 !important;
+  background: #9df5ec !important;
+  border-color: #9df5ec !important;
+  transform: scale(1.04);
 }

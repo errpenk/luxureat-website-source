@@ -122,6 +122,8 @@ function initLuxCaviarControls() {
   const search = controls.querySelector("[data-caviar-search]");
   const searchClear = controls.querySelector("[data-caviar-search-clear]");
   const clearAll = document.querySelector("[data-caviar-clear]");
+  const filterPanel = document.querySelector(".lux-product-filter-panel");
+  const filterToggle = document.querySelector("[data-caviar-filter-toggle]");
   const count = document.querySelector("[data-caviar-count]");
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
 
@@ -151,6 +153,31 @@ function initLuxCaviarControls() {
   let activeView = "grid";
   let activeSortKey = "recommended";
   let searchTerm = "";
+  const mobileFilters = matchMedia("(max-width: 767px)");
+
+  const syncMobileFilterPanel = () => {
+    if (!filterPanel || !filterToggle || !mobileFilters.matches || filterPanel.hidden) return;
+
+    const toggleRect = filterToggle.getBoundingClientRect();
+    filterPanel.style.setProperty("--lux-filter-panel-top", `${Math.round(toggleRect.bottom + 12)}px`);
+    filterPanel.style.setProperty("--lux-filter-panel-left", `${Math.round(toggleRect.left)}px`);
+    filterPanel.style.setProperty("--lux-filter-panel-width", `${Math.round(toggleRect.width)}px`);
+  };
+
+  const setFiltersOpen = (open) => {
+    if (!filterPanel || !filterToggle) return;
+    filterPanel.hidden = !open;
+    filterToggle.setAttribute("aria-expanded", String(open));
+    if (open) requestAnimationFrame(syncMobileFilterPanel);
+  };
+
+  filterToggle?.addEventListener("click", () => {
+    setFiltersOpen(filterToggle.getAttribute("aria-expanded") !== "true");
+  });
+  if (mobileFilters.matches) setFiltersOpen(false);
+  mobileFilters.addEventListener("change", (event) => setFiltersOpen(!event.matches));
+  addEventListener("scroll", syncMobileFilterPanel, { passive: true });
+  addEventListener("resize", syncMobileFilterPanel);
 
   const setPressed = (buttons, activeButton, activeClasses, inactiveClasses) => {
     buttons.forEach((button) => {
@@ -302,7 +329,7 @@ function initLuxProductDetails() {
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
   const copy = () => document.documentElement.lang?.startsWith("zh")
     ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", qty: "数量", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat（露意膳） 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
-    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", qty: "Qty", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat（露意膳） protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", qty: "Qty", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat (露意膳) protects every tasting with cold-chain handling, batch records, and precise opening standards." };
   const totalLabel = (quantity) => document.documentElement.lang?.startsWith("zh") ? `${quantity}件总价` : `${quantity}-item total`;
   const maxQuantity = () => Math.min(window.LuxureatBag?.maxQuantity || 99, Math.max(1, Number(products[currentProductId]?.maxQuantity) || 99));
   const clampQuantity = (quantity) => Math.min(maxQuantity(), Math.max(1, Number(quantity) || 1));

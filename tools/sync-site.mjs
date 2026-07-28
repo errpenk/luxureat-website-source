@@ -8,6 +8,7 @@ const root = path.resolve(rootArg || process.cwd());
 const check = process.argv.includes("--check");
 const bagIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>';
 const accountIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+const fontPreconnects = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
 
 const esc = (value) => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
 const slugFor = (item, lang) => item[`${lang}Slug`];
@@ -80,6 +81,9 @@ function render(page) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   html = html.replace(/(\.\.\/(?:assets\/css\/(?:tailwind-home|tailwind-site)\.css|integration\.css))\?v=[^"']+/g, `$1?v=${assetVersion}`);
+  if (html.includes("fonts.googleapis.com") && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
+    html = html.replace(/(<meta\b[^>]*\bname=["']viewport["'][^>]*>)/i, `$1\n${fontPreconnects}`);
+  }
   return [file, html];
 }
 
@@ -94,6 +98,9 @@ function performanceIssues(file, html) {
     if (!/\bloading=["'](?:lazy|eager)["']/i.test(match[0]) && !/\bfetchpriority=["']high["']/i.test(match[0])) {
       issues.push(`${file}: image has no explicit loading policy ${match[0]}`);
     }
+  }
+  if (html.includes("fonts.googleapis.com") && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
+    issues.push(`${file}: Google Fonts is missing connection hints`);
   }
   const legacyRootRoutes = /^(?:\.\.\/)+(?:index|bag|caviar|contact|gifting|journal|product-imperial-beluga|rituals)\.html(?:[?#].*)?$/i;
   for (const match of html.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)) {

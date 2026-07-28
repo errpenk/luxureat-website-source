@@ -41,7 +41,7 @@ assert(core.includes('body > section h2'), "navigation does not scan top-level s
 
 const submenuTargets = {
   zh: {
-    "index.html": ["meet-us", "selected-products", "maison-overview", "heritage-editorial", "brand-timeline", "gifting-editorial"],
+    "index.html": ["meet-us", "selected-products", "maison-overview", "market-system", "brand-timeline", "gifting-editorial"],
     "journal.html": ["about-us", "featured", "seasonal-notes"],
     "caviar.html": ["product-catalogue"],
     "rituals.html": ["breakfast", "first-courses", "main-courses", "desserts"],
@@ -51,7 +51,7 @@ const submenuTargets = {
     "contact.html": ["brand-consultation", "global-footprint"],
   },
   en: {
-    "index.html": ["meet-us", "selected-products", "maison-overview", "heritage-editorial", "brand-timeline", "gifting-editorial"],
+    "index.html": ["meet-us", "selected-products", "maison-overview", "market-system", "brand-timeline", "gifting-editorial"],
     "journal.html": ["about-us", "featured", "seasonal-notes"],
     "products.html": ["product-catalogue"],
     "rituals.html": ["breakfast", "first-courses", "main-courses", "desserts"],

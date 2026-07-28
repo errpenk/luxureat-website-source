@@ -109,7 +109,7 @@ function initLuxReader() {
     if (!mapMount) return;
     const mapLabels = lang === "zh"
       ? { kicker: "展会图谱", title: "展会地图", intro: "查看 LuxurEat（露意膳）即将参与及已经结束的展会。将鼠标移至地点标记可预览，点击可打开对应活动详情。", upcoming: "即将开始", ended: "已结束", detail: "查看详情", reset: "返回中国地图视角", unavailable: "地图暂时无法加载，请稍后重试。" }
-      : { kicker: "Exhibition Atlas", title: "Exhibition Map", intro: "Explore upcoming and completed LuxurEat（露意膳） exhibitions. Hover over a location to preview it, then select the marker to open the event article.", upcoming: "Upcoming", ended: "Ended", detail: "View details", reset: "Reset to China view", unavailable: "The map is temporarily unavailable. Please try again shortly." };
+      : { kicker: "Exhibition Atlas", title: "Exhibition Map", intro: "Explore upcoming and completed LuxurEat (露意膳) exhibitions. Hover over a location to preview it, then select the marker to open the event article.", upcoming: "Upcoming", ended: "Ended", detail: "View details", reset: "Reset to China view", unavailable: "The map is temporarily unavailable. Please try again shortly." };
     const today = new Date();
     const mappedEvents = events.filter((event) => Array.isArray(event.coordinates)).map((event) => ({
       ...event,
@@ -158,6 +158,7 @@ function initLuxReader() {
         boxZoom: false,
         keyboard: false,
       });
+      map.attributionControl.setPrefix(false);
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -254,7 +255,13 @@ function initLuxReader() {
       const divider = /传统、创新|Tradition, Innovation/i.test(heading)
         ? `<figure class="lux-about-section-divider"><img loading="lazy" decoding="async" src="../assets/media/brand/about-aquaculture-divider.webp" alt="${escapeHtml(lang === "zh" ? "山水之间的可持续水产养殖场" : "Sustainable aquaculture among mountains and clear water")}"></figure>`
         : "";
-      return `${divider}<section class="lux-reader-section" id="lux-about-section-${index}">
+      const virtualTour = index === 1
+        ? `<figure class="lux-about-vr">
+            <iframe loading="lazy" src="https://trufflebar.com/vr/" title="${escapeHtml(lang === "zh" ? "曼谷 TruffleBar & Restaurant 360° 全景体验" : "TruffleBar & Restaurant Bangkok 360° virtual tour")}" allow="fullscreen; accelerometer; gyroscope" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            <figcaption><span>${escapeHtml(lang === "zh" ? "TruffleBar & Restaurant · 曼谷全景体验" : "TruffleBar & Restaurant · Bangkok Virtual Tour")}</span><a href="https://trufflebar.com/vr/" target="_blank" rel="noopener">${escapeHtml(lang === "zh" ? "全屏打开" : "Open Full Screen")} ↗</a></figcaption>
+          </figure>`
+        : "";
+      return `${divider}${virtualTour}<section class="lux-reader-section" id="lux-about-section-${index}">
         <h3>${escapeHtml(heading)}</h3>
         ${paragraphs(content)}
         ${gallery}
@@ -347,6 +354,7 @@ function initLuxReader() {
     };
 
     document.querySelectorAll("[data-reader-open]").forEach((trigger) => {
+      if (trigger.closest(".lux-home-market-collage")) return;
       const article = articles[trigger.dataset.readerOpen];
       if (!article) return;
       sync(trigger.closest(".lux-reader-card, .article-card") || trigger.parentElement, article);

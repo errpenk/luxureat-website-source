@@ -111,7 +111,7 @@
           calendarTitle: "添加到日历"
         },
         en: {
-          posterAlt: "LuxurEat（露意膳） at the 11th China International Food & Catering Expo",
+          posterAlt: "LuxurEat (露意膳) at the 11th China International Food & Catering Expo",
           title: "Italian flavor meets Changsha.",
           articleTitle: "Italian flavor meets Changsha.",
           eyebrow: "Recent Event",
@@ -121,14 +121,14 @@
           city: "Changsha",
           category: "Trade Fair",
           paragraphs: [
-            "From September 18 to 20, 2026, LuxurEat（露意膳） will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
+            "From September 18 to 20, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
             "As a major business platform spanning the food and catering value chain, the expo will cover 100,000 square metres and is expected to welcome more than 200,000 visits.",
-            "Through truffles, caviar, and premium Italian foods, LuxurEat（露意膳） will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry. We warmly invite you to meet us in Changsha."
+            "Through truffles, caviar, and premium Italian foods, LuxurEat (露意膳) will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry. We warmly invite you to meet us in Changsha."
           ],
-          intro: "From September 18 to 20, 2026, LuxurEat（露意膳） will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
+          intro: "From September 18 to 20, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
           sections: [
             ["A platform across the value chain", "As a major business platform spanning the food and catering value chain, the expo will cover 100,000 square metres and is expected to welcome more than 200,000 visits."],
-            ["Italian flavor, thoughtfully selected", "Through truffles, caviar, and premium Italian foods, LuxurEat（露意膳） will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry."],
+            ["Italian flavor, thoughtfully selected", "Through truffles, caviar, and premium Italian foods, LuxurEat (露意膳) will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry."],
             ["Meet us in Changsha", "We warmly invite you to meet us in Changsha."]
           ],
           quote: "Italian flavor meets Changsha.",
@@ -187,15 +187,15 @@
           city: "Guangzhou",
           category: "Trade Fair",
           paragraphs: [
-            "On September 8–9, 2026, LuxurEat（露意膳） will present TrufflEat, CaviarEat, TinCaviar, and more at MARCA CHINA Private Label Fair.",
+            "On September 8–9, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, TinCaviar, and more at MARCA CHINA Private Label Fair.",
             "MARCA CHINA is one of China’s most influential professional trade exhibitions dedicated to private-label products, the event brings together more than 500 direct manufacturers and private-label production partners.",
-            "LuxurEat（露意膳）will use the exhibition to discover promising products, sourcing resources, and new partnership models, while fostering stronger and more enduring connections between premium food businesses in China and international markets."
+            "LuxurEat (露意膳)will use the exhibition to discover promising products, sourcing resources, and new partnership models, while fostering stronger and more enduring connections between premium food businesses in China and international markets."
           ],
-          intro: "China's food market is moving toward healthier, higher-quality, more regional, and younger expressions. In Guangzhou, LuxurEat（露意膳） will explore new products and partnerships with professional buyers and industry partners.",
+          intro: "China's food market is moving toward healthier, higher-quality, more regional, and younger expressions. In Guangzhou, LuxurEat (露意膳) will explore new products and partnerships with professional buyers and industry partners.",
           sections: [
             ["An industry gathering", "The fifth Marca China Private Label Fair will take place at the Poly World Trade Expo Centre in Guangzhou on September 8–9, 2026. Around 500 exhibitors and more than 20,000 professional visitors are expected across food and beverage, packaging design, pet products, beauty, and personal care."],
             ["New directions in China's food market", "From regional seafood specialties to natural juices and low-alcohol wines, this year's fair reflects a market moving toward health, quality, regional identity, and younger audiences. Consumers increasingly consider not only ingredients and nutrition, but also context, culture, and the overall experience of a product."],
-            ["Connecting brands with global markets", "As a bridge between international food brands, quality producers, and global markets, LuxurEat（露意膳） will continue to follow the development of China's food industry. Through professional fairs such as Marca China, we seek new suppliers, products, and commercial partnerships that help high-quality foods move between China and international markets."]
+            ["Connecting brands with global markets", "As a bridge between international food brands, quality producers, and global markets, LuxurEat (露意膳) will continue to follow the development of China's food industry. Through professional fairs such as Marca China, we seek new suppliers, products, and commercial partnerships that help high-quality foods move between China and international markets."]
           ],
           quote: "Professional fairs create a clear, lasting connection between high-quality food and markets in China and around the world.",
           tagline: "The Luxury of Taste, Made in Italy.",

@@ -4,6 +4,28 @@ const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) =>
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
 
+const luxScheduleIdle = window.requestIdleCallback || ((callback) => setTimeout(callback, 1200));
+luxScheduleIdle(() => {
+  const connection = navigator.connection;
+  if (connection?.saveData || /(?:^|-)2g$/.test(connection?.effectiveType || "")) return;
+  const pages = new Set();
+  document.querySelectorAll("a[href]").forEach((anchor) => {
+    const url = new URL(anchor.href, location.href);
+    const fileName = url.pathname.split("/").pop() || "";
+    const looksLikePage = !fileName.includes(".") || fileName.endsWith(".html");
+    if (url.origin === location.origin && url.pathname !== location.pathname && looksLikePage) {
+      pages.add(`${url.pathname}${url.search}`);
+    }
+  });
+  pages.forEach((href) => {
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "document";
+    link.href = href;
+    document.head.append(link);
+  });
+}, { timeout: 2500 });
+
 const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg]");
 const loadLuxBackground = (element) => {
   element.style.backgroundImage = `url("${element.dataset.luxBg}")`;
@@ -73,37 +95,24 @@ document.querySelectorAll("[data-cert-quote-carousel]").forEach((carousel) => {
   show(0);
 });
 
-if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
-  document.querySelectorAll("[data-cert-hover-image]").forEach((figure) => {
-    const source = figure.querySelector("img");
-    if (!source) return;
-    let preview;
-    let closeTimer;
-    figure.addEventListener("mouseenter", () => {
-      clearTimeout(closeTimer);
-      const rect = source.getBoundingClientRect();
-      preview?.remove();
-      preview = document.createElement("div");
-      preview.className = "lux-cert-hover-preview";
-      preview.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
-      const image = source.cloneNode();
-      image.removeAttribute("loading");
-      preview.append(image);
-      document.body.append(preview);
-      requestAnimationFrame(() => preview?.classList.add("is-open"));
-    });
-    figure.addEventListener("mouseleave", () => {
-      if (!preview) return;
-      const rect = source.getBoundingClientRect();
-      preview.classList.remove("is-open");
-      preview.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px`;
-      closeTimer = setTimeout(() => {
-        preview?.remove();
-        preview = null;
-      }, 420);
-    });
+document.querySelectorAll("[data-cert-media-carousel]").forEach((carousel) => {
+  const slides = [...carousel.querySelectorAll("[data-cert-media-slide]")];
+  if (slides.length < 2) return;
+  let index = 0;
+  const show = (next) => {
+    index = (next + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => slide.classList.toggle("is-active", slideIndex === index));
+  };
+  carousel.querySelector("[data-cert-media-prev]")?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    show(index - 1);
   });
-}
+  carousel.querySelector("[data-cert-media-next]")?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    show(index + 1);
+  });
+  show(0);
+});
 
 document.querySelectorAll("[data-home-timeline]").forEach((timeline) => {
   const steps = [...timeline.querySelectorAll("[data-timeline-step]")];
@@ -118,6 +127,39 @@ document.querySelectorAll("[data-home-timeline]").forEach((timeline) => {
       if (active) activate(Number(active.target.dataset.timelineIndex) || 0);
     }, { rootMargin: "-28% 0px -38%", threshold: [0, .25, .5, .75] });
     steps.forEach((step) => observer.observe(step));
+  }
+});
+
+document.querySelectorAll("[data-count-up]").forEach((counter) => {
+  const target = Number(counter.dataset.countUp) || 0;
+  const suffix = counter.dataset.countSuffix || "";
+  const showFinal = () => {
+    counter.textContent = `${target}${suffix}`;
+  };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    showFinal();
+    return;
+  }
+  const animate = () => {
+    const started = performance.now();
+    const duration = 950;
+    const frame = (now) => {
+      const progress = Math.min(1, (now - started) / duration);
+      const eased = 1 - (1 - progress) ** 3;
+      counter.textContent = `${Math.round(target * eased)}${suffix}`;
+      if (progress < 1) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some(({ isIntersecting }) => isIntersecting)) return;
+      observer.disconnect();
+      animate();
+    }, { threshold: .35 });
+    observer.observe(counter);
+  } else {
+    animate();
   }
 });
 
@@ -139,7 +181,7 @@ const luxMenu = document.querySelector(".lux-menu");
 
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品目录", "selected-products"], ["品牌概览", "maison-overview"], ["我们的价值观", "heritage-editorial"], ["品牌历程", "brand-timeline"], ["全球合作", "gifting-editorial"]]],
+    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品目录", "selected-products"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["全球合作", "gifting-editorial"]]],
     ["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]],
     ["caviar.html", "系列产品", [["产品全览", "product-catalogue"]]],
     ["rituals.html", "食谱艺术", [["早餐", "breakfast"], ["第一道主食", "first-courses"], ["第二道主食", "main-courses"], ["甜品", "desserts"]]],
@@ -149,7 +191,7 @@ const luxNavigation = {
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Meet Us", "meet-us"], ["Selected Product Catalogue", "selected-products"], ["Maison Overview", "maison-overview"], ["Our Values", "heritage-editorial"], ["Brand Journey", "brand-timeline"], ["Global Partnership", "gifting-editorial"]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Selected Product Catalogue", "selected-products"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Global Partnership", "gifting-editorial"]]],
     ["journal.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Seasonal Notes", "seasonal-notes"]]],
     ["products.html", "Products", [["Premium Products", "product-catalogue"]]],
     ["rituals.html", "Recipe Art", [["Breakfast", "breakfast"], ["First Courses", "first-courses"], ["Main Courses", "main-courses"], ["Desserts", "desserts"]]],
@@ -472,8 +514,12 @@ function initLuxPartnershipLightbox() {
     if (!sourceImage) return;
     trigger.setAttribute("aria-label", `${viewLabel}：${sourceImage.alt}`);
     const open = () => {
-      lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
-      lightboxImage.alt = sourceImage.alt;
+      const currentImage = trigger.matches("img")
+        ? trigger
+        : trigger.querySelector("[data-cert-media-slide].is-active") || trigger.querySelector("img");
+      if (!currentImage) return;
+      lightboxImage.src = currentImage.currentSrc || currentImage.src;
+      lightboxImage.alt = currentImage.alt;
       dialog.showModal();
     };
     trigger.addEventListener("click", open);
@@ -709,8 +755,8 @@ info@luxureat.com`;
     close: "Close",
     signIn: "Sign In",
     create: "Create Account",
-    subtitleSignIn: "Welcome back to your LuxurEat（露意膳） account.",
-    subtitleCreate: "Create your LuxurEat（露意膳） account.",
+    subtitleSignIn: "Welcome back to your LuxurEat (露意膳) account.",
+    subtitleCreate: "Create your LuxurEat (露意膳) account.",
     resetTitle: "Reset Password",
     subtitleReset: "Enter your account email and we will send a secure reset link.",
     email: "Email Address",

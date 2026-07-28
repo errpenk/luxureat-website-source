@@ -1,8 +1,10 @@
 <!DOCTYPE html><html class="dark" lang="zh-CN"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <title>品质与认证 | LuxurEat Maison</title>
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260727-final-layout-5">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260728-performance-27">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;0,900&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <style>
@@ -17,7 +19,7 @@
         .hover-gold-glow:hover { box-shadow: 0 0 20px rgba(157, 245, 236, 0.1); }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260727-final-layout-5">
+<link rel="stylesheet" href="../integration.css?v=20260728-performance-27">
 </head>
 <body class="text-on-surface">
 <!-- lux:header:start -->
@@ -136,7 +138,15 @@
 <section class="lux-cert-capability" aria-labelledby="cert-capability-title">
 <video class="lux-cert-capability-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/cert-capability-background.m4v" type="video/mp4"></video>
 <span class="lux-cert-capability-overlay" aria-hidden="true"></span>
-<figure><img loading="lazy" decoding="async" src="../assets/media/brand/cert-quality-production.webp" alt="LuxurEat 松露原料与生产管理"></figure>
+<figure class="lux-cert-media-carousel" data-cert-media-carousel data-partnership-image role="button" tabindex="0" aria-label="查看原料甄选与品质管理图片">
+<img data-cert-media-slide class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/cert-quality-production.webp" alt="Roberto Ugolini 进行松露原料甄选">
+<img data-cert-media-slide loading="lazy" decoding="async" src="../assets/media/brand/cert-morel-selection.webp" alt="新鲜羊肚菌原料甄选">
+<img data-cert-media-slide loading="lazy" decoding="async" src="../assets/media/brand/cert-laboratory-control.webp" alt="LuxurEat 实验室品质检测">
+<div class="lux-cert-media-nav" aria-label="原料甄选图片导航">
+<button type="button" data-cert-media-prev aria-label="上一张图片"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+<button type="button" data-cert-media-next aria-label="下一张图片"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+</div>
+</figure>
 <div class="lux-cert-capability-grid">
 <article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.5.4 2.7-.2 3.8-1.3 1.1-1.1 1.8-2.5 1.3-3.8-1.3-.5-2.7.2-3.8 1.3-1.1 1.1-1.7 2.3-1.3 3.8Z"/></svg><h3 id="cert-capability-title">原料甄选</h3><p>审核产地、供应商与产品文件，从源头建立品质基础。</p></article>
 <article><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V7l8 4V7l8 4v10"/><path d="M5 7V3h4v6"/><path d="M12 16h.01"/><path d="M16 16h.01"/></svg><h3>生产管理</h3><p>以食品安全体系及关键控制点管理生产全过程。</p></article>
@@ -169,15 +179,15 @@
 <section class="lux-cert-results" aria-labelledby="cert-results-title">
 <header><span>VERIFIED QUALITY</span><h2 id="cert-results-title">稳定交付，<em>品质有据</em></h2><p>从文件审核到每一批产品，我们以可验证的流程支持客户长期合作。</p></header>
 <div class="lux-cert-results-lead">
-<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access-lifestyle.webp" alt="LuxurEat 品质与市场服务"></figure>
+<figure data-cert-hover-image data-partnership-image role="button" tabindex="0"><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access-lifestyle.webp" alt="LuxurEat 品质与市场服务"></figure>
 <blockquote><p>“当品质标准能够被清楚理解、查验和追溯，产品才真正具备进入专业渠道的长期价值。”</p><footer>QUALITY &amp; COMPLIANCE<br/><span>LuxurEat China</span></footer></blockquote>
 </div>
 <div class="lux-cert-results-gallery">
-<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-our-commitment.webp" alt="LuxurEat 品质承诺"></figure>
-<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-responsible-trade.webp" alt="负责任贸易"></figure>
-<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access.webp" alt="国际市场准入"></figure>
-<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/gifting-service-volume.webp" alt="专业供应服务"></figure>
-<figure data-cert-hover-image><img loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="国际食品行业合作"></figure>
+<figure data-cert-hover-image data-partnership-image role="button" tabindex="0"><img loading="lazy" decoding="async" src="../assets/media/brand/cert-our-commitment.webp" alt="LuxurEat 品质承诺"></figure>
+<figure data-cert-hover-image data-partnership-image role="button" tabindex="0"><img loading="lazy" decoding="async" src="../assets/media/brand/cert-responsible-trade.webp" alt="负责任贸易"></figure>
+<figure data-cert-hover-image data-partnership-image role="button" tabindex="0"><img loading="lazy" decoding="async" src="../assets/media/brand/cert-market-access.webp" alt="国际市场准入"></figure>
+<figure data-cert-hover-image data-partnership-image role="button" tabindex="0"><img loading="lazy" decoding="async" src="../assets/media/brand/gifting-service-volume.webp" alt="专业供应服务"></figure>
+<figure data-cert-hover-image data-partnership-image role="button" tabindex="0"><img loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="国际食品行业合作"></figure>
 </div>
 </section>
 <!-- Certification Glossary -->
@@ -252,5 +262,5 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260727-final-layout-5"></script>
+<script defer src="../assets/js/core.js?v=20260728-performance-27"></script>
 <!-- lux:scripts:end --></body></html>
