@@ -3,7 +3,7 @@
   src: url("assets/fonts/AlimamaShuHeiTi-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: optional;
 }
 .lux-header, .lux-header * { box-sizing: border-box; }
 .lux-header {
@@ -2271,8 +2271,25 @@ html[lang^="zh"] .lux-reader-archive-card strong {
 .lux-latest-event-viewport {
   min-width: 0;
   overflow: hidden;
-  clip-path: inset(0 2px);
   contain: paint;
+}
+
+.lux-hero-video,
+.lux-about-program-media,
+.lux-cert-capability-video,
+.lux-meet-map-video {
+  pointer-events: none;
+}
+.lux-hero-video::-webkit-media-controls,
+.lux-about-program-media::-webkit-media-controls,
+.lux-cert-capability-video::-webkit-media-controls,
+.lux-meet-map-video::-webkit-media-controls,
+.lux-hero-video::-webkit-media-controls-start-playback-button,
+.lux-about-program-media::-webkit-media-controls-start-playback-button,
+.lux-cert-capability-video::-webkit-media-controls-start-playback-button,
+.lux-meet-map-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 .lux-latest-event-track {
   display: flex;
@@ -9538,8 +9555,20 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     font-size: 26px;
   }
   html[lang^="en"] .lux-home-timeline-steps article::after {
-    font-size: 10px;
-    letter-spacing: .04em;
+    left: auto;
+    right: calc(100% - 68px);
+    width: min(142px, calc(100vw - 86px));
+    font-size: 12px;
+    line-height: 1.15;
+    letter-spacing: .035em;
+    overflow-wrap: normal;
+    word-break: normal;
+    white-space: normal;
+    text-align: right;
+    transform: translateY(-50%);
+  }
+  html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
+    transform: translateY(-50%);
   }
   .lux-event-city-mark {
     left: 4px;
@@ -9552,6 +9581,10 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   .lux-event-city-mark span {
     font-size: 11px;
     letter-spacing: .08em;
+  }
+  .lux-event-copy {
+    box-sizing: border-box;
+    padding-inline: 3px;
   }
   .lux-home-gifting-image {
     min-height: clamp(520px, 142vw, 610px);

@@ -1,4 +1,6 @@
 (function () {
+  const assetBase = new URL("../", document.currentScript?.src || location.href);
+  const asset = (path) => new URL(path, assetBase).href;
   const section = document.querySelector("[data-latest-event]");
   const events = window.LUXUREAT_EVENT_DATA?.events?.filter((item) => item.status === "latest") || [];
   if (!section || !events.length) return;
@@ -75,7 +77,7 @@
       </div>` : ""}
     </div>
     <div class="lux-meet-map">
-      <video class="lux-meet-map-video" autoplay muted loop playsinline preload="metadata" poster="../assets/media/events/exhibition-atlas-globe-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/events/exhibition-atlas-globe.mp4" type="video/mp4"></video>
+      <video class="lux-meet-map-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="${escapeHtml(asset("media/events/exhibition-atlas-globe-poster.webp"))}" aria-hidden="true" tabindex="-1"><source src="${escapeHtml(asset("media/events/exhibition-atlas-globe.mp4"))}" type="video/mp4"></video>
       <div class="lux-meet-map-card">
         <span>EXHIBITION ATLAS</span>
         <h2>${escapeHtml(carouselLabels.meet)}</h2>

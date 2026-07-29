@@ -56,9 +56,17 @@ document.querySelectorAll("[data-content-search]").forEach((input) => {
 
 const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media, .lux-hero-video, .lux-cert-capability-video");
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const startLuxVideo = (video) => {
+    video.controls = false;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.play().catch(() => {});
+  };
+  luxBackgroundVideos.forEach(startLuxVideo);
   if ("IntersectionObserver" in window) {
     const videoObserver = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
-      if (isIntersecting) target.play().catch(() => {});
+      if (isIntersecting) startLuxVideo(target);
       else target.pause();
     }), { rootMargin: "120px", threshold: .05 });
     luxBackgroundVideos.forEach((video) => videoObserver.observe(video));
@@ -730,6 +738,7 @@ info@luxureat.com`;
     resetTitle: "重置密码",
     subtitleReset: "输入注册邮箱，我们会发送安全的密码重置链接。",
     email: "电子邮箱",
+    emailPlaceholder: "请输入您的邮箱号",
     emailInvalid: "电子邮箱不存在或格式错误。",
     password: "密码",
     passwordHint: "至少 12 位，须包含字母和数字。",
@@ -760,6 +769,7 @@ info@luxureat.com`;
     resetTitle: "Reset Password",
     subtitleReset: "Enter your account email and we will send a secure reset link.",
     email: "Email Address",
+    emailPlaceholder: "Enter your email address",
     emailInvalid: "The email address does not exist or is invalid.",
     password: "Password",
     passwordHint: "Use at least 12 characters with letters and numbers.",
@@ -798,7 +808,7 @@ info@luxureat.com`;
           <form data-account-form novalidate>
             <label class="lux-account-field">
               <span>${text.email}</span>
-              <div class="lux-account-input">${icons.mail}<input name="email" type="email" placeholder="china@luxureat.com" autocomplete="email" required></div>
+              <div class="lux-account-input">${icons.mail}<input name="email" type="email" placeholder="${text.emailPlaceholder}" autocomplete="email" required></div>
               <small class="lux-account-field-error" data-account-email-hint hidden>${text.emailInvalid}</small>
             </label>
             <label class="lux-account-field" data-account-password>

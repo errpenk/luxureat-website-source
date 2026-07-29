@@ -1,3 +1,6 @@
+const luxJournalAssetBase = new URL("../", document.currentScript?.src || location.href);
+const luxJournalAsset = (path) => new URL(path, luxJournalAssetBase).href;
+
 function initLuxReader() {
   const articleData = window.LUXUREAT_ARTICLE_DATA || {};
   const articles = articleData.articles || {};
@@ -226,7 +229,7 @@ function initLuxReader() {
       <div class="lux-news-center-inner">
         <header class="lux-recent-events-head"><span>${newsLabels.kicker}</span><h2>${newsLabels.title}</h2></header>
         <article class="lux-news-feature">
-          <figure><img loading="lazy" decoding="async" src="../assets/media/events/caviareat-baerii-news.png" alt="${escapeHtml(story.alt)}"></figure>
+          <figure><img loading="lazy" decoding="async" src="${escapeHtml(luxJournalAsset("media/events/caviareat-baerii-news.png"))}" alt="${escapeHtml(story.alt)}"></figure>
           <div class="lux-news-feature-copy"><small>${escapeHtml(story.date)} · CaviareEat</small><h3>${escapeHtml(story.title)}</h3><p class="lux-news-lead">${escapeHtml(story.intro)}</p>${story.sections.map(([heading, copy]) => `<section><h4>${escapeHtml(heading)}</h4><p>${escapeHtml(copy)}</p></section>`).join("")}<blockquote>${escapeHtml(story.closing)}</blockquote></div>
         </article>
       </div>`;
@@ -253,12 +256,12 @@ function initLuxReader() {
           </div>`
         : `<div class="lux-reader-section-media">${figures}</div>`;
       const divider = /传统、创新|Tradition, Innovation/i.test(heading)
-        ? `<figure class="lux-about-section-divider"><img loading="lazy" decoding="async" src="../assets/media/brand/about-aquaculture-divider.webp" alt="${escapeHtml(lang === "zh" ? "山水之间的可持续水产养殖场" : "Sustainable aquaculture among mountains and clear water")}"></figure>`
+        ? `<figure class="lux-about-section-divider"><img loading="lazy" decoding="async" src="${escapeHtml(luxJournalAsset("media/brand/about-aquaculture-divider.webp"))}" alt="${escapeHtml(lang === "zh" ? "山水之间的可持续水产养殖场" : "Sustainable aquaculture among mountains and clear water")}"></figure>`
         : "";
       const virtualTour = index === 1
         ? `<figure class="lux-about-vr">
             <iframe loading="lazy" src="https://trufflebar.com/vr/" title="${escapeHtml(lang === "zh" ? "曼谷 TruffleBar & Restaurant 360° 全景体验" : "TruffleBar & Restaurant Bangkok 360° virtual tour")}" allow="fullscreen; accelerometer; gyroscope" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-            <figcaption><span>${escapeHtml(lang === "zh" ? "TruffleBar & Restaurant · 曼谷全景体验" : "TruffleBar & Restaurant · Bangkok Virtual Tour")}</span><a href="https://trufflebar.com/vr/" target="_blank" rel="noopener">${escapeHtml(lang === "zh" ? "全屏打开" : "Open Full Screen")} ↗</a></figcaption>
+            <figcaption><span>${escapeHtml(lang === "zh" ? "TruffleBar & Restaurant · 曼谷全景体验" : "TruffleBar & Restaurant · Bangkok Virtual Tour")}</span><a href="https://trufflebar.com/vr/" target="_blank" rel="noopener">${escapeHtml(lang === "zh" ? "全屏打开" : "Open Full Screen")}<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg></a></figcaption>
           </figure>`
         : "";
       return `${divider}${virtualTour}<section class="lux-reader-section" id="lux-about-section-${index}">
