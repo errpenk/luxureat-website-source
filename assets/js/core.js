@@ -1,30 +1,6 @@
-const luxAssetBase = new URL(".", document.currentScript?.src || location.href);
-const luxAsset = (path) => new URL(path, luxAssetBase).href;
 const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
-
-const luxScheduleIdle = window.requestIdleCallback || ((callback) => setTimeout(callback, 1200));
-luxScheduleIdle(() => {
-  const connection = navigator.connection;
-  if (connection?.saveData || /(?:^|-)2g$/.test(connection?.effectiveType || "")) return;
-  const pages = new Set();
-  document.querySelectorAll("a[href]").forEach((anchor) => {
-    const url = new URL(anchor.href, location.href);
-    const fileName = url.pathname.split("/").pop() || "";
-    const looksLikePage = !fileName.includes(".") || fileName.endsWith(".html");
-    if (url.origin === location.origin && url.pathname !== location.pathname && looksLikePage) {
-      pages.add(`${url.pathname}${url.search}`);
-    }
-  });
-  pages.forEach((href) => {
-    const link = document.createElement("link");
-    link.rel = "prefetch";
-    link.as = "document";
-    link.href = href;
-    document.head.append(link);
-  });
-}, { timeout: 2500 });
 
 const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg]");
 const loadLuxBackground = (element) => {
@@ -54,72 +30,155 @@ document.querySelectorAll("[data-content-search]").forEach((input) => {
   });
 });
 
-const luxBackgroundVideos = document.querySelectorAll(".lux-about-program-media, .lux-hero-video, .lux-cert-capability-video");
-if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  const startLuxVideo = (video) => {
-    video.controls = false;
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.play().catch(() => {});
-  };
-  luxBackgroundVideos.forEach(startLuxVideo);
-  if ("IntersectionObserver" in window) {
-    const videoObserver = new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
-      if (isIntersecting) startLuxVideo(target);
-      else target.pause();
-    }), { rootMargin: "120px", threshold: .05 });
-    luxBackgroundVideos.forEach((video) => videoObserver.observe(video));
+const luxReduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const startLuxVideo = (video) => {
+  video.controls = false;
+  video.removeAttribute("controls");
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.disablePictureInPicture = true;
+  video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
+  video.play().catch(() => {});
+};
+const luxVideoObserver = !luxReduceMotion && "IntersectionObserver" in window
+  ? new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
+    if (isIntersecting) {
+      target.preload = "auto";
+      startLuxVideo(target);
+    } else {
+      target.pause();
+    }
+  }), { rootMargin: "600px 0px", threshold: .01 })
+  : null;
+const initLuxVideo = (video) => {
+  if (video.dataset.luxVideoReady) return;
+  video.dataset.luxVideoReady = "true";
+  video.controls = false;
+  video.removeAttribute("controls");
+  if (luxReduceMotion) {
+    video.pause();
+  } else if (video.matches(".lux-hero-video") || !luxVideoObserver) {
+    video.preload = "auto";
+    startLuxVideo(video);
   } else {
-    luxBackgroundVideos.forEach((video) => video.play().catch(() => {}));
+    luxVideoObserver.observe(video);
   }
-} else {
-  luxBackgroundVideos.forEach((video) => video.pause());
-}
+};
+const luxAutoplaySelector = "video[autoplay], video[data-lux-autoplay]";
+document.querySelectorAll(luxAutoplaySelector).forEach(initLuxVideo);
+new MutationObserver((records) => records.forEach(({ addedNodes }) => addedNodes.forEach((node) => {
+  if (!(node instanceof Element)) return;
+  if (node.matches(luxAutoplaySelector)) initLuxVideo(node);
+  node.querySelectorAll?.(luxAutoplaySelector).forEach(initLuxVideo);
+}))).observe(document.body, { childList: true, subtree: true });
+
+const initLuxScrollReveal = () => {
+  if (document.querySelector(".lux-products-main")) return;
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const elements = document.querySelectorAll([
+    "body > header:not(.lux-header)",
+    "body > section",
+    "main > header",
+    "main section",
+    "body > section header",
+    "main section header",
+    "body > section article",
+    "main section article",
+    "body > section figure",
+    "main section figure",
+    "body > section blockquote",
+    "main section blockquote",
+  ].join(","));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => target.classList.toggle("is-in-view", isIntersecting));
+  }, { rootMargin: "0px 0px -8%", threshold: .06 });
+  elements.forEach((element) => {
+    if (element.matches(".reveal-on-scroll, .opacity-0") || element.closest("[hidden], dialog")) return;
+    element.classList.add("lux-scroll-reveal");
+    observer.observe(element);
+  });
+};
 
 document.querySelectorAll("[data-cert-quote-carousel]").forEach((carousel) => {
   const quotes = [...carousel.querySelectorAll("[data-cert-quote]")];
   const story = carousel.closest(".lux-cert-network-story");
+  story?.querySelectorAll(".lux-cert-quote-nav").forEach((nav, index) => { nav.hidden = index > 0; });
   const images = [...(story?.querySelectorAll("[data-cert-quote-image]") || [])];
   const footers = [...carousel.querySelectorAll("[data-cert-quote-footer]")];
-  const status = carousel.querySelector("[data-cert-quote-status]");
+  const status = story?.querySelector("[data-cert-quote-status]");
+  const count = Math.max(quotes.length, images.length, footers.length);
+  if (count < 2) return;
   let index = 0;
+  let timer;
   const show = (next) => {
-    index = (next + quotes.length) % quotes.length;
+    index = (next + count) % count;
     quotes.forEach((quote, quoteIndex) => {
-      quote.hidden = quoteIndex !== index;
-      quote.classList.toggle("is-active", quoteIndex === index);
+      const active = quoteIndex === index % quotes.length;
+      quote.hidden = !active;
+      quote.classList.toggle("is-active", active);
     });
     images.forEach((image, imageIndex) => image.classList.toggle("is-active", imageIndex === index));
     if (images[index]) story?.style.setProperty("--lux-cert-quote-background", `url("${images[index].currentSrc || images[index].src}")`);
     footers.forEach((footer, footerIndex) => {
-      footer.hidden = footerIndex !== index;
-      footer.classList.toggle("is-active", footerIndex === index);
+      const active = footerIndex === index % footers.length;
+      footer.hidden = !active;
+      footer.classList.toggle("is-active", active);
     });
-    if (status) status.textContent = `${index + 1} / ${quotes.length}`;
+    if (status) status.textContent = `${index + 1} / ${count}`;
   };
-  carousel.querySelector("[data-cert-quote-prev]")?.addEventListener("click", () => show(index - 1));
-  carousel.querySelector("[data-cert-quote-next]")?.addEventListener("click", () => show(index + 1));
+  const stop = () => window.clearInterval(timer);
+  const start = () => {
+    stop();
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = window.setInterval(() => show(index + 1), 4000);
+  };
+  story?.querySelectorAll("[data-cert-quote-prev]").forEach((button) => button.addEventListener("click", () => { show(index - 1); start(); }));
+  story?.querySelectorAll("[data-cert-quote-next]").forEach((button) => button.addEventListener("click", () => { show(index + 1); start(); }));
+  story?.addEventListener("mouseenter", stop);
+  story?.addEventListener("mouseleave", start);
+  story?.addEventListener("focusin", stop);
+  story?.addEventListener("focusout", (event) => {
+    if (!story.contains(event.relatedTarget)) start();
+  });
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
   show(0);
+  start();
 });
 
 document.querySelectorAll("[data-cert-media-carousel]").forEach((carousel) => {
   const slides = [...carousel.querySelectorAll("[data-cert-media-slide]")];
+  carousel.querySelectorAll(".lux-cert-media-nav").forEach((nav, index) => { nav.hidden = index > 0; });
   if (slides.length < 2) return;
   let index = 0;
+  let timer;
   const show = (next) => {
     index = (next + slides.length) % slides.length;
     slides.forEach((slide, slideIndex) => slide.classList.toggle("is-active", slideIndex === index));
   };
+  const stop = () => window.clearInterval(timer);
+  const start = () => {
+    stop();
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = window.setInterval(() => show(index + 1), 4000);
+  };
   carousel.querySelector("[data-cert-media-prev]")?.addEventListener("click", (event) => {
     event.stopPropagation();
     show(index - 1);
+    start();
   });
   carousel.querySelector("[data-cert-media-next]")?.addEventListener("click", (event) => {
     event.stopPropagation();
     show(index + 1);
+    start();
   });
+  carousel.addEventListener("mouseenter", stop);
+  carousel.addEventListener("mouseleave", start);
+  carousel.addEventListener("focusin", stop);
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) start();
+  });
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
   show(0);
+  start();
 });
 
 document.querySelectorAll("[data-home-timeline]").forEach((timeline) => {
@@ -149,21 +208,27 @@ document.querySelectorAll("[data-count-up]").forEach((counter) => {
     return;
   }
   const animate = () => {
+    window.cancelAnimationFrame(frameId);
     const started = performance.now();
     const duration = 950;
     const frame = (now) => {
       const progress = Math.min(1, (now - started) / duration);
       const eased = 1 - (1 - progress) ** 3;
       counter.textContent = `${Math.round(target * eased)}${suffix}`;
-      if (progress < 1) requestAnimationFrame(frame);
+      if (progress < 1) frameId = requestAnimationFrame(frame);
     };
-    requestAnimationFrame(frame);
+    frameId = requestAnimationFrame(frame);
   };
+  let frameId;
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
-      if (!entries.some(({ isIntersecting }) => isIntersecting)) return;
-      observer.disconnect();
-      animate();
+      entries.forEach(({ intersectionRatio }) => {
+        if (intersectionRatio >= .35) animate();
+        else {
+          window.cancelAnimationFrame(frameId);
+          counter.textContent = "0";
+        }
+      });
     }, { threshold: .35 });
     observer.observe(counter);
   } else {
@@ -189,22 +254,24 @@ const luxMenu = document.querySelector(".lux-menu");
 
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品目录", "selected-products"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["全球合作", "gifting-editorial"]]],
+    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["全球合作", "gifting-editorial"]]],
     ["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]],
     ["caviar.html", "系列产品", [["产品全览", "product-catalogue"]]],
     ["rituals.html", "食谱艺术", [["早餐", "breakfast"], ["第一道主食", "first-courses"], ["第二道主食", "main-courses"], ["甜品", "desserts"]]],
     ["news.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
-    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["认证与品质标识", "certification-glossary"]]],
+    ["blog.html", "知识博客", [["鱼子酱学院", "caviar-academy"]]],
+    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["品质与认证", "certification-glossary"]]],
     ["gifting.html", "礼赠合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Meet Us", "meet-us"], ["Selected Product Catalogue", "selected-products"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Global Partnership", "gifting-editorial"]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Global Partnership", "gifting-editorial"]]],
     ["journal.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Seasonal Notes", "seasonal-notes"]]],
     ["products.html", "Products", [["Premium Products", "product-catalogue"]]],
     ["rituals.html", "Recipe Art", [["Breakfast", "breakfast"], ["First Courses", "first-courses"], ["Main Courses", "main-courses"], ["Desserts", "desserts"]]],
     ["news.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
-    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Certification Glossary", "certification-glossary"]]],
+    ["blog.html", "Blog", [["Caviar Academy", "caviar-academy"]]],
+    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Quality & Certification", "certification-glossary"]]],
     ["gifting.html", "Gifting", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
     ["contact.html", "Contact", [["Brand Consultation", "brand-consultation"], ["Global Presence", "global-footprint"]]],
   ],
@@ -481,24 +548,76 @@ function initLuxInfoPopovers() {
 }
 
 function initLuxGiftScroller() {
-  const grid = document.querySelector("[data-gift-grid]");
-  const buttons = document.querySelectorAll("[data-gift-scroll]");
-  if (!grid || !buttons.length) return;
-  const sync = () => {
-    const max = grid.scrollWidth - grid.clientWidth;
-    buttons.forEach((button) => {
-      const disabled = max <= 1 || (Number(button.dataset.giftScroll) < 0 ? grid.scrollLeft <= 1 : grid.scrollLeft >= max - 1);
+  document.querySelectorAll("[data-gift-grid]").forEach((grid) => {
+    const section = grid.closest(".lux-gift-catalogue-section");
+    const buttons = section?.querySelectorAll("[data-gift-scroll]") || [];
+    let timer, hintTimer, resumeTimer, visible = false;
+    const max = () => grid.scrollWidth - grid.clientWidth;
+    const sync = () => buttons.forEach((button) => {
+      const limit = max();
+      const disabled = limit <= 1 || (Number(button.dataset.giftScroll) < 0 ? grid.scrollLeft <= 1 : grid.scrollLeft >= limit - 1);
       button.disabled = disabled;
       button.setAttribute("aria-disabled", String(disabled));
     });
-  };
-  buttons.forEach((button) => button.addEventListener("click", () => {
-    if (button.disabled) return;
-    grid.scrollBy({ left: Number(button.dataset.giftScroll) * grid.clientWidth, behavior: "smooth" });
-  }));
-  grid.addEventListener("scroll", sync, { passive: true });
-  window.addEventListener("resize", sync);
-  requestAnimationFrame(sync);
+    const advance = () => {
+      const limit = max();
+      if (limit <= 1) return;
+      grid.scrollTo({ left: grid.scrollLeft >= limit - 1 ? 0 : Math.min(grid.scrollLeft + grid.clientWidth, limit), behavior: "smooth" });
+    };
+    const stop = () => window.clearInterval(timer);
+    const cancelHint = () => {
+      window.clearTimeout(hintTimer);
+      window.clearTimeout(resumeTimer);
+    };
+    const start = () => {
+      stop();
+      if (visible && !matchMedia("(prefers-reduced-motion: reduce)").matches && max() > 1) timer = window.setInterval(advance, 4000);
+    };
+    const hint = () => {
+      const limit = max();
+      if (limit <= 1) return;
+      cancelHint();
+      stop();
+      grid.scrollTo({ left: 0, behavior: "auto" });
+      hintTimer = window.setTimeout(() => {
+        if (!visible) return;
+        grid.scrollTo({ left: limit, behavior: "smooth" });
+        hintTimer = window.setTimeout(() => {
+          grid.scrollTo({ left: 0, behavior: "smooth" });
+          resumeTimer = window.setTimeout(start, 850);
+        }, 850);
+      }, 40);
+    };
+    buttons.forEach((button) => button.addEventListener("click", () => {
+      cancelHint();
+      if (!button.disabled) grid.scrollBy({ left: Number(button.dataset.giftScroll) * grid.clientWidth, behavior: "smooth" });
+      start();
+    }));
+    grid.addEventListener("scroll", sync, { passive: true });
+    grid.addEventListener("pointerdown", cancelHint, { passive: true });
+    grid.addEventListener("wheel", cancelHint, { passive: true });
+    grid.addEventListener("mouseenter", stop);
+    grid.addEventListener("mouseleave", start);
+    grid.addEventListener("focusin", stop);
+    grid.addEventListener("focusout", (event) => { if (!grid.contains(event.relatedTarget)) start(); });
+    window.addEventListener("resize", () => { sync(); start(); });
+    document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+    if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const observer = new IntersectionObserver(([entry]) => {
+        const wasVisible = visible;
+        visible = entry.intersectionRatio >= .25;
+        if (visible && !wasVisible) hint();
+        else if (!visible) {
+          cancelHint();
+          stop();
+        }
+      }, { threshold: [.25] });
+      observer.observe(section || grid);
+    } else {
+      visible = true;
+    }
+    requestAnimationFrame(() => { sync(); start(); });
+  });
 }
 
 function initLuxPartnershipLightbox() {
@@ -550,7 +669,7 @@ function initLuxFooterActions() {
   const isZh = document.documentElement.lang?.startsWith("zh");
   const privacyZh = `最后更新日期：2026年7月23日
 
-Luxureat China（露意膳）尊重并保护您的个人信息。本政策说明我们在您访问网站、注册账户、购买商品、参加活动或联系我们时，如何收集、使用、存储、共享和保护个人信息，以及您依法享有的权利。
+LuxurEat（露意膳）尊重并保护您的个人信息。本政策说明我们在您访问网站、注册账户、购买商品、参加活动或联系我们时，如何收集、使用、存储、共享和保护个人信息，以及您依法享有的权利。
 
 一、个人信息处理者基本信息
 个人信息处理者：露意膳（上海）贸易有限公司
@@ -560,7 +679,7 @@ Luxureat China（露意膳）尊重并保护您的个人信息。本政策说明
 联系邮箱：info@luxureat.com
 
 二、本隐私政策的适用与变更
-本政策适用于 Luxureat China（露意膳）网站及相关在线服务。若处理目的、方式或个人信息种类发生重大变化，我们将更新政策并以显著方式通知您；法律要求取得单独同意的，我们将另行征得同意。
+本政策适用于 LuxurEat（露意膳）网站及相关在线服务。若处理目的、方式或个人信息种类发生重大变化，我们将更新政策并以显著方式通知您；法律要求取得单独同意的，我们将另行征得同意。
 
 三、我们收集哪些个人信息
 1. 您主动提供的信息：咨询或联系时提供的姓名、公司、职位、邮箱、电话及沟通内容；注册账户时提供的邮箱、密码及账户设置；下单时提供的商品、数量、金额、订单状态、优惠与备注；配送和开票所需的收货人、电话、地址及发票信息；支付状态、交易编号及退款状态（完整银行卡信息由支付机构处理）；客服、投诉、退换货材料；报名活动或订阅营销时提供的信息。
@@ -609,13 +728,13 @@ Luxureat China（露意膳）尊重并保护您的个人信息。本政策说明
 联系邮箱：info@luxureat.com`;
   const privacyEn = `Last updated: July 23, 2026
 
-Luxureat China（露意膳） respects and protects your personal information. This policy explains how we collect, use, store, share and protect information when you visit our website, register an account, place an order, attend an event or contact us.
+LuxurEat (露意膳) respects and protects your personal information. This policy explains how we collect, use, store, share and protect information when you visit our website, register an account, place an order, attend an event or contact us.
 
 1. Controller
 Luxureat (Shanghai) Trading Co., Ltd.; Unified Social Credit Code: 91310000MAERED2X1W; Legal representative: UGOLINI ROBERTO; Registered address: Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai; Email: info@luxureat.com.
 
 2. Scope and updates
-This policy applies to the Luxureat China website and related online services. Material changes will be prominently notified, and separate consent will be obtained where required by law.
+This policy applies to the LuxurEat (露意膳) website and related online services. Material changes will be prominently notified, and separate consent will be obtained where required by law.
 
 3. Information collected
 We may collect information you provide for inquiries, accounts, orders, delivery, invoicing, payment status, support, returns, events and subscriptions; technical information such as IP address, browser, device, access logs, cookies, cart and preferences; and necessary information from payment, logistics, event and authorized partners.
@@ -659,17 +778,17 @@ info@luxureat.com`;
   const copy = isZh
     ? {
       close: "关闭",
-      privacy: ["Luxureat China（露意膳）用户服务协议和隐私政策", privacyZh],
+      privacy: ["LuxurEat（露意膳）用户服务协议和隐私政策", privacyZh],
       terms: ["销售条款", "所有商品以确认订单与付款记录为准。鱼子酱等冷链商品因食品安全原因，发出后非质量问题不支持退换；如运输异常，请在签收后 24 小时内联系我们。"],
       shipping: ["配送说明", "我们采用 0-4°C 冷链包装与预约配送。发货前会确认收货时间，偏远地区或特殊活动订单将由顾问单独确认时效。"],
       wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
     }
     : {
       close: "Close",
-      privacy: ["Luxureat China（露意膳） Terms of Service and Privacy Policy", privacyEn],
+      privacy: ["LuxurEat (露意膳) Terms of Service and Privacy Policy", privacyEn],
       terms: ["Terms of Sale", "Orders are confirmed by written order details and payment records. For food-safety reasons, shipped cold-chain goods are not returnable unless quality or transport issues are reported within 24 hours of delivery."],
       shipping: ["Shipping", "We ship with 0-4°C cold-chain packaging and scheduled delivery. Timing is confirmed before dispatch; remote areas and special-event orders are coordinated by a concierge."],
-      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat China（露意膳） concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
+      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
     };
 
   const modal = document.createElement("div");
@@ -741,6 +860,7 @@ info@luxureat.com`;
     emailPlaceholder: "请输入您的邮箱号",
     emailInvalid: "电子邮箱不存在或格式错误。",
     password: "密码",
+    passwordPlaceholder: "请输入您的密码",
     passwordHint: "至少 12 位，须包含字母和数字。",
     remember: "记住我",
     forgot: "忘记密码？",
@@ -750,7 +870,7 @@ info@luxureat.com`;
     consentPrefix: "我已阅读并同意",
     consentLabel: "《用户协议和隐私政策》",
     consentRequired: "请先阅读并同意用户服务协议和隐私政策。",
-    newsletter: "我愿意接收 LuxurEat 的活动提醒和产品上新邮件（可选）",
+    newsletter: "我愿意接收 LuxurEat（露意膳）的活动提醒和产品上新邮件（可选）",
     sendReset: "发送重置链接",
     resetSent: "如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。",
     verificationSent: "验证邮件已发送，请打开邮件中的链接完成注册后再登录。",
@@ -772,6 +892,7 @@ info@luxureat.com`;
     emailPlaceholder: "Enter your email address",
     emailInvalid: "The email address does not exist or is invalid.",
     password: "Password",
+    passwordPlaceholder: "Enter your password",
     passwordHint: "Use at least 12 characters with letters and numbers.",
     remember: "Remember Me",
     forgot: "Forgot Password?",
@@ -781,7 +902,7 @@ info@luxureat.com`;
     consentPrefix: "I have read and agree to",
     consentLabel: "Terms of Service and Privacy Policy",
     consentRequired: "Please read and agree to the Terms of Service and Privacy Policy.",
-    newsletter: "Email me about LuxurEat events and new products (optional)",
+    newsletter: "Email me about LuxurEat (露意膳) events and new products (optional)",
     sendReset: "Send Reset Link",
     resetSent: "If the email is registered, a reset link has been sent. Please check your inbox and spam folder.",
     verificationSent: "A verification email has been sent. Open its link to finish registration before signing in.",
@@ -813,7 +934,7 @@ info@luxureat.com`;
             </label>
             <label class="lux-account-field" data-account-password>
               <span>${text.password}</span>
-              <div class="lux-account-input lux-account-password-input">${icons.lock}<input name="password" type="password" placeholder="••••••••" autocomplete="current-password" minlength="1" required><button type="button" class="lux-account-password-toggle" data-account-password-toggle aria-label="${text.showPassword}" title="${text.showPassword}">${icons.eyeOff}</button></div>
+              <div class="lux-account-input lux-account-password-input">${icons.lock}<input name="password" type="password" placeholder="${text.passwordPlaceholder}" autocomplete="current-password" minlength="1" required><button type="button" class="lux-account-password-toggle" data-account-password-toggle aria-label="${text.showPassword}" title="${text.showPassword}">${icons.eyeOff}</button></div>
               <small class="lux-account-password-hint" data-account-password-hint hidden>${text.passwordHint}</small>
             </label>
             <input name="company" type="text" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
@@ -1112,6 +1233,7 @@ info@luxureat.com`;
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  initLuxScrollReveal();
   initLuxInfoPopovers();
   initLuxGiftScroller();
   initLuxPartnershipLightbox();

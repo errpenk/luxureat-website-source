@@ -32,7 +32,7 @@ function rgbNumbers(color) {
     };
   });
 
-  assert(result.title === "LuxurEat携旗下高端美食品牌亮相FHC上海环球食品展", `latest event title did not render: ${result.title}`);
+  assert(result.title === "LuxurEat（露意膳）亮相FHC上海环球食品展。", `latest event title did not render: ${result.title}`);
   assert(result.poster.endsWith("/assets/media/events/fhc-shanghai-2026.webp"), `home event poster should use the FHC poster: ${result.poster}`);
   assert(result.location === expectedLocation, `latest event location mismatch: ${result.location}`);
   assert(result.mapHref.startsWith("https://maps.apple.com/"), `latest event map link mismatch: ${result.mapHref}`);

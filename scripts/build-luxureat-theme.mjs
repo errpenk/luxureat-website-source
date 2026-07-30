@@ -248,6 +248,8 @@ function luxureat_static_aliases() {
         'journal.html' => 'zh/journal',
         'news' => 'zh/news',
         'news.html' => 'zh/news',
+        'blog' => 'zh/blog',
+        'blog.html' => 'zh/blog',
         'gifting' => 'zh/gifting',
         'gifting.html' => 'zh/gifting',
         'certification' => 'zh/certification',
@@ -282,6 +284,7 @@ function luxureat_static_pretty_paths() {
         'zh/rituals' => '/rituals/',
         'zh/journal' => '/journal/',
         'zh/news' => '/news/',
+        'zh/blog' => '/blog/',
         'zh/gifting' => '/gifting/',
         'zh/certification' => '/certification/',
         'zh/contact' => '/contact/',
@@ -291,6 +294,7 @@ function luxureat_static_pretty_paths() {
         'en/rituals' => '/en/rituals/',
         'en/journal' => '/en/journal/',
         'en/news' => '/en/news/',
+        'en/blog' => '/en/blog/',
         'en/gifting' => '/en/gifting/',
         'en/certification' => '/en/certification/',
         'en/contact' => '/en/contact/',
@@ -337,6 +341,11 @@ function luxureat_static_woo_catalog() {
         return array();
     }
 
+    $cached = get_transient('luxureat_static_woo_catalog');
+    if (is_array($cached)) {
+        return $cached;
+    }
+
     $catalog = array();
     foreach (array('imperial-beluga-30g', 'royal-oscetra-30g', 'mother-of-pearl-spoons', 'champagne', 'ice-server') as $sku) {
         $product_id = wc_get_product_id_by_sku($sku);
@@ -369,6 +378,7 @@ function luxureat_static_woo_catalog() {
             'maxQuantity' => $max_quantity,
         );
     }
+    set_transient('luxureat_static_woo_catalog', $catalog, MINUTE_IN_SECONDS);
     return $catalog;
 }
 
@@ -987,24 +997,22 @@ add_action('send_headers', 'luxureat_static_hide_server_version', 999);
 remove_action('wp_head', 'wp_generator');
 add_filter('the_generator', '__return_empty_string');
 
-add_filter('xmlrpc_enabled', '__return_false');
-function luxureat_static_disable_xmlrpc_request() {
-    if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
-        header_remove('X-Powered-By');
-        status_header(403);
-        nocache_headers();
-        exit('XML-RPC disabled.');
-    }
-}
-add_action('init', 'luxureat_static_disable_xmlrpc_request', 0);
-
-function luxureat_static_remove_xmlrpc_auth_methods($methods) {
-    foreach (array('system.multicall', 'wp.getUsersBlogs', 'blogger.getUsersBlogs', 'metaWeblog.getUsersBlogs') as $method) {
+function luxureat_static_remove_xmlrpc_pingbacks($methods) {
+    foreach (array('pingback.ping', 'pingback.extensions.getPingbacks') as $method) {
         unset($methods[$method]);
     }
     return $methods;
 }
-add_filter('xmlrpc_methods', 'luxureat_static_remove_xmlrpc_auth_methods', 999);
+add_filter('xmlrpc_methods', 'luxureat_static_remove_xmlrpc_pingbacks', 999);
+
+function luxureat_static_restrict_xmlrpc_request() {
+    if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST && (!isset($_GET['for']) || $_GET['for'] !== 'jetpack')) {
+        status_header(403);
+        nocache_headers();
+        exit('XML-RPC is available only for Jetpack.');
+    }
+}
+add_action('init', 'luxureat_static_restrict_xmlrpc_request', 0);
 
 function luxureat_static_cookie_samesite_headers() {
     $cookies = array_values(array_filter(headers_list(), function ($header) {

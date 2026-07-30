@@ -1,11 +1,5 @@
 # Security Policy
 
-## Supported Versions
+Please report vulnerabilities privately to [china@luxureat.com](mailto:china@luxureat.com). Include the affected URL or file, reproduction steps, and potential impact.
 
-The current `main` branch is the supported version of this static LuxurEat site source.
-
-## Reporting a Vulnerability
-
-Please report security issues privately through GitHub Security Advisories when available, or email china@luxureat.com with a clear description, affected files, and reproduction steps.
-
-Please do not open public issues for vulnerabilities before a fix is available.
+Do not open a public issue for an undisclosed vulnerability. We will acknowledge reports as soon as practical and coordinate a fix before public disclosure.

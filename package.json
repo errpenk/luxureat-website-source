@@ -7,7 +7,7 @@
     "images:check": "node tools/optimize-images.mjs --check",
     "theme:build": "node scripts/build-luxureat-theme.mjs . .deploy",
     "theme:check": "npm run theme:build && node tools/verify-theme.mjs .deploy",
-    "check": "npm run site:check && npm run images:check && node qa/verify_content_architecture.cjs && node qa/verify_events.cjs && node qa/verify_navigation.cjs && node tools/verify-cart.mjs && npm run theme:check"
+    "check": "npm run site:check && npm run images:check && node qa/verify_content_architecture.cjs && node qa/verify_events.cjs && node qa/verify_navigation.cjs && node qa/verify_academy.cjs && node tools/verify-cart.mjs && npm run theme:check"
   },
   "devDependencies": {
     "sharp": "^0.35.3"

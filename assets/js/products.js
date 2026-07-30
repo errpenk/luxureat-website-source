@@ -36,9 +36,9 @@ function renderLuxProductCatalog() {
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const labels = lang === "zh"
-    ? { add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", badge: "限量珍藏" }
-    : { add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", badge: "Limited Reserve" };
-  const formatMoney = (product) => `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
+    ? { add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情" }
+    : { add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details" };
+  const formatMoney = (product) => product.priceLabel || `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
   const stockLabel = (product) => product.available === false
     ? labels.unavailable
     : Number.isFinite(product.stockQuantity) ? `${product.stockQuantity} ${labels.stock}` : "";
@@ -52,21 +52,21 @@ function renderLuxProductCatalog() {
   if (!entries.length) return;
 
   grid.innerHTML = entries.map(([key, product], index) => `
-    <article class="group cursor-pointer flex flex-col gap-6" data-caviar-item data-species="${speciesFor(key)}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
-      <div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container-low">
+    <article class="group cursor-pointer flex flex-col gap-6${product.catalogOnly ? " is-catalog-only" : ""}" data-caviar-item data-species="${product.category || speciesFor(key)}" data-product-type="${luxEscapeProductHtml(product.typeKey || "")}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
+      <div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container-low" data-product-open="${luxEscapeProductHtml(key)}" role="button" tabindex="0" aria-label="${luxEscapeProductHtml(labels.detail)}: ${luxEscapeProductHtml(product.title)}">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0" style="background-image: url('${luxEscapeProductHtml(product.image)}');"></div>
-        ${index === 0 ? `<div class="absolute top-4 left-4 border border-secondary/50 px-3 py-1 bg-surface-container-lowest/80 backdrop-blur-md"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">${labels.badge}</span></div>` : ""}
       </div>
       <div class="flex flex-col gap-2 border-t border-secondary/20 pt-4">
         <div class="flex justify-between items-start">
           <h2 class="font-headline-md text-headline-sm md:text-headline-md text-on-surface">${luxEscapeProductHtml(product.title)}</h2>
           <span class="font-body-lg text-body-lg text-secondary">${luxEscapeProductHtml(formatMoney(product))} / ${luxEscapeProductHtml(product.unit)}</span>
         </div>
-        <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">${luxEscapeProductHtml(product.desc)}</p>
+        <p class="lux-product-card-description font-body-md text-body-md text-on-surface-variant">${luxEscapeProductHtml(product.cardDesc || product.desc)}</p>
+        ${product.mainIngredients ? `<small class="lux-product-registration-line font-label-sm text-label-sm"><strong>${luxEscapeProductHtml(product.eyebrow)}</strong><b aria-hidden="true">/</b><span>${luxEscapeProductHtml(product.mainIngredients)}</span></small>` : ""}
         ${stockLabel(product) ? `<small class="font-label-sm text-label-sm uppercase tracking-widest ${product.available === false ? "text-error" : "text-primary"}">${luxEscapeProductHtml(stockLabel(product))}</small>` : ""}
         <div class="mt-4 flex items-center gap-4">
-          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
-          <button class="border border-outline-variant text-on-surface hover:border-primary hover:text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
+          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-price-label="${luxEscapeProductHtml(product.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
+          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
         </div>
       </div>
     </article>`).join("");
@@ -126,6 +126,11 @@ function initLuxCaviarControls() {
   const filterToggle = document.querySelector("[data-caviar-filter-toggle]");
   const count = document.querySelector("[data-caviar-count]");
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const empty = document.createElement("p");
+  empty.className = "lux-caviar-empty";
+  empty.textContent = lang === "zh" ? "未找到相关产品" : "No related products found";
+  empty.hidden = true;
+  grid.insertAdjacentElement("afterend", empty);
 
   const activeButtonClasses = ["border-primary", "text-primary", "bg-primary/10"];
   const inactiveButtonClasses = ["border-outline-variant", "text-on-surface-variant"];
@@ -138,18 +143,18 @@ function initLuxCaviarControls() {
       compare: (a, b) => Number(a.dataset.recommendation) - Number(b.dataset.recommendation),
     },
     {
-      key: "price-asc",
-      label: lang === "zh" ? "价格升序" : "Price: Low to High",
-      compare: (a, b) => Number(a.dataset.price) - Number(b.dataset.price),
+      key: "name-asc",
+      label: lang === "zh" ? "名称正序" : "Name: A to Z",
+      compare: (a, b) => a.dataset.title.localeCompare(b.dataset.title, lang === "zh" ? "zh-CN" : "en"),
     },
     {
-      key: "price-desc",
-      label: lang === "zh" ? "价格降序" : "Price: High to Low",
-      compare: (a, b) => Number(b.dataset.price) - Number(a.dataset.price),
+      key: "name-desc",
+      label: lang === "zh" ? "名称倒序" : "Name: Z to A",
+      compare: (a, b) => b.dataset.title.localeCompare(a.dataset.title, lang === "zh" ? "zh-CN" : "en"),
     },
   ];
 
-  const activeFilters = new Set();
+  const activeFilters = { category: new Set(), type: new Set() };
   let activeView = "grid";
   let activeSortKey = "recommended";
   let searchTerm = "";
@@ -193,9 +198,10 @@ function initLuxCaviarControls() {
     let visibleCount = 0;
 
     items.forEach((item) => {
-      const matchesSpecies = !activeFilters.size || activeFilters.has(item.dataset.species);
+      const matchesSpecies = !activeFilters.category.size || activeFilters.category.has(item.dataset.species);
+      const matchesType = !activeFilters.type.size || activeFilters.type.has(item.dataset.productType);
       const matchesSearch = !searchTerm || item.textContent.toLocaleLowerCase(lang === "zh" ? "zh-CN" : "en").includes(searchTerm);
-      const matchesFilter = matchesSpecies && matchesSearch;
+      const matchesFilter = matchesSpecies && matchesType && matchesSearch;
       item.hidden = !matchesFilter;
       if (matchesFilter) {
         visibleCount += 1;
@@ -206,6 +212,7 @@ function initLuxCaviarControls() {
       count.textContent = String(visibleCount);
     }
     grid.dataset.visibleCount = String(visibleCount);
+    empty.hidden = visibleCount !== 0;
   };
 
   const applyView = () => {
@@ -245,12 +252,16 @@ function initLuxCaviarControls() {
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const filter = button.dataset.caviarFilter || "all";
-      if (filter === "all") activeFilters.clear();
-      else if (activeFilters.has(filter)) activeFilters.delete(filter);
-      else activeFilters.add(filter);
+      const group = button.dataset.caviarFilterGroup === "type" ? "type" : "category";
+      const selected = activeFilters[group];
+      if (filter === "all") selected.clear();
+      else if (selected.has(filter)) selected.delete(filter);
+      else selected.add(filter);
       filterButtons.forEach((item) => {
+        const itemGroup = item.dataset.caviarFilterGroup === "type" ? "type" : "category";
+        if (itemGroup !== group) return;
         const itemFilter = item.dataset.caviarFilter || "all";
-        const isActive = itemFilter === "all" ? !activeFilters.size : activeFilters.has(itemFilter);
+        const isActive = itemFilter === "all" ? !selected.size : selected.has(itemFilter);
         item.setAttribute("aria-pressed", String(isActive));
         activeButtonClasses.forEach((className) => item.classList.toggle(className, isActive));
         inactiveButtonClasses.forEach((className) => item.classList.toggle(className, !isActive));
@@ -273,7 +284,8 @@ function initLuxCaviarControls() {
     applyFilter();
   });
   clearAll?.addEventListener("click", () => {
-    activeFilters.clear();
+    activeFilters.category.clear();
+    activeFilters.type.clear();
     searchTerm = "";
     if (search) search.value = "";
     searchClear?.classList.remove("is-visible");
@@ -328,8 +340,8 @@ function initLuxProductDetails() {
 
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", qty: "数量", remove: "移除", recent: "最近浏览过", specs: ["鲟鱼品种 SPECIES", "颗粒直径 SIZE", "珍珠色泽 COLOR", "味觉特征 PROFILE"], story: "传承与自然的洗礼", note: "LuxurEat（露意膳） 以冷链、批次记录与开罐服务标准确保每一次品鉴都保持稳定、清晰且可追溯。" }
-    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", qty: "Qty", remove: "Remove", recent: "Recently Viewed", specs: ["Species", "Pearl Size", "Color", "Profile"], story: "Heritage & Origin", note: "LuxurEat (露意膳) protects every tasting with cold-chain handling, batch records, and precise opening standards." };
+    ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", qty: "数量", remove: "移除", recent: "更多推荐", specs: ["生产企业", "中国注册号", "产品类别 / HS", "有效期至"], story: "产品说明" }
+    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", qty: "Qty", remove: "Remove", recent: "More Recommendations", specs: ["Manufacturer", "China Registration", "Category / HS", "Valid Until"], story: "Product Information" };
   const totalLabel = (quantity) => document.documentElement.lang?.startsWith("zh") ? `${quantity}件总价` : `${quantity}-item total`;
   const maxQuantity = () => Math.min(window.LuxureatBag?.maxQuantity || 99, Math.max(1, Number(products[currentProductId]?.maxQuantity) || 99));
   const clampQuantity = (quantity) => Math.min(maxQuantity(), Math.max(1, Number(quantity) || 1));
@@ -415,7 +427,10 @@ function initLuxProductDetails() {
     const labels = copy();
     const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
     const prefix = id.startsWith("zh-") ? "zh-" : "en-";
-    const recommendations = Object.entries(products).filter(([key]) => key !== id && key.startsWith(prefix)).slice(0, 4);
+    const recommendations = Object.entries(products)
+      .filter(([key]) => key !== id && key.startsWith(prefix))
+      .sort(() => Math.random() - .5)
+      .slice(0, 6);
     body.innerHTML = `
       <article>
         <section class="lux-product-hero">
@@ -429,7 +444,7 @@ function initLuxProductDetails() {
             <span>${luxEscapeProductHtml(product.eyebrow)}</span>
             <h2 id="lux-product-title">${luxEscapeProductHtml(product.title)}</h2>
             <p>${luxEscapeProductHtml(product.desc)}</p>
-            <strong class="lux-product-price">${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em></strong>
+            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(product.priceLabel || "TEST") : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em>`}</strong>
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
               <div class="lux-product-qty" aria-label="${luxEscapeProductHtml(labels.qty)}">
@@ -437,7 +452,7 @@ function initLuxProductDetails() {
                 <output data-product-quantity-value>1</output>
                 <button type="button" data-product-quantity="1" aria-label="${luxEscapeProductHtml(labels.qty)} +">+</button>
               </div>
-              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
+              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-price-label="${luxEscapeProductHtml(product.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
             </div>
             <div class="lux-product-cart-state" data-product-cart-state hidden>
               <span data-product-cart-text></span>
@@ -445,23 +460,23 @@ function initLuxProductDetails() {
             </div>
           </div>
         </section>
-        <section class="lux-product-specs">
-          ${product.specs.map((value, index) => `<div><span>${luxEscapeProductHtml(labels.specs[index])}</span><strong>${luxEscapeProductHtml(value)}</strong></div>`).join("")}
+        <section class="lux-product-specs${product.details ? " has-label-details" : ""}">
+          ${(product.details || product.specs.map((value, index) => ({ label: labels.specs[index], value }))).map((item) => `<div><span>${luxEscapeProductHtml(item.label)}</span><strong>${luxEscapeProductHtml(item.value)}</strong></div>`).join("")}
         </section>
         <section class="lux-product-story">
           <h3>${labels.story}</h3>
-          <p>${luxEscapeProductHtml(product.desc)} ${luxEscapeProductHtml(labels.note)}</p>
+          <p>${luxEscapeProductHtml(product.desc)}</p>
         </section>
         ${recommendations.length ? `<section class="lux-product-recent">
           <div class="lux-product-recent-inner">
           <h3>${luxEscapeProductHtml(labels.recent)}</h3>
           <div class="lux-product-recent-grid">
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
-              <img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}">
+              <div class="lux-product-recent-media"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}"></div>
               <strong>${luxEscapeProductHtml(item.title)}</strong>
-              <small>${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}</small>
+              <small>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "TEST")} / ${luxEscapeProductHtml(item.unit)}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
               <div class="lux-product-recent-actions">
-                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}"${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
+                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-price-label="${luxEscapeProductHtml(item.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}"${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
               </div>
             </article>`).join("")}
@@ -540,13 +555,22 @@ function initLuxProductDetails() {
   window.addEventListener("resize", syncRecentNav);
 
   document.addEventListener("click", (event) => {
-    const trigger = event.target.closest("[data-product-open]");
+    const media = event.target.closest(".lux-product-recent-media, .lux-bag-recommendation-media");
+    const trigger = event.target.closest("[data-product-open]")
+      || (!event.target.closest("button, a, input, select, textarea") ? media?.closest(".lux-product-recent-card, [data-bag-card]")?.querySelector("[data-product-open]") : null);
     if (!trigger) return;
     const productId = trigger.dataset.productOpen;
     if (!products[productId]) return;
     if (trigger.href && new URL(trigger.href, location.href).pathname !== location.pathname) return;
     event.preventDefault();
     render(productId, true);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (!["Enter", " "].includes(event.key)) return;
+    const trigger = event.target.closest('[data-product-open][role="button"]');
+    if (!trigger || !products[trigger.dataset.productOpen]) return;
+    event.preventDefault();
+    render(trigger.dataset.productOpen, true);
   });
   detail.querySelectorAll("[data-product-close]").forEach((button) => button.addEventListener("click", close));
   window.addEventListener("popstate", () => {
@@ -592,6 +616,7 @@ function initLuxProductDetails() {
     title: String(product.title || "").trim(),
     subtitle: String(product.subtitle || "").trim(),
     price: Number(product.price ?? product.amount) || 0,
+    priceLabel: String(product.priceLabel || "").trim(),
     currency: product.currency || "$",
     image: product.image || "",
     available: product.available !== false,
@@ -686,6 +711,7 @@ function initLuxProductDetails() {
     title: button.dataset.bagTitle,
     subtitle: button.dataset.bagSubtitle,
     price: button.dataset.bagPrice,
+    priceLabel: button.dataset.bagPriceLabel,
     currency: button.dataset.bagCurrency,
     image: button.dataset.bagImage || productImage(button),
     quantity: button.dataset.bagQuantity,
@@ -697,7 +723,7 @@ function initLuxProductDetails() {
 
   const itemHtml = (item, lang) => {
     const quantity = clampQuantity(item.quantity, item.maxQuantity);
-    const lineTotal = quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${item.quantity}件总价` : `${item.quantity}-item total`} ${money(item.currency, item.price * quantity)}</small>` : "";
+    const lineTotal = !item.priceLabel && quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${item.quantity}件总价` : `${item.quantity}-item total`} ${money(item.currency, item.price * quantity)}</small>` : "";
     const detailId = detailProductId(item, lang);
     const minDisabled = quantity <= 1 ? " disabled aria-disabled=\"true\"" : "";
     const maxDisabled = quantity >= item.maxQuantity ? " disabled aria-disabled=\"true\"" : "";
@@ -713,7 +739,7 @@ function initLuxProductDetails() {
             <h3 class="font-headline-sm text-headline-sm mb-1">${luxEscapeProductHtml(item.title)}</h3>
             <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${luxEscapeProductHtml(item.subtitle)}</p>
           </div>
-          <span class="lux-bag-price font-headline-sm text-headline-sm text-primary whitespace-nowrap">${money(item.currency, item.price)}${lineTotal}</span>
+          <span class="lux-bag-price font-headline-sm text-headline-sm text-primary whitespace-nowrap">${luxEscapeProductHtml(item.priceLabel || money(item.currency, item.price))}${lineTotal}</span>
         </div>
         <div class="flex justify-between items-end mt-8">
           <div class="flex items-center gap-4">
@@ -761,21 +787,24 @@ function initLuxProductDetails() {
     const copy = lang === "zh"
       ? { add: "加入清单", unavailable: "暂时无货", detail: "查看详情" }
       : { add: "Add to List", unavailable: "Out of Stock", detail: "View Details" };
-    const entries = Object.entries(products).filter(([key]) => key.startsWith(`${lang}-`)).slice(2);
+    const entries = Object.entries(products)
+      .filter(([key]) => key.startsWith(`${lang}-`))
+      .sort(() => Math.random() - .5)
+      .slice(0, 3);
     if (!entries.length) return;
 
     grid.innerHTML = entries.map(([key, product]) => `
       <div class="group cursor-pointer" data-bag-card>
-        <div class="aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
+        <div class="lux-bag-recommendation-media aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
           <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${luxEscapeProductHtml(product.image)}" alt="${luxEscapeProductHtml(product.title)}">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center gap-3">
-            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? copy.unavailable : copy.add}</button>
+            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-price-label="${luxEscapeProductHtml(product.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? copy.unavailable : copy.add}</button>
             <button type="button" class="px-6 py-3 border border-primary text-primary font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-product-open="${luxEscapeProductHtml(key)}">${copy.detail}</button>
           </div>
         </div>
         <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">${luxEscapeProductHtml(product.title)}</h4>
         <p class="font-label-sm text-label-sm text-on-surface-variant mb-2">${luxEscapeProductHtml(product.subtitle)}</p>
-        <span class="font-body-md text-primary">${money(product.currency, Number(product.amount) || 0)}</span>
+        <span class="lux-bag-recommendation-price font-body-md">${luxEscapeProductHtml(product.priceLabel || money(product.currency, Number(product.amount) || 0))}</span>
       </div>`).join("");
   };
 
@@ -794,9 +823,10 @@ function initLuxProductDetails() {
       ? items.map((item) => itemHtml(item, lang)).join("")
       : `<div class="p-8 border border-outline-variant/30 text-on-surface-variant">${lang === "zh" ? "您的购物袋暂时为空。" : "Your shopping bag is empty."}</div>`;
 
-    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = money(currency, subtotal); });
-    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = money(currency, shipping); });
-    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = money(currency, subtotal + shipping); });
+    const testPricing = items.some((item) => item.priceLabel);
+    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal); });
+    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, shipping); });
+    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal + shipping); });
   };
 
   const checkout = async (button) => {

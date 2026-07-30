@@ -3,7 +3,7 @@
 <html class="dark" lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link rel="preload" href="../assets/fonts/AlimamaShuHeiTi-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,300;6..96,400;6..96,500;6..96,600&amp;family=Montserrat:wght@300;400;500;600&amp;display=optional" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260729-mobile-media-29">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20260730-performance-76">
 <style>
     .fade-in-up {
         animation: fadeInUp 1s ease-out forwards;
@@ -20,13 +20,13 @@
     }
 </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260729-mobile-media-29">
+<link rel="stylesheet" href="../integration.css?v=20260730-performance-76">
 </head>
 <body class="antialiased bg-background text-on-background selection:bg-primary selection:text-on-primary">
 <!-- lux:header:start -->
 <header class="lux-header">
   <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a class="active" href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
+  <nav class="lux-nav" aria-label="navigation"><a class="active" href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="购物袋"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="个人登录"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
@@ -41,11 +41,11 @@
 <!-- 1. Hero Section -->
 <header class="lux-home-hero relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
-<video class="lux-hero-video" autoplay muted loop playsinline preload="auto" poster="../assets/media/brand/home-hero-truffle-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-hero-truffle.mp4" type="video/mp4"></video>
+<video class="lux-hero-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="../assets/media/brand/home-hero-truffle-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-hero-truffle.mp4" type="video/mp4"></video>
 <div class="absolute inset-0 lux-hero-video-shade"></div>
 </div>
 <div class="lux-home-hero-content relative z-10 text-center max-w-5xl px-margin-mobile fade-in-up">
-<img decoding="async" fetchpriority="high" class="lux-home-hero-mark" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"/>
+<img decoding="async" fetchpriority="high" class="lux-home-hero-mark" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat（露意膳）"/>
 <span class="lux-hero-kicker">探索地道风味，品味真正的意大利制造</span>
 <h1 class="zh-display-title text-on-surface mb-8">
             意大利卓越品质的<br/><span class="text-secondary">至臻之艺</span>
@@ -67,11 +67,11 @@
 <section class="lux-latest-event" id="meet-us" data-latest-event></section>
 <section class="lux-home-services" id="services-overview" aria-labelledby="services-title-zh">
 <div class="lux-home-services-inner">
-<header><span>OUR SERVICES</span><h2 id="services-title-zh">完整而清晰的<em>合作方案</em></h2></header>
+<header><span>OUR SERVICES / 我们的服务</span><h2 id="services-title-zh">完整而清晰的<em>合作方案</em></h2></header>
 <div class="lux-home-services-grid">
-<a class="lux-home-service-card" href="caviar.html"><figure><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-truffle.webp" alt="LuxurEat 松露与高端食材甄选"></figure><div><span class="material-symbols-outlined" aria-hidden="true">restaurant</span><h3>产品甄选</h3><p>围绕渠道定位与消费场景配置松露、鱼子酱及高端食材。</p><b>探索产品 <i aria-hidden="true">→</i></b></div></a>
-<a class="lux-home-service-card" href="gifting.html"><figure><img loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat 国际市场与渠道合作"></figure><div><span class="material-symbols-outlined" aria-hidden="true">hub</span><h3>市场合作</h3><p>从市场准入、中文资料到渠道启动，提供一站式协作。</p><b>合作方案 <i aria-hidden="true">→</i></b></div></a>
-<a class="lux-home-service-card" href="rituals.html"><figure><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-gambero-rosso.webp" alt="LuxurEat 餐饮应用与红虾粉产品"></figure><div><span class="material-symbols-outlined" aria-hidden="true">room_service</span><h3>餐饮应用</h3><p>让专业食材自然进入菜单、宴会与高端零售体验。</p><b>查看灵感 <i aria-hidden="true">→</i></b></div></a>
+<a class="lux-home-service-card" href="caviar.html"><figure><img loading="lazy" decoding="async" src="../assets/media/brand/home-service-selection.webp" alt="Ugolini 黑松露酱与专业餐饮应用"></figure><div><span class="material-symbols-outlined" aria-hidden="true">restaurant</span><h3>产品甄选</h3><p>围绕渠道定位与消费场景配置松露、鱼子酱及高端食材。</p><b>探索产品 <i aria-hidden="true">→</i></b></div></a>
+<a class="lux-home-service-card" href="gifting.html"><figure><img loading="lazy" decoding="async" src="../assets/media/brand/home-service-partnership.webp" alt="LuxurEat（露意膳） 团队市场合作"></figure><div><span class="material-symbols-outlined" aria-hidden="true">hub</span><h3>市场合作</h3><p>从市场准入、中文资料到渠道启动，提供一站式协作。</p><b>合作方案 <i aria-hidden="true">→</i></b></div></a>
+<a class="lux-home-service-card" href="rituals.html"><figure><img loading="lazy" decoding="async" src="../assets/media/brand/home-service-foodservice.webp" alt="TruffleEat 松露烩饭与餐饮应用"></figure><div><span class="material-symbols-outlined" aria-hidden="true">room_service</span><h3>餐饮应用</h3><p>让专业食材自然进入菜单、宴会与高端零售体验。</p><b>查看灵感 <i aria-hidden="true">→</i></b></div></a>
 </div>
 </div>
 </section>
@@ -79,8 +79,8 @@
 <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="selected-products">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
 <div class="max-w-xl">
-<span class="lux-selected-products-kicker">SELECTED PRODUCT CATALOGUE</span>
-<h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">甄选产品目录</h2>
+<span class="lux-selected-products-kicker">CURATED SELECTION / 品质精选</span>
+<h2 class="font-display text-4xl md:text-5xl text-on-surface mb-6">甄选产品</h2>
 <p class="text-on-surface-variant font-light leading-relaxed">严选全球兼具商业价值与品鉴价值的顶级食材，为高端商务宴请与私人品鉴呈现非凡之选。</p>
 </div>
 <a class="lux-narrative-link group" href="caviar.html">
@@ -89,43 +89,37 @@
 </a>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Caviar -->
-<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container">
-<img loading="lazy" decoding="async" alt="Royal Caviar" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/brand/lux-044.jpg"/>
+<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container" data-product-type="调味油">
+<img loading="lazy" decoding="async" alt="白松露风味油" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/products/appennino/product-02.webp"/>
 <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
 <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-<span class="text-primary text-[10px] uppercase tracking-[0.3em] mb-2 block">顶级海味</span>
-<h3 class="font-display text-3xl text-on-surface mb-4">皇室鱼子酱</h3>
-<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">深海气息与黄油质感交织出的宏大乐章。</p>
-<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="caviar.html#product-zh-imperial-beluga" data-product-open="zh-imperial-beluga">立即选购</a>
+<h3 class="font-display text-3xl text-on-surface mb-4">白松露风味油 · 60 ml</h3>
+<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">以橄榄油和食用香料调制，适合为意面、烩饭、蛋料理与冷盘增添松露香气。</p>
+<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="caviar.html#product-zh-white-truffle-oil-60ml" data-product-open="zh-white-truffle-oil-60ml">立即选购</a>
 </div>
 </div>
-<!-- Truffles -->
-<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container">
-<img loading="lazy" decoding="async" alt="The Alba Gold" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/brand/lux-038.jpg"/>
+<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container" data-product-type="食用菌罐头">
+<img loading="lazy" decoding="async" alt="夏季黑松露片" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/products/appennino/product-05.webp"/>
 <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
 <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-<span class="text-secondary text-[10px] uppercase tracking-[0.3em] mb-2 block">大地之钻</span>
-<h3 class="font-display text-3xl text-on-surface mb-4">阿尔巴之金</h3>
-<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">源自皮埃蒙特中心地带的珍稀“白钻石”。</p>
-<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="caviar.html#product-zh-royal-oscetra" data-product-open="zh-royal-oscetra">立即选购</a>
+<h3 class="font-display text-3xl text-on-surface mb-4">夏季黑松露片 · 180 g</h3>
+<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">精选夏季黑松露切片并装罐保存，适合披萨、意面、肉类及精致餐饮摆盘。</p>
+<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="caviar.html#product-zh-summer-truffle-slices-180g" data-product-open="zh-summer-truffle-slices-180g">立即选购</a>
 </div>
 </div>
-<!-- Service Ware -->
-<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container">
-<img loading="lazy" decoding="async" alt="Modern Silver Ice Server" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/products/lux-039.jpg"/>
+<div class="group relative aspect-[3/4] overflow-hidden bg-surface-container" data-product-type="复合调味品">
+<img loading="lazy" decoding="async" alt="冬季黑松露酱" class="w-full h-full object-cover img-reveal opacity-80" src="../assets/media/products/appennino/product-21.webp"/>
 <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-90"></div>
 <div class="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-<span class="text-primary text-[10px] uppercase tracking-[0.3em] mb-2 block">侍酒器具</span>
-<h3 class="font-display text-3xl text-on-surface mb-4">冰镇银座</h3>
-<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">稳定开罐后的低温服务，让每一匙保持清晰弹性。</p>
-<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="caviar.html#product-zh-ice-server" data-product-open="zh-ice-server">立即选购</a>
+<h3 class="font-display text-3xl text-on-surface mb-4">冬季黑松露酱 · 180 g</h3>
+<p class="text-on-surface-variant text-sm font-light mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">以蘑菇和冬季黑松露调制，适合作为意面、烩饭、面包及肉类料理的风味基底。</p>
+<a class="lux-core-shop inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-on-background border border-white/20 bg-white/10 backdrop-blur px-6 py-3 hover:bg-white hover:text-background transition-colors" href="caviar.html#product-zh-winter-black-truffle-sauce-180g" data-product-open="zh-winter-black-truffle-sauce-180g">立即选购</a>
 </div>
 </div>
 </section>
-<!-- LuxurEat Group Overview -->
+<!-- LuxurEat（露意膳） Group Overview -->
 <section class="lux-home-maison" id="maison-overview" aria-labelledby="section-5">
-<video class="lux-home-maison-media lux-about-program-media" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-maison-overview.m4v" type="video/mp4"></video>
+<video class="lux-home-maison-media lux-about-program-media" data-lux-autoplay muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/home-maison-overview.m4v" type="video/mp4"></video>
 <div class="lux-home-maison-overlay" aria-hidden="true"></div>
 <div class="lux-home-maison-inner">
 <header class="lux-home-maison-head">
@@ -151,16 +145,16 @@
 </section>
 <section class="lux-home-market-system" id="market-system" aria-labelledby="market-system-title-zh">
 <header>
-<span>品牌根基 / OUR VALUES</span>
+<span>OUR VALUES / 品牌根基</span>
 <h2 id="market-system-title-zh">为卓越风味打造的<br/><em>品质体系</em></h2>
 <span class="lux-home-market-watermark" aria-hidden="true">VALUES &amp;<br/>PHILOSOPHY</span>
 <p>从意大利家族餐桌上的一份食谱，到世界各地餐桌上的真实风味，LuxurEat（露意膳）以松露、鱼子酱和精选高端食材，将代代相传的烹饪传统融入现代生活。每一款产品，都是经典食谱与创新表达之间的连接，让优质食材更自然地进入日常料理，也让意大利美食文化跨越地域，在每一次烹饪与分享中延续。</p>
 </header>
 <div class="lux-home-market-system-layout">
 <div class="lux-home-market-collage">
-<figure class="lux-home-market-collage-main"><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-truffle.webp" alt="LuxurEat 意大利黑松露"></figure>
-<figure class="lux-home-market-collage-secondary"><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-caviar-plating.webp" alt="LuxurEat 鱼子酱餐桌艺术"></figure>
-<button type="button" class="lux-home-market-stat" data-reader-open="zh-harvest" aria-label="打开 LuxurEat 的理念与哲学"><strong>价值观</strong><span>传统 · 创新 · 可持续</span><span class="lux-home-market-learn">了解更多 <i aria-hidden="true">→</i></span></button>
+<figure class="lux-home-market-collage-main"><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-truffle.webp" alt="LuxurEat（露意膳） 意大利黑松露"></figure>
+<figure class="lux-home-market-collage-secondary"><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-caviar-plating.webp" alt="LuxurEat（露意膳） 鱼子酱餐桌艺术"></figure>
+<button type="button" class="lux-home-market-stat" data-reader-open="zh-harvest" aria-label="打开 LuxurEat（露意膳） 的理念与哲学"><strong>价值观</strong><span>传统 · 创新 · 可持续</span><span class="lux-home-market-learn">了解更多 <i aria-hidden="true">→</i></span></button>
 </div>
 <div class="lux-home-market-features">
 <article class="lux-market-feature" tabindex="0"><div class="lux-market-card-front"><span class="material-symbols-outlined" aria-hidden="true">history_edu</span><h3>传统传承</h3><p>把意大利家族餐桌的真实风味与传统工艺延续至今。</p><small>意大利传统</small></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
@@ -170,7 +164,7 @@
 </div>
 </div>
 </section>
-<aside class="lux-home-global-reach" aria-label="LuxurEat 全球业务范围">
+<aside class="lux-home-global-reach" aria-label="LuxurEat（露意膳） 全球业务范围">
 <div>
 <p>我们的业务覆盖欧洲、东亚及东南亚、中东和北美市场，包括欧盟国家、中国、日本、韩国、泰国、新加坡、阿联酋（迪拜）、沙特阿拉伯及美国</p>
 <ul aria-label="业务覆盖地区国旗">
@@ -188,31 +182,32 @@
 </aside>
 <!-- Brand partnership timeline -->
 <section class="lux-home-timeline" id="brand-timeline" data-home-timeline aria-labelledby="home-timeline-title">
-<header><span>品牌里程 / 品牌历程</span><h2 id="home-timeline-title">传统、经验与创新</h2><p>从意大利美食传统出发，历经专业餐饮实践、产品研发与全球合作，我们以长期主义构建值得信赖的品牌、产品与服务网络。</p></header>
+<header><span>BRAND JOURNEY / 品牌历程</span><h2 id="home-timeline-title">传统、经验与创新</h2><p>从意大利美食传统出发，历经专业餐饮实践、产品研发与全球合作，我们以长期主义构建值得信赖的品牌、产品与服务网络。</p></header>
 <div class="lux-home-timeline-layout">
 <div class="lux-home-timeline-steps">
-<article data-timeline-step data-timeline-index="0" class="is-active"><span>品牌起点</span><h3>源于意大利美食热忱</h3><p>LuxurEat 的故事源于对意大利料理、优质原料与传统工艺的长期热爱。我们从真实风味与产地知识出发，逐步建立对松露、鱼子酱及高端食品的专业判断，并把尊重食材、尊重手艺的原则写入品牌根基。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini 与意大利松露"></article>
-<article data-timeline-step data-timeline-index="1"><span>二十余年经验</span><h3>专业经验不断沉淀</h3><p>二十余年的餐饮实践、产品研发以及与专业厨师和生产伙伴的合作，让我们更准确地理解风味、品质、稳定交付与渠道需求。每一次选品和合作，都以可持续的长期价值而非短期流行为判断标准。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="LuxurEat 意大利展馆与二十余年专业经验"></article>
-<article data-timeline-step data-timeline-index="2"><span>中国与全球</span><h3>连接中国与全球市场</h3><p>依托上海本地团队、意大利产地资源与国际供应网络，我们把进口合规、品质文件、冷链物流、品牌传播和渠道服务连接起来，让优秀产品能够以清晰、稳定且适合当地市场的方式抵达中国与全球客户。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat 中国与全球展会合作团队"></article>
-<article data-timeline-step data-timeline-index="3"><span>2026及未来</span><h3>共同塑造未来</h3><p>面向未来，LuxurEat 将继续以松露、鱼子酱与高端意大利食品为核心，拓展更丰富的产品、餐饮与品牌合作方案。我们期待与生产者、经销商、酒店餐饮及零售伙伴共同创造经得起时间检验的增长机会。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="LuxurEat 2026及未来全球市场合作"></article>
+<article data-timeline-step data-timeline-index="0" class="is-active"><span>品牌起点</span><h3>源于意大利美食热忱</h3><p>LuxurEat（露意膳） 的故事源于对意大利料理、优质原料与传统工艺的长期热爱。我们从真实风味与产地知识出发，逐步建立对松露、鱼子酱及高端食品的专业判断，并把尊重食材、尊重手艺的原则写入品牌根基。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-roberto.jpg" alt="Roberto Ugolini 与 TrufflEat 品牌"></article>
+<article data-timeline-step data-timeline-index="1"><span>二十余年经验</span><h3>专业经验不断沉淀</h3><p>二十余年的餐饮实践、产品研发以及与专业厨师和生产伙伴的合作，让我们更准确地理解风味、品质、稳定交付与渠道需求。每一次选品和合作，都以可持续的长期价值而非短期流行为判断标准。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-timeline-experience.jpg" alt="Roberto Ugolini 与餐饮行业伙伴"></article>
+<article data-timeline-step data-timeline-index="2"><span>中国与全球</span><h3>连接中国与全球市场</h3><p>依托上海本地团队、意大利产地资源与国际供应网络，我们把进口合规、品质文件、冷链物流、品牌传播和渠道服务连接起来，让优秀产品能够以清晰、稳定且适合当地市场的方式抵达中国与全球客户。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-timeline-cooperation.webp" alt="LuxurEat（露意膳） 在中国连接国际品牌与本地市场"></article>
+<article data-timeline-step data-timeline-index="3"><span>2026及未来</span><h3>共同塑造未来</h3><p>面向未来，LuxurEat（露意膳） 将继续以松露、鱼子酱与高端意大利食品为核心，拓展更丰富的产品、餐饮与品牌合作方案。我们期待与生产者、经销商、酒店餐饮及零售伙伴共同创造经得起时间检验的增长机会。</p><img class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-timeline-vision.webp" alt="CaviarEat 鱼子酱与未来美食体验"></article>
 </div>
-<figure class="lux-home-timeline-visual" aria-label="LuxurEat 品牌历程图集">
-<img data-timeline-image class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini 与意大利松露">
-<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="意大利展馆与品牌发展">
-<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-fair.webp" alt="LuxurEat 国际团队与展会合作">
-<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-fair.webp" alt="LuxurEat 全球市场合作">
+<figure class="lux-home-timeline-visual" aria-label="LuxurEat（露意膳） 品牌历程图集">
+<img data-timeline-image class="is-active" loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-roberto.jpg" alt="Roberto Ugolini 与 TrufflEat 品牌">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-timeline-experience.jpg" alt="Roberto Ugolini 与餐饮行业伙伴">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-timeline-cooperation.webp" alt="LuxurEat（露意膳） 在中国连接国际品牌与本地市场">
+<img data-timeline-image loading="lazy" decoding="async" src="../assets/media/brand/home-timeline-vision.webp" alt="CaviarEat 鱼子酱与未来美食体验">
 </figure>
 </div>
 </section>
 <section class="lux-home-why" id="china-partnership" aria-labelledby="lux-home-why-title">
 <div class="lux-home-why-media">
-<figure class="lux-home-why-main"><img loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt="LuxurEat 意大利展馆与国际市场合作"></figure>
-<figure class="lux-home-why-inset"><img loading="lazy" decoding="async" src="../assets/media/brand/home-values-truffle.webp" alt="LuxurEat 精选意大利松露"></figure>
+<figure class="lux-home-why-main"><img loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-caviar.webp" alt="冰上陈列的 CaviarEat 奥西特拉鱼子酱"></figure>
+<figure class="lux-home-why-inset"><img loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-truffles.jpg" alt="精选意大利黑松露"></figure>
 </div>
 <div class="lux-home-why-copy">
 <span>CHINA PARTNERSHIP / 渠道合作</span>
 <h2 id="lux-home-why-title">寻找中国合作伙伴</h2>
-<p>LuxurEat China（露意膳）已在上海开展中国本地业务并直接进口产品，诚邀专业、可靠且具有长期发展愿景的全国及区域经销与渠道合作伙伴，共同拓展高端零售、酒店餐饮、电商、礼赠及专业食品渠道。</p>
+<img class="lux-home-why-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-roberto-ugolini.webp" alt="Roberto Ugolini 与意大利松露">
+<p>LuxurEat（露意膳）已在上海开展中国本地业务并直接进口产品，诚邀专业、可靠且具有长期发展愿景的全国及区域经销与渠道合作伙伴，共同拓展高端零售、酒店餐饮、电商、礼赠及专业食品渠道。</p>
 <div class="lux-home-why-benefits">
 <article><i class="material-symbols-outlined" aria-hidden="true">travel_explore</i><strong>全球产地网络</strong><small>连接意大利生产者、国际品牌与目标市场</small></article>
 <article><i class="material-symbols-outlined" aria-hidden="true">tune</i><strong>灵活合作方案</strong><small>产品、包装、渠道与生产规模按需配置</small></article>
@@ -231,9 +226,9 @@
 <div class="lux-home-editorial-frame">
 <div class="lux-home-editorial-rule"></div>
 <span class="lux-home-editorial-kicker text-primary text-[11px] uppercase tracking-[0.4em] font-semibold">GLOBAL PARTNERSHIP / 与我们合作</span>
-<span class="lux-home-editorial-folio">MAISON BUSINESS — 01</span>
+<span class="lux-home-editorial-folio">全球战略合作</span>
 <h2 class="lux-home-gifting-title font-display text-5xl text-on-surface leading-tight">连接意大利制造，<br/><span class="text-secondary">共拓全球市场</span></h2>
-<figure class="lux-home-gifting-image" aria-label="LuxurEat 全球合作与展会图集"><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="LuxurEat 意大利展会合作现场" src="../assets/media/brand/home-partnership-italy-fair.webp"/><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="LuxurEat、CaviarEat 与 TrufflEat 展会团队" src="../assets/media/brand/home-partnership-fair.webp"/><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="TrufflEat 意大利展馆合作现场" src="../assets/media/brand/home-partnership-italy-pavilion.webp"/><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="Roberto Ugolini 展示意大利松露" src="../assets/media/brand/home-partnership-roberto-ugolini.webp"/></figure>
+<figure class="lux-home-gifting-image" aria-label="LuxurEat（露意膳） 全球合作与展会图集"><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="LuxurEat（露意膳） 意大利展会合作现场" src="../assets/media/brand/home-partnership-italy-fair.webp"/><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="LuxurEat（露意膳）、CaviarEat 与 TrufflEat 展会团队" src="../assets/media/brand/home-partnership-fair.webp"/><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="TrufflEat 意大利展馆合作现场" src="../assets/media/brand/home-partnership-italy-pavilion.webp"/><img data-partnership-image role="button" tabindex="0" loading="lazy" decoding="async" alt="Roberto Ugolini 展示意大利松露" src="../assets/media/brand/home-partnership-roberto-ugolini.webp"/></figure>
 <div class="lux-home-gifting-intro">
 <p class="text-on-surface-variant text-lg font-light leading-relaxed">我们正在全球范围内寻找分销商、渠道运营商和商业合作伙伴。从订单与定制项目，到特许经营与专业咨询，与LuxurEat（露意膳）一起将真正的意大利美味带向世界。</p>
 <a class="lux-action-copy inline-block px-12 py-5 border border-primary text-primary uppercase text-[11px] font-bold tracking-[0.3em] hover:bg-primary hover:text-on-primary transition-all duration-500" href="contact.html">合作详情</a>
@@ -254,20 +249,20 @@
 <!-- lux:footer:start -->
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
-    <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
+    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
+    <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a></div>
     <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
   </div>
-  <div class="lux-footer-bottom">© 2026 Luxureat China（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W</div>
+  <div class="lux-footer-bottom">© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W</div>
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/data/products.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/data/events.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/js/events.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/data/journal.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/js/journal.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/js/products.js?v=20260729-mobile-media-29"></script>
+<script defer src="../assets/js/core.js?v=20260730-performance-76"></script>
+<script defer src="../assets/data/products.js?v=20260730-performance-76"></script>
+<script defer src="../assets/data/events.js?v=20260730-performance-76"></script>
+<script defer src="../assets/js/events.js?v=20260730-performance-76"></script>
+<script defer src="../assets/data/journal.js?v=20260730-performance-76"></script>
+<script defer src="../assets/js/journal.js?v=20260730-performance-76"></script>
+<script defer src="../assets/js/products.js?v=20260730-performance-76"></script>
 <!-- lux:scripts:end --></body></html>

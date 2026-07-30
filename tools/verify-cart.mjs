@@ -59,8 +59,8 @@ const context = {
 vm.createContext(context);
 context.window.LuxureatWooCatalog = {
   products: {
-    'imperial-beluga-30g': {
-      name: 'Woo Beluga',
+    'white-truffle-oil-60ml': {
+      name: 'Woo White Truffle Oil',
       price: 999,
       currency: '¥',
       image: 'https://example.com/woo-beluga.jpg',
@@ -77,7 +77,7 @@ vm.runInContext(fs.readFileSync('assets/js/products.js', 'utf8'), context);
 
 const bag = context.window.LuxureatBag;
 assert.equal(typeof bag?.add, 'function');
-const syncedProduct = context.window.LUXUREAT_PRODUCT_DATA.products['en-imperial-beluga'];
+const syncedProduct = context.window.LUXUREAT_PRODUCT_DATA.products['en-white-truffle-oil-60ml'];
 assert.equal(syncedProduct.amount, 999);
 assert.equal(syncedProduct.currency, '¥');
 assert.equal(syncedProduct.image, 'https://example.com/woo-beluga.jpg');

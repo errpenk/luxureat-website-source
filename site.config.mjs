@@ -1,4 +1,4 @@
-export const assetVersion = "20260729-mobile-media-29";
+export const assetVersion = "20260730-performance-76";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -13,6 +13,7 @@ export const navigation = [
   { key: "products", zh: "系列产品", en: "Products", zhSlug: "caviar", enSlug: "products" },
   { key: "rituals", zh: "食谱艺术", en: "Recipe Art", zhSlug: "rituals", enSlug: "rituals" },
   { key: "news", zh: "品牌新闻", en: "Brand News", zhSlug: "news", enSlug: "news" },
+  { key: "blog", zh: "知识博客", en: "Blog", zhSlug: "blog", enSlug: "blog" },
   { key: "certification", zh: "品质认证", en: "Certification", zhSlug: "certification", enSlug: "certification" },
   { key: "gifting", zh: "礼赠合作", en: "Gifting", zhSlug: "gifting", enSlug: "gifting" },
   { key: "contact", zh: "联系我们", en: "Contact", zhSlug: "contact", enSlug: "contact" },
@@ -33,6 +34,7 @@ export const pages = [
   page("zh", "caviar", "products", ["product-data", "products"]),
   page("zh", "rituals", "rituals", ["journal-data", "journal"]),
   page("zh", "news", "news", ["event-data", "journal-data", "journal"]),
+  page("zh", "blog", "blog", ["journal-data", "academy-data", "academy", "journal"]),
   page("zh", "certification", "certification", []),
   page("zh", "gifting", "gifting", ["brand-data", "brand"]),
   page("zh", "contact", "contact", ["brand-data", "brand"]),
@@ -42,6 +44,7 @@ export const pages = [
   page("en", "products", "products", ["product-data", "products"]),
   page("en", "rituals", "rituals", ["journal-data", "journal"]),
   page("en", "news", "news", ["event-data", "journal-data", "journal"]),
+  page("en", "blog", "blog", ["journal-data", "academy-data", "academy", "journal"]),
   page("en", "certification", "certification", []),
   page("en", "gifting", "gifting", ["brand-data", "brand"]),
   page("en", "contact", "contact", ["brand-data", "brand"]),
@@ -52,24 +55,26 @@ export const scripts = {
   "product-data": { src: "assets/data/products.js", dependencies: [] },
   "event-data": { src: "assets/data/events.js", dependencies: [] },
   "journal-data": { src: "assets/data/journal.js", dependencies: [] },
+  "academy-data": { src: "assets/data/academy.js", dependencies: ["journal-data"] },
   "brand-data": { src: "assets/data/brand.js", dependencies: [] },
   core: { src: "assets/js/core.js", dependencies: [] },
   products: { src: "assets/js/products.js", dependencies: ["product-data"] },
   events: { src: "assets/js/events.js", dependencies: ["event-data"] },
   journal: { src: "assets/js/journal.js", dependencies: ["journal-data"] },
+  academy: { src: "assets/js/academy.js", dependencies: ["academy-data"] },
   brand: { src: "assets/js/brand.js", dependencies: ["brand-data"] },
 };
 
 export const footer = {
   zh: {
-    description: "不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。",
-    copyright: "© 2026 Luxureat China（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W",
+    description: "不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。",
+    copyright: "© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W",
     legal: [["privacy", "隐私政策"], ["terms", "销售条款"], ["shipping", "配送说明"]],
   },
   en: {
-    description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat China（露意膳） brings Italian food culture and innovative experiences to China.",
+    description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat (露意膳) brings Italian food culture and innovative experiences to China.",
 
-    copyright: "© 2026 Luxureat China（露意膳）｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W",
+    copyright: "© 2026 LuxurEat (露意膳)｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W",
     legal: [
       ["privacy", "Privacy Policy"], ["terms", "Terms of Sale"], ["shipping", "Shipping"]
     ],

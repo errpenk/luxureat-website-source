@@ -1,13 +1,13 @@
 <!DOCTYPE html><html class="dark" lang="zh-CN" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport">
 <link rel="preload" href="../assets/fonts/AlimamaShuHeiTi-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=optional" rel="stylesheet"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260729-mobile-media-29">
-<link rel="stylesheet" href="../integration.css?v=20260729-mobile-media-29">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260730-performance-76">
+<link rel="stylesheet" href="../integration.css?v=20260730-performance-76">
 </head><body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col min-h-screen">
 <!-- lux:header:start -->
 <header class="lux-header">
   <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
-  <nav class="lux-nav" aria-label="navigation"><a href="index.html">首页</a><a href="journal.html">关于我们</a><a class="active" href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
+  <nav class="lux-nav" aria-label="navigation"><a href="index.html">首页</a><a href="journal.html">关于我们</a><a class="active" href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="购物袋"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="个人登录"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
@@ -32,7 +32,7 @@
 <span class="block">我们的产品由专业生产商精心打造，并按照严格的工艺与品质标准进行生产和管理。从原料筛选到最终包装，每一个环节都致力于呈现稳定、纯正且符合高端餐饮需求的品质表现。</span>
 </p>
 <div class="text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">
-                    共显示 <span class="text-primary" data-caviar-count>2</span> 款精选单品
+                    共显示 <span class="text-primary" data-caviar-count>24</span> 款注册产品
                 </div>
 </div></section>
 <!-- Filters & Sorting -->
@@ -43,8 +43,8 @@
 <div class="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end">
 <div class="flex items-center gap-2">
 <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">视图:</span>
-<button type="button" data-caviar-view="grid" aria-pressed="true" aria-label="网格视图" class="material-symbols-outlined text-primary text-[20px]">grid_view</button>
-<button type="button" data-caviar-view="list" aria-pressed="false" aria-label="列表视图" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors text-[20px]">view_list</button>
+<button type="button" data-caviar-view="grid" aria-pressed="true" aria-label="网格视图" class="lux-view-icon text-primary"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></button>
+<button type="button" data-caviar-view="list" aria-pressed="false" aria-label="列表视图" class="lux-view-icon text-on-surface-variant hover:text-primary transition-colors"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M21 9H3"/><path d="M21 15H3"/></svg></button>
 </div>
 <div class="flex items-center gap-2 lux-sort-wrap">
 <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">排序:</span>
@@ -53,8 +53,8 @@
 </button>
 <div class="lux-sort-menu" data-caviar-sort-menu role="listbox" hidden>
 <button type="button" data-caviar-sort-option="recommended" role="option" aria-selected="true">推荐排列</button>
-<button type="button" data-caviar-sort-option="price-asc" role="option" aria-selected="false">价格升序</button>
-<button type="button" data-caviar-sort-option="price-desc" role="option" aria-selected="false">价格降序</button>
+<button type="button" data-caviar-sort-option="name-asc" role="option" aria-selected="false">名称正序</button>
+<button type="button" data-caviar-sort-option="name-desc" role="option" aria-selected="false">名称倒序</button>
 </div>
 </div>
 </div>
@@ -64,29 +64,37 @@
 <div class="lux-product-browser" id="product-catalogue">
 <aside class="lux-product-filter-panel" id="product-filters" aria-label="产品筛选">
 <header><strong>筛选条件</strong><button type="button" data-caviar-clear>全部清除</button></header>
-<section><h3>鱼种</h3><div class="lux-product-filter-list">
-<button type="button" data-caviar-filter="all" aria-pressed="true"><span aria-hidden="true"></span>全部品种</button>
-<button type="button" data-caviar-filter="beluga" aria-pressed="false"><span aria-hidden="true"></span>帝王鲟 (BELUGA)</button>
-<button type="button" data-caviar-filter="oscetra" aria-pressed="false"><span aria-hidden="true"></span>奥西特拉 (OSCETRA)</button>
-<button type="button" data-caviar-filter="baeri" aria-pressed="false"><span aria-hidden="true"></span>西伯利亚 (BAERI)</button>
+<section><h3>产品分类</h3><div class="lux-product-filter-list">
+<button type="button" data-caviar-filter-group="category" data-caviar-filter="all" aria-pressed="true"><span aria-hidden="true"></span>全部分类</button>
+<button type="button" data-caviar-filter-group="category" data-caviar-filter="oil" aria-pressed="false"><span aria-hidden="true"></span>松露油</button>
+<button type="button" data-caviar-filter-group="category" data-caviar-filter="slices" aria-pressed="false"><span aria-hidden="true"></span>松露片</button>
+<button type="button" data-caviar-filter-group="category" data-caviar-filter="seasoning" aria-pressed="false"><span aria-hidden="true"></span>松露酱与蜂蜜</button>
+<button type="button" data-caviar-filter-group="category" data-caviar-filter="whole" aria-pressed="false"><span aria-hidden="true"></span>整颗松露</button>
+</div></section>
+<section><h3>标签产品类型</h3><div class="lux-product-filter-list">
+<button type="button" data-caviar-filter-group="type" data-caviar-filter="all" aria-pressed="true"><span aria-hidden="true"></span>全部类型</button>
+<button type="button" data-caviar-filter-group="type" data-caviar-filter="seasoning-oil" aria-pressed="false"><span aria-hidden="true"></span>调味油</button>
+<button type="button" data-caviar-filter-group="type" data-caviar-filter="canned-fungi" aria-pressed="false"><span aria-hidden="true"></span>食用菌罐头</button>
+<button type="button" data-caviar-filter-group="type" data-caviar-filter="compound-condiment" aria-pressed="false"><span aria-hidden="true"></span>复合调味品</button>
+<button type="button" data-caviar-filter-group="type" data-caviar-filter="compound-sauce" aria-pressed="false"><span aria-hidden="true"></span>复合调味汁</button>
 </div></section>
 </aside>
 <section class="lux-product-catalog grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-16" data-caviar-grid></section>
 </div>
 <section class="lux-product-notes">
-<p><strong>Cold Chain</strong>全程 0°C - 4°C 冷链履约，确保开罐前的质地与香气稳定。</p>
-<p><strong>CITES Certified</strong>所有批次以合规文件、可追溯来源与专业交付标准为基础。</p>
-<p><strong>Serving Ritual</strong>搭配贝母匙、低温服务与品鉴节奏，让每一勺保持清晰表达。</p>
+<p><strong>品味非凡</strong>精选来自全球优质养殖场的鱼子酱，口感细腻卓越。</p>
+<p><strong>合规可溯</strong>所有批次以合规文件、可追溯来源与专业交付标准为基础。</p>
+<p><strong>匠心臻选</strong>每一款产品都经过严格挑选，满足味蕾对品质的追求。</p>
 </section>
 <!-- Rituals / Pairing Banner -->
 <section class="lux-promo-banner lux-full-bleed lux-dark-photo-block lux-bright-photo lux-photo-fade-bottom py-section-gap px-margin-mobile md:px-margin-desktop flex items-center justify-center mt-12">
 <div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/recipe-art-banner.webp')"></div>
 <div class="relative z-10 text-center flex flex-col items-center gap-6 max-w-3xl">
-<h3 class="font-display-lg text-display-lg-mobile md:text-display-lg text-secondary mb-10">食谱艺术</h3>
-<p class="lux-page-hero-subtitle">
+<h3 class="font-display-lg text-display-lg-mobile md:text-display-lg text-secondary">食谱艺术</h3>
+<p class="lux-page-hero-subtitle lux-promo-support-copy">
                      从早餐、第一道主食到甜点，以LuxurEat（露意膳）鱼子酱、松露与精选食材构筑意大利餐桌，让每一道食谱兼具本味、技法与优雅。
                  </p>
-<a class="mt-4 border-b border-primary text-primary pb-1 uppercase tracking-widest font-label-lg text-label-lg hover:opacity-70 transition-opacity" href="rituals.html">探索食谱艺术</a>
+<a class="inline-flex px-12 py-4 border border-primary text-primary font-label-lg uppercase tracking-[0.2em] hover:bg-primary hover:text-on-primary transition-all duration-500 active:scale-95" href="rituals.html">探索食谱</a>
 </div>
 </section>
 </main>
@@ -114,16 +122,16 @@
 <!-- lux:footer:start -->
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat China（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
-    <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
+    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
+    <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a></div>
     <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
   </div>
-  <div class="lux-footer-bottom">© 2026 Luxureat China（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W</div>
+  <div class="lux-footer-bottom">© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W</div>
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/data/products.js?v=20260729-mobile-media-29"></script>
-<script defer src="../assets/js/products.js?v=20260729-mobile-media-29"></script>
+<script defer src="../assets/js/core.js?v=20260730-performance-76"></script>
+<script defer src="../assets/data/products.js?v=20260730-performance-76"></script>
+<script defer src="../assets/js/products.js?v=20260730-performance-76"></script>
 <!-- lux:scripts:end --></body></html>

@@ -20,29 +20,43 @@ function initLuxReader() {
   }[char]));
   const labels = () => document.documentElement.lang?.startsWith("zh")
     ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情", archive: "往期随笔", note: "品鉴笔记", noteText: "温度、器具与节奏共同决定入口的第一层印象；真正的奢华来自克制而准确的服务。" }
-    : { back: "Back", close: "Close", related: "Further Reading", read: "Read Details", archive: "Archive", note: "Tasting Notes", noteText: "Temperature, service ware, and pacing shape the first impression; luxury is restraint made precise." };
+    : { back: "Back", close: "Close", related: "Further Reading", read: "View Details", archive: "Archive", note: "Tasting Notes", noteText: "Temperature, service ware, and pacing shape the first impression; luxury is restraint made precise." };
   const archiveGroups = () => document.documentElement.lang?.startsWith("zh")
     ? [
-      ["品牌与产地", ["zh-harvest", "zh-truffle"]],
-      ["服务与工艺", ["zh-service", "zh-malossol"]],
-      ["品鉴仪式", ["zh-champagne", "zh-mother-of-pearl", "zh-ice-server", "zh-breath", "zh-hand-warm", "zh-palate"]],
+      ["品牌与产业", ["zh-harvest", "zh-truffle", "zh-service"]],
+      ["品鉴与文化", ["zh-malossol", "zh-champagne"]],
+      ["品质与溯源", ["zh-mother-of-pearl"]],
     ]
     : [
-      ["Maison & Origin", ["en-harvest", "en-truffle"]],
-      ["Service & Craft", ["en-service", "en-malossol"]],
-      ["Tasting Ritual", ["en-champagne", "en-mother-of-pearl", "en-ice-server", "en-breath", "en-hand-warm", "en-palate"]],
+      ["Brand & Industry", ["en-harvest", "en-truffle", "en-service"]],
+      ["Tasting & Culture", ["en-malossol", "en-champagne"]],
+      ["Quality & Traceability", ["en-mother-of-pearl"]],
     ];
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const localizeArchiveLabel = (value) => {
+    if (lang !== "zh") return value;
+    const labels = {
+      MAISON: "品牌",
+      MASTERCLASS: "大师课",
+      RECIPE: "食谱",
+      ATLAS: "产业版图",
+      MARKET: "市场",
+      RITUAL: "品鉴",
+      PAIRING: "配餐",
+      SERVICE: "服务",
+    };
+    return labels[value] || value;
+  };
   const eventLabels = lang === "zh"
-    ? { kicker: "Maison Events", title: "展览活动", latest: "最新活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
-    : { kicker: "Maison Events", title: "Exhibitions & Events", latest: "Latest Events", past: "Past Events", empty: "No past events yet", read: "View details" };
+    ? { kicker: "发布 LuxurEat（露意膳）参与的国际食品展会、行业活动与品牌展示信息，包括活动预告、展位安排、现场动态及展后回顾。", title: "展览活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
+    : { kicker: "Updates on LuxurEat (露意膳) at international food fairs, industry events and brand showcases, including previews, stand information, live coverage and post-event reviews.", title: "Exhibitions & Events", past: "Past Events", empty: "No past events yet", read: "View details" };
   const newsLabels = lang === "zh"
-    ? { kicker: "Maison Journal", title: "新闻中心", search: "搜索新闻", latest: "最新文章", read: "阅读详情", empty: "没有找到相关内容" }
-    : { kicker: "Maison Journal", title: "News Centre", search: "Search news", latest: "Latest Posts", read: "Read more", empty: "No matching stories found" };
+    ? { kicker: "聚焦 LuxurEat（露意膳）的品牌动态、新品发布、战略合作、市场拓展与企业发展，及时分享公司在高端食品领域的创新成果、业务进展及重要资讯。", title: "新闻中心", search: "搜索新闻", read: "阅读详情", empty: "没有找到相关内容" }
+    : { kicker: "Follow LuxurEat (露意膳) brand updates, product launches, strategic partnerships, market expansion and company development, with timely news on innovation and business progress in premium food.", title: "News Centre", search: "Search news", read: "Read more", empty: "No matching stories found" };
   const aboutArticle = articles[`${lang}-about`];
   const aboutLabels = lang === "zh"
-    ? { title: "关于我们", journal: "LuxurEat 志", story: "品牌故事", madeIn: "意大利制造", view: "查看大图", previous: "查看上一张图片", next: "查看下一张图片", slide: "左右滑动查看", close: "关闭", portrait: "Roberto Ugolini 肖像" }
-    : { title: "About Us", journal: "LuxurEat Journal", story: "Brand Story", madeIn: "Made in Italy", view: "View Full Size", previous: "View previous image", next: "View next image", slide: "Slide left or right", close: "Close", portrait: "Portrait of Roberto Ugolini" };
+    ? { title: "关于我们", journal: "品牌调查", story: "品牌故事", madeIn: "意大利制造", view: "查看大图", previous: "查看上一张图片", next: "查看下一张图片", slide: "左右滑动查看", close: "关闭", portrait: "Roberto Ugolini 肖像" }
+    : { title: "About Us", journal: "LuxurEat (露意膳) Journal", story: "Brand Story", madeIn: "Made in Italy", view: "View Full Size", previous: "View previous image", next: "View next image", slide: "Slide left or right", close: "Close", portrait: "Portrait of Roberto Ugolini" };
   const loadLeaflet = () => {
     if (window.L) return Promise.resolve(window.L);
     if (!document.querySelector('link[data-lux-leaflet]')) {
@@ -83,7 +97,6 @@ function initLuxReader() {
           <h2>${eventLabels.title}</h2>
         </header>
         <div class="lux-recent-events-latest">
-          <h3>${eventLabels.latest}</h3>
           ${latest.map((event) => {
             const copy = event[lang];
             return copy ? `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}">
@@ -225,13 +238,34 @@ function initLuxReader() {
       closing: "CaviareEat Baerii makes caviar more accessible and versatile without compromising luxury, safety or sustainability.",
       alt: "CaviareEat Royal Baerii caviar tin",
     };
+    const storyId = `${lang}-caviareat-baerii-news`;
+    articles[storyId] = {
+      lang,
+      eyebrow: newsLabels.title,
+      title: story.title,
+      meta: `CaviareEat · ${story.date}`,
+      image: luxJournalAsset("media/events/caviareat-baerii-news.png"),
+      intro: story.intro,
+      sections: story.sections,
+      quote: story.closing,
+      column: newsLabels.title,
+      archive: "CaviareEat",
+      related: [],
+    };
     newsMount.innerHTML = `
-      <div class="lux-news-center-inner">
+      <div class="lux-recent-events-inner">
         <header class="lux-recent-events-head"><span>${newsLabels.kicker}</span><h2>${newsLabels.title}</h2></header>
-        <article class="lux-news-feature">
-          <figure><img loading="lazy" decoding="async" src="${escapeHtml(luxJournalAsset("media/events/caviareat-baerii-news.png"))}" alt="${escapeHtml(story.alt)}"></figure>
-          <div class="lux-news-feature-copy"><small>${escapeHtml(story.date)} · CaviareEat</small><h3>${escapeHtml(story.title)}</h3><p class="lux-news-lead">${escapeHtml(story.intro)}</p>${story.sections.map(([heading, copy]) => `<section><h4>${escapeHtml(heading)}</h4><p>${escapeHtml(copy)}</p></section>`).join("")}<blockquote>${escapeHtml(story.closing)}</blockquote></div>
-        </article>
+        <div class="lux-recent-events-latest">
+          <button type="button" class="lux-event-card lux-news-feature" data-reader-open="${storyId}">
+            <img loading="lazy" decoding="async" src="${escapeHtml(luxJournalAsset("media/events/caviareat-baerii-news.png"))}" alt="${escapeHtml(story.alt)}">
+            <span class="lux-event-card-copy">
+              <small>${escapeHtml(story.date)} · CaviareEat</small>
+              <strong>${escapeHtml(story.title)}</strong>
+              <span>${escapeHtml(story.intro)}</span>
+              <span class="lux-narrative-link">${escapeHtml(newsLabels.read)}<span class="material-symbols-outlined">arrow_forward</span></span>
+            </span>
+          </button>
+        </div>
       </div>`;
   };
   renderNewsCenter();
@@ -304,6 +338,23 @@ function initLuxReader() {
   renderAboutStory();
 
   if (aboutMount) {
+    aboutMount.querySelectorAll("[data-about-carousel]").forEach((carousel) => {
+      const track = carousel.querySelector(".lux-about-carousel-track");
+      if (!track) return;
+      let timer;
+      const advance = () => track.scrollTo({ left: track.scrollLeft >= track.scrollWidth - track.clientWidth - 1 ? 0 : track.scrollLeft + track.clientWidth * .8, behavior: "smooth" });
+      const stop = () => clearInterval(timer);
+      const start = () => {
+        stop();
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches && track.scrollWidth > track.clientWidth) timer = setInterval(advance, 4000);
+      };
+      carousel.addEventListener("mouseenter", stop);
+      carousel.addEventListener("mouseleave", start);
+      carousel.addEventListener("focusin", stop);
+      carousel.addEventListener("focusout", (event) => { if (!carousel.contains(event.relatedTarget)) start(); });
+      document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+      start();
+    });
     const lightbox = document.createElement("dialog");
     lightbox.className = "lux-about-lightbox";
     lightbox.innerHTML = `<div class="lux-image-lightbox-frame"><button type="button" data-about-lightbox-close aria-label="${escapeHtml(aboutLabels.close)}"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button><img loading="lazy" decoding="async" alt=""></div>`;
@@ -384,6 +435,7 @@ function initLuxReader() {
   const backButton = reader.querySelector("[data-reader-back]");
   const closeButtons = reader.querySelectorAll("[data-reader-close]");
   let currentId = "";
+  let archiveOrigin = false;
   const stack = [];
   const syncReaderTop = () => {
     panel.classList.toggle("is-at-top", body.scrollTop <= 4);
@@ -422,7 +474,7 @@ function initLuxReader() {
             return item ? `
               <button type="button" class="lux-reader-archive-card" data-reader-archive-item="${escapeHtml(id)}" data-reader-archive-category="${escapeHtml(title)}">
                 <span class="lux-reader-archive-media"><img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt=""><span class="lux-reader-archive-cta">${copy.read}</span></span>
-                <span class="lux-reader-archive-copy"><span>${escapeHtml(item.eyebrow)}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.meta)}</small></span>
+                <span class="lux-reader-archive-copy"><span>${escapeHtml(item.eyebrow)}</span><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(lang === "zh" ? item.meta.split("·").map((part, index) => index ? part.trim() : localizeArchiveLabel(part.trim())).join(" · ") : item.meta)}</small></span>
               </button>` : "";
           }).join("")}
         </div>
@@ -476,9 +528,15 @@ function initLuxReader() {
       return;
     }
     const articleSections = article.sections.length ? article.sections : [[copy.note, copy.noteText]];
-    const contentText = (item) => typeof item === "string" ? item : item?.lines?.join("") || item?.text || "";
+    const contentText = (item) => typeof item === "string"
+      ? item
+      : item?.type === "table"
+        ? item.rows.flat().join(" ")
+        : item?.lines?.join("") || item?.text || "";
     const paragraphs = (content) => (Array.isArray(content) ? content : [content])
-      .map((item) => item?.type === "strong"
+      .map((item) => item?.type === "table"
+        ? `<div class="lux-reader-table-wrap"><table><tbody>${item.rows.map((row, rowIndex) => `<tr>${row.map((cell) => `<${rowIndex ? "td" : "th"}>${escapeHtml(cell)}</${rowIndex ? "td" : "th"}>`).join("")}</tr>`).join("")}</tbody></table></div>`
+        : item?.type === "strong"
         ? `<p class="lux-reader-inline-heading"><strong>${escapeHtml(item.text)}</strong></p>`
         : item?.type === "quote"
           ? `<blockquote class="lux-reader-indent-quote">${item.lines.map((line, index) => `<p>${item.bold?.includes(index) ? `<strong>${escapeHtml(line)}</strong>` : escapeHtml(line)}</p>`).join("")}</blockquote>`
@@ -490,14 +548,17 @@ function initLuxReader() {
     const minutes = Math.max(1, Math.ceil(units));
     const metaParts = article.meta.split("·").map((part) => part.trim()).filter(Boolean);
     const readTime = article.lang === "zh" ? `${minutes} 分钟阅读` : `${minutes} min read`;
-    const issue = article.lang === "zh" ? "LuxurEat 志" : "LuxurEat Journal";
+    const issue = article.slug
+      ? (article.lang === "zh" ? "知识博客" : "Knowledge Blog")
+      : (article.lang === "zh" ? "品牌调查" : "LuxurEat (露意膳) Journal");
     const metaItems = [issue, article.eyebrow, readTime, metaParts[1] || metaParts[0] || ""];
     const asideRows = [
-      [article.lang === "zh" ? "栏目" : "Column", article.eyebrow],
-      [article.lang === "zh" ? "档案" : "Series", metaParts[0] || copy.archive],
+      [article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow],
+      [article.lang === "zh" ? "档案" : "Series", article.archive || localizeArchiveLabel(metaParts[0]) || copy.archive],
       [article.lang === "zh" ? "日期" : "Date", metaParts[1] || ""],
     ].filter(([, value]) => value);
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
+    const figureLabel = article.lang === "zh" ? "图" : "Figure";
     const openingHtml = opening.length ? `<section class="lux-reader-section lux-reader-section-opening">${paragraphs(opening)}</section>` : "";
     const sectionHtml = articleSections.map(([heading, content], index) => {
       const media = article.sectionMedia?.[index] || [];
@@ -507,15 +568,17 @@ function initLuxReader() {
             ${paragraphs(content)}
             ${media.length ? `<div class="lux-reader-section-media">${media.map((item, mediaIndex) => `
               <figure>
-                <img loading="lazy" decoding="async" src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || heading)}">
-                <figcaption>Figure ${String(mediaIndex + 1).padStart(2, "0")} / ${escapeHtml(heading)}</figcaption>
+                <button type="button" class="lux-reader-image-button" data-reader-image="${escapeHtml(item.src)}" aria-label="${escapeHtml(article.lang === "zh" ? `放大查看：${item.alt || heading}` : `View full size: ${item.alt || heading}`)}">
+                  <img loading="lazy" decoding="async" src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt || heading)}">
+                </button>
+                <figcaption>${figureLabel} ${String(mediaIndex + 1).padStart(2, "0")} / ${escapeHtml(heading)}</figcaption>
               </figure>`).join("")}</div>` : ""}
           </section>`;
     }).join("");
     const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(article.tocLabels?.[index] || heading)}</a>`).join("");
 
     body.innerHTML = `
-      <article class="lux-reader-layout">
+      <article class="lux-reader-layout${article.slug ? " lux-academy-reader" : ""}${article.wideCover ? " is-wide-cover" : ""}">
         <div class="lux-reader-rule"></div>
         <section class="lux-reader-hero">
           <div class="lux-reader-hero-copy">
@@ -527,7 +590,7 @@ function initLuxReader() {
           </div>
           <figure class="lux-reader-cover">
             <img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"${article.coverPosition ? ` style="object-position: ${escapeHtml(article.coverPosition)}"` : ""}>
-            <figcaption>Figure 01 / ${escapeHtml(article.eyebrow)}</figcaption>
+            <figcaption>${figureLabel} 01 / ${escapeHtml(article.archive || article.eyebrow)}</figcaption>
           </figure>
         </section>
         <section class="lux-reader-content">
@@ -540,7 +603,7 @@ function initLuxReader() {
             ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
           </div>
           <aside class="lux-reader-pull">
-            <p>${escapeHtml(article.quote || copy.noteText)}</p>
+            <p>${escapeHtml(article.asideSummary || article.quote || copy.noteText)}</p>
             <nav class="lux-reader-toc" aria-label="${escapeHtml(tocLabel)}">
               <span>${escapeHtml(tocLabel)}</span>
               ${tocHtml}
@@ -555,12 +618,12 @@ function initLuxReader() {
               ${article.related.map((relatedId) => {
                 const item = articles[relatedId];
                 return item ? `
-                  <button type="button" data-reader-related="${escapeHtml(relatedId)}">
+                  <button type="button"${item.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}">
                     <span class="lux-reader-related-media">
                       <img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt="">
                       <span class="lux-reader-related-cta">${copy.read}</span>
                     </span>
-                    <span>${escapeHtml(item.eyebrow)}</span>
+                    <span>${escapeHtml(item.archive || item.eyebrow)}</span>
                     <strong>${escapeHtml(item.title)}</strong>
                   </button>` : "";
               }).join("")}
@@ -576,6 +639,7 @@ function initLuxReader() {
     const article = event?.[lang];
     if (!event || !article) return;
     stack.length = 0;
+    archiveOrigin = false;
     currentId = `event:${id}`;
     const copy = labels();
     const allEvents = events.map((item) => ({ item, copy: item[lang] })).filter(({ copy: itemCopy }) => itemCopy);
@@ -614,16 +678,29 @@ function initLuxReader() {
 
   const open = (id) => {
     stack.length = 0;
+    archiveOrigin = false;
     currentId = "";
     render(id, false);
   };
   const close = () => {
+    if (archiveOrigin && currentId !== "__archive") {
+      stack.length = 0;
+      archiveOrigin = false;
+      renderArchive(false);
+      return;
+    }
     reader.hidden = true;
     document.body.classList.remove("lux-reader-open");
     stack.length = 0;
+    archiveOrigin = false;
     currentId = "";
     if (location.hash.startsWith("#event-") || location.hash.startsWith("#reader-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
   };
+
+  const imageLightbox = document.createElement("dialog");
+  imageLightbox.className = "lux-about-lightbox";
+  imageLightbox.innerHTML = `<div class="lux-image-lightbox-frame"><button type="button" data-reader-lightbox-close aria-label="${lang === "zh" ? "关闭大图" : "Close full-size image"}"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button><img alt=""></div>`;
+  document.body.appendChild(imageLightbox);
 
   document.addEventListener("click", (event) => {
     const eventTrigger = event.target.closest("[data-event-open]");
@@ -636,19 +713,30 @@ function initLuxReader() {
     if (archive) {
       event.preventDefault();
       stack.length = 0;
+      archiveOrigin = false;
       currentId = "";
       renderArchive(false);
       return;
     }
-    const trigger = event.target.closest("[data-reader-open]");
+    const trigger = event.target.closest("[data-reader-open]") || event.target.closest(".lux-reader-media")?.querySelector("[data-reader-open]");
     if (!trigger || !articles[trigger.dataset.readerOpen]) return;
     event.preventDefault();
     open(trigger.dataset.readerOpen);
   });
   body.addEventListener("click", (event) => {
+    const imageTrigger = event.target.closest("[data-reader-image]");
+    if (imageTrigger) {
+      const image = imageLightbox.querySelector("img");
+      image.src = imageTrigger.dataset.readerImage;
+      image.alt = imageTrigger.querySelector("img")?.alt || "";
+      imageLightbox.showModal();
+      return;
+    }
     const archived = event.target.closest("[data-reader-archive-item]");
     if (archived) {
-      render(archived.dataset.readerArchiveItem, true);
+      stack.length = 0;
+      archiveOrigin = true;
+      render(archived.dataset.readerArchiveItem, false);
       return;
     }
     const related = event.target.closest("[data-reader-related]");
@@ -664,6 +752,9 @@ function initLuxReader() {
       });
     }
   });
+  imageLightbox.addEventListener("click", (event) => {
+    if (event.target === imageLightbox || event.target.closest("[data-reader-lightbox-close]")) imageLightbox.close();
+  });
   body.addEventListener("scroll", syncReaderTop, { passive: true });
   backButton.addEventListener("click", () => {
     const previous = stack.pop();
@@ -672,9 +763,10 @@ function initLuxReader() {
   });
   closeButtons.forEach((button) => button.addEventListener("click", close));
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !reader.hidden) close();
+    if (event.key === "Escape" && !imageLightbox.open && !reader.hidden) close();
   });
-  if (events.some((event) => event.id === eventHash)) renderEvent(eventHash);
+  if (location.hash === "#archive") renderArchive(false);
+  else if (events.some((event) => event.id === eventHash)) renderEvent(eventHash);
   else if (articles[readerHash]) open(readerHash);
 }
 

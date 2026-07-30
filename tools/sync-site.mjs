@@ -10,6 +10,7 @@ const bagIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" widt
 const accountIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
 const fontPreconnects = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
 const localFontPreload = '<link rel="preload" href="../assets/fonts/AlimamaShuHeiTi-Bold.woff2" as="font" type="font/woff2" crossorigin>';
+const usesGoogleFonts = (html) => /<link\b[^>]*\bhref=["']https:\/\/fonts\.googleapis\.com\//i.test(html);
 
 const esc = (value) => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
 const slugFor = (item, lang) => item[`${lang}Slug`];
@@ -86,7 +87,7 @@ function render(page) {
   if (!html.includes("AlimamaShuHeiTi-Bold.woff2")) {
     html = html.replace(/(<meta\b[^>]*\bname=["']viewport["'][^>]*>)/i, `$1\n${localFontPreload}`);
   }
-  if (html.includes("fonts.googleapis.com") && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
+  if (usesGoogleFonts(html) && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
     html = html.replace(/(<meta\b[^>]*\bname=["']viewport["'][^>]*>)/i, `$1\n${fontPreconnects}`);
   }
   return [file, html];
@@ -104,7 +105,7 @@ function performanceIssues(file, html) {
       issues.push(`${file}: image has no explicit loading policy ${match[0]}`);
     }
   }
-  if (html.includes("fonts.googleapis.com") && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
+  if (usesGoogleFonts(html) && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
     issues.push(`${file}: Google Fonts is missing connection hints`);
   }
   const legacyRootRoutes = /^(?:\.\.\/)+(?:index|bag|caviar|contact|gifting|journal|product-imperial-beluga|rituals)\.html(?:[?#].*)?$/i;

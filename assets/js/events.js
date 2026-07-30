@@ -11,7 +11,7 @@
     : lang === "zh" ? "/news/" : "/en/news/";
   const carouselLabels = lang === "zh"
     ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
-    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "About Us", meetCopy: "Explore upcoming and completed LuxurEat exhibitions across China.", map: "View exhibition map" };
+    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "About Us", meetCopy: "Explore upcoming and completed LuxurEat (露意膳) exhibitions across China.", map: "View exhibition map" };
   const atlasLabels = lang === "zh"
     ? { title: "各地区展会数量与月份", count: "场展览" }
     : { title: "Exhibitions by region and month", count: "exhibitions" };
@@ -77,7 +77,7 @@
       </div>` : ""}
     </div>
     <div class="lux-meet-map">
-      <video class="lux-meet-map-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="${escapeHtml(asset("media/events/exhibition-atlas-globe-poster.webp"))}" aria-hidden="true" tabindex="-1"><source src="${escapeHtml(asset("media/events/exhibition-atlas-globe.mp4"))}" type="video/mp4"></video>
+      <video class="lux-meet-map-video" data-lux-autoplay muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback poster="${escapeHtml(asset("media/events/exhibition-atlas-globe-poster.webp"))}" aria-hidden="true" tabindex="-1"><source src="${escapeHtml(asset("media/events/exhibition-atlas-globe.mp4"))}" type="video/mp4"></video>
       <div class="lux-meet-map-card">
         <span>EXHIBITION ATLAS</span>
         <h2>${escapeHtml(carouselLabels.meet)}</h2>
@@ -116,7 +116,7 @@
   const stop = () => clearInterval(timer);
   const start = () => {
     stop();
-    if (!reduceMotion && !document.hidden) timer = setInterval(() => show(index + 1), 3000);
+    if (!reduceMotion && !document.hidden) timer = setInterval(() => show(index + 1), 2500);
   };
   carousel.addEventListener("click", (event) => {
     const thumbnail = event.target.closest("[data-event-carousel-index]");

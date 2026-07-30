@@ -72,7 +72,7 @@ function assert(condition, message) {
   }));
   assert(home.title === "我们的价值观", `homepage values title is wrong: ${home.title}`);
   assert(home.text.includes("意大利美食文化") && home.text.includes("生物多样性"), "homepage values copy is incomplete");
-  assert(home.image.includes("/assets/media/brand/home-values-truffle.webp"), `homepage harvest image changed: ${home.image}`);
+  assert(home.image.includes("/assets/media/brand/home-service-selection.webp"), `homepage service image changed: ${home.image}`);
   assert(home.cta.includes("探索品牌理念") && home.href === "journal.html#about-us", `homepage values link is wrong: ${home.cta} / ${home.href}`);
 
   await page.goto(fileUrl("../en/journal.html"), { waitUntil: "domcontentloaded" });
