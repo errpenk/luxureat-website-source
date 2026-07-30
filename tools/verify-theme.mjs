@@ -107,6 +107,7 @@ assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.in
 assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
+assert(functionsPhp.includes('luxureat_static_refresh_changed_routes') && functionsPhp.includes('luxureat_static_route_version'), 'theme updates refresh changed WordPress routes once');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
@@ -145,6 +146,7 @@ assert(functionsPhp.includes("get_user_meta($user_id, 'luxureat_bag'") && functi
 assert(functionsPhp.includes("$paid_quantity = min($item['quantity'], $purchased[$item['sku']])") && functionsPhp.includes("$purchased[$item['sku']] -= $paid_quantity"), 'paid bags decrement the matching SKU by the purchased quantity');
 assert(functionsPhp.includes("add_filter('wp_send_new_user_notification_to_admin', '__return_false')") && functionsPhp.includes("add_filter('pre_wp_mail', 'luxureat_static_silence_account_admin_mail'"), 'account activity emails to administrators are silenced');
 assert(functionsPhp.includes("$_GET['for'] !== 'jetpack'") && functionsPhp.includes('luxureat_static_remove_xmlrpc_pingbacks') && functionsPhp.includes("'pingback.ping'"), 'XML-RPC permits Jetpack requests only and keeps legacy pingback methods disabled');
+assert(functionsPhp.includes("remove_action('wp_head', 'rsd_link')"), 'pages do not advertise the restricted legacy RSD endpoint');
 assert(functionsPhp.includes("cookie .= '; SameSite=Lax'") && functionsPhp.includes('header_register_callback'), 'authentication cookie headers receive SameSite=Lax immediately before sending');
 assert(functionsPhp.includes("'Content-Security-Policy'") && functionsPhp.includes("'X-Content-Type-Options'") && functionsPhp.includes("'Permissions-Policy'"), 'front-end responses include hardened security headers');
 

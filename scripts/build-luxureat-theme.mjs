@@ -995,6 +995,7 @@ function luxureat_static_hide_server_version() {
 }
 add_action('send_headers', 'luxureat_static_hide_server_version', 999);
 remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'rsd_link');
 add_filter('the_generator', '__return_empty_string');
 
 function luxureat_static_remove_xmlrpc_pingbacks($methods) {
@@ -1079,6 +1080,16 @@ function luxureat_static_flush_rewrites() {
 }
 add_action('after_switch_theme', 'luxureat_static_flush_rewrites');
 add_action('switch_theme', 'flush_rewrite_rules');
+
+function luxureat_static_refresh_changed_routes() {
+    $route_version = md5(wp_json_encode(array(luxureat_static_routes(), luxureat_static_aliases())));
+    if (get_option('luxureat_static_route_version') === $route_version) {
+        return;
+    }
+    flush_rewrite_rules(false);
+    update_option('luxureat_static_route_version', $route_version, false);
+}
+add_action('init', 'luxureat_static_refresh_changed_routes', 20);
 `;
 }
 
