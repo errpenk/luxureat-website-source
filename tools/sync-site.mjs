@@ -85,6 +85,17 @@ function protectMaterialIconMarkup(html) {
   });
 }
 
+function addMobileImageSources(file, html) {
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    if (/\bdata-lux-mobile-src=/.test(tag)) return tag;
+    const source = tag.match(/\b(?:data-lux-src|src)=["'](\.\.\/assets\/media\/[^"']+\.(?:webp|png|jpe?g))["']/i)?.[1];
+    if (!source) return tag;
+    const mobile = source.replace(/\.(?:webp|png|jpe?g)$/i, "-mobile.webp");
+    if (!fs.existsSync(path.resolve(path.dirname(file), mobile))) return tag;
+    return tag.replace(/^<img\b/i, `<img data-lux-mobile-src="${mobile}"`);
+  });
+}
+
 function fontPreloads(page) {
   const fonts = page.lang === "zh"
     ? page.key === "home"
@@ -92,9 +103,20 @@ function fontPreloads(page) {
       : [[`KingHwaOldSong-${page.slug}-critical.woff2`, "KingHwa Old Song Page", 700], [`LuxurEatZhiSong-${page.slug}-critical.woff2`, "LuxurEat ZhiSong Page", 400]]
     : page.key === "home"
       ? [["NyghtSerif-home-critical.woff2", "Nyght Serif Home", 400], ["Spectral-home-critical.woff2", "Spectral Home", 400]]
-      : [["NyghtSerif-Regular.woff2", "Nyght Serif", 400], ["Spectral-Regular.woff2", "Spectral", 400]];
-  const links = fonts.map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${assetVersion}" as="font" type="font/woff2" crossorigin>`).join("\n");
-  const faces = fonts.map(([font, family, weight]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:normal;font-display:block}`).join("");
+      : [
+        ["NyghtSerif-Regular.woff2", "Nyght Serif", 400],
+        ["Spectral-Regular.woff2", "Spectral", 400],
+        ["NyghtSerif-RegularItalic.woff2", "Nyght Serif", 400, "italic", false],
+        ["NyghtSerif-Bold.woff2", "Nyght Serif", 700, "normal", false],
+        ["Spectral-Italic.woff2", "Spectral", 400, "italic", false],
+        ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
+        ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
+      ];
+  if (page.lang === "en" && ["home", "products", "bag"].includes(page.key)) {
+    fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Labels", 700, "normal", false]);
+  }
+  const links = fonts.filter(([, , , , preload = true]) => preload).map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${assetVersion}" as="font" type="font/woff2" crossorigin>`).join("\n");
+  const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:${style};font-display:block}`).join("");
   return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}</style>\n<!-- lux:fonts:end -->`;
 }
 
@@ -118,6 +140,7 @@ function render(page) {
     html = html.replace(/<\/head>/i, '<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">\n</head>');
   }
   html = protectMaterialIconMarkup(html);
+  html = addMobileImageSources(file, html);
   return [file, html];
 }
 

@@ -14,7 +14,8 @@ assert.ok(size("assets/fonts/KingHwaOldSong-home-critical.woff2") <= 200 * 1024,
 assert.ok(size("assets/fonts/LuxurEatZhiSong-home-subset.woff2") <= 250 * 1024, "Chinese home body subset exceeds 250 KB");
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
-assert.ok(size("assets/fonts/KingHwaOldSong-subset.woff2") <= 720 * 1024, "Chinese headline subset exceeds 720 KB");
+assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
+assert.ok(!fs.existsSync(path.join(root, "assets/fonts/LuxurEatZhiSongWeb-subset.woff2")), "retired full ZhiSong font remains bundled");
 assert.ok(size("assets/media/brand/home-hero-truffle-mobile.m4v") <= 320 * 1024, "mobile hero video exceeds 320 KB");
 assert.ok(size("assets/media/brand/about-hero-chi-siamo-mobile.m4v") <= 650 * 1024, "mobile about hero video exceeds 650 KB");
 for (const file of [
@@ -25,7 +26,10 @@ for (const file of [
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 52 * 1024, "shared CSS exceeds the 52 KB compressed budget");
 assert.ok(gzipSize("assets/js/core.js") <= 22 * 1024, "critical shared JavaScript exceeds the 22 KB compressed budget");
+assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px"/);
+assert.match(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.doesNotMatch(css, /font-display:\s*swap/, "custom fonts still permit an old-font flash");
+assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
@@ -39,6 +43,13 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
   assert.doesNotMatch(home, /<script\b(?=[^>]*\bsrc=)(?![^>]*\b(?:defer|async)\b)/i);
+}
+
+const allHtml = ["zh", "en"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n");
+assert.doesNotMatch(allHtml, /assets\/fonts\/[^"']+\.(?:woff2|ttf)(?!\?v=)/, "a page still contains an unversioned font URL");
+assert.match(read("zh/index.html").toString(), /data-lux-mobile-src="\.\.\/assets\/media\/brand\/home-service-selection-mobile\.webp"/);
+for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter((name) => name.endsWith("-mobile.webp"))) {
+  assert.ok(size(`assets/media/brand/${file}`) <= 120 * 1024, `${file} exceeds the 120 KB mobile image budget`);
 }
 
 for (const slug of ["journal", "caviar", "rituals", "news", "blog", "certification", "gifting", "contact", "bag"]) {

@@ -318,7 +318,7 @@ assert(integrationCss.includes('align-items: stretch') && integrationCss.include
 assert(integrationCss.includes('.lux-event-reader-article > figure img') && integrationCss.includes('object-fit: contain'), 'mobile event articles keep the complete poster centered');
 assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
 assert(integrationCss.includes('.lux-account-dashboard-page .woocommerce-MyAccount-content > p'), 'account dashboard hides the duplicated WooCommerce introduction');
-assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('KingHwaOldSong-subset.woff2') && integrationCss.includes('LuxurEatZhiSongWeb-subset.woff2'), 'Chinese typography uses the bundled KingHwa and ZhiSong subsets');
+assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('"KingHwa Old Song Page"') && integrationCss.includes('"LuxurEat ZhiSong Page"'), 'Chinese typography uses current page-specific KingHwa and ZhiSong subsets');
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
@@ -412,7 +412,7 @@ const identityVideo = path.join(themeDir, 'assets/media/brand/about-china-operat
 const audienceVideo = path.join(themeDir, 'assets/media/brand/about-consumer-needs.m4v');
 assert(fs.existsSync(identityVideo) && fs.statSync(identityVideo).size < 1.5 * 1024 * 1024, 'China identity background video stays below 1.5 MB');
 assert(fs.existsSync(audienceVideo) && fs.statSync(audienceVideo).size < 1.5 * 1024 * 1024, 'consumer background video stays below 1.5 MB');
-assert(integrationCss.includes('about-mission-rome.webp') && integrationCss.includes('"KingHwa Old Song"'), 'about program backgrounds and requested display font are present');
+assert(integrationCss.includes('about-mission-rome.webp') && integrationCss.includes('var(--lux-zh-headline)'), 'about program backgrounds and requested display font are present');
 assert(integrationCss.includes('[data-certification="OU Kosher"] .lux-cert-card-front img'), 'OU Kosher logo receives a visible dark-card treatment');
 assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('luxVideoObserver'), 'background videos play only near the viewport');
 assert(enJournal.includes('Our Story') && enJournal.includes('Brand Story') && enJournal.includes('From a recipe at an Italian family table'), 'English journal hero mirrors the Chinese brand-story content');

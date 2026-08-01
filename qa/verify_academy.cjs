@@ -84,7 +84,7 @@ assert(styles.includes("[data-academy-item][hidden]"), "academy search results c
 assert(!styles.includes(".lux-academy-reader.is-wide-cover .lux-reader-cover img {\n  mix-blend-mode"), "wide covers still darken the page background");
 assert(styles.includes(".lux-about-story .lux-reader-section-media figure"), "about-page media containers are not cleaned up");
 assert(styles.includes(".lux-about-story .lux-about-carousel-track figure"), "about-page carousel borders are not removed");
-assert(styles.includes('--lux-zh-headline: "KingHwa Old Song"'), "Chinese headings do not use KingHwa Old Song");
+assert(styles.includes('--lux-zh-headline: "KingHwa Old Song Page"'), "Chinese headings do not use the current page-specific KingHwa font");
 assert(styles.includes(".lux-reader-related-grid button.is-wide-cover img"), "related wide covers are still cropped");
 assert(styles.includes('.lux-latest-event-slide[aria-hidden="true"]'), "homepage carousel does not fully hide inactive slides");
 assert(styles.includes('right: calc(100% + 30px)'), "English timeline labels are not fixed to the left of the marker");

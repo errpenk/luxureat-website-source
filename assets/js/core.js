@@ -34,6 +34,17 @@ if ("IntersectionObserver" in window) {
   luxLazyBackgrounds.forEach(loadLuxBackground);
 }
 
+if (matchMedia("(max-width: 640px)").matches) {
+  document.querySelectorAll("img[data-lux-mobile-src]").forEach((image) => {
+    if (image.dataset.luxSrc && image.closest(".lux-home-service-card")) {
+      image.loading = "eager";
+      image.src = image.dataset.luxMobileSrc;
+      delete image.dataset.luxSrc;
+    } else if (image.dataset.luxSrc) image.dataset.luxSrc = image.dataset.luxMobileSrc;
+    else image.src = image.dataset.luxMobileSrc;
+    delete image.dataset.luxMobileSrc;
+  });
+}
 const luxLazyImages = document.querySelectorAll("img[data-lux-src]");
 const loadLuxImage = (image) => {
   image.src = image.dataset.luxSrc;
@@ -45,7 +56,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: "300px" });
+  }, { rootMargin: "1200px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);
