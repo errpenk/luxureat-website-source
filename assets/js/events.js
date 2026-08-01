@@ -117,7 +117,7 @@
   const stop = () => clearInterval(timer);
   const start = () => {
     stop();
-    if (!reduceMotion && !document.hidden) timer = setInterval(() => show(index + 1), 2500);
+    if (!reduceMotion && !document.hidden && !matchMedia("(max-width: 767px)").matches) timer = setInterval(() => show(index + 1), 2500);
   };
   carousel.addEventListener("click", (event) => {
     const thumbnail = event.target.closest("[data-event-carousel-index]");

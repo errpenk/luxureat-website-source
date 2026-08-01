@@ -69,9 +69,10 @@ const latestEvent = read("assets/js/events.js");
 const journal = read("assets/js/journal.js");
 const css = read("integration.css");
 
-[zhHome, enHome, zhNews, enNews].forEach((html) => {
+[zhNews, enNews].forEach((html) => {
   assert(html.includes("assets/data/events.js"), "a bilingual page does not load shared event data");
 });
+assert(zhHome.includes("data-lux-deferred-scripts") && enHome.includes("data-lux-deferred-scripts") && read("assets/js/core.js").includes('"../data/events.js"'), "bilingual homepages do not load trusted deferred event data");
 assert(!zhJournal.includes("data-recent-events"), "Chinese journal still contains recent events");
 assert(!enJournal.includes("data-recent-events"), "English journal still contains recent events");
 assert(zhNews.includes("data-recent-events"), "Chinese brand-news event mount is missing");
@@ -82,6 +83,9 @@ assert(latestEvent.includes("LUXUREAT_EVENT_DATA"), "home latest event does not 
 assert(latestEvent.includes("a.endDate.localeCompare(b.endDate)"), "home events are not ordered from nearest to latest");
 assert(journal.includes("a.endDate.localeCompare(b.endDate)"), "Brand News upcoming events are not ordered from nearest to latest");
 assert(latestEvent.includes("setInterval(() => show(index + 1), 2500)"), "home event autoplay is not set to 2.5 seconds");
+assert(latestEvent.includes('!matchMedia("(max-width: 767px)").matches'), "home event autoplay is not paused on mobile");
+assert(journal.includes('(prefers-reduced-motion: reduce), (max-width: 767px)'), "About Us carousel autoplay is not paused on mobile");
+assert(read("assets/js/core.js").includes('(prefers-reduced-motion: reduce), (max-width: 767px)'), "shared carousels are not paused on mobile");
 assert(latestEvent.includes("data-event-carousel-step"), "home event carousel controls are missing");
 assert(latestEvent.includes("#event-${event.id}"), "home latest event detail hash is missing");
 assert(latestEvent.includes("const newsIndexHref = location.protocol") && latestEvent.includes("`${newsIndexHref}#event-${event.id}`"), "home latest event does not resolve Brand News for static and WordPress routes");

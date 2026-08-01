@@ -3,21 +3,21 @@
   src: url("assets/fonts/KingHwaOldSong-subset.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "KingHwa Old Song Home";
   src: url("assets/fonts/KingHwaOldSong-home-subset.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "LuxurEat ZhiSong Web";
   src: url("assets/fonts/LuxurEatZhiSongWeb-subset.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -25,21 +25,21 @@
   src: url("assets/fonts/NyghtSerif-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "Nyght Serif";
   src: url("assets/fonts/NyghtSerif-RegularItalic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "Nyght Serif";
   src: url("assets/fonts/NyghtSerif-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -47,7 +47,7 @@
   src: url("assets/fonts/Spectral-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -84,21 +84,21 @@
   src: url("assets/fonts/Spectral-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "Spectral";
   src: url("assets/fonts/Spectral-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 @font-face {
   font-family: "Spectral";
   src: url("assets/fonts/Spectral-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 .lux-scroll-reveal {
@@ -598,7 +598,7 @@ html.dark body.lux-academy-page {
   gap: 24px;
 }
 .lux-footer-brand > img { width: 112px; height: 112px; object-fit: contain; filter: invert(1) brightness(1.35); }
-.lux-footer-brand > p { margin: 0; line-height: 1.65; }
+.lux-footer .lux-footer-brand > p { margin: 0; font-size: var(--lux-type-body-sm) !important; line-height: 1.5 !important; }
 .lux-footer a, .lux-footer button, .lux-footer p {
   display: block;
   color: #bdc9c7;

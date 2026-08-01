@@ -53,6 +53,14 @@ if ("IntersectionObserver" in window) {
 
 const luxDeferredScripts = document.querySelector("[data-lux-deferred-scripts]");
 if (luxDeferredScripts) {
+  const coreUrl = new URL(document.currentScript.src);
+  const deferredUrl = (path) => {
+    const url = new URL(path, coreUrl);
+    url.search = coreUrl.search;
+    return url.href;
+  };
+  const data = ["../data/products.js", "../data/events.js", "../data/journal.js"].map(deferredUrl);
+  const runtimes = ["events.js", "journal.js", "products.js"].map(deferredUrl);
   let started = false;
   let loaded = false;
   let loading;
@@ -66,9 +74,6 @@ if (luxDeferredScripts) {
   const loadDeferredScripts = () => {
     if (started) return loading;
     started = true;
-    const urls = JSON.parse(luxDeferredScripts.textContent);
-    const data = urls.filter((src) => src.includes("/data/"));
-    const runtimes = urls.filter((src) => !src.includes("/data/"));
     loading = Promise.all(data.map(loadScript))
       .then(() => Promise.all(runtimes.map(loadScript)))
       .then(() => {
@@ -164,20 +169,6 @@ new MutationObserver((records) => records.forEach(({ addedNodes }) => addedNodes
   node.querySelectorAll?.(luxAutoplaySelector).forEach(initLuxVideo);
 }))).observe(document.body, { childList: true, subtree: true });
 
-document.querySelectorAll("video[data-lux-hero-deferred]").forEach((video) => {
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  const slowConnection = connection?.saveData || /(?:^|-)2g|3g/.test(connection?.effectiveType || "");
-  if (slowConnection || luxReduceMotion) return;
-  const start = () => {
-    video.preload = "auto";
-    video.load();
-    startLuxVideo(video);
-  };
-  const delay = matchMedia("(max-width: 640px)").matches ? 10000 : 1000;
-  if (document.readyState === "complete") setTimeout(start, delay);
-  else addEventListener("load", () => setTimeout(start, delay), { once: true });
-});
-
 document.querySelectorAll(".lux-home-market-system, .lux-home-gifting").forEach((section) => {
   if (!("IntersectionObserver" in window)) {
     section.classList.add("is-media-ready");
@@ -248,7 +239,7 @@ document.querySelectorAll("[data-cert-quote-carousel]").forEach((carousel) => {
   const stop = () => window.clearInterval(timer);
   const start = () => {
     stop();
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = window.setInterval(() => show(index + 1), 4000);
+    if (!matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches) timer = window.setInterval(() => show(index + 1), 4000);
   };
   story?.querySelectorAll("[data-cert-quote-prev]").forEach((button) => button.addEventListener("click", () => { show(index - 1); start(); }));
   story?.querySelectorAll("[data-cert-quote-next]").forEach((button) => button.addEventListener("click", () => { show(index + 1); start(); }));
@@ -276,7 +267,7 @@ document.querySelectorAll("[data-cert-media-carousel]").forEach((carousel) => {
   const stop = () => window.clearInterval(timer);
   const start = () => {
     stop();
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = window.setInterval(() => show(index + 1), 4000);
+    if (!matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches) timer = window.setInterval(() => show(index + 1), 4000);
   };
   carousel.querySelector("[data-cert-media-prev]")?.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -689,7 +680,7 @@ function initLuxGiftScroller() {
     };
     const start = () => {
       stop();
-      if (visible && !matchMedia("(prefers-reduced-motion: reduce)").matches && max() > 1) timer = window.setInterval(advance, 4000);
+      if (visible && !matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches && max() > 1) timer = window.setInterval(advance, 4000);
     };
     const hint = () => {
       const limit = max();
@@ -720,7 +711,7 @@ function initLuxGiftScroller() {
     grid.addEventListener("focusout", (event) => { if (!grid.contains(event.relatedTarget)) start(); });
     window.addEventListener("resize", () => { sync(); start(); });
     document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
-    if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches) {
       const observer = new IntersectionObserver(([entry]) => {
         const wasVisible = visible;
         visible = entry.intersectionRatio >= .25;

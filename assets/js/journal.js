@@ -346,7 +346,7 @@ function initLuxReader() {
       const stop = () => clearInterval(timer);
       const start = () => {
         stop();
-        if (!matchMedia("(prefers-reduced-motion: reduce)").matches && track.scrollWidth > track.clientWidth) timer = setInterval(advance, 4000);
+        if (!matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches && track.scrollWidth > track.clientWidth) timer = setInterval(advance, 4000);
       };
       carousel.addEventListener("mouseenter", stop);
       carousel.addEventListener("mouseleave", start);

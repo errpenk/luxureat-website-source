@@ -565,8 +565,8 @@ assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.include
 assert(['rednote.svg', 'wechat.svg', 'douyin.svg', 'weibo.svg'].every((icon) => zhHome.includes(`media/social/${icon}`) && enHome.includes(`media/social/${icon}`)), 'bilingual footers use all four supplied social SVG icons');
 assert(zhHome.includes('© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W'), 'Chinese footer keeps the copyright and social credit code on one line');
 assert(enHome.includes('© 2026 LuxurEat (露意膳)｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W'), 'English footer mirrors the one-line company copyright');
-assert(hasExactHref(zhHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(zhHome, 'https://v.douyin.com/oEPE48mPS48/'), 'Chinese footer uses the updated Rednote and Douyin links');
-assert(hasExactHref(enHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(enHome, 'https://v.douyin.com/oEPE48mPS48/'), 'English footer uses the updated Rednote and Douyin links');
+assert(hasExactHref(zhHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(zhHome, 'https://v.douyin.com/9H5RI6LEdaU'), 'Chinese footer uses the updated Rednote and Douyin links');
+assert(hasExactHref(enHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(enHome, 'https://v.douyin.com/9H5RI6LEdaU'), 'English footer uses the updated Rednote and Douyin links');
 assert(hasExactHref(zhHome, 'mailto:china@luxureat.com') && hasExactHref(zhHome, 'mailto:roberto@ugolinigroup.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer routes each displayed email to itself');
 assert(hasExactHref(enHome, 'mailto:china@luxureat.com') && hasExactHref(enHome, 'mailto:roberto@ugolinigroup.com') && enHome.includes('tel:+8615721452475'), 'English footer routes each displayed email to itself');
 assert(!zhHome.includes('?cc=') && !enHome.includes('?cc='), 'bilingual footer email links do not add a CC recipient');

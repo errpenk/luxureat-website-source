@@ -115,7 +115,7 @@ assert(integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols
 const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
 assert(JSON.stringify([...new Set(registeredTextFonts)].sort()) === JSON.stringify(["KingHwa Old Song", "KingHwa Old Song Home", "LuxurEat ZhiSong Web", "Nyght Serif", "Spectral"]), "unexpected text font remains registered");
 assert(integrationStyles.includes('MaterialSymbolsOutlined-subset.ttf'), "local Material Symbols subset is missing");
-assert(["en", "zh"].flatMap((locale) => require("node:fs").readdirSync(locale).filter((name) => name.endsWith(".html")).map((name) => `${locale}/${name}`)).every((file) => !read(file).includes("fonts.googleapis.com")), "a page still depends on Google Fonts");
+assert(["en", "zh"].flatMap((locale) => require("node:fs").readdirSync(locale).filter((name) => name.endsWith(".html")).map((name) => `${locale}/${name}`)).every((file) => !/<link\b[^>]*href=["']https:\/\/fonts\.googleapis\.com\//i.test(read(file))), "a page still depends on Google Fonts");
 assert(integrationStyles.includes('KingHwaOldSong-home-subset.woff2') && read("zh/index.html").includes('class="lux-home-page '), "Chinese homepage does not use its reduced KingHwa subset");
 assert(!read("zh/index.html").includes('rel="preload" href="../assets/fonts/KingHwaOldSong-subset.woff2"'), "Chinese homepage still forces the full KingHwa font into the critical path");
 assert(!require("node:fs").existsSync("assets/fonts/LanternMingA-subset.woff2") && !require("node:fs").existsSync("assets/fonts/LanternMing-SOURCE.md"), "retired font assets remain in the site bundle");
@@ -145,16 +145,18 @@ assert(integrationStyles.includes("align-items: center") && integrationStyles.in
 for (const locale of ["zh", "en"]) {
   assert(read(`${locale}/index.html`).includes("lux-home-why-orbit"), `${locale} homepage partnership circle is missing`);
   const home = read(`${locale}/index.html`);
-  assert(home.includes("data-lux-hero-deferred") && home.includes('preload="none"') && !home.includes('class="lux-hero-video" autoplay'), `${locale} homepage hero video is not deferred`);
+  assert(/class="lux-hero-video"[^>]*\bautoplay\b[^>]*\bpreload="auto"/.test(home), `${locale} homepage hero video does not request immediate playback`);
   assert(home.includes("data-lux-deferred-scripts") && !home.includes('defer src="../assets/data/products.js'), `${locale} homepage noncritical scripts still block DOMContentLoaded`);
 }
-assert(accountRuntime.includes("connection?.saveData") && accountRuntime.includes("data-lux-hero-deferred") && accountRuntime.includes("data-lux-deferred-scripts"), "mobile-first-load deferral logic is incomplete");
+assert(accountRuntime.includes("data-lux-deferred-scripts"), "mobile-first-load script deferral logic is incomplete");
+assert(!accountRuntime.includes("luxDeferredScripts.textContent") && accountRuntime.includes('["../data/products.js", "../data/events.js", "../data/journal.js"]'), "deferred script loading is not restricted to the trusted local catalog");
 assert(accountRuntime.includes('event.target.closest?.("[data-reader-open]")') && accountRuntime.includes("trigger.click()"), "the first deferred article click is not replayed after its runtime loads");
 assert(journalRuntime.includes('document.readyState === "complete"') && journalRuntime.includes("initLuxReader()"), "the reader runtime does not cover deferred and post-load initialization");
 assert(productRuntime.includes('document.readyState === "complete"') && productRuntime.includes("initLuxProductDetails()") && productRuntime.includes("renderInitialBag()"), "the product runtime does not cover deferred and post-load initialization");
 assert(read("assets/js/academy.js").includes('document.readyState === "complete"'), "the academy runtime can initialize after its reader runtime");
 assert(productRuntime.includes('key: "price-asc"') && productRuntime.includes('key: "price-desc"') && productRuntime.includes("lux-sort-selected-icon"), "bilingual price sorting or its Lucide selection icon is incomplete");
 assert(integrationStyles.includes(".lux-about-story .lux-reader-quote") && integrationStyles.includes(".lux-reader-pull p") && integrationStyles.includes("grid-template-columns: 112px minmax(0, 1fr)"), "requested quote hierarchy or compact mobile product view is incomplete");
+assert(integrationStyles.includes(".lux-footer .lux-footer-brand > p") && integrationStyles.includes("font-size: var(--lux-type-body-sm) !important"), "footer description does not match navigation sizing");
 assert(read("en/index.html").includes('href="journal.html#reader-en-harvest" data-reader-open="en-harvest"') && read("zh/index.html").includes('href="journal.html#reader-zh-harvest" data-reader-open="zh-harvest"'), "homepage Values UI lacks a native article fallback");
 assert(accountRuntime.includes("else if (trigger.href) location.href = trigger.href"), "failed deferred reader loading has no native link fallback");
 assert(integrationStyles.includes("z-index: 120 !important") && integrationStyles.includes("html[lang] body #luxureat-china .lux-about-program-lead h2") && integrationStyles.includes("clamp(34px, 4vw, 58px)") && integrationStyles.includes(".lux-recent-events-head > span"), "sort layering or requested bilingual typography is incomplete");

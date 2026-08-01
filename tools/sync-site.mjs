@@ -44,8 +44,8 @@ function footerFor(page) {
   const copy = footer[lang];
   const nav = navigation.map((item) => `<a href="${link(slugFor(item, lang))}">${esc(item[lang])}</a>`).join("");
   const social = lang === "zh"
-    ? '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a>'
-    : '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a>';
+    ? '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a>'
+    : '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a>';
   const legal = copy.legal.map(([id, label]) => `<button type="button" data-footer-modal="${id}">${label}</button>`).join("");
 
   return `<!-- lux:footer:start -->
@@ -66,7 +66,7 @@ function scriptsFor(page) {
   const lazy = page.key === "home" ? page.scripts.filter((handle) => handle !== "core") : [];
   const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}"></script>`).join("\n");
   const deferred = lazy.length
-    ? `\n<script type="application/json" data-lux-deferred-scripts>${JSON.stringify(lazy.map((handle) => `../${scripts[handle].src}?v=${assetVersion}`))}</script>`
+    ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";
   return `<!-- lux:scripts:start -->\n${tags}${deferred}\n<!-- lux:scripts:end -->`;
 }
@@ -85,6 +85,13 @@ function protectMaterialIconMarkup(html) {
   });
 }
 
+function fontPreloads(page) {
+  const fonts = page.lang === "zh"
+    ? [page.key === "home" ? "KingHwaOldSong-home-subset.woff2" : "KingHwaOldSong-subset.woff2", "LuxurEatZhiSongWeb-subset.woff2"]
+    : ["NyghtSerif-Regular.woff2", "Spectral-Regular.woff2"];
+  return `<!-- lux:fonts:start -->\n${fonts.map((font) => `<link rel="preload" href="../assets/fonts/${font}" as="font" type="font/woff2" crossorigin>`).join("\n")}\n<!-- lux:fonts:end -->`;
+}
+
 function render(page) {
   const file = path.join(root, page.file);
   let html = fs.readFileSync(file, "utf8");
@@ -94,6 +101,11 @@ function render(page) {
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   html = html.replace(/(\.\.\/(?:assets\/css\/(?:tailwind-home|tailwind-site)\.css|integration\.css))\?v=[^"']+/g, `$1?v=${assetVersion}`);
   html = html.replace(/<link rel="preload" href="\.\.\/assets\/fonts\/KingHwaOldSong-subset\.woff2" as="font" type="font\/woff2" crossorigin>\n?/g, "");
+  if (/<!-- lux:fonts:start -->[\s\S]*?<!-- lux:fonts:end -->/.test(html)) {
+    html = html.replace(/<!-- lux:fonts:start -->[\s\S]*?<!-- lux:fonts:end -->/, fontPreloads(page));
+  } else {
+    html = html.replace(/(?=<link rel="stylesheet")/, `${fontPreloads(page)}\n`);
+  }
   html = html.replace(/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.(?:googleapis|gstatic)\.com["'])[^>]*>\s*/gi, "");
   html = html.replace(/<link\b[^>]*\bhref=["']https:\/\/fonts\.googleapis\.com\/css2\?family=Material\+Symbols[^"']*["'][^>]*>\s*/gi, "");
   if (!/<link\b[^>]*\brel=["'](?:shortcut )?icon["']/i.test(html)) {
