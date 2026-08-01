@@ -139,7 +139,7 @@ function assert(condition, message) {
     assert(lightboxState.background === "rgb(244, 242, 238)", `lightbox background is still black: ${lightboxState.background}`);
     assert(lightboxState.border === 0, `lightbox frame still exists: ${lightboxState.border}px`);
     assert(lightboxState.centerDelta <= 2, `lightbox image is not centered: ${lightboxState.centerDelta}px`);
-    assert(lightboxState.imageName.includes("about-global-map.png"), `wrong lightbox image: ${lightboxState.imageName}`);
+    assert(lightboxState.imageName.includes("about-global-map-cropped.png"), `wrong lightbox image: ${lightboxState.imageName}`);
     await page.locator("[data-about-lightbox-close]").hover();
     const closeHover = await page.locator("[data-about-lightbox-close]").evaluate((node) => getComputedStyle(node).backgroundColor);
     assert(closeHover === "rgb(0, 80, 75)", `lightbox close hover is not dark green: ${closeHover}`);

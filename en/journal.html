@@ -3,10 +3,11 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Journal | LuxurEat (露意膳) Maison</title>
 <!-- lux:fonts:start -->
-<link rel="preload" href="../assets/fonts/NyghtSerif-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/Spectral-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/NyghtSerif-Regular.woff2?v=20260801-mobile-optimal-128" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Spectral-Regular.woff2?v=20260801-mobile-optimal-128" as="font" type="font/woff2" crossorigin>
+<style data-lux-critical-fonts>@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Regular.woff2?v=20260801-mobile-optimal-128") format("woff2");font-weight:400;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Regular.woff2?v=20260801-mobile-optimal-128") format("woff2");font-weight:400;font-style:normal;font-display:block}</style>
 <!-- lux:fonts:end -->
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260801-mobile-video-footer-123">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260801-mobile-optimal-128">
 <style>
         body {
             background-color: #000000;
@@ -50,7 +51,7 @@
         }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260801-mobile-video-footer-123">
+<link rel="stylesheet" href="../integration.css?v=20260801-mobile-optimal-128">
 <link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head>
 <body class="font-body-md">
@@ -72,7 +73,7 @@
 <!-- Hero Section -->
 <section class="lux-page-top-hero lux-standard-hero relative h-screen w-full flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0 transition-all duration-1000 opacity-100">
-<video class="lux-hero-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="../assets/media/brand/about-hero-chi-siamo-poster.webp" aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-hero-chi-siamo.mp4" type="video/mp4"></video>
+<video class="lux-hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback poster="../assets/media/brand/about-hero-chi-siamo-poster.webp" aria-hidden="true" tabindex="-1"><source media="(max-width: 640px)" src="../assets/media/brand/about-hero-chi-siamo-mobile.m4v" type="video/mp4"><source src="../assets/media/brand/about-hero-chi-siamo.mp4" type="video/mp4"></video>
 <div class="absolute inset-0 lux-hero-fade-both"></div>
 </div>
 <div class="lux-page-hero-content relative z-10 text-center px-margin-mobile max-w-4xl transition-all duration-1000 opacity-100">
@@ -91,7 +92,7 @@
 <!-- Main Content Grid -->
 <section class="lux-about-story" id="about-us" data-about-story></section>
 <section class="lux-about-program lux-about-program--identity" id="luxureat-china">
-<video class="lux-about-program-media" data-lux-autoplay muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-china-operations.m4v" type="video/mp4"></video>
+<video class="lux-about-program-media" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" poster="../assets/media/brand/about-china-operations-poster.webp" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"><source media="(max-width: 640px)" src="../assets/media/brand/about-china-operations-mobile.m4v" type="video/mp4"><source src="../assets/media/brand/about-china-operations.m4v" type="video/mp4"></video>
 <div class="lux-about-program-overlay" aria-hidden="true"></div>
 <div class="lux-about-program-inner">
 <p class="lux-about-program-kicker">LUXUREAT CHINA · SHANGHAI</p>
@@ -118,7 +119,7 @@
 </div>
 </section>
 <section class="lux-about-program lux-about-program--audience" id="consumer-needs">
-<video class="lux-about-program-media" data-lux-autoplay muted loop playsinline preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"><source src="../assets/media/brand/about-consumer-needs.m4v" type="video/mp4"></video>
+<video class="lux-about-program-media" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" poster="../assets/media/brand/about-consumer-needs-poster.webp" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"><source media="(max-width: 640px)" src="../assets/media/brand/about-consumer-needs-mobile.m4v" type="video/mp4"><source src="../assets/media/brand/about-consumer-needs.m4v" type="video/mp4"></video>
 <div class="lux-about-program-overlay" aria-hidden="true"></div>
 <div class="lux-about-program-inner">
 <p class="lux-about-program-kicker">CONSUMER NEEDS</p>
@@ -142,7 +143,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center transition-all duration-1000 opacity-100">
 <div class="lg:col-span-7 article-card lux-reader-card group cursor-pointer">
 <div class="aspect-[16/10] overflow-hidden mb-8 border border-white/5 lux-reader-media">
-<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="A close-up, noir-style photograph of a silver tasting spoon lifting a small mound of glistening Ossetra caviar. The background is a deep, velvety black with soft bokeh light reflecting off the spoon's polished surface. The lighting is moody and directional, emphasizing the texture and depth of the caviar pearls against the pristine silver. A whisper of Tiffany Blue light catches the edge of the spoon, adding a modern luxury touch." src="../assets/media/journal/lux-032.jpg">
+<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="A close-up, noir-style photograph of a silver tasting spoon lifting a small mound of glistening Ossetra caviar. The background is a deep, velvety black with soft bokeh light reflecting off the spoon's polished surface. The lighting is moody and directional, emphasizing the texture and depth of the caviar pearls against the pristine silver. A whisper of Tiffany Blue light catches the edge of the spoon, adding a modern luxury touch." src="../assets/media/journal/about-caviar.webp">
 <button type="button" class="lux-reader-cta" data-reader-open="en-harvest">View Details</button>
 </div>
 </div>
@@ -174,7 +175,7 @@
 <!-- Article 1 -->
 <article class="lux-journal-season-card article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5 lux-reader-media" data-reader-open="en-truffle">
-<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="An atmospheric, architectural shot of a minimalist truffle storage cellar in Italy. Shelves of weathered dark wood hold rows of rough, earthy black winter truffles. The lighting is cool and low-key, with dramatic shadows that highlight the unique, brain-like texture of the fungi. The palette is dominated by dark charcoal, deep browns, and a subtle Tiffany Blue accent light on the far wall." src="../assets/media/products/lux-026.jpg">
+<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="An atmospheric, architectural shot of a minimalist truffle storage cellar in Italy. Shelves of weathered dark wood hold rows of rough, earthy black winter truffles. The lighting is cool and low-key, with dramatic shadows that highlight the unique, brain-like texture of the fungi. The palette is dominated by dark charcoal, deep browns, and a subtle Tiffany Blue accent light on the far wall." src="../assets/media/journal/about-truffle-products.webp">
 <button type="button" class="lux-reader-cta" data-reader-open="en-truffle">View Details</button>
 </div>
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">Sourcing</span>
@@ -187,7 +188,7 @@
 <!-- Article 2 -->
 <article class="lux-journal-season-card article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5 lux-reader-media" data-reader-open="en-service">
-<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="A high-end, editorial flat-lay of a luxury dinner table set with minimalist black ceramic plates and crystal glassware. A small tin of LuxurEat (露意膳) caviar sits at the center, its lid slightly ajar to reveal the dark pearls. The lighting is soft and ambient, casting long, elegant shadows. The style is 'Luminous Noir', creating a sophisticated and exclusive dining atmosphere for elite connoisseurs." src="../assets/media/journal/lux-003.jpg">
+<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="A high-end, editorial flat-lay of a luxury dinner table set with minimalist black ceramic plates and crystal glassware. A small tin of LuxurEat (露意膳) caviar sits at the center, its lid slightly ajar to reveal the dark pearls. The lighting is soft and ambient, casting long, elegant shadows. The style is 'Luminous Noir', creating a sophisticated and exclusive dining atmosphere for elite connoisseurs." src="../assets/media/journal/caviar-etiquette-service.webp">
 <button type="button" class="lux-reader-cta" data-reader-open="en-service">View Details</button>
 </div>
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">Epicurean Life</span>
@@ -200,7 +201,7 @@
 <!-- Article 3 -->
 <article class="lux-journal-season-card article-card lux-reader-card group cursor-pointer transition-all duration-1000 opacity-100">
 <div class="aspect-[4/5] overflow-hidden mb-6 border border-white/5 lux-reader-media" data-reader-open="en-malossol">
-<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="A portrait of a master salt artisan in a dimly lit, high-tech curing room. The artisan is meticulously inspecting a batch of sturgeon roe, with focus and precision. The lighting highlights the fine details of the artisan's face and the delicate nature of the caviar. The aesthetic is clean and professional, using a low-saturation palette with deep shadows and surgical-grade lighting focus." src="../assets/media/journal/lux-048.jpg">
+<img loading="lazy" decoding="async" class="w-full h-full object-cover" data-alt="A portrait of a master salt artisan in a dimly lit, high-tech curing room. The artisan is meticulously inspecting a batch of sturgeon roe, with focus and precision. The lighting highlights the fine details of the artisan's face and the delicate nature of the caviar. The aesthetic is clean and professional, using a low-saturation palette with deep shadows and surgical-grade lighting focus." src="../assets/media/academy/caviar-processing-04.webp">
 <button type="button" class="lux-reader-cta" data-reader-open="en-malossol">View Details</button>
 </div>
 <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-3 block">Craftsmanship</span>
@@ -263,7 +264,7 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260801-mobile-video-footer-123"></script>
-<script defer src="../assets/data/journal.js?v=20260801-mobile-video-footer-123"></script>
-<script defer src="../assets/js/journal.js?v=20260801-mobile-video-footer-123"></script>
+<script defer src="../assets/js/core.js?v=20260801-mobile-optimal-128"></script>
+<script defer src="../assets/data/journal.js?v=20260801-mobile-optimal-128"></script>
+<script defer src="../assets/js/journal.js?v=20260801-mobile-optimal-128"></script>
 <!-- lux:scripts:end --></body></html>

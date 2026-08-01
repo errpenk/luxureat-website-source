@@ -20,8 +20,8 @@ function assert(condition, message) {
 
   assert(champagne, "champagne recommendation was not added");
   assert(iceServer, "ice-server recommendation was not added");
-  assert(champagne.image.includes("lux-042.jpg"), `champagne image should be its own bottle image, got ${champagne.image}`);
-  assert(iceServer.image.includes("lux-039.jpg"), `ice-server image should be its own server image, got ${iceServer.image}`);
+  assert(champagne.image.includes("home-values-caviar-plating.webp"), `champagne image should use the current pairing image, got ${champagne.image}`);
+  assert(iceServer.image.includes("partnership-solution-caviar-service.jpg"), `ice-server image should use the current service image, got ${iceServer.image}`);
 
   await browser.close();
   console.log("bag recommendation verification passed");

@@ -45,7 +45,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: "100px" });
+  }, { rootMargin: "300px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);
@@ -152,6 +152,9 @@ const initLuxVideo = (video) => {
   video.dataset.luxVideoReady = "true";
   video.controls = false;
   video.removeAttribute("controls");
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
+  video.addEventListener("canplay", () => startLuxVideo(video), { once: true });
   if (luxReduceMotion) {
     video.pause();
   } else if (video.matches(".lux-hero-video") || !luxVideoObserver) {

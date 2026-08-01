@@ -945,17 +945,17 @@ function luxureat_static_cart_item_images($images, $cart_item) {
         return $images;
     }
     $files = array(
-        'imperial-beluga-30g' => 'lux-005.jpg',
-        'royal-oscetra-30g' => 'lux-030.jpg',
-        'mother-of-pearl-spoons' => 'lux-022.jpg',
-        'champagne' => 'lux-042.jpg',
-        'ice-server' => 'lux-039.jpg',
+        'imperial-beluga-30g' => 'academy/beluga-caviar-cover-new-page-bg.png',
+        'royal-oscetra-30g' => 'academy/oscetra-caviar-cover.png',
+        'mother-of-pearl-spoons' => 'journal/caviar-etiquette-service.webp',
+        'champagne' => 'brand/home-values-caviar-plating.webp',
+        'ice-server' => 'brand/partnership-solution-caviar-service.jpg',
     );
     $sku = $product->get_sku();
     if (!isset($files[$sku])) {
         return $images;
     }
-    $url = get_template_directory_uri() . '/assets/media/products/' . $files[$sku];
+    $url = get_template_directory_uri() . '/assets/media/' . $files[$sku];
     return array((object) array(
         'id' => $product->get_id(),
         'src' => $url,

@@ -83,8 +83,8 @@ for (const file of [
   'assets/js/brand.js',
   'assets/media/brand/luxureat-logo.png',
   'assets/media/brand/wechat-qr.webp',
-  'assets/media/journal/lux-032.jpg',
-  'assets/media/brand/lux-029.jpg',
+  'assets/media/journal/about-caviar.webp',
+  'assets/media/brand/home-values-caviar-plating.webp',
   'assets/data/products.js',
   'assets/data/events.js',
   'assets/data/journal.js',
@@ -129,7 +129,7 @@ assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_contact") && functionsPhp.
 assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_create_nonce('luxureat_contact')"), 'contact pages receive a nonce-protected AJAX endpoint');
 assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_type . ' + ' . $phone"), 'contact email subjects contain name, enquiry type, and phone');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
-assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('lux-005.jpg'), 'checkout cart items receive branded product images');
+assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('academy/beluga-caviar-cover-new-page-bg.png'), 'checkout cart items receive branded product images');
 assert(functionsPhp.includes('function luxureat_static_woo_catalog()') && functionsPhp.includes("'LuxureatWooCatalog'") && functionsPhp.includes("'stockQuantity'"), 'product pages receive live WooCommerce price, image, and stock data');
 assert(functionsPhp.includes("get_transient('luxureat_static_woo_catalog')") && functionsPhp.includes("MINUTE_IN_SECONDS"), 'repeated anonymous page checks reuse the short WooCommerce catalogue cache');
 assert(functionsPhp.includes("html_entity_decode(get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8')"), 'WooCommerce currency symbols render as characters rather than escaped HTML entities');
@@ -583,7 +583,7 @@ if (fs.existsSync(zipFile)) {
     assert(entries.includes('luxureat-static/functions.php'), 'zip contains luxureat-static/functions.php');
     assert(entries.includes('luxureat-static/assets/media/brand/luxureat-logo.png'), 'zip contains logo asset');
     assert(entries.includes('luxureat-static/assets/media/brand/wechat-qr.webp'), 'zip contains WeChat QR asset');
-    assert(entries.includes('luxureat-static/assets/media/brand/luxureat-domestic-contact-qr.webp'), 'zip contains the domestic contact QR asset');
+    assert(entries.includes('luxureat-static/assets/media/brand/luxureat-domestic-contact-qr-transparent.webp'), 'zip contains the current domestic contact QR asset');
     assert(entries.includes('luxureat-static/assets/data/products.js'), 'zip contains product data asset');
     assert(entries.some((entry) => entry.startsWith('luxureat-static/assets/media/brand/')), 'zip contains local image assets');
     assert(!entries.some((entry) => entry.startsWith('__MACOSX/')), 'zip has no __MACOSX metadata');

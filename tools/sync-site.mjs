@@ -87,9 +87,15 @@ function protectMaterialIconMarkup(html) {
 
 function fontPreloads(page) {
   const fonts = page.lang === "zh"
-    ? [page.key === "home" ? "KingHwaOldSong-home-subset.woff2" : "KingHwaOldSong-subset.woff2", "LuxurEatZhiSongWeb-subset.woff2"]
-    : ["NyghtSerif-Regular.woff2", "Spectral-Regular.woff2"];
-  return `<!-- lux:fonts:start -->\n${fonts.map((font) => `<link rel="preload" href="../assets/fonts/${font}" as="font" type="font/woff2" crossorigin>`).join("\n")}\n<!-- lux:fonts:end -->`;
+    ? page.key === "home"
+      ? [["KingHwaOldSong-home-critical.woff2", "KingHwa Old Song Home", 700], ["LuxurEatZhiSong-home-subset.woff2", "LuxurEat ZhiSong Home", 400]]
+      : [[`KingHwaOldSong-${page.slug}-critical.woff2`, "KingHwa Old Song Page", 700], [`LuxurEatZhiSong-${page.slug}-critical.woff2`, "LuxurEat ZhiSong Page", 400]]
+    : page.key === "home"
+      ? [["NyghtSerif-home-critical.woff2", "Nyght Serif Home", 400], ["Spectral-home-critical.woff2", "Spectral Home", 400]]
+      : [["NyghtSerif-Regular.woff2", "Nyght Serif", 400], ["Spectral-Regular.woff2", "Spectral", 400]];
+  const links = fonts.map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${assetVersion}" as="font" type="font/woff2" crossorigin>`).join("\n");
+  const faces = fonts.map(([font, family, weight]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:normal;font-display:block}`).join("");
+  return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}</style>\n<!-- lux:fonts:end -->`;
 }
 
 function render(page) {

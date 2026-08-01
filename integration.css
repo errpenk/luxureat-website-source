@@ -6,13 +6,6 @@
   font-display: block;
 }
 @font-face {
-  font-family: "KingHwa Old Song Home";
-  src: url("assets/fonts/KingHwaOldSong-home-subset.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: block;
-}
-@font-face {
   font-family: "LuxurEat ZhiSong Web";
   src: url("assets/fonts/LuxurEatZhiSongWeb-subset.woff2") format("woff2");
   font-weight: 400;
@@ -902,8 +895,8 @@ header:has(.lux-hero-fade-both) {
   transform: scale(1.07);
 }
 .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/cert-food-safety.webp"); }
-.lux-card-photo-two { --lux-card-bg: url("assets/media/brand/lux-029.jpg"); }
-.lux-card-photo-three { --lux-card-bg: url("assets/media/brand/lux-008.jpg"); }
+.lux-card-photo-two { --lux-card-bg: url("assets/media/brand/cert-quality-products.webp"); }
+.lux-card-photo-three { --lux-card-bg: url("assets/media/brand/cert-gallery-truffle-hand.webp"); }
 
 .lux-muted-block {
   background: rgb(102, 100, 96) !important;
@@ -10465,6 +10458,12 @@ html[lang^="en"] {
   --lux-en-heading: "Nyght Serif";
   --lux-en-body: "Spectral";
 }
+html.lux-home-root[lang^="en"] {
+  --lux-page-heading: "Nyght Serif Home", serif;
+  --lux-en-display: "Nyght Serif Home", serif;
+  --lux-en-heading: "Nyght Serif Home", serif;
+  --lux-en-body: "Spectral Home", serif;
+}
 html[lang^="en"] body *:not(.material-symbols-outlined),
 html[lang^="en"] body *:not(.material-symbols-outlined)::before,
 html[lang^="en"] body *:not(.material-symbols-outlined)::after {
@@ -10659,10 +10658,14 @@ html[lang^="zh"] {
   --lux-zh-body: "LuxurEat ZhiSong Web";
   font-synthesis: none;
 }
-html[lang^="zh"] body *:not(.material-symbols-outlined),
+html[lang^="zh"] body:not(.lux-home-page) {
+  --lux-page-heading: "KingHwa Old Song Page", "LuxurEat ZhiSong Page", "KingHwa Old Song";
+  --lux-zh-headline: "KingHwa Old Song Page", "LuxurEat ZhiSong Page", "KingHwa Old Song";
+  --lux-zh-body: "LuxurEat ZhiSong Page", "LuxurEat ZhiSong Web";
+}
 html[lang^="zh"] body *:not(.material-symbols-outlined)::before,
 html[lang^="zh"] body *:not(.material-symbols-outlined)::after {
-  font-family: var(--lux-zh-headline) !important;
+  font-family: inherit !important;
 }
 html[lang^="zh"] body,
 html[lang^="zh"] :is(p, li, blockquote, figcaption, label, small, dt, dd, th, td, button, input, textarea, select, a, span:not(.material-symbols-outlined)) {
@@ -10972,9 +10975,10 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
 html[lang^="zh"] :is(.lux-bag-item, .lux-bag-recommendations) :not(.material-symbols-outlined) {
   font-family: var(--lux-zh-headline) !important;
 }
-html[lang^="zh"] body.lux-home-page {
-  --lux-page-heading: "KingHwa Old Song Home";
-  --lux-zh-headline: "KingHwa Old Song Home";
+html.lux-home-root[lang^="zh"] {
+  --lux-page-heading: "KingHwa Old Song Home", "LuxurEat ZhiSong Home", serif;
+  --lux-zh-headline: "KingHwa Old Song Home", "LuxurEat ZhiSong Home", serif;
+  --lux-zh-body: "LuxurEat ZhiSong Home", serif;
 }
 html[lang^="zh"] body.lux-home-page .lux-reader {
   --lux-page-heading: "KingHwa Old Song";
