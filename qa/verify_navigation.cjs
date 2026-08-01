@@ -26,6 +26,29 @@ for (const lang of ["zh", "en"]) {
     assert(header.indexOf('href="blog.html"') > header.indexOf('href="news.html"') && header.indexOf('href="blog.html"') < header.indexOf('href="certification.html"'), `${lang}/${file} does not place Blog directly after Brand News`);
     assert(!html.includes(lang === "zh" ? "品鉴艺术" : ">Rituals<"), `${lang}/${file} still contains the old ritual label`);
     assert(!html.includes(lang === "zh" ? ">品牌志<" : ">Journal<"), `${lang}/${file} still contains the old About Us label`);
+
+    for (const match of html.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)) {
+      const href = match[1];
+      if (/^(?:https?:|mailto:|tel:|javascript:)/.test(href) || href === "#") continue;
+      const [rawPath, fragment = ""] = href.split("#");
+      const cleanPath = rawPath.split("?")[0];
+      const target = path.resolve(directory, cleanPath || file);
+      assert(fs.existsSync(target), `${lang}/${file} links to missing target ${href}`);
+      if (!fragment || /^(?:archive|product-|reader-|event-)/.test(fragment)) continue;
+      const targetHtml = fs.readFileSync(target, "utf8");
+      assert(new RegExp(`(?:id|name)=["']${fragment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}["']`).test(targetHtml), `${lang}/${file} links to missing anchor ${href}`);
+    }
+  }
+}
+
+const journalData = fs.readFileSync(path.join(root, "assets/data/journal.js"), "utf8");
+const productData = fs.readFileSync(path.join(root, "assets/data/products.js"), "utf8");
+for (const lang of ["zh", "en"]) {
+  const directory = path.join(root, lang);
+  for (const file of fs.readdirSync(directory).filter((name) => name.endsWith(".html"))) {
+    const html = fs.readFileSync(path.join(directory, file), "utf8");
+    for (const [, id] of html.matchAll(/data-reader-open=["']([^"']+)["']/g)) assert(journalData.includes(`"${id}":`), `${lang}/${file} references missing reader ${id}`);
+    for (const [, id] of html.matchAll(/data-product-open=["']([^"']+)["']/g)) assert(productData.includes(`"${id.replace(/^(?:zh|en)-/, "")}"`), `${lang}/${file} references missing product ${id}`);
   }
 }
 

@@ -2,7 +2,8 @@
   const assetBase = new URL("../", document.currentScript?.src || location.href);
   const asset = (path) => new URL(path, assetBase).href;
   const section = document.querySelector("[data-latest-event]");
-  const events = window.LUXUREAT_EVENT_DATA?.events?.filter((item) => item.status === "latest") || [];
+  const events = (window.LUXUREAT_EVENT_DATA?.events?.filter((item) => item.status === "latest") || [])
+    .sort((a, b) => a.endDate.localeCompare(b.endDate));
   if (!section || !events.length) return;
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
@@ -11,7 +12,7 @@
     : lang === "zh" ? "/news/" : "/en/news/";
   const carouselLabels = lang === "zh"
     ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
-    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "About Us", meetCopy: "Explore upcoming and completed LuxurEat (露意膳) exhibitions across China.", map: "View exhibition map" };
+    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "Meet Us", meetCopy: "Explore upcoming and completed LuxurEat (露意膳) exhibitions across China.", map: "View exhibition map" };
   const atlasLabels = lang === "zh"
     ? { title: "各地区展会数量与月份", count: "场展览" }
     : { title: "Exhibitions by region and month", count: "exhibitions" };
@@ -73,7 +74,7 @@
         </div>` : ""}
       </div>
       ${events.length > 1 ? `<div class="lux-event-thumbnails" role="tablist" aria-label="${escapeHtml(carouselLabels.carousel)}">
-        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="eager" decoding="async" src="${escapeHtml(event.poster)}" alt=""></button>`).join("")}
+        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="lazy" fetchpriority="low" decoding="async" src="${escapeHtml(event.poster)}" alt=""></button>`).join("")}
       </div>` : ""}
     </div>
     <div class="lux-meet-map">

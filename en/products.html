@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="dark" lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&amp;display=optional" rel="stylesheet" media="print" onload="this.media='all'"><link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260730-performance-77">
-<link rel="stylesheet" href="../integration.css?v=20260730-performance-77">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260801-performance-final-119">
+<link rel="stylesheet" href="../integration.css?v=20260801-performance-final-119">
+<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head><body class="bg-background text-on-surface font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col min-h-screen">
 <!-- lux:header:start -->
 <header class="lux-header">
@@ -21,19 +21,14 @@
 <!-- Main Content Canvas -->
 <main class="lux-products-main flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap flex flex-col gap-section-gap">
 <!-- Hero / Header Section -->
-<section class="lux-full-bleed lux-dark-photo-block lux-photo-fade-bottom lux-bright-photo flex flex-col items-start justify-end gap-4 pt-32 pb-16 px-margin-mobile md:px-margin-desktop min-h-[520px]">
+<section class="lux-full-bleed lux-dark-photo-block lux-photo-fade-bottom lux-bright-photo flex flex-col items-center justify-end gap-4 pt-32 pb-16 px-margin-mobile md:px-margin-desktop min-h-[520px] text-center">
 <div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/products-hero-caviar.jpg')"></div>
 <span class="lux-hero-kicker">Presenting the purest expression of Italian luxury gastronomy to China</span>
 <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Premium Products</h1>
-
-<div class="flex flex-col md:flex-row md:items-end justify-between w-full gap-4 mt-4">
-<p class="lux-page-hero-subtitle lux-hero-support max-w-2xl text-left">
+<p class="lux-page-hero-subtitle lux-hero-support max-w-2xl mt-4 text-center">
 <span class="block">Our products are carefully crafted by professional producers and manufactured under rigorous production and quality-control standards. From ingredient selection to final packaging, every stage is dedicated to delivering consistent, authentic quality that meets the demands of fine dining.</span>
 </p>
-<div class="text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">
-                    Showing <span class="text-primary" data-caviar-count>24</span> registered products
-                </div>
-</div></section>
+</section>
 <!-- Filters & Sorting -->
 <section class="flex flex-col md:flex-row justify-between items-center gap-6 border-y border-white/10 py-4 sticky top-[78px] bg-background z-40" data-lux-caviar-controls>
 <div class="flex items-center gap-4 overflow-x-auto w-full md:w-auto hide-scrollbar">
@@ -48,20 +43,21 @@
 <div class="flex items-center gap-2 lux-sort-wrap">
 <span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Sort:</span>
 <button type="button" data-caviar-sort="recommended" class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface uppercase tracking-widest hover:text-primary transition-colors" aria-haspopup="listbox" aria-expanded="false" aria-label="Sort By">
-                        <span data-caviar-sort-label>Recommended</span> <span class="material-symbols-outlined text-[16px]">expand_more</span>
+                        <span data-caviar-sort-label>Recommended</span> <span class="material-symbols-outlined text-[16px]" data-icon="expand_more" aria-hidden="true" translate="no"></span>
 </button>
 <div class="lux-sort-menu" data-caviar-sort-menu role="listbox" hidden>
 <button type="button" data-caviar-sort-option="recommended" role="option" aria-selected="true">Recommended</button>
-<button type="button" data-caviar-sort-option="name-asc" role="option" aria-selected="false">Name: A to Z</button>
-<button type="button" data-caviar-sort-option="name-desc" role="option" aria-selected="false">Name: Z to A</button>
+<button type="button" data-caviar-sort-option="price-asc" role="option" aria-selected="false">Price: Low to High</button>
+<button type="button" data-caviar-sort-option="price-desc" role="option" aria-selected="false">Price: High to Low</button>
 </div>
 </div>
 </div>
-<button class="lux-product-filter-toggle" type="button" data-caviar-filter-toggle aria-controls="product-filters" aria-expanded="true"><span>Filter by</span><span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button>
+<button class="lux-product-filter-toggle" type="button" data-caviar-filter-toggle aria-controls="product-filters" aria-expanded="true"><span>Filter by</span><span class="material-symbols-outlined" data-icon="expand_more" aria-hidden="true" translate="no"></span></button>
 </section>
 <!-- Product Grid -->
 <div class="lux-product-browser" id="product-catalogue">
 <aside class="lux-product-filter-panel" id="product-filters" aria-label="Product filters">
+<div class="lux-product-count">Showing <span data-caviar-count>24</span> registered products</div>
 <header><strong>Filter by</strong><button type="button" data-caviar-clear>Clear all</button></header>
 <section><h3>Product Category</h3><div class="lux-product-filter-list">
 <button type="button" data-caviar-filter-group="category" data-caviar-filter="all" aria-pressed="true"><span aria-hidden="true"></span>All Categories</button>
@@ -124,13 +120,13 @@
     <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat (露意膳) brings Italian food culture and innovative experiences to China.</p></div>
     <nav><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="blog.html">Blog</a><a href="certification.html">Certification</a><a href="gifting.html">Gifting</a><a href="contact.html">Contact</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a></div>
-    <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
+    <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="mailto:roberto@ugolinigroup.com">roberto@ugolinigroup.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">Privacy Policy</button><button type="button" data-footer-modal="terms">Terms of Sale</button><button type="button" data-footer-modal="shipping">Shipping</button></div></div>
   </div>
   <div class="lux-footer-bottom">© 2026 LuxurEat (露意膳)｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W</div>
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260730-performance-77"></script>
-<script defer src="../assets/data/products.js?v=20260730-performance-77"></script>
-<script defer src="../assets/js/products.js?v=20260730-performance-77"></script>
+<script defer src="../assets/js/core.js?v=20260801-performance-final-119"></script>
+<script defer src="../assets/data/products.js?v=20260801-performance-final-119"></script>
+<script defer src="../assets/js/products.js?v=20260801-performance-final-119"></script>
 <!-- lux:scripts:end --></body></html>

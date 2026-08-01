@@ -143,14 +143,14 @@ function initLuxCaviarControls() {
       compare: (a, b) => Number(a.dataset.recommendation) - Number(b.dataset.recommendation),
     },
     {
-      key: "name-asc",
-      label: lang === "zh" ? "名称正序" : "Name: A to Z",
-      compare: (a, b) => a.dataset.title.localeCompare(b.dataset.title, lang === "zh" ? "zh-CN" : "en"),
+      key: "price-asc",
+      label: lang === "zh" ? "价格低到高" : "Price: Low to High",
+      compare: (a, b) => Number(a.dataset.price) - Number(b.dataset.price),
     },
     {
-      key: "name-desc",
-      label: lang === "zh" ? "名称倒序" : "Name: Z to A",
-      compare: (a, b) => b.dataset.title.localeCompare(a.dataset.title, lang === "zh" ? "zh-CN" : "en"),
+      key: "price-desc",
+      label: lang === "zh" ? "价格高到低" : "Price: High to Low",
+      compare: (a, b) => Number(b.dataset.price) - Number(a.dataset.price),
     },
   ];
 
@@ -235,6 +235,8 @@ function initLuxCaviarControls() {
       const selected = item.dataset.caviarSortOption === option.key;
       item.setAttribute("aria-selected", String(selected));
       item.classList.toggle("is-selected", selected);
+      item.querySelector(".lux-sort-selected-icon")?.remove();
+      if (selected) item.insertAdjacentHTML("beforeend", '<svg class="lux-lucide lux-sort-selected-icon" viewBox="0 0 24 24" aria-hidden="true" translate="no"><path d="M20 6 9 17l-5-5"/></svg>');
     });
 
     items
@@ -474,7 +476,7 @@ function initLuxProductDetails() {
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
               <div class="lux-product-recent-media"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}"></div>
               <strong>${luxEscapeProductHtml(item.title)}</strong>
-              <small>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "TEST")} / ${luxEscapeProductHtml(item.unit)}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
+              <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "TEST")} / ${luxEscapeProductHtml(item.unit)}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
               <div class="lux-product-recent-actions">
                 <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-price-label="${luxEscapeProductHtml(item.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}"${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
@@ -737,21 +739,21 @@ function initLuxProductDetails() {
         <div class="flex justify-between gap-6 items-start">
           <div>
             <h3 class="font-headline-sm text-headline-sm mb-1">${luxEscapeProductHtml(item.title)}</h3>
-            <p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${luxEscapeProductHtml(item.subtitle)}</p>
+            <p${lang === "en" ? ' lang="zh-CN"' : ""} class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${luxEscapeProductHtml(item.subtitle)}</p>
           </div>
-          <span class="lux-bag-price font-headline-sm text-headline-sm text-primary whitespace-nowrap">${luxEscapeProductHtml(item.priceLabel || money(item.currency, item.price))}${lineTotal}</span>
+          <span class="lux-bag-price${item.priceLabel ? " is-test-price" : ""} font-headline-sm text-headline-sm text-primary whitespace-nowrap">${luxEscapeProductHtml(item.priceLabel || money(item.currency, item.price))}${lineTotal}</span>
         </div>
         <div class="flex justify-between items-end mt-8">
           <div class="flex items-center gap-4">
             <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">${lang === "zh" ? "数量" : "Qty"}</span>
             <div class="flex items-center border border-outline-variant/30">
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${minDisabled}><span class="material-symbols-outlined text-sm">remove</span></button>
+              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${minDisabled}><span class="material-symbols-outlined text-sm" data-icon="remove" aria-hidden="true" translate="no"></span></button>
               <span class="w-12 text-center font-label-lg">${quantity}</span>
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${maxDisabled}><span class="material-symbols-outlined text-sm">add</span></button>
+              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${maxDisabled}><span class="material-symbols-outlined text-sm" data-icon="add" aria-hidden="true" translate="no"></span></button>
             </div>
           </div>
           <button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm uppercase tracking-widest" data-bag-remove="${luxEscapeProductHtml(item.id)}" type="button">
-            <span class="material-symbols-outlined text-lg">delete</span>
+            <span class="material-symbols-outlined text-lg" data-icon="delete" aria-hidden="true" translate="no"></span>
             <span>${lang === "zh" ? "移除" : "Remove"}</span>
           </button>
         </div>
@@ -803,8 +805,8 @@ function initLuxProductDetails() {
           </div>
         </div>
         <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">${luxEscapeProductHtml(product.title)}</h4>
-        <p class="font-label-sm text-label-sm text-on-surface-variant mb-2">${luxEscapeProductHtml(product.subtitle)}</p>
-        <span class="lux-bag-recommendation-price font-body-md">${luxEscapeProductHtml(product.priceLabel || money(product.currency, Number(product.amount) || 0))}</span>
+        <p${lang === "en" ? ' lang="zh-CN"' : ""} class="font-label-sm text-label-sm text-on-surface-variant mb-2">${luxEscapeProductHtml(product.subtitle)}</p>
+        <span class="lux-bag-recommendation-price${product.priceLabel ? " is-test-price" : ""} font-body-md">${luxEscapeProductHtml(product.priceLabel || money(product.currency, Number(product.amount) || 0))}</span>
       </div>`).join("");
   };
 
@@ -824,9 +826,9 @@ function initLuxProductDetails() {
       : `<div class="p-8 border border-outline-variant/30 text-on-surface-variant">${lang === "zh" ? "您的购物袋暂时为空。" : "Your shopping bag is empty."}</div>`;
 
     const testPricing = items.some((item) => item.priceLabel);
-    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal); });
-    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, shipping); });
-    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal + shipping); });
+    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal); el.classList.toggle("is-test-price", testPricing); });
+    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, shipping); el.classList.toggle("is-test-price", testPricing); });
+    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal + shipping); el.classList.toggle("is-test-price", testPricing); });
   };
 
   const checkout = async (button) => {
@@ -903,11 +905,14 @@ function initLuxProductDetails() {
     if (checkoutButton) checkout(checkoutButton);
   });
 
-  document.addEventListener("DOMContentLoaded", () => {
+  const renderInitialBag = () => {
     renderRecommendations();
     renderBag();
-  });
+  };
+  if (document.readyState === "complete") renderInitialBag();
+  else document.addEventListener("DOMContentLoaded", renderInitialBag, { once: true });
 })();
 
 
-document.addEventListener("DOMContentLoaded", initLuxProductDetails);
+if (document.readyState === "complete") initLuxProductDetails();
+else document.addEventListener("DOMContentLoaded", initLuxProductDetails, { once: true });

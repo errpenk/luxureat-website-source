@@ -629,7 +629,7 @@
         ],
         [
           {
-            "src": academyImage("caviar-processing-06.webp"),
+            "src": academyImage("main-types-of-caviar-cover.webp"),
             "alt": "Caviar Processing"
           }
         ],

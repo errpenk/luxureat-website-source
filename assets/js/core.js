@@ -2,6 +2,20 @@ const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) =>
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
 
+const luxProtectMaterialIcons = (root) => {
+  const icons = root.matches?.(".material-symbols-outlined")
+    ? [root]
+    : root.querySelectorAll?.(".material-symbols-outlined") || [];
+  icons.forEach((icon) => {
+    icon.translate = false;
+    icon.classList.add("notranslate");
+  });
+};
+luxProtectMaterialIcons(document);
+new MutationObserver((records) => records.forEach(({ addedNodes }) => addedNodes.forEach((node) => {
+  if (node instanceof Element) luxProtectMaterialIcons(node);
+}))).observe(document.documentElement, { childList: true, subtree: true });
+
 const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg]");
 const loadLuxBackground = (element) => {
   element.style.backgroundImage = `url("${element.dataset.luxBg}")`;
@@ -19,6 +33,83 @@ if ("IntersectionObserver" in window) {
 } else {
   luxLazyBackgrounds.forEach(loadLuxBackground);
 }
+
+const luxLazyImages = document.querySelectorAll("img[data-lux-src]");
+const loadLuxImage = (image) => {
+  image.src = image.dataset.luxSrc;
+  delete image.dataset.luxSrc;
+};
+if ("IntersectionObserver" in window) {
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.filter(({ isIntersecting }) => isIntersecting).forEach(({ target }) => {
+      loadLuxImage(target);
+      observer.unobserve(target);
+    });
+  }, { rootMargin: "100px" });
+  luxLazyImages.forEach((image) => imageObserver.observe(image));
+} else {
+  luxLazyImages.forEach(loadLuxImage);
+}
+
+const luxDeferredScripts = document.querySelector("[data-lux-deferred-scripts]");
+if (luxDeferredScripts) {
+  let started = false;
+  let loaded = false;
+  let loading;
+  const loadScript = (src) => new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.append(script);
+  });
+  const loadDeferredScripts = () => {
+    if (started) return loading;
+    started = true;
+    const urls = JSON.parse(luxDeferredScripts.textContent);
+    const data = urls.filter((src) => src.includes("/data/"));
+    const runtimes = urls.filter((src) => !src.includes("/data/"));
+    loading = Promise.all(data.map(loadScript))
+      .then(() => Promise.all(runtimes.map(loadScript)))
+      .then(() => {
+        loaded = true;
+        return true;
+      })
+      .catch(() => false);
+    return loading;
+  };
+  const scheduleDeferredScripts = () => setTimeout(loadDeferredScripts, matchMedia("(max-width: 640px)").matches ? 3500 : 800);
+  if (document.readyState === "complete") scheduleDeferredScripts();
+  else addEventListener("load", scheduleDeferredScripts, { once: true });
+  addEventListener("scroll", loadDeferredScripts, { once: true, passive: true });
+  addEventListener("pointerdown", loadDeferredScripts, { once: true, passive: true });
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest?.("[data-reader-open]");
+    if (!trigger || loaded) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    loadDeferredScripts()?.then((ready) => {
+      if (ready) trigger.click();
+      else if (trigger.href) location.href = trigger.href;
+    });
+  }, true);
+}
+
+document.querySelectorAll("#selected-products > .grid > .group").forEach((card) => {
+  const productLink = card.querySelector("[data-product-open]");
+  if (!productLink) return;
+  card.setAttribute("role", "link");
+  card.tabIndex = 0;
+  card.addEventListener("click", (event) => {
+    if (event.target.closest("a, button")) return;
+    location.href = productLink.href;
+  });
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+    location.href = productLink.href;
+  });
+});
 
 document.querySelectorAll("[data-content-search]").forEach((input) => {
   const items = [...document.querySelectorAll(input.dataset.contentSearch || "")];
@@ -72,6 +163,33 @@ new MutationObserver((records) => records.forEach(({ addedNodes }) => addedNodes
   if (node.matches(luxAutoplaySelector)) initLuxVideo(node);
   node.querySelectorAll?.(luxAutoplaySelector).forEach(initLuxVideo);
 }))).observe(document.body, { childList: true, subtree: true });
+
+document.querySelectorAll("video[data-lux-hero-deferred]").forEach((video) => {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const slowConnection = connection?.saveData || /(?:^|-)2g|3g/.test(connection?.effectiveType || "");
+  if (slowConnection || luxReduceMotion) return;
+  const start = () => {
+    video.preload = "auto";
+    video.load();
+    startLuxVideo(video);
+  };
+  const delay = matchMedia("(max-width: 640px)").matches ? 10000 : 1000;
+  if (document.readyState === "complete") setTimeout(start, delay);
+  else addEventListener("load", () => setTimeout(start, delay), { once: true });
+});
+
+document.querySelectorAll(".lux-home-market-system, .lux-home-gifting").forEach((section) => {
+  if (!("IntersectionObserver" in window)) {
+    section.classList.add("is-media-ready");
+    return;
+  }
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    section.classList.add("is-media-ready");
+    observer.disconnect();
+  }, { rootMargin: "400px" });
+  observer.observe(section);
+});
 
 const initLuxScrollReveal = () => {
   if (document.querySelector(".lux-products-main")) return;

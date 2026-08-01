@@ -1,9 +1,104 @@
 @font-face {
-  font-family: "Alimama ShuHei";
-  src: url("assets/fonts/AlimamaShuHeiTi-Bold-subset.woff2") format("woff2");
+  font-family: "KingHwa Old Song";
+  src: url("assets/fonts/KingHwaOldSong-subset.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KingHwa Old Song Home";
+  src: url("assets/fonts/KingHwaOldSong-home-subset.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LuxurEat ZhiSong Web";
+  src: url("assets/fonts/LuxurEatZhiSongWeb-subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nyght Serif";
+  src: url("assets/fonts/NyghtSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nyght Serif";
+  src: url("assets/fonts/NyghtSerif-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Nyght Serif";
+  src: url("assets/fonts/NyghtSerif-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("assets/fonts/Spectral-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("assets/fonts/MaterialSymbolsOutlined-subset.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
   font-display: block;
+}
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined" !important;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+}
+.material-symbols-outlined::before {
+  content: attr(data-icon);
+}
+
+/* Keep the long homepage below the fold out of the initial render pass. */
+.lux-home-page > :is(section, aside, footer) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("assets/fonts/Spectral-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("assets/fonts/Spectral-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Spectral";
+  src: url("assets/fonts/Spectral-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
 
 .lux-scroll-reveal {
@@ -49,7 +144,7 @@ html.dark body.lux-academy-page {
 .lux-academy-intro > span,
 .lux-academy-card-copy > span {
   color: #9df5ec;
-  font: 700 12px/1.4 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 700 12px/1.4 var(--lux-page-heading);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
@@ -74,12 +169,12 @@ html.dark body.lux-academy-page {
 .lux-academy-intro h2 {
   margin: 0;
   color: #101010;
-  font: 500 clamp(44px, 6vw, 78px)/.95 "Bodoni Moda", Georgia, serif;
+  font: 500 clamp(44px, 6vw, 78px)/.95 var(--lux-page-heading);
 }
 .lux-academy-intro p {
   margin: 0;
   color: #55514b;
-  font: 400 17px/1.75 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 400 17px/1.75 var(--lux-page-heading);
 }
 .lux-academy-layout {
   display: grid;
@@ -121,13 +216,13 @@ html.dark body.lux-academy-page {
 .lux-academy-card-copy h2 {
   margin: 8px 0 10px;
   color: #101010;
-  font: 600 clamp(34px, 4.6vw, 58px)/1 "Bodoni Moda", "Alimama ShuHei", Georgia, serif;
+  font: 600 clamp(34px, 4.6vw, 58px)/1 var(--lux-page-heading);
 }
 .lux-academy-card-copy p {
   max-width: 780px;
   margin: 0;
   color: #5d5850;
-  font: 400 15px/1.75 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 400 15px/1.75 var(--lux-page-heading);
 }
 .lux-academy-card-copy > button {
   margin-top: 18px;
@@ -136,7 +231,7 @@ html.dark body.lux-academy-page {
   border-bottom: 1px solid #006a64;
   background: transparent;
   color: #006a64;
-  font: 700 12px/1.4 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 700 12px/1.4 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
   cursor: pointer;
@@ -160,7 +255,7 @@ html.dark body.lux-academy-page {
   display: block;
   margin-bottom: 9px;
   color: #686159;
-  font: 700 14px/1.4 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 700 14px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -178,7 +273,7 @@ html.dark body.lux-academy-page {
   outline: 0;
   color: #151513;
   background: transparent;
-  font: 400 14px/1.4 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 400 14px/1.4 var(--lux-page-heading);
 }
 .lux-academy-search:focus-within {
   border-color: #006a64;
@@ -199,7 +294,7 @@ html.dark body.lux-academy-page {
 .lux-academy-latest h2 {
   margin: 0 0 18px;
   color: #101010;
-  font: 700 14px/1.4 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 700 14px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -228,19 +323,19 @@ html.dark body.lux-academy-page {
   display: block;
 }
 .lux-academy-latest strong {
-  font: 700 13px/1.35 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 700 13px/1.35 var(--lux-page-heading);
 }
 .lux-academy-latest small {
   margin-top: 5px;
   color: #827a70;
-  font: 600 10px/1.3 Montserrat, Arial, sans-serif;
+  font: 600 10px/1.3 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
 .lux-academy-empty {
   padding: 60px 0;
   color: #686159;
-  font: 500 18px/1.6 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 500 18px/1.6 var(--lux-page-heading);
 }
 .lux-reader-table-wrap {
   max-width: 100%;
@@ -254,7 +349,7 @@ html.dark body.lux-academy-page {
   border-collapse: collapse;
   color: #2b2926;
   background: #f8f6f2;
-  font: 500 12px/1.5 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 500 12px/1.5 var(--lux-page-heading);
 }
 .lux-reader-table-wrap th,
 .lux-reader-table-wrap td {
@@ -323,7 +418,7 @@ html.dark body.lux-academy-page {
   border-bottom: 1px solid rgba(233, 195, 73, .22);
   backdrop-filter: blur(18px);
   color: #e5e2e1;
-  font-family: Montserrat, Arial, sans-serif;
+  font-family: var(--lux-page-heading);
 }
 .lux-brand { display: inline-flex; align-items: center; width: 72px; height: 54px; }
 .lux-brand img { width: 64px; height: 64px; object-fit: contain; filter: invert(1) brightness(1.35); }
@@ -437,7 +532,7 @@ html.dark body.lux-academy-page {
   border-radius: 999px;
   background: #9df5ec;
   color: #003734;
-  font: 700 10px/16px Montserrat, Arial, sans-serif;
+  font: 700 10px/16px var(--lux-page-heading);
   letter-spacing: 0;
   text-align: center;
 }
@@ -468,11 +563,11 @@ html.dark body.lux-academy-page {
   padding: clamp(64px, 8vw, 110px) clamp(22px, 5vw, 80px);
   background: #101010;
   color: #e5e2e1;
-  font-family: Montserrat, Arial, sans-serif;
+  font-family: var(--lux-page-heading);
 }
 .lux-modules h2 {
   margin: 0 0 28px;
-  font-family: "Bodoni Moda", Georgia, serif;
+  font-family: var(--lux-page-heading);
   font-size: clamp(34px, 4vw, 58px);
   font-weight: 400;
 }
@@ -487,7 +582,7 @@ html.dark body.lux-academy-page {
   color: #e5e2e1;
   border-top: 1px solid rgba(233,195,73,.25);
   padding: 72px clamp(22px, 5vw, 80px) 28px;
-  font-family: Montserrat, Arial, sans-serif;
+  font-family: var(--lux-page-heading);
 }
 .lux-footer-grid {
   max-width: 1440px;
@@ -536,7 +631,7 @@ html.dark body.lux-academy-page {
 .lux-footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; align-content: start; }
 .lux-footer-bottom { max-width: 1440px; margin: 38px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #bdc9c7; font-size: 13px; }
 html[lang="en"] h1 {
-  font-family: "Bodoni Moda", Georgia, serif !important;
+  font-family: var(--lux-page-heading);
   font-size: clamp(56px, 7vw, 96px) !important;
   font-weight: 300 !important;
   line-height: 1.05 !important;
@@ -605,7 +700,7 @@ html[lang="en"] h1 {
 .lux-footprint-video-title {
   margin: 0;
   color: #fff;
-  font-family: "Bodoni Moda", sans-serif !important;
+  font-family: var(--lux-page-heading);
   font-size: clamp(30px, 4.8vw, 72px) !important;
   font-weight: 700;
   line-height: 1.08 !important;
@@ -621,15 +716,25 @@ html[lang="en"] h1 {
 }
 .lux-footprint-card summary::-webkit-details-marker { display: none; }
 .lux-footprint-icon { font-size: 34px; }
+.lux-country-icon {
+  width: 34px;
+  height: 34px;
+  color: #9df5ec;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .lux-footprint-heading strong,
 .lux-footprint-card summary strong {
   color: #e5e2e1;
-  font: 400 28px/1.15 "Bodoni Moda", Georgia, serif;
+  font: 400 28px/1.15 var(--lux-page-heading);
 }
 .lux-footprint-heading small,
 .lux-footprint-card summary small {
   color: #9df5ec;
-  font: 700 11px/1.4 Montserrat, Arial, sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -638,7 +743,7 @@ html[lang="en"] h1 {
   margin: 12px 0 0;
   display: block;
   color: #bdc9c7;
-  font: 400 13px/1.55 Montserrat, Arial, sans-serif;
+  font: 400 13px/1.55 var(--lux-page-heading);
 }
 .lux-footprint-card .lux-footprint-role {
   display: flex;
@@ -752,6 +857,9 @@ html[lang="en"] h1 {
 }
 .lux-hero-fade-both {
   background: linear-gradient(to bottom, #131313 0%, rgba(19,19,19,.84) 8%, rgba(19,19,19,.34) 24%, rgba(19,19,19,.42) 66%, rgba(19,19,19,.88) 90%, #131313 100%) !important;
+}
+.lux-gifting-hero .lux-hero-fade-both {
+  background: linear-gradient(to bottom, #131313 0%, rgba(19,19,19,.84) 8%, rgba(19,19,19,.34) 24%, rgba(19,19,19,.42) 66%, rgba(0,0,0,.88) 90%, #000 100%) !important;
 }
 section:has(.lux-hero-fade-both),
 header:has(.lux-hero-fade-both) {
@@ -885,20 +993,20 @@ header:has(.lux-hero-fade-both) {
 .lux-product-catalog [data-caviar-item] h2 {
   margin: 0;
   color: #1c1b1b;
-  font: 400 26px/1 "Bodoni Moda", "PingFang SC", "Microsoft YaHei", serif !important;
+  font: 400 26px/1 var(--lux-page-heading);
   letter-spacing: 0 !important;
   overflow-wrap: break-word;
   word-break: normal;
 }
 .lux-product-catalog [data-caviar-item] h2 + span {
   color: #af8d11;
-  font: 700 26px/1 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 700 26px/1 var(--lux-page-heading);
   white-space: nowrap;
 }
 .lux-product-catalog [data-caviar-item] p {
   margin-top: 16px;
   color: #4f5655;
-  font: 400 13px/1.5 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+  font: 400 13px/1.5 var(--lux-page-heading);
 }
 .lux-product-catalog [data-caviar-item] [data-bag-add] {
   border-width: 2px !important;
@@ -951,7 +1059,7 @@ header:has(.lux-hero-fade-both) {
 .lux-product-notes p {
   margin: 0;
   color: #bdc9c7;
-  font: 400 13px/1.55 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 400 13px/1.55 var(--lux-page-heading);
 }
 .lux-product-notes strong {
   display: block;
@@ -1033,7 +1141,7 @@ header:has(.lux-hero-fade-both) {
   gap: 14px;
   padding: 10px 12px;
   color: #e5e2e1;
-  font: 600 12px/1.2 Montserrat, Arial, sans-serif;
+  font: 600 12px/1.2 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -1043,10 +1151,15 @@ header:has(.lux-hero-fade-both) {
   color: #9df5ec;
 }
 .lux-sort-menu button.is-selected::after {
-  content: "check";
-  font-family: "Material Symbols Outlined";
-  font-size: 18px;
-  letter-spacing: 0;
+  content: none;
+}
+.lux-sort-selected-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  color: #9df5ec;
+  stroke: #9df5ec;
+  stroke-width: 2;
 }
 .lux-back-to-top {
   position: fixed;
@@ -1107,7 +1220,7 @@ header:has(.lux-hero-fade-both) {
   background: rgba(0, 0, 0, .26);
   color: #fff;
   backdrop-filter: blur(8px);
-  font: 600 13px/1 Montserrat, Arial, sans-serif;
+  font: 600 13px/1 var(--lux-page-heading);
   letter-spacing: .14em;
   text-transform: uppercase;
   opacity: 0;
@@ -1155,14 +1268,14 @@ header:has(.lux-hero-fade-both) {
   display: block;
   margin-bottom: 8px;
   color: #9df5ec;
-  font: 700 12px/1.3 Montserrat, Arial, sans-serif;
+  font: 700 12px/1.3 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
 .lux-info-popover p {
   margin: 0;
   color: #d7dcda;
-  font: 400 13px/1.65 Montserrat, Arial, sans-serif;
+  font: 400 13px/1.65 var(--lux-page-heading);
 }
 [data-info-popover] {
   min-width: 44px;
@@ -1190,6 +1303,18 @@ header:has(.lux-hero-fade-both) {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.9;
+}
+.lux-info-icon {
+  flex: 0 0 auto;
+  color: #c9a227 !important;
+  transform: scale(1);
+  transform-origin: center;
+  transition: color .22s ease, transform .22s ease;
+}
+.lux-info-icon:hover,
+.lux-info-icon:focus-visible {
+  color: #9df5ec !important;
+  transform: scale(1.08);
 }
 .lux-product-detail[hidden] { display: none !important; }
 .lux-product-detail {
@@ -1237,7 +1362,7 @@ header:has(.lux-hero-fade-both) {
   border: 1px solid rgba(0,106,100,.35);
   color: #006a64;
   background: rgba(240,238,235,.86);
-  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  font: 700 12px/1 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
@@ -1323,32 +1448,32 @@ header:has(.lux-hero-fade-both) {
 .lux-product-summary span,
 .lux-product-specs span {
   color: #006a64;
-  font: 700 14px/1.45 Montserrat, Arial, sans-serif;
+  font: 700 14px/1.45 var(--lux-page-heading);
   letter-spacing: .14em;
   text-transform: uppercase;
 }
 .lux-product-summary h2 {
   margin: 0;
   color: #1c1b1b;
-  font: 600 clamp(42px, 6vw, 72px)/1.05 "Bodoni Moda", Georgia, serif;
+  font: 600 clamp(42px, 6vw, 72px)/1.05 var(--lux-page-heading);
 }
 .lux-product-summary p,
 .lux-product-story p {
   margin: 0;
   color: #3e4947;
-  font: 400 18px/1.7 Montserrat, Arial, sans-serif;
+  font: 400 18px/1.7 var(--lux-page-heading);
 }
 .lux-product-summary > .lux-product-price {
   color: #af8d11;
-  font: 700 34px/1.1 Montserrat, Arial, sans-serif;
+  font: 700 34px/1.1 var(--lux-page-heading);
   letter-spacing: 0;
 }
-.lux-product-summary small { color: #3e4947; font: 700 13px/1 Montserrat, Arial, sans-serif; }
+.lux-product-summary small { color: #3e4947; font: 700 13px/1 var(--lux-page-heading); }
 .lux-product-price em {
   display: block;
   margin-top: 10px;
   color: #8f6a00;
-  font: 700 14px/1.3 Montserrat, Arial, sans-serif;
+  font: 700 14px/1.3 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -1357,7 +1482,7 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-product-summary > .lux-product-stock {
   color: #087f78;
-  font: 700 11px/1.4 Montserrat, "PingFang SC", sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: .14em;
   text-transform: uppercase;
 }
@@ -1382,7 +1507,7 @@ header:has(.lux-hero-fade-both) {
   display: grid;
   place-items: center;
   color: #1c1b1b;
-  font: 400 24px/1 Montserrat, Arial, sans-serif;
+  font: 400 24px/1 var(--lux-page-heading);
   transition: background .18s ease, color .18s ease;
 }
 .lux-product-qty button:disabled {
@@ -1394,7 +1519,7 @@ header:has(.lux-hero-fade-both) {
   min-width: 40px;
   text-align: center;
   color: #1c1b1b;
-  font: 500 22px/1 Montserrat, Arial, sans-serif;
+  font: 500 22px/1 var(--lux-page-heading);
 }
 .lux-product-summary > button,
 .lux-product-purchase > button {
@@ -1405,7 +1530,7 @@ header:has(.lux-hero-fade-both) {
   padding: 18px 34px;
   border: 2px solid #006a64;
   color: #006a64;
-  font: 700 13px/1 Montserrat, Arial, sans-serif;
+  font: 700 13px/1 var(--lux-page-heading);
   letter-spacing: .14em;
   text-transform: uppercase;
 }
@@ -1417,7 +1542,7 @@ header:has(.lux-hero-fade-both) {
   gap: 12px;
   align-items: center;
   color: #3e4947;
-  font: 700 13px/1.4 Montserrat, Arial, sans-serif;
+  font: 700 13px/1.4 var(--lux-page-heading);
 }
 .lux-product-cart-state[hidden] { display: none; }
 .lux-product-cart-state span {
@@ -1459,7 +1584,7 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-product-specs strong {
   color: #1c1b1b;
-  font: 600 22px/1.25 Montserrat, Arial, sans-serif;
+  font: 600 22px/1.25 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-product-specs.has-label-details {
@@ -1476,7 +1601,7 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-product-story h3 {
   margin: 0 0 24px;
-  font: 500 clamp(32px, 4vw, 48px)/1.15 "Bodoni Moda", Georgia, serif;
+  font: 500 clamp(32px, 4vw, 48px)/1.15 var(--lux-page-heading);
 }
 .lux-product-recent {
   padding: clamp(48px, 7vw, 92px) 0;
@@ -1490,7 +1615,7 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-product-recent h3 {
   margin: 0 0 34px;
-  font: 400 clamp(30px, 4vw, 46px)/1.15 "Bodoni Moda", Georgia, serif;
+  font: 400 clamp(30px, 4vw, 46px)/1.15 var(--lux-page-heading);
 }
 .lux-product-recent-grid {
   display: flex;
@@ -1515,12 +1640,12 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-product-recent-card strong {
   color: #1c1b1b;
-  font: 600 15px/1.5 Montserrat, Arial, sans-serif;
+  font: 600 15px/1.5 var(--lux-page-heading);
   letter-spacing: .08em;
 }
 .lux-product-recent-card small {
   color: #3e4947;
-  font: 400 13px/1.4 Montserrat, Arial, sans-serif;
+  font: 400 13px/1.4 var(--lux-page-heading);
 }
 .lux-product-recent-actions {
   display: flex;
@@ -1532,7 +1657,7 @@ header:has(.lux-hero-fade-both) {
   padding: 10px 14px;
   border: 1px solid rgba(0,106,100,.46);
   color: #006a64;
-  font: 700 11px/1 Montserrat, Arial, sans-serif;
+  font: 700 11px/1 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -1694,7 +1819,7 @@ header:has(.lux-hero-fade-both) {
   color: #fff;
   background: rgba(0,0,0,.18);
   opacity: 0;
-  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  font: 700 12px/1 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
   transition: opacity .2s ease, background .18s ease, color .18s ease;
@@ -1770,7 +1895,7 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-bag-line-total {
   color: #8f6a00;
-  font: 700 13px/1.2 Montserrat, Arial, sans-serif;
+  font: 700 13px/1.2 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -1809,20 +1934,20 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-partner-card-content span {
   color: #9df5ec;
-  font: 700 12px/1.4 Montserrat, Arial, sans-serif;
+  font: 700 12px/1.4 var(--lux-page-heading);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
 .lux-partner-card-content strong {
   max-width: 420px;
-  font: 400 clamp(34px, 5vw, 54px)/1.12 "Bodoni Moda", Georgia, serif;
+  font: 400 clamp(34px, 5vw, 54px)/1.12 var(--lux-page-heading);
 }
 .lux-partner-card-content em {
   min-width: 180px;
   padding: 14px 24px;
   border: 1px solid #e9c349;
   color: #e9c349;
-  font: normal 700 12px/1 Montserrat, Arial, sans-serif;
+  font: normal 700 12px/1 var(--lux-page-heading);
   letter-spacing: .18em;
   text-transform: uppercase;
   transition: background .18s ease, color .18s ease, transform .18s ease;
@@ -1876,7 +2001,7 @@ header:has(.lux-hero-fade-both) {
   padding: 8px 12px;
   border: 1px solid rgba(0,106,100,.28);
   color: #006a64;
-  font: 700 12px/1 Montserrat, Arial, sans-serif;
+  font: 700 12px/1 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
   transition: color .18s ease, border-color .18s ease, transform .18s ease;
@@ -1894,12 +2019,12 @@ header:has(.lux-hero-fade-both) {
 .lux-footer-modal-body h2 {
   margin: 0 0 18px;
   color: #1c1b1b;
-  font: 500 clamp(30px, 5vw, 44px)/1.1 "Bodoni Moda", Georgia, serif;
+  font: 500 clamp(30px, 5vw, 44px)/1.1 var(--lux-page-heading);
 }
 .lux-footer-modal-body p {
   margin: 0;
   color: #3e4947;
-  font: 400 16px/1.75 Montserrat, Arial, sans-serif;
+  font: 400 16px/1.75 var(--lux-page-heading);
 }
 .lux-footer-modal-body .lux-footer-wechat-id {
   margin-top: 8px;
@@ -2222,13 +2347,13 @@ button,
 .lux-account-head h2 {
   margin: 0 !important;
   color: #151818 !important;
-  font: 600 30px/1.15 Montserrat, Arial, sans-serif !important;
+  font: 600 30px/1.15 var(--lux-page-heading);
   letter-spacing: 0 !important;
 }
 .lux-account-head p {
   margin: 0 !important;
   color: #5c6765 !important;
-  font: 400 14px/1.5 Montserrat, Arial, sans-serif !important;
+  font: 400 14px/1.5 var(--lux-page-heading);
 }
 .lux-account-close {
   position: absolute;
@@ -2262,7 +2387,7 @@ button,
 .lux-account-row a,
 .lux-account-submit,
 .lux-account-logout {
-  font-family: Montserrat, Arial, sans-serif !important;
+  font-family: var(--lux-page-heading);
   letter-spacing: .08em !important;
   text-transform: uppercase !important;
 }
@@ -2309,7 +2434,7 @@ button,
   background: transparent !important;
   color: #151818 !important;
   padding: 0 !important;
-  font: 400 14px/1.4 Montserrat, Arial, sans-serif !important;
+  font: 400 14px/1.4 var(--lux-page-heading);
 }
 .lux-account-input input:focus {
   outline: 0 !important;
@@ -2318,7 +2443,7 @@ button,
 .lux-account-password-hint,
 .lux-account-field-error {
   color: #4b5553;
-  font: 500 12px/1.5 Montserrat, Arial, sans-serif;
+  font: 500 12px/1.5 var(--lux-page-heading);
 }
 @keyframes lux-account-warning-shake {
   0%, 100% { transform: translateX(0); }
@@ -2357,7 +2482,7 @@ button,
 .lux-account-existing,
 .lux-account-existing button {
   color: #4b5553 !important;
-  font: 400 12px/1.5 Montserrat, Arial, sans-serif !important;
+  font: 400 12px/1.5 var(--lux-page-heading);
   white-space: nowrap !important;
   transition: color .18s ease, transform .18s ease !important;
 }
@@ -2410,7 +2535,7 @@ html[lang^="en"] [data-account-forgot] {
   margin: 0 0 18px;
   color: #4b5553;
   cursor: pointer;
-  font: 400 12px/1.5 Montserrat, Arial, sans-serif;
+  font: 400 12px/1.5 var(--lux-page-heading);
 }
 .lux-account-newsletter input,
 .lux-account-consent input {
@@ -2436,7 +2561,7 @@ html[lang^="en"] [data-account-forgot] {
   min-height: 18px;
   margin: 0 0 12px !important;
   color: #8b2f28 !important;
-  font: 500 12px/1.5 Montserrat, Arial, sans-serif !important;
+  font: 500 12px/1.5 var(--lux-page-heading);
 }
 .lux-account-feedback.is-success {
   color: #006a64 !important;
@@ -2526,7 +2651,7 @@ html[lang^="en"] [data-account-forgot] {
 }
 
 h1.zh-display-title {
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
+  font-family: var(--lux-page-heading);
   font-size: clamp(64px, 8.4vw, 120px) !important;
   line-height: .92 !important;
   font-weight: 700 !important;
@@ -2544,7 +2669,7 @@ html[lang^="zh"] :is(
   .font-headline-md,
   .font-headline-sm
 ) {
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
+  font-family: var(--lux-page-heading);
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
@@ -2560,7 +2685,7 @@ html[lang^="zh"] .lux-reader-archive-card:focus-visible strong {
 
 html[lang^="zh"] .lux-reader-archive h2,
 html[lang^="zh"] .lux-reader-archive-card strong {
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
+  font-family: var(--lux-page-heading);
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
@@ -2626,6 +2751,8 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
   will-change: transform;
 }
 .lux-latest-event-slide {
+  display: flex;
+  align-items: center;
   flex: 0 0 100%;
   width: 100%;
   min-width: 0;
@@ -2634,6 +2761,7 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
 .lux-latest-event-inner {
   position: relative;
   z-index: 1;
+  width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
@@ -2647,13 +2775,13 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
 .lux-event-copy h2 {
   margin: 0;
   color: #c9a227;
-  font: 700 clamp(30px, 3.4vw, 46px)/1.15 "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font: 700 clamp(30px, 3.4vw, 46px)/1.15 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-event-copy p {
   margin: 18px 0 0;
   color: #3e4947;
-  font: 400 16px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 16px/1.75 var(--lux-page-heading);
 }
 .lux-event-copy strong {
   color: #1f2424;
@@ -2727,7 +2855,7 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
 .lux-event-carousel-controls span {
   min-width: 54px;
   color: #3e4947;
-  font: 600 12px/1 Montserrat, Arial, sans-serif;
+  font: 600 12px/1 var(--lux-page-heading);
   text-align: center;
   letter-spacing: .08em;
 }
@@ -2810,32 +2938,47 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
   gap: clamp(44px, 8vw, 120px);
-  align-items: end;
+  align-items: stretch;
   padding-top: 28px;
   border-top: 1px solid rgba(255, 255, 255, .18);
 }
-.lux-home-maison-head span {
+.lux-home-maison-head > div:first-child,
+.lux-home-maison-intro {
+  display: flex;
+  flex-direction: column;
+}
+.lux-home-maison-head > div:first-child > span:first-child {
   display: block;
   margin-bottom: 24px;
   color: #0abab5;
-  font: 600 11px/1.4 Montserrat, "PingFang SC", sans-serif;
+  font: 600 11px/1.4 var(--lux-page-heading);
   letter-spacing: .28em;
   text-transform: uppercase;
 }
+html[lang^="en"] .lux-home-maison-head > div:first-child {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+html[lang^="en"] .lux-home-maison-head > div:first-child > h2 {
+  align-self: center;
+}
 .lux-home-maison-head h2 {
   margin: 0;
-  font: 700 clamp(46px, 6.8vw, 98px)/.96 "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font: 700 clamp(46px, 6.8vw, 98px)/.96 var(--lux-page-heading);
   letter-spacing: -.035em;
 }
 html[lang^="en"] .lux-home-maison-head h2 {
-  font-family: "Bodoni Moda", Georgia, serif;
+  font-family: var(--lux-page-heading);
   font-weight: 500;
 }
 .lux-home-maison-intro {
-  display: grid;
   gap: 18px;
   color: rgba(241, 238, 232, .72);
-  font: 400 17px/1.75 Montserrat, "PingFang SC", sans-serif;
+  font: 400 17px/1.75 var(--lux-page-heading);
+}
+.lux-home-maison-intro > a,
+.lux-home-maison-head > div:first-child > blockquote {
+  margin-top: auto;
 }
 .lux-home-maison-intro p { margin: 0; }
 .lux-home-maison-intro a,
@@ -2850,13 +2993,21 @@ html[lang^="en"] .lux-home-maison-head h2 {
 .lux-home-maison-reach a:hover,
 .lux-home-maison-reach a:focus-visible { color: #9df5ec; }
 .lux-home-maison blockquote {
-  margin: clamp(36px, 4vw, 62px) 0 clamp(44px, 6vw, 82px);
-  padding: 0 0 28px;
-  border-bottom: 1px solid rgba(255, 255, 255, .12);
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 0;
+  border: 0;
   color: #d4dcda;
-  font: 400 clamp(28px, 4vw, 62px)/1.12 "Bodoni Moda", "Alimama ShuHei", serif;
+  font: 400 clamp(28px, 4vw, 62px)/1.12 var(--lux-page-heading);
+}
+.lux-home-maison-grid {
+  margin-top: clamp(44px, 6vw, 82px);
 }
 .lux-home-maison blockquote strong { color: #e9c349; font-weight: 600; }
+html[lang^="zh"] .lux-home-maison-head blockquote {
+  transform: translateY(1.7px);
+}
 .lux-home-maison-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2882,7 +3033,7 @@ html[lang^="en"] .lux-home-maison-head h2 {
 }
 .lux-home-maison-grid span {
   color: #0abab5;
-  font: 600 10px/1.3 Montserrat, sans-serif;
+  font: 600 10px/1.3 var(--lux-page-heading);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
@@ -2890,13 +3041,13 @@ html[lang^="en"] .lux-home-maison-head h2 {
 .lux-home-maison-grid > a:focus-visible span { color: #101010; }
 .lux-home-maison-grid h3 {
   margin: 46px 0 18px;
-  font: 600 27px/1.15 "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font: 600 27px/1.15 var(--lux-page-heading);
 }
-html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia, serif; }
+html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading); }
 .lux-home-maison-grid p {
   margin: 0;
   color: rgba(241, 238, 232, .62);
-  font: 400 14px/1.65 Montserrat, "PingFang SC", sans-serif;
+  font: 400 14px/1.65 var(--lux-page-heading);
 }
 .lux-home-maison-grid > a:hover p,
 .lux-home-maison-grid > a:focus-visible p { color: rgba(16, 16, 16, .76); }
@@ -2904,7 +3055,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   margin-top: auto;
   padding-top: 28px;
   color: #c9a227;
-  font: 600 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 600 12px/1.3 var(--lux-page-heading);
 }
 .lux-home-maison-grid > a:hover b,
 .lux-home-maison-grid > a:focus-visible b { color: #101010; }
@@ -2917,7 +3068,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 }
 .lux-home-maison-reach > span {
   color: #77736d;
-  font: 600 10px/1.4 Montserrat, sans-serif;
+  font: 600 10px/1.4 var(--lux-page-heading);
   letter-spacing: .22em;
   text-transform: uppercase;
 }
@@ -2976,7 +3127,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 .lux-home-editorial-folio {
   grid-column: 9 / 13;
   color: #77736d;
-  font: 600 10px/1.4 Montserrat, Arial, sans-serif;
+  font: 600 10px/1.4 var(--lux-page-heading);
   letter-spacing: .22em;
   text-align: right;
 }
@@ -3072,9 +3223,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 }
 
 .lux-home-gifting {
-  background:
-    linear-gradient(rgba(7, 7, 7, .78), rgba(7, 7, 7, .84)),
-    url("assets/media/brand/home-gifting-waves.webp") center / cover no-repeat;
+  background: #070707;
 }
 .lux-home-gifting .lux-home-editorial-frame {
   grid-template-rows: auto auto auto 1fr;
@@ -3257,7 +3406,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   top: 2%;
   right: -1.5%;
   color: rgba(7,127,120,.06);
-  font: 700 clamp(54px, 8.5vw, 150px)/.85 Montserrat, sans-serif;
+  font: 700 clamp(54px, 8.5vw, 150px)/.85 var(--lux-page-heading);
   letter-spacing: -.05em;
   white-space: nowrap;
   pointer-events: none;
@@ -3288,7 +3437,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   display: block;
   margin-bottom: 18px;
   color: rgba(7,127,120,.48);
-  font: 700 9px/1.4 Montserrat, sans-serif;
+  font: 700 9px/1.4 var(--lux-page-heading);
   letter-spacing: .22em;
 }
 .lux-home-why-metrics > div {
@@ -3379,7 +3528,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   border-bottom: 1px solid rgba(229, 226, 225, .28);
   background: transparent;
   color: #c9a227;
-  font: 400 18px/1.5 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font: 400 18px/1.5 var(--lux-page-heading);
   letter-spacing: 0;
   text-decoration: none;
   cursor: pointer;
@@ -3423,7 +3572,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
   padding: clamp(72px, 8vw, 112px) clamp(22px, 5vw, 80px);
   background: #f2eee8;
   color: #111;
-  font-family: Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--lux-page-heading);
 }
 .lux-recent-events-inner {
   max-width: 1280px;
@@ -3449,11 +3598,11 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: "Bodoni Moda", Georgia,
 }
 .lux-recent-events-head h2 {
   margin: 0;
-  font: 400 clamp(46px, 7vw, 92px)/.95 "Bodoni Moda", Georgia, serif;
+  font: 400 clamp(46px, 7vw, 92px)/.95 var(--lux-page-heading);
   letter-spacing: 0;
 }
 html[lang^="zh"] .lux-recent-events-head h2 {
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--lux-page-heading);
   font-weight: 700;
 }
 .lux-recent-events-latest,
@@ -3520,7 +3669,7 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   border: 1px solid rgba(255,255,255,.82);
   background: rgba(0,0,0,.62);
   color: #fff;
-  font: 600 var(--lux-type-button)/1 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 var(--lux-type-button)/1 var(--lux-page-heading);
   letter-spacing: .14em;
   opacity: 0;
   transform: translate(-50%, calc(-50% + 5px));
@@ -3604,7 +3753,7 @@ html[lang^="zh"] .lux-recent-events-head h2 {
 .lux-about-program-kicker {
   margin: 0 0 18px;
   color: #078e89;
-  font: 700 12px/1.4 Montserrat, Arial, sans-serif;
+  font: 700 12px/1.4 var(--lux-page-heading);
   letter-spacing: .22em;
 }
 .lux-about-program--identity .lux-about-program-kicker { color: #9df5ec; }
@@ -3616,13 +3765,13 @@ html[lang^="zh"] .lux-recent-events-head h2 {
 }
 .lux-about-program-lead h2 {
   margin: 0;
-  font: 700 clamp(34px, 4vw, 58px)/1.06 "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font: 700 clamp(34px, 4vw, 58px)/1.06 var(--lux-page-heading);
   letter-spacing: -.025em;
 }
 .lux-about-program-lead p {
   margin: 4px 0 0;
   color: #d4dcda;
-  font: 400 clamp(16px, 1.5vw, 20px)/1.8 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 clamp(16px, 1.5vw, 20px)/1.8 var(--lux-page-heading);
 }
 .lux-about-program--identity .lux-about-program-lead p { color: #bdc9c7; }
 .lux-about-program-grid {
@@ -3649,18 +3798,18 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   display: block;
   margin-bottom: 22px;
   color: #078e89;
-  font: 700 11px/1.4 Montserrat, Arial, sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: .16em;
 }
 .lux-about-program-grid h3 {
   margin: 0 0 14px;
   color: #fff;
-  font: 600 clamp(20px, 2vw, 28px)/1.2 "Bodoni Moda", Georgia, "PingFang SC", serif;
+  font: 600 clamp(20px, 2vw, 28px)/1.2 var(--lux-page-heading);
 }
 .lux-about-program-grid article p {
   margin: 0;
   color: #d4dcda;
-  font: 400 14px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 14px/1.75 var(--lux-page-heading);
 }
 .lux-product-characteristics-note {
   display: grid;
@@ -3673,12 +3822,12 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   color: #f4f2ee;
 }
 .lux-product-characteristics-note strong {
-  font: 600 17px/1.5 Montserrat, "PingFang SC", sans-serif;
+  font: 600 17px/1.5 var(--lux-page-heading);
 }
 .lux-product-characteristics-note p {
   margin: 0;
   color: #d4dcda;
-  font: 400 14px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 14px/1.75 var(--lux-page-heading);
 }
 @media (prefers-reduced-motion: reduce) {
   .lux-about-program-media { display: none; }
@@ -3716,15 +3865,15 @@ html[lang^="zh"] .lux-recent-events-head h2 {
 }
 .lux-recipe-jump-nav span {
   color: #0abab5;
-  font: 600 11px/1 Montserrat, sans-serif;
+  font: 600 11px/1 var(--lux-page-heading);
   letter-spacing: .12em;
 }
 .lux-recipe-jump-nav strong {
-  font: 600 13px/1.25 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 600 13px/1.25 var(--lux-page-heading);
 }
 .lux-recipe-jump-nav b {
   color: #0abab5;
-  font: 400 18px/1 sans-serif;
+  font: 400 18px/1 var(--lux-page-heading);
 }
 .lux-recipe-jump-nav a:hover,
 .lux-recipe-jump-nav a:focus-visible {
@@ -3881,10 +4030,10 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   text-transform: uppercase;
 }
 .lux-event-card-copy strong {
-  font: 400 clamp(28px, 3.2vw, 46px)/1.08 "Bodoni Moda", Georgia, serif;
+  font: 400 clamp(28px, 3.2vw, 46px)/1.08 var(--lux-page-heading);
 }
 html[lang^="zh"] .lux-event-card-copy strong {
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--lux-zh-headline);
   font-weight: 700;
 }
 .lux-event-card-copy > span:not(.lux-narrative-link) {
@@ -3934,7 +4083,7 @@ html[lang^="zh"] .lux-event-card-copy strong {
   margin: 0 auto;
   padding: 44px 0 72px;
   color: #111;
-  font-family: Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--lux-page-heading);
 }
 .lux-event-reader-intro {
   display: grid;
@@ -3959,11 +4108,11 @@ html[lang^="zh"] .lux-event-card-copy strong {
 .lux-event-reader-intro h2 {
   max-width: 860px;
   margin: 0;
-  font: 400 clamp(58px, 9vw, 120px)/.88 "Bodoni Moda", Georgia, serif;
+  font: 400 clamp(58px, 9vw, 120px)/.88 var(--lux-page-heading);
   letter-spacing: 0;
 }
 html[lang^="zh"] .lux-event-reader-intro h2 {
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--lux-page-heading);
   font-weight: 700;
 }
 .lux-event-reader-layout {
@@ -4011,7 +4160,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 .lux-event-reader-copy h3 {
   margin: 0 0 14px;
-  font-family: "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--lux-page-heading);
   font-size: 30px;
   font-weight: 700;
 }
@@ -4192,7 +4341,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   border: 1px solid #101010;
   background: #f4f2ee;
   color: #101010;
-  font: 600 12px/1 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 12px/1 var(--lux-page-heading);
   letter-spacing: 0;
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
 }
@@ -4265,7 +4414,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   gap: 12px;
   margin-bottom: 34px;
   color: #77736c;
-  font: 600 12px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 12px/1.35 var(--lux-page-heading);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -4273,14 +4422,14 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   max-width: 760px;
   margin: 0;
   color: #101010;
-  font: 700 clamp(58px, 8vw, 112px)/.95 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font: 700 clamp(58px, 8vw, 112px)/.95 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-summary {
   max-width: 500px;
   margin: 28px 0 0;
   color: #2b2a28;
-  font: 400 20px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+  font: 400 20px/1.35 var(--lux-page-heading);
 }
 .lux-reader-cover {
   margin: 0;
@@ -4296,7 +4445,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-reader-cover figcaption {
   margin-top: 14px;
   color: #77736c;
-  font: 600 12px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 12px/1.35 var(--lux-page-heading);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -4311,7 +4460,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   gap: 8px;
   align-content: start;
   color: #77736c;
-  font: 600 13px/1.5 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 13px/1.5 var(--lux-page-heading);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -4362,7 +4511,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-reader-section-media figcaption {
   margin-top: 10px;
   color: #77736c;
-  font: 600 11px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 11px/1.35 var(--lux-page-heading);
   text-transform: uppercase;
 }
 @media (max-width: 700px) {
@@ -4373,13 +4522,13 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-reader-layout .lux-reader-copy h3 {
   margin: 0 0 16px;
   color: #006a64;
-  font: 700 30px/1.18 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font: 700 30px/1.18 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-layout .lux-reader-copy p {
   margin: 0 0 24px;
   color: #2b2a28;
-  font: 400 19px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+  font: 400 19px/1.75 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-layout .lux-reader-copy .lux-reader-inline-heading {
@@ -4394,7 +4543,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   margin: 0;
   color: #77736c;
   text-align: center;
-  font: 700 18px/1.5 Montserrat, "PingFang SC", Arial, sans-serif;
+  font: 700 18px/1.5 var(--lux-page-heading);
 }
 .lux-caviar-empty[hidden] {
   display: none;
@@ -4454,14 +4603,14 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-home-hero-action {
   border-color: #9df5ec !important;
   color: #9df5ec !important;
-  font-family: "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font-family: var(--lux-page-heading);
   font-weight: 700 !important;
 }
 @media (max-width: 720px) {
   .lux-home-hero {
     min-height: auto;
     padding-block: 56px;
-    overflow: visible;
+    overflow: hidden;
   }
   .lux-home-hero-content {
     top: 0;
@@ -4502,19 +4651,19 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-ingredients > span,
 .lux-recipe-method > span {
   color: #79e4da;
-  font: 700 12px/1.3 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 700 12px/1.3 var(--lux-page-heading);
   letter-spacing: .24em;
   text-transform: uppercase;
 }
 .lux-recipe-intro h2 {
   margin: 18px 0 26px;
   color: #f4f2ee;
-  font: 700 clamp(46px, 6vw, 82px)/.98 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font: 700 clamp(46px, 6vw, 82px)/.98 var(--lux-page-heading);
 }
 .lux-recipe-intro > p {
   margin: 0;
   color: #c9c5bd;
-  font: 400 17px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 17px/1.75 var(--lux-page-heading);
 }
 .lux-recipe-facts {
   display: grid;
@@ -4532,14 +4681,14 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-facts dt,
 .lux-recipe-nutrition dt {
   color: #817d75;
-  font: 600 11px/1.3 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 600 11px/1.3 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
 .lux-recipe-facts dd {
   margin: 0;
   color: #f4f2ee;
-  font: 700 15px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 700 15px/1.4 var(--lux-page-heading);
 }
 .lux-recipe-body {
   display: grid;
@@ -4551,7 +4700,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-nutrition h3 {
   margin: 12px 0 28px;
   color: #101010;
-  font: 700 clamp(30px, 4vw, 48px)/1.05 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  font: 700 clamp(30px, 4vw, 48px)/1.05 var(--lux-page-heading);
 }
 .lux-recipe-ingredients {
   align-self: start;
@@ -4564,7 +4713,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-ingredients > p {
   margin: 0 0 28px;
   color: #55514b;
-  font: 400 15px/1.7 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 15px/1.7 var(--lux-page-heading);
 }
 .lux-recipe-ingredients ul,
 .lux-recipe-method ol {
@@ -4576,7 +4725,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   padding: 13px 0;
   border-top: 1px solid #cec8bd;
   color: #242321;
-  font: 500 16px/1.55 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 500 16px/1.55 var(--lux-page-heading);
 }
 .lux-recipe-method ol {
   counter-reset: recipe-step;
@@ -4586,7 +4735,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   min-height: 52px;
   padding: 2px 0 28px 68px;
   color: #2b2926;
-  font: 400 18px/1.7 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 400 18px/1.7 var(--lux-page-heading);
   counter-increment: recipe-step;
 }
 .lux-recipe-method li::before {
@@ -4595,7 +4744,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   top: 0;
   left: 0;
   color: #087d77;
-  font: 700 22px/1 Montserrat, sans-serif;
+  font: 700 22px/1 var(--lux-page-heading);
 }
 .lux-recipe-nutrition {
   margin: 0 clamp(18px, 4vw, 56px);
@@ -4623,13 +4772,13 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-nutrition dd {
   margin: 0;
   color: #151513;
-  font: 700 16px/1.45 Montserrat, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 700 16px/1.45 var(--lux-page-heading);
 }
 .lux-reader-copy .lux-reader-section:first-child p:first-of-type::first-letter {
   float: left;
   margin: 8px 10px 0 0;
   color: #006a64;
-  font: 400 76px/.74 "Bodoni Moda", Georgia, "Times New Roman", serif;
+  font: 400 76px/.74 var(--lux-page-heading);
 }
 html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-type::first-letter {
   margin: 8px 14px 10px 0;
@@ -4642,7 +4791,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   border-left: 1px solid #101010;
   color: #101010;
   text-align: left;
-  font: 400 32px/1.12 "Bodoni Moda", Georgia, "Times New Roman", serif !important;
+  font: 400 32px/1.12 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-pull {
@@ -4654,7 +4803,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   padding-top: 16px;
   border-top: 1px solid #101010;
   color: #77736c;
-  font: 400 14px/1.5 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 400 14px/1.5 var(--lux-page-heading);
   letter-spacing: 0;
 }
 @media (max-width: 980px) {
@@ -4678,14 +4827,14 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-toc span {
   color: #77736c;
-  font: 600 12px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 12px/1.4 var(--lux-page-heading);
   letter-spacing: 0;
   text-transform: uppercase;
 }
 .lux-reader-toc a {
   width: fit-content;
   color: #77736c;
-  font: 700 17px/1.35 "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font: 700 17px/1.35 var(--lux-page-heading);
   letter-spacing: 0;
   transform-origin: left center;
   transition: color .18s ease, transform .18s ease;
@@ -4704,7 +4853,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-reader-related h3 {
   margin: 0 0 20px;
   color: #101010;
-  font: 400 30px/1 "Bodoni Moda", Georgia, "Times New Roman", serif !important;
+  font: 400 30px/1 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-related-grid {
@@ -4751,12 +4900,12 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-related-grid button > span:not(.lux-reader-related-media) {
   color: #77736c;
-  font: 600 11px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 11px/1.4 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-related-grid strong {
   color: #101010;
-  font: 600 15px/1.35 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 15px/1.35 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-related-cta,
@@ -4782,7 +4931,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   opacity: 0;
   transform: translate(-50%, -50%);
   white-space: nowrap;
-  font: 700 14px/1 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif !important;
+  font: 700 14px/1 var(--lux-page-heading);
 }
 .lux-reader-archive-cta {
   opacity: 0;
@@ -4836,7 +4985,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-reader-archive h2 {
   margin: 0;
   color: #101010;
-  font: 400 clamp(36px, 5vw, 58px)/1.1 "Bodoni Moda", Georgia, "Times New Roman", serif;
+  font: 400 clamp(36px, 5vw, 58px)/1.1 var(--lux-page-heading);
   letter-spacing: 0;
 }
 .lux-reader-archive-tabs {
@@ -4846,7 +4995,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-archive-tabs button {
   color: #77736c;
-  font: 700 11px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: 0;
   text-transform: uppercase;
   border-bottom: 1px solid transparent;
@@ -4919,7 +5068,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-reader-archive-card small {
   display: block;
   color: #77736c;
-  font: 700 10px/1.4 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 700 10px/1.4 var(--lux-page-heading);
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -4927,7 +5076,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   display: block;
   margin: 7px 0;
   color: #101010;
-  font: 400 22px/1.25 "Bodoni Moda", Georgia, "Times New Roman", serif;
+  font: 400 22px/1.25 var(--lux-page-heading);
   letter-spacing: 0;
   transition: color .18s ease;
 }
@@ -5090,12 +5239,12 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-cert-card-front h5 {
   margin: 0 0 9px;
   color: #f4f2ee;
-  font: 700 16px/1.25 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 700 16px/1.25 var(--lux-page-heading);
 }
 .lux-cert-card-front p {
   margin: 0;
   color: #aaa8a2;
-  font: 500 12px/1.65 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 500 12px/1.65 var(--lux-page-heading);
 }
 .lux-cert-card-back {
   justify-content: center;
@@ -5138,13 +5287,13 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-page-hero-subtitle {
   color: #bdc9c7;
-  font: 300 18px/1.625 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 300 18px/1.625 var(--lux-page-heading);
 }
 .lux-hero-kicker {
   display: block;
   margin-bottom: 24px;
   color: #9df5ec;
-  font: 600 14px/20px Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 600 14px/20px var(--lux-page-heading);
   font-size: 14px !important;
   line-height: 20px !important;
   letter-spacing: 4.2px;
@@ -5170,7 +5319,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   max-width: 880px;
   margin: 0 auto 28px;
   color: #bdc9c7;
-  font: 300 14px/1.75 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 300 14px/1.75 var(--lux-page-heading);
 }
 .lux-cert-hero-note strong {
   color: #8beee5;
@@ -5207,6 +5356,9 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-contact-form .relative {
   transition: border-color .2s ease;
 }
+.lux-contact-form .relative.is-invalid {
+  border-color: #b94a42 !important;
+}
 .lux-contact-form .relative:focus-within {
   border-color: rgba(157, 245, 236, .72);
 }
@@ -5216,6 +5368,89 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-contact-form .relative:focus-within > label {
   color: #fff !important;
   font-weight: 700;
+}
+.lux-required-icon {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  color: #d45f56;
+  stroke-width: 2.5;
+}
+.lux-contact-select-wrap {
+  position: relative;
+}
+.lux-contact-select-wrap select {
+  cursor: pointer;
+  color-scheme: dark;
+}
+.lux-contact-select-icon {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  color: rgba(255,255,255,.5);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.lux-contact-field-error,
+.lux-contact-feedback {
+  display: block;
+  margin-top: 8px;
+  color: #d96d64;
+  font: 600 13px/1.5 var(--lux-page-heading);
+}
+.lux-contact-field-error[hidden] {
+  display: none;
+}
+.lux-contact-field-error.is-shaking,
+.lux-contact-feedback.is-shaking {
+  animation: lux-account-warning-shake .34s ease;
+}
+.lux-contact-feedback {
+  min-height: 20px;
+  margin: 14px 0 0;
+}
+.lux-contact-feedback.is-success {
+  color: #9df5ec;
+}
+.lux-contact-honeypot {
+  position: fixed !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.lux-contact-form button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+.lux-contact-services li {
+  font-size: 16px;
+  line-height: 24px;
+  transform-origin: left center;
+  transition: color .2s ease, transform .2s ease;
+}
+.lux-contact-services li:hover {
+  color: #9df5ec;
+  transform: scale(1.025);
+}
+.lux-contact-main {
+  padding-bottom: 0;
+}
+.lux-contact-left {
+  padding-bottom: 64px;
+}
+@media (min-width: 1024px) {
+  .lux-contact-services {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
+  .lux-contact-business-card {
+    flex: 1;
+  }
 }
 .lux-contact-network-thumb {
   background: url("assets/media/brand/contact-global-network.webp") center / cover no-repeat;
@@ -5232,7 +5467,8 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 @media (prefers-reduced-motion: reduce) {
   .lux-light-glass-card,
-  .lux-contact-service-thumb { transition: none; transform: none !important; }
+  .lux-contact-service-thumb,
+  .lux-contact-services li { transition: none; transform: none !important; }
 }
 
 #inquiry .lux-partner-card {
@@ -5290,10 +5526,10 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-partnership-cases-head h2 {
   margin: 0;
-  font: 700 clamp(48px, 7vw, 94px)/.96 "Alimama ShuHei", "PingFang SC", sans-serif;
+  font: 700 clamp(48px, 7vw, 94px)/.96 var(--lux-page-heading);
 }
 html[lang^="en"] .lux-partnership-cases-head h2 {
-  font-family: "Bodoni Moda", Georgia, serif;
+  font-family: var(--lux-page-heading);
   font-weight: 500;
 }
 .lux-partnership-cases-head p {
@@ -5349,7 +5585,7 @@ html[lang^="en"] .lux-partnership-cases-head h2 {
   border: 1px solid rgba(255,255,255,.88);
   color: #fff;
   background: rgba(0,0,0,.38);
-  font: 700 11px/1 Montserrat, "PingFang SC", sans-serif;
+  font: 700 11px/1 var(--lux-page-heading);
   letter-spacing: .1em;
   opacity: 0;
   white-space: nowrap;
@@ -5410,7 +5646,7 @@ html[lang^="en"] .lux-partnership-cases-head h2 {
   color: #087f78;
 }
 .lux-partnership-cases-grid article > div > span:first-child {
-  font: 700 10px/1.4 Montserrat, sans-serif;
+  font: 700 10px/1.4 var(--lux-page-heading);
   letter-spacing: .16em;
 }
 .lux-partnership-cases-grid .material-symbols-outlined {
@@ -5418,10 +5654,10 @@ html[lang^="en"] .lux-partnership-cases-head h2 {
 }
 .lux-partnership-cases-grid h3 {
   margin: 42px 0 18px;
-  font: 700 27px/1.15 "Alimama ShuHei", "PingFang SC", sans-serif;
+  font: 700 27px/1.15 var(--lux-page-heading);
 }
 html[lang^="en"] .lux-partnership-cases-grid h3 {
-  font-family: Montserrat, Arial, sans-serif;
+  font-family: var(--lux-page-heading);
 }
 .lux-partnership-cases-grid p {
   margin: 0;
@@ -5434,7 +5670,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   margin-top: auto;
   padding-top: 20px;
   color: #087f78;
-  font: 700 11px/1.4 Montserrat, sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
   text-decoration: none;
   text-transform: uppercase;
@@ -5495,7 +5731,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   outline: 0;
   background: transparent;
   color: inherit;
-  font: 500 13px/1 Montserrat, "PingFang SC", sans-serif;
+  font: 500 13px/1 var(--lux-page-heading);
 }
 .lux-caviar-search input::placeholder { color: currentColor; opacity: .68; }
 .lux-news-center {
@@ -5656,7 +5892,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   height: 30px;
   border-bottom: 1px solid #ccc;
   background: #fff;
-  font: 700 20px/30px Arial, sans-serif;
+  font: 700 20px/30px var(--lux-page-heading);
   text-align: center;
   text-decoration: none;
 }
@@ -5701,7 +5937,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   border-radius: 50% 50% 50% 10%;
   background: var(--marker-color);
   color: #06201e;
-  font: 800 12px/1 Montserrat, sans-serif;
+  font: 800 12px/1 var(--lux-page-heading);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--marker-color) 22%, transparent);
   transform: rotate(-45deg);
   transition: transform .18s ease;
@@ -6065,7 +6301,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-product-filter-panel header strong,
 .lux-product-filter-panel h3 {
-  font: 700 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 700 12px/1.3 var(--lux-page-heading);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -6073,7 +6309,7 @@ input[type="search"]::-webkit-search-decoration {
   padding: 0;
   border: 0;
   color: #9df5ec;
-  font: 500 11px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 500 11px/1.3 var(--lux-page-heading);
 }
 .lux-product-filter-panel section { padding-top: 24px; }
 .lux-product-filter-panel h3 { margin: 0 0 18px; color: #fff; }
@@ -6089,7 +6325,7 @@ input[type="search"]::-webkit-search-decoration {
   padding: 0;
   border: 0;
   color: #aeb5b3;
-  font: 500 12px/1.45 Montserrat, "PingFang SC", sans-serif;
+  font: 500 12px/1.45 var(--lux-page-heading);
   text-align: left;
 }
 .lux-product-filter-list button > span {
@@ -6177,12 +6413,12 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-meet-map-card > span {
   color: #9df5ec;
-  font: 700 10px/1.4 Montserrat, sans-serif;
+  font: 700 10px/1.4 var(--lux-page-heading);
   letter-spacing: .25em;
 }
 .lux-meet-map-card h2 {
   margin: 12px 0;
-  font: 500 clamp(38px, 5vw, 66px)/1 "Bodoni Moda", "Alimama ShuHei", serif;
+  font: 500 clamp(38px, 5vw, 66px)/1 var(--lux-page-heading);
 }
 .lux-meet-map-card p { margin: 0 0 24px; color: #d4dddb; line-height: 1.7; }
 .lux-meet-map-card a {
@@ -6232,7 +6468,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-exhibition-map-head > span {
   color: #9df5ec;
-  font: 700 11px/1.4 Montserrat, sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: .28em;
   text-transform: uppercase;
 }
@@ -6240,7 +6476,7 @@ input[type="search"]::-webkit-search-decoration {
   grid-row: 2 / 4;
   margin: 0;
   color: #fff;
-  font: 500 clamp(42px, 5vw, 72px)/1.05 "Bodoni Moda", "Alimama ShuHei", serif;
+  font: 500 clamp(42px, 5vw, 72px)/1.05 var(--lux-page-heading);
 }
 .lux-exhibition-map-head p {
   margin: 0;
@@ -6343,8 +6579,8 @@ input[type="search"]::-webkit-search-decoration {
   pointer-events: none;
 }
 .lux-contact-results header { max-width: 780px; margin: 0 auto 50px; text-align: center; }
-.lux-contact-results header > span { color: #9df5ec; font: 700 10px/1.4 Montserrat, sans-serif; letter-spacing: .26em; text-transform: uppercase; }
-.lux-contact-results h2 { margin: 12px 0 16px; color: #fff; font: 500 clamp(40px, 5vw, 70px)/1.05 "Bodoni Moda", "Alimama ShuHei", serif; }
+.lux-contact-results header > span { color: #9df5ec; font: 700 10px/1.4 var(--lux-page-heading); letter-spacing: .26em; text-transform: uppercase; }
+.lux-contact-results h2 { margin: 12px 0 16px; color: #fff; font: 500 clamp(40px, 5vw, 70px)/1.05 var(--lux-page-heading); }
 .lux-contact-results h2 em { color: #d0ac2d; font-style: normal; }
 .lux-contact-results header p { margin: 0; color: #bdc9c7; line-height: 1.75; }
 .lux-contact-results-grid {
@@ -6385,9 +6621,9 @@ input[type="search"]::-webkit-search-decoration {
   transition: opacity .3s ease;
   pointer-events: none;
 }
-.lux-contact-results-main figcaption p { margin: 0 0 34px; color: #f5f3ee; font: 500 clamp(20px, 2.1vw, 32px)/1.55 "Bodoni Moda", "PingFang SC", serif; }
+.lux-contact-results-main figcaption p { margin: 0 0 34px; color: #f5f3ee; font: 500 clamp(20px, 2.1vw, 32px)/1.55 var(--lux-page-heading); }
 .lux-contact-results-main figcaption footer { display: grid; gap: 6px; padding-top: 18px; border-top: 1px solid #d0ac2d; }
-.lux-contact-results-main figcaption span { color: #9df5ec; font: 600 11px/1.4 Montserrat, "PingFang SC", sans-serif; letter-spacing: .14em; }
+.lux-contact-results-main figcaption span { color: #9df5ec; font: 600 11px/1.4 var(--lux-page-heading); letter-spacing: .14em; }
 .lux-contact-results-main:hover::after,
 .lux-contact-results-main:focus-visible::after,
 .lux-contact-results-main:hover figcaption,
@@ -6436,7 +6672,7 @@ input[type="search"]::-webkit-search-decoration {
 .lux-contact-results-grid blockquote:focus-visible .lux-contact-results-quote-image {
   transform: scale(1.045);
 }
-.lux-contact-results-grid blockquote p { margin: 0 0 34px; color: #f5f3ee; font: 500 clamp(20px, 2.1vw, 32px)/1.55 "Bodoni Moda", "PingFang SC", serif; }
+.lux-contact-results-grid blockquote p { margin: 0 0 34px; color: #f5f3ee; font: 500 clamp(20px, 2.1vw, 32px)/1.55 var(--lux-page-heading); }
 .lux-contact-results-grid blockquote footer { display: grid; gap: 6px; padding-top: 18px; border-top: 1px solid #d0ac2d; }
 .lux-contact-results-grid blockquote span { color: #9df5ec; font-size: 12px; letter-spacing: .12em; }
 
@@ -6567,12 +6803,12 @@ input[type="search"]::-webkit-search-decoration {
   display: block;
   margin-bottom: 18px;
   color: #087f78;
-  font: 700 12px/1.2 Montserrat, sans-serif;
+  font: 700 12px/1.2 var(--lux-page-heading);
   letter-spacing: .24em;
 }
 .lux-importer-invite-head h2 {
   margin: 0 0 24px;
-  font: 700 clamp(42px, 6vw, 82px)/.98 "Alimama ShuHei", "PingFang SC", sans-serif;
+  font: 700 clamp(42px, 6vw, 82px)/.98 var(--lux-page-heading);
 }
 .lux-importer-invite-head h2 em {
   color: #c99f22;
@@ -6610,7 +6846,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-importer-invite-grid h3 {
   margin: 0 0 24px;
-  font: 700 28px/1.2 "Alimama ShuHei", "PingFang SC", sans-serif;
+  font: 700 28px/1.2 var(--lux-page-heading);
 }
 .lux-importer-invite-grid p,
 .lux-importer-invite-grid li {
@@ -6658,7 +6894,7 @@ input[type="search"]::-webkit-search-decoration {
 .lux-importer-qr-grid figcaption {
   margin-top: 8px;
   color: #171715;
-  font: 700 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 700 12px/1.3 var(--lux-page-heading);
 }
 .lux-importer-qr {
   display: block;
@@ -6728,7 +6964,7 @@ input[type="search"]::-webkit-search-decoration {
 .lux-wp-page-home {
   color: #fff;
   text-decoration: none;
-  font-family: Montserrat, Arial, sans-serif;
+  font-family: var(--lux-page-heading);
   text-transform: uppercase;
   letter-spacing: .12em;
 }
@@ -6769,7 +7005,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-language-switch {
   gap: 8px;
-  font: 600 11px/1 Montserrat, Arial, sans-serif;
+  font: 600 11px/1 var(--lux-page-heading);
   letter-spacing: .12em;
 }
 .lux-language-switch a {
@@ -6794,13 +7030,13 @@ input[type="search"]::-webkit-search-decoration {
 .lux-wp-page-title p {
   margin: 0 0 12px;
   color: #006a64;
-  font: 600 11px/1.2 Montserrat, Arial, sans-serif;
+  font: 600 11px/1.2 var(--lux-page-heading);
   letter-spacing: .2em;
   text-transform: uppercase;
 }
 .lux-wp-page-title h1 {
   margin: 0;
-  font: 400 clamp(36px, 6vw, 68px)/1.05 Georgia, serif;
+  font: 400 clamp(36px, 6vw, 68px)/1.05 var(--lux-page-heading);
 }
 .lux-wp-page-content {
   padding: clamp(24px, 5vw, 56px);
@@ -6842,7 +7078,7 @@ input[type="search"]::-webkit-search-decoration {
   padding: 17px 20px 17px 0;
   color: rgba(255,255,255,.7);
   text-decoration: none;
-  font: 600 12px/1.4 Montserrat, Arial, sans-serif;
+  font: 600 12px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
 }
 .woocommerce-account .woocommerce-MyAccount-navigation a::after {
@@ -6875,19 +7111,19 @@ input[type="search"]::-webkit-search-decoration {
 .lux-account-eyebrow {
   margin: 0 0 12px;
   color: #00766f;
-  font: 600 11px/1.2 Montserrat, Arial, sans-serif;
+  font: 600 11px/1.2 var(--lux-page-heading);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
 .lux-account-dashboard h2 {
   margin: 0 0 24px;
   color: #1f2424;
-  font: 400 clamp(34px, 5vw, 58px)/1.05 Georgia, serif;
+  font: 400 clamp(34px, 5vw, 58px)/1.05 var(--lux-page-heading);
 }
 .lux-account-dashboard > p:last-child {
   margin: 0;
   color: #5e6664;
-  font: 400 16px/1.8 Montserrat, Arial, sans-serif;
+  font: 400 16px/1.8 var(--lux-page-heading);
 }
 .lux-wp-page-content .woocommerce form .form-row input.input-text {
   min-height: 48px;
@@ -6936,7 +7172,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-cert-card-back strong {
   color: #111;
-  font: 700 14px/1.3 Montserrat, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  font: 700 14px/1.3 var(--lux-page-heading);
   text-align: center;
 }
 .lux-cert-card:focus-visible .lux-cert-card-face {
@@ -6965,6 +7201,26 @@ input[type="search"]::-webkit-search-decoration {
   }
   .lux-cert-card-back img {
     max-height: 96px;
+  }
+  .lux-cert-glossary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .lux-cert-glossary-grid .lux-cert-card,
+  .lux-cert-glossary-grid .lux-cert-card-inner {
+    min-height: 280px;
+  }
+  .lux-cert-principle {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px !important;
+  }
+  .lux-cert-principle > :first-child {
+    width: 48px;
+    height: 48px;
+  }
+  .lux-cert-principle > :last-child {
+    min-width: 0;
+    width: 100%;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -7055,18 +7311,18 @@ input[type="search"]::-webkit-search-decoration {
 .lux-cert-results header > span {
   display: block;
   margin-bottom: 14px;
-  font: 600 11px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 600 11px/1.3 var(--lux-page-heading);
   letter-spacing: .2em;
 }
 .lux-collab-mosaic-lead h2 {
   max-width: 520px;
   margin: 0 0 18px;
-  font: 700 clamp(28px, 3.2vw, 54px)/1.03 Montserrat, "PingFang SC", sans-serif;
+  font: 700 clamp(28px, 3.2vw, 54px)/1.03 var(--lux-page-heading);
 }
 .lux-collab-mosaic-lead p {
   max-width: 520px;
   margin: 0;
-  font: 500 14px/1.65 Montserrat, "PingFang SC", sans-serif;
+  font: 500 14px/1.65 var(--lux-page-heading);
 }
 .lux-collab-bolt {
   flex: 0 0 auto;
@@ -7076,7 +7332,7 @@ input[type="search"]::-webkit-search-decoration {
   place-items: center;
   border: 3px solid currentColor;
   color: #004b47;
-  font: 700 clamp(30px, 4vw, 54px)/1 Montserrat, sans-serif;
+  font: 700 clamp(30px, 4vw, 54px)/1 var(--lux-page-heading);
   transform: rotate(-8deg);
 }
 .lux-collab-mosaic-feature {
@@ -7091,7 +7347,7 @@ input[type="search"]::-webkit-search-decoration {
 .lux-channel-services h3 {
   margin: 0 0 22px;
   color: #111;
-  font: 700 clamp(38px, 4.2vw, 68px)/1 Montserrat, "PingFang SC", sans-serif;
+  font: 700 clamp(38px, 4.2vw, 68px)/1 var(--lux-page-heading);
 }
 .lux-channel-services h3 em,
 .lux-cert-network h2 em,
@@ -7147,7 +7403,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-channel-services header p {
   color: #4d5654;
-  font: 400 14px/1.75 Montserrat, "PingFang SC", sans-serif;
+  font: 400 14px/1.75 var(--lux-page-heading);
 }
 .lux-channel-service-grid {
   display: grid;
@@ -7162,16 +7418,16 @@ input[type="search"]::-webkit-search-decoration {
   margin-bottom: 18px;
   border: 1px solid #007d76;
   color: #007d76;
-  font: 700 12px/1 Montserrat, sans-serif;
+  font: 700 12px/1 var(--lux-page-heading);
 }
 .lux-channel-service-grid h4 {
   margin: 0 0 10px;
-  font: 700 16px/1.25 Montserrat, "PingFang SC", sans-serif;
+  font: 700 16px/1.25 var(--lux-page-heading);
 }
 .lux-channel-service-grid p {
   margin: 0;
   color: #59615f;
-  font: 400 12px/1.65 Montserrat, "PingFang SC", sans-serif;
+  font: 400 12px/1.65 var(--lux-page-heading);
 }
 
 .lux-cert-capability,
@@ -7214,17 +7470,17 @@ input[type="search"]::-webkit-search-decoration {
   display: block;
   margin-bottom: 12px;
   color: #9df5ec;
-  font: 400 30px/1 Montserrat, sans-serif;
+  font: 400 30px/1 var(--lux-page-heading);
 }
 .lux-cert-capability-grid h3 {
   margin: 0 0 9px;
   color: #fff;
-  font: 600 16px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 600 16px/1.3 var(--lux-page-heading);
 }
 .lux-cert-capability-grid p {
   margin: 0;
   color: #b9c3c1;
-  font: 400 12px/1.65 Montserrat, "PingFang SC", sans-serif;
+  font: 400 12px/1.65 var(--lux-page-heading);
 }
 .lux-cert-network {
   padding: clamp(52px, 7vw, 96px);
@@ -7241,12 +7497,12 @@ input[type="search"]::-webkit-search-decoration {
 .lux-cert-results h2 {
   margin: 0 0 18px;
   color: #151919;
-  font: 500 clamp(34px, 4vw, 60px)/1.08 "Bodoni Moda", "Songti SC", serif;
+  font: 500 clamp(34px, 4vw, 60px)/1.08 var(--lux-page-heading);
 }
 .lux-cert-network header p,
 .lux-cert-results header p {
   color: #59615f;
-  font: 400 13px/1.7 Montserrat, "PingFang SC", sans-serif;
+  font: 400 13px/1.7 var(--lux-page-heading);
 }
 .lux-cert-network-story {
   min-height: 380px;
@@ -7264,13 +7520,13 @@ input[type="search"]::-webkit-search-decoration {
 .lux-cert-network-story blockquote p,
 .lux-cert-results blockquote p {
   margin: 0 0 30px;
-  font: 500 clamp(18px, 2vw, 28px)/1.45 "Bodoni Moda", "Songti SC", serif;
+  font: 500 clamp(18px, 2vw, 28px)/1.45 var(--lux-page-heading);
 }
 .lux-cert-network-story footer,
 .lux-cert-results blockquote footer {
   padding-top: 20px;
   border-top: 1px solid #d0ac2d;
-  font: 700 10px/1.5 Montserrat, sans-serif;
+  font: 700 10px/1.5 var(--lux-page-heading);
   letter-spacing: .12em;
 }
 .lux-cert-network-story footer span,
@@ -7304,12 +7560,12 @@ input[type="search"]::-webkit-search-decoration {
   stroke-linejoin: round;
 }
 .lux-cert-network-marks strong {
-  font: 650 clamp(12px, 1.15vw, 17px)/1.2 Montserrat, "Noto Sans SC", sans-serif;
+  font: 650 clamp(12px, 1.15vw, 17px)/1.2 var(--lux-page-heading);
   letter-spacing: .04em;
 }
 .lux-cert-network-marks small {
   color: #777e7c;
-  font: 500 10px/1.35 Montserrat, "Noto Sans SC", sans-serif;
+  font: 500 10px/1.35 var(--lux-page-heading);
   letter-spacing: .04em;
 }
 .lux-cert-results {
@@ -7423,7 +7679,7 @@ body {
 .lux-channel-services h3,
 .lux-cert-network h2,
 .lux-cert-results h2 {
-  font-family: "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", "Microsoft YaHei", serif;
+  font-family: var(--lux-page-heading);
   font-size: clamp(32px, 3.4vw, 48px);
   line-height: 1.16;
   font-weight: 400;
@@ -7521,7 +7777,7 @@ body {
 .lux-cert-quote-nav span {
   min-width: 44px;
   text-align: center;
-  font: 600 11px/1 Montserrat, sans-serif;
+  font: 600 11px/1 var(--lux-page-heading);
 }
 @keyframes luxQuoteIn {
   from { opacity: 0; transform: translateX(12px); }
@@ -7588,19 +7844,19 @@ body {
   display: block;
   margin-bottom: 18px;
   color: #9df5ec;
-  font: 600 11px/1.4 Montserrat, sans-serif;
+  font: 600 11px/1.4 var(--lux-page-heading);
   letter-spacing: .35em;
 }
 .lux-home-timeline > header h2 {
   margin: 0 0 22px;
   color: #fff;
-  font: 400 clamp(40px, 5vw, 72px)/1.08 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 400 clamp(40px, 5vw, 72px)/1.08 var(--lux-page-heading);
 }
 .lux-home-timeline > header p {
   max-width: 680px;
   margin: 0;
   color: #bdc9c7;
-  font: 300 18px/28px Montserrat, "PingFang SC", sans-serif;
+  font: 300 18px/28px var(--lux-page-heading);
 }
 .lux-home-timeline-layout {
   display: grid;
@@ -7658,19 +7914,19 @@ body {
 .lux-home-timeline-steps article > span {
   margin-bottom: 14px;
   color: #9df5ec;
-  font: 600 11px/1.4 Montserrat, sans-serif;
+  font: 600 11px/1.4 var(--lux-page-heading);
   letter-spacing: .25em;
 }
 .lux-home-timeline-steps h3 {
   margin: 0 0 18px;
   color: #fff;
-  font: 400 clamp(30px, 3vw, 48px)/1.15 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 400 clamp(30px, 3vw, 48px)/1.15 var(--lux-page-heading);
 }
 .lux-home-timeline-steps p {
   max-width: 590px;
   margin: 0;
   color: #bdc9c7;
-  font: 300 18px/28px Montserrat, "PingFang SC", sans-serif;
+  font: 300 18px/28px var(--lux-page-heading);
 }
 .lux-home-timeline-visual {
   position: sticky;
@@ -7824,7 +8080,7 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.lux-channel-service-grid article > span b { color: #d0ac2d; font: 700 12px/1 Montserrat, sans-serif; }
+.lux-channel-service-grid article > span b { color: #d0ac2d; font: 700 12px/1 var(--lux-page-heading); }
 .lux-importer-qr-grid {
   grid-template-columns: repeat(2, 136px);
   justify-content: space-between;
@@ -8196,7 +8452,7 @@ html[lang^="en"] .lux-account-row button {
   display: flex;
   align-items: baseline;
   gap: 14px;
-  font: 500 17px/1.4 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 17px/1.4 var(--lux-page-heading);
 }
 .lux-meet-map-summary dt span {
   min-width: 56px;
@@ -8218,7 +8474,7 @@ html[lang^="en"] .lux-account-row button {
   display: block;
   margin-bottom: 14px;
   color: #9df5ec;
-  font: 600 11px/1.4 Montserrat, sans-serif;
+  font: 600 11px/1.4 var(--lux-page-heading);
   letter-spacing: .3em;
 }
 .lux-map-reset {
@@ -8244,7 +8500,7 @@ html[lang^="en"] .lux-account-row button {
   padding: 15px 18px;
   border: 1px solid rgba(157,245,236,.5);
   color: #9df5ec;
-  font: 600 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+  font: 600 12px/1.3 var(--lux-page-heading);
   letter-spacing: .1em;
   text-transform: uppercase;
 }
@@ -8287,7 +8543,7 @@ html[lang^="en"] .lux-account-row button {
   display: block;
   grid-column: 1 / -1;
   color: #9df5ec;
-  font: 700 11px/1.4 Montserrat, sans-serif;
+  font: 700 11px/1.4 var(--lux-page-heading);
   letter-spacing: .28em;
 }
 .lux-home-market-system > header h2 {
@@ -8296,7 +8552,7 @@ html[lang^="en"] .lux-account-row button {
   max-width: 980px;
   margin: 0;
   color: #f1eee8;
-  font: 500 clamp(42px, 5.4vw, 76px)/1.05 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 clamp(42px, 5.4vw, 76px)/1.05 var(--lux-page-heading);
 }
 .lux-home-market-system > header h2 em {
   color: #cba51c;
@@ -8308,7 +8564,7 @@ html[lang^="en"] .lux-account-row button {
   max-width: 780px;
   margin: 0;
   color: rgba(248, 246, 240, .88);
-  font: 400 16px/1.8 Montserrat, "PingFang SC", sans-serif;
+  font: 400 16px/1.8 var(--lux-page-heading);
 }
 .lux-home-market-system-layout {
   display: grid;
@@ -8362,7 +8618,7 @@ html[lang^="en"] .lux-account-row button {
   right: 0;
   width: 56%;
   color: rgba(255,255,255,.12);
-  font: 700 clamp(96px, 8.2vw, 144px)/.82 "Alimama ShuHei", "Noto Sans SC", Montserrat, sans-serif;
+  font: 700 clamp(96px, 8.2vw, 144px)/.82 var(--lux-page-heading);
   letter-spacing: -.1em;
   white-space: normal;
   pointer-events: none;
@@ -8382,11 +8638,11 @@ html[lang^="en"] .lux-account-row button {
   color: #061b19;
 }
 .lux-home-market-stat strong {
-  font: 500 clamp(34px, 3vw, 48px)/1 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 clamp(34px, 3vw, 48px)/1 var(--lux-page-heading);
 }
 .lux-home-market-stat span {
   margin-top: 12px;
-  font: 600 13px/1.4 Montserrat, "PingFang SC", sans-serif;
+  font: 600 13px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
 }
 .lux-home-market-stat .lux-home-market-learn {
@@ -8433,16 +8689,16 @@ html[lang^="en"] .lux-account-row button {
   transform-style: preserve-3d;
   transition: transform .72s cubic-bezier(.2,.72,.2,1);
 }
-.lux-market-feature:nth-child(1) {
+.lux-home-market-system.is-media-ready .lux-market-feature:nth-child(1) {
   --lux-market-image: url("assets/media/brand/values-italian-heritage.webp");
 }
-.lux-market-feature:nth-child(2) {
+.lux-home-market-system.is-media-ready .lux-market-feature:nth-child(2) {
   --lux-market-image: url("assets/media/brand/home-values-contemporary-caviar.jpg");
 }
-.lux-market-feature:nth-child(3) {
+.lux-home-market-system.is-media-ready .lux-market-feature:nth-child(3) {
   --lux-market-image: url("assets/media/brand/values-sustainability.webp");
 }
-.lux-market-feature:nth-child(4) {
+.lux-home-market-system.is-media-ready .lux-market-feature:nth-child(4) {
   --lux-market-image: url("assets/media/brand/values-responsible-practice.webp");
 }
 .lux-market-feature:hover {
@@ -8502,7 +8758,7 @@ html[lang^="en"] .lux-account-row button {
 }
 .lux-home-market-features h3 {
   margin: 0 0 14px;
-  font: 500 24px/1.2 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 24px/1.2 var(--lux-page-heading);
 }
 .lux-home-market-features p {
   max-width: 28ch;
@@ -8514,7 +8770,7 @@ html[lang^="en"] .lux-account-row button {
   margin-top: auto;
   padding-top: 28px;
   color: #e9c349;
-  font: 600 11px/1.4 Montserrat, sans-serif;
+  font: 600 11px/1.4 var(--lux-page-heading);
   letter-spacing: .2em;
 }
 
@@ -8533,7 +8789,7 @@ html[lang^="en"] .lux-account-row button {
   top: clamp(44px, 4.5vw, 72px);
   right: clamp(-46px, 1vw, 18px);
   color: rgba(21,21,21,.045);
-  font: 700 clamp(112px, 13vw, 220px)/.8 Montserrat, sans-serif;
+  font: 700 clamp(112px, 13vw, 220px)/.8 var(--lux-page-heading);
   letter-spacing: -.065em;
   white-space: nowrap;
   pointer-events: none;
@@ -8589,13 +8845,13 @@ html[lang^="en"] .lux-account-row button {
 .lux-home-services header > span {
   display: block;
   margin-bottom: 18px;
-  color: #cba51c;
-  font: 600 11px/1.2 Montserrat, sans-serif;
+  color: #004b47;
+  font: 600 11px/1.2 var(--lux-page-heading);
   letter-spacing: .3em;
 }
 .lux-home-services h2 {
   margin: 0;
-  font: 500 56px/1.08 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 56px/1.08 var(--lux-page-heading);
   letter-spacing: -.035em;
 }
 .lux-home-services h2 em {
@@ -8625,7 +8881,7 @@ html[lang^="en"] .lux-account-row button {
   top: 24px;
   right: 24px;
   color: rgba(255,255,255,.86);
-  font: 600 11px/1 Montserrat, sans-serif;
+  font: 600 11px/1 var(--lux-page-heading);
   letter-spacing: .24em;
 }
 .lux-home-service-card:nth-child(2)::before {
@@ -8686,7 +8942,7 @@ html[lang^="en"] .lux-account-row button {
 }
 .lux-home-service-card h3 {
   margin: 0 0 14px;
-  font: 500 23px/1.25 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 23px/1.25 var(--lux-page-heading);
 }
 .lux-home-service-card p {
   min-height: 3.3em;
@@ -8905,7 +9161,7 @@ html[lang^="en"] .lux-account-row button {
     padding: 15px 18px;
     border: 1px solid rgba(157,245,236,.5);
     color: #9df5ec;
-    font: 600 12px/1.3 Montserrat, "PingFang SC", sans-serif;
+    font: 600 12px/1.3 var(--lux-page-heading);
     letter-spacing: .1em;
     text-transform: uppercase;
   }
@@ -9041,7 +9297,7 @@ html[lang^="en"] .lux-account-row button {
   top: -36px;
   right: clamp(76px, 10vw, 170px);
   color: rgba(0,106,100,.055);
-  font: 700 clamp(96px, 13vw, 210px)/.8 Montserrat, sans-serif;
+  font: 700 clamp(96px, 13vw, 210px)/.8 var(--lux-page-heading);
   letter-spacing: -.07em;
   white-space: nowrap;
   pointer-events: none;
@@ -9067,7 +9323,7 @@ html[lang^="en"] .lux-account-row button {
   top: clamp(82px, 8vw, 126px);
   right: clamp(-70px, 2vw, 28px);
   color: rgba(255,255,255,.035);
-  font: 700 clamp(84px, 11vw, 176px)/.82 Montserrat, sans-serif;
+  font: 700 clamp(84px, 11vw, 176px)/.82 var(--lux-page-heading);
   letter-spacing: -.065em;
   white-space: nowrap;
   pointer-events: none;
@@ -9098,7 +9354,7 @@ html[lang^="en"] .lux-account-row button {
   right: auto;
   left: -30px;
   color: rgba(233,195,73,0);
-  font: 700 clamp(34px, 4.4vw, 66px)/1 "Alimama ShuHei", "Noto Sans SC", sans-serif;
+  font: 700 clamp(34px, 4.4vw, 66px)/1 var(--lux-page-heading);
   letter-spacing: .02em;
   white-space: nowrap;
   transform: translate(-92%, -50%);
@@ -9115,7 +9371,7 @@ html[lang^="en"] .lux-home-timeline-steps article:nth-child(4)::after { content:
 html[lang^="en"] .lux-home-timeline-steps article::after {
   box-sizing: border-box;
   width: clamp(86px, 7.5vw, 118px);
-  font-family: Montserrat, sans-serif;
+  font-family: var(--lux-page-heading);
   font-size: clamp(16px, 1.8vw, 28px);
   line-height: .92;
   letter-spacing: .08em;
@@ -9141,7 +9397,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   top: 50%;
   right: 0;
   color: rgba(233,195,73,0);
-  font: 700 clamp(104px, 12vw, 176px)/1 Montserrat, sans-serif;
+  font: 700 clamp(104px, 12vw, 176px)/1 var(--lux-page-heading);
   letter-spacing: -.08em;
   transform: translate(18px, -50%) scale(.9);
   transition: color .45s ease, transform .6s cubic-bezier(.22,.61,.36,1);
@@ -9312,7 +9568,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-left: 0;
   background: rgba(7,8,8,.72);
   color: #e9c349;
-  font: 600 14px/1 Montserrat, sans-serif;
+  font: 600 14px/1 var(--lux-page-heading);
   letter-spacing: .12em;
   white-space: nowrap;
   pointer-events: none;
@@ -9459,7 +9715,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 }
 .lux-home-why-copy > span {
   color: #087f78;
-  font: 700 10px/1.4 Montserrat, "PingFang SC", sans-serif;
+  font: 700 10px/1.4 var(--lux-page-heading);
   letter-spacing: .24em;
 }
 .lux-home-why-copy {
@@ -9481,7 +9737,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 .lux-home-why-copy h2 {
   max-width: 13ch;
   margin: 14px 0 18px;
-  font: 500 clamp(40px, 4.8vw, 72px)/1.03 "Bodoni Moda", "Alimama ShuHei", "Noto Sans SC", serif;
+  font: 500 clamp(40px, 4.8vw, 72px)/1.03 var(--lux-page-heading);
 }
 @media (max-width: 1240px) {
   .lux-home-why-orbit {
@@ -9550,7 +9806,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 }
 .lux-home-why-metrics strong {
   color: #cba51c;
-  font: 600 clamp(28px, 3vw, 44px)/1 Montserrat, sans-serif;
+  font: 600 clamp(28px, 3vw, 44px)/1 var(--lux-page-heading);
 }
 .lux-home-why-metrics span {
   color: #616865;
@@ -9564,7 +9820,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   padding: 13px 18px;
   background: #7d1832;
   color: #fff;
-  font: 700 11px/1 Montserrat, "PingFang SC", sans-serif;
+  font: 700 11px/1 var(--lux-page-heading);
   letter-spacing: .08em;
   text-decoration: none;
   transition: background-color .22s ease, transform .22s ease;
@@ -9767,12 +10023,18 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 }
 .lux-product-filter-panel header strong,
 .lux-product-filter-panel header button,
-.lux-product-filter-panel h3 {
+.lux-product-filter-panel h3,
+.lux-product-count {
   font-size: 14px !important;
   line-height: 1.35 !important;
   font-weight: 700 !important;
   letter-spacing: .02em !important;
 }
+.lux-product-count {
+  margin: 0 0 20px;
+  color: #171715;
+}
+.lux-product-count span { color: #087f78; }
 
 .lux-latest-event-carousel::before {
   content: none;
@@ -9857,7 +10119,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   top: -36px;
   right: clamp(76px, 10vw, 170px);
   color: rgba(0,106,100,.055);
-  font: 700 clamp(96px, 13vw, 210px)/.8 Montserrat, sans-serif;
+  font: 700 clamp(96px, 13vw, 210px)/.8 var(--lux-page-heading);
   letter-spacing: -.07em;
   white-space: nowrap;
   pointer-events: none;
@@ -9882,7 +10144,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 /* July 28 control sizing, event alignment, and anchored mobile filters. */
 .lux-home-why-copy > a {
   padding: 20px 48px;
-  font: 700 18px/27px Montserrat, "PingFang SC", sans-serif;
+  font: 700 18px/27px var(--lux-page-heading);
   letter-spacing: .3em;
 }
 
@@ -9936,7 +10198,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   color: #303633 !important;
   background: rgba(255, 255, 255, .82) !important;
   box-shadow: none !important;
-  font: 10px/1.35 Arial, sans-serif !important;
+  font: 10px/1.35 var(--lux-page-heading);
   white-space: nowrap;
 }
 .lux-amap-canvas .leaflet-control-attribution a {
@@ -10044,7 +10306,7 @@ html[lang^="zh"] :is(
   .lux-reader-related-grid strong,
   .lux-academy-latest strong
 ) {
-  font-family: "Alimama ShuHei" !important;
+  font-family: var(--lux-page-heading);
   font-weight: 700 !important;
 }
 .lux-academy-news-hero {
@@ -10061,12 +10323,6 @@ html[lang^="zh"] :is(
 .lux-academy-hero-description p + p {
   margin-top: 10px;
 }
-@media (min-width: 681px) {
-  .lux-academy-hero-content {
-    transform: translateY(30px);
-  }
-}
-
 /* Exact media backgrounds, carousel clipping, and left-aligned timeline labels. */
 .lux-latest-event-carousel,
 .lux-latest-event-viewport,
@@ -10202,15 +10458,25 @@ html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
   color: #89670f;
 }
 
-/* English typography standard: display titles are Garamond Bold, secondary titles Garamond, copy Helvetica. */
+/* English typography standard: Nyght Serif titles with Spectral body copy. */
 html[lang^="en"] {
-  --lux-en-display: "EB Garamond", Garamond, "Times New Roman", serif;
-  --lux-en-heading: "EB Garamond", Garamond, "Times New Roman", serif;
-  --lux-en-body: Helvetica, Arial, sans-serif;
+  --lux-page-heading: "Nyght Serif";
+  --lux-en-display: "Nyght Serif";
+  --lux-en-heading: "Nyght Serif";
+  --lux-en-body: "Spectral";
+}
+html[lang^="en"] body *:not(.material-symbols-outlined),
+html[lang^="en"] body *:not(.material-symbols-outlined)::before,
+html[lang^="en"] body *:not(.material-symbols-outlined)::after {
+  font-family: var(--lux-en-heading) !important;
 }
 html[lang^="en"] body,
 html[lang^="en"] :is(p, li, blockquote, figcaption, label, small, dt, dd, th, td, button, input, textarea, select, a, span:not(.material-symbols-outlined)) {
   font-family: var(--lux-en-body) !important;
+}
+html[lang^="en"] :is(p, li, blockquote, figcaption, dt, dd) {
+  font-size: 18px !important;
+  line-height: 1.65 !important;
 }
 html[lang^="en"] :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm),
 html[lang^="en"] :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm) * {
@@ -10220,7 +10486,7 @@ html[lang^="en"] :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .fon
 html[lang^="en"] :is(h1, .font-display, .font-display-lg, .font-display-lg-mobile, #lux-reader-title, .lux-event-reader-intro h2),
 html[lang^="en"] :is(h1, .font-display, .font-display-lg, .font-display-lg-mobile, #lux-reader-title, .lux-event-reader-intro h2) * {
   font-family: var(--lux-en-display) !important;
-  font-weight: 700 !important;
+  font-weight: 400 !important;
 }
 
 html[lang^="en"] .lux-home-maison blockquote,
@@ -10306,6 +10572,12 @@ html[lang^="en"] .lux-reader-quote {
   background:
     radial-gradient(circle at 88% 16%, transparent 0 118px, rgba(157, 245, 236, .12) 119px 120px, transparent 121px),
     repeating-linear-gradient(90deg, transparent 0 84px, rgba(233, 195, 73, .025) 85px 86px),
+    #070707;
+}
+.lux-home-gifting.is-media-ready {
+  background:
+    radial-gradient(circle at 88% 16%, transparent 0 118px, rgba(157, 245, 236, .12) 119px 120px, transparent 121px),
+    repeating-linear-gradient(90deg, transparent 0 84px, rgba(233, 195, 73, .025) 85px 86px),
     linear-gradient(rgba(7, 7, 7, .78), rgba(7, 7, 7, .84)),
     url("assets/media/brand/home-gifting-waves.webp") center / cover no-repeat;
 }
@@ -10337,15 +10609,60 @@ html[lang] .material-symbols-outlined {
 html[lang^="en"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h2) {
   font-family: var(--lux-en-display) !important;
   font-size: clamp(42px, 5vw, 72px) !important;
-  font-weight: 700 !important;
+  font-weight: 400 !important;
   line-height: 1.04 !important;
 }
 
-/* Chinese typography standard: local display face for headlines, fixed system body stack. */
+/* Homepage eyebrow labels share the Maison Overview type scale. */
+html[lang^="en"] :is(
+  .lux-home-maison-head > div > span:first-child,
+  .lux-selected-products-kicker,
+  .lux-home-services header > span,
+  .lux-home-editorial-kicker,
+  .lux-home-editorial-folio,
+  .lux-home-why-copy > span,
+  .lux-home-gifting .lux-action-copy,
+  .lux-meet-map-card > span
+) {
+  font-family: var(--lux-en-body) !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  font-weight: 600 !important;
+  letter-spacing: .28em !important;
+}
+
+/* Title-case labels need a larger optical size than the all-caps Maison label. */
+html[lang^="en"] #selected-products .lux-selected-products-kicker,
+html[lang^="en"] #gifting-editorial .lux-home-editorial-kicker {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+/* Match the partnership CTA to Explore Partnership and keep it horizontal. */
+html[lang^="en"] #gifting-editorial .lux-action-copy {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px !important;
+  line-height: 27px !important;
+  font-weight: 700 !important;
+  letter-spacing: .3em !important;
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+}
+
+/* Chinese typography standard: KingHwa headlines with LXGW-derived ZhiSong body copy. */
 html[lang^="zh"] {
-  --lux-zh-headline: "Alimama ShuHei", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --lux-zh-body: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  --lux-page-heading: "KingHwa Old Song";
+  --lux-zh-headline: "KingHwa Old Song";
+  --lux-zh-body: "LuxurEat ZhiSong Web";
   font-synthesis: none;
+}
+html[lang^="zh"] body *:not(.material-symbols-outlined),
+html[lang^="zh"] body *:not(.material-symbols-outlined)::before,
+html[lang^="zh"] body *:not(.material-symbols-outlined)::after {
+  font-family: var(--lux-zh-headline) !important;
 }
 html[lang^="zh"] body,
 html[lang^="zh"] :is(p, li, blockquote, figcaption, label, small, dt, dd, th, td, button, input, textarea, select, a, span:not(.material-symbols-outlined)) {
@@ -10355,6 +10672,197 @@ html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .
 html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .font-headline, .font-display-lg, .font-display-lg-mobile, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm, .lux-reader-related-grid strong, .lux-academy-latest strong) * {
   font-family: var(--lux-zh-headline) !important;
   font-weight: 700 !important;
+  -webkit-text-stroke: .16px currentColor;
+  paint-order: stroke fill;
+}
+
+html[lang^="zh"] .lux-home-maison blockquote,
+html[lang^="zh"] .lux-home-maison blockquote *,
+html[lang^="zh"] .lux-event-card-copy strong {
+  font-family: var(--lux-zh-headline) !important;
+  font-weight: 700 !important;
+  -webkit-text-stroke: .16px currentColor;
+  paint-order: stroke fill;
+}
+
+html[lang^="zh"] body p.lux-footprint-video-title {
+  font-family: var(--lux-zh-headline) !important;
+}
+html[lang^="en"] body p.lux-footprint-video-title {
+  font-family: var(--lux-en-heading) !important;
+  font-weight: 400 !important;
+}
+
+/* Keep bilingual reading sizes equivalent and comfortably legible. */
+html[lang^="zh"] :is(p, li, blockquote, figcaption, dt, dd) {
+  font-size: 18px !important;
+  line-height: 1.75 !important;
+}
+html[lang^="zh"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h2) {
+  font-family: var(--lux-zh-headline) !important;
+  font-size: clamp(42px, 5vw, 72px) !important;
+  font-weight: 700 !important;
+  line-height: 1.12 !important;
+}
+
+/* The contact film uses the same editorial scale in both languages. */
+html[lang] body p.lux-footprint-video-title {
+  font-size: clamp(30px, 5vw, 72px) !important;
+  line-height: 1.08 !important;
+}
+.lux-footprint-video-copy {
+  transform: translateY(-6%);
+}
+
+#selected-products > .grid > .group[role="link"] {
+  cursor: pointer;
+}
+#selected-products > .grid > .group[role="link"]:focus-visible {
+  outline: 2px solid #8eece6;
+  outline-offset: 5px;
+}
+
+/* About-page closing statement: restrained KingHwa display treatment. */
+html[lang^="zh"] .lux-about-story .lux-reader-quote {
+  color: #004b47;
+  font-family: "KingHwa Old Song" !important;
+  font-size: clamp(22px, 2.2vw, 32px) !important;
+  line-height: 1.3 !important;
+}
+html[lang^="en"] .lux-about-story .lux-reader-quote {
+  font-size: clamp(22px, 2.2vw, 32px) !important;
+  line-height: 1.3 !important;
+}
+#consumer-needs .lux-about-program-grid h3,
+#consumer-needs .lux-product-characteristics-note strong {
+  color: #d0ac2d !important;
+}
+/* Mission titles: gold lettering with a crisp black edge in both locales. */
+#mission-objectives .lux-about-program-grid h3 {
+  color: #d0ac2d !important;
+  -webkit-text-stroke: .6px #050505;
+  paint-order: stroke fill;
+}
+/* Shared non-home hero: kicker, title and support copy form one centered stack. */
+.lux-page-top-hero {
+  box-sizing: border-box;
+  height: auto !important;
+  min-height: 100svh !important;
+  padding-block: 0 !important;
+}
+@media (min-width: 681px) {
+  .lux-page-top-hero {
+    height: 100svh !important;
+  }
+}
+.lux-page-hero-content {
+  position: relative;
+  z-index: 20;
+  width: min(100%, 1152px);
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(24px, 2.2vw, 32px) !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  transform: none !important;
+}
+.lux-page-hero-content > .lux-hero-kicker {
+  margin: 0 !important;
+  font-weight: 700 !important;
+}
+.lux-page-hero-content > h1,
+.lux-page-hero-content > .lux-hero-support {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.lux-page-hero-content > .lux-hero-support {
+  margin-inline: auto !important;
+  text-align: center !important;
+}
+.lux-page-hero-scroll {
+  position: absolute;
+  top: calc(100% + 44px);
+  left: 50%;
+  margin: 0 !important;
+  transform: translateX(-50%);
+}
+.lux-page-hero-meta {
+  position: absolute;
+  right: clamp(20px, 5vw, 80px);
+  bottom: 28px;
+  z-index: 20;
+}
+html[lang] .lux-reader-aside,
+html[lang] .lux-reader-pull p {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+/* Keep sorting above the catalogue and unclipped at tablet widths. */
+[data-lux-caviar-controls] {
+  z-index: 100 !important;
+  overflow: visible !important;
+}
+.lux-sort-wrap,
+.lux-sort-menu {
+  z-index: 120 !important;
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  [data-lux-caviar-controls] { overflow: visible !important; }
+}
+
+/* China-operation and Mission titles share the programme heading scale. */
+html[lang] body #luxureat-china .lux-about-program-lead h2 {
+  font-size: clamp(34px, 4vw, 58px) !important;
+  line-height: 1.06 !important;
+}
+html[lang^="zh"] body #luxureat-china .lux-about-program-lead h2 {
+  font-family: "KingHwa Old Song" !important;
+}
+html[lang^="en"] body #luxureat-china .lux-about-program-lead h2 {
+  font-family: "Nyght Serif" !important;
+  font-weight: 400 !important;
+}
+
+html[lang] .lux-recent-events-head > span {
+  font-size: 18px !important;
+}
+html[lang^="en"] .lux-recent-events-head > span { line-height: 1.65 !important; }
+html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; }
+
+@media (max-width: 767px) {
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] {
+    grid-template-columns: 112px minmax(0, 1fr);
+    min-height: 0;
+    gap: 0 !important;
+  }
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] > div:first-child {
+    min-height: 150px;
+    height: 100%;
+    aspect-ratio: 1;
+  }
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] > div:last-child {
+    padding: 12px;
+  }
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] h2 {
+    font-size: 18px !important;
+    line-height: 1.15 !important;
+  }
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] :is(p, small),
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] h2 + span {
+    display: none !important;
+  }
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] > div:last-child > .mt-4 {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] > div:last-child > .mt-4 button {
+    min-height: 38px;
+    padding: 7px 8px !important;
+  }
 }
 
 /* Shared hero support treatment for the bilingual editorial pages. */
@@ -10375,6 +10883,23 @@ html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .
   height: 1px;
   transform: translateX(-50%);
   background: #8ceee6;
+}
+
+/* Editorial hero tail: one horizontal rule followed by a centered fading stem. */
+.lux-hero-tail .lux-page-hero-content {
+  --lux-hero-stem-height: clamp(96px, 12svh, 150px);
+  box-sizing: border-box;
+  padding-bottom: calc(48px + var(--lux-hero-stem-height));
+}
+.lux-hero-tail .lux-page-hero-content > .lux-hero-support::before {
+  content: "";
+  position: absolute;
+  top: calc(100% + 48px);
+  left: 50%;
+  width: 1px;
+  height: var(--lux-hero-stem-height);
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, #8ceee6, rgba(140, 238, 230, 0));
 }
 
 /* The complete Seasonal Observations image is the detail trigger. */
@@ -10433,6 +10958,47 @@ html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .
 .lux-product-summary > .lux-product-price {
   color: #9a7400 !important;
 }
+
+/* Catalogue-only price labels use the same visible gold treatment everywhere. */
+.is-test-price {
+  color: #b48700 !important;
+}
+.lux-product-recent-card > .is-test-price,
+.lux-bag-recommendations .is-test-price {
+  font-size: clamp(20px, 1.5vw, 26px) !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+}
+html[lang^="zh"] :is(.lux-bag-item, .lux-bag-recommendations) :not(.material-symbols-outlined) {
+  font-family: var(--lux-zh-headline) !important;
+}
+html[lang^="zh"] body.lux-home-page {
+  --lux-page-heading: "KingHwa Old Song Home";
+  --lux-zh-headline: "KingHwa Old Song Home";
+}
+html[lang^="zh"] body.lux-home-page .lux-reader {
+  --lux-page-heading: "KingHwa Old Song";
+  --lux-zh-headline: "KingHwa Old Song";
+}
+
+/* Every page-top hero follows the homepage's 14px / 18px support scale. */
+html[lang] body .lux-hero-kicker {
+  font-size: 14px !important;
+}
+html[lang] body .lux-hero-support {
+  font-size: 18px !important;
+}
+
+/* Account helper pairs share an optical size in both locales. */
+html[lang] body .lux-account-inline-actions button {
+  font-size: 12px !important;
+  line-height: 18px !important;
+}
+html[lang] body .lux-account-existing,
+html[lang] body .lux-account-existing button {
+  font-size: 14px !important;
+  line-height: 18px !important;
+}
 .lux-product-panel {
   width: min(1440px, 100%);
 }
@@ -10458,4 +11024,12 @@ html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .
     height: 100%;
     object-fit: cover;
   }
+}
+
+/* Chinese product names remain KingHwa even inside the English interface. */
+html[lang^="en"] body [lang^="zh"] {
+  font-family: "KingHwa Old Song" !important;
+  font-weight: 700 !important;
+  -webkit-text-stroke: .16px currentColor;
+  paint-order: stroke fill;
 }

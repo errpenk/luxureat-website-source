@@ -7,3 +7,5 @@ id_*
 *.key
 node_modules/
 .deploy/
+qa/*.png
+!qa/zh-home-desktop.png

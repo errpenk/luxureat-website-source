@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import sharp from 'sharp';
 import { pages, scripts } from '../site.config.mjs';
 
 const sourceDir = path.resolve(process.argv[2] || process.cwd());
@@ -36,6 +37,7 @@ function write(file, contents) {
 function copyDir(src, dest) {
   mkdirp(dest);
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    if (entry.name === '.DS_Store') continue;
     const sourcePath = path.join(src, entry.name);
     const destPath = path.join(dest, entry.name);
     if (entry.isDirectory()) {
@@ -161,7 +163,7 @@ function convertHtml(file, lang) {
 
   html = stripKnownLocalIncludes(html);
 
-  html = html.replace(/\b(src|href|poster|data-lux-bg)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
+  html = html.replace(/\b(src|href|poster|data-lux-bg|data-lux-src)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
     return `${attr}=${quote}${phpThemeAsset(assetPath)}${quote}`;
   });
   html = html.replace(/url\((['"]?)\.\.\/assets\/([^'")]+)\1\)/g, (_match, quote, assetPath) => {
@@ -169,6 +171,9 @@ function convertHtml(file, lang) {
   });
   html = html.replace(/url\(&quot;\.\.\/assets\/([^&]+)&quot;\)/g, (_match, assetPath) => {
     return `url(&quot;${phpThemeAsset(assetPath)}&quot;)`;
+  });
+  html = html.replace(/(["'])\.\.\/assets\/([^"']+)\1/g, (_match, quote, assetPath) => {
+    return `${quote}${phpThemeAsset(assetPath)}${quote}`;
   });
 
   html = html.replace(/\bhref=(["'])([^"']+)\1/g, (match, quote, href) => {
@@ -444,6 +449,12 @@ ${byPath}
                 'products' => luxureat_static_woo_catalog(),
             ));
         }
+        if ($handle === 'brand' && in_array($path, array('zh/contact', 'en/contact'), true)) {
+            wp_localize_script('luxureat-brand', 'LuxureatContact', array(
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('luxureat_contact'),
+            ));
+        }
     }
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_assets');
@@ -646,7 +657,8 @@ function luxureat_static_account_ajax() {
     }
 
     $mode = isset($_POST['mode']) ? sanitize_key(wp_unslash($_POST['mode'])) : 'login';
-    $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
+    $raw_email = isset($_POST['email']) ? trim((string) wp_unslash($_POST['email'])) : '';
+    $email = sanitize_email($raw_email);
     $password = isset($_POST['password']) ? (string) wp_unslash($_POST['password']) : '';
     if (!is_email($email)) {
         wp_send_json_error(array('message' => $message('电子邮箱不存在或格式错误。', 'The email address does not exist or is invalid.'), 'field' => 'email'), 400);
@@ -728,6 +740,57 @@ function luxureat_static_account_ajax() {
 }
 add_action('wp_ajax_nopriv_luxureat_account', 'luxureat_static_account_ajax');
 add_action('wp_ajax_luxureat_account', 'luxureat_static_account_ajax');
+
+function luxureat_static_contact_ajax() {
+    $is_zh = isset($_POST['lang']) && sanitize_key(wp_unslash($_POST['lang'])) === 'zh';
+    $message = function ($zh, $en) use ($is_zh) { return $is_zh ? $zh : $en; };
+    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_contact')) {
+        wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
+    }
+    if (!empty($_POST['company'])) {
+        wp_send_json_error(array('message' => $message('安全验证失败，请刷新页面后重试。', 'Security verification failed. Please refresh the page and try again.')), 403);
+    }
+
+    $name = isset($_POST['name']) ? trim(sanitize_text_field(wp_unslash($_POST['name']))) : '';
+    $phone = isset($_POST['phone']) ? trim(sanitize_text_field(wp_unslash($_POST['phone']))) : '';
+    $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
+    $inquiry_type = isset($_POST['inquiry_type']) ? trim(sanitize_text_field(wp_unslash($_POST['inquiry_type']))) : '';
+    $content = isset($_POST['message']) ? trim(sanitize_textarea_field(wp_unslash($_POST['message']))) : '';
+    $allowed_types = array(
+        '产品与采购咨询', '经销及渠道合作', '酒店餐饮与专业供应', '自有品牌与私人定制',
+        '企业礼赠与项目合作', '品牌、媒体合作', '其他',
+        'Product & Purchasing Enquiries', 'Distribution & Channel Partnerships',
+        'Hospitality, Catering & Professional Supply', 'Private Label & Bespoke Customisation',
+        'Corporate Gifting & Project Partnerships', 'Brand & Media Partnerships', 'Other',
+    );
+    if ($name === '' || $phone === '' || $content === '' || !in_array($inquiry_type, $allowed_types, true)) {
+        wp_send_json_error(array('message' => $message('请填写所有必填信息。', 'Please complete all required fields.')), 400);
+    }
+    if (strlen($name) > 240 || strlen($phone) > 120 || strlen($content) > 12000 || ($raw_email !== '' && !is_email($email))) {
+        wp_send_json_error(array('message' => $message('请检查所填信息后重试。', 'Please check the information and try again.')), 400);
+    }
+
+    $remote_address = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
+    $rate_key = 'lux_contact_' . hash_hmac('sha256', $remote_address, wp_salt('nonce'));
+    if (get_transient($rate_key)) {
+        wp_send_json_error(array('message' => $message('信息已提交，请稍后再试。', 'Your message was submitted. Please wait before trying again.')), 429);
+    }
+
+    $subject = $name . ' + ' . $inquiry_type . ' + ' . $phone;
+    $not_provided = $message('未提供', 'Not provided');
+    $body = $message('姓名', 'Name') . '：' . $name . "\n"
+        . $message('电话', 'Phone') . '：' . $phone . "\n"
+        . $message('电子邮箱', 'Email') . '：' . ($email ?: $not_provided) . "\n\n"
+        . $message('咨询内容', 'Message') . "：\n" . $content;
+    $headers = $email ? array('Reply-To: ' . $name . ' <' . $email . '>') : array();
+    if (!wp_mail('roberto@ugolinigroup.com', $subject, $body, $headers)) {
+        wp_send_json_error(array('message' => $message('暂时无法发送，请稍后再试。', 'Your message could not be sent. Please try again later.')), 500);
+    }
+    set_transient($rate_key, 1, 30);
+    wp_send_json_success(array('message' => $message('信息已发送，我们会尽快与您联系。', 'Your message has been sent. We will be in touch soon.')));
+}
+add_action('wp_ajax_nopriv_luxureat_contact', 'luxureat_static_contact_ajax');
+add_action('wp_ajax_luxureat_contact', 'luxureat_static_contact_ajax');
 
 function luxureat_static_password_hint() {
     return determine_locale() === 'zh_CN'
@@ -1131,10 +1194,10 @@ if (!isset($routes[$path])) {
     <title><?php esc_html_e('Page not found', 'luxureat-static'); ?></title>
     <?php wp_head(); ?>
 </head>
-<body style="margin:0;background:#101010;color:#e5e2e1;font-family:Montserrat,Arial,sans-serif;display:grid;min-height:100vh;place-items:center;text-align:center;padding:24px;">
+<body style="margin:0;background:#101010;color:#e5e2e1;font-family:Spectral;display:grid;min-height:100vh;place-items:center;text-align:center;padding:24px;">
     <main>
         <p style="color:#9df5ec;letter-spacing:.2em;text-transform:uppercase;font-size:12px;">LuxurEat</p>
-        <h1 style="font-family:Georgia,serif;font-weight:400;"><?php esc_html_e('Page not found', 'luxureat-static'); ?></h1>
+        <h1 style="font-family:'Nyght Serif';font-weight:400;"><?php esc_html_e('Page not found', 'luxureat-static'); ?></h1>
         <p><a style="color:#e9c349;" href="<?php echo esc_url(luxureat_static_url('zh')); ?>"><?php esc_html_e('Return to home', 'luxureat-static'); ?></a></p>
     </main>
     <?php wp_footer(); ?>
@@ -1237,7 +1300,7 @@ This package wraps the static bilingual LuxurEat website source from https://git
 `;
 }
 
-function build() {
+async function build() {
   ensureSource();
 
   fs.rmSync(themeDir, { recursive: true, force: true });
@@ -1249,10 +1312,10 @@ function build() {
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');
-  fs.copyFileSync(
-    fs.existsSync(screenshotSource) ? screenshotSource : path.join(sourceDir, 'assets/media/brand/luxureat-logo.png'),
-    path.join(themeDir, 'screenshot.png')
-  );
+  await sharp(fs.existsSync(screenshotSource) ? screenshotSource : path.join(sourceDir, 'assets/media/brand/luxureat-logo.png'))
+    .resize({ width: 1200, height: 900, fit: 'cover' })
+    .png({ compressionLevel: 9, palette: true, quality: 85 })
+    .toFile(path.join(themeDir, 'screenshot.png'));
 
   write(path.join(themeDir, 'style.css'), styleCss());
   write(path.join(themeDir, 'functions.php'), functionsPhp());
@@ -1277,4 +1340,4 @@ function build() {
   console.log(`Theme zip written to ${zipFile}`);
 }
 
-build();
+await build();

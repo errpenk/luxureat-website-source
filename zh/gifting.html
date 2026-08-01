@@ -3,14 +3,10 @@
 <html class="dark" lang="zh-CN"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link rel="preload" href="../assets/fonts/AlimamaShuHeiTi-Bold-subset.woff2" as="font" type="font/woff2" crossorigin>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260801-performance-final-119">
 
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/>
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260730-performance-77">
-
-<link rel="stylesheet" href="../integration.css?v=20260730-performance-77">
+<link rel="stylesheet" href="../integration.css?v=20260801-performance-final-119">
+<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head>
 <body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
 <!-- lux:header:start -->
@@ -29,12 +25,12 @@
 
 <main class="flex-grow">
 <!-- Corporate Hero Section -->
-<section class="lux-standard-hero relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
+<section class="lux-page-top-hero lux-hero-tail lux-gifting-hero lux-standard-hero relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
 <div class="w-full h-full bg-cover bg-center opacity-70" style="background-image: url('../assets/media/brand/gifting-hero-cooperation.webp')"></div>
 <div class="absolute inset-0 lux-hero-fade-both"></div>
 </div>
-<div class="relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto flex flex-col items-center gap-8">
+<div class="lux-page-hero-content relative z-10 text-center px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto">
 <span class="lux-hero-kicker">从这里，链接全球机遇</span>
 <h1 class="zh-display-title text-on-surface">定义商务共创的<br/><span class="text-secondary">卓越标准</span></h1>
 <p class="lux-page-hero-subtitle lux-hero-support max-w-3xl mx-auto">
@@ -49,7 +45,7 @@
 <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
 <div class="lux-card-photo lux-card-photo-one p-10 border border-white/5 bg-surface-container flex flex-col items-start gap-6 hover:border-primary/30 transition-all group">
-<span class="material-symbols-outlined text-4xl text-primary font-light">corporate_fare</span>
+<span class="material-symbols-outlined text-4xl text-primary font-light" data-icon="corporate_fare" aria-hidden="true" translate="no"></span>
 <h3 class="font-headline-sm text-on-surface uppercase tracking-wider">大宗采购服务</h3>
 <p class="text-on-surface-variant font-body-md leading-relaxed">针对年度大型活动、节假日员工激励及大客户维系，提供极具竞争力的规模采购价格与全国多点配送物流。</p>
 <ul class="text-xs uppercase tracking-widest text-primary/70 flex flex-col gap-2 mt-2">
@@ -59,7 +55,7 @@
 </ul>
 </div>
 <div class="lux-card-photo lux-card-photo-two p-10 border border-white/5 bg-surface-container flex flex-col items-start gap-6 hover:border-primary/30 transition-all">
-<span class="material-symbols-outlined text-4xl text-primary font-light">branding_watermark</span>
+<span class="material-symbols-outlined text-4xl text-primary font-light" data-icon="branding_watermark" aria-hidden="true" translate="no"></span>
 <h3 class="font-headline-sm text-on-surface uppercase tracking-wider">自有品牌与 OEM 生产</h3>
 <p class="text-on-surface-variant font-body-md leading-relaxed">为分销商、零售商和国际品牌开发高端美食产品，管理从食谱研发、品牌包装到意大利生产与全球发行的完整流程。</p>
 <ul class="text-xs uppercase tracking-widest text-primary/70 flex flex-col gap-2 mt-2">
@@ -69,7 +65,7 @@
 </ul>
 </div>
 <div class="lux-card-photo lux-card-photo-three p-10 border border-white/5 bg-surface-container flex flex-col items-start gap-6 hover:border-primary/30 transition-all">
-<span class="material-symbols-outlined text-4xl text-primary font-light">workspace_premium</span>
+<span class="material-symbols-outlined text-4xl text-primary font-light" data-icon="workspace_premium" aria-hidden="true" translate="no"></span>
 <h3 class="font-headline-sm text-on-surface uppercase tracking-wider">白标与餐饮供应</h3>
 <p class="text-on-surface-variant font-body-md leading-relaxed">为顶级酒店及会所提供白标定制。结合我们全球顶级的鱼子酱产源与您的品牌影响力，创造独一无二的产品叙事。</p>
 <ul class="text-xs uppercase tracking-widest text-primary/70 flex flex-col gap-2 mt-2">
@@ -91,7 +87,7 @@
 <span class="text-primary font-body-md text-label-sm uppercase tracking-[0.25em] mb-5 block">Private Label &amp; OEM</span>
 <h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">为国际市场量身定制的<br/><span class="text-secondary">完整解决方案</span></h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-10">LuxurEat（露意膳） 将产品研发、生产、合规与物流纳入同一条合作链路。无论是小批量市场测试，还是大规模国际发行，都能在统一品质标准下灵活推进。</p>
-<a class="inline-flex items-center gap-3 text-secondary border-b border-secondary/40 pb-2 hover:text-primary hover:border-primary transition-colors" href="mailto:china%40luxureat.com?cc=roberto%40truffleat.com&amp;subject=LuxurEat（露意膳）%20%E5%95%86%E5%8A%A1%E5%90%88%E4%BD%9C%E5%92%A8%E8%AF%A2">讨论定制项目 <span aria-hidden="true">→︎</span></a>
+<a class="inline-flex items-center gap-3 text-secondary border-b border-secondary/40 pb-2 hover:text-primary hover:border-primary transition-colors" href="mailto:roberto@ugolinigroup.com?subject=LuxurEat（露意膳）%20%E5%95%86%E5%8A%A1%E5%90%88%E4%BD%9C%E5%92%A8%E8%AF%A2">讨论定制项目 <span aria-hidden="true">→︎</span></a>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-gutter">
 <article class="lux-light-glass-card bg-surface/45 backdrop-blur-xl border border-white/10 p-8 min-h-[270px]">
@@ -132,14 +128,14 @@
 </div>
 </header>
 <div class="lux-partnership-cases-grid">
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/hotel-restaurant.webp" alt="TrufflEAT 五星级酒店餐厅合作概念"><span>查看大图</span></button><div><span>01 / HOSPITALITY</span><span class="material-symbols-outlined" aria-hidden="true">hotel</span></div><h3>酒店餐厅</h3><p>为五星级酒店屋顶、酒吧与餐厅设计灵活、舒适的餐饮空间。以新鲜意大利松露和精选食材打造高品质菜单，让客人在社交、商务餐叙与休闲场景中获得难忘体验。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-hotel-e-ristoranti/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/cruise-ship.webp" alt="TrufflEAT 豪华邮轮餐厅与精品店合作概念"><span>查看大图</span></button><div><span>02 / CRUISE</span><span class="material-symbols-outlined" aria-hidden="true">directions_boat</span></div><h3>邮轮</h3><p>将餐厅与精品店结合到豪华邮轮场景中。旅客既可购买 TrufflEAT® 产品，也可品尝船上现场烹制的新鲜松露菜单，从轻食到完整晚餐均可灵活配置。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-sulla-nave-da-crociera/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/airport.jpg" alt="TrufflEAT 机场餐饮与购物合作概念"><span>查看大图</span></button><div><span>03 / AIRPORT</span><span class="material-symbols-outlined" aria-hidden="true">flight</span></div><h3>机场</h3><p>面向新一代旅客，将登机前的时间转化为 Food & Buy 餐饮与零售体验。在舒适空间中品尝松露美食，同时选购 TrufflEAT® 产品和礼盒。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-in-aeroporto/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/train-station.webp" alt="TrufflEAT 火车站精致外带餐饮合作概念"><span>查看大图</span></button><div><span>04 / STATION</span><span class="material-symbols-outlined" aria-hidden="true">train</span></div><h3>车站</h3><p>为旅行及商务客流提供快速但精致的松露美食，满足出发前的用餐与外带需求。合作方案也可增设 TrufflEAT® 产品店，完成餐饮与零售的结合。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-alla-stazione-ferroviaria/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/casino.webp" alt="TrufflEAT 娱乐场所互动餐饮合作概念"><span>查看大图</span></button><div><span>05 / ENTERTAINMENT</span><span class="material-symbols-outlined" aria-hidden="true">casino</span></div><h3>娱乐场所</h3><p>以快休闲餐饮和现场互动烹饪呈现新鲜、高品质的美食体验。宾客可品尝如艺术品般完成的菜肴，并在用餐后直接购买同系列产品。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-al-casino/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/street-food.webp" alt="TrufflEAT 松露美食餐车合作概念"><span>查看大图</span></button><div><span>06 / FOOD TRUCK</span><span class="material-symbols-outlined" aria-hidden="true">local_shipping</span></div><h3>餐车</h3><p>以餐车形式将新鲜、轻盈、高品质的松露菜肴带入街头。方案不追求油腻的传统快餐，而是以新鲜及本地食材提供有趣而精致的用餐体验。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-bar-e-ristoranti/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/specialty-operation.webp" alt="TrufflEAT 酒店餐饮特色经营"><span>查看大图</span></button><div><span>07 / SPECIALTY OPERATIONS</span><span class="material-symbols-outlined" aria-hidden="true">restaurant</span></div><h3>特色经营</h3><p>为酒店与餐厅提供灵活的松露特色经营方案，将松露菜单、厨师支持与品牌餐饮体验融入不同的高端餐饮场景。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-bar-e-ristoranti/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
-<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/fresh-truffle.webp" alt="新鲜意大利松露全球供应"><span>查看大图</span></button><div><span>08 / IMPORT & EXPORT</span><span class="material-symbols-outlined" aria-hidden="true">flight_takeoff</span></div><h3>松露进出口</h3><p>向个人客户、创业者与零售商供应经认证的新鲜意大利松露。白松露与黑松露按季节供货，通过每日航空冷链发出，并由 DHL 提供全球 24–72 小时配送。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/hotel-restaurant.webp" alt="TrufflEAT 五星级酒店餐厅合作概念"><span>查看大图</span></button><div><span>01 / HOSPITALITY</span><span class="material-symbols-outlined" data-icon="hotel" aria-hidden="true" translate="no"></span></div><h3>酒店餐厅</h3><p>为五星级酒店屋顶、酒吧与餐厅设计灵活、舒适的餐饮空间。以新鲜意大利松露和精选食材打造高品质菜单，让客人在社交、商务餐叙与休闲场景中获得难忘体验。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-hotel-e-ristoranti/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/cruise-ship.webp" alt="TrufflEAT 豪华邮轮餐厅与精品店合作概念"><span>查看大图</span></button><div><span>02 / CRUISE</span><span class="material-symbols-outlined" data-icon="directions_boat" aria-hidden="true" translate="no"></span></div><h3>邮轮</h3><p>将餐厅与精品店结合到豪华邮轮场景中。旅客既可购买 TrufflEAT® 产品，也可品尝船上现场烹制的新鲜松露菜单，从轻食到完整晚餐均可灵活配置。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-sulla-nave-da-crociera/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/airport.jpg" alt="TrufflEAT 机场餐饮与购物合作概念"><span>查看大图</span></button><div><span>03 / AIRPORT</span><span class="material-symbols-outlined" data-icon="flight" aria-hidden="true" translate="no"></span></div><h3>机场</h3><p>面向新一代旅客，将登机前的时间转化为 Food & Buy 餐饮与零售体验。在舒适空间中品尝松露美食，同时选购 TrufflEAT® 产品和礼盒。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-in-aeroporto/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/train-station.webp" alt="TrufflEAT 火车站精致外带餐饮合作概念"><span>查看大图</span></button><div><span>04 / STATION</span><span class="material-symbols-outlined" data-icon="train" aria-hidden="true" translate="no"></span></div><h3>车站</h3><p>为旅行及商务客流提供快速但精致的松露美食，满足出发前的用餐与外带需求。合作方案也可增设 TrufflEAT® 产品店，完成餐饮与零售的结合。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-alla-stazione-ferroviaria/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/casino.webp" alt="TrufflEAT 娱乐场所互动餐饮合作概念"><span>查看大图</span></button><div><span>05 / ENTERTAINMENT</span><span class="material-symbols-outlined" data-icon="casino" aria-hidden="true" translate="no"></span></div><h3>娱乐场所</h3><p>以快休闲餐饮和现场互动烹饪呈现新鲜、高品质的美食体验。宾客可品尝如艺术品般完成的菜肴，并在用餐后直接购买同系列产品。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-ristoranti-al-casino/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/street-food.webp" alt="TrufflEAT 松露美食餐车合作概念"><span>查看大图</span></button><div><span>06 / FOOD TRUCK</span><span class="material-symbols-outlined" data-icon="local_shipping" aria-hidden="true" translate="no"></span></div><h3>餐车</h3><p>以餐车形式将新鲜、轻盈、高品质的松露菜肴带入街头。方案不追求油腻的传统快餐，而是以新鲜及本地食材提供有趣而精致的用餐体验。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-bar-e-ristoranti/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/specialty-operation.webp" alt="TrufflEAT 酒店餐饮特色经营"><span>查看大图</span></button><div><span>07 / SPECIALTY OPERATIONS</span><span class="material-symbols-outlined" data-icon="restaurant" aria-hidden="true" translate="no"></span></div><h3>特色经营</h3><p>为酒店与餐厅提供灵活的松露特色经营方案，将松露菜单、厨师支持与品牌餐饮体验融入不同的高端餐饮场景。</p><a class="lux-partnership-case-source" href="https://truffleat.com/franchising-di-bar-e-ristoranti/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
+<article><button type="button" class="lux-partnership-case-media" data-partnership-image><img loading="lazy" decoding="async" src="../assets/media/brand/partnership-cases/fresh-truffle.webp" alt="新鲜意大利松露全球供应"><span>查看大图</span></button><div><span>08 / IMPORT & EXPORT</span><span class="material-symbols-outlined" data-icon="flight_takeoff" aria-hidden="true" translate="no"></span></div><h3>松露进出口</h3><p>向个人客户、创业者与零售商供应经认证的新鲜意大利松露。白松露与黑松露按季节供货，通过每日航空冷链发出，并由 DHL 提供全球 24–72 小时配送。</p><a class="lux-partnership-case-source" href="https://luxureat.com/work-with-us/" target="_blank" rel="noopener">查看详情 ↗︎</a></article>
 </div>
 </div>
 </section>
@@ -286,8 +282,8 @@
 </div>
 <div class="lux-importer-contact" aria-label="Roberto Ugolini 联系方式">
 <strong>Roberto Ugolini · LuxurEat（露意膳）</strong>
-<a href="mailto:china@luxureat.com?cc=roberto@truffleat.com"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg><span>china@luxureat.com</span></a>
-<a href="mailto:china@luxureat.com?cc=roberto@truffleat.com"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg><span>roberto@truffleat.com</span></a>
+<a href="mailto:china@luxureat.com"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg><span>china@luxureat.com</span></a>
+<a href="mailto:roberto@ugolinigroup.com"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg><span>roberto@ugolinigroup.com</span></a>
 <a href="tel:+8615721452475"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.91.33 1.8.62 2.65a2 2 0 0 1-.45 2.11L8 9.71a16 16 0 0 0 6.29 6.29l1.23-1.23a2 2 0 0 1 2.11-.45c.85.29 1.74.5 2.65.62A2 2 0 0 1 22 16.92z"></path></svg><span>+86 15721452475</span></a>
 </div>
 </article>
@@ -320,21 +316,21 @@
 <div class="lux-inquiry-divider" aria-hidden="true"></div>
 <div class="pt-8 space-y-4">
 <div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">phone_in_talk</span>
+<span class="material-symbols-outlined text-primary" data-icon="phone_in_talk" aria-hidden="true" translate="no"></span>
 <a class="text-on-surface font-body-md hover:text-primary" href="tel:+8615721452475">+86 15721452475</a>
 </div>
 <div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">mail</span>
-<a class="text-on-surface font-body-md hover:text-primary" href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a>
+<span class="material-symbols-outlined text-primary" data-icon="mail" aria-hidden="true" translate="no"></span>
+<a class="text-on-surface font-body-md hover:text-primary" href="mailto:china@luxureat.com">china@luxureat.com</a>
 </div>
 <div class="flex items-center gap-4">
-<span class="material-symbols-outlined text-primary">mail</span>
-<a class="text-on-surface font-body-md hover:text-primary" href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a>
+<span class="material-symbols-outlined text-primary" data-icon="mail" aria-hidden="true" translate="no"></span>
+<a class="text-on-surface font-body-md hover:text-primary" href="mailto:roberto@ugolinigroup.com">roberto@ugolinigroup.com</a>
 </div>
 </div>
 </div>
 </div>
-<a class="lux-partner-card lg:w-1/2" href="mailto:china%40luxureat.com?cc=roberto%40truffleat.com&amp;subject=LuxurEat（露意膳）%20%E5%95%86%E5%8A%A1%E5%90%88%E4%BD%9C%E5%92%A8%E8%AF%A2">
+<a class="lux-partner-card lg:w-1/2" href="mailto:roberto@ugolinigroup.com?subject=LuxurEat（露意膳）%20%E5%95%86%E5%8A%A1%E5%90%88%E4%BD%9C%E5%92%A8%E8%AF%A2">
 <span class="lux-partner-card-bg" style="background-image: url('../assets/media/brand/lux-050.jpg');"></span>
 <span class="lux-partner-card-content">
 <strong class="font-headline-lg">参考方案</strong>
@@ -355,13 +351,13 @@
     <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
     <nav><a href="index.html">首页</a><a href="journal.html">关于我们</a><a href="caviar.html">系列产品</a><a href="rituals.html">食谱艺术</a><a href="news.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="gifting.html">礼赠合作</a><a href="contact.html">联系我们</a></nav>
     <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/oEPE48mPS48/" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a></div>
-    <div><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">china@luxureat.com</a><a href="mailto:china@luxureat.com?cc=roberto@truffleat.com">roberto@truffleat.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
+    <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="mailto:roberto@ugolinigroup.com">roberto@ugolinigroup.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
   </div>
   <div class="lux-footer-bottom">© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W</div>
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260730-performance-77"></script>
-<script defer src="../assets/data/brand.js?v=20260730-performance-77"></script>
-<script defer src="../assets/js/brand.js?v=20260730-performance-77"></script>
+<script defer src="../assets/js/core.js?v=20260801-performance-final-119"></script>
+<script defer src="../assets/data/brand.js?v=20260801-performance-final-119"></script>
+<script defer src="../assets/js/brand.js?v=20260801-performance-final-119"></script>
 <!-- lux:scripts:end --></body></html>

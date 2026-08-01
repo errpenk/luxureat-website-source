@@ -35,7 +35,7 @@ function assert(condition, message) {
       assert(result.image?.includes("assets/media/events/cifie-changsha-2026-banner.webp"), `${lang} event preview image is wrong`);
       assert(result.indexImage?.includes("assets/media/events/cifie-changsha-2026-poster.webp"), `${lang} event index image should use the Changsha poster: ${result.indexImage}`);
       assert(result.indexImageFit === "contain", `${lang} event index image should show the complete poster: ${result.indexImageFit}`);
-      assert(result.sectionTitleFont.includes("Alimama ShuHei"), `${lang} event section title should use Alimama ShuHei: ${result.sectionTitleFont}`);
+      assert(result.sectionTitleFont.includes(lang === "zh" ? "KingHwa Old Song" : "Nyght Serif"), `${lang} event section title uses the wrong headline font: ${result.sectionTitleFont}`);
       assert(result.sections === 3, `${lang} event article sections are incomplete`);
       assert(result.overflow <= 6, `${lang} event reader overflows by ${result.overflow}px at ${viewport.width}px`);
       await page.close();

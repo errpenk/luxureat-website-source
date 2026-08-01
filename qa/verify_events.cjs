@@ -79,6 +79,8 @@ assert(enNews.includes("data-recent-events"), "English brand-news event mount is
 assert(zhNews.includes('class="active" href="news.html">品牌新闻'), "Chinese brand-news navigation is not active");
 assert(enNews.includes('class="active" href="news.html">Brand News'), "English brand-news navigation is not active");
 assert(latestEvent.includes("LUXUREAT_EVENT_DATA"), "home latest event does not use shared event data");
+assert(latestEvent.includes("a.endDate.localeCompare(b.endDate)"), "home events are not ordered from nearest to latest");
+assert(journal.includes("a.endDate.localeCompare(b.endDate)"), "Brand News upcoming events are not ordered from nearest to latest");
 assert(latestEvent.includes("setInterval(() => show(index + 1), 2500)"), "home event autoplay is not set to 2.5 seconds");
 assert(latestEvent.includes("data-event-carousel-step"), "home event carousel controls are missing");
 assert(latestEvent.includes("#event-${event.id}"), "home latest event detail hash is missing");

@@ -54,8 +54,8 @@ const assert = (condition, message) => { if (!condition) throw new Error(message
     assert(result.privateLabelCardClasses.every((name) => name.includes("backdrop-blur") && !name.includes("border-t")), "private-label cards should be frosted and have no colored top border");
     assert(result.privateLabelBackground.includes("gifting-global-partnership.webp"), "private-label background was not applied");
     assert(result.coreBackground?.includes("value-ribbed-texture.webp"), "gray texture is missing");
-    assert(decodeURIComponent(result.mailto || "") === "mailto:china@luxureat.com?subject=LuxurEat 商务合作咨询", "custom project email subject is incorrect");
-    assert(decodeURIComponent(result.inquiryMailto || "") === "mailto:china@luxureat.com?subject=LuxurEat 商务合作咨询", "inquiry card email subject is incorrect");
+    assert(decodeURIComponent(result.mailto || "") === "mailto:roberto@ugolinigroup.com?subject=LuxurEat（露意膳） 商务合作咨询", "custom project email recipient or subject is incorrect");
+    assert(decodeURIComponent(result.inquiryMailto || "") === "mailto:roberto@ugolinigroup.com?subject=LuxurEat（露意膳） 商务合作咨询", "inquiry card email recipient or subject is incorrect");
     assert(result.text.includes("全程安心交付"), "delivery wording was not updated");
     assert(!result.text.includes("全程冷链交付"), "old delivery wording remains");
     assert(["自有品牌与 OEM 生产", "批发采购", "进出口合作"].every((text) => result.text.includes(text)), "B2B content is incomplete");

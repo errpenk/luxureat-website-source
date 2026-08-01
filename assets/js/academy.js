@@ -48,4 +48,5 @@ function initCaviarAcademy() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", initCaviarAcademy);
+if (document.readyState === "complete") initCaviarAcademy();
+else document.addEventListener("DOMContentLoaded", initCaviarAcademy, { once: true });

@@ -8,8 +8,6 @@ const root = path.resolve(rootArg || process.cwd());
 const check = process.argv.includes("--check");
 const bagIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>';
 const accountIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
-const fontPreconnects = '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
-const localFontPreload = '<link rel="preload" href="../assets/fonts/AlimamaShuHeiTi-Bold-subset.woff2" as="font" type="font/woff2" crossorigin>';
 const usesGoogleFonts = (html) => /<link\b[^>]*\bhref=["']https:\/\/fonts\.googleapis\.com\//i.test(html);
 
 const esc = (value) => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
@@ -56,7 +54,7 @@ function footerFor(page) {
     <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>${copy.description}</p></div>
     <nav>${nav}</nav>
     <div class="lux-footer-social">${social}</div>
-    <div><a href="mailto:${contact.email}?cc=${contact.secondaryEmail}">${contact.email}</a><a href="mailto:${contact.email}?cc=${contact.secondaryEmail}">${contact.secondaryEmail}</a><a href="tel:${contact.phoneHref}">${contact.phone}</a><div class="lux-footer-legal">${legal}</div></div>
+    <div><a href="mailto:${contact.email}">${contact.email}</a><a href="mailto:${contact.secondaryEmail}">${contact.secondaryEmail}</a><a href="tel:${contact.phoneHref}">${contact.phone}</a><div class="lux-footer-legal">${legal}</div></div>
   </div>
   <div class="lux-footer-bottom">${copy.copyright}</div>
 </footer>
@@ -64,8 +62,13 @@ function footerFor(page) {
 }
 
 function scriptsFor(page) {
-  const tags = page.scripts.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}"></script>`).join("\n");
-  return `<!-- lux:scripts:start -->\n${tags}\n<!-- lux:scripts:end -->`;
+  const eager = page.key === "home" ? page.scripts.filter((handle) => handle === "core") : page.scripts;
+  const lazy = page.key === "home" ? page.scripts.filter((handle) => handle !== "core") : [];
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}"></script>`).join("\n");
+  const deferred = lazy.length
+    ? `\n<script type="application/json" data-lux-deferred-scripts>${JSON.stringify(lazy.map((handle) => `../${scripts[handle].src}?v=${assetVersion}`))}</script>`
+    : "";
+  return `<!-- lux:scripts:start -->\n${tags}${deferred}\n<!-- lux:scripts:end -->`;
 }
 
 function replaceRegion(html, name, fallback, replacement) {
@@ -73,6 +76,13 @@ function replaceRegion(html, name, fallback, replacement) {
   if (marked.test(html)) return html.replace(marked, replacement);
   if (!fallback.test(html)) throw new Error(`Cannot find ${name} region`);
   return html.replace(fallback, replacement);
+}
+
+function protectMaterialIconMarkup(html) {
+  return html.replace(/<(span|i)\b([^>]*\bclass=["'][^"']*\bmaterial-symbols-outlined\b[^"']*["'][^>]*)>\s*([a-z0-9_]+)\s*<\/\1>/gi, (_match, tag, attrs, icon) => {
+    const cleanAttrs = attrs.replace(/\s(?:data-icon|aria-hidden|translate)=["'][^"']*["']/gi, "");
+    return `<${tag}${cleanAttrs} data-icon="${icon}" aria-hidden="true" translate="no"></${tag}>`;
+  });
 }
 
 function render(page) {
@@ -83,14 +93,13 @@ function render(page) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   html = html.replace(/(\.\.\/(?:assets\/css\/(?:tailwind-home|tailwind-site)\.css|integration\.css))\?v=[^"']+/g, `$1?v=${assetVersion}`);
-  html = html.replace(/(fonts\.googleapis\.com\/css2\?[^"']*(?:Bodoni|Montserrat)[^"']*(?:&|&amp;)display=)swap/g, "$1optional");
-  html = html.replace(/<link rel="preload" href="\.\.\/assets\/fonts\/AlimamaShuHeiTi-Bold\.woff2" as="font" type="font\/woff2" crossorigin>\n?/g, "");
-  if (page.lang === "zh" && !html.includes("AlimamaShuHeiTi-Bold-subset.woff2")) {
-    html = html.replace(/(<meta\b[^>]*\bname=["']viewport["'][^>]*>)/i, `$1\n${localFontPreload}`);
+  html = html.replace(/<link rel="preload" href="\.\.\/assets\/fonts\/KingHwaOldSong-subset\.woff2" as="font" type="font\/woff2" crossorigin>\n?/g, "");
+  html = html.replace(/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.(?:googleapis|gstatic)\.com["'])[^>]*>\s*/gi, "");
+  html = html.replace(/<link\b[^>]*\bhref=["']https:\/\/fonts\.googleapis\.com\/css2\?family=Material\+Symbols[^"']*["'][^>]*>\s*/gi, "");
+  if (!/<link\b[^>]*\brel=["'](?:shortcut )?icon["']/i.test(html)) {
+    html = html.replace(/<\/head>/i, '<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">\n</head>');
   }
-  if (usesGoogleFonts(html) && !/<link\b(?=[^>]*\brel=["']preconnect["'])(?=[^>]*\bhref=["']https:\/\/fonts\.gstatic\.com["'])[^>]*>/i.test(html)) {
-    html = html.replace(/(<meta\b[^>]*\bname=["']viewport["'][^>]*>)/i, `$1\n${fontPreconnects}`);
-  }
+  html = protectMaterialIconMarkup(html);
   return [file, html];
 }
 

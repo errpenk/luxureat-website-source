@@ -1,8 +1,8 @@
-export const assetVersion = "20260730-performance-77";
+export const assetVersion = "20260801-performance-final-119";
 
 export const contact = {
   email: "china@luxureat.com",
-  secondaryEmail: "roberto@truffleat.com",
+  secondaryEmail: "roberto@ugolinigroup.com",
   phone: "+86 15721452475",
   phoneHref: "+8615721452475",
 };

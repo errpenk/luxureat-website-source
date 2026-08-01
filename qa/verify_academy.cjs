@@ -78,13 +78,13 @@ assert(readerRuntime.includes("item.archive || item.eyebrow"), "related articles
 const styles = read("integration.css");
 assert(styles.includes(".lux-academy-card:hover .lux-reader-cta") && styles.includes("background: #89670f"), "academy cover hover treatment is missing");
 assert(styles.includes(".lux-academy-latest button:hover img"), "latest-post hover treatment is missing");
-assert(styles.includes("font: 700 14px/1.4 Montserrat") && styles.includes(".lux-academy-sidebar > label"), "academy sidebar headings do not share a font size");
+assert(styles.includes("font: 700 14px/1.4 var(--lux-page-heading)") && styles.includes(".lux-academy-sidebar > label"), "academy sidebar headings do not share a font size");
 assert(styles.includes(".lux-academy-reader .lux-reader-section-media img"), "academy inline-media cleanup is missing");
 assert(styles.includes("[data-academy-item][hidden]"), "academy search results cannot be hidden");
 assert(!styles.includes(".lux-academy-reader.is-wide-cover .lux-reader-cover img {\n  mix-blend-mode"), "wide covers still darken the page background");
 assert(styles.includes(".lux-about-story .lux-reader-section-media figure"), "about-page media containers are not cleaned up");
 assert(styles.includes(".lux-about-story .lux-about-carousel-track figure"), "about-page carousel borders are not removed");
-assert(styles.includes('font-family: "Alimama ShuHei" !important'), "Chinese headings do not exclusively use Alimama ShuHei");
+assert(styles.includes('--lux-zh-headline: "KingHwa Old Song"'), "Chinese headings do not use KingHwa Old Song");
 assert(styles.includes(".lux-reader-related-grid button.is-wide-cover img"), "related wide covers are still cropped");
 assert(styles.includes('.lux-latest-event-slide[aria-hidden="true"]'), "homepage carousel does not fully hide inactive slides");
 assert(styles.includes('right: calc(100% + 30px)'), "English timeline labels are not fixed to the left of the marker");

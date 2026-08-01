@@ -88,8 +88,8 @@ function initLuxReader() {
 
   const renderRecentEvents = () => {
     if (!eventMount) return;
-    const latest = events.filter((event) => event.status === "latest");
-    const past = events.filter((event) => event.status === "past");
+    const latest = events.filter((event) => event.status === "latest").sort((a, b) => a.endDate.localeCompare(b.endDate));
+    const past = events.filter((event) => event.status === "past").sort((a, b) => b.endDate.localeCompare(a.endDate));
     eventMount.innerHTML = `
       <div class="lux-recent-events-inner">
         <header class="lux-recent-events-head">
@@ -105,7 +105,7 @@ function initLuxReader() {
                 <small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small>
                 <strong>${escapeHtml(copy.articleTitle)}</strong>
                 <span>${escapeHtml(copy.intro)}</span>
-                <span class="lux-narrative-link">${eventLabels.read}<span class="material-symbols-outlined">arrow_forward</span></span>
+                <span class="lux-narrative-link">${eventLabels.read}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
               </span>
             </button>` : "";
           }).join("")}
@@ -262,7 +262,7 @@ function initLuxReader() {
               <small>${escapeHtml(story.date)} · CaviareEat</small>
               <strong>${escapeHtml(story.title)}</strong>
               <span>${escapeHtml(story.intro)}</span>
-              <span class="lux-narrative-link">${escapeHtml(newsLabels.read)}<span class="material-symbols-outlined">arrow_forward</span></span>
+              <span class="lux-narrative-link">${escapeHtml(newsLabels.read)}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
             </span>
           </button>
         </div>
@@ -771,4 +771,5 @@ function initLuxReader() {
 }
 
 
-document.addEventListener("DOMContentLoaded", initLuxReader);
+if (document.readyState === "complete") initLuxReader();
+else document.addEventListener("DOMContentLoaded", initLuxReader, { once: true });
