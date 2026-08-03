@@ -64,7 +64,7 @@ assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is miss
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
 assert(core.includes('["blog.html", "知识博客", [["鱼子酱学院", "caviar-academy"]]'), "Chinese Blog submenu is incorrect");
 assert(core.includes('["blog.html", "Blog", [["Caviar Academy", "caviar-academy"]]'), "English Blog submenu is incorrect");
-assert(core.includes('["gifting.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"]'), "Chinese cooperation submenu is incorrect");
+assert(core.includes('["gifting.html", "礼赠合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"]'), "Chinese gifting submenu is incorrect");
 assert(core.includes('["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]'), "Chinese About Us submenu is incorrect");
 assert(core.includes('["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]'), "Chinese contact submenu is incorrect");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");

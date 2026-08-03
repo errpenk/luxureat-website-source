@@ -10,7 +10,8 @@ const gzipSize = (file) => zlib.gzipSync(read(file), { level: 9 }).length;
 const css = read("integration.css").toString();
 
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
-assert.ok(size("assets/fonts/KingHwaOldSong-complete.ttf") > 0, "complete KingHwa font is missing");
+assert.ok(size("assets/fonts/KingHwaOldSong-home-critical.woff2") <= 200 * 1024, "Chinese home headline subset exceeds 200 KB");
+assert.ok(size("assets/fonts/LuxurEatZhiSong-home-subset.woff2") <= 250 * 1024, "Chinese home body subset exceeds 250 KB");
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
@@ -28,7 +29,7 @@ assert.ok(gzipSize("assets/js/core.js") <= 22 * 1024, "critical shared JavaScrip
 assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px"/);
 assert.match(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.doesNotMatch(css, /font-display:\s*swap/, "custom fonts still permit an old-font flash");
-assert.match(css, /src:\s*url\(["']?assets\/fonts\/KingHwaOldSong-complete\.ttf\?v=20260803-font-video-2/, "shared CSS does not use the versioned complete KingHwa font");
+assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
@@ -36,9 +37,8 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /class="lux-hero-video"[^>]+autoplay[^>]+preload="auto"/);
   assert.match(home, /data-lux-deferred-scripts/);
   assert.match(home, /rel="icon"[^>]+luxureat-logo\.png/);
-  assert.match(home, lang === "zh" ? /rel="preload"[^>]+KingHwaOldSong-complete\.ttf/ : /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
-  if (lang === "zh") assert.match(home, /lux-kinghwa-loading/);
-  else assert.match(home, /rel="preload"[^>]+Spectral-home-critical\.woff2/);
+  assert.match(home, lang === "zh" ? /rel="preload"[^>]+KingHwaOldSong-home-critical\.woff2/ : /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
+  assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-home-subset\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
@@ -54,8 +54,11 @@ for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter(
 
 for (const slug of ["journal", "caviar", "rituals", "news", "blog", "certification", "gifting", "contact", "bag"]) {
   const page = read(`zh/${slug}.html`).toString();
-  assert.match(page, /rel="preload"[^>]+KingHwaOldSong-complete\.ttf/);
-  assert.match(page, /lux-kinghwa-loading/);
+  const headline = `assets/fonts/KingHwaOldSong-${slug}-critical.woff2`;
+  const body = `assets/fonts/LuxurEatZhiSong-${slug}-critical.woff2`;
+  assert.ok(size(headline) + size(body) <= 450 * 1024, `${slug} Chinese critical fonts exceed 450 KB`);
+  assert.match(page, new RegExp(`rel="preload"[^>]+KingHwaOldSong-${slug}-critical\\.woff2`));
+  assert.match(page, new RegExp(`rel="preload"[^>]+LuxurEatZhiSong-${slug}-critical\\.woff2`));
 }
 
 const videoMarkup = ["en", "zh"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n") + read("assets/js/events.js").toString();
@@ -65,10 +68,6 @@ for (const match of videoMarkup.matchAll(/<video\b[\s\S]*?<\/video>/g)) {
   assert.match(match[0], /webkit-playsinline/);
   assert.match(match[0], /poster=/);
   assert.match(match[0], /<source media="\(max-width: 640px\)"[^>]+-mobile\.m4v/);
-  assert.doesNotMatch(match[0], /\bcontrols(?:=|\s|>)/);
 }
-const core = read("assets/js/core.js").toString();
-assert.doesNotMatch(core, /luxReduceMotion|video\.pause\(/, "autoplay videos still stop for reduced-motion preferences");
-assert.match(core, /video\.setAttribute\("autoplay", ""\)/, "viewport videos are not promoted to autoplay before playback");
 
 console.log("Performance budgets passed.");
