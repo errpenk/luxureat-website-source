@@ -11471,10 +11471,20 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
   grid-template-columns: 7fr 5fr;
   min-height: 430px;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 .lux-olive-recipe-stories article:nth-child(2) {
   grid-template-columns: 5fr 7fr;
   margin-top: clamp(32px, 5vw, 72px);
+}
+.lux-olive-recipe-stories article:nth-child(-n + 2) { grid-template-columns: 1fr; }
+.lux-olive-recipe-stories article:nth-child(-n + 2) figure,
+.lux-olive-recipe-stories article:nth-child(-n + 2) > div { grid-area: 1 / 1; }
+.lux-olive-recipe-stories article:nth-child(-n + 2) > div { z-index: 1; align-self: stretch; }
+.lux-olive-recipe-stories article:first-child > div {
+  padding-left: 55%;
+  background: linear-gradient(to left, #89670f, #89670f00 68%);
 }
 .lux-olive-recipe-stories article:nth-child(n + 3) {
   position: relative;
@@ -11510,19 +11520,6 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
   margin: 12px 0 10px;
   font-size: clamp(28px, 2.6vw, 38px);
 }
-.lux-olive-recipe-stories article:nth-child(n + 3) p {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: max-height .3s ease, opacity .25s ease, transform .3s ease;
-}
-.lux-olive-recipe-stories article:nth-child(n + 3):hover p,
-.lux-olive-recipe-stories article:nth-child(n + 3):focus-within p {
-  max-height: 120px;
-  opacity: .86;
-  transform: none;
-}
 .lux-olive-recipe-stories article:nth-child(n + 3) button { display: none; }
 .lux-olive-recipe-stories figure {
   min-width: 0;
@@ -11545,7 +11542,8 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
   color: #fff;
 }
 .lux-olive-recipe-stories article:nth-child(2) > div {
-  background: #fff;
+  padding-right: 45%;
+  background: linear-gradient(to right, #fff, #fff0 68%);
   color: #171715;
 }
 .lux-olive-recipe-stories h3 {
@@ -11553,11 +11551,17 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
   font: 500 clamp(30px, 3.8vw, 52px)/1.08 var(--lux-page-heading);
 }
 .lux-olive-recipe-stories p {
+  max-height: 0;
   margin: 0;
+  overflow: hidden;
   color: inherit;
-  opacity: .82;
+  opacity: 0;
+  transform: translateY(8px);
   font: 400 16px/1.75 var(--lux-zh-body, var(--lux-en-body));
+  transition: max-height .3s ease, margin-top .3s ease, opacity .25s ease, transform .3s ease;
 }
+.lux-olive-recipe-stories article:hover p,
+.lux-olive-recipe-stories article:focus-within p { max-height: 120px; margin-top: 12px; opacity: .86; transform: none; }
 .lux-olive-recipe-stories button {
   align-self: flex-start;
   min-height: 44px;
@@ -11801,23 +11805,6 @@ section[data-recipe-panel] {
 #truffle-recipes .lux-recipe-theme-card:nth-child(3) figure,
 #china-family-recipes .lux-recipe-theme-card:nth-child(2) figure,
 #china-family-recipes .lux-recipe-theme-card:nth-child(3) figure { min-height: 360px; }
-#china-family-recipes .lux-recipe-theme-card:first-child { background: transparent; }
-#china-family-recipes .lux-recipe-theme-card:first-child > div {
-  width: 100%;
-  margin: 0;
-  align-self: stretch;
-  padding-left: 55%;
-  background: linear-gradient(to left, #89670f, #89670f00 68%);
-}
-#china-family-recipes .lux-recipe-theme-card:nth-child(2) { background: transparent; color: #171715; }
-#china-family-recipes .lux-recipe-theme-card:nth-child(2) > div {
-  width: 100%;
-  margin: 0;
-  align-self: stretch;
-  padding-right: 45%;
-  background: linear-gradient(to right, #fff, #fff0 68%);
-}
-
 .lux-cert-awards {
   margin: clamp(96px, 10vw, 150px) 0 0;
   padding: clamp(72px, 8vw, 112px) 24px;
@@ -12015,7 +12002,8 @@ section[data-recipe-panel] {
   }
   #truffle-recipes .lux-recipe-theme-card:first-child,
   #china-family-recipes .lux-recipe-theme-card:first-child { min-height: 520px; }
-  #truffle-recipes .lux-recipe-theme-card:first-child > div {
+  #truffle-recipes .lux-recipe-theme-card:first-child > div,
+  #china-family-recipes .lux-recipe-theme-card:first-child > div {
     width: calc(100% - 32px);
     margin: auto 16px 16px;
     align-self: end;
