@@ -21,8 +21,8 @@ function headerFor(page) {
   const counterpart = pages.find((item) => item.lang === otherLang && item.key === key) || pages.find((item) => item.lang === otherLang && item.key === "home");
   const nav = navigation.map((item) => `<a${item.key === key ? ' class="active"' : ""} href="${link(slugFor(item, lang))}">${esc(item[lang])}</a>`).join("");
   const labels = lang === "zh"
-    ? { nav: "navigation", bag: "购物袋", account: "个人登录", search: "搜索意大利美食、食材、橄榄油和食谱", open: "关闭", closed: "菜单", menu: "菜单" }
-    : { nav: "navigation", bag: "Shopping bag", account: "Account sign in", search: "Search Italian food, ingredients, olive oil and recipes", open: "Close", closed: "Menu", menu: "Menu" };
+    ? { nav: "navigation", bag: "购物袋", account: "个人登录", search: "搜索全部网页内容", open: "关闭", closed: "菜单", menu: "菜单" }
+    : { nav: "navigation", bag: "Shopping bag", account: "Account sign in", search: "Search all website content", open: "Close", closed: "Menu", menu: "Menu" };
   const zhLink = lang === "zh" ? "#" : `../zh/${counterpart.slug}.html`;
   const enLink = lang === "en" ? "#" : `../en/${counterpart.slug}.html`;
 

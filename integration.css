@@ -231,13 +231,22 @@ html.dark body.lux-academy-page {
 }
 .lux-global-search::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(5px); }
 .lux-global-search-panel { position: relative; padding: clamp(30px, 6vw, 66px); }
-.lux-global-search-panel label { display: block; margin-bottom: 20px; color: #9df5ec; font: 500 clamp(28px, 5vw, 52px)/1 var(--lux-page-heading); }
 .lux-global-search-panel > div { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
 .lux-global-search-panel input { min-width: 0; min-height: 52px; padding: 12px 14px; border: 1px solid rgba(229,226,225,.35); background: transparent; color: #fff; font: 400 15px/1.4 var(--lux-page-heading); }
 .lux-global-search-panel input:focus { border-color: #9df5ec; outline: 0; box-shadow: 0 0 0 2px rgba(157,245,236,.16); }
 .lux-global-search-panel form button,
 .lux-global-search-panel > div > button { min-height: 52px; padding: 0 18px; border: 1px solid #9df5ec; background: #9df5ec; color: #003734; font: 700 12px/1.2 var(--lux-page-heading); letter-spacing: .08em; cursor: pointer; }
-.lux-global-search-panel > div > button span { margin-left: 8px; }
+.lux-global-search-panel > div > button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background-color .2s ease, color .2s ease, transform .2s ease; }
+.lux-global-search-panel > div > button:hover,
+.lux-global-search-panel > div > button:focus-visible { background: #e9c349; border-color: #e9c349; color: #101313; transform: scale(1.04); outline: 0; }
+.lux-global-search-panel > div > button:disabled { cursor: progress; opacity: .72; }
+.lux-global-search-arrow { width: 16px; height: 16px; flex: 0 0 auto; }
+.lux-global-search-results { display: grid; gap: 10px; max-height: min(42vh, 360px); margin: 20px 0 0; overflow: auto; color: rgba(229,226,225,.72); font: 400 14px/1.5 var(--lux-page-heading); }
+.lux-global-search-results a { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid rgba(157,245,236,.2); color: inherit; transition: border-color .2s ease, background-color .2s ease; }
+.lux-global-search-results a:hover,
+.lux-global-search-results a:focus-visible { border-color: #e9c349; background: rgba(233,195,73,.08); outline: 0; }
+.lux-global-search-results strong { color: #9df5ec; font-weight: 600; }
+.lux-global-search-results span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lux-global-search-close { position: absolute; top: 14px; right: 18px; border: 0; background: transparent; color: #e5e2e1; font-size: 28px; line-height: 1; cursor: pointer; }
 .lux-global-search-close:hover,
 .lux-global-search-close:focus-visible { color: #9df5ec; }
@@ -11512,11 +11521,23 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
 }
 .lux-olive-recipe-stories article:nth-child(n + 3) button { display: none; }
 .lux-olive-recipe-stories figure {
+  position: relative;
   min-width: 0;
   margin: 0;
   overflow: hidden;
   background: #252321;
 }
+.lux-olive-recipe-stories figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .34);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .24s ease;
+}
+.lux-olive-recipe-stories article:hover figure::after,
+.lux-olive-recipe-stories article:focus-within figure::after { opacity: 1; }
 .lux-olive-recipe-stories img {
   width: 100%;
   height: 100%;
@@ -11561,6 +11582,26 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
   font: 700 12px/1.4 var(--lux-page-heading);
   letter-spacing: .12em;
 }
+.lux-olive-recipe-stories .lux-reader-cta {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  margin: 0;
+  border: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+  font: 600 13px/1 var(--lux-page-heading);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.lux-olive-recipe-stories article:hover .lux-reader-cta,
+.lux-olive-recipe-stories article:focus-within .lux-reader-cta {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lux-olive-recipe-stories .lux-reader-cta:hover,
+.lux-olive-recipe-stories .lux-reader-cta:focus-visible { border-color: #fff; color: #fff; }
 .lux-olive-recipe-stories article:hover img,
 .lux-olive-recipe-stories article:focus-within img {
   transform: scale(1.025);

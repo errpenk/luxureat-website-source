@@ -395,26 +395,79 @@ const luxGlobalSearch = document.querySelector("[data-global-search]");
 if (luxGlobalSearch) {
   const zh = document.documentElement.lang?.startsWith("zh");
   const copy = zh
-    ? { title: "搜索意大利美食", placeholder: "搜索意大利美食、食材、橄榄油和食谱", submit: "开始搜索", close: "关闭搜索" }
-    : { title: "Search Italian food", placeholder: "Search Italian food, ingredients, olive oil and recipes", submit: "Search", close: "Close search" };
+    ? { placeholder: "支持搜索全部网页内容", submit: "开始搜索", close: "关闭搜索", searching: "正在搜索…", empty: "未找到相关内容" }
+    : { placeholder: "Search all website content", submit: "Search", close: "Close search", searching: "Searching…", empty: "No matching content found" };
+  const pages = zh
+    ? ["index.html", "journal.html", "caviar.html", "rituals.html", "news.html", "blog.html", "certification.html", "gifting.html", "contact.html", "bag.html"]
+    : ["index.html", "journal.html", "products.html", "rituals.html", "news.html", "blog.html", "certification.html", "gifting.html", "contact.html", "bag.html"];
+  const dataSources = [
+    ["../assets/data/products.js", zh ? "caviar.html" : "products.html", zh ? "产品目录" : "Product catalogue"],
+    ["../assets/data/events.js", "news.html", zh ? "品牌新闻" : "News"],
+    ["../assets/data/journal.js", "blog.html", zh ? "知识博客" : "Blog"],
+    ["../assets/data/academy.js", "blog.html", zh ? "意大利美食学院" : "Italian Food Academy"],
+    ["../assets/data/brand.js", "journal.html", zh ? "关于我们" : "About Us"],
+  ];
   const dialog = document.createElement("dialog");
   dialog.className = "lux-global-search";
-  dialog.innerHTML = `<form method="dialog" class="lux-global-search-panel"><button type="button" class="lux-global-search-close" data-global-search-close aria-label="${copy.close}">×</button><label for="lux-global-search-input">${copy.title}</label><div><input id="lux-global-search-input" name="q" type="search" placeholder="${copy.placeholder}" autocomplete="off" maxlength="100" required><button type="submit">${copy.submit}<span aria-hidden="true">↗</span></button></div></form>`;
+  dialog.innerHTML = `<form method="dialog" class="lux-global-search-panel"><button type="button" class="lux-global-search-close" data-global-search-close aria-label="${copy.close}">×</button><div><input id="lux-global-search-input" name="q" type="search" aria-label="${copy.placeholder}" placeholder="${copy.placeholder}" autocomplete="off" maxlength="100" required><button type="submit">${copy.submit}<svg class="lux-global-search-arrow notranslate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" translate="no"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div><p class="lux-global-search-results" data-global-search-results hidden aria-live="polite"></p></form>`;
   document.body.appendChild(dialog);
   const input = dialog.querySelector("input");
+  const results = dialog.querySelector("[data-global-search-results]");
+  const submit = dialog.querySelector('[type="submit"]');
+  luxGlobalSearch.setAttribute("aria-label", copy.placeholder);
+  const searchSite = async (query) => {
+    const needle = query.toLocaleLowerCase(document.documentElement.lang || "en");
+    const sources = [
+      ...pages.map((path) => ({ url: new URL(path, location.href), href: new URL(path, location.href).href })),
+      ...dataSources.map(([path, target, title]) => ({ url: new URL(path, location.href), href: new URL(target, location.href).href, title, data: true })),
+    ];
+    const records = await Promise.all(sources.map(async (source) => {
+      try {
+        const response = await fetch(source.url.href);
+        if (!response.ok) return null;
+        const content = await response.text();
+        const page = source.data ? null : new DOMParser().parseFromString(content, "text/html");
+        page?.querySelectorAll("script, style, noscript, template").forEach((node) => node.remove());
+        const text = (source.data ? content : page?.body?.textContent || "").replace(/\s+/g, " ").trim();
+        const index = text.toLocaleLowerCase(document.documentElement.lang || "en").indexOf(needle);
+        if (index < 0) return null;
+        return { href: source.href, title: page?.title || source.title || source.href, excerpt: text.slice(Math.max(0, index - 48), index + query.length + 100) };
+      } catch { return null; }
+    }));
+    return records.filter(Boolean);
+  };
   luxGlobalSearch.addEventListener("click", () => {
     dialog.showModal();
     input.focus();
   });
   dialog.querySelector("[data-global-search-close]").addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
-  dialog.querySelector("form").addEventListener("submit", (event) => {
+  dialog.querySelector("form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const query = input.value.trim();
     if (!query) return;
-    const target = new URL("blog.html", location.href);
-    target.searchParams.set("q", query);
-    location.href = target.href;
+    submit.disabled = true;
+    submit.firstChild.textContent = copy.searching;
+    results.hidden = false;
+    results.textContent = copy.searching;
+    const matches = await searchSite(query);
+    submit.disabled = false;
+    submit.firstChild.textContent = copy.submit;
+    results.replaceChildren();
+    if (!matches.length) {
+      results.textContent = copy.empty;
+      return;
+    }
+    matches.forEach((match) => {
+      const link = document.createElement("a");
+      link.href = match.href;
+      const title = document.createElement("strong");
+      title.textContent = match.title;
+      const excerpt = document.createElement("span");
+      excerpt.textContent = `…${match.excerpt}…`;
+      link.append(title, excerpt);
+      results.append(link);
+    });
   });
 }
 
@@ -1028,7 +1081,8 @@ function initLuxRecipeCtas() {
   const label = document.documentElement.lang?.startsWith("zh") ? "阅读详情" : "Read More";
   document.querySelectorAll(".lux-recipe-anchor .lux-reader-card[data-reader-open]").forEach((card) => {
     const cta = card.querySelector(".lux-reader-cta") || card.querySelector("button[data-reader-open]") || document.createElement("button");
-    if (!cta.isConnected) card.appendChild(cta);
+    const media = card.closest(".lux-olive-recipe-stories") ? card.querySelector("figure") || card : card;
+    if (cta.parentElement !== media) media.appendChild(cta);
     cta.type = "button";
     cta.classList.add("lux-reader-cta");
     cta.dataset.readerOpen = card.dataset.readerOpen;
