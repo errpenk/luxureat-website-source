@@ -102,6 +102,145 @@ html.dark body.lux-academy-page {
   color: #55514b;
   font: 400 17px/1.75 var(--lux-page-heading);
 }
+.lux-academy-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -34px 0 54px;
+}
+.lux-academy-anchors { position: relative; height: 0; }
+.lux-academy-anchors span { position: relative; top: -120px; display: block; scroll-margin-top: 120px; }
+.lux-academy-topics button {
+  padding: 9px 15px;
+  border: 1px solid #bdb6ac;
+  border-radius: 0;
+  color: #4d4943;
+  background: transparent;
+  font: 600 13px/1.4 var(--lux-page-heading);
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.lux-academy-topics button:hover,
+.lux-academy-topics button:focus-visible,
+.lux-academy-topics button.is-active {
+  border-color: #006a64;
+  color: #003734;
+  background: #9df5ec;
+  transform: translateY(-1px);
+}
+.lux-academy-card-art,
+.lux-reader-cover-art {
+  display: grid;
+  align-content: end;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  padding: clamp(24px, 5vw, 62px);
+  box-sizing: border-box;
+  text-align: left;
+  color: #f5f1e9;
+  background: #14201f;
+}
+.lux-academy-card-art b,
+.lux-reader-cover-art span {
+  color: #9df5ec;
+  font: 600 12px/1.4 var(--lux-page-heading);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.lux-academy-card-art strong,
+.lux-reader-cover-art strong {
+  font: 400 clamp(42px, 8vw, 96px)/.88 var(--lux-page-heading);
+  letter-spacing: .04em;
+}
+.lux-academy-card-art.is-olive,
+.lux-reader-cover-art.is-olive {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(221, 183, 62, .7) 0 5%, transparent 5.5%),
+    radial-gradient(circle at 68% 44%, rgba(157, 245, 236, .15) 0 18%, transparent 18.5%),
+    linear-gradient(135deg, #173d37, #0b1717 66%, #66520e);
+}
+.lux-academy-card-art.is-gelato,
+.lux-reader-cover-art.is-gelato {
+  color: #25221d;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(255,255,255,.86) 0 12%, transparent 12.5%),
+    radial-gradient(circle at 22% 78%, rgba(157, 245, 236, .65) 0 16%, transparent 16.5%),
+    linear-gradient(135deg, #ead7bc, #f3eee4 56%, #d8a26e);
+}
+.lux-academy-card-art.is-gelato b,
+.lux-reader-cover-art.is-gelato span {
+  color: #006a64;
+}
+.lux-academy-card-art.is-caviar,
+.lux-reader-cover-art.is-caviar {
+  background: linear-gradient(135deg, #232929, #101313 58%, #006a64);
+}
+.lux-academy-card-art.is-culture,
+.lux-reader-cover-art.is-culture {
+  background:
+    radial-gradient(circle at 78% 22%, rgba(232, 195, 76, .7) 0 4%, transparent 4.5%),
+    linear-gradient(135deg, #184b45, #0d1b1a 62%, #8d6d16);
+}
+.lux-academy-card-art.is-academy,
+.lux-reader-cover-art.is-academy {
+  color: #29251d;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(255,255,255,.72) 0 15%, transparent 15.5%),
+    linear-gradient(135deg, #d9c68e, #f2ead6 54%, #a9d5cc);
+}
+.lux-academy-card-art.is-academy b,
+.lux-reader-cover-art.is-academy span {
+  color: #006a64;
+}
+.lux-academy-card-art.is-nutrition,
+.lux-reader-cover-art.is-nutrition {
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.08) 0 1px, transparent 1px 12px),
+    linear-gradient(135deg, #453d2e, #171b19 58%, #80641d);
+}
+@media (max-width: 720px) {
+  .lux-academy-topics {
+    margin-top: -22px;
+    margin-bottom: 40px;
+  }
+}
+.lux-academy-latest .lux-academy-card-art {
+  min-height: 58px;
+  padding: 8px;
+  gap: 2px;
+}
+.lux-academy-latest .lux-academy-card-art b { display: none; }
+.lux-academy-latest .lux-academy-card-art strong { font-size: 20px; }
+.lux-reader-cover-art {
+  min-height: 360px;
+}
+.lux-reader-related-media .lux-reader-cover-art {
+  min-height: 100%;
+  padding: 16px;
+}
+.lux-reader-related-media .lux-reader-cover-art span { font-size: 9px; }
+.lux-reader-related-media .lux-reader-cover-art strong { font-size: 24px; }
+.lux-global-search {
+  width: min(680px, calc(100% - 28px));
+  padding: 0;
+  border: 1px solid rgba(157,245,236,.36);
+  background: #101313;
+  color: #f4f2ee;
+  box-shadow: 0 24px 90px rgba(0,0,0,.4);
+}
+.lux-global-search::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(5px); }
+.lux-global-search-panel { position: relative; padding: clamp(30px, 6vw, 66px); }
+.lux-global-search-panel label { display: block; margin-bottom: 20px; color: #9df5ec; font: 500 clamp(28px, 5vw, 52px)/1 var(--lux-page-heading); }
+.lux-global-search-panel > div { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.lux-global-search-panel input { min-width: 0; min-height: 52px; padding: 12px 14px; border: 1px solid rgba(229,226,225,.35); background: transparent; color: #fff; font: 400 15px/1.4 var(--lux-page-heading); }
+.lux-global-search-panel input:focus { border-color: #9df5ec; outline: 0; box-shadow: 0 0 0 2px rgba(157,245,236,.16); }
+.lux-global-search-panel form button,
+.lux-global-search-panel > div > button { min-height: 52px; padding: 0 18px; border: 1px solid #9df5ec; background: #9df5ec; color: #003734; font: 700 12px/1.2 var(--lux-page-heading); letter-spacing: .08em; cursor: pointer; }
+.lux-global-search-panel > div > button span { margin-left: 8px; }
+.lux-global-search-close { position: absolute; top: 14px; right: 18px; border: 0; background: transparent; color: #e5e2e1; font-size: 28px; line-height: 1; cursor: pointer; }
+.lux-global-search-close:hover,
+.lux-global-search-close:focus-visible { color: #9df5ec; }
 .lux-academy-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
@@ -3779,7 +3918,8 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   gap: 10px;
   margin-top: 34px;
 }
-.lux-recipe-jump-nav a {
+.lux-recipe-jump-nav a,
+.lux-recipe-jump-nav button {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 10px;
@@ -3804,7 +3944,10 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   font: 400 18px/1 var(--lux-page-heading);
 }
 .lux-recipe-jump-nav a:hover,
-.lux-recipe-jump-nav a:focus-visible {
+.lux-recipe-jump-nav a:focus-visible,
+.lux-recipe-jump-nav button:hover,
+.lux-recipe-jump-nav button:focus-visible,
+.lux-recipe-jump-nav button.is-active {
   border-color: #0abab5;
   background: #0abab5;
   color: #101010;
@@ -3813,12 +3956,75 @@ html[lang^="zh"] .lux-recent-events-head h2 {
 .lux-recipe-jump-nav a:hover span,
 .lux-recipe-jump-nav a:hover b,
 .lux-recipe-jump-nav a:focus-visible span,
-.lux-recipe-jump-nav a:focus-visible b {
+.lux-recipe-jump-nav a:focus-visible b,
+.lux-recipe-jump-nav button:hover span,
+.lux-recipe-jump-nav button:hover b,
+.lux-recipe-jump-nav button:focus-visible span,
+.lux-recipe-jump-nav button:focus-visible b,
+.lux-recipe-jump-nav button.is-active span,
+.lux-recipe-jump-nav button.is-active b {
   color: #101010;
+}
+.lux-recipe-video-link {
+  display: inline-flex;
+  margin-top: 18px;
+  color: #9df5ec;
+  font: 600 13px/1.4 var(--lux-page-heading);
+  text-decoration: none;
+  transition: color .2s ease, transform .2s ease;
+}
+.lux-recipe-video-link:hover,
+.lux-recipe-video-link:focus-visible {
+  color: #fff;
+  transform: translateX(3px);
+}
+.lux-recipe-video-placeholder {
+  margin: 0 auto;
+  padding: clamp(64px, 9vw, 124px) clamp(22px, 6vw, 90px);
+  border-top: 1px solid #c9c3b8;
+  border-bottom: 1px solid #c9c3b8;
+  background: #e8e4dc;
+  color: #242321;
+}
+.lux-recipe-video-placeholder > div {
+  width: min(780px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+.lux-recipe-video-placeholder span {
+  color: #087d77;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .2em;
+}
+.lux-recipe-video-placeholder h2 {
+  margin: 18px 0 18px;
+  color: #101010;
+  font: 500 clamp(36px, 6vw, 72px)/1.02 var(--lux-page-heading);
+}
+.lux-recipe-video-placeholder p {
+  max-width: 620px;
+  margin: 0 auto;
+  color: #5d5850;
+  font: 400 16px/1.8 var(--lux-page-heading);
+}
+.lux-recipe-video-placeholder small {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 8px 12px;
+  border: 1px solid #b8b1a5;
+  color: #6d675e;
+  font: 600 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .08em;
 }
 @media (max-width: 520px) {
   .lux-recipe-jump-nav {
     grid-template-columns: 1fr;
+  }
+  .lux-recipe-video-placeholder {
+    padding-inline: 22px;
+  }
+  .lux-recipe-video-placeholder p {
+    font-size: 15px;
   }
 }
 #lux-about-section-1 .lux-about-image-button {
@@ -4568,6 +4774,10 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   min-height: 560px;
   object-fit: cover;
 }
+.lux-recipe-hero .lux-reader-cover-art {
+  min-height: 560px;
+  height: 100%;
+}
 .lux-recipe-intro {
   display: flex;
   flex-direction: column;
@@ -4702,6 +4912,70 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #151513;
   font: 700 16px/1.45 var(--lux-page-heading);
 }
+.lux-recipe-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 28px clamp(18px, 4vw, 56px) 0;
+  background: #cbc6bc;
+}
+.lux-recipe-details div {
+  padding: 22px 24px;
+  background: #f0ede6;
+}
+.lux-recipe-details dt {
+  color: #6d675e;
+  font: 700 11px/1.3 var(--lux-page-heading);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.lux-recipe-details dd {
+  margin: 7px 0 0;
+  color: #242321;
+  font: 400 14px/1.6 var(--lux-page-heading);
+}
+.lux-recipe-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(22px, 4vw, 54px);
+}
+.lux-recipe-topic-card {
+  min-width: 0;
+  cursor: pointer;
+}
+.lux-recipe-topic-card .lux-reader-cover-art {
+  position: relative;
+  min-height: 360px;
+  border: 1px solid rgba(0,106,100,.2);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.lux-recipe-topic-card .lux-reader-cover-art strong { font-size: clamp(36px, 6vw, 72px); }
+.lux-recipe-topic-card .lux-reader-cta { position: absolute; right: 24px; bottom: 24px; }
+.lux-recipe-topic-card h3 {
+  margin: 22px 0 8px;
+  color: #101010;
+  font: 600 clamp(26px, 3vw, 42px)/1.1 var(--lux-page-heading);
+}
+.lux-recipe-topic-card p { margin: 0; color: #5d5850; font: 400 15px/1.7 var(--lux-page-heading); }
+.lux-recipe-topic-card:hover .lux-reader-cover-art,
+.lux-recipe-topic-card:focus-within .lux-reader-cover-art { transform: translateY(-4px); box-shadow: 0 18px 42px rgba(12,27,26,.16); }
+.lux-product-topic-bridge {
+  padding: clamp(44px, 6vw, 86px) clamp(22px, 5vw, 72px);
+  border: 1px solid rgba(157,245,236,.24);
+  background: linear-gradient(135deg, #14201f, #101313 64%, #253b31);
+  color: #f4f2ee;
+}
+.lux-product-topic-bridge header { display: grid; grid-template-columns: minmax(0, .9fr) minmax(280px, 1.1fr); gap: 14px 48px; align-items: end; }
+.lux-product-topic-bridge header > span { grid-column: 1 / -1; color: #9df5ec; font: 700 11px/1.4 var(--lux-page-heading); letter-spacing: .2em; }
+.lux-product-topic-bridge h2 { margin: 0; font: 500 clamp(36px, 5vw, 68px)/1 var(--lux-page-heading); }
+.lux-product-topic-bridge h2 em { color: #e9c349; font-style: normal; }
+.lux-product-topic-bridge header p { margin: 0; color: #c9c5bd; font: 400 16px/1.7 var(--lux-page-heading); }
+.lux-product-topic-bridge > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 42px; }
+.lux-product-topic-bridge a { display: flex; flex-direction: column; gap: 10px; min-height: 190px; padding: 26px; border: 1px solid rgba(229,226,225,.2); color: #f4f2ee; text-decoration: none; transition: border-color .2s ease, transform .25s ease, background .2s ease; }
+.lux-product-topic-bridge a:hover, .lux-product-topic-bridge a:focus-visible { border-color: #9df5ec; background: rgba(157,245,236,.08); transform: translateY(-3px); }
+.lux-product-topic-bridge strong { font: 500 26px/1.15 var(--lux-page-heading); }
+.lux-product-topic-bridge span { color: #c9c5bd; font: 400 14px/1.6 var(--lux-page-heading); }
+.lux-product-topic-bridge b { margin-top: auto; color: #9df5ec; font: 700 11px/1.3 var(--lux-page-heading); letter-spacing: .08em; }
 .lux-reader-copy .lux-reader-section:first-child p:first-of-type::first-letter {
   float: left;
   margin: 8px 10px 0 0;
@@ -5085,6 +5359,10 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
     min-height: 0;
     aspect-ratio: 3 / 2;
   }
+  .lux-recipe-hero .lux-reader-cover-art {
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+  }
   .lux-recipe-intro {
     padding: 38px 26px;
   }
@@ -5101,6 +5379,14 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   .lux-recipe-nutrition dl {
     grid-template-columns: repeat(2, 1fr);
   }
+  .lux-recipe-details {
+    grid-template-columns: 1fr;
+    margin-inline: 0;
+  }
+  .lux-recipe-topic-grid { grid-template-columns: 1fr; gap: 38px; }
+  .lux-recipe-topic-card .lux-reader-cover-art { min-height: 280px; }
+  .lux-product-topic-bridge header,
+  .lux-product-topic-bridge > div { grid-template-columns: 1fr; }
 }
 
 /* Certification glossary: logo-led, accessible flip cards. */
@@ -10966,4 +11252,795 @@ html[lang^="en"] body [lang^="zh"] {
   font-weight: 700 !important;
   -webkit-text-stroke: .16px currentColor;
   paint-order: stroke fill;
+}
+
+/* August 3 reference-layout refinements. */
+body.lux-academy-page .lux-scroll-reveal,
+body.lux-academy-page .lux-scroll-reveal.is-in-view {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.lux-home-topic-preview {
+  position: relative;
+  padding: clamp(72px, 8vw, 120px) clamp(24px, 5.55vw, 80px);
+  background: #f5f2ec;
+  color: #151513;
+  overflow: hidden;
+  isolation: isolate;
+}
+.lux-home-topic-preview::before,
+.lux-home-topic-preview::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.lux-home-topic-preview::before {
+  top: 70px;
+  right: -90px;
+  width: 310px;
+  height: 310px;
+  background: rgba(157, 245, 236, .22);
+}
+.lux-home-topic-preview::after {
+  left: -110px;
+  bottom: 14%;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(137, 103, 15, .28);
+}
+.lux-home-topic-preview-inner {
+  width: min(1280px, 100%);
+  margin-inline: auto;
+}
+.lux-home-topic-preview header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .92fr);
+  align-items: start;
+  gap: 16px clamp(48px, 8vw, 118px);
+  margin-bottom: 42px;
+}
+.lux-home-topic-preview header > span {
+  grid-column: 1 / -1;
+  color: #006a64;
+  font: 700 12px/1.4 var(--lux-page-heading);
+  letter-spacing: .22em;
+}
+.lux-home-topic-preview h2 {
+  margin: 0;
+  color: #101010;
+  font-family: var(--lux-page-heading);
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.08;
+  font-weight: 500;
+}
+.lux-home-topic-preview h2 em { color: #89670f; font-style: normal; }
+.lux-home-topic-preview header p {
+  max-width: 600px;
+  margin: 0;
+  padding-top: 4px;
+  color: #5d5850;
+  font: 400 17px/1.75 var(--lux-zh-body, var(--lux-en-body));
+}
+.lux-home-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+}
+.lux-topic-preview-card {
+  grid-column: span 5;
+  display: grid;
+  grid-template-rows: clamp(220px, 24vw, 330px) auto;
+  min-height: 0;
+  padding: 0;
+  color: #171715;
+  background: #e9e6df;
+  isolation: auto;
+  border: 1px solid transparent;
+  transition: border-color .25s ease, border-radius .25s ease;
+  border-radius: 22px;
+  overflow: hidden;
+}
+.lux-topic-preview-card:nth-child(4n + 2),
+.lux-topic-preview-card:nth-child(4n + 3) {
+  grid-column: span 7;
+}
+.lux-topic-preview-card::before {
+  display: none;
+}
+.lux-topic-preview-card figure {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #d9d5cd;
+}
+.lux-topic-preview-card figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.lux-topic-preview-card > div {
+  position: relative;
+  min-height: 190px;
+  padding: 24px 78px 26px 26px;
+}
+.lux-topic-preview-card > div > span {
+  display: block;
+  margin-bottom: 16px;
+  color: #087d77;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .18em;
+}
+.lux-topic-preview-card > div > h3 {
+  margin: 0 0 10px;
+  color: #171715;
+  font: 500 clamp(26px, 2.7vw, 38px)/1.1 var(--lux-page-heading);
+}
+.lux-topic-preview-card > div > p {
+  max-width: 620px;
+  margin: 0;
+  color: #5b5750;
+  font: 400 15px/1.65 var(--lux-zh-body, var(--lux-en-body));
+}
+.lux-topic-preview-card > div > b {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid #9df5ec;
+  color: #003734;
+  background: #9df5ec;
+  font-size: 0;
+  border-radius: 50%;
+  transition: transform .25s ease, color .25s ease, border-color .25s ease, background .25s ease;
+}
+.lux-topic-preview-card > div > b i {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+}
+.lux-topic-preview-card > div > b svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.lux-topic-preview-card:hover,
+.lux-topic-preview-card:focus-visible {
+  transform: none;
+  border-color: #89670f;
+  border-radius: 0;
+  box-shadow: none;
+}
+.lux-topic-preview-card:hover figure img,
+.lux-topic-preview-card:focus-visible figure img {
+  transform: scale(1.025);
+}
+.lux-topic-preview-card:hover > div > b,
+.lux-topic-preview-card:focus-visible > div > b {
+  transform: scale(1.09);
+  border-color: #89670f;
+  color: #fff;
+  background: #89670f;
+}
+
+.lux-olive-recipe-editorial {
+  padding: clamp(72px, 9vw, 132px) 24px;
+  background: #f5f2ec;
+  color: #171715;
+}
+.lux-olive-recipe-editorial > header,
+.lux-olive-recipe-stories {
+  width: min(1280px, 100%);
+  margin-inline: auto;
+}
+.lux-olive-recipe-editorial > header {
+  margin-bottom: clamp(42px, 6vw, 80px);
+  text-align: center;
+}
+.lux-olive-recipe-editorial > header > span,
+.lux-olive-recipe-stories article span {
+  color: #8b6712;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .2em;
+}
+.lux-olive-recipe-editorial > header h2 {
+  margin: 16px 0 18px;
+  color: #171715;
+  font: 500 clamp(42px, 6vw, 76px)/1.04 var(--lux-page-heading);
+}
+.lux-olive-recipe-editorial > header p {
+  margin: 0;
+  color: #686159;
+  font: 400 16px/1.7 var(--lux-zh-body, var(--lux-en-body));
+}
+.lux-olive-recipe-stories {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0;
+}
+.lux-olive-recipe-stories article {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  min-height: 430px;
+  cursor: pointer;
+}
+.lux-olive-recipe-stories article:nth-child(2) {
+  grid-template-columns: 5fr 7fr;
+  margin-top: clamp(32px, 5vw, 72px);
+}
+.lux-olive-recipe-stories article:nth-child(n + 3) {
+  position: relative;
+  grid-column: span 5;
+  grid-template-columns: 1fr;
+  min-height: 390px;
+  margin-top: clamp(36px, 5vw, 64px);
+  overflow: hidden;
+}
+.lux-olive-recipe-stories article:nth-child(3) {
+  grid-column: 2 / span 5;
+  width: auto;
+}
+.lux-olive-recipe-stories article:nth-child(4) {
+  grid-column: 7 / span 5;
+  width: auto;
+  margin-left: 0;
+}
+.lux-olive-recipe-stories article:nth-child(n + 3) figure {
+  grid-area: 1 / 1;
+  min-height: 390px;
+}
+.lux-olive-recipe-stories article:nth-child(n + 3) > div {
+  z-index: 1;
+  grid-area: 1 / 1;
+  min-height: 0;
+  align-self: end;
+  padding: 90px 34px 32px;
+  background: linear-gradient(transparent, rgba(17, 17, 17, .88));
+  color: #fff;
+}
+.lux-olive-recipe-stories article:nth-child(n + 3) h3 {
+  margin: 12px 0 10px;
+  font-size: clamp(28px, 2.6vw, 38px);
+}
+.lux-olive-recipe-stories article:nth-child(n + 3) p {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: max-height .3s ease, opacity .25s ease, transform .3s ease;
+}
+.lux-olive-recipe-stories article:nth-child(n + 3):hover p,
+.lux-olive-recipe-stories article:nth-child(n + 3):focus-within p {
+  max-height: 120px;
+  opacity: .86;
+  transform: none;
+}
+.lux-olive-recipe-stories article:nth-child(n + 3) button { display: none; }
+.lux-olive-recipe-stories figure {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #252321;
+}
+.lux-olive-recipe-stories img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.lux-olive-recipe-stories article > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(34px, 5vw, 72px);
+  background: #89670f;
+  color: #fff;
+}
+.lux-olive-recipe-stories article:nth-child(2) > div {
+  background: #fff;
+  color: #171715;
+}
+.lux-olive-recipe-stories h3 {
+  margin: 18px 0 18px;
+  font: 500 clamp(30px, 3.8vw, 52px)/1.08 var(--lux-page-heading);
+}
+.lux-olive-recipe-stories p {
+  margin: 0;
+  color: inherit;
+  opacity: .82;
+  font: 400 16px/1.75 var(--lux-zh-body, var(--lux-en-body));
+}
+.lux-olive-recipe-stories button {
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: 28px;
+  padding: 10px 0;
+  border-bottom: 1px solid currentColor;
+  color: inherit;
+  font: 700 12px/1.4 var(--lux-page-heading);
+  letter-spacing: .12em;
+}
+.lux-olive-recipe-stories article:hover img,
+.lux-olive-recipe-stories article:focus-within img {
+  transform: scale(1.025);
+}
+
+section[data-recipe-panel][hidden] { display: none !important; }
+#italian-flavor-recipes,
+section[data-recipe-panel] {
+  background: #131313 !important;
+  color: #e5e2e1;
+}
+
+.lux-recipe-theme {
+  padding: clamp(80px, 9vw, 132px) 24px;
+  color: #171715;
+  background: #fff;
+}
+.lux-recipe-theme:nth-of-type(even) { background: #f1eee8; }
+.lux-recipe-theme > header,
+.lux-recipe-theme-grid {
+  width: min(1280px, 100%);
+  margin-inline: auto;
+}
+.lux-recipe-theme > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .8fr);
+  gap: 16px 64px;
+  align-items: end;
+  margin-bottom: 54px;
+}
+.lux-recipe-theme > header span {
+  grid-column: 1 / -1;
+  color: #087d77;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .2em;
+}
+.lux-recipe-theme > header h2 {
+  margin: 0;
+  font: 500 clamp(40px, 5vw, 68px)/1.05 var(--lux-page-heading);
+}
+.lux-recipe-theme > header p {
+  margin: 0;
+  color: #686159;
+  font: 400 16px/1.75 var(--lux-zh-body, var(--lux-en-body));
+}
+.lux-recipe-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0;
+}
+.lux-recipe-theme-card {
+  grid-column: span 7;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  min-height: 370px;
+  background: #20201f;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+}
+.lux-recipe-theme-card:nth-child(2) {
+  grid-column: 6 / span 7;
+  margin-top: 48px;
+  background: #89670f;
+}
+.lux-recipe-theme-card:nth-child(3) {
+  grid-column: 2 / span 7;
+  margin-top: 48px;
+  background: #f1eee8;
+  color: #171715;
+}
+.lux-recipe-theme-card figure { margin: 0; min-width: 0; overflow: hidden; }
+.lux-recipe-theme-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.lux-recipe-theme-card > div { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 54px); }
+.lux-recipe-theme-card span { color: #d7ad31; font: 700 11px/1.4 var(--lux-page-heading); letter-spacing: .18em; }
+.lux-recipe-theme-card h3 { margin: 16px 0 14px; font: 500 clamp(28px, 3vw, 42px)/1.08 var(--lux-page-heading); }
+.lux-recipe-theme-card p { margin: 0; color: inherit; opacity: .78; font: 400 15px/1.7 var(--lux-zh-body, var(--lux-en-body)); }
+.lux-recipe-theme-card:hover img,
+.lux-recipe-theme-card:focus-within img { transform: scale(1.035); }
+
+/* Three distinct editorial compositions follow the supplied recipe references. */
+#truffle-recipes { background: #fff; }
+#truffle-recipes > header,
+#healthy-light-recipes > header,
+#china-family-recipes > header {
+  grid-template-columns: 1fr;
+  max-width: 760px;
+  text-align: center;
+}
+#truffle-recipes > header span,
+#healthy-light-recipes > header span,
+#china-family-recipes > header span { grid-column: 1; }
+#truffle-recipes > header p,
+#healthy-light-recipes > header p,
+#china-family-recipes > header p { max-width: 680px; margin-inline: auto; }
+#healthy-light-recipes { background: #fff; }
+#healthy-light-recipes .lux-recipe-theme-grid {
+  position: relative;
+  width: min(1160px, 100%);
+  grid-template-rows: repeat(2, 300px);
+  gap: 16px;
+}
+#healthy-light-recipes .lux-recipe-theme-grid::after {
+  content: "";
+  position: absolute;
+  right: -34px;
+  bottom: -30px;
+  z-index: 0;
+  width: 38%;
+  height: 48%;
+  background: #89670f;
+}
+#healthy-light-recipes .lux-recipe-theme-card {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / span 7;
+  display: block;
+  min-height: 0;
+  margin: 0;
+  background: #eee9e1;
+  color: #171715;
+}
+#healthy-light-recipes .lux-recipe-theme-card:nth-child(2) {
+  grid-column: 1 / span 7;
+  margin: 0;
+}
+#healthy-light-recipes .lux-recipe-theme-card:nth-child(3) {
+  grid-column: 8 / span 5;
+  grid-row: 1 / span 2;
+  margin: 0;
+}
+#healthy-light-recipes .lux-recipe-theme-card figure { width: 100%; height: 100%; }
+#healthy-light-recipes .lux-recipe-theme-card > div {
+  position: absolute;
+  inset: auto 0 0;
+  max-width: none;
+  padding: 54px 24px 22px;
+  background: linear-gradient(transparent, rgba(17, 17, 17, .84));
+  color: #fff;
+}
+#healthy-light-recipes .lux-recipe-theme-card h3 { margin: 0; color: #fff; font-size: 22px; }
+#healthy-light-recipes .lux-recipe-theme-card span { display: none; }
+#healthy-light-recipes .lux-recipe-theme-card p {
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: max-height .3s ease, margin-top .3s ease, opacity .25s ease, transform .3s ease;
+}
+#healthy-light-recipes .lux-recipe-theme-card:hover p,
+#healthy-light-recipes .lux-recipe-theme-card:focus-within p {
+  max-height: 110px;
+  margin-top: 12px;
+  opacity: .9;
+  transform: none;
+}
+
+#truffle-recipes,
+#china-family-recipes { padding-inline: 0; background: #fff; }
+#truffle-recipes > header,
+#china-family-recipes > header { width: min(1280px, calc(100% - 48px)); }
+#truffle-recipes .lux-recipe-theme-grid,
+#china-family-recipes .lux-recipe-theme-grid { width: 100%; }
+#truffle-recipes .lux-recipe-theme-grid { position: relative; }
+#truffle-recipes .lux-recipe-theme-grid::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  bottom: -28px;
+  z-index: 0;
+  width: 60%;
+  height: 180px;
+  background: #89670f;
+}
+#truffle-recipes .lux-recipe-theme-card { position: relative; z-index: 1; }
+#truffle-recipes .lux-recipe-theme-card:first-child,
+#china-family-recipes .lux-recipe-theme-card:first-child {
+  grid-column: 1 / -1;
+  grid-template-columns: 1fr;
+  min-height: clamp(460px, 50vw, 700px);
+  background: #1d1d1c;
+}
+#truffle-recipes .lux-recipe-theme-card:first-child figure,
+#china-family-recipes .lux-recipe-theme-card:first-child figure { grid-area: 1 / 1; }
+#truffle-recipes .lux-recipe-theme-card:first-child > div,
+#china-family-recipes .lux-recipe-theme-card:first-child > div {
+  z-index: 1;
+  grid-area: 1 / 1;
+  width: min(520px, calc(100% - 48px));
+  margin-left: max(24px, calc((100vw - 1280px) / 2));
+  align-self: center;
+  background: transparent;
+}
+#truffle-recipes .lux-recipe-theme-card:nth-child(2),
+#truffle-recipes .lux-recipe-theme-card:nth-child(3),
+#china-family-recipes .lux-recipe-theme-card:nth-child(2),
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) {
+  grid-column: span 5;
+  grid-template-columns: 1fr;
+  margin-top: -70px;
+  background: #1d1d1c;
+  color: #fff;
+  box-shadow: none;
+}
+#truffle-recipes .lux-recipe-theme-card:nth-child(2) figure,
+#truffle-recipes .lux-recipe-theme-card:nth-child(3) figure,
+#truffle-recipes .lux-recipe-theme-card:nth-child(2) > div,
+#truffle-recipes .lux-recipe-theme-card:nth-child(3) > div,
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) figure,
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) figure,
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) > div,
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) > div { grid-area: 1 / 1; }
+#truffle-recipes .lux-recipe-theme-card:nth-child(2) > div,
+#truffle-recipes .lux-recipe-theme-card:nth-child(3) > div,
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) > div,
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) > div {
+  z-index: 1;
+  align-self: end;
+  justify-content: end;
+  min-height: 55%;
+  background: linear-gradient(transparent, rgba(17, 17, 17, .9));
+}
+#truffle-recipes .lux-recipe-theme-card:nth-child(2) p,
+#truffle-recipes .lux-recipe-theme-card:nth-child(3) p,
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) p,
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) p {
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+#truffle-recipes .lux-recipe-theme-card:nth-child(2),
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) { grid-column: 2 / span 5; }
+#truffle-recipes .lux-recipe-theme-card:nth-child(3),
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) { grid-column: 7 / span 5; }
+#truffle-recipes .lux-recipe-theme-card:nth-child(2) figure,
+#truffle-recipes .lux-recipe-theme-card:nth-child(3) figure,
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) figure,
+#china-family-recipes .lux-recipe-theme-card:nth-child(3) figure { min-height: 360px; }
+
+.lux-cert-awards {
+  margin: clamp(96px, 10vw, 150px) 0 0;
+  padding: clamp(72px, 8vw, 112px) 24px;
+  background: #131313;
+}
+.lux-cert-awards > header {
+  max-width: 940px;
+  margin: 0 auto 56px;
+}
+.lux-cert-awards > header {
+  text-align: center;
+}
+.lux-cert-awards header > span {
+  color: #9df5ec;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .2em;
+}
+.lux-cert-awards h2 {
+  margin: 0 0 18px;
+  color: #f4f2ee;
+  font: 400 48px/56px var(--lux-page-heading);
+}
+.lux-cert-awards header p {
+  margin: 0;
+  color: #aaa69f;
+  font: 400 16px/1.75 var(--lux-page-heading);
+}
+.lux-cert-award-stack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 410px;
+  padding: 32px;
+  overflow: hidden;
+  background: #131313;
+}
+.lux-cert-award-stack figure {
+  width: min(290px, 38vw);
+  margin: 0 -22px;
+  border: 10px solid #292929;
+  background: #fff;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, .22);
+  transition: transform .25s ease, box-shadow .25s ease;
+  cursor: zoom-in;
+}
+.lux-cert-award-stack figure:first-child {
+  transform: rotate(-3deg) translateY(18px);
+}
+.lux-cert-award-stack figure:last-child {
+  z-index: 1;
+  transform: rotate(2deg) translateY(-18px);
+}
+.lux-cert-award-stack figure:hover,
+.lux-cert-award-stack figure:focus-within {
+  z-index: 5;
+  transform: translateY(-22px) scale(1.1);
+  box-shadow: 0 30px 58px rgba(0, 0, 0, .32);
+}
+.lux-cert-award-stack button {
+  display: grid;
+  width: 100%;
+  min-height: 255px;
+  padding: 34px;
+  place-items: center;
+  background: #fff;
+  cursor: zoom-in;
+}
+.lux-cert-award-stack figure > div {
+  display: grid;
+  min-height: 320px;
+  padding: 46px;
+  place-items: center;
+}
+.lux-cert-award-dialog {
+  width: min(880px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #f4f2ee;
+  color: #171715;
+}
+.lux-cert-award-dialog::backdrop { background: rgba(0, 0, 0, .82); }
+.lux-cert-award-dialog img {
+  width: 100%;
+  max-height: calc(100dvh - 120px);
+  object-fit: contain;
+  background: #fff;
+}
+.lux-cert-award-dialog button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  background: #171715;
+  color: #fff;
+  font-size: 28px;
+}
+.lux-cert-award-stack img {
+  width: 100%;
+  max-height: 165px;
+  object-fit: contain;
+}
+.lux-cert-award-stack figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 18px 20px;
+  border-top: 1px solid #ddd8cf;
+  color: #171715;
+  text-align: center;
+}
+.lux-cert-award-stack figcaption strong {
+  font: 700 16px/1.4 var(--lux-page-heading);
+}
+.lux-cert-award-stack figcaption span {
+  color: #686159;
+  font: 400 12px/1.5 var(--lux-page-heading);
+}
+@media (max-width: 820px) {
+  .lux-home-topic-preview header {
+    grid-template-columns: 1fr;
+  }
+  .lux-home-topic-preview header > span {
+    grid-column: 1;
+  }
+  .lux-home-topic-grid {
+    grid-template-columns: 1fr;
+  }
+  .lux-topic-preview-card,
+  .lux-topic-preview-card:nth-child(4n + 2),
+  .lux-topic-preview-card:nth-child(4n + 3) {
+    grid-column: 1;
+  }
+  .lux-olive-recipe-stories article,
+  .lux-olive-recipe-stories article:nth-child(2),
+  .lux-olive-recipe-stories article:nth-child(n + 3) {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    width: 100%;
+    margin: 32px 0 0;
+  }
+  .lux-olive-recipe-stories article figure {
+    min-height: 320px;
+  }
+  .lux-olive-recipe-stories article:nth-child(2) figure {
+    order: -1;
+  }
+  .lux-olive-recipe-stories article:nth-child(n + 3),
+  .lux-olive-recipe-stories article:nth-child(n + 3) figure { min-height: 320px; }
+  .lux-recipe-theme > header { grid-template-columns: 1fr; }
+  .lux-recipe-theme > header span { grid-column: 1; }
+  .lux-recipe-theme-card,
+  .lux-recipe-theme-card:nth-child(2),
+  .lux-recipe-theme-card:nth-child(3) {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+  }
+  .lux-recipe-theme-card figure { min-height: 280px; }
+  #truffle-recipes .lux-recipe-theme-card,
+  #truffle-recipes .lux-recipe-theme-card:nth-child(2),
+  #truffle-recipes .lux-recipe-theme-card:nth-child(3) {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    margin-top: 20px;
+  }
+  #truffle-recipes .lux-recipe-theme-card:nth-child(2) figure { order: 0; }
+  #healthy-light-recipes .lux-recipe-theme-grid {
+    grid-template-rows: none;
+    gap: 18px;
+  }
+  #truffle-recipes .lux-recipe-theme-grid::after,
+  #healthy-light-recipes .lux-recipe-theme-grid::after { display: none; }
+  #healthy-light-recipes .lux-recipe-theme-card,
+  #healthy-light-recipes .lux-recipe-theme-card:nth-child(2),
+  #healthy-light-recipes .lux-recipe-theme-card:nth-child(3) {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    height: 300px;
+  }
+  #truffle-recipes .lux-recipe-theme-card:first-child,
+  #truffle-recipes .lux-recipe-theme-card:nth-child(2),
+  #truffle-recipes .lux-recipe-theme-card:nth-child(3),
+  #china-family-recipes .lux-recipe-theme-card:first-child,
+  #china-family-recipes .lux-recipe-theme-card:nth-child(2),
+  #china-family-recipes .lux-recipe-theme-card:nth-child(3) {
+    grid-column: 1 / -1;
+    margin-top: 20px;
+  }
+  #truffle-recipes .lux-recipe-theme-card:first-child,
+  #china-family-recipes .lux-recipe-theme-card:first-child { min-height: 520px; }
+  #truffle-recipes .lux-recipe-theme-card:first-child > div,
+  #china-family-recipes .lux-recipe-theme-card:first-child > div {
+    width: calc(100% - 32px);
+    margin: auto 16px 16px;
+    align-self: end;
+  }
+}
+@media (max-width: 560px) {
+  .lux-home-topic-preview {
+    padding-inline: 24px;
+  }
+  .lux-topic-preview-card {
+    grid-template-rows: 220px auto;
+  }
+  .lux-topic-preview-card > div {
+    min-height: 210px;
+  }
+  .lux-olive-recipe-stories article figure {
+    min-height: 240px;
+  }
+  .lux-cert-award-stack {
+    flex-direction: column;
+    gap: 24px;
+    min-height: 0;
+    padding: 28px 18px;
+  }
+  .lux-cert-award-stack figure {
+    width: min(100%, 330px);
+    margin: 0;
+    transform: none !important;
+  }
+  .lux-cert-award-stack figure > div {
+    min-height: 250px;
+    padding: 32px;
+  }
+  .lux-cert-awards h2 {
+    font-size: 40px;
+    line-height: 48px;
+  }
 }

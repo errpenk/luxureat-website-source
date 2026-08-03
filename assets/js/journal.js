@@ -384,7 +384,7 @@ function initLuxReader() {
   const syncReaderCards = () => {
     const seen = new Set();
     const sync = (node, article) => {
-      if (!node || seen.has(node) || node.closest(".lux-home-harvest")) return;
+      if (!node || seen.has(node) || node.closest(".lux-home-harvest, .lux-olive-recipe-stories") || node.matches(".lux-recipe-theme-card")) return;
       seen.add(node);
       const image = node.querySelector("img");
       const background = node.querySelector(".lux-dark-photo-bg, [style*='background-image']");
@@ -482,6 +482,10 @@ function initLuxReader() {
     showReader(copy);
   };
 
+  const topicArt = (article, compact = false) => article.image
+    ? `<img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">`
+    : `<div class="lux-reader-cover-art ${escapeHtml(article.artClass || "is-caviar")}" role="img" aria-label="${escapeHtml(article.title)}"><span>${escapeHtml(article.topicLabel || article.eyebrow)}</span><strong>${escapeHtml(article.topic === "olive" ? "OLIO" : article.topic === "gelato" ? "GELATO" : "CAVIAR")}</strong></div>`;
+
   const render = (id, push) => {
     const article = articles[id];
     if (!article) return;
@@ -491,12 +495,12 @@ function initLuxReader() {
     if (article.type === "recipe" && article.recipe) {
       const recipe = article.recipe;
       const recipeLabels = article.lang === "zh"
-        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分" }
-        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving" };
+        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", region: "参考产区", oil: "推荐用油", allergens: "过敏原提示", substitutions: "可替换食材", products: "相关产品" }
+        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", region: "Reference region", oil: "Suggested oil", allergens: "Allergen note", substitutions: "Substitutions", products: "Related products" };
       body.innerHTML = `
         <article class="lux-recipe-reader">
           <section class="lux-recipe-hero">
-            <figure><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>
+            <figure>${article.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">` : topicArt(article)}</figure>
             <div class="lux-recipe-intro">
               <span>${escapeHtml(article.eyebrow)}</span>
               <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
@@ -522,6 +526,9 @@ function initLuxReader() {
           <section class="lux-recipe-nutrition">
             <header><h3>${recipeLabels.nutrition}</h3></header>
             <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
+          </section>
+          <section class="lux-recipe-details">
+            ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions], [recipeLabels.products, recipe.products]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
           </section>
         </article>`;
       showReader(copy);
@@ -589,7 +596,7 @@ function initLuxReader() {
             <p class="lux-reader-summary">${escapeHtml(article.intro)}</p>
           </div>
           <figure class="lux-reader-cover">
-            <img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"${article.coverPosition ? ` style="object-position: ${escapeHtml(article.coverPosition)}"` : ""}>
+            ${article.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"${article.coverPosition ? ` style="object-position: ${escapeHtml(article.coverPosition)}"` : ""}>` : topicArt(article)}
             <figcaption>${figureLabel} 01 / ${escapeHtml(article.archive || article.eyebrow)}</figcaption>
           </figure>
         </section>
@@ -620,7 +627,7 @@ function initLuxReader() {
                 return item ? `
                   <button type="button"${item.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}">
                     <span class="lux-reader-related-media">
-                      <img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt="">
+                      ${item.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt="">` : topicArt(item, true)}
                       <span class="lux-reader-related-cta">${copy.read}</span>
                     </span>
                     <span>${escapeHtml(item.archive || item.eyebrow)}</span>

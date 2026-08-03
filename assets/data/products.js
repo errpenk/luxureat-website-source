@@ -5,14 +5,13 @@
   const images = {
     oil: asset("media/brand/gifting-collab-truffle-oil.jpg"),
     slices: asset("media/brand/gifting-channel-truffle-products.webp"),
-    sauce: asset("media/brand/partnership-solution-truffle-sauce.jpg"),
     salt: asset("media/brand/gifting-wholesale-truffle-salt.webp"),
     truffle: asset("media/brand/contact-partnership-fresh-truffles.webp"),
   };
   const galleries = {
     oil: [images.oil, images.truffle],
     slices: [images.slices, images.truffle],
-    seasoning: [images.sauce, images.salt, images.truffle],
+    seasoning: [images.salt, images.truffle],
     whole: [images.truffle, images.slices],
   };
   // Match the Italian mockup label and package size to each registered product row.

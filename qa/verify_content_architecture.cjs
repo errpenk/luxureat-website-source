@@ -205,7 +205,8 @@ assert(!/<span\b[^>]*\bmaterial-symbols-outlined\b[^>]*>\s*[a-z0-9_]+\s*<\/span>
 assert(integrationStyles.includes('font-size: 18px !important') && integrationStyles.includes('line-height: 1.65 !important'), "English body copy does not meet the enlarged reading scale");
 assert(productRuntime.includes('lang === "en" ? \' lang="zh-CN"\'') && integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && integrationStyles.includes('font-family: "KingHwa Labels", serif !important'), "Chinese product names in the English interface do not use the current KingHwa label subset");
 const zhBlog = read("zh/blog.html");
-assert(zhBlog.includes("全面了解鱼子酱的历史、养殖与加工方式、种类、品鉴方法及可持续生产"), "Chinese Blog kicker is outdated");
+assert(zhBlog.includes("从鱼子酱、橄榄油到意式 Gelato"), "Chinese Blog kicker is outdated");
+assert(zhBlog.includes("意大利美食学院") && zhBlog.includes("橄榄油") && zhBlog.includes("Gelato"), "Chinese food academy topics are missing");
 assert(!zhBlog.includes("对于希望全面了解这种奢华食品每一处细微差别的人来说"), "obsolete Chinese Blog paragraph remains");
 
 console.log("content architecture verification passed");

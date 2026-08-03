@@ -39,6 +39,9 @@ function renderLuxProductCatalog() {
     ? { add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情" }
     : { add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details" };
   const formatMoney = (product) => product.priceLabel || `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
+  const formatPreviewPrice = (product) => product.catalogOnly
+    ? `${product.priceLabel || "TEST"} / ${lang === "zh" ? "份" : "unit"}`
+    : `${formatMoney(product)} / ${product.unit}`;
   const stockLabel = (product) => product.available === false
     ? labels.unavailable
     : Number.isFinite(product.stockQuantity) ? `${product.stockQuantity} ${labels.stock}` : "";
@@ -59,7 +62,7 @@ function renderLuxProductCatalog() {
       <div class="flex flex-col gap-2 border-t border-secondary/20 pt-4">
         <div class="flex justify-between items-start">
           <h2 class="font-headline-md text-headline-sm md:text-headline-md text-on-surface">${luxEscapeProductHtml(product.title)}</h2>
-          <span class="font-body-lg text-body-lg text-secondary">${luxEscapeProductHtml(formatMoney(product))} / ${luxEscapeProductHtml(product.unit)}</span>
+          <span class="font-body-lg text-body-lg text-secondary">${luxEscapeProductHtml(formatPreviewPrice(product))}</span>
         </div>
         <p class="lux-product-card-description font-body-md text-body-md text-on-surface-variant">${luxEscapeProductHtml(product.cardDesc || product.desc)}</p>
         ${product.mainIngredients ? `<small class="lux-product-registration-line font-label-sm text-label-sm"><strong>${luxEscapeProductHtml(product.eyebrow)}</strong><b aria-hidden="true">/</b><span>${luxEscapeProductHtml(product.mainIngredients)}</span></small>` : ""}
@@ -341,6 +344,7 @@ function initLuxProductDetails() {
   if (!Object.keys(products).length) return;
 
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
+  const catalogUnit = () => document.documentElement.lang?.startsWith("zh") ? "份" : "unit";
   const copy = () => document.documentElement.lang?.startsWith("zh")
     ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", qty: "数量", remove: "移除", recent: "更多推荐", specs: ["生产企业", "中国注册号", "产品类别 / HS", "有效期至"], story: "产品说明" }
     : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", qty: "Qty", remove: "Remove", recent: "More Recommendations", specs: ["Manufacturer", "China Registration", "Category / HS", "Valid Until"], story: "Product Information" };
@@ -476,7 +480,7 @@ function initLuxProductDetails() {
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
               <div class="lux-product-recent-media"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}"></div>
               <strong>${luxEscapeProductHtml(item.title)}</strong>
-              <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "TEST")} / ${luxEscapeProductHtml(item.unit)}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
+              <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "TEST")} / ${luxEscapeProductHtml(catalogUnit())}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
               <div class="lux-product-recent-actions">
                 <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-price-label="${luxEscapeProductHtml(item.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}"${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>

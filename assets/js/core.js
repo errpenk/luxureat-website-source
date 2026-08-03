@@ -213,6 +213,7 @@ document.querySelectorAll(".lux-home-market-system, .lux-home-gifting").forEach(
 
 const initLuxScrollReveal = () => {
   if (document.querySelector(".lux-products-main")) return;
+  if (document.body.classList.contains("lux-academy-page")) return;
   if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const elements = document.querySelectorAll([
     "body > header:not(.lux-header)",
@@ -390,26 +391,53 @@ document.addEventListener("lux-bag-change", updateLuxBagCount);
 const luxNav = document.querySelector(".lux-nav");
 const luxMenu = document.querySelector(".lux-menu");
 
+const luxGlobalSearch = document.querySelector("[data-global-search]");
+if (luxGlobalSearch) {
+  const zh = document.documentElement.lang?.startsWith("zh");
+  const copy = zh
+    ? { title: "搜索意大利美食", placeholder: "搜索意大利美食、食材、橄榄油和食谱", submit: "开始搜索", close: "关闭搜索" }
+    : { title: "Search Italian food", placeholder: "Search Italian food, ingredients, olive oil and recipes", submit: "Search", close: "Close search" };
+  const dialog = document.createElement("dialog");
+  dialog.className = "lux-global-search";
+  dialog.innerHTML = `<form method="dialog" class="lux-global-search-panel"><button type="button" class="lux-global-search-close" data-global-search-close aria-label="${copy.close}">×</button><label for="lux-global-search-input">${copy.title}</label><div><input id="lux-global-search-input" name="q" type="search" placeholder="${copy.placeholder}" autocomplete="off" maxlength="100" required><button type="submit">${copy.submit}<span aria-hidden="true">↗</span></button></div></form>`;
+  document.body.appendChild(dialog);
+  const input = dialog.querySelector("input");
+  luxGlobalSearch.addEventListener("click", () => {
+    dialog.showModal();
+    input.focus();
+  });
+  dialog.querySelector("[data-global-search-close]").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  dialog.querySelector("form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = input.value.trim();
+    if (!query) return;
+    const target = new URL("blog.html", location.href);
+    target.searchParams.set("q", query);
+    location.href = target.href;
+  });
+}
+
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["全球合作", "gifting-editorial"]]],
+    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["全球合作", "gifting-editorial"]]],
     ["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]],
     ["caviar.html", "系列产品", [["产品全览", "product-catalogue"]]],
-    ["rituals.html", "食谱艺术", [["早餐", "breakfast"], ["第一道主食", "first-courses"], ["第二道主食", "main-courses"], ["甜品", "desserts"]]],
+    ["rituals.html", "食谱艺术", [["意式风味食谱", "italian-flavor-recipes"], ["橄榄油食谱", "olive-recipes"], ["松露食谱", "truffle-recipes"], ["健康轻食", "healthy-light-recipes"], ["适合中国家庭的意大利菜", "china-family-recipes"]]],
     ["news.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
-    ["blog.html", "知识博客", [["鱼子酱学院", "caviar-academy"]]],
-    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["品质与认证", "certification-glossary"]]],
+    ["blog.html", "知识博客", [["探索意大利", "?topic=culture"], ["意大利美食学院", "?topic=academy"], ["鱼子酱学院", "?topic=caviar"], ["橄榄油学院", "?topic=olive"], ["意式 Gelato", "?topic=gelato"], ["营养与配料指南", "?topic=nutrition"]]],
+    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["获奖记录", "award-proofs"], ["品质与认证", "certification-glossary"]]],
     ["gifting.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Global Partnership", "gifting-editorial"]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Global Partnership", "gifting-editorial"]]],
     ["journal.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Seasonal Notes", "seasonal-notes"]]],
     ["products.html", "Products", [["Premium Products", "product-catalogue"]]],
-    ["rituals.html", "Recipe Art", [["Breakfast", "breakfast"], ["First Courses", "first-courses"], ["Main Courses", "main-courses"], ["Desserts", "desserts"]]],
+    ["rituals.html", "Recipe Art", [["Italian Flavor Recipes", "italian-flavor-recipes"], ["Olive Oil Recipes", "olive-recipes"], ["Truffle Recipes", "truffle-recipes"], ["Healthy Light Meals", "healthy-light-recipes"], ["Italian Food for Chinese Homes", "china-family-recipes"]]],
     ["news.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
-    ["blog.html", "Blog", [["Caviar Academy", "caviar-academy"]]],
-    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Quality & Certification", "certification-glossary"]]],
+    ["blog.html", "Blog", [["Explore Italy", "?topic=culture"], ["Italian Food Academy", "?topic=academy"], ["Caviar Academy", "?topic=caviar"], ["Olive Oil Academy", "?topic=olive"], ["Italian Gelato", "?topic=gelato"], ["Nutrition & Ingredients", "?topic=nutrition"]]],
+    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Award Records", "award-proofs"], ["Quality & Certification", "certification-glossary"]]],
     ["gifting.html", "Cooperation", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
     ["contact.html", "Contact", [["Brand Consultation", "brand-consultation"], ["Global Presence", "global-footprint"]]],
   ],
@@ -462,7 +490,9 @@ if (luxNav && luxMenu) {
       const [sectionLabel, targetIndex] = Array.isArray(section) ? section : [section, index + 1];
       const sectionLink = document.createElement("a");
       const sectionHash = typeof targetIndex === "number" ? `section-${targetIndex}` : targetIndex;
-      sectionLink.href = `${pageHref(href)}#${sectionHash}`;
+      sectionLink.href = typeof sectionHash === "string" && sectionHash.startsWith("?")
+        ? `${pageHref(href)}${sectionHash}`
+        : `${pageHref(href)}#${sectionHash}`;
       sectionLink.textContent = sectionLabel;
       flyout.appendChild(sectionLink);
     });
@@ -973,6 +1003,58 @@ info@luxureat.com`;
   });
 }
 
+function initLuxRecipePanels() {
+  const buttons = [...document.querySelectorAll("[data-recipe-panel-open]")];
+  const panels = [...document.querySelectorAll("[data-recipe-panel]")];
+  if (!buttons.length || !panels.length) return;
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    const id = button.dataset.recipePanelOpen;
+    const opening = button.getAttribute("aria-expanded") !== "true";
+    panels.forEach((panel) => { panel.hidden = !opening || panel.id !== id; });
+    buttons.forEach((item) => {
+      const active = opening && item === button;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-expanded", String(active));
+    });
+    if (opening) document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+  const initial = buttons.find((button) => button.dataset.recipePanelOpen === "breakfast") || buttons[0];
+  panels.forEach((panel) => { panel.hidden = panel.id !== initial.dataset.recipePanelOpen; });
+  initial.classList.add("is-active");
+  initial.setAttribute("aria-expanded", "true");
+}
+
+function initLuxRecipeCtas() {
+  const label = document.documentElement.lang?.startsWith("zh") ? "阅读详情" : "Read More";
+  document.querySelectorAll(".lux-recipe-anchor .lux-reader-card[data-reader-open]").forEach((card) => {
+    const cta = card.querySelector(".lux-reader-cta") || card.querySelector("button[data-reader-open]") || document.createElement("button");
+    if (!cta.isConnected) card.appendChild(cta);
+    cta.type = "button";
+    cta.classList.add("lux-reader-cta");
+    cta.dataset.readerOpen = card.dataset.readerOpen;
+    cta.textContent = label;
+  });
+}
+
+function initLuxAwardLightbox() {
+  const triggers = [...document.querySelectorAll("[data-cert-award-open]")];
+  if (!triggers.length || typeof HTMLDialogElement === "undefined") return;
+  const dialog = document.createElement("dialog");
+  dialog.className = "lux-cert-award-dialog";
+  dialog.innerHTML = '<button type="button" aria-label="Close">\u00d7</button><img alt="">';
+  document.body.appendChild(dialog);
+  const image = dialog.querySelector("img");
+  const close = dialog.querySelector("button");
+  triggers.forEach((trigger) => trigger.addEventListener("click", () => {
+    image.src = trigger.dataset.certAwardOpen;
+    image.alt = trigger.querySelector("img")?.alt || "";
+    dialog.showModal();
+    close.focus();
+  }));
+  close.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+}
+
 (() => {
   const icons = {
     x: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>',
@@ -1375,5 +1457,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initLuxInfoPopovers();
   initLuxGiftScroller();
   initLuxPartnershipLightbox();
+  initLuxRecipePanels();
+  initLuxRecipeCtas();
+  initLuxAwardLightbox();
   initLuxFooterActions();
 });

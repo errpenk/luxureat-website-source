@@ -241,6 +241,32 @@
       },
       sections: [], related: ["zh-recipe-sweet-bread-butter-caviar", "zh-recipe-truffle-eggs", "zh-recipe-truffle-toast"],
     },
+    "zh-recipe-olive-bruschetta": {
+      type: "recipe", lang: "zh", topic: "olive", artClass: "is-olive", eyebrow: "橄榄油食谱", title: "番茄罗勒橄榄油烤面包", meta: "RECIPE · 橄榄油食谱",
+      image: images.recipeTruffleToast,
+      intro: "用成熟番茄、罗勒和一款风味清晰的特级初榨橄榄油，完成适合中国家庭的简单意式前菜。",
+      recipe: {
+        description: "番茄的酸甜、烤面包的焦香与橄榄油的果香形成清晰层次。番茄、罗勒和乡村面包在中国市场较易获得，也可以按季节替换。",
+        time: "15分钟", difficulty: "简单", servings: "2人份", region: "拉齐奥 / 中部意大利", oil: "果香清新的特级初榨橄榄油", allergens: "含麸质；如使用奶酪需注意牛奶过敏原", substitutions: "法棍可替换为全麦面包；罗勒可用香芹或薄荷少量替代", products: "橄榄油学院专题；具体产品以实际目录为准",
+        ingredients: ["4片乡村面包或法棍", "2个成熟番茄", "6片新鲜罗勒", "1瓣蒜", "1.5汤匙特级初榨橄榄油", "少许盐与黑胡椒"],
+        steps: ["面包烤至表面金黄，用蒜瓣轻轻擦过。", "番茄切丁，与罗勒、盐和胡椒拌匀，静置3分钟。", "将番茄放在面包上，最后淋橄榄油并立即食用。"],
+        nutrition: [["能量", "约720千焦（约170千卡/份）"], ["脂肪", "约7克"], ["碳水化合物", "约23克"], ["蛋白质", "约4克"]],
+      },
+      sections: [], related: ["zh-recipe-olive-pasta", "zh-recipe-truffle-toast", "zh-academy-olive-oil-basics"],
+    },
+    "zh-recipe-olive-pasta": {
+      type: "recipe", lang: "zh", topic: "olive", artClass: "is-olive", eyebrow: "橄榄油食谱", title: "蒜香橄榄油意面", meta: "RECIPE · 橄榄油食谱",
+      image: images.recipeTruffleTagliolini,
+      intro: "用蒜、辣椒、欧芹和橄榄油完成一份快速意面，适合作为理解油脂、面水与火候的基础练习。",
+      recipe: {
+        description: "这道经典意面依靠面水与橄榄油形成轻盈乳化，不需要厚重酱汁。辣椒可按家庭口味减少或省略。",
+        time: "20分钟", difficulty: "简单", servings: "2人份", region: "坎帕尼亚 / 南部意大利", oil: "果香中等、带温和辛香的特级初榨橄榄油", allergens: "含麸质；意面可能含蛋，需按包装确认", substitutions: "普通意面可换成全麦或无麸质意面；欧芹可换香菜或罗勒", products: "橄榄油学院专题；具体产品以实际目录为准",
+        ingredients: ["180克意面", "3汤匙特级初榨橄榄油", "2瓣蒜", "少量干辣椒", "一小把欧芹", "盐适量"],
+        steps: ["将意面放入充足的盐水中煮至略有弹性，保留约100毫升面水。", "小火加热橄榄油与蒜片，加入辣椒，避免蒜片过度变焦。", "加入意面和少量面水，快速翻拌至油与淀粉形成轻盈酱汁。", "关火后加入欧芹，立即装盘并按口味补充橄榄油。"],
+        nutrition: [["能量", "约1900千焦（约455千卡/份）"], ["脂肪", "约18克"], ["碳水化合物", "约62克"], ["蛋白质", "约14克"]],
+      },
+      sections: [], related: ["zh-recipe-olive-bruschetta", "zh-recipe-black-truffle-risotto", "zh-academy-olive-tasting"],
+    },
     "zh-truffle": {
       lang: "zh", eyebrow: "产业观察", title: "世界鱼子酱版图：主要生产国与产业发展", meta: "ATLAS · 全球产地",
       image: images.caviarWorld,
@@ -562,6 +588,32 @@
       },
       sections: [], related: ["en-recipe-sweet-bread-butter-caviar", "en-recipe-truffle-eggs", "en-recipe-truffle-toast"],
     },
+    "en-recipe-olive-bruschetta": {
+      type: "recipe", lang: "en", topic: "olive", artClass: "is-olive", eyebrow: "Olive Oil Recipe", title: "Tomato and basil bruschetta", meta: "RECIPE · Olive Oil",
+      image: images.recipeTruffleToast,
+      intro: "Ripe tomato, basil and a clear extra-virgin olive oil make a simple Italian starter that works naturally in a Chinese home kitchen.",
+      recipe: {
+        description: "Tomato acidity, toasted bread and fruity olive oil create a clean, layered bite. Tomatoes, basil and country bread are widely available in China and can be adapted seasonally.",
+        time: "15 min", difficulty: "Easy", servings: "2 servings", region: "Lazio / Central Italy", oil: "A fresh, fruit-forward extra-virgin olive oil", allergens: "Contains gluten; check milk allergen if cheese is added", substitutions: "Baguette can replace country bread; parsley or a little mint can replace basil", products: "Olive Oil Academy; final product links follow the live catalogue",
+        ingredients: ["4 slices country bread or baguette", "2 ripe tomatoes", "6 basil leaves", "1 garlic clove", "1½ tablespoons extra-virgin olive oil", "Salt and black pepper"],
+        steps: ["Toast the bread until golden and rub it lightly with the garlic clove.", "Dice the tomatoes and mix with basil, salt and pepper; rest for 3 minutes.", "Spoon the tomatoes over the toast, finish with olive oil and serve immediately."],
+        nutrition: [["Energy", "About 720 kJ (170 kcal) per serving"], ["Fat", "About 7 g"], ["Carbohydrate", "About 23 g"], ["Protein", "About 4 g"]],
+      },
+      sections: [], related: ["en-recipe-olive-pasta", "en-recipe-truffle-toast", "en-academy-olive-oil-basics"],
+    },
+    "en-recipe-olive-pasta": {
+      type: "recipe", lang: "en", topic: "olive", artClass: "is-olive", eyebrow: "Olive Oil Recipe", title: "Spaghetti aglio, olio e peperoncino", meta: "RECIPE · Olive Oil",
+      image: images.recipeTruffleTagliolini,
+      intro: "Garlic, chilli, parsley and olive oil create a quick pasta dish that teaches the relationship between fat, pasta water and heat.",
+      recipe: {
+        description: "This classic pasta uses starchy water and olive oil to form a light emulsion rather than a heavy sauce. Reduce or omit chilli to suit the household.",
+        time: "20 min", difficulty: "Easy", servings: "2 servings", region: "Campania / Southern Italy", oil: "A medium-fruity extra-virgin olive oil with gentle pepper", allergens: "Contains gluten; egg may be present in pasta, check the package", substitutions: "Use whole-wheat or gluten-free pasta; replace parsley with coriander or basil", products: "Olive Oil Academy; final product links follow the live catalogue",
+        ingredients: ["180 g spaghetti", "3 tablespoons extra-virgin olive oil", "2 garlic cloves", "A little dried chilli", "A handful of parsley", "Salt"],
+        steps: ["Cook the pasta in salted water until just al dente and reserve about 100 ml of pasta water.", "Warm the olive oil and sliced garlic over low heat, adding chilli without browning the garlic too far.", "Add the pasta and a little pasta water; toss quickly until the oil and starch form a light sauce.", "Turn off the heat, add parsley and finish with olive oil to taste."],
+        nutrition: [["Energy", "About 1,900 kJ (455 kcal) per serving"], ["Fat", "About 18 g"], ["Carbohydrate", "About 62 g"], ["Protein", "About 14 g"]],
+      },
+      sections: [], related: ["en-recipe-olive-bruschetta", "en-recipe-black-truffle-risotto", "en-academy-olive-tasting"],
+    },
     "en-truffle": {
       lang: "en", eyebrow: "Industry Atlas", title: "The World of Caviar: Leading Producers and Industry Development", meta: "ATLAS · Global Origins",
       image: images.caviarWorld,
@@ -683,6 +735,28 @@
     },
   };
 
+
+  const recipeProfiles = {
+    "truffle-eggs": { zh: ["参考：意大利家庭早餐", "含蛋；如使用黄油需注意牛奶过敏原", "鸡蛋可按个人饮食替换；松露片可用适量松露产品替代", "特级初榨橄榄油或黄油，按实际产品标签使用", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Italian home breakfast", "Contains egg; butter adds a milk allergen", "Use a dietary egg alternative if appropriate; truffle slices may be replaced by a suitable truffle product", "Extra-virgin olive oil or butter, following the product label", "Truffle catalogue (subject to live stock and label)" ] },
+    "truffle-toast": { zh: ["参考：意大利早午餐", "含麸质、蛋、奶；刺山柑按实际包装确认", "乡村面包可替换为法棍或无麸质面包；罗比奥拉可替换为里科塔", "风味清新的特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Italian brunch", "Contains gluten, egg and milk; check capers on the package", "Replace country bread with baguette or gluten-free bread; robiola with ricotta", "A fresh extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "truffle-tagliolini": { zh: ["参考：皮埃蒙特风味", "含麸质、蛋、奶", "新鲜意面可替换为干意面；黄油可用橄榄油减少乳制品", "温和果香型特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Piedmont-style", "Contains gluten, egg and milk", "Fresh pasta can be replaced by dried pasta; use olive oil to reduce dairy", "A gentle, fruity extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "truffle-ravioli": { zh: ["参考：意大利北部风味", "含麸质、奶；馅料可能含蛋", "奶酪馅可替换为蘑菇馅；鲜奶油可用无糖燕麦烹饪奶替代但需确认配方", "中等果香型特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Northern Italian style", "Contains gluten and milk; filling may contain egg", "Replace cheese filling with mushroom; unsweetened oat cooking cream can replace dairy if the label allows", "A medium-fruity extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "black-truffle-risotto": { zh: ["参考：皮埃蒙特 / 伦巴第风味", "含奶；高汤与奶酪需按包装确认麸质和其他过敏原", "卡纳罗利米可替换为其他圆粒米；白葡萄酒可用无酒精高汤替代", "结构感中等的特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Piedmont / Lombardy style", "Contains milk; check stock and cheese labels for gluten and other allergens", "Carnaroli can be replaced by another round-grain rice; wine by alcohol-free stock", "A medium-structured extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "mushroom-soup": { zh: ["参考：翁布里亚 / 中部意大利风味", "如加入奶油则含奶；高汤需按包装确认", "奶油可省略或用无糖燕麦奶替代；香菇、口蘑可按供应替换", "果香温和的特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Umbrian / Central Italian style", "Contains milk if cream is used; check the stock label", "Omit cream or use unsweetened oat milk; mushrooms can follow local supply", "A gently fruity extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "beef-carpaccio-scallop-truffle": { zh: ["参考：皮埃蒙特现代前菜", "含鱼类/贝类；可能含芥末或其他酱汁过敏原，按包装确认", "扇贝可换熟虾；生牛肉应使用符合食品安全要求的原料，不建议高风险人群食用", "清新、低苦味的特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: modern Piedmont-style starter", "Contains fish and shellfish; check any mustard or sauce allergens", "Scallops can be replaced by cooked shrimp; use food-safe beef and avoid for high-risk groups", "A fresh, low-bitterness extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "shrimp-tartare-truffle": { zh: ["参考：利古里亚海岸风味", "含甲壳类；可能含鱼类或芥末，按包装确认", "生虾可改用彻底加热的虾；青柠可用柠檬替代", "清新果香型特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Ligurian coastal style", "Contains crustaceans; check fish or mustard in sauces", "Replace raw shrimp with fully cooked shrimp; lime with lemon", "A fresh, fruity extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
+    "sweet-bread-butter-caviar": { zh: ["参考：威尼斯风味甜咸小食", "含麸质、奶、鱼类；面包与鱼子酱标签需确认", "奶油蛋卷可换小片法棍；黄油可用无乳涂抹酱但需确认鱼子酱搭配", "此食谱以无额外用油为主，可用少量温和橄榄油收尾", "鱼子酱产品目录（以实际库存和标签为准）"], en: ["Reference: Venetian-style sweet-savoury bite", "Contains gluten, milk and fish; check bread and caviar labels", "Brioche can be replaced with baguette; use a dairy-free spread only after checking compatibility", "No added oil is required; a little mild olive oil can finish", "Caviar catalogue (subject to live stock and label)" ] },
+    "truffle-tiramisu": { zh: ["参考：威尼托甜点的创意表达", "含蛋、奶、麸质；咖啡利口酒可能含酒精", "马斯卡彭可用奶油奶酪；手指饼可按包装替换为无麸质版本", "此食谱以松露油为风味点缀，不建议过量", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Veneto-inspired dessert", "Contains egg, milk and gluten; coffee liqueur may contain alcohol", "Mascarpone can be replaced by cream cheese; check a gluten-free biscuit label", "Truffle oil is a finishing accent and should be used sparingly", "Truffle catalogue (subject to live stock and label)" ] },
+  };
+  Object.entries(articles).forEach(([id, article]) => {
+    if (article.type !== "recipe" || !article.recipe) return;
+    const key = id.replace(/^(?:zh|en)-recipe-/, "");
+    const profile = recipeProfiles[key]?.[article.lang];
+    if (!profile) return;
+    ["region", "allergens", "substitutions", "oil", "products"].forEach((field, index) => {
+      if (!article.recipe[field]) article.recipe[field] = profile[index];
+    });
+  });
 
   window.LUXUREAT_ARTICLE_DATA = { images, articles };
 })();

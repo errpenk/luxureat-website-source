@@ -3,18 +3,18 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>LuxurEat (露意膳) - Rituals &amp; Culture</title>
 <!-- lux:fonts:start -->
-<link rel="preload" href="../assets/fonts/NyghtSerif-Regular.woff2?v=20260803-font-video-final-131" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/Spectral-Regular.woff2?v=20260803-font-video-final-131" as="font" type="font/woff2" crossorigin>
-<style data-lux-critical-fonts>@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Regular.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:400;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Regular.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:400;font-style:normal;font-display:block}@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-RegularItalic.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:400;font-style:italic;font-display:block}@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Bold.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:700;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Italic.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:400;font-style:italic;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Light.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:300;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-SemiBold.woff2?v=20260803-font-video-final-131") format("woff2");font-weight:600;font-style:normal;font-display:block}</style>
+<link rel="preload" href="../assets/fonts/NyghtSerif-Regular.woff2?v=20260803-recipe-layouts-143" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/Spectral-Regular.woff2?v=20260803-recipe-layouts-143" as="font" type="font/woff2" crossorigin>
+<style data-lux-critical-fonts>@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Regular.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:400;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Regular.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:400;font-style:normal;font-display:block}@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-RegularItalic.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:400;font-style:italic;font-display:block}@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Bold.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:700;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Italic.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:400;font-style:italic;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Light.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:300;font-style:normal;font-display:block}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-SemiBold.woff2?v=20260803-recipe-layouts-143") format("woff2");font-weight:600;font-style:normal;font-display:block}</style>
 <!-- lux:fonts:end -->
-<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260803-font-video-final-131">
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260803-recipe-layouts-143">
 <style>
         body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
         .ghost-border { border: 0.5px solid rgba(233, 195, 73, 0.3); } /* secondary with opacity */
         .glass-panel { background: rgba(26, 26, 26, 0.4); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20260803-font-video-final-131">
+<link rel="stylesheet" href="../integration.css?v=20260803-recipe-layouts-143">
 <link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head>
 <body class="antialiased min-h-screen flex flex-col">
@@ -23,6 +23,7 @@
   <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
   <nav class="lux-nav" aria-label="navigation"><a href="index.html">Home</a><a href="journal.html">About Us</a><a href="products.html">Products</a><a class="active" href="rituals.html">Recipe Art</a><a href="news.html">Brand News</a><a href="blog.html">Blog</a><a href="certification.html">Certification</a><a href="gifting.html">Cooperation</a><a href="contact.html">Contact</a></nav>
   <div class="lux-actions">
+    <button class="lux-icon-action lux-search-action" type="button" data-global-search aria-label="Search Italian food, ingredients, olive oil and recipes"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button>
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="Shopping bag"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
     <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="Account sign in"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
     <span class="lux-lang"><a href="../zh/rituals.html">ZH</a><span>/</span><a class="active" href="#">EN</a></span>
@@ -47,7 +48,7 @@
 </div>
 </section>
 <!-- Recipe Atelier -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden lux-recipe-anchor" id="italian-flavor-recipes">
 <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
 <div class="md:col-span-5 reveal-on-scroll active">
 <span class="text-primary font-label-lg tracking-[0.3em] uppercase block mb-4">LuxurEat (露意膳) Recipe Atelier</span>
@@ -55,11 +56,11 @@
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">From breakfast to dessert, LuxurEat (露意膳) follows the rhythm of Italian recipes, bringing truffles, caviar, and seasonal ingredients into every course. These pages record more than methods: they express an understanding of ingredients, heat, and the aesthetics of the table.</p>
 <div class="flex items-center gap-4 mb-10"><div class="h-px bg-primary line-draw active"></div><span class="font-label-lg text-primary tracking-widest">FROM ITALY, WITH TASTE</span></div>
 <p class="font-body-md text-body-md text-on-surface-variant/80 italic border-l border-outline-variant/30 pl-6">Every recipe begins with the ingredient itself. Clear steps preserve the soul of Italian cooking and let LuxurEat (露意膳) specialties belong naturally at both everyday tables and formal gatherings.</p>
-<nav class="lux-recipe-jump-nav" aria-label="Recipe categories">
-<a href="#breakfast"><span>01</span><strong>Breakfast</strong><b aria-hidden="true">↘︎</b></a>
-<a href="#first-courses"><span>02</span><strong>First Courses</strong><b aria-hidden="true">↘︎</b></a>
-<a href="#main-courses"><span>03</span><strong>Main Courses</strong><b aria-hidden="true">↘︎</b></a>
-<a href="#desserts"><span>04</span><strong>Desserts</strong><b aria-hidden="true">↘︎</b></a>
+<nav class="lux-recipe-jump-nav lux-flavor-category-nav" aria-label="Italian Flavor Recipe categories">
+<button type="button" data-recipe-panel-open="breakfast" aria-controls="breakfast" aria-expanded="false"><span>01</span><strong>Breakfast</strong><b aria-hidden="true">↘︎</b></button>
+<button type="button" data-recipe-panel-open="first-courses" aria-controls="first-courses" aria-expanded="false"><span>02</span><strong>First Courses</strong><b aria-hidden="true">↘︎</b></button>
+<button type="button" data-recipe-panel-open="main-courses" aria-controls="main-courses" aria-expanded="false"><span>03</span><strong>Main Courses</strong><b aria-hidden="true">↘︎</b></button>
+<button type="button" data-recipe-panel-open="desserts" aria-controls="desserts" aria-expanded="false"><span>04</span><strong>Desserts</strong><b aria-hidden="true">↘︎</b></button>
 </nav>
 </div>
 <div class="md:col-span-6 md:col-start-7 relative reveal-on-scroll active">
@@ -69,7 +70,7 @@
 </div>
 </section>
 <!-- Breakfast Recipes -->
-<section class="bg-surface-container-low py-section-gap px-margin-mobile md:px-margin-desktop lux-recipe-anchor" id="breakfast">
+<section class="bg-surface-container-low py-section-gap px-margin-mobile md:px-margin-desktop lux-recipe-anchor" id="breakfast" data-recipe-panel hidden>
 <div class="max-w-container-max mx-auto">
 <div class="text-center mb-16">
 <span class="font-label-lg text-label-lg text-secondary tracking-widest uppercase block mb-4">Colazione</span>
@@ -98,7 +99,7 @@
 </div>
 </section>
 <!-- First Courses -->
-<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto lux-recipe-anchor" id="first-courses">
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto lux-recipe-anchor" id="first-courses" data-recipe-panel hidden>
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
 <div>
 <span class="text-secondary font-label-lg tracking-[0.3em] uppercase block mb-4">Primi</span>
@@ -148,7 +149,7 @@
 </div>
 </section>
 <!-- Main Courses -->
-<section class="bg-surface-container-low py-section-gap lux-recipe-anchor" id="main-courses">
+<section class="bg-surface-container-low py-section-gap lux-recipe-anchor" id="main-courses" data-recipe-panel hidden>
 <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
 <div>
@@ -180,7 +181,7 @@
 </div>
 </section>
 <!-- Desserts -->
-<section class="py-section-gap lux-recipe-anchor" id="desserts">
+<section class="py-section-gap lux-recipe-anchor" id="desserts" data-recipe-panel hidden>
 <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
 <header class="text-center mb-20 reveal-on-scroll active">
 <p class="font-label-lg text-secondary tracking-[0.4em] uppercase">Dolci</p>
@@ -207,6 +208,31 @@
 </div>
 </div>
 </section>
+<!-- Olive Oil Recipes -->
+<section class="lux-olive-recipe-editorial lux-recipe-anchor" id="olive-recipes">
+<header><span>OLIO ITALIANO</span><h2>Olive Oil Recipes</h2><p>Clear techniques lead from antipasti and pasta to soup and light dishes for the home table.</p></header>
+<div class="lux-olive-recipe-stories">
+<article class="lux-reader-card" data-reader-open="en-recipe-olive-bruschetta"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-toast.webp" alt="Toasted bread dish"></figure><div><span>OLIO</span><h3>Tomato and basil bruschetta</h3><p>Tomato, basil and extra-virgin olive oil in a fresh starter ready in 15 minutes.</p><button type="button" data-reader-open="en-recipe-olive-bruschetta">Read recipe ↗</button></div></article>
+<article class="lux-reader-card" data-reader-open="en-recipe-olive-pasta"><div><span>SEMPLICE</span><h3>Spaghetti aglio, olio e peperoncino</h3><p>A light emulsion of pasta water and olive oil for a foundational technique.</p><button type="button" data-reader-open="en-recipe-olive-pasta">Read recipe ↗</button></div><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-tagliolini.webp" alt="Italian pasta dish"></figure></article>
+<article class="lux-reader-card" data-reader-open="en-recipe-mushroom-soup"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-mushroom-soup.webp" alt="Olive oil mushroom soup"></figure><div><span>AROMA</span><h3>Olive oil mushroom soup</h3><p>A final thread of olive oil lifts the woodland aroma without making the soup heavy.</p><button type="button" data-reader-open="en-recipe-mushroom-soup">Read recipe ↗</button></div></article>
+<article class="lux-reader-card" data-reader-open="en-recipe-shrimp-tartare-truffle"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-shrimp-tartare-truffle.webp" alt="Olive oil shrimp light dish"></figure><div><span>FRESCO</span><h3>Olive oil shrimp light dish</h3><p>Sweet shrimp, crisp vegetables and fresh olive oil make a warm-weather plate.</p><button type="button" data-reader-open="en-recipe-shrimp-tartare-truffle">Read recipe ↗</button></div></article>
+</div>
+</section>
+<section class="lux-recipe-theme lux-recipe-anchor" id="truffle-recipes"><header><span>TARTUFO</span><h2>Truffle Recipes</h2><p>Eggs, pasta and risotto carry truffle aroma through a progression from delicate to deeply savoury.</p></header><div class="lux-recipe-theme-grid">
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-truffle-eggs"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-eggs.webp" alt="Truffle eggs"></figure><div><span>TRADIZIONE</span><h3>Truffle Eggs</h3><p>A classic meeting of fresh eggs and truffle aroma.</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-truffle-tagliolini"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-tagliolini.webp" alt="Truffle tagliolini"></figure><div><span>AROMA</span><h3>Truffle Tagliolini</h3><p>Butter, Parmigiano and fresh truffle in a pure expression.</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-black-truffle-risotto"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-black-truffle-risotto.webp" alt="Black truffle risotto"></figure><div><span>SAPORE</span><h3>Black Truffle Risotto</h3><p>Creamy rice extends the depth of black truffle.</p></div></article>
+</div></section>
+<section class="lux-recipe-theme lux-recipe-anchor" id="healthy-light-recipes"><header><span>CUCINA LEGGERA</span><h2>Healthy Light Meals</h2><p>Keep the texture and natural character of fresh ingredients while reducing heavy seasoning.</p></header><div class="lux-recipe-theme-grid">
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-shrimp-tartare-truffle"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-shrimp-tartare-truffle.webp" alt="Shrimp and vegetable tartare"></figure><div><span>FRESCO</span><h3>Shrimp and Vegetable Tartare</h3><p>Sweet shrimp meets the crisp texture of fresh vegetables.</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-mushroom-soup"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-mushroom-soup.webp" alt="Mushroom soup"></figure><div><span>NATURALE</span><h3>Mushroom Soup</h3><p>Warm and smooth, with a clear woodland aroma.</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-truffle-toast"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-toast.webp" alt="Poached egg with truffle toast"></figure><div><span>LEGGERO</span><h3>Poached Egg with Truffle Toast</h3><p>A light meeting of silky egg and crisp toast.</p></div></article>
+</div></section>
+<section class="lux-recipe-theme lux-recipe-anchor" id="china-family-recipes"><header><span>CASA CINESE</span><h2>Italian Food for Chinese Homes</h2><p>Accessible ingredients, familiar equipment and clear steps bring Italian flavour naturally into a Chinese home kitchen.</p></header><div class="lux-recipe-theme-grid">
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-olive-bruschetta"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-toast.webp" alt="Tomato and basil bruschetta"></figure><div><span>CASA</span><h3>Tomato and Basil Bruschetta</h3><p>A fifteen-minute Italian starter for the family table.</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-olive-pasta"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-tagliolini.webp" alt="Garlic and olive oil pasta"></figure><div><span>QUOTIDIANO</span><h3>Garlic and Olive Oil Pasta</h3><p>A foundational emulsion made with pasta water and olive oil.</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="en-recipe-truffle-eggs"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-eggs.webp" alt="Truffle eggs"></figure><div><span>CONDIVIDERE</span><h3>Truffle Eggs</h3><p>Familiar ingredients create an unmistakably Italian breakfast.</p></div></article>
+</div></section>
 <section class="lux-promo-banner lux-full-bleed lux-dark-photo-block lux-bright-photo lux-photo-fade-bottom py-section-gap relative overflow-hidden">
 <div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/ingredient-purchase-banner.webp')"></div>
 <div class="relative z-10 text-center px-margin-mobile">
@@ -237,7 +263,7 @@
 </footer>
 <!-- lux:footer:end -->
 <!-- lux:scripts:start -->
-<script defer src="../assets/js/core.js?v=20260803-font-video-final-131"></script>
-<script defer src="../assets/data/journal.js?v=20260803-font-video-final-131"></script>
-<script defer src="../assets/js/journal.js?v=20260803-font-video-final-131"></script>
+<script defer src="../assets/js/core.js?v=20260803-recipe-layouts-143"></script>
+<script defer src="../assets/data/journal.js?v=20260803-recipe-layouts-143"></script>
+<script defer src="../assets/js/journal.js?v=20260803-recipe-layouts-143"></script>
 <!-- lux:scripts:end --></body></html>
