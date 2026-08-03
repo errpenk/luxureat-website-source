@@ -384,7 +384,7 @@ const luxNavigation = {
     ["news.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
     ["blog.html", "知识博客", [["鱼子酱学院", "caviar-academy"]]],
     ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["品质与认证", "certification-glossary"]]],
-    ["gifting.html", "礼赠合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
+    ["gifting.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
@@ -395,7 +395,7 @@ const luxNavigation = {
     ["news.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
     ["blog.html", "Blog", [["Caviar Academy", "caviar-academy"]]],
     ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Quality & Certification", "certification-glossary"]]],
-    ["gifting.html", "Gifting", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
+    ["gifting.html", "Cooperation", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
     ["contact.html", "Contact", [["Brand Consultation", "brand-consultation"], ["Global Presence", "global-footprint"]]],
   ],
 };

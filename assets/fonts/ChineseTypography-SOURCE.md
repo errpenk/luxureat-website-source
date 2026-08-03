@@ -21,4 +21,9 @@ The derivative uses a distinct family and filename. To replace it with the origi
 - Homepage subsets: `KingHwaOldSong-home-critical.woff2` and `LuxurEatZhiSong-home-subset.woff2` cover the current static and deferred homepage copy without requesting the full Chinese fonts.
 - Inner-page critical subsets: `KingHwaOldSong-<slug>-critical.woff2` and `LuxurEatZhiSong-<slug>-critical.woff2`; each Chinese inner page preloads only its own current typography while the full web subsets remain fallbacks for future copy.
 
+## Production fallback
+
+- `KingHwaOldSong-complete.ttf` is the complete supplied font and is the active Chinese typography source in `integration.css`.
+- It deliberately replaces all page-specific Chinese subsets at render time, so new, CMS-provided, and mobile-only Chinese copy cannot fall back to a device font when a glyph is absent from a subset.
+
 The headline subsets intentionally omit body-copy-only glyphs because body text uses `LuxurEat ZhiSong Web`. Both files retain the original layout tables and WOFF2 compression.

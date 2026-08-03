@@ -15,7 +15,7 @@ export const navigation = [
   { key: "news", zh: "品牌新闻", en: "Brand News", zhSlug: "news", enSlug: "news" },
   { key: "blog", zh: "知识博客", en: "Blog", zhSlug: "blog", enSlug: "blog" },
   { key: "certification", zh: "品质认证", en: "Certification", zhSlug: "certification", enSlug: "certification" },
-  { key: "gifting", zh: "礼赠合作", en: "Gifting", zhSlug: "gifting", enSlug: "gifting" },
+  { key: "gifting", zh: "商务合作", en: "Cooperation", zhSlug: "gifting", enSlug: "gifting" },
   { key: "contact", zh: "联系我们", en: "Contact", zhSlug: "contact", enSlug: "contact" },
 ];
 
