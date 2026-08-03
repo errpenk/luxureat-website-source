@@ -125,11 +125,13 @@ function stripKnownLocalIncludes(html) {
     ['script', 'src', '../assets/data/events.js'],
     ['script', 'src', '../assets/data/journal.js'],
     ['script', 'src', '../assets/data/brand.js'],
+    ['script', 'src', '../assets/data/academy.js'],
     ['script', 'src', '../assets/js/core.js'],
     ['script', 'src', '../assets/js/products.js'],
     ['script', 'src', '../assets/js/events.js'],
     ['script', 'src', '../assets/js/journal.js'],
     ['script', 'src', '../assets/js/brand.js'],
+    ['script', 'src', '../assets/js/academy.js'],
   ].reduce((source, args) => stripTagByAttr(source, ...args), html);
 }
 

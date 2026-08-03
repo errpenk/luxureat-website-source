@@ -185,6 +185,10 @@ for (const route of expectedRoutes) {
 const pageFiles = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php'));
 assert(pageFiles.length >= expectedRoutes.length, 'converted PHP page files exist');
 const renderedPages = pageFiles.map(read).join('\n');
+for (const file of ['pages/zh/blog.php', 'pages/en/blog.php']) {
+  const source = read(path.join(themeDir, file));
+  assert(!source.includes('assets/data/academy.js') && !source.includes('assets/js/academy.js'), `${file} relies on the single WordPress academy script enqueue`);
+}
 assert(!/<(?:span|i)\b[^>]*\bmaterial-symbols-outlined\b[^>]*>\s*[a-z0-9_]+\s*<\/(?:span|i)>/i.test(renderedPages), 'rendered pages do not expose translatable icon ligature text');
 assert([...renderedPages.matchAll(/<(?:span|i)\b[^>]*\bmaterial-symbols-outlined\b[^>]*>\s*<\/(?:span|i)>/gi)].every((match) => /\bdata-icon=["'][a-z0-9_]+["']/.test(match[0]) && /\btranslate=["']no["']/.test(match[0])), 'rendered material icons use translation-safe empty markup');
 for (const file of pageFiles) {
