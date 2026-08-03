@@ -97,21 +97,23 @@ function addMobileImageSources(file, html) {
 }
 
 function fontPreloads(page) {
-  const fonts = page.lang === "zh"
-    ? page.key === "home"
-      ? [["KingHwaOldSong-home-critical.woff2", "KingHwa Old Song Home", 700], ["LuxurEatZhiSong-home-subset.woff2", "LuxurEat ZhiSong Home", 400]]
-      : [[`KingHwaOldSong-${page.slug}-critical.woff2`, "KingHwa Old Song Page", 700], [`LuxurEatZhiSong-${page.slug}-critical.woff2`, "LuxurEat ZhiSong Page", 400]]
-    : page.key === "home"
-      ? [["NyghtSerif-home-critical.woff2", "Nyght Serif Home", 400], ["Spectral-home-critical.woff2", "Spectral Home", 400]]
-      : [
-        ["NyghtSerif-Regular.woff2", "Nyght Serif", 400],
-        ["Spectral-Regular.woff2", "Spectral", 400],
-        ["NyghtSerif-RegularItalic.woff2", "Nyght Serif", 400, "italic", false],
-        ["NyghtSerif-Bold.woff2", "Nyght Serif", 700, "normal", false],
-        ["Spectral-Italic.woff2", "Spectral", 400, "italic", false],
-        ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
-        ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
-      ];
+  if (page.lang === "zh") {
+    const font = `KingHwaOldSong-complete.ttf?v=${assetVersion}`;
+    const style = '@font-face{font-family:"KingHwa Old Song Complete";src:url("../assets/fonts/' + font + '") format("truetype");font-weight:400;font-style:normal;font-display:block}html[lang^="zh"]{--lux-page-heading:"KingHwa Old Song Complete";--lux-zh-headline:"KingHwa Old Song Complete";--lux-zh-body:"KingHwa Old Song Complete";font-synthesis:none}html[lang^="zh"].lux-kinghwa-loading body :not(.material-symbols-outlined):not(svg):not(svg *){color:transparent!important;text-shadow:none!important}';
+    const ready = '<script>!function(d){var r=d.documentElement;if(d.fonts&&d.fonts.load){d.fonts.load(\'400 16px "KingHwa Old Song Complete"\').then(function(){r.classList.remove("lux-kinghwa-loading")})}}(document);</script>';
+    return `<!-- lux:fonts:start -->\n<link rel="preload" href="../assets/fonts/${font}" as="font" type="font/ttf" crossorigin>\n<style data-lux-critical-fonts>${style}</style>\n${ready}\n<!-- lux:fonts:end -->`;
+  }
+  const fonts = page.key === "home"
+    ? [["NyghtSerif-home-critical.woff2", "Nyght Serif Home", 400], ["Spectral-home-critical.woff2", "Spectral Home", 400]]
+    : [
+      ["NyghtSerif-Regular.woff2", "Nyght Serif", 400],
+      ["Spectral-Regular.woff2", "Spectral", 400],
+      ["NyghtSerif-RegularItalic.woff2", "Nyght Serif", 400, "italic", false],
+      ["NyghtSerif-Bold.woff2", "Nyght Serif", 700, "normal", false],
+      ["Spectral-Italic.woff2", "Spectral", 400, "italic", false],
+      ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
+      ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
+    ];
   if (page.lang === "en" && ["home", "products", "bag"].includes(page.key)) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Labels", 700, "normal", false]);
   }

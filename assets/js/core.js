@@ -137,24 +137,28 @@ document.querySelectorAll("[data-content-search]").forEach((input) => {
   });
 });
 
-const luxReduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const startLuxVideo = (video) => {
+const startLuxVideo = (video, attempt = 0) => {
   video.controls = false;
   video.removeAttribute("controls");
+  video.autoplay = true;
+  video.setAttribute("autoplay", "");
   video.muted = true;
   video.defaultMuted = true;
   video.playsInline = true;
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
   video.disablePictureInPicture = true;
   video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
-  video.play().catch(() => {});
+  const playback = video.play();
+  if (playback?.catch && attempt < 4) {
+    playback.catch(() => window.setTimeout(() => startLuxVideo(video, attempt + 1), 250 * (attempt + 1)));
+  }
 };
-const luxVideoObserver = !luxReduceMotion && "IntersectionObserver" in window
+const luxVideoObserver = "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting) {
       target.preload = "auto";
       startLuxVideo(target);
-    } else {
-      target.pause();
     }
   }), { rootMargin: "600px 0px", threshold: .01 })
   : null;
@@ -163,12 +167,15 @@ const initLuxVideo = (video) => {
   video.dataset.luxVideoReady = "true";
   video.controls = false;
   video.removeAttribute("controls");
+  video.autoplay = true;
+  video.setAttribute("autoplay", "");
+  video.muted = true;
+  video.defaultMuted = true;
   video.setAttribute("playsinline", "");
   video.setAttribute("webkit-playsinline", "");
+  video.addEventListener("loadeddata", () => startLuxVideo(video), { once: true });
   video.addEventListener("canplay", () => startLuxVideo(video), { once: true });
-  if (luxReduceMotion) {
-    video.pause();
-  } else if (video.matches(".lux-hero-video") || !luxVideoObserver) {
+  if (video.matches(".lux-hero-video") || !luxVideoObserver) {
     video.preload = "auto";
     startLuxVideo(video);
   } else {
