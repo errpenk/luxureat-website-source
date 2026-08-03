@@ -137,18 +137,34 @@ document.querySelectorAll("[data-content-search]").forEach((input) => {
   });
 });
 
-const luxReduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const startLuxVideo = (video) => {
+const prepareLuxVideo = (video) => {
   video.controls = false;
   video.removeAttribute("controls");
+  video.autoplay = true;
+  video.setAttribute("autoplay", "");
   video.muted = true;
   video.defaultMuted = true;
   video.playsInline = true;
+  video.setAttribute("playsinline", "");
+  video.setAttribute("webkit-playsinline", "");
   video.disablePictureInPicture = true;
+  video.disableRemotePlayback = true;
+  video.setAttribute("x-webkit-airplay", "deny");
   video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
-  video.play().catch(() => {});
 };
-const luxVideoObserver = !luxReduceMotion && "IntersectionObserver" in window
+const startLuxVideo = (video) => {
+  prepareLuxVideo(video);
+  if (video.dataset.luxPlayPending) return;
+  video.dataset.luxPlayPending = "true";
+  Promise.resolve(video.play()).then(() => {
+    delete video.dataset.luxPlayPending;
+    delete video.dataset.luxPlayBlocked;
+  }).catch(() => {
+    delete video.dataset.luxPlayPending;
+    video.dataset.luxPlayBlocked = "true";
+  });
+};
+const luxVideoObserver = "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting) {
       target.preload = "auto";
@@ -161,14 +177,10 @@ const luxVideoObserver = !luxReduceMotion && "IntersectionObserver" in window
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
   video.dataset.luxVideoReady = "true";
-  video.controls = false;
-  video.removeAttribute("controls");
-  video.setAttribute("playsinline", "");
-  video.setAttribute("webkit-playsinline", "");
+  prepareLuxVideo(video);
+  video.addEventListener("loadeddata", () => startLuxVideo(video), { once: true });
   video.addEventListener("canplay", () => startLuxVideo(video), { once: true });
-  if (luxReduceMotion) {
-    video.pause();
-  } else if (video.matches(".lux-hero-video") || !luxVideoObserver) {
+  if (video.matches(".lux-hero-video") || !luxVideoObserver) {
     video.preload = "auto";
     startLuxVideo(video);
   } else {
@@ -182,6 +194,9 @@ new MutationObserver((records) => records.forEach(({ addedNodes }) => addedNodes
   if (node.matches(luxAutoplaySelector)) initLuxVideo(node);
   node.querySelectorAll?.(luxAutoplaySelector).forEach(initLuxVideo);
 }))).observe(document.body, { childList: true, subtree: true });
+addEventListener("pointerdown", () => {
+  document.querySelectorAll(`${luxAutoplaySelector}[data-lux-play-blocked]`).forEach(startLuxVideo);
+}, { passive: true });
 
 document.querySelectorAll(".lux-home-market-system, .lux-home-gifting").forEach((section) => {
   if (!("IntersectionObserver" in window)) {

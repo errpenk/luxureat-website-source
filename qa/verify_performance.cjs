@@ -68,6 +68,11 @@ for (const match of videoMarkup.matchAll(/<video\b[\s\S]*?<\/video>/g)) {
   assert.match(match[0], /webkit-playsinline/);
   assert.match(match[0], /poster=/);
   assert.match(match[0], /<source media="\(max-width: 640px\)"[^>]+-mobile\.m4v/);
+  assert.doesNotMatch(match[0], /\bcontrols(?:=|\s|>)/);
 }
+const videoRuntime = read("assets/js/core.js").toString();
+assert.match(videoRuntime, /video\.setAttribute\("autoplay", ""\)/, "viewport videos are not promoted to autoplay before playback");
+assert.match(videoRuntime, /data-lux-play-blocked/, "blocked mobile autoplay is not retried after user interaction");
+assert.match(css, /::-webkit-media-controls-enclosure/, "Safari's native video control enclosure is not hidden");
 
 console.log("Performance budgets passed.");

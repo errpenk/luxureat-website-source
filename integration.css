@@ -2661,6 +2661,8 @@ video[data-lux-autoplay] {
 }
 video[autoplay]::-webkit-media-controls,
 video[data-lux-autoplay]::-webkit-media-controls,
+video[autoplay]::-webkit-media-controls-enclosure,
+video[data-lux-autoplay]::-webkit-media-controls-enclosure,
 video[autoplay]::-webkit-media-controls-start-playback-button,
 video[data-lux-autoplay]::-webkit-media-controls-start-playback-button,
 video[autoplay]::-webkit-media-controls-overlay-play-button,
@@ -10584,18 +10586,11 @@ html[lang^="en"] #gifting-editorial .lux-action-copy {
   text-orientation: mixed;
 }
 
-/* Chinese typography standard: one complete KingHwa family prevents glyph fallback on any device. */
-@font-face {
-  font-family: "KingHwa Old Song Complete";
-  src: url("assets/fonts/KingHwaOldSong-complete.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: block;
-}
+/* Chinese typography standard: page-local WOFF2 subsets keep the two families fast and device-independent. */
 html[lang^="zh"] {
-  --lux-page-heading: "KingHwa Old Song Complete", serif;
-  --lux-zh-headline: "KingHwa Old Song Complete", serif;
-  --lux-zh-body: "KingHwa Old Song Complete", serif;
+  --lux-page-heading: "KingHwa Old Song Page", serif;
+  --lux-zh-headline: "KingHwa Old Song Page", serif;
+  --lux-zh-body: "LuxurEat ZhiSong Page", serif;
   font-synthesis: none;
 }
 html[lang^="zh"] body *:not(.material-symbols-outlined)::before,
@@ -10911,13 +10906,13 @@ html[lang^="zh"] :is(.lux-bag-item, .lux-bag-recommendations) :not(.material-sym
   font-family: var(--lux-zh-headline) !important;
 }
 html.lux-home-root[lang^="zh"] {
-  --lux-page-heading: "KingHwa Old Song Complete", serif;
-  --lux-zh-headline: "KingHwa Old Song Complete", serif;
-  --lux-zh-body: "KingHwa Old Song Complete", serif;
+  --lux-page-heading: "KingHwa Old Song Home", serif;
+  --lux-zh-headline: "KingHwa Old Song Home", serif;
+  --lux-zh-body: "LuxurEat ZhiSong Home", serif;
 }
 html[lang^="zh"] body.lux-home-page .lux-reader {
-  --lux-page-heading: "KingHwa Old Song Complete", serif;
-  --lux-zh-headline: "KingHwa Old Song Complete", serif;
+  --lux-page-heading: "KingHwa Old Song Home", serif;
+  --lux-zh-headline: "KingHwa Old Song Home", serif;
 }
 
 /* Every page-top hero follows the homepage's 14px / 18px support scale. */
@@ -10967,7 +10962,7 @@ html[lang] body .lux-account-existing button {
 
 /* Chinese product names remain KingHwa even inside the English interface. */
 html[lang^="en"] body [lang^="zh"] {
-  font-family: "KingHwa Old Song Complete", serif !important;
+  font-family: "KingHwa Labels", serif !important;
   font-weight: 700 !important;
   -webkit-text-stroke: .16px currentColor;
   paint-order: stroke fill;

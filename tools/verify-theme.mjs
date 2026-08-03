@@ -318,7 +318,7 @@ assert(integrationCss.includes('align-items: stretch') && integrationCss.include
 assert(integrationCss.includes('.lux-event-reader-article > figure img') && integrationCss.includes('object-fit: contain'), 'mobile event articles keep the complete poster centered');
 assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
 assert(integrationCss.includes('.lux-account-dashboard-page .woocommerce-MyAccount-content > p'), 'account dashboard hides the duplicated WooCommerce introduction');
-assert(integrationCss.includes('html[lang^="zh"]') && integrationCss.includes('"KingHwa Old Song Complete"') && integrationCss.includes('KingHwaOldSong-complete.ttf'), 'Chinese typography uses the complete KingHwa font without subset fallback');
+assert(integrationCss.includes('--lux-zh-headline: "KingHwa Old Song Page"') && integrationCss.includes('--lux-zh-body: "LuxurEat ZhiSong Page"') && !integrationCss.includes('KingHwaOldSong-complete.ttf'), 'Chinese typography does not use the page-specific KingHwa and ZhiSong subsets');
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
