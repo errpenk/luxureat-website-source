@@ -11644,9 +11644,20 @@ section[data-recipe-panel] {
 .lux-recipe-theme-card > div { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 4vw, 54px); }
 .lux-recipe-theme-card span { color: #d7ad31; font: 700 11px/1.4 var(--lux-page-heading); letter-spacing: .18em; }
 .lux-recipe-theme-card h3 { margin: 16px 0 14px; font: 500 clamp(28px, 3vw, 42px)/1.08 var(--lux-page-heading); }
-.lux-recipe-theme-card p { margin: 0; color: inherit; opacity: .78; font: 400 15px/1.7 var(--lux-zh-body, var(--lux-en-body)); }
+.lux-recipe-theme-card p {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: inherit;
+  opacity: 0;
+  transform: translateY(8px);
+  font: 400 15px/1.7 var(--lux-zh-body, var(--lux-en-body));
+  transition: max-height .3s ease, margin-top .3s ease, opacity .25s ease, transform .3s ease;
+}
 .lux-recipe-theme-card:hover img,
 .lux-recipe-theme-card:focus-within img { transform: scale(1.035); }
+.lux-recipe-theme-card:hover p,
+.lux-recipe-theme-card:focus-within p { max-height: 110px; margin-top: 12px; opacity: .9; transform: none; }
 
 /* Three distinct editorial compositions follow the supplied recipe references. */
 #truffle-recipes { background: #fff; }
@@ -11710,22 +11721,6 @@ section[data-recipe-panel] {
 }
 #healthy-light-recipes .lux-recipe-theme-card h3 { margin: 0; color: #fff; font-size: 22px; }
 #healthy-light-recipes .lux-recipe-theme-card span { display: none; }
-#healthy-light-recipes .lux-recipe-theme-card p {
-  max-height: 0;
-  margin-top: 0;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: max-height .3s ease, margin-top .3s ease, opacity .25s ease, transform .3s ease;
-}
-#healthy-light-recipes .lux-recipe-theme-card:hover p,
-#healthy-light-recipes .lux-recipe-theme-card:focus-within p {
-  max-height: 110px;
-  margin-top: 12px;
-  opacity: .9;
-  transform: none;
-}
-
 #truffle-recipes,
 #china-family-recipes { padding-inline: 0; background: #fff; }
 #truffle-recipes > header,
@@ -11806,6 +11801,22 @@ section[data-recipe-panel] {
 #truffle-recipes .lux-recipe-theme-card:nth-child(3) figure,
 #china-family-recipes .lux-recipe-theme-card:nth-child(2) figure,
 #china-family-recipes .lux-recipe-theme-card:nth-child(3) figure { min-height: 360px; }
+#china-family-recipes .lux-recipe-theme-card:first-child { background: transparent; }
+#china-family-recipes .lux-recipe-theme-card:first-child > div {
+  width: 100%;
+  margin: 0;
+  align-self: stretch;
+  padding-left: 55%;
+  background: linear-gradient(to left, #89670f, #89670f00 68%);
+}
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) { background: transparent; color: #171715; }
+#china-family-recipes .lux-recipe-theme-card:nth-child(2) > div {
+  width: 100%;
+  margin: 0;
+  align-self: stretch;
+  padding-right: 45%;
+  background: linear-gradient(to right, #fff, #fff0 68%);
+}
 
 .lux-cert-awards {
   margin: clamp(96px, 10vw, 150px) 0 0;
@@ -12004,8 +12015,7 @@ section[data-recipe-panel] {
   }
   #truffle-recipes .lux-recipe-theme-card:first-child,
   #china-family-recipes .lux-recipe-theme-card:first-child { min-height: 520px; }
-  #truffle-recipes .lux-recipe-theme-card:first-child > div,
-  #china-family-recipes .lux-recipe-theme-card:first-child > div {
+  #truffle-recipes .lux-recipe-theme-card:first-child > div {
     width: calc(100% - 32px);
     margin: auto 16px 16px;
     align-self: end;
