@@ -10835,8 +10835,8 @@ html[lang^="en"] #gifting-editorial .lux-action-copy {
 
 /* Chinese typography standard: page-local WOFF2 subsets keep the two families fast and device-independent. */
 html[lang^="zh"] {
-  --lux-page-heading: "KingHwa Old Song Page", serif;
-  --lux-zh-headline: "KingHwa Old Song Page", serif;
+  --lux-page-heading: "KingHwa Old Song Page", "KingHwa Old Song Complete", serif;
+  --lux-zh-headline: "KingHwa Old Song Page", "KingHwa Old Song Complete", serif;
   --lux-zh-body: "LuxurEat ZhiSong Page", serif;
   font-synthesis: none;
 }
@@ -11153,13 +11153,13 @@ html[lang^="zh"] :is(.lux-bag-item, .lux-bag-recommendations) :not(.material-sym
   font-family: var(--lux-zh-headline) !important;
 }
 html.lux-home-root[lang^="zh"] {
-  --lux-page-heading: "KingHwa Old Song Home", serif;
-  --lux-zh-headline: "KingHwa Old Song Home", serif;
+  --lux-page-heading: "KingHwa Old Song Home", "KingHwa Old Song Complete", serif;
+  --lux-zh-headline: "KingHwa Old Song Home", "KingHwa Old Song Complete", serif;
   --lux-zh-body: "LuxurEat ZhiSong Home", serif;
 }
 html[lang^="zh"] body.lux-home-page .lux-reader {
-  --lux-page-heading: "KingHwa Old Song Home", serif;
-  --lux-zh-headline: "KingHwa Old Song Home", serif;
+  --lux-page-heading: "KingHwa Old Song Home", "KingHwa Old Song Complete", serif;
+  --lux-zh-headline: "KingHwa Old Song Home", "KingHwa Old Song Complete", serif;
 }
 
 /* Every page-top hero follows the homepage's 14px / 18px support scale. */
@@ -11808,6 +11808,10 @@ section[data-recipe-panel] {
   margin: 0 0 18px;
   color: #f4f2ee;
   font: 400 48px/56px var(--lux-page-heading);
+}
+html[lang^="zh"] .lux-cert-awards h2 {
+  font-family: var(--lux-zh-headline) !important;
+  font-weight: 700 !important;
 }
 .lux-cert-awards header p {
   margin: 0;

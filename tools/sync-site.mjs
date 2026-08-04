@@ -117,7 +117,10 @@ function fontPreloads(page) {
   }
   const links = fonts.filter(([, , , , preload = true]) => preload).map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${assetVersion}" as="font" type="font/woff2" crossorigin>`).join("\n");
   const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:${style};font-display:block}`).join("");
-  return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}</style>\n<!-- lux:fonts:end -->`;
+  const kingHwaFallback = page.lang === "zh"
+    ? `@font-face{font-family:"KingHwa Old Song Complete";src:url("../assets/fonts/KingHwaOldSong-complete.ttf?v=${assetVersion}") format("truetype");font-weight:700;font-style:normal;font-display:block}`
+    : "";
+  return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}${kingHwaFallback}</style>\n<!-- lux:fonts:end -->`;
 }
 
 function render(page) {
