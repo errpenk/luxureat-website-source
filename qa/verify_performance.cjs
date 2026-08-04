@@ -10,8 +10,8 @@ const gzipSize = (file) => zlib.gzipSync(read(file), { level: 9 }).length;
 const css = read("integration.css").toString();
 
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
-assert.ok(size("assets/fonts/KingHwaOldSong-home-critical.woff2") <= 200 * 1024, "Chinese home headline subset exceeds 200 KB");
-assert.ok(size("assets/fonts/LuxurEatZhiSong-home-subset.woff2") <= 250 * 1024, "Chinese home body subset exceeds 250 KB");
+assert.ok(size("assets/fonts/KingHwaOldSong-site.woff2") <= 550 * 1024, "Chinese site headline subset exceeds 550 KB");
+assert.ok(size("assets/fonts/LuxurEatZhiSong-site.woff2") <= 320 * 1024, "Chinese site body subset exceeds 320 KB");
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
@@ -37,8 +37,8 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /class="lux-hero-video"[^>]+autoplay[^>]+preload="auto"/);
   assert.match(home, /data-lux-deferred-scripts/);
   assert.match(home, /rel="icon"[^>]+luxureat-logo\.png/);
-  assert.match(home, lang === "zh" ? /rel="preload"[^>]+KingHwaOldSong-home-critical\.woff2/ : /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
-  assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-home-subset\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
+  assert.match(home, lang === "zh" ? /rel="preload"[^>]+KingHwaOldSong-site\.woff2/ : /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
+  assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-site\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
@@ -54,11 +54,11 @@ for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter(
 
 for (const slug of ["journal", "caviar", "rituals", "news", "blog", "certification", "gifting", "contact", "bag"]) {
   const page = read(`zh/${slug}.html`).toString();
-  const headline = `assets/fonts/KingHwaOldSong-${slug}-critical.woff2`;
-  const body = `assets/fonts/LuxurEatZhiSong-${slug}-critical.woff2`;
-  assert.ok(size(headline) + size(body) <= 450 * 1024, `${slug} Chinese critical fonts exceed 450 KB`);
-  assert.match(page, new RegExp(`rel="preload"[^>]+KingHwaOldSong-${slug}-critical\\.woff2`));
-  assert.match(page, new RegExp(`rel="preload"[^>]+LuxurEatZhiSong-${slug}-critical\\.woff2`));
+  const headline = "assets/fonts/KingHwaOldSong-site.woff2";
+  const body = "assets/fonts/LuxurEatZhiSong-site.woff2";
+  assert.ok(size(headline) + size(body) <= 900 * 1024, `${slug} Chinese critical fonts exceed 900 KB`);
+  assert.match(page, /rel="preload"[^>]+KingHwaOldSong-site\.woff2/);
+  assert.match(page, /rel="preload"[^>]+LuxurEatZhiSong-site\.woff2/);
 }
 
 const videoMarkup = ["en", "zh"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n") + read("assets/js/events.js").toString();

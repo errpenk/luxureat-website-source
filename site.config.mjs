@@ -1,4 +1,4 @@
-export const assetVersion = "20260804-kinghwa-fallback-150";
+export const assetVersion = "20260804-unified-zh-fonts-153";
 
 export const contact = {
   email: "china@luxureat.com",
