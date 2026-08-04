@@ -221,35 +221,6 @@ html.dark body.lux-academy-page {
 }
 .lux-reader-related-media .lux-reader-cover-art span { font-size: 9px; }
 .lux-reader-related-media .lux-reader-cover-art strong { font-size: 24px; }
-.lux-global-search {
-  width: min(680px, calc(100% - 28px));
-  padding: 0;
-  border: 1px solid rgba(157,245,236,.36);
-  background: #101313;
-  color: #f4f2ee;
-  box-shadow: 0 24px 90px rgba(0,0,0,.4);
-}
-.lux-global-search::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(5px); }
-.lux-global-search-panel { position: relative; padding: clamp(30px, 6vw, 66px); }
-.lux-global-search-panel > div { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
-.lux-global-search-panel input { min-width: 0; min-height: 52px; padding: 12px 14px; border: 1px solid rgba(229,226,225,.35); background: transparent; color: #fff; font: 400 15px/1.4 var(--lux-page-heading); }
-.lux-global-search-panel input:focus { border-color: #9df5ec; outline: 0; box-shadow: 0 0 0 2px rgba(157,245,236,.16); }
-.lux-global-search-panel form button,
-.lux-global-search-panel > div > button { min-height: 52px; padding: 0 18px; border: 1px solid #9df5ec; background: #9df5ec; color: #003734; font: 700 12px/1.2 var(--lux-page-heading); letter-spacing: .08em; cursor: pointer; }
-.lux-global-search-panel > div > button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background-color .2s ease, color .2s ease, transform .2s ease; }
-.lux-global-search-panel > div > button:hover,
-.lux-global-search-panel > div > button:focus-visible { background: #e9c349; border-color: #e9c349; color: #101313; transform: scale(1.04); outline: 0; }
-.lux-global-search-panel > div > button:disabled { cursor: progress; opacity: .72; }
-.lux-global-search-arrow { width: 16px; height: 16px; flex: 0 0 auto; }
-.lux-global-search-results { display: grid; gap: 10px; max-height: min(42vh, 360px); margin: 20px 0 0; overflow: auto; color: rgba(229,226,225,.72); font: 400 14px/1.5 var(--lux-page-heading); }
-.lux-global-search-results a { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid rgba(157,245,236,.2); color: inherit; transition: border-color .2s ease, background-color .2s ease; }
-.lux-global-search-results a:hover,
-.lux-global-search-results a:focus-visible { border-color: #e9c349; background: rgba(233,195,73,.08); outline: 0; }
-.lux-global-search-results strong { color: #9df5ec; font-weight: 600; }
-.lux-global-search-results span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.lux-global-search-close { position: absolute; top: 14px; right: 18px; border: 0; background: transparent; color: #e5e2e1; font-size: 28px; line-height: 1; cursor: pointer; }
-.lux-global-search-close:hover,
-.lux-global-search-close:focus-visible { color: #9df5ec; }
 .lux-academy-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
@@ -4968,23 +4939,6 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-topic-card p { margin: 0; color: #5d5850; font: 400 15px/1.7 var(--lux-page-heading); }
 .lux-recipe-topic-card:hover .lux-reader-cover-art,
 .lux-recipe-topic-card:focus-within .lux-reader-cover-art { transform: translateY(-4px); box-shadow: 0 18px 42px rgba(12,27,26,.16); }
-.lux-product-topic-bridge {
-  padding: clamp(44px, 6vw, 86px) clamp(22px, 5vw, 72px);
-  border: 1px solid rgba(157,245,236,.24);
-  background: linear-gradient(135deg, #14201f, #101313 64%, #253b31);
-  color: #f4f2ee;
-}
-.lux-product-topic-bridge header { display: grid; grid-template-columns: minmax(0, .9fr) minmax(280px, 1.1fr); gap: 14px 48px; align-items: end; }
-.lux-product-topic-bridge header > span { grid-column: 1 / -1; color: #9df5ec; font: 700 11px/1.4 var(--lux-page-heading); letter-spacing: .2em; }
-.lux-product-topic-bridge h2 { margin: 0; font: 500 clamp(36px, 5vw, 68px)/1 var(--lux-page-heading); }
-.lux-product-topic-bridge h2 em { color: #e9c349; font-style: normal; }
-.lux-product-topic-bridge header p { margin: 0; color: #c9c5bd; font: 400 16px/1.7 var(--lux-page-heading); }
-.lux-product-topic-bridge > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 42px; }
-.lux-product-topic-bridge a { display: flex; flex-direction: column; gap: 10px; min-height: 190px; padding: 26px; border: 1px solid rgba(229,226,225,.2); color: #f4f2ee; text-decoration: none; transition: border-color .2s ease, transform .25s ease, background .2s ease; }
-.lux-product-topic-bridge a:hover, .lux-product-topic-bridge a:focus-visible { border-color: #9df5ec; background: rgba(157,245,236,.08); transform: translateY(-3px); }
-.lux-product-topic-bridge strong { font: 500 26px/1.15 var(--lux-page-heading); }
-.lux-product-topic-bridge span { color: #c9c5bd; font: 400 14px/1.6 var(--lux-page-heading); }
-.lux-product-topic-bridge b { margin-top: auto; color: #9df5ec; font: 700 11px/1.3 var(--lux-page-heading); letter-spacing: .08em; }
 .lux-reader-copy .lux-reader-section:first-child p:first-of-type::first-letter {
   float: left;
   margin: 8px 10px 0 0;
@@ -5394,8 +5348,6 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   }
   .lux-recipe-topic-grid { grid-template-columns: 1fr; gap: 38px; }
   .lux-recipe-topic-card .lux-reader-cover-art { min-height: 280px; }
-  .lux-product-topic-bridge header,
-  .lux-product-topic-bridge > div { grid-template-columns: 1fr; }
 }
 
 /* Certification glossary: logo-led, accessible flip cards. */
