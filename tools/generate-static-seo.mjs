@@ -3,7 +3,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { pages, seo } from '../site.config.mjs';
 
-const outputFile = path.resolve(process.argv[2] || '.seo/static-seo.php.fragment');
+const outputFile = path.resolve(process.argv[2] || '.seo/static-seo.php');
 const excludedSlugs = new Set(['bag', 'cart', 'checkout', 'account', 'login', 'register']);
 
 const isPublic = (page) => page && page.indexable !== false && !excludedSlugs.has(page.slug);
@@ -42,8 +42,13 @@ for (const page of publicPages) {
 }
 
 const json = JSON.stringify(records, null, 2);
-const fragment = `// LUXUREAT_STATIC_SEO_BEGIN
+const module = `<?php
+// LUXUREAT_STATIC_SEO_BEGIN
 // Generated from site.config.mjs by tools/generate-static-seo.mjs. Do not edit in the theme repository.
+
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 function luxureat_static_seo_map() {
     static $map = null;
@@ -174,6 +179,6 @@ add_action('wp_head', 'luxureat_static_output_seo_head', 0);
 `;
 
 fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-fs.writeFileSync(outputFile, fragment, 'utf8');
-console.log(`Static SEO fragment written to ${outputFile}`);
+fs.writeFileSync(outputFile, module, 'utf8');
+console.log(`Static SEO module written to ${outputFile}`);
 console.log(`Generated metadata for ${Object.keys(records).length} public routes.`);
