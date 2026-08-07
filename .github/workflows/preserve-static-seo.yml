@@ -1,4 +1,5 @@
 name: Preserve Static SEO
+# Static SEO metadata pipeline v1
 
 on:
   push:
