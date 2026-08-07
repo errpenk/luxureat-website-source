@@ -14,7 +14,7 @@ on:
       - completed
 
 concurrency:
-  group: luxureat-search-url-guard
+  group: luxureat-search-metadata
   cancel-in-progress: false
 
 permissions:
