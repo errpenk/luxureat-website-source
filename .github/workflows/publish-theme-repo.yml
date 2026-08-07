@@ -160,3 +160,5 @@ jobs:
           if printf '%s' "$response" | grep -q '"error"'; then
             echo "::warning::Baidu returned an error response: $response"
           fi
+
+# Manual trigger marker: 2026-08-07
