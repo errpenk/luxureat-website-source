@@ -30,6 +30,7 @@ jobs:
 
     env:
       THEME_REPO_DEPLOY_KEY: ${{ secrets.THEME_REPO_DEPLOY_KEY }}
+      BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
 
     steps:
       - name: Checkout source
@@ -111,10 +112,51 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if git diff --quiet && git diff --cached --quiet; then
             echo "No theme repository changes to publish."
-            exit 0
+          else
+            git add -A
+            git commit -m "Publish theme from ${GITHUB_SHA}"
+            git push origin main
           fi
-          git add -A
-          git commit -m "Publish theme from ${GITHUB_SHA}"
-          git push origin main
         env:
           GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
+
+      - name: Push public URLs to Baidu
+        run: |
+          if [ -z "$BAIDU_PUSH_TOKEN" ]; then
+            echo "::warning::BAIDU_PUSH_TOKEN is not configured; skipping Baidu URL submission."
+            exit 0
+          fi
+
+          cat > "$RUNNER_TEMP/baidu-urls.txt" <<'URLS'
+          https://luxureat.cn/
+          https://luxureat.cn/caviar/
+          https://luxureat.cn/rituals/
+          https://luxureat.cn/journal/
+          https://luxureat.cn/news/
+          https://luxureat.cn/blog/
+          https://luxureat.cn/gifting/
+          https://luxureat.cn/certification/
+          https://luxureat.cn/contact/
+          https://luxureat.cn/en/
+          https://luxureat.cn/en/products/
+          https://luxureat.cn/en/rituals/
+          https://luxureat.cn/en/journal/
+          https://luxureat.cn/en/news/
+          https://luxureat.cn/en/blog/
+          https://luxureat.cn/en/gifting/
+          https://luxureat.cn/en/certification/
+          https://luxureat.cn/en/contact/
+          URLS
+
+          if ! response="$(curl --fail-with-body -sS \
+            -H 'Content-Type: text/plain' \
+            --data-binary @"$RUNNER_TEMP/baidu-urls.txt" \
+            "http://data.zz.baidu.com/urls?site=https://luxureat.cn&token=${BAIDU_PUSH_TOKEN}")"; then
+            echo "::warning::Baidu URL submission request failed."
+            exit 0
+          fi
+
+          echo "Baidu response: $response"
+          if printf '%s' "$response" | grep -q '"error"'; then
+            echo "::warning::Baidu returned an error response: $response"
+          fi
