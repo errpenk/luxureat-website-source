@@ -1,4 +1,5 @@
 name: Preserve Search Metadata
+# Reapply search metadata after SEO pipeline update
 
 on:
   push:
