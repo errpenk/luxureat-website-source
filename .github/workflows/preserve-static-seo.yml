@@ -1,0 +1,94 @@
+name: Preserve Static SEO
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'site.config.mjs'
+      - 'tools/generate-static-seo.mjs'
+      - '.github/workflows/preserve-static-seo.yml'
+  workflow_run:
+    workflows:
+      - 'Publish Theme Repository'
+    types:
+      - completed
+
+concurrency:
+  group: luxureat-search-metadata
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish-static-seo:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    env:
+      THEME_REPO_DEPLOY_KEY: ${{ secrets.THEME_REPO_DEPLOY_KEY }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Generate static SEO fragment
+        run: node tools/generate-static-seo.mjs "$GITHUB_WORKSPACE/.seo/static-seo.php.fragment"
+
+      - name: Add GitHub deploy key
+        run: |
+          test -n "$THEME_REPO_DEPLOY_KEY"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$THEME_REPO_DEPLOY_KEY" > ~/.ssh/theme_repo_key
+          chmod 600 ~/.ssh/theme_repo_key
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
+      - name: Checkout theme repository
+        run: |
+          git clone git@github.com:errpenk/luxureat-wordpress-theme.git "$GITHUB_WORKSPACE/.publish/theme"
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
+
+      - name: Install static SEO
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path.cwd()
+          functions = root / '.publish/theme/functions.php'
+          fragment = (root / '.seo/static-seo.php.fragment').read_text(encoding='utf-8').strip()
+          text = functions.read_text(encoding='utf-8')
+          pattern = re.compile(
+              r'\n?// LUXUREAT_STATIC_SEO_BEGIN.*?// LUXUREAT_STATIC_SEO_END\n?',
+              re.S,
+          )
+          text = pattern.sub('\n', text).rstrip() + '\n\n' + fragment + '\n'
+          functions.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Lint updated PHP
+        run: php -l "$GITHUB_WORKSPACE/.publish/theme/functions.php"
+
+      - name: Commit and push static SEO
+        run: |
+          cd "$GITHUB_WORKSPACE/.publish/theme"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "Static SEO is already current."
+          else
+            git add functions.php
+            git commit -m "Preserve static route SEO metadata"
+            git push origin main
+          fi
+        env:
+          GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
