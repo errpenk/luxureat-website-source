@@ -120,37 +120,53 @@ jobs:
         env:
           GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
 
+      - name: Build Baidu URL list from site config
+        env:
+          BAIDU_URLS_FILE: ${{ runner.temp }}/baidu-urls.txt
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import { pages } from './site.config.mjs';
+
+          const site = 'https://luxureat.cn';
+          const excludedSlugs = new Set(['bag', 'cart', 'checkout', 'account', 'login', 'register']);
+
+          const urls = pages
+            .filter((page) => page && page.indexable !== false && !excludedSlugs.has(page.slug))
+            .map((page) => {
+              const route = String(page.route || '').replace(/^\/+|\/+$/g, '');
+              if (!route || route === 'zh') {
+                return `${site}/`;
+              }
+              if (route.startsWith('zh/')) {
+                return `${site}/${route.slice(3)}/`;
+              }
+              return `${site}/${route}/`;
+            });
+
+          const uniqueUrls = [...new Set(urls)];
+          fs.writeFileSync(process.env.BAIDU_URLS_FILE, `${uniqueUrls.join('\n')}\n`, 'utf8');
+          console.log(`Prepared ${uniqueUrls.length} indexable URLs for Baidu:`);
+          console.log(uniqueUrls.join('\n'));
+          NODE
+
       - name: Push public URLs to Baidu
+        env:
+          BAIDU_URLS_FILE: ${{ runner.temp }}/baidu-urls.txt
         run: |
           if [ -z "$BAIDU_PUSH_TOKEN" ]; then
             echo "::warning::BAIDU_PUSH_TOKEN is not configured; skipping Baidu URL submission."
             exit 0
           fi
 
-          cat > "$RUNNER_TEMP/baidu-urls.txt" <<'URLS'
-          https://luxureat.cn/
-          https://luxureat.cn/caviar/
-          https://luxureat.cn/rituals/
-          https://luxureat.cn/journal/
-          https://luxureat.cn/news/
-          https://luxureat.cn/blog/
-          https://luxureat.cn/gifting/
-          https://luxureat.cn/certification/
-          https://luxureat.cn/contact/
-          https://luxureat.cn/en/
-          https://luxureat.cn/en/products/
-          https://luxureat.cn/en/rituals/
-          https://luxureat.cn/en/journal/
-          https://luxureat.cn/en/news/
-          https://luxureat.cn/en/blog/
-          https://luxureat.cn/en/gifting/
-          https://luxureat.cn/en/certification/
-          https://luxureat.cn/en/contact/
-          URLS
+          if [ ! -s "$BAIDU_URLS_FILE" ]; then
+            echo "::warning::No indexable URLs were generated; skipping Baidu URL submission."
+            exit 0
+          fi
 
           if ! response="$(curl --fail-with-body -sS \
             -H 'Content-Type: text/plain' \
-            --data-binary @"$RUNNER_TEMP/baidu-urls.txt" \
+            --data-binary @"$BAIDU_URLS_FILE" \
             "http://data.zz.baidu.com/urls?site=https://luxureat.cn&token=${BAIDU_PUSH_TOKEN}")"; then
             echo "::warning::Baidu URL submission request failed."
             exit 0
@@ -160,5 +176,3 @@ jobs:
           if printf '%s' "$response" | grep -q '"error"'; then
             echo "::warning::Baidu returned an error response: $response"
           fi
-
-# Manual trigger marker: 2026-08-07
