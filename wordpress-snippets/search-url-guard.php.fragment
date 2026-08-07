@@ -81,15 +81,4 @@ function luxureat_static_reject_spam_query_urls() {
 }
 add_action('template_redirect', 'luxureat_static_reject_spam_query_urls', -200);
 
-function luxureat_static_output_canonical() {
-    $canonical_path = luxureat_static_public_canonical_path();
-    if ($canonical_path === '') {
-        return;
-    }
-
-    $canonical_url = home_url($canonical_path);
-    echo '<link rel="canonical" href="' . esc_url($canonical_url) . '">' . "\n";
-}
-add_action('wp_head', 'luxureat_static_output_canonical', 1);
-
 // LUXUREAT_SEARCH_URL_GUARD_END
