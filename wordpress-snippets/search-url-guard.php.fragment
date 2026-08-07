@@ -1,0 +1,94 @@
+// LUXUREAT_SEARCH_URL_GUARD_BEGIN
+
+function luxureat_static_public_canonical_path() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '/';
+    $request_path = parse_url($request_uri, PHP_URL_PATH);
+    $request_path = is_string($request_path) ? $request_path : '/';
+
+    $normalized = '/' . trim($request_path, '/');
+    if ($normalized !== '/') {
+        $normalized .= '/';
+    }
+
+    $public_paths = array(
+        '/',
+        '/caviar/',
+        '/rituals/',
+        '/journal/',
+        '/news/',
+        '/blog/',
+        '/gifting/',
+        '/certification/',
+        '/contact/',
+        '/en/',
+        '/en/products/',
+        '/en/rituals/',
+        '/en/journal/',
+        '/en/news/',
+        '/en/blog/',
+        '/en/gifting/',
+        '/en/certification/',
+        '/en/contact/',
+    );
+
+    return in_array($normalized, $public_paths, true) ? $normalized : '';
+}
+
+function luxureat_static_is_spam_query($raw_query) {
+    if (!is_string($raw_query) || $raw_query === '') {
+        return false;
+    }
+
+    $decoded = rawurldecode($raw_query);
+
+    // Historical spam URLs seen by Search Console, e.g. ?t=3509394515 or ?p=9098915020.
+    if (preg_match('/^[A-Za-z]=[0-9]{7,}$/', $decoded)) {
+        return true;
+    }
+
+    // Historical malformed pseudo-paths placed after ?, e.g. ?category/7204-2598100054.html.
+    if (preg_match('#^[^=&]+/[^=&]+\.html(?:&.*)?$#i', $decoded)) {
+        return true;
+    }
+
+    return false;
+}
+
+function luxureat_static_reject_spam_query_urls() {
+    if (is_admin() || (function_exists('wp_doing_ajax') && wp_doing_ajax())) {
+        return;
+    }
+
+    $canonical_path = luxureat_static_public_canonical_path();
+    if ($canonical_path === '') {
+        return;
+    }
+
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+    $raw_query = parse_url($request_uri, PHP_URL_QUERY);
+
+    if (!luxureat_static_is_spam_query($raw_query)) {
+        return;
+    }
+
+    status_header(404);
+    nocache_headers();
+    header('X-Robots-Tag: noindex, nofollow', true);
+    header('Content-Type: text/html; charset=UTF-8');
+    echo '<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>Not Found</title></head><body><h1>404 Not Found</h1></body></html>';
+    exit;
+}
+add_action('template_redirect', 'luxureat_static_reject_spam_query_urls', -200);
+
+function luxureat_static_output_canonical() {
+    $canonical_path = luxureat_static_public_canonical_path();
+    if ($canonical_path === '') {
+        return;
+    }
+
+    $canonical_url = home_url($canonical_path);
+    echo '<link rel="canonical" href="' . esc_url($canonical_url) . '">' . "\n";
+}
+add_action('wp_head', 'luxureat_static_output_canonical', 1);
+
+// LUXUREAT_SEARCH_URL_GUARD_END
