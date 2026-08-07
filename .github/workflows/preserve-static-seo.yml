@@ -1,5 +1,5 @@
 name: Preserve Static SEO
-# Static SEO metadata pipeline v1
+# Static SEO metadata pipeline v2
 
 on:
   push:
@@ -41,8 +41,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Generate static SEO fragment
-        run: node tools/generate-static-seo.mjs "$GITHUB_WORKSPACE/.seo/static-seo.php.fragment"
+      - name: Generate static SEO module
+        run: node tools/generate-static-seo.mjs "$GITHUB_WORKSPACE/.seo/static-seo.php"
 
       - name: Add GitHub deploy key
         run: |
@@ -60,24 +60,40 @@ jobs:
 
       - name: Install static SEO
         run: |
+          cp "$GITHUB_WORKSPACE/.seo/static-seo.php" "$GITHUB_WORKSPACE/.publish/theme/static-seo.php"
           python - <<'PY'
           from pathlib import Path
           import re
 
           root = Path.cwd()
           functions = root / '.publish/theme/functions.php'
-          fragment = (root / '.seo/static-seo.php.fragment').read_text(encoding='utf-8').strip()
-          text = functions.read_text(encoding='utf-8')
-          pattern = re.compile(
+          index = root / '.publish/theme/index.php'
+
+          # Clean up the earlier inline implementation if it was ever installed.
+          functions_text = functions.read_text(encoding='utf-8')
+          functions_text = re.sub(
               r'\n?// LUXUREAT_STATIC_SEO_BEGIN.*?// LUXUREAT_STATIC_SEO_END\n?',
-              re.S,
+              '\n',
+              functions_text,
+              flags=re.S,
           )
-          text = pattern.sub('\n', text).rstrip() + '\n\n' + fragment + '\n'
-          functions.write_text(text, encoding='utf-8')
+          functions.write_text(functions_text.rstrip() + '\n', encoding='utf-8')
+
+          index_text = index.read_text(encoding='utf-8')
+          require_line = "require_once get_template_directory() . '/static-seo.php';"
+          if require_line not in index_text:
+              anchor = "if (!defined('ABSPATH')) {\n    exit;\n}\n"
+              if anchor not in index_text:
+                  raise SystemExit('Could not find index.php bootstrap anchor')
+              index_text = index_text.replace(anchor, anchor + "\n" + require_line + "\n", 1)
+          index.write_text(index_text, encoding='utf-8')
           PY
 
       - name: Lint updated PHP
-        run: php -l "$GITHUB_WORKSPACE/.publish/theme/functions.php"
+        run: |
+          php -l "$GITHUB_WORKSPACE/.publish/theme/static-seo.php"
+          php -l "$GITHUB_WORKSPACE/.publish/theme/index.php"
+          php -l "$GITHUB_WORKSPACE/.publish/theme/functions.php"
 
       - name: Commit and push static SEO
         run: |
@@ -87,7 +103,7 @@ jobs:
           if git diff --quiet && git diff --cached --quiet; then
             echo "Static SEO is already current."
           else
-            git add functions.php
+            git add static-seo.php index.php functions.php
             git commit -m "Preserve static route SEO metadata"
             git push origin main
           fi
