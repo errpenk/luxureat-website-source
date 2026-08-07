@@ -1,3 +1,4 @@
+# LuxurEat search crawler policy
 User-agent: *
 Allow: /
 
