@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /my-account/
+Disallow: /bag/
+Disallow: /en/bag/
+
+Sitemap: https://luxureat.cn/sitemap.xml
