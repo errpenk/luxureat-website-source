@@ -167,7 +167,8 @@ jobs:
           if ! response="$(curl --fail-with-body -sS \
             -H 'Content-Type: text/plain' \
             --data-binary @"$BAIDU_URLS_FILE" \
-            "http://data.zz.baidu.com/urls?site=https://luxureat.cn&token=${BAIDU_PUSH_TOKEN}")"; then
+            "http://data.zz.baidu.com/urls?site=luxureat.cn&token=${BAIDU_PUSH_TOKEN}")"; then
+            echo "Baidu response: $response"
             echo "::warning::Baidu URL submission request failed."
             exit 0
           fi
