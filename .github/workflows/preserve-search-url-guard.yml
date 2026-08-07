@@ -1,4 +1,5 @@
 name: Preserve Search URL Guard
+# Reapply guard after SEO pipeline update
 
 on:
   push:
