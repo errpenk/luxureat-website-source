@@ -527,6 +527,20 @@ ${seoCatalog}
     );
 }
 
+function luxureat_static_disable_yoast_output() {
+    $path = luxureat_static_current_path();
+    $path = $path === '' || $path === '__home' ? 'zh' : $path;
+    $aliases = luxureat_static_aliases();
+    $route = isset($aliases[$path]) ? $aliases[$path] : $path;
+    if (!isset(luxureat_static_seo_catalog()[$route]) || !function_exists('YoastSEO')) {
+        return;
+    }
+
+    $front_end = YoastSEO()->classes->get(Yoast\\WP\\SEO\\Integrations\\Front_End_Integration::class);
+    remove_action('wpseo_head', array($front_end, 'present_head'), -9999);
+}
+add_action('template_redirect', 'luxureat_static_disable_yoast_output', -20);
+
 function luxureat_static_seo_head() {
     $path = luxureat_static_current_path();
     $path = $path === '' || $path === '__home' ? 'zh' : $path;

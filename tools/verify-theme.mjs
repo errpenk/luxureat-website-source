@@ -135,6 +135,7 @@ assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'fun
 assert(functionsPhp.includes("'en/caviar' => 'en/product'"), 'legacy English caviar route redirects to product');
 assert(functionsPhp.includes("'en/private' => 'en/cooperation'"), 'legacy English private route redirects to cooperation');
 assert(functionsPhp.includes('function luxureat_static_seo_head()') && functionsPhp.includes("rel=\"canonical\"") && functionsPhp.includes("hreflang=\"x-default\"") && functionsPhp.includes('application/ld+json'), 'functions.php emits canonical, alternate-language, social and structured SEO metadata');
+assert(functionsPhp.includes('luxureat_static_disable_yoast_output') && functionsPhp.includes("remove_action('wpseo_head'") && functionsPhp.includes('Front_End_Integration::class'), 'static routes use the theme SEO output without duplicate Yoast metadata');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_contact") && functionsPhp.includes("wp_mail('roberto@ugolinigroup.com'"), 'contact enquiries are emailed to the requested recipient');
