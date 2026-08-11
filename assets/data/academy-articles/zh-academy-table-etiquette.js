@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-table-etiquette"] = revive({"lang":"zh","slug":"table-etiquette","topic":"culture","topicLabel":"探索意大利","artClass":"is-culture","eyebrow":"意大利餐桌礼仪","title":"意大利餐桌礼仪：慢下来，分享风味","meta":"探索意大利 · 2026","archive":"餐桌文化","intro":"餐桌礼仪不是僵硬规则，而是通过节奏、份量、分享和交谈，让食物与共同用餐得到应有的注意。","opening":["意大利不同地区、家庭和餐厅的用餐方式并不完全相同，因此不存在一套适用于所有场合的固定程序。更稳定的共同点，是重视用餐节奏、尊重同桌的人，并让每一道食物在合适状态下被品尝。","理解餐桌文化时，可以把正式宴席与家庭日常分开。多道式结构是一种组织风味的方法，但普通家庭并不需要每餐完整复制；分享、从容和适量比形式数量更重要。"],"sections":[["一道一道，让风味有次序",["前菜、第一道、第二道、配菜和甜点等次序，可以让温度、质地和强度逐步变化。实际餐次会因地区、场合与家庭习惯缩减或调整。","在家实践时，可以只保留两三道，并控制单份体量。让热菜及时上桌、冷食保持适宜温度，比追求复杂摆盘更能改善体验。"]],["面包、油与共享方式",["面包在许多餐桌上用于配合菜肴和酱汁，但具体习惯并不处处相同。橄榄油的使用也应结合地区和菜式，不必把餐厅里看到的一个动作视为全国规则。","共享食物时，使用公共餐具、留意过敏原并尊重他人份量，是现代餐桌上更重要的礼貌。涉及生食和冷藏产品，还应遵循食品安全与产品说明。"]],["让主角食材保持清晰",["高品质食材不等于越多越好。橄榄油、奶酪、鱼子酱或香气集中的调味品，需要合适温度和克制份量，让质地与余味能够被辨认。","如果多种强烈原料同时出现，容易造成盐度、脂肪感和香气拥挤。先确定一道菜的主角，再选择提供酸度、清新感或口感对比的配角。"]],["交谈也是用餐的一部分",["共同用餐提供的不只是能量，也包括交流、记忆和社群关系。联合国教科文组织对地中海饮食文化的描述，同样强调分享、款待与共同生活，而不只是某一份食物清单。","放慢速度并不意味着拖延，而是给咀嚼、交谈和菜肴转换留出空间。对家庭来说，减少屏幕干扰、让所有人都能参与，比模仿正式礼仪更有意义。"]],["适合中国家庭的表达",["中国家庭常以共享菜肴为中心，可以保留这种结构，同时借鉴意大利餐桌对顺序、温度和份量的关注。例如先上清爽小食，再安排主食与热菜，最后以水果或少量甜点收尾。","跨文化餐桌不需要证明谁更正宗。明确食材来源、尊重同桌需求、照顾过敏与饮食限制，并让每个人舒适参与，就是礼仪真正发挥作用的地方。"]],["面对不同场合保持弹性",["商务餐、家庭聚会和朋友简餐需要不同程度的正式感。提前了解用餐时间、座位安排、分享方式与饮食限制，可以减少临场压力，也让主人更从容地安排菜肴。","礼仪的底线不是展示知识，而是不让他人感到被忽视。对不熟悉的食物先询问、对服务人员保持尊重、不过度评论他人的选择，往往比掌握繁复规则更重要。"]]],"asideSummary":"从餐次节奏、分享方式、食材份量与共同交流理解意大利餐桌，并转化为适合中国家庭的实践。","relatedSlugs":["italian-food-culture","regional-traditions","pairings-class"],"image":"assets/media/academy/culture-cover-05.webp","column":"探索意大利","related":["zh-academy-italian-food-culture","zh-academy-regional-traditions","zh-academy-pairings-class"],"sectionMedia":[]});
+})();

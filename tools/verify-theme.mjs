@@ -123,6 +123,12 @@ assert(functionsPhp.includes('luxureat_static_search_metadata_endpoint') && func
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
+assert(functionsPhp.includes("'type' => 'Product'") && functionsPhp.includes("'type' => 'Event'") && functionsPhp.includes("'type' => 'Recipe'") && functionsPhp.includes("'@type' => 'BreadcrumbList'"), 'theme exposes Product, Event, Recipe and breadcrumb structured data');
+const zhRecipePages = fs.readdirSync(path.join(themeDir, 'pages/zh/recipe')).filter((file) => file.endsWith('.php'));
+const enRecipePages = fs.readdirSync(path.join(themeDir, 'pages/en/recipe')).filter((file) => file.endsWith('.php'));
+assert(zhRecipePages.length === 25 && enRecipePages.length === 25, 'theme contains all 25 bilingual recipe detail pairs');
+const recipeDetail = read(path.join(themeDir, 'pages/zh/recipe/truffle-eggs.php'));
+assert(recipeDetail.includes('class="lux-breadcrumb"') && recipeDetail.includes('<h1 id="lux-reader-title">松露鸡蛋</h1>'), 'recipe details expose a visible breadcrumb and one primary heading');
 assert(functionsPhp.includes("get_option('home')"), 'route URLs use the unfiltered WordPress home option');
 assert(!functionsPhp.includes('home_url($pretty_paths[$path])'), 'route URLs are not rewritten by language-plugin home_url filters');
 assert(functionsPhp.includes('function luxureat_static_pretty_paths('), 'functions.php defines canonical pretty route URLs');
@@ -225,7 +231,7 @@ for (const file of pageFiles) {
   assert(!source.includes("home_url('/zh/") && !source.includes("home_url('/en/"), `${rel} does not require pretty permalink routes`);
   assert(source.includes('luxureat_static_url('), `${rel} uses host-compatible route URLs`);
 }
-assert(/class="lux-hero-video"[^>]*\bautoplay\b[^>]*\bpreload="auto"/.test(renderedPages), 'first-screen hero videos request playback and preload immediately');
+assert(/data-lux-autoplay[^>]*class="lux-hero-video"[^>]*\bpreload="none"/.test(renderedPages), 'first-screen hero videos defer transfer until the page load event');
 assert(!/class="[^"]*(?:lux-about-program-media|lux-cert-capability-video|lux-meet-map-video)[^"]*"[^>]*\sautoplay(?:\s|=|>)/.test(renderedPages), 'offscreen background videos do not compete with the first screen');
 assert(/class="[^"]*(?:lux-about-program-media|lux-cert-capability-video)[^"]*"[^>]*\bdata-lux-autoplay\b[^>]*\bpreload="none"/.test(renderedPages), 'offscreen background videos load only near the viewport');
 
@@ -249,6 +255,7 @@ assert(zhCaviar.includes('data-caviar-grid'), 'Chinese caviar page marks the pro
 
 const runtimeJs = [
   'assets/js/core.js',
+  'assets/js/engagement.js',
   'assets/js/products.js',
   'assets/js/events.js',
   'assets/js/journal.js',

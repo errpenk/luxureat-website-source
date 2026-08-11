@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-italian-gelato-vs-ice-cream"] = revive({"slug":"italian-gelato-vs-ice-cream","lang":"zh","topic":"gelato","topicLabel":"意式手工冰淇淋学院","column":"意式手工冰淇淋学院","artClass":"is-gelato","eyebrow":"意式手工冰淇淋学院","title":"意式手工冰淇淋与普通冰淇淋：意大利传统究竟有何不同？","meta":"意式手工冰淇淋学院 · 2026","archive":"学院 / 文化","imageFile":"italian-gelato-vs-ice-cream.webp","intro":"意式手工冰淇淋和普通冰淇淋都属于冷冻甜品，但传统意式手工冰淇淋在空气含量、脂肪比例、食用温度和风味表达之间形成了不同的平衡。因此，差别并不只是“配方不同”，而是带来了一种不同的冷冻甜品体验。","opening":[],"sections":[["两种冷冻甜品，两种不同传统",["在世界各地，意式手工冰淇淋和普通冰淇淋经常被混用。实际上，不同配方之间差异很大，并不存在一条可以把所有意式手工冰淇淋与所有普通冰淇淋完全分开的公式。不过，意大利手工冰淇淋通常会打入更少的空气，并以略高于硬质冰淇淋的温度食用。","这些差异会直接影响口感。空气含量较低，通常会让意式手工冰淇淋的质地更加紧实、细腻；较高的食用温度则让它保持柔软，也让香气更快在口腔中释放。"]],["脂肪、质地与风味",["许多传统意式手工冰淇淋配方使用的奶油比例也低于经典高脂冰淇淋，但具体脂肪含量仍取决于口味和配方。脂肪会影响人对风味的感知，因此一款平衡良好的意式手工冰淇淋应当有足够的奶香和顺滑感，却不应让浓厚感盖住食材本身。","因此，好的开心果意式手工冰淇淋应该让人清楚尝到开心果；柠檬意式雪葩应保持明亮、清新的酸香；纯牛奶口味则应突出牛奶干净自然的风味，而不是只剩甜味。"]],["意式手工冰淇淋是意大利日常文化的一部分",["在意大利，意式手工冰淇淋并不只属于正式餐饮或特殊场合。社区里的手工冰淇淋专卖店是日常社交生活的一部分：下午顺路停一下、晚饭后散步、家庭习惯，或和朋友分享的一点小享受。","这种亲近感正是意式手工冰淇淋的特点之一。它可以体现优质原料和高度成熟的制作技术，却仍然可以装在一个简单的杯子或蛋筒里。工艺可以很精细，享用方式却不必复杂。"]],["传统也为创新留出空间",["意式手工冰淇淋从来没有被固定在一张口味清单里。除了巧克力、榛子、开心果、咖啡、水果和纯牛奶口味，手工冰淇淋师也长期尝试香草、香料、特级初榨橄榄油、奶酪，以及其他跨越甜咸边界的食材。","关键并不是为了新奇而新奇。真正有效的创新，是让加入的新食材依然清晰可辨，同时让甜度、香气和质地之间保持有意图的平衡。"]],["LuxurEat（露意膳） 视角",["LuxurEat（露意膳） 以松露意式手工冰淇淋探索传统与创新的结合：让细腻、微甜的意式手工冰淇淋成为背景，衬托松露鲜明而独特的香气。它并不是为了取代巧克力、开心果等经典口味，而是提供另一种认识意大利食材的方式。"]]],"sectionMedia":[],"asideSummary":"意式手工冰淇淋和普通冰淇淋都属于冷冻甜品，但传统意式手工冰淇淋在空气含量、脂肪比例、食用温度和风味表达之间形成了不同的平衡。因此，差别并不只是“配方不同”，而是带来了一种不同的冷冻甜品体验。","relatedSlugs":["story-of-italian-gelato","truffle-meets-dessert","truffle-gelato-at-home"],"image":"assets/media/academy/italian-gelato-vs-ice-cream.webp","related":["zh-academy-story-of-italian-gelato","zh-academy-truffle-meets-dessert","zh-academy-truffle-gelato-at-home"]});
+})();

@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-olive-recipes-guide"] = revive({"lang":"zh","slug":"olive-recipes-guide","topic":"olive","topicLabel":"橄榄油学院","artClass":"is-olive","eyebrow":"橄榄油食谱","title":"橄榄油进入日常：从面包到意面","meta":"橄榄油学院 · 2026","archive":"厨房应用","intro":"从面包、沙拉、豆类到意面和烤制，理解橄榄油在调味、传热、乳化与完成菜中的不同角色。","opening":["橄榄油进入菜谱时，不只是“加一点油”。它可以承载香气、连接酱汁、帮助表面受热，也可以在出餐前提供新鲜果香。把加入时点、温度和用量写清楚，才能让同一瓶油在家庭与专业厨房中稳定复现。","配方应从食材和目标口感出发，而不是为了突出油而过量使用。清淡油、绿色辛香型油与成熟果香型油各有位置；若只有一瓶，也可以通过生用、低温调和与烹饪三个阶段分配用量。"],"sections":[["面包与生食",["新鲜面包配橄榄油最能直接观察香气和苦辣。先少量淋油，再决定是否加盐、番茄或香草，避免调味一次盖住油品。番茄烤面包可让酸甜、面包焦香与油的果香形成清楚层次。","沙拉中先处理盐和酸，再缓慢加入油并搅拌，可获得更均匀的包裹。油与醋不会永久乳化，但芥末、乳酪或食材自身成分可帮助短暂稳定；具体过敏原要随配方标示。"]],["豆类、汤与蔬菜",["豆类和根茎淀粉能承接橄榄油的苦辣，少量生油可在浓稠口感上增加香气和流动感。汤品适合把一部分油用于炒香基础食材，另一部分留到起锅。","烤蔬菜用油应薄而均匀，过量会妨碍表面脱水和焦香。先按重量或份量记录用油，再根据烤盘、含水量和温度调整，比笼统写“适量”更易复现。"]],["意面与酱汁",["橄榄油、煮面水和奶酪或其他酱料成分可以通过搅拌形成暂时乳化，使酱汁附着面条。关键是控制水量、温度和搅拌，而不是依赖大量油制造光泽。","蒜香、辣椒和香草可在适度温度下释放风味，避免把蒜或香草烧焦。最后补入更具果香的油，能够保留挥发性香气，并减少长时间加热造成的损失。"]],["建立自己的用油表",["为常做菜记录油品、用量、加入时点和结果，例如“烤前每份多少、出餐再加多少”。餐饮端还可记录批次和开瓶日期，便于成本与风味一致性管理。","LuxurEat（露意膳）的食谱会把橄榄油与相关产品链接、份量、过敏原和替代方案一起呈现。替代油品时，应重新判断风味和加热表现，而不是假设所有植物油完全相同。"]],["加热之后如何复盘",["同一道菜可分别记录烹饪前后香气：若起锅时几乎闻不到油品特征，可以减少前段用量，并把一小部分留到完成菜；若苦辣压过食材，则换用更柔和风格或减少最后淋油。","菜谱不是固定命令，而是一套可以重复验证的比例。通过称量与记录，把“适量”转化为适合自己锅具、份数和油品的范围。"]],["替代与过敏提示",["用橄榄油替代黄油会改变乳香、含水和质地，并不总能一比一替换；烘焙配方尤其需要重新测试。若菜谱同时使用乳酪、坚果、鱼类或含麸质面包，应单独列出相关过敏原，不能因橄榄油本身不含这些成分而省略。"]]],"asideSummary":"把橄榄油分成生食、烹饪、乳化和完成菜四种角色，并记录用量与时点，菜谱才能稳定复现。","relatedSlugs":["olive-tasting","pasta-academy","italian-food-culture"],"image":"assets/media/academy/choose-use-store-evo.webp","column":"橄榄油学院","related":["zh-academy-olive-tasting","zh-academy-pasta-academy","zh-academy-italian-food-culture"],"sectionMedia":[]});
+})();

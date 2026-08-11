@@ -53,6 +53,9 @@ function renderLuxProductCatalog() {
   };
   const entries = Object.entries(data.products).filter(([key]) => key.startsWith(`${lang}-`));
   if (!entries.length) return;
+  const productHref = (product) => location.pathname.endsWith(".html")
+    ? `product.html?product=${encodeURIComponent(product.id)}`
+    : `${encodeURIComponent(product.id)}/`;
 
   grid.innerHTML = entries.map(([key, product], index) => `
     <article class="group cursor-pointer flex flex-col gap-6${product.catalogOnly ? " is-catalog-only" : ""}" data-caviar-item data-species="${product.category || speciesFor(key)}" data-product-type="${luxEscapeProductHtml(product.typeKey || "")}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
@@ -61,7 +64,7 @@ function renderLuxProductCatalog() {
       </div>
       <div class="flex flex-col gap-2 border-t border-secondary/20 pt-4">
         <div class="flex justify-between items-start">
-          <h2 class="font-headline-md text-headline-sm md:text-headline-md text-on-surface">${luxEscapeProductHtml(product.title)}</h2>
+          <h2 class="font-headline-md text-headline-sm md:text-headline-md text-on-surface"><a href="${productHref(product)}">${luxEscapeProductHtml(product.title)}</a></h2>
           <span class="font-body-lg text-body-lg text-secondary">${luxEscapeProductHtml(formatPreviewPrice(product))}</span>
         </div>
         <p class="lux-product-card-description font-body-md text-body-md text-on-surface-variant">${luxEscapeProductHtml(product.cardDesc || product.desc)}</p>

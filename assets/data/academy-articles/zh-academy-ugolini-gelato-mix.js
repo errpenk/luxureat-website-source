@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-ugolini-gelato-mix"] = revive({"lang":"zh","slug":"ugolini-gelato-mix","topic":"gelato","topicLabel":"意式手工冰淇淋","artClass":"is-gelato","eyebrow":"新品预告","title":"新品：Luxureat（露意膳）意式手工冰淇淋粉末基底即将上线","meta":"意式手工冰淇淋 · 即将上线","archive":"新品前瞻","intro":"Luxureat（露意膳）全新意式手工冰淇淋粉末基底系列即将推出，面向家庭、店铺及食品业客户，提供更灵活、便捷的意式冰淇淋制作选择。具体口味、规格及上市信息，请以最终产品资料为准。","opening":["这是一篇新品前瞻，而不是已经完成的规格或功效承诺。当前可以确认的是产品方向与服务对象；口味、配方、包装、建议用量、营养和过敏原等信息，必须等待研发、合规审核和最终产品文件后再发布。","粉末基底的价值不在于替代所有专业判断，而在于把部分固形物、甜味体系与结构需求转化为更容易执行的操作起点。家庭、店铺和食品业的设备、批量、服务温度与合规责任不同，最终资料需要分别说明。"],"sections":[["为什么开发粉末基底",["意式手工冰淇淋需要平衡水、糖、脂肪、蛋白质与其他固形物。对不具备完整研发条件的用户，经过验证的基底有助于减少称量项目和批次波动，但仍需按说明加入指定液体或原料并遵守温度流程。","便捷不应以模糊信息为代价。Luxureat（露意膳）会在上市前说明配料、适用设备、操作步骤、储存和成品建议，避免把“只需加水”之类口号用于并不符合该操作的产品。"]],["面向三类使用场景",["家庭用户需要清楚份量、常见器具和失败排查；店铺更关注连续出品、展示稳定、口味轮换与员工培训；食品业客户还要评估规格、供应、生产适配、标签、过敏原和质量文件。","同一系列可以提供不同包装或操作方案，但具体形式尚未最终确认。网站不会提前写入未经核准的口味、重量、保质期或产能信息。"]],["上市资料应该包含什么",["完整资料至少应帮助用户识别产品名称、配料、致敏物质、营养、净含量、批次、保存条件、使用方法和责任主体。针对餐饮和食品业，还应提供可追溯文件、质量标准与技术支持范围。","中文标签和线上信息需要符合中国适用规定。任何“无添加”“低糖”或其他营养声称，都必须基于最终配方和法规条件，不能在研发阶段先作为宣传结论。"]],["从关注新品到实际评估",["感兴趣的用户可以先了解意式手工冰淇淋的配方、温度和风味基础，再在产品上线后对照自己的设备与服务方式。购买前应以正式页面和包装信息为准，专业客户可进一步索取技术资料。","Luxureat（露意膳）将通过热门新品和系列产品页面更新进度，所有购买与应用判断都以届时发布的正式资料为准。"]],["订阅与沟通边界",["新品信息会在配方和包装最终确认后更新，订阅只用于接收正式发布、活动与产品动态，不代表预售或锁定某项规格。专业客户提出需求时，可说明预计产量、设备和应用场景，便于后续资料匹配。","在产品正式上线前，不建议根据本文安排菜单、标签或采购预算。任何商业决策都应基于最终报价、合同、样品测试和适用文件。"]]],"asideSummary":"新品方向已经明确，具体口味、规格、配方与上市时间仍以最终产品资料为准；面向不同用户提供透明、可执行的信息。","relatedSlugs":["gelato-vs-ice-cream","gelato-history"],"image":"assets/media/academy/gelato-cover-03.webp","column":"意式手工冰淇淋","related":["zh-academy-gelato-vs-ice-cream","zh-academy-gelato-history","zh-academy-gelato-flavours"],"sectionMedia":[],"cta":{"label":"了解新品 →","href":"new.html#gelato"}});
+})();

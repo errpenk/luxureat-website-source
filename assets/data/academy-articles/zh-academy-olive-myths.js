@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-olive-myths"] = revive({"lang":"zh","slug":"olive-myths","topic":"olive","topicLabel":"橄榄油学院","artClass":"is-olive","eyebrow":"常见问题与误区","title":"关于橄榄油，先放下这几种误区","meta":"橄榄油学院 · 2026","archive":"误区澄清","intro":"澄清酸度、颜色、加热、苦辣和产地等常见误区，用可验证信息替代简单口号。","opening":["橄榄油知识里最常见的问题，不是完全没有信息，而是把一个线索夸大成万能结论。颜色深、酸度低、喉咙辣、冷藏凝固或来自某个国家，都不能单独证明一瓶油的全部品质。","可靠判断通常需要多项证据：法定名称与标签、可追溯文件、理化分析、受训感官评价、包装储存和实际品鉴。消费者不必拥有实验室，但可以识别哪些说法越过了证据边界。"],"sections":[["误区一：颜色越绿越新鲜",["颜色受品种、成熟度和色素影响，专业感官评价不会把绿色直接当作等级依据。透明瓶在灯光下很漂亮，却可能让油承受更多光照。","选择时应更重视果香、是否存在缺陷、日期与保存。颜色可作为视觉特征记录，但不宜排序高低。"]],["误区二：酸度可以尝出来",["标签所说的游离酸度需要化学分析，舌头感受到的酸、苦、辣不是同一概念。低酸度是部分等级要求之一，但还需其他理化和感官条件。","如果营销只强调一个极低数字，却不说明类别、来源和保存，信息仍然不完整。开瓶后的哈败也不能靠出厂酸度数字排除。"]],["误区三：特级初榨不能加热",["特级初榨橄榄油可以用于多种家庭烹饪。加热会改变部分香气，实际适用性取决于温度、时间、菜肴和油品状态。把油反复长时间过热，与正常炒、烤或炖并不是一回事。","风味特别细致的油可以留作完成菜，日常油用于烹饪。这样是管理香气和成本，而不是因为特级初榨一遇热就变成有害物。"]],["误区四：苦辣代表刺激或越强越好",["新鲜初榨油的苦味与辛辣感可以是积极特征，与酚类物质和果实状态有关；但强度应与果香、质地和用途平衡。对清淡鱼类合适的油，未必适合用同样强度处理豆汤和烤肉。","LuxurEat（露意膳）会把感官词写成可比较的描述，而不是功效暗示。遇到“包治”“排毒”“零负担”或仅凭一项家庭测试判真假的说法，应回到标签与权威资料。"]],["误区五：一个产地自动保证一切",["意大利拥有重要橄榄油传统，但国家名称并不能替代具体产区、生产者、批次和储存。橄榄种植地、压榨地、调和与装瓶地可能不同，应按标签准确阅读。","奖项和认证可以提供额外信息，也有各自范围与年份。消费者仍应确认获奖对象是否为当前产品与批次，认证标识是否真实适用，并结合开瓶后的感官表现。"]],["误区六：浑浊一定更天然",["未过滤油可能保留微量水分和果肉颗粒，外观更浑浊，但这些物质也可能影响保存稳定。过滤油同样可以是机械取得的特级初榨产品。是否过滤是生产选择，不是天然与工业的简单分界。","同样地，沉淀、絮状物或低温结晶都需要结合产品说明和储存判断，不能直接作为真假测试。对异常气味、包装膨胀或来源不明的产品，应停止食用并向责任主体核实。"]]],"asideSummary":"颜色、酸度、冷藏、苦辣或产地都只是局部线索；多项证据和实际使用才能构成完整判断。","relatedSlugs":["olive-how-to-choose","olive-nutrition","olive-storage"],"image":"assets/media/academy/olive-cover-09.webp","column":"橄榄油学院","related":["zh-academy-olive-how-to-choose","zh-academy-olive-nutrition","zh-academy-olive-storage"],"sectionMedia":[]});
+})();

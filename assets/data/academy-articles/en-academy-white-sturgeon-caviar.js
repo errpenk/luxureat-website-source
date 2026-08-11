@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["en-academy-white-sturgeon-caviar"] = revive({"slug":"white-sturgeon-caviar","lang":"en","eyebrow":"Caviar Academy","title":"White Sturgeon Caviar","meta":"CAVIAR ACADEMY · 2026","image":"assets/media/academy/white-sturgeon-caviar-cover-page-bg.png","intro":"White sturgeon caviar, native to the west coast of North America, is prized for its large eggs, creamy texture, and delicate flavor.","opening":["Thanks to its high yield and ease of farming, White Sturgeon caviar is now among the most widely available and sought-after on the international market."],"sections":[["Main Characteristics of White Sturgeon Caviar:",["Color: ranges from dark grey to deep black, with glossy reflections indicating freshness.","Egg size: larger than other varieties, with a compact yet creamy texture.","Flavor: delicate and slightly buttery, with marine notes and a smooth finish — ideal for those who prefer elegant, less intense flavors.","Origin: predominantly farmed in the United States and Canada, synonymous with high quality and consistent production."]],["Recommended Pairings",["White Sturgeon caviar pairs beautifully with brut champagne, dry white wines, and delicate dishes such as buttered crostini, fish tartare, or new potatoes. Its versatility makes it perfect both for gourmet recipes and for simple yet refined tastings."]]],"sectionMedia":[[],[]],"relatedSlugs":["history-of-caviar","main-types-of-caviar","sevruga-caviar"],"topic":"caviar","topicLabel":"Caviar Academy","column":"Caviar Academy","archive":"White Sturgeon","asideSummary":"An introduction to White Sturgeon caviar, its North American origin, creamy large eggs, consistent production, and versatile pairings.","wideCover":true,"related":["en-academy-history-of-caviar","en-academy-main-types-of-caviar","en-academy-sevruga-caviar"]});
+})();

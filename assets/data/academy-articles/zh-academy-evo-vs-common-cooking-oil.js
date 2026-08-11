@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-evo-vs-common-cooking-oil"] = revive({"slug":"evo-vs-common-cooking-oil","lang":"zh","topic":"olive","topicLabel":"橄榄油学院","column":"橄榄油学院","artClass":"is-olive","eyebrow":"橄榄油学院","title":"意大利特级初榨橄榄油与普通食用油：特级初榨橄榄油到底有什么不同？","meta":"橄榄油学院 · 2026","archive":"学院 / 文化","imageFile":"evo-vs-common-cooking-oil.webp","intro":"“橄榄油”并不是一个单一产品类别。特级初榨橄榄油（特级初榨橄榄油）由其取得方式以及化学和感官标准共同定义；精炼橄榄油和橄榄果渣油则采用不同工艺生产，因此也具有不同特征。","opening":[],"sections":[["“特级初榨”究竟意味着什么",["按照国际标准，初榨橄榄油必须仅通过机械或其他物理方式从橄榄中获得，并且处理条件不能导致油品发生改变。特级初榨橄榄油还必须满足严格的化学与感官要求，其中包括游离酸度以油酸计不高于每 100 克油 0.8 克。","另一个需要区分的词是“冷提取（冷提取）”。并不是所有特级初榨橄榄油都必须具备这一表述。按照欧盟营销规则，只有在规定提取条件下、低于 27°C 获得的初榨或特级初榨橄榄油，才可以使用这一说法。也就是说，“特级初榨”是产品类别，而“冷提取”是额外的生产方式声明。"]],["不是所有橄榄油都一样",["标注为“特级初榨橄榄油”的产品，与只标注“橄榄油”的产品并不相同。后者通常是精炼橄榄油与初榨橄榄油的混合物。橄榄果渣油则属于另一个类别，其原料和生产过程也不同于初榨橄榄油。","这就是为什么正面标签很重要。消费者应关注准确的产品类别，而不是认为所有写着“橄榄油”的产品都具有相同的风味特征或生产方式。"]],["与其评“最好产区”，不如理解地域风格",["意大利特级初榨橄榄油的表现受橄榄品种、采收时间、气候、土壤和压榨选择等因素影响。托斯卡纳和翁布里亚常让人联想到较明显的青草、苦感与辛辣感；利古里亚的风格可能更细腻；普利亚和西西里则从强劲到果香突出都有多种类型。","与其把某个地区简单评为“全意大利最好”，不如从风格和搭配角度理解。更有力量感的油可能适合烤蔬菜或肉类，而较细腻的油则可能更适合鱼类、蔬菜和口味轻盈的料理。"]],["苦味和辛辣感可以是积极特征",["新鲜的特级初榨橄榄油可能在舌面呈现苦味，也可能在咽喉产生胡椒般的辛辣或刺激感。这些都是被认可的感官特征，并可能与天然存在的酚类化合物有关。","这种强度会随着品种、采收、加工和储存时间而变化，因此不能把“喉咙越辣”简单当成判断真伪或品质的单一标准。专业感官评价看的是整体风味轮廓和是否存在缺陷，而不是孤立地看某一种刺激感。"]],["LuxurEat（露意膳） 视角",["LuxurEat（露意膳） 的作用并不是把“橄榄油”笼统包装成一种高端食材。更有说服力的产品故事，应把产地、生产者、感官特征、适用场景和可追溯性连接起来，帮助中国消费者理解为什么不同特级初榨橄榄油在味道和使用表现上可能完全不同。"]]],"sectionMedia":[],"asideSummary":"“橄榄油”并不是一个单一产品类别。特级初榨橄榄油（特级初榨橄榄油）由其取得方式以及化学和感官标准共同定义；精炼橄榄油和橄榄果渣油则采用不同工艺生产，因此也具有不同特征。","relatedSlugs":["story-of-italian-evo","evo-chocolate-dessert","choose-use-store-evo"],"image":"assets/media/academy/evo-vs-common-cooking-oil.webp","related":["zh-academy-story-of-italian-evo","zh-academy-evo-chocolate-dessert","zh-academy-choose-use-store-evo"]});
+})();

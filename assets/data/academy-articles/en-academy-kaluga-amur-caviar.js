@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["en-academy-kaluga-amur-caviar"] = revive({"slug":"kaluga-amur-caviar","lang":"en","eyebrow":"Caviar Academy","title":"Kaluga and Amur Caviar","meta":"CAVIAR ACADEMY · 2026","image":"assets/media/academy/kaluga-amur-caviar-cover-page-bg.png","intro":"Kaluga and Amur caviar is considered a fine alternative to the prestigious Beluga, distinguished mainly by its lower cost. The Kaluga sturgeon inhabits only the Amur River and its tributaries, located between Russia and China.","opening":["The main farms for this sturgeon are in Yidu, China. While its caviar is very similar to Beluga, it has a slightly less delicate flavor. Kaluga eggs are notable for their shades ranging from brown to golden."],"sections":[["Sensory Characteristics of Kaluga and Amur Caviar",["Species: Acipenser dauricus x Schrenki","Color: Shades from brown to golden","Egg size: approx. 3.0 – 3.1 mm","Sturgeon age: 10–11 years","Aroma: No strong odors","Texture: Firm, compact eggs","Flavor: Balanced and harmonious"]],["Royal Kaluga vs. Amur",["Within the CaviarEat catalog, two Kaluga caviar variants are available, differing in egg size, sturgeon age, and quality level:","Royal Kaluga: sturgeon aged 10–12 years, eggs measuring 3.0 – 3.3 mm","Amur: sturgeon aged 10 years, eggs around 3.0 mm"]]],"sectionMedia":[[],[]],"relatedSlugs":["oscetra-caviar","sevruga-caviar","beluga-caviar"],"topic":"caviar","topicLabel":"Caviar Academy","column":"Caviar Academy","archive":"Kaluga","asideSummary":"A guide to Kaluga and Amur caviar, comparing their origins, maturity, egg size, golden-brown colour, and value as Beluga alternatives.","wideCover":true,"related":["en-academy-oscetra-caviar","en-academy-sevruga-caviar","en-academy-beluga-caviar"]});
+})();

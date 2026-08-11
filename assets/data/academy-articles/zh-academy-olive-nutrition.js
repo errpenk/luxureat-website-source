@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-olive-nutrition"] = revive({"lang":"zh","slug":"olive-nutrition","topic":"olive","topicLabel":"橄榄油学院","artClass":"is-olive","eyebrow":"橄榄油营养价值","title":"橄榄油的营养价值：从份量到饮食搭配","meta":"橄榄油学院 · 2026","archive":"营养基础","intro":"认识橄榄油中的脂肪类型与能量密度，把营养数字放回份量、替代关系和整体饮食。","opening":["橄榄油的主要营养贡献来自脂肪和能量，其中以单不饱和脂肪酸为主。世界卫生组织强调，饮食中脂肪的质量很重要，以不饱和脂肪替代较多饱和脂肪和反式脂肪的来源，是理解橄榄油价值的合理框架；这并不意味着添加越多越健康。","油脂能量密度高，因此“有益的脂肪类型”和“适量使用”需要同时成立。营养判断应关注一天或一周的饮食结构、实际份量、烹饪方式与被替代的食材，而不是把一勺油视作独立的保健方案。"],"sections":[["先看一份到底是多少",["标签常以每100克或每100毫升表示营养数据，但家庭一次使用量远小于这个数。阅读时要把标示单位换算成自己的淋油、拌沙拉或烹饪份量，并把锅中剩余、多人分食等实际情况考虑进去。不同产品密度和标签规则可能不同，应以包装数值为准。","用量控制不等于拒绝脂肪。脂肪参与细胞功能，也帮助饮食获得满足感；重点是让用量与总能量需求相匹配，并避免在已经含有大量奶油、肥肉或油炸食物的餐食中无意识叠加。"]],["理解脂肪的替代关系",["橄榄油富含不饱和脂肪，但只有当它替代部分黄油、动物油或其他饱和脂肪来源时，脂肪结构的变化才有明确意义。如果只是额外加入而其他用量不变，总能量仍会增加。","在实际餐桌上，可以用橄榄油拌蔬菜、豆类和全谷物，用于烤制或炒制，并减少重油酱汁。这样的价值不仅来自一项营养素，也来自它帮助蔬菜、豆类等食物更容易进入日常饮食。"]],["微量成分不等于疗效",["特级初榨橄榄油可含有多酚等微量成分，其含量会受到品种、成熟度、加工、储存和时间影响。不能仅凭颜色、辛辣感或营销词推断具体含量，更不能把研究结果直接改写成对某一瓶油的治疗承诺。","若产品对营养成分或特定物质作出声明，应查看检测、标签和适用法规。普通食品内容应提供饮食教育，不替代针对疾病、药物或个体健康状况的医学建议。"]],["建立可执行的搭配",["一餐中先安排蔬菜、豆类、全谷物与适量蛋白质，再决定橄榄油的角色。清新油可用于沙拉和完成菜，结构较强的油可与豆汤、烤蔬菜和番茄菜肴搭配。用量可以通过量勺或固定油嘴逐步建立直觉。","对需要控制体重、血脂、血糖或有消化系统问题的人，合适份量应结合专业建议。LuxurEat（露意膳）提供的是原料与使用知识，不把单一食材包装成适合所有人的健康答案。"]],["如何比较不同油脂",["比较时不要只看“植物”或“动物”名称，也要看脂肪酸组成、使用量、烹饪场景和整餐结构。营养标签提供基础数字，卫生机构的膳食建议提供整体方向，两者不能由单一广告语替代。","橄榄油不是维生素、药品或零能量调料。把它作为食材使用，尊重香气并控制份量，反而更能体现其营养与餐桌价值。"]]],"asideSummary":"橄榄油的营养价值来自脂肪质量、合理替代和整体搭配；份量、总能量与个人情况同样不可忽略。","relatedSlugs":["olive-oil-basics","olive-fasting","nutrition-myths"],"image":"assets/media/academy/olive-cover-04.webp","column":"橄榄油学院","related":["zh-academy-olive-oil-basics","zh-academy-olive-fasting","zh-academy-nutrition-myths"],"sectionMedia":[]});
+})();

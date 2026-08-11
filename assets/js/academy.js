@@ -1,3 +1,41 @@
+const academyRuntimeUrl = new URL(document.currentScript.src);
+const academyScriptUrl = (path) => {
+  const url = new URL(path, academyRuntimeUrl);
+  url.search = academyRuntimeUrl.search;
+  return url;
+};
+let academyReaderLoading;
+const academyArticleLoading = new Map();
+const loadScript = (path) => new Promise((resolve) => {
+  const script = document.createElement("script");
+  script.src = academyScriptUrl(path);
+  script.onload = () => resolve(true);
+  script.onerror = () => resolve(false);
+  document.body.appendChild(script);
+});
+const loadAcademyReader = () => academyReaderLoading ||= loadScript("journal.js");
+const loadAcademyArticle = (id) => {
+  if (window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return Promise.resolve(true);
+  if (academyArticleLoading.has(id)) return academyArticleLoading.get(id);
+  const loading = (async () => {
+    const ready = await loadScript(`../data/academy-articles/${encodeURIComponent(id)}.js`);
+    return ready && loadAcademyReader();
+  })();
+  academyArticleLoading.set(id, loading);
+  return loading;
+};
+document.addEventListener("pointerover", (event) => {
+  const trigger = event.target.closest?.('[data-reader-open*="-academy-"]');
+  if (trigger) loadAcademyArticle(trigger.dataset.readerOpen);
+}, { passive: true });
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest?.('[data-reader-open*="-academy-"]');
+  if (!trigger || window.LUXUREAT_ARTICLE_DATA?.articles?.[trigger.dataset.readerOpen]?.sections) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  loadAcademyArticle(trigger.dataset.readerOpen).then((ready) => { if (ready) trigger.click(); });
+}, true);
+
 function initCaviarAcademy() {
   const data = window.LUXUREAT_ACADEMY_DATA;
   const list = document.querySelector("[data-academy-list]");
@@ -38,6 +76,9 @@ function initCaviarAcademy() {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
   const articles = data.order.map((slug) => data.articles[`${lang}-academy-${slug}`]).filter(Boolean);
+  const articleHref = (article) => location.pathname.endsWith(".html")
+    ? `blog.html?article=${encodeURIComponent(article.slug)}`
+    : `${encodeURIComponent(article.slug)}/`;
 
   const art = (article, compact = false) => article.image
     ? `<img ${!compact && articles.indexOf(article) === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">`
@@ -49,7 +90,7 @@ function initCaviarAcademy() {
         <span class="lux-reader-cta">${copy.read}</span>
       </button>
       <div class="lux-academy-card-copy">
-        <h2>${escapeHtml(article.title)}</h2>
+        <h2><a href="${articleHref(article)}" data-reader-open="${lang}-academy-${escapeHtml(article.slug)}">${escapeHtml(article.title)}</a></h2>
         <p>${escapeHtml(article.intro)}</p>
         <button type="button" data-reader-open="${lang}-academy-${escapeHtml(article.slug)}">${copy.read}<span aria-hidden="true">→</span></button>
       </div>

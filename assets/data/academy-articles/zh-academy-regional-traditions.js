@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-regional-traditions"] = revive({"lang":"zh","slug":"regional-traditions","topic":"culture","topicLabel":"探索意大利","artClass":"is-culture","eyebrow":"地方风味与传统","title":"地方风味：传统如何留在日常餐桌","meta":"探索意大利 · 2026","archive":"传统与日常","intro":"从季节、保存、节庆和家庭实践出发，理解地方传统为何会变化，却仍能保持清晰的文化连续性。","opening":["传统不是陈列柜里的固定配方，而是一套在真实生活中反复使用、调整和传递的方法。同一种面食、汤或节庆点心，可能因地区、家庭人数、可得食材和制作人的经验而不同。","这种差异并不削弱传统。相反，它说明食物仍在服务日常生活。判断一项地方做法时，重要的是理解哪些部分承载身份和记忆，哪些部分可以随季节、设备与生活节奏变化。"],"sections":[["季节是第一套菜单",["春季嫩菜、夏季番茄与水果、秋季坚果和菌菇、冬季豆类与慢煮菜肴，让餐桌与生产周期保持联系。今天的供应更稳定，但成熟度与季节仍会影响香气、含水量和烹饪方法。","顺应季节不是追求稀缺，而是理解食材在什么状态下最适合简单处理，什么时候需要保存、浓缩或与其他原料平衡。"]],["保存方法留下地方口音",["晒干、盐渍、腌制、发酵、烟熏和油封等方法，最初回应储存与运输需要，后来逐渐成为地方风味。保存会改变水分、盐度、酸度和质地，因此使用时也需要重新考虑份量与搭配。","现代产品应以标签和生产资料说明工艺、保存条件与食用方式。文化故事可以解释来源，但不能替代食品安全要求。"]],["节庆食物连接人与时间",["许多菜肴在宗教节日、收获季、婚礼或家庭团聚中反复出现。它们的意义不仅来自配料，也来自谁来制作、何时端上桌、如何分食以及与谁共同享用。","当节庆食物进入日常或跨文化场景时，可以调整份量和呈现方式，但应说明它原来的语境，避免只留下装饰性的名称。"]],["口述经验如何变成可学习的方法",["家庭烹饪常用手感、声音、气味和状态判断火候，例如面团弹性、酱汁附着或油温变化。把这些经验写成文章，需要描述可观察信号，而不能只写“适量”“凭感觉”。","可靠的教学会同时给出范围和判断：说明原料差异会怎样影响结果，也提醒读者根据设备、海拔、环境温度和产品说明调整。"]],["在中国餐桌上尊重传统",["引入意大利食材并不要求复制某个家庭的全部条件。更现实的做法，是保留关键原理，再根据本地季节、厨房设备和用餐习惯调整配菜与份量。","LuxurEat（露意膳）关注的不是把“传统”变成营销标签，而是提供产地、工艺和使用背景，让消费者知道哪些部分可以灵活，哪些信息必须以真实产品和可靠资料为准。"]],["判断传统内容是否可靠",["可靠的地方饮食内容应说明具体地区、季节与使用场景，并承认同名菜肴可能存在多个家庭版本。若文章只用“意大利人都这样做”概括复杂习惯，却没有交代来源和条件，就需要保持谨慎。","对产品与食谱而言，传统故事应与当代标签、过敏原和保存要求并列呈现。文化背景能够解释风味为什么形成，却不能替代今天的安全标准与可追溯资料。"]]],"asideSummary":"地方传统通过季节、保存方法、节庆和家庭经验持续变化；理解关键原理，才能在新的餐桌环境中保持尊重。","relatedSlugs":["italy-regions","ingredients-territory","table-etiquette"],"image":"assets/media/academy/culture-cover-03.webp","column":"探索意大利","related":["zh-academy-italy-regions","zh-academy-ingredients-territory","zh-academy-table-etiquette"],"sectionMedia":[]});
+})();

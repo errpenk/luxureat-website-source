@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import vm from "node:vm";
+import sharp from "sharp";
 import { assetVersion, contact, footer, navigation, pages, scripts } from "../site.config.mjs";
 
 const rootArg = process.argv.slice(2).find((argument) => !argument.startsWith("--"));
@@ -101,20 +103,98 @@ function protectMaterialIconMarkup(html) {
   });
 }
 
-function addMobileImageSources(file, html) {
+function addMobileImageSources(file, html, dimensions) {
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
-    if (/\bdata-lux-mobile-src=/.test(tag)) return tag;
     const source = tag.match(/\b(?:data-lux-src|src)=["'](\.\.\/assets\/media\/[^"']+\.(?:webp|png|jpe?g))["']/i)?.[1];
     if (!source) return tag;
-    const mobile = source.replace(/\.(?:webp|png|jpe?g)$/i, "-mobile.webp");
+    const mobile = tag.match(/\bdata-lux-mobile-src=["']([^"']+)["']/i)?.[1]
+      || source.replace(/\.(?:webp|png|jpe?g)$/i, "-mobile.webp");
     if (!fs.existsSync(path.resolve(path.dirname(file), mobile))) return tag;
-    return tag.replace(/^<img\b/i, `<img data-lux-mobile-src="${mobile}"`);
+    let output = /\bdata-lux-mobile-src=/.test(tag)
+      ? tag
+      : tag.replace(/^<img\b/i, `<img data-lux-mobile-src="${mobile}"`);
+    if (!/\bdata-lux-src=/.test(output) && !/\bsrcset=/.test(output)) {
+      const mobileWidth = dimensions.get(mobile)?.[0];
+      const desktopWidth = dimensions.get(source)?.[0];
+      if (mobileWidth && desktopWidth) {
+        output = output.replace(/^<img\b/i, `<img srcset="${mobile} ${mobileWidth}w, ${source} ${desktopWidth}w" sizes="100vw"`);
+      }
+    }
+    return output;
+  });
+}
+
+function mediaFiles(dir) {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const file = path.join(dir, entry.name);
+    return entry.isDirectory() ? mediaFiles(file) : [file];
+  });
+}
+
+async function buildImageDimensions() {
+  const mediaRoot = path.join(root, "assets/media");
+  const rasterFiles = mediaFiles(mediaRoot).filter((file) => /\.(?:avif|gif|jpe?g|png|webp)$/i.test(file));
+  const entries = await Promise.all(rasterFiles.map(async (file) => {
+    const { width, height } = await sharp(file).metadata();
+    const key = `../${path.relative(root, file).split(path.sep).join("/")}`;
+    return [key, width && height ? [width, height] : null];
+  }));
+  const dimensions = new Map(entries.filter(([, size]) => size));
+  for (const file of mediaFiles(mediaRoot).filter((item) => /\.svg$/i.test(item))) {
+    const svg = fs.readFileSync(file, "utf8");
+    const viewBox = svg.match(/\bviewBox=["']\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*["']/i);
+    const width = svg.match(/\bwidth=["']([\d.]+)(?:px)?["']/i)?.[1] || viewBox?.[1];
+    const height = svg.match(/\bheight=["']([\d.]+)(?:px)?["']/i)?.[1] || viewBox?.[2];
+    if (width && height) dimensions.set(`../${path.relative(root, file).split(path.sep).join("/")}`, [Math.round(width), Math.round(height)]);
+  }
+  return dimensions;
+}
+
+function addImageDimensions(html, dimensions) {
+  return html.replace(/<img\b[^>]*>/gi, (tag) => {
+    if (/\bwidth=["']\d+["']/i.test(tag) && /\bheight=["']\d+["']/i.test(tag)) return tag;
+    const source = tag.match(/\bdata-lux-src=["']([^"']+)["']/i)?.[1]
+      || tag.match(/\bsrc=["']([^"']+)["']/i)?.[1];
+    const size = dimensions.get(source?.split(/[?#]/, 1)[0]);
+    if (!size) return tag;
+    return tag.replace(/^<img\b/i, `<img width="${size[0]}" height="${size[1]}"`);
+  });
+}
+
+function deferHeroVideos(html) {
+  return html.replace(/<video\b[^>]*\blux-hero-video\b[^>]*>/gi, (tag) => {
+    const deferred = tag
+      .replace(/\sautoplay(?:=["'][^"']*["'])?/i, "")
+      .replace(/(?:\sdata-lux-autoplay)+/gi, " data-lux-autoplay")
+      .replace(/\spreload=["'][^"']*["']/i, ' preload="none"');
+    return /\bdata-lux-autoplay\b/i.test(deferred)
+      ? deferred
+      : deferred.replace(/^<video\b/i, '<video data-lux-autoplay');
   });
 }
 
 function fontPreloads(page) {
+  const zhCritical = {
+    home: ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-home-subset.woff2"],
+    journal: ["KingHwaOldSong-journal-critical.woff2", "LuxurEatZhiSong-journal-critical.woff2"],
+    products: ["KingHwaOldSong-caviar-critical.woff2", "LuxurEatZhiSong-caviar-critical.woff2"],
+    new: ["KingHwaOldSong-news-critical.woff2", "LuxurEatZhiSong-news-critical.woff2"],
+    rituals: ["KingHwaOldSong-rituals-critical.woff2", "LuxurEatZhiSong-rituals-critical.woff2"],
+    news: ["KingHwaOldSong-news-critical.woff2", "LuxurEatZhiSong-news-critical.woff2"],
+    blog: ["KingHwaOldSong-blog-critical.woff2", "LuxurEatZhiSong-blog-critical.woff2"],
+    certification: ["KingHwaOldSong-certification-critical.woff2", "LuxurEatZhiSong-certification-critical.woff2"],
+    gifting: ["KingHwaOldSong-gifting-critical.woff2", "LuxurEatZhiSong-gifting-critical.woff2"],
+    contact: ["KingHwaOldSong-contact-critical.woff2", "LuxurEatZhiSong-contact-critical.woff2"],
+    bag: ["KingHwaOldSong-bag-critical.woff2", "LuxurEatZhiSong-bag-critical.woff2"],
+  };
+  const critical = zhCritical[page.key] || zhCritical.home;
   const fonts = page.lang === "zh"
-    ? [["KingHwaOldSong-site.woff2", "KingHwa Old Song Site", 700], ["LuxurEatZhiSong-site.woff2", "LuxurEat ZhiSong Site", 400]]
+    ? [
+      [critical[0], "KingHwa Page Critical", 700],
+      ["KingHwaOldSong-site.woff2", "KingHwa Old Song Site", 700, "normal", false],
+      [critical[1], "ZhiSong Page Critical", 400],
+      ["LuxurEatZhiSong-site.woff2", "LuxurEat ZhiSong Site", 400, "normal", false],
+    ]
     : page.key === "home"
       ? [["NyghtSerif-home-critical.woff2", "Nyght Serif", 400], ["Spectral-home-critical.woff2", "Spectral", 400]]
       : [
@@ -131,10 +211,11 @@ function fontPreloads(page) {
   }
   const links = fonts.filter(([, , , , preload = true]) => preload).map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${assetVersion}" as="font" type="font/woff2" crossorigin>`).join("\n");
   const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:${style};font-display:block}`).join("");
-  return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}</style>\n<!-- lux:fonts:end -->`;
+  const localeFonts = page.lang === "zh" ? 'html[lang^="zh"]{--lux-zh-headline:"KingHwa Page Critical","KingHwa Old Song Site"!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : "";
+  return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}${localeFonts}</style>\n<!-- lux:fonts:end -->`;
 }
 
-function render(page) {
+function render(page, dimensions) {
   const file = path.join(root, page.file);
   let html = fs.readFileSync(file, "utf8");
   if (/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/.test(html)) {
@@ -149,7 +230,7 @@ function render(page) {
   html = replaceRegion(html, "footer", /<footer class="lux-footer">[\s\S]*?<\/footer>/, footerFor(page));
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
-  html = html.replace(/(\.\.\/(?:assets\/css\/(?:tailwind-home|tailwind-site)\.css|integration\.css))\?v=[^"']+/g, `$1?v=${assetVersion}`);
+  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, `$1?v=${assetVersion}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
   } else {
@@ -167,12 +248,59 @@ function render(page) {
     html = html.replace(/<\/head>/i, '<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">\n</head>');
   }
   html = protectMaterialIconMarkup(html);
-  html = addMobileImageSources(file, html);
+  html = addMobileImageSources(file, html, dimensions);
+  html = addImageDimensions(html, dimensions);
+  html = deferHeroVideos(html);
   return [file, html];
+}
+
+function loadAcademyData() {
+  const context = {
+    URL,
+    location: { href: `file://${path.join(root, "en/blog.html")}` },
+    document: { currentScript: { src: `file://${path.join(root, "assets/data/academy.js")}` } },
+    window: { LUXUREAT_ARTICLE_DATA: { articles: {} } },
+  };
+  vm.createContext(context);
+  for (const file of ["assets/data/academy.js", "assets/data/academy-columns.js"]) {
+    vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, { filename: file });
+  }
+  return context.window.LUXUREAT_ACADEMY_DATA;
+}
+
+function normalizeAcademyValue(value) {
+  if (typeof value === "string") {
+    const marker = value.indexOf("/assets/");
+    return marker < 0 ? value : value.slice(marker + 1);
+  }
+  if (Array.isArray(value)) return value.map(normalizeAcademyValue);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, normalizeAcademyValue(item)]));
+  }
+  return value;
+}
+
+function academyIndex(source) {
+  const fields = ["slug", "title", "intro", "topic", "topicLabel", "image", "artClass", "wideCover"];
+  const articles = Object.fromEntries(Object.entries(source.articles).map(([id, article]) => [id,
+    Object.fromEntries(fields.filter((field) => article[field] != null).map((field) => {
+      if (field !== "image") return [field, article[field]];
+      const marker = article.image.indexOf("/assets/");
+      return [field, marker < 0 ? article.image : article.image.slice(marker + 1)];
+    })),
+  ]));
+  return `(() => {\n  const root = new URL("../../", document.currentScript?.src || location.href);\n  const data = ${JSON.stringify({ order: source.order, articles })};\n  Object.values(data.articles).forEach((article) => { if (article.image) article.image = new URL(article.image, root).href; });\n  window.LUXUREAT_ACADEMY_DATA = data;\n  const articleData = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };\n  Object.assign(articleData.articles, data.articles);\n})();\n`;
+}
+
+function academyArticleChunk(id, article) {
+  return `(() => {\n  const root = new URL("../../../", document.currentScript?.src || location.href);\n  const revive = (value) => {\n    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;\n    if (Array.isArray(value)) return value.map(revive);\n    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));\n    return value;\n  };\n  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };\n  data.articles[${JSON.stringify(id)}] = revive(${JSON.stringify(normalizeAcademyValue(article))});\n})();\n`;
 }
 
 function performanceIssues(file, html) {
   const issues = [];
+  for (const match of html.matchAll(/<script\b(?![^>]*\bsrc=)(?![^>]*\btype=["']application\/(?:json|ld\+json)["'])[^>]*>/gi)) {
+    issues.push(`${file}: executable inline script ${match[0]}`);
+  }
   for (const match of html.matchAll(/<script\b[^>]*\bsrc=["'][^"']+["'][^>]*>/gi)) {
     if (!/\b(?:defer|async)(?:\s|=|>)/i.test(match[0]) && !/\btype=["']module["']/i.test(match[0])) {
       issues.push(`${file}: blocking script ${match[0]}`);
@@ -194,8 +322,26 @@ function performanceIssues(file, html) {
 
 const changed = [];
 const performanceFailures = [];
+const imageDimensions = await buildImageDimensions();
+const academyData = loadAcademyData();
+const academyIndexFile = path.join(root, "assets/data/academy-index.js");
+const academyIndexOutput = academyIndex(academyData);
+if (!fs.existsSync(academyIndexFile) || fs.readFileSync(academyIndexFile, "utf8") !== academyIndexOutput) {
+  changed.push(path.relative(root, academyIndexFile));
+  if (!check) fs.writeFileSync(academyIndexFile, academyIndexOutput);
+}
+for (const [id, article] of Object.entries(academyData.articles)) {
+  const file = path.join(root, "assets/data/academy-articles", `${id}.js`);
+  const output = academyArticleChunk(id, article);
+  if (fs.existsSync(file) && fs.readFileSync(file, "utf8") === output) continue;
+  changed.push(path.relative(root, file));
+  if (!check) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, output);
+  }
+}
 for (const page of pages) {
-  const [file, output] = render(page);
+  const [file, output] = render(page, imageDimensions);
   performanceFailures.push(...performanceIssues(page.file, output));
   const input = fs.readFileSync(file, "utf8");
   if (input === output) continue;

@@ -114,6 +114,9 @@ assert(!read("assets/js/core.js").includes('"意大利美食学院", "?topic=aca
 assert(read("assets/js/core.js").includes('"披萨学院", "?topic=pizza"'), "Chinese Pizza Academy submenu is missing");
 const runtime = read("assets/js/academy.js");
 assert(runtime.includes('search.addEventListener("input"') && runtime.includes("data-reader-open") && runtime.includes("data-academy-topic-filter"), "academy search, topic filters or reader integration is missing");
+assert(runtime.includes("academy-articles/") && !runtime.includes('../data/academy.js') && !runtime.includes('../data/academy-columns.js'), "academy reader does not load one article at a time");
+assert(runtime.includes('href="${articleHref(article)}"'), "academy cards do not expose crawlable article URLs");
+assert(fs.readdirSync(path.join(root, "assets/data/academy-articles")).filter((file) => file.endsWith(".js")).length === 132, "academy article chunks are incomplete");
 assert(runtime.includes("const introCopy") && runtime.includes("introTitle.textContent") && runtime.includes("introSummary.textContent"), "academy topic introduction does not follow the active filter");
 assert(runtime.includes('params.has("topic")') && runtime.includes("topicNav.getBoundingClientRect().top - headerOffset"), "Blog submenu links do not position the selected topic below the fixed header");
 assert(!runtime.includes('["academy", copy.academy]') && !read("assets/data/academy.js").includes('topic: "academy"'), "Food Academy articles are not merged into Explore Italy");
