@@ -13,7 +13,7 @@ const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
 const pageInputs = pages.map(({ lang, slug, file }) => [lang, slug, file]);
 
 function ensureSource() {
-  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
+  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'google053137c136af2773.html', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
   for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
@@ -366,6 +366,160 @@ function luxureat_static_current_path() {
 
     return luxureat_static_normalize_path($request_path);
 }
+
+function luxureat_static_is_allowed_public_query($key, $route) {
+    if (strpos($key, 'utm_') === 0 || strpos($key, 'attribute_') === 0) {
+        return true;
+    }
+
+    if (in_array($key, array('gclid', 'dclid', 'fbclid', 'msclkid', '_gl', 'wc-ajax', 'add-to-cart', 'quantity', 'variation_id', '_wpnonce'), true)) {
+        return true;
+    }
+
+    if (in_array($route, array('zh', 'en'), true) && in_array($key, array('account', 'luxureat_verify', 'user', 'token'), true)) {
+        return true;
+    }
+
+    return in_array($route, array('zh/product', 'en/product'), true) && $key === 'category';
+}
+
+function luxureat_static_reject_noncanonical_requests() {
+    if (
+        is_admin()
+        || is_user_logged_in()
+        || (function_exists('wp_doing_ajax') && wp_doing_ajax())
+        || (function_exists('wp_doing_cron') && wp_doing_cron())
+    ) {
+        return;
+    }
+
+    $method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper((string) $_SERVER['REQUEST_METHOD']) : 'GET';
+    if (!in_array($method, array('GET', 'HEAD'), true)) {
+        return;
+    }
+
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '/';
+    $request_path = parse_url($request_uri, PHP_URL_PATH);
+    $request_path = luxureat_static_normalize_path(is_string($request_path) ? $request_path : '');
+    $gone_paths = array('product-category/uncategorized');
+    $gone = in_array($request_path, $gone_paths, true);
+
+    $route = $request_path === '' ? 'zh' : $request_path;
+    $aliases = luxureat_static_aliases();
+    if (isset($aliases[$route])) {
+        $route = $aliases[$route];
+    }
+    $public_route = isset(luxureat_static_routes()[$route]);
+
+    $raw_query = parse_url($request_uri, PHP_URL_QUERY);
+    if (!$gone && $public_route && is_string($raw_query) && $raw_query !== '') {
+        $decoded_query = rawurldecode($raw_query);
+        $gone = preg_match('/^[A-Za-z]=[0-9]{7,}$/', $decoded_query) === 1
+            || preg_match('#^[^=&]+/[^=&]+\\.html(?:&.*)?$#i', $decoded_query) === 1;
+
+        if (!$gone) {
+            $query = array();
+            wp_parse_str($raw_query, $query);
+            foreach (array_keys($query) as $key) {
+                if (!luxureat_static_is_allowed_public_query((string) $key, $route)) {
+                    $gone = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!$gone) {
+        return;
+    }
+
+    status_header(410);
+    nocache_headers();
+    header('X-Robots-Tag: noindex, nofollow', true);
+    header('Content-Type: text/html; charset=UTF-8');
+    if ($method !== 'HEAD') {
+        echo '<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><title>Gone</title></head><body><h1>410 Gone</h1></body></html>';
+    }
+    exit;
+}
+add_action('template_redirect', 'luxureat_static_reject_noncanonical_requests', -200);
+
+function luxureat_static_is_utility_page() {
+    $path = luxureat_static_current_path();
+    $aliases = luxureat_static_aliases();
+    $route = isset($aliases[$path]) ? $aliases[$path] : $path;
+
+    return in_array($route, array('zh/bag', 'en/bag'), true)
+        || (function_exists('is_cart') && is_cart())
+        || (function_exists('is_checkout') && is_checkout())
+        || (function_exists('is_account_page') && is_account_page());
+}
+
+function luxureat_static_utility_noindex_header() {
+    if (luxureat_static_is_utility_page()) {
+        header('X-Robots-Tag: noindex, follow', true);
+    }
+}
+add_action('template_redirect', 'luxureat_static_utility_noindex_header', -50);
+
+function luxureat_static_utility_robots($robots) {
+    if (luxureat_static_is_utility_page()) {
+        $robots['noindex'] = true;
+        $robots['follow'] = true;
+    }
+    return $robots;
+}
+add_filter('wp_robots', 'luxureat_static_utility_robots', 999);
+
+function luxureat_static_search_metadata_endpoint() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+    $request_path = parse_url($request_uri, PHP_URL_PATH);
+    $files = array(
+        '/google053137c136af2773.html' => array('google053137c136af2773.html', 'text/html; charset=UTF-8'),
+        '/sitemap.xml' => array('sitemap.xml', 'application/xml; charset=UTF-8'),
+    );
+
+    if (!isset($files[$request_path])) {
+        return;
+    }
+
+    $file = get_template_directory() . '/' . $files[$request_path][0];
+    if (!is_file($file) || !is_readable($file)) {
+        return;
+    }
+
+    status_header(200);
+    nocache_headers();
+    header('Content-Type: ' . $files[$request_path][1]);
+    readfile($file);
+    exit;
+}
+add_action('template_redirect', 'luxureat_static_search_metadata_endpoint', -100);
+
+function luxureat_static_robots_txt($output, $public) {
+    $file = get_template_directory() . '/robots.txt';
+    if (!is_file($file) || !is_readable($file)) {
+        return $output;
+    }
+
+    $contents = file_get_contents($file);
+    return is_string($contents) ? $contents : $output;
+}
+add_filter('robots_txt', 'luxureat_static_robots_txt', 999, 2);
+
+function luxureat_baidu_site_verification() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+    if (parse_url($request_uri, PHP_URL_PATH) !== '/baidu_verify_codeva-unoYAk5W8p.html') {
+        return;
+    }
+
+    status_header(200);
+    nocache_headers();
+    header('Content-Type: text/html; charset=UTF-8');
+    echo '6c9c028426f2f70621969ba37ffb0ae3';
+    exit;
+}
+add_action('template_redirect', 'luxureat_baidu_site_verification', -100);
 
 function luxureat_static_seo_catalog() {
     return array(
@@ -1424,6 +1578,9 @@ async function build() {
 
   fs.copyFileSync(path.join(sourceDir, 'integration.css'), path.join(themeDir, 'integration.css'));
   fs.copyFileSync(path.join(sourceDir, '.htaccess'), path.join(themeDir, '.htaccess'));
+  fs.copyFileSync(path.join(sourceDir, 'robots.txt'), path.join(themeDir, 'robots.txt'));
+  fs.copyFileSync(path.join(sourceDir, 'google053137c136af2773.html'), path.join(themeDir, 'google053137c136af2773.html'));
+  execFileSync(process.execPath, [path.join(sourceDir, 'tools/generate-sitemap.mjs'), path.join(themeDir, 'sitemap.xml')]);
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
 
   const screenshotSource = path.join(sourceDir, 'qa/zh-home-desktop.png');

@@ -21,7 +21,7 @@ try {
   const robots = read("robots.txt");
   assert.match(robots, /^User-agent: \*$/m);
   assert.match(robots, /Allow: \/wp-admin\/admin-ajax\.php/);
-  assert.match(robots, /Disallow: \/(?:en\/)?bag\//);
+  assert.doesNotMatch(robots, /Disallow: \/(?:en\/)?(?:bag|cart|checkout|my-account)\//, "Google must crawl utility pages to see their noindex directive");
   assert.match(robots, /Sitemap: https:\/\/luxureat\.cn\/sitemap\.xml/);
   assert.doesNotMatch(robots, /Disallow: \/assets\//, "search engines need access to render assets");
 
@@ -38,6 +38,9 @@ try {
   }
   assert.ok(!fs.existsSync(path.join(root, "tools/generate-static-seo.mjs")), "obsolete duplicate SEO generator remains");
   assert.ok(!fs.existsSync(path.join(root, ".github/workflows/preserve-static-seo.yml")), "obsolete duplicate SEO workflow remains");
+  assert.ok(!fs.existsSync(path.join(root, ".github/workflows/preserve-search-url-guard.yml")), "obsolete guard injection workflow remains");
+  assert.ok(!fs.existsSync(path.join(root, ".github/workflows/publish-google-verification.yml")), "obsolete search metadata injection workflow remains");
+  assert.ok(!fs.existsSync(path.join(root, "wordpress-snippets/search-url-guard.php.fragment")), "obsolete detached URL guard remains");
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
 }

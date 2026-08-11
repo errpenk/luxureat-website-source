@@ -35,6 +35,7 @@ for (const lang of ["zh", "en"]) {
   assert((html.match(/data-chef-slide/g) || []).length === 3, `${lang}/new.html must provide three rotating chef recommendations`);
   assert(html.includes("data-chef-prev") && html.includes("data-chef-next") && !html.includes("data-chef-count"), `${lang}/new.html must use side arrows without the deleted chef counter pill`);
   assert(!html.includes("data-cert-media-carousel") && !html.includes("data-cert-media-prev") && !html.includes("data-cert-media-next"), `${lang}/new.html still contains the deleted product image carousels`);
+  assert((html.match(/<video data-lux-autoplay muted loop playsinline preload="none"/g) || []).length === 2, `${lang}/new.html mosaic videos are not deferred`);
   assert((html.match(/lux-new-product-visual/g) || []).length === 3, `${lang}/new.html must provide three static product visuals`);
   assert((html.match(/lux-new-product-visual" tabindex="0"/g) || []).length === 3, `${lang}/new.html product visuals must reveal captions on keyboard or tap focus`);
   assert((html.match(/lux-filmstrip-icon/g) || []).length === 4 && (html.match(/<figure tabindex="0">/g) || []).length === 4, `${lang}/new.html must provide four keyboard-accessible Lucide flip cards`);

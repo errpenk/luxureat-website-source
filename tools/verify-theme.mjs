@@ -93,6 +93,9 @@ for (const file of [
   'assets/data/brand.js',
   'screenshot.png',
   'README.md',
+  'robots.txt',
+  'sitemap.xml',
+  'google053137c136af2773.html',
 ]) {
   assert(fs.existsSync(path.join(themeDir, file)), `${file} exists`);
 }
@@ -112,6 +115,10 @@ assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.in
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
 assert(functionsPhp.includes('luxureat_static_refresh_changed_routes') && functionsPhp.includes('luxureat_static_route_version'), 'theme updates refresh changed WordPress routes once');
+assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && functionsPhp.includes('status_header(410)') && functionsPhp.includes("header('X-Robots-Tag: noindex, nofollow'"), 'spam and noncanonical public URLs return an explicit non-indexable 410');
+assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
+assert(functionsPhp.includes('luxureat_static_utility_noindex_header') && functionsPhp.includes("header('X-Robots-Tag: noindex, follow'"), 'bag, cart, checkout and account pages are crawlable but explicitly non-indexable');
+assert(functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes('luxureat_static_robots_txt') && functionsPhp.includes('luxureat_baidu_site_verification'), 'search metadata and verification endpoints ship in the generated theme');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
