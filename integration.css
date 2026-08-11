@@ -11410,6 +11410,16 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   background: linear-gradient(to bottom, #8ceee6, rgba(140, 238, 230, 0));
 }
 
+/* Mobile certification hero: center the copy without the decorative stem. */
+@media (max-width: 680px) {
+  .lux-certification-hero.lux-hero-tail .lux-page-hero-content {
+    padding-bottom: 0;
+  }
+  .lux-certification-hero.lux-hero-tail .lux-page-hero-content > .lux-hero-support::before {
+    display: none;
+  }
+}
+
 /* The complete Seasonal Observations image is the detail trigger. */
 .lux-journal-season .lux-reader-media[data-reader-open] { cursor: pointer; }
 
