@@ -8,7 +8,7 @@ function assert(condition, message) {
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
-  await page.goto(`${BASE_URL}/zh/caviar.html#product-zh-imperial-beluga`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE_URL}/zh/product.html#product-zh-imperial-beluga`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".lux-product-detail:not([hidden]) .lux-product-qty");
 
   const plus = page.locator('.lux-product-qty [data-product-quantity="1"]');

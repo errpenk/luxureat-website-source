@@ -142,7 +142,7 @@
     const image = productImages[index];
     const family = labelFamilies[familyFor(slug)];
     const common = {
-      id: slug, sku: slug, unit, category, typeKey: typeKeys[family.zh.type], registration, hsCode, validUntil,
+      id: slug, sku: slug, unit, category: "truffle", typeKey: typeKeys[family.zh.type], registration, hsCode, validUntil,
       manufacturer: "APPENNINO FOOD GROUP SPA", image,
       gallery: [image, ...(galleries[category] || [])],
       catalogOnly: true, amount: 0, currency: "", priceLabel: "TEST",

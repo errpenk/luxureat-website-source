@@ -11,7 +11,7 @@ function assert(condition, message) {
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
     for (const lang of ["zh", "en"]) {
       const page = await browser.newPage({ viewport });
-      await page.goto(`${BASE_URL}/${lang}/news.html#event-cifie-changsha-2026`, { waitUntil: "domcontentloaded" });
+      await page.goto(`${BASE_URL}/${lang}/brand.html#event-cifie-changsha-2026`, { waitUntil: "domcontentloaded" });
       await page.waitForSelector(".lux-reader:not([hidden]) .lux-event-reader");
 
       const result = await page.evaluate(() => {
@@ -45,7 +45,7 @@ function assert(condition, message) {
   const home = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   await home.goto(`${BASE_URL}/zh/index.html`, { waitUntil: "domcontentloaded" });
   const detailHref = await home.locator(".lux-event-detail-link").getAttribute("href");
-  assert(detailHref === "news.html#event-fhc-shanghai-2026", `home event link is wrong: ${detailHref}`);
+  assert(detailHref === "brand.html#event-fhc-shanghai-2026", `home event link is wrong: ${detailHref}`);
   await home.close();
 
   await browser.close();

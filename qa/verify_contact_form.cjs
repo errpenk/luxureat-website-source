@@ -43,6 +43,8 @@ assert.ok(css.includes('.lux-contact-services li:hover'));
 assert.ok(css.includes('font-size: 16px'));
 assert.ok(css.includes('.lux-contact-main'));
 assert.ok(css.includes('.lux-contact-left'));
+assert.ok(css.includes('--lux-footprint-detail-size: var(--lux-type-body-sm, 13px)'));
+assert.ok(css.includes('.lux-footprint-card > p:not(.lux-footprint-role)'));
 assert.ok(themeBuilder.includes("wp_mail('roberto@ugolinigroup.com'"));
 assert.ok(themeBuilder.includes("wp_ajax_nopriv_luxureat_contact"));
 

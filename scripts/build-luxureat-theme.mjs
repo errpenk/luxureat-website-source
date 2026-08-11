@@ -13,7 +13,8 @@ const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
 const pageInputs = pages.map(({ lang, slug, file }) => [lang, slug, file]);
 
 function ensureSource() {
-  for (const file of ['README.md', '.htaccess', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', 'assets/data/products.js', 'assets/data/events.js', 'assets/data/journal.js', 'assets/data/brand.js', 'assets/js/core.js', 'assets/js/products.js', 'assets/js/events.js', 'assets/js/journal.js', 'assets/js/brand.js']) {
+  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
+  for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
     }
@@ -121,17 +122,7 @@ function stripTagByAttr(html, tagName, attr, value) {
 function stripKnownLocalIncludes(html) {
   return [
     ['link', 'href', '../integration.css'],
-    ['script', 'src', '../assets/data/products.js'],
-    ['script', 'src', '../assets/data/events.js'],
-    ['script', 'src', '../assets/data/journal.js'],
-    ['script', 'src', '../assets/data/brand.js'],
-    ['script', 'src', '../assets/data/academy.js'],
-    ['script', 'src', '../assets/js/core.js'],
-    ['script', 'src', '../assets/js/products.js'],
-    ['script', 'src', '../assets/js/events.js'],
-    ['script', 'src', '../assets/js/journal.js'],
-    ['script', 'src', '../assets/js/brand.js'],
-    ['script', 'src', '../assets/js/academy.js'],
+    ...Object.values(scripts).map(({ src }) => ['script', 'src', `../${src}`]),
   ].reduce((source, args) => stripTagByAttr(source, ...args), html);
 }
 
@@ -230,8 +221,16 @@ function buildAssetCatalogPhp() {
   return { catalog, byPath };
 }
 
+function buildSeoCatalogPhp() {
+  return pages.map((page) => {
+    const alternate = pages.find((candidate) => candidate.key === page.key && candidate.lang !== page.lang);
+    return `        '${escapePhpString(page.route)}' => array('title' => '${escapePhpString(page.seo.title)}', 'description' => '${escapePhpString(page.seo.description)}', 'lang' => '${page.lang}', 'alternate' => '${escapePhpString(alternate?.route || page.route)}'),`;
+  }).join('\n');
+}
+
 function functionsPhp() {
   const { catalog, byPath } = buildAssetCatalogPhp();
+  const seoCatalog = buildSeoCatalogPhp();
   return `<?php
 if (!defined('ABSPATH')) {
     exit;
@@ -247,32 +246,55 @@ function luxureat_static_aliases() {
         'index.html' => 'zh',
         'zh/index.html' => 'zh',
         'en/index.html' => 'en',
-        'caviar' => 'zh/caviar',
-        'caviar.html' => 'zh/caviar',
-        'rituals' => 'zh/rituals',
-        'rituals.html' => 'zh/rituals',
-        'journal' => 'zh/journal',
-        'journal.html' => 'zh/journal',
-        'news' => 'zh/news',
-        'news.html' => 'zh/news',
+        'about-us' => 'zh/about-us',
+        'about-us.html' => 'zh/about-us',
+        'journal' => 'zh/about-us',
+        'journal.html' => 'zh/about-us',
+        'product' => 'zh/product',
+        'product.html' => 'zh/product',
+        'caviar' => 'zh/product',
+        'caviar.html' => 'zh/product',
+        'recipe' => 'zh/recipe',
+        'recipe.html' => 'zh/recipe',
+        'rituals' => 'zh/recipe',
+        'rituals.html' => 'zh/recipe',
+        'brand' => 'zh/brand',
+        'brand.html' => 'zh/brand',
+        'news' => 'zh/brand',
+        'news.html' => 'zh/brand',
         'blog' => 'zh/blog',
         'blog.html' => 'zh/blog',
-        'gifting' => 'zh/gifting',
-        'gifting.html' => 'zh/gifting',
+        'new' => 'zh/new',
+        'new.html' => 'zh/new',
+        'cooperation' => 'zh/cooperation',
+        'cooperation.html' => 'zh/cooperation',
+        'gifting' => 'zh/cooperation',
+        'gifting.html' => 'zh/cooperation',
         'certification' => 'zh/certification',
         'certification.html' => 'zh/certification',
         'contact' => 'zh/contact',
         'contact.html' => 'zh/contact',
         'bag' => 'zh/bag',
         'bag.html' => 'zh/bag',
-        'en/caviar' => 'en/products',
-        'en/caviar.html' => 'en/products',
-        'en/private' => 'en/gifting',
-        'en/private.html' => 'en/gifting',
-        'private-selection' => 'en/gifting',
-        'private-selection.html' => 'en/gifting',
-        'product-imperial-beluga' => 'zh/caviar',
-        'product-imperial-beluga.html' => 'zh/caviar',
+        'en/journal' => 'en/about-us',
+        'en/journal.html' => 'en/about-us',
+        'en/products' => 'en/product',
+        'en/products.html' => 'en/product',
+        'en/caviar' => 'en/product',
+        'en/caviar.html' => 'en/product',
+        'en/rituals' => 'en/recipe',
+        'en/rituals.html' => 'en/recipe',
+        'en/news' => 'en/brand',
+        'en/news.html' => 'en/brand',
+        'en/new.html' => 'en/new',
+        'en/gifting' => 'en/cooperation',
+        'en/gifting.html' => 'en/cooperation',
+        'en/private' => 'en/cooperation',
+        'en/private.html' => 'en/cooperation',
+        'private-selection' => 'en/cooperation',
+        'private-selection.html' => 'en/cooperation',
+        'product-imperial-beluga' => 'zh/product',
+        'product-imperial-beluga.html' => 'zh/product',
     );
 }
 
@@ -287,22 +309,24 @@ function luxureat_static_normalize_path($path) {
 function luxureat_static_pretty_paths() {
     return array(
         'zh' => '/',
-        'zh/caviar' => '/caviar/',
-        'zh/rituals' => '/rituals/',
-        'zh/journal' => '/journal/',
-        'zh/news' => '/news/',
+        'zh/product' => '/product/',
+        'zh/recipe' => '/recipe/',
+        'zh/about-us' => '/about-us/',
+        'zh/brand' => '/brand/',
         'zh/blog' => '/blog/',
-        'zh/gifting' => '/gifting/',
+        'zh/new' => '/new/',
+        'zh/cooperation' => '/cooperation/',
         'zh/certification' => '/certification/',
         'zh/contact' => '/contact/',
         'zh/bag' => '/bag/',
         'en' => '/en/',
-        'en/products' => '/en/products/',
-        'en/rituals' => '/en/rituals/',
-        'en/journal' => '/en/journal/',
-        'en/news' => '/en/news/',
+        'en/product' => '/en/product/',
+        'en/recipe' => '/en/recipe/',
+        'en/about-us' => '/en/about-us/',
+        'en/brand' => '/en/brand/',
         'en/blog' => '/en/blog/',
-        'en/gifting' => '/en/gifting/',
+        'en/new' => '/en/new/',
+        'en/cooperation' => '/en/cooperation/',
         'en/certification' => '/en/certification/',
         'en/contact' => '/en/contact/',
         'en/bag' => '/en/bag/',
@@ -342,6 +366,53 @@ function luxureat_static_current_path() {
 
     return luxureat_static_normalize_path($request_path);
 }
+
+function luxureat_static_seo_catalog() {
+    return array(
+${seoCatalog}
+    );
+}
+
+function luxureat_static_seo_head() {
+    $path = luxureat_static_current_path();
+    $path = $path === '' || $path === '__home' ? 'zh' : $path;
+    $aliases = luxureat_static_aliases();
+    $route = isset($aliases[$path]) ? $aliases[$path] : $path;
+    $catalog = luxureat_static_seo_catalog();
+    if (!isset($catalog[$route])) {
+        return;
+    }
+
+    $meta = $catalog[$route];
+    $alternate = isset($catalog[$meta['alternate']]) ? $catalog[$meta['alternate']] : null;
+    $zh_route = $meta['lang'] === 'zh' ? $route : $meta['alternate'];
+    $canonical = luxureat_static_url($route);
+    echo '<link rel="canonical" href="' . esc_url($canonical) . '">' . "\n";
+    echo '<link rel="alternate" hreflang="zh-CN" href="' . esc_url(luxureat_static_url($zh_route)) . '">' . "\n";
+    if ($alternate) {
+        $en_route = $meta['lang'] === 'en' ? $route : $meta['alternate'];
+        echo '<link rel="alternate" hreflang="en" href="' . esc_url(luxureat_static_url($en_route)) . '">' . "\n";
+    }
+    echo '<link rel="alternate" hreflang="x-default" href="' . esc_url(luxureat_static_url($zh_route)) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+    echo '<meta property="og:site_name" content="LuxurEat">' . "\n";
+    echo '<meta property="og:locale" content="' . esc_attr($meta['lang'] === 'zh' ? 'zh_CN' : 'en_US') . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($meta['title']) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr($meta['description']) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($canonical) . '">' . "\n";
+    echo '<meta name="twitter:card" content="summary">' . "\n";
+    echo '<script type="application/ld+json">' . wp_json_encode(array(
+        '@context' => 'https://schema.org',
+        '@type' => 'WebPage',
+        'name' => $meta['title'],
+        'description' => $meta['description'],
+        'url' => $canonical,
+        'inLanguage' => $meta['lang'] === 'zh' ? 'zh-CN' : 'en',
+        'isPartOf' => array('@type' => 'WebSite', 'name' => 'LuxurEat', 'url' => luxureat_static_url('zh')),
+    ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+}
+remove_action('wp_head', 'rel_canonical');
+add_action('wp_head', 'luxureat_static_seo_head', 1);
 
 function luxureat_static_woo_catalog() {
     if (!function_exists('wc_get_product_id_by_sku')) {
@@ -434,6 +505,7 @@ ${byPath}
             wp_localize_script('luxureat-core', 'LuxureatAccount', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('luxureat_account'),
+                'newsletterNonce' => wp_create_nonce('luxureat_newsletter'),
                 'botChallenge' => luxureat_static_bot_challenge(),
                 'loggedIn' => is_user_logged_in(),
                 'bag' => is_user_logged_in() ? luxureat_static_get_bag(get_current_user_id()) : array(),
@@ -580,6 +652,34 @@ function luxureat_static_mailpoet_subscribe($email) {
         return new WP_Error('mailpoet_failed');
     }
 }
+
+function luxureat_static_newsletter_ajax() {
+    $is_zh = isset($_POST['lang']) && sanitize_key(wp_unslash($_POST['lang'])) === 'zh';
+    $message = function ($zh, $en) use ($is_zh) { return $is_zh ? $zh : $en; };
+    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_newsletter')) {
+        wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
+    }
+    if (!empty($_POST['company']) || !luxureat_static_verify_bot_challenge()) {
+        wp_send_json_error(array('message' => $message('安全验证失败，请刷新页面后重试。', 'Security verification failed. Please refresh the page and try again.')), 403);
+    }
+    $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
+    if (!is_email($email)) {
+        wp_send_json_error(array('message' => $message('请输入有效的电子邮箱。', 'Please enter a valid email address.')), 400);
+    }
+    $remote_address = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : '';
+    $rate_key = 'lux_newsletter_' . hash_hmac('sha256', strtolower($email) . '|' . $remote_address, wp_salt('nonce'));
+    if (get_transient($rate_key)) {
+        wp_send_json_error(array('message' => $message('确认邮件已发送，请检查收件箱。', 'A confirmation email was already sent. Please check your inbox.')), 429);
+    }
+    $subscribed = luxureat_static_mailpoet_subscribe($email);
+    if (is_wp_error($subscribed)) {
+        wp_send_json_error(array('message' => $message('订阅服务暂时不可用，请稍后再试。', 'Subscriptions are temporarily unavailable. Please try again later.')), 503);
+    }
+    set_transient($rate_key, '1', 10 * MINUTE_IN_SECONDS);
+    wp_send_json_success(array('message' => $message('确认邮件已发送，请打开邮件完成订阅。', 'Confirmation email sent. Open it to complete your subscription.')));
+}
+add_action('wp_ajax_nopriv_luxureat_newsletter', 'luxureat_static_newsletter_ajax');
+add_action('wp_ajax_luxureat_newsletter', 'luxureat_static_newsletter_ajax');
 
 function luxureat_static_send_verification($user_id, $lang) {
     $user = get_userdata($user_id);
@@ -1166,6 +1266,7 @@ if (!defined('ABSPATH')) {
 
 $routes = require get_template_directory() . '/routes.php';
 $path = luxureat_static_current_path();
+$request_path = $path;
 $aliases = luxureat_static_aliases();
 
 if ($path === '' || $path === '__home') {
@@ -1181,6 +1282,15 @@ if (isset($aliases[$path])) {
         $path = $target_path;
     } else {
         wp_safe_redirect(luxureat_static_url($target_path), 301);
+        exit;
+    }
+}
+
+if ($request_path === $path && isset($routes[$path])) {
+    $pretty_paths = luxureat_static_pretty_paths();
+    $canonical_request_path = isset($pretty_paths[$path]) ? trim($pretty_paths[$path], '/') : $path;
+    if ($canonical_request_path !== $request_path) {
+        wp_safe_redirect(luxureat_static_url($path), 301);
         exit;
     }
 }
@@ -1291,8 +1401,8 @@ This package wraps the static bilingual LuxurEat website source from https://git
 ## Routes
 
 - \`/\` serves the Chinese home page.
-- Default Chinese routes use root-level pretty URLs such as \`/caviar/\`, \`/rituals/\`, and \`/contact/\`.
-- English routes use \`/en/\`, \`/en/products/\`, and the rest of the \`/en/.../\` namespace.
+- Default Chinese routes use root-level pretty URLs such as \`/product/\`, \`/recipe/\`, and \`/contact/\`.
+- English routes use \`/en/\`, \`/en/product/\`, and the rest of the \`/en/.../\` namespace.
 
 ## Notes
 

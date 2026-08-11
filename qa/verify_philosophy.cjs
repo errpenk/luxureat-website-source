@@ -10,7 +10,7 @@ function assert(condition, message) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   const fileUrl = (relativePath) => `file://${path.resolve(__dirname, relativePath)}`;
 
-  await page.goto(fileUrl("../zh/journal.html"), { waitUntil: "domcontentloaded" });
+  await page.goto(fileUrl("../zh/about-us.html"), { waitUntil: "domcontentloaded" });
   const featured = await page.locator("#featured").evaluate((root) => {
     const card = root.querySelector(".lux-reader-card");
     const copy = root.querySelector(".lg\\:col-span-5");
@@ -73,9 +73,9 @@ function assert(condition, message) {
   assert(home.title === "我们的价值观", `homepage values title is wrong: ${home.title}`);
   assert(home.text.includes("意大利美食文化") && home.text.includes("生物多样性"), "homepage values copy is incomplete");
   assert(home.image.includes("/assets/media/brand/home-service-selection.webp"), `homepage service image changed: ${home.image}`);
-  assert(home.cta.includes("探索品牌理念") && home.href === "journal.html#about-us", `homepage values link is wrong: ${home.cta} / ${home.href}`);
+  assert(home.cta.includes("探索品牌理念") && home.href === "about-us.html#about-us", `homepage values link is wrong: ${home.cta} / ${home.href}`);
 
-  await page.goto(fileUrl("../en/journal.html"), { waitUntil: "domcontentloaded" });
+  await page.goto(fileUrl("../en/about-us.html"), { waitUntil: "domcontentloaded" });
   const englishFeatured = await page.locator("#featured").evaluate((root) => ({
     image: root.querySelector(".lux-reader-card img").src,
     eyebrow: root.querySelector(".lg\\:col-span-5 span").textContent.trim(),

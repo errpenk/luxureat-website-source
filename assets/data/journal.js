@@ -37,6 +37,21 @@
     recipeShrimpTartareTruffle: articleImage("recipe-shrimp-tartare-truffle.webp"),
     recipeSweetBreadButterCaviar: articleImage("recipe-sweet-bread-butter-caviar.webp"),
     recipeTruffleTiramisu: articleImage("recipe-truffle-tiramisu.webp"),
+    recipePizza: articleImage("recipe-pizza-margherita.webp"),
+    recipeGelato: articleImage("recipe-gelato-classic.webp"),
+    recipeOliveBruschetta: articleImage("recipe-olive-bruschetta.webp"),
+    recipeOliveAglioOlio: articleImage("recipe-olive-aglio-olio.webp"),
+    recipeOlivePanzanella: articleImage("recipe-olive-panzanella.webp"),
+    recipeOlivePinzimonio: articleImage("recipe-olive-pinzimonio.webp"),
+    recipeLightFennelOrangeSalad: articleImage("recipe-light-fennel-orange-salad.webp"),
+    recipeLightGrilledZucchini: articleImage("recipe-light-grilled-zucchini.webp"),
+    recipeLightSeaBass: articleImage("recipe-light-sea-bass-acqua-pazza.webp"),
+    recipeFamilyPomodoro: articleImage("recipe-family-spaghetti-pomodoro.webp"),
+    recipeFamilyFrittata: articleImage("recipe-family-zucchini-frittata.webp"),
+    recipeFamilyCacciatora: articleImage("recipe-family-chicken-cacciatora.webp"),
+    recipeTruffleCrostini: articleImage("recipe-truffle-summer-crostini.webp"),
+    recipeTruffleTrout: articleImage("recipe-truffle-trout.webp"),
+    recipeTruffleLamb: articleImage("recipe-truffle-lamb.webp"),
   };
   const articles = {
     "zh-about": {
@@ -247,7 +262,7 @@
       intro: "用成熟番茄、罗勒和一款风味清晰的特级初榨橄榄油，完成适合中国家庭的简单意式前菜。",
       recipe: {
         description: "番茄的酸甜、烤面包的焦香与橄榄油的果香形成清晰层次。番茄、罗勒和乡村面包在中国市场较易获得，也可以按季节替换。",
-        time: "15分钟", difficulty: "简单", servings: "2人份", region: "拉齐奥 / 中部意大利", oil: "果香清新的特级初榨橄榄油", allergens: "含麸质；如使用奶酪需注意牛奶过敏原", substitutions: "法棍可替换为全麦面包；罗勒可用香芹或薄荷少量替代", products: "橄榄油学院专题；具体产品以实际目录为准",
+        time: "15分钟", difficulty: "简单", servings: "2人份", region: "拉齐奥 / 中部意大利", oil: "果香清新的特级初榨橄榄油", allergens: "含麸质；如使用奶酪需注意牛奶过敏原", substitutions: "法棍可替换为全麦面包；罗勒可用香芹或薄荷少量替代", products: "橄榄油产品目录（以实际库存和标签为准）",
         ingredients: ["4片乡村面包或法棍", "2个成熟番茄", "6片新鲜罗勒", "1瓣蒜", "1.5汤匙特级初榨橄榄油", "少许盐与黑胡椒"],
         steps: ["面包烤至表面金黄，用蒜瓣轻轻擦过。", "番茄切丁，与罗勒、盐和胡椒拌匀，静置3分钟。", "将番茄放在面包上，最后淋橄榄油并立即食用。"],
         nutrition: [["能量", "约720千焦（约170千卡/份）"], ["脂肪", "约7克"], ["碳水化合物", "约23克"], ["蛋白质", "约4克"]],
@@ -260,12 +275,38 @@
       intro: "用蒜、辣椒、欧芹和橄榄油完成一份快速意面，适合作为理解油脂、面水与火候的基础练习。",
       recipe: {
         description: "这道经典意面依靠面水与橄榄油形成轻盈乳化，不需要厚重酱汁。辣椒可按家庭口味减少或省略。",
-        time: "20分钟", difficulty: "简单", servings: "2人份", region: "坎帕尼亚 / 南部意大利", oil: "果香中等、带温和辛香的特级初榨橄榄油", allergens: "含麸质；意面可能含蛋，需按包装确认", substitutions: "普通意面可换成全麦或无麸质意面；欧芹可换香菜或罗勒", products: "橄榄油学院专题；具体产品以实际目录为准",
+        time: "20分钟", difficulty: "简单", servings: "2人份", region: "坎帕尼亚 / 南部意大利", oil: "果香中等、带温和辛香的特级初榨橄榄油", allergens: "含麸质；意面可能含蛋，需按包装确认", substitutions: "普通意面可换成全麦或无麸质意面；欧芹可换香菜或罗勒", products: "橄榄油产品目录（以实际库存和标签为准）",
         ingredients: ["180克意面", "3汤匙特级初榨橄榄油", "2瓣蒜", "少量干辣椒", "一小把欧芹", "盐适量"],
         steps: ["将意面放入充足的盐水中煮至略有弹性，保留约100毫升面水。", "小火加热橄榄油与蒜片，加入辣椒，避免蒜片过度变焦。", "加入意面和少量面水，快速翻拌至油与淀粉形成轻盈酱汁。", "关火后加入欧芹，立即装盘并按口味补充橄榄油。"],
         nutrition: [["能量", "约1900千焦（约455千卡/份）"], ["脂肪", "约18克"], ["碳水化合物", "约62克"], ["蛋白质", "约14克"]],
       },
       sections: [], related: ["zh-recipe-olive-bruschetta", "zh-recipe-black-truffle-risotto", "zh-academy-olive-tasting"],
+    },
+    "zh-recipe-pizza-margherita": {
+      type: "recipe", lang: "zh", topic: "pizza", eyebrow: "披萨学院", title: "经典玛格丽特披萨", meta: "RECIPE · 披萨",
+      image: images.recipePizza,
+      intro: "以耐心发酵的面团、番茄、马苏里拉奶酪与罗勒，完成一张配料克制、饼边轻盈的经典披萨。",
+      recipe: {
+        description: "玛格丽特披萨让面粉、发酵与高温烘烤成为主角。LuxurEat（露意膳）建议先理解面团状态，再用简洁配料保留麦香与焦香。",
+        time: "准备30分钟＋发酵8—24小时", difficulty: "中等", servings: "2张小披萨", region: "坎帕尼亚 / 那不勒斯", allergens: "含麸质与牛奶", substitutions: "可按面粉吸水率微调水量；新鲜马苏里拉可换低水分马苏里拉", products: "披萨产品目录（以实际库存和标签为准）",
+        ingredients: ["500克披萨面粉", "325克水", "10克盐", "1克干酵母", "250克番茄碎", "200克马苏里拉奶酪", "罗勒与特级初榨橄榄油"],
+        steps: ["混合面粉、水和酵母，静置20分钟后加入盐，揉至面团光滑。", "室温发酵后分割成两份，冷藏熟成8—24小时。", "回温后轻柔展开面团，保留饼边气泡，铺上番茄与奶酪。", "以烤箱可达到的最高温度烘烤至饼边膨起上色，出炉后加入罗勒与橄榄油。"],
+        nutrition: [["能量", "约2850千焦（约680千卡/张）"], ["脂肪", "约19克"], ["碳水化合物", "约98克"], ["蛋白质", "约28克"]],
+      },
+      sections: [], related: ["zh-recipe-olive-pasta", "zh-recipe-gelato-classic", "zh-academy-pizza-dough"],
+    },
+    "zh-recipe-gelato-classic": {
+      type: "recipe", lang: "zh", topic: "gelato", eyebrow: "意式手工冰淇淋", title: "经典意式手工冰淇淋", meta: "RECIPE · 意式手工冰淇淋",
+      image: images.recipeGelato,
+      intro: "以均衡甜度、细腻质地与清晰风味呈现经典意式手工冰淇淋。",
+      recipe: {
+        description: "一份平衡的意式手工冰淇淋配方，需要准确控制糖、乳脂、固形物与冷冻温度，让真实原料保持清楚。",
+        time: "准备35分钟＋冷藏4小时", difficulty: "中等", servings: "6人份", region: "意大利", allergens: "含牛奶", substitutions: "可按配方结构选用适合的乳制品基底；无冰淇淋机时需分次冷冻搅拌", products: "意式手工冰淇淋产品目录（以实际库存和标签为准）",
+        ingredients: ["550克全脂牛奶", "150克淡奶油", "100克糖", "30克脱脂奶粉", "一小撮盐"],
+        steps: ["混合糖与奶粉，缓慢加入牛奶和淡奶油并搅匀。", "加热至82°C左右后离火，加入盐并充分乳化。", "快速降温并冷藏至少4小时，让基底成熟。", "倒入冰淇淋机搅冻，完成后短时冷冻定型；食用前稍微回温。"],
+        nutrition: [["能量", "约870千焦（约208千卡/份）"], ["脂肪", "约12克"], ["碳水化合物", "约20克"], ["蛋白质", "约6克"]],
+      },
+      sections: [], related: ["zh-recipe-pizza-margherita", "zh-recipe-truffle-tiramisu", "zh-academy-gelato-basics"],
     },
     "zh-truffle": {
       lang: "zh", eyebrow: "产业观察", title: "世界鱼子酱版图：主要生产国与产业发展", meta: "ATLAS · 全球产地",
@@ -594,7 +635,7 @@
       intro: "Ripe tomato, basil and a clear extra-virgin olive oil make a simple Italian starter that works naturally in a Chinese home kitchen.",
       recipe: {
         description: "Tomato acidity, toasted bread and fruity olive oil create a clean, layered bite. Tomatoes, basil and country bread are widely available in China and can be adapted seasonally.",
-        time: "15 min", difficulty: "Easy", servings: "2 servings", region: "Lazio / Central Italy", oil: "A fresh, fruit-forward extra-virgin olive oil", allergens: "Contains gluten; check milk allergen if cheese is added", substitutions: "Baguette can replace country bread; parsley or a little mint can replace basil", products: "Olive Oil Academy; final product links follow the live catalogue",
+        time: "15 min", difficulty: "Easy", servings: "2 servings", region: "Lazio / Central Italy", oil: "A fresh, fruit-forward extra-virgin olive oil", allergens: "Contains gluten; check milk allergen if cheese is added", substitutions: "Baguette can replace country bread; parsley or a little mint can replace basil", products: "Olive oil catalogue (subject to live stock and label)",
         ingredients: ["4 slices country bread or baguette", "2 ripe tomatoes", "6 basil leaves", "1 garlic clove", "1½ tablespoons extra-virgin olive oil", "Salt and black pepper"],
         steps: ["Toast the bread until golden and rub it lightly with the garlic clove.", "Dice the tomatoes and mix with basil, salt and pepper; rest for 3 minutes.", "Spoon the tomatoes over the toast, finish with olive oil and serve immediately."],
         nutrition: [["Energy", "About 720 kJ (170 kcal) per serving"], ["Fat", "About 7 g"], ["Carbohydrate", "About 23 g"], ["Protein", "About 4 g"]],
@@ -607,12 +648,38 @@
       intro: "Garlic, chilli, parsley and olive oil create a quick pasta dish that teaches the relationship between fat, pasta water and heat.",
       recipe: {
         description: "This classic pasta uses starchy water and olive oil to form a light emulsion rather than a heavy sauce. Reduce or omit chilli to suit the household.",
-        time: "20 min", difficulty: "Easy", servings: "2 servings", region: "Campania / Southern Italy", oil: "A medium-fruity extra-virgin olive oil with gentle pepper", allergens: "Contains gluten; egg may be present in pasta, check the package", substitutions: "Use whole-wheat or gluten-free pasta; replace parsley with coriander or basil", products: "Olive Oil Academy; final product links follow the live catalogue",
+        time: "20 min", difficulty: "Easy", servings: "2 servings", region: "Campania / Southern Italy", oil: "A medium-fruity extra-virgin olive oil with gentle pepper", allergens: "Contains gluten; egg may be present in pasta, check the package", substitutions: "Use whole-wheat or gluten-free pasta; replace parsley with coriander or basil", products: "Olive oil catalogue (subject to live stock and label)",
         ingredients: ["180 g spaghetti", "3 tablespoons extra-virgin olive oil", "2 garlic cloves", "A little dried chilli", "A handful of parsley", "Salt"],
         steps: ["Cook the pasta in salted water until just al dente and reserve about 100 ml of pasta water.", "Warm the olive oil and sliced garlic over low heat, adding chilli without browning the garlic too far.", "Add the pasta and a little pasta water; toss quickly until the oil and starch form a light sauce.", "Turn off the heat, add parsley and finish with olive oil to taste."],
         nutrition: [["Energy", "About 1,900 kJ (455 kcal) per serving"], ["Fat", "About 18 g"], ["Carbohydrate", "About 62 g"], ["Protein", "About 14 g"]],
       },
       sections: [], related: ["en-recipe-olive-bruschetta", "en-recipe-black-truffle-risotto", "en-academy-olive-tasting"],
+    },
+    "en-recipe-pizza-margherita": {
+      type: "recipe", lang: "en", topic: "pizza", eyebrow: "Pizza Academy", title: "Classic Margherita pizza", meta: "RECIPE · Pizza",
+      image: images.recipePizza,
+      intro: "Patiently fermented dough, tomato, mozzarella and basil make a restrained classic with an airy rim and clear wheat flavour.",
+      recipe: {
+        description: "Margherita pizza puts flour, fermentation and high heat first. LuxurEat (露意膳) recommends reading the dough before adding a concise set of toppings.",
+        time: "30 min + 8–24 hr fermentation", difficulty: "Medium", servings: "2 small pizzas", region: "Campania / Naples", allergens: "Contains gluten and milk", substitutions: "Adjust water to the flour's absorption; low-moisture mozzarella can replace fresh mozzarella", products: "Pizza catalogue (subject to live stock and label)",
+        ingredients: ["500 g pizza flour", "325 g water", "10 g salt", "1 g dry yeast", "250 g crushed tomato", "200 g mozzarella", "Basil and extra-virgin olive oil"],
+        steps: ["Mix flour, water and yeast; rest for 20 minutes, add salt and knead until smooth.", "Bulk-ferment, divide into two balls and cold-proof for 8–24 hours.", "Bring to room temperature, open gently while preserving the rim, then add tomato and mozzarella.", "Bake at the oven's highest temperature until risen and charred; finish with basil and olive oil."],
+        nutrition: [["Energy", "About 2,850 kJ (680 kcal) per pizza"], ["Fat", "About 19 g"], ["Carbohydrate", "About 98 g"], ["Protein", "About 28 g"]],
+      },
+      sections: [], related: ["en-recipe-olive-pasta", "en-recipe-gelato-classic", "en-academy-pizza-dough"],
+    },
+    "en-recipe-gelato-classic": {
+      type: "recipe", lang: "en", topic: "gelato", eyebrow: "Artisan Gelato", title: "Classic artisan Gelato", meta: "RECIPE · Artisan Gelato",
+      image: images.recipeGelato,
+      intro: "Balanced sweetness, fine texture and clear flavour define this classic artisan Gelato.",
+      recipe: {
+        description: "A balanced artisan gelato formula controls sugar, dairy solids and freezing temperature so the real ingredient remains distinct.",
+        time: "35 min + 4 hr chilling", difficulty: "Medium", servings: "6 servings", region: "Italy", allergens: "Contains milk", substitutions: "Use a compatible dairy base with the same formula balance; without a machine, freeze and stir the mixture repeatedly", products: "Artisan Gelato catalogue (subject to live stock and label)",
+        ingredients: ["550 g whole milk", "150 g cream", "100 g sugar", "30 g skimmed milk powder", "A small pinch of salt"],
+        steps: ["Combine sugar and milk powder, then whisk gradually into the milk and cream.", "Heat to about 82°C, remove from the heat and emulsify with salt.", "Cool rapidly and mature in the refrigerator for at least 4 hours.", "Churn, freeze briefly to set and temper slightly before serving."],
+        nutrition: [["Energy", "About 870 kJ (208 kcal) per serving"], ["Fat", "About 12 g"], ["Carbohydrate", "About 20 g"], ["Protein", "About 6 g"]],
+      },
+      sections: [], related: ["en-recipe-pizza-margherita", "en-recipe-truffle-tiramisu", "en-academy-gelato-basics"],
     },
     "en-truffle": {
       lang: "en", eyebrow: "Industry Atlas", title: "The World of Caviar: Leading Producers and Industry Development", meta: "ATLAS · Global Origins",
@@ -736,6 +803,221 @@
   };
 
 
+  const addDocumentedRecipe = (id, image, productCategory, zh, en, related = []) => {
+    [["zh", zh], ["en", en]].forEach(([lang, copy]) => {
+      articles[`${lang}-recipe-${id}`] = {
+        type: "recipe", lang, topic: productCategory === "olive-oil" ? "olive" : productCategory,
+        productCategory, artClass: productCategory === "olive-oil" ? "is-olive" : undefined,
+        eyebrow: copy.eyebrow, title: copy.title, meta: copy.meta, image, intro: copy.intro,
+        recipe: copy.recipe, sections: [], related: related.map((item) => `${lang}-${item}`),
+      };
+    });
+  };
+
+  addDocumentedRecipe("olive-bruschetta", images.recipeOliveBruschetta, "olive-oil", {
+    eyebrow: "橄榄油食谱", title: "番茄罗勒意式烤面包", meta: "RECIPE · 橄榄油食谱",
+    intro: "成熟番茄、烤面包、蒜与特级初榨橄榄油构成最经典的意式前菜之一。重点在于面包的酥脆、番茄的新鲜度，以及最后加入的橄榄油果香。",
+    recipe: {
+      description: "Bruschetta al Pomodoro · Tomato and Basil Bruschetta",
+      time: "15分钟", difficulty: "简单", servings: "4人份", region: "意大利中部广泛流行；经典意式前菜", oil: "中等果香、低至中等苦辣度的特级初榨橄榄油。",
+      ingredients: ["乡村面包160克，切4片", "成熟番茄400克", "特级初榨橄榄油30克（约33毫升）", "蒜1瓣（约5克）", "新鲜罗勒8克", "细盐2克", "现磨黑胡椒适量"],
+      steps: ["番茄洗净、擦干并切成约1厘米小丁。加入20克橄榄油、盐和撕碎的罗勒，轻轻拌匀后静置10分钟。", "面包在烤箱、烤架或干燥平底锅中烤至两面金黄且表面酥脆。", "趁热用切开的蒜瓣轻擦面包表面，不要反复摩擦，以免蒜味压过番茄和橄榄油。", "将番茄沥去过多汁液后铺在面包上，淋剩余10克橄榄油，磨少量黑胡椒，立即上桌。"],
+      professionalTip: "面包应保持酥脆，番茄汁不要过多；橄榄油在最后加入，才能保留清晰果香。", foodSafety: "生食番茄和罗勒应在流动饮用水下充分清洗并擦干。装配后建议立即食用，避免长时间室温放置。",
+      allergens: "含麸质谷物（面包）。", substitutions: "乡村面包可换为法棍或酸面包；有无麸质需求时，应使用经认证的无麸质面包。", products: "LuxurEat（露意膳）特级初榨橄榄油产品（以实际目录和标签为准）",
+      nutrition: [["能量", "约850千焦 / 205千卡"], ["脂肪", "约9克"], ["其中饱和脂肪", "约1.5克"], ["碳水化合物", "约24克"], ["其中糖", "约4克"], ["蛋白质", "约5克"], ["膳食纤维", "约2.5克"], ["钠", "约390毫克"]],
+      nutritionNote: "营养数据为按上述标准化配料计算的每份估算值，实际结果会因面包品牌、番茄品种及实际调味量而变化。",
+    },
+  }, {
+    eyebrow: "Olive Oil Recipes", title: "Tomato and Basil Bruschetta", meta: "RECIPE · Olive Oil",
+    intro: "Ripe tomatoes, toasted bread, garlic and extra-virgin olive oil make one of Italy’s classic antipasti. Crisp bread, fresh tomato and the fruitiness of the finishing oil are the essentials.",
+    recipe: {
+      description: "Bruschetta al Pomodoro",
+      time: "15 min", difficulty: "Easy", servings: "Serves 4", region: "Widely enjoyed in Central Italy; a classic Italian antipasto", oil: "A medium-fruity extra-virgin olive oil with low to medium bitterness and pepperiness.",
+      ingredients: ["160 g country bread, cut into 4 slices", "400 g ripe tomatoes", "30 g extra-virgin olive oil (about 33 ml)", "1 garlic clove (about 5 g)", "8 g fresh basil", "2 g fine salt", "Freshly ground black pepper"],
+      steps: ["Wash and dry the tomatoes, then cut into 1 cm dice. Mix gently with 20 g of the oil, the salt and torn basil; rest for 10 minutes.", "Toast the bread in an oven, on a grill or in a dry frying pan until golden and crisp on both sides.", "While hot, rub each slice lightly with the cut garlic. Do not over-rub or the garlic will dominate.", "Drain excess tomato juice, spoon the mixture over the bread, drizzle with the remaining 10 g oil, add black pepper and serve immediately."],
+      professionalTip: "Keep the bread crisp, drain excess tomato juice and add the final oil at the end so its fruit character stays distinct.", foodSafety: "Wash tomatoes and basil thoroughly under potable running water and dry them. Serve immediately after assembly and do not leave at room temperature for long.",
+      allergens: "Contains gluten cereals (bread).", substitutions: "Replace country bread with baguette or sourdough. Use certified gluten-free bread when required.", products: "LuxurEat (露意膳) extra-virgin olive oil range (subject to the live catalogue and label)",
+      nutrition: [["Energy", "About 850 kJ / 205 kcal"], ["Fat", "About 9 g"], ["of which saturates", "About 1.5 g"], ["Carbohydrate", "About 24 g"], ["of which sugars", "About 4 g"], ["Protein", "About 5 g"], ["Fibre", "About 2.5 g"], ["Sodium", "About 390 mg"]],
+      nutritionNote: "Estimated per serving from the standardised ingredients above; bread brand, tomato variety and actual seasoning will change the result.",
+    },
+  }, ["recipe-olive-pasta", "recipe-olive-panzanella", "academy-olive-oil-basics"]);
+
+  addDocumentedRecipe("olive-pasta", images.recipeOliveAglioOlio, "olive-oil", {
+    eyebrow: "橄榄油食谱", title: "蒜香辣椒橄榄油意面", meta: "RECIPE · 橄榄油食谱",
+    intro: "经典的 Aglio, Olio e Peperoncino 依靠蒜、辣椒、特级初榨橄榄油和富含淀粉的面水形成轻薄乳化，而不是用大量油把意面浸湿。",
+    recipe: {
+      description: "Spaghetti Aglio, Olio e Peperoncino · Spaghetti with Garlic, Olive Oil and Chilli",
+      time: "20分钟", difficulty: "简单", servings: "4人份", region: "坎帕尼亚及意大利南部传统", oil: "中等果香、带适度辛香感的特级初榨橄榄油。",
+      ingredients: ["干 Spaghetti 320克", "特级初榨橄榄油60克（约66毫升）", "蒜4瓣（约20克），切薄片", "干辣椒1–2个，或辣椒碎1–2克", "新鲜欧芹12克，切碎，可选但推荐", "细盐约6克，用于煮面水", "保留煮面水约150毫升"],
+      steps: ["在充足沸水中加盐，放入意面，煮至比包装标示的 al dente 时间少约1分钟，舀出约150毫升面水备用。", "冷锅加入橄榄油和蒜片，以中低火缓慢加热。蒜应逐渐释放香气并变成浅金色，不要炸至深褐。", "加入辣椒，继续低火加热数十秒。", "将意面直接转入锅中，加入约80毫升面水，以中火快速翻拌。", "根据需要少量补充面水，使橄榄油和淀粉水形成乳化，并均匀附着在面条表面。", "当意面达到 al dente、锅底几乎没有游离水分时关火，加入欧芹，翻拌后立即装盘。"],
+      professionalTip: "重点不是油越多越好，而是通过面水中的淀粉完成乳化。蒜如果炸焦，会产生明显苦味。", foodSafety: "煮熟意面不宜在室温下长时间放置。如非立即食用，应尽快冷却并冷藏。",
+      allergens: "含麸质谷物（意面）；如使用含蛋意面，则另含蛋。", substitutions: "可使用全麦意面或经认证的无麸质意面。辣椒可按口味减少，但标准版本不建议用香菜替代欧芹。", products: "中等果香型 LuxurEat（露意膳）特级初榨橄榄油",
+      nutrition: [["能量", "约1810千焦 / 435千卡"], ["脂肪", "约16克"], ["其中饱和脂肪", "约2.5克"], ["碳水化合物", "约59克"], ["其中糖", "约3克"], ["蛋白质", "约11克"], ["膳食纤维", "约3克"], ["钠", "取决于煮面水盐度和沥水程度"]],
+      nutritionNote: "营养数据为每份估算值。煮面水中的盐不会全部进入最终成品。",
+    },
+  }, {
+    eyebrow: "Olive Oil Recipes", title: "Spaghetti with Garlic, Olive Oil and Chilli", meta: "RECIPE · Olive Oil",
+    intro: "Classic Aglio, Olio e Peperoncino uses garlic, chilli, extra-virgin olive oil and starchy pasta water to form a light emulsion rather than soaking the pasta in oil.",
+    recipe: {
+      description: "Spaghetti Aglio, Olio e Peperoncino",
+      time: "20 min", difficulty: "Easy", servings: "Serves 4", region: "Campania and the tradition of Southern Italy", oil: "A medium-fruity extra-virgin olive oil with moderate pepperiness.",
+      ingredients: ["320 g dried spaghetti", "60 g extra-virgin olive oil (about 66 ml)", "4 garlic cloves (about 20 g), thinly sliced", "1–2 dried chillies, or 1–2 g chilli flakes", "12 g fresh parsley, chopped, optional but recommended", "About 6 g fine salt for the pasta water", "About 150 ml reserved pasta water"],
+      steps: ["Cook the pasta in plenty of salted boiling water until about 1 minute short of the package’s al dente time. Reserve about 150 ml pasta water.", "Add the oil and garlic to a cold pan and warm slowly over medium-low heat. Let the garlic become pale gold, never dark brown.", "Add the chilli and cook over low heat for a few seconds.", "Transfer the pasta directly to the pan, add about 80 ml pasta water and toss briskly over medium heat.", "Add small amounts of pasta water as needed so the oil and starch emulsify and coat the spaghetti.", "When the pasta is al dente and almost no free liquid remains, turn off the heat, add parsley, toss and serve immediately."],
+      professionalTip: "The key is not more oil but emulsification with the starch in the pasta water. Burnt garlic will make the dish distinctly bitter.", foodSafety: "Do not leave cooked pasta at room temperature for extended periods. Cool promptly and refrigerate if it will not be served immediately.",
+      allergens: "Contains gluten cereals (pasta). Egg pasta also contains egg.", substitutions: "Use whole-wheat or certified gluten-free pasta. Reduce chilli to taste; the standard version should not replace parsley with coriander.", products: "Medium-fruity LuxurEat (露意膳) extra-virgin olive oil",
+      nutrition: [["Energy", "About 1,810 kJ / 435 kcal"], ["Fat", "About 16 g"], ["of which saturates", "About 2.5 g"], ["Carbohydrate", "About 59 g"], ["of which sugars", "About 3 g"], ["Protein", "About 11 g"], ["Fibre", "About 3 g"], ["Sodium", "Depends on pasta-water salinity and draining"]],
+      nutritionNote: "Estimated per serving. Not all salt added to the cooking water enters the finished dish.",
+    },
+  }, ["recipe-olive-bruschetta", "recipe-olive-panzanella", "academy-olive-tasting"]);
+
+  addDocumentedRecipe("olive-panzanella", images.recipeOlivePanzanella, "olive-oil", {
+    eyebrow: "橄榄油食谱", title: "托斯卡纳面包沙拉", meta: "RECIPE · 橄榄油食谱",
+    intro: "Panzanella 是托斯卡纳及意大利中部经典的陈面包沙拉。略微回软的面包吸收番茄、醋和特级初榨橄榄油的风味，形成清爽又保留结构感的夏季料理。",
+    recipe: {
+      description: "Panzanella Toscana · Tuscan Panzanella",
+      time: "约55分钟，含静置时间", difficulty: "简单", servings: "4人份", region: "托斯卡纳", oil: "果香清晰、苦辣度适中的托斯卡纳风格特级初榨橄榄油。",
+      ingredients: ["陈乡村面包240克", "成熟番茄500克", "黄瓜180克", "红洋葱80克", "新鲜罗勒12克", "特级初榨橄榄油40克（约44毫升）", "红酒醋20克", "冷饮用水约120毫升", "细盐3克", "现磨黑胡椒适量"],
+      steps: ["面包切成约1厘米厚片或较大的块，均匀洒上冷水和约一半红酒醋。", "静置10–15分钟，使面包回软，但不要完全泡烂。", "番茄切块，黄瓜切片，红洋葱切薄片；洋葱过辣时可在冷水中浸泡10分钟后彻底沥干。", "轻轻挤去面包中过多水分，再用手撕成大小均匀的块。", "将面包、番茄、黄瓜、洋葱和罗勒混合。", "加入剩余红酒醋、橄榄油、盐和黑胡椒，轻轻拌匀。", "冷藏静置约30分钟。上桌前再次拌匀，并微调酸度和盐度。"],
+      professionalTip: "面包应该湿润而有结构，而不是彻底泡成糊状。番茄汁、醋和橄榄油会继续软化面包，初始湿润程度不要过高。", foodSafety: "所有生食蔬菜和香草都应在流动饮用水下充分清洗。成品应冷藏保存并尽量当天食用。",
+      allergens: "含麸质谷物（面包）。", substitutions: "传统托斯卡纳无盐面包可用结构紧实的陈乡村面包替代；红酒醋可换为白酒醋。", products: "结构感清晰的 LuxurEat（露意膳）特级初榨橄榄油",
+      nutrition: [["能量", "约1160千焦 / 280千卡"], ["脂肪", "约12克"], ["其中饱和脂肪", "约2克"], ["碳水化合物", "约37克"], ["其中糖", "约7克"], ["蛋白质", "约7克"], ["膳食纤维", "约4克"], ["钠", "约530毫克"]],
+      nutritionNote: "营养数据为每份估算值，实际结果会随面包种类、面包含盐量及实际调味量变化。",
+    },
+  }, {
+    eyebrow: "Olive Oil Recipes", title: "Tuscan Panzanella", meta: "RECIPE · Olive Oil",
+    intro: "Panzanella is Tuscany’s classic stale-bread salad. Softened bread absorbs tomato, vinegar and extra-virgin olive oil while retaining enough structure for a fresh summer dish.",
+    recipe: {
+      description: "Panzanella Toscana",
+      time: "About 55 min, including resting", difficulty: "Easy", servings: "Serves 4", region: "Tuscany", oil: "A Tuscan-style extra-virgin olive oil with clear fruit and moderate bitterness and pepperiness.",
+      ingredients: ["240 g stale country bread", "500 g ripe tomatoes", "180 g cucumber", "80 g red onion", "12 g fresh basil", "40 g extra-virgin olive oil (about 44 ml)", "20 g red-wine vinegar", "About 120 ml cold potable water", "3 g fine salt", "Freshly ground black pepper"],
+      steps: ["Cut the bread into 1 cm slices or large pieces and sprinkle evenly with cold water and half the vinegar.", "Rest for 10–15 minutes so the bread softens without becoming mushy.", "Cut the tomatoes, slice the cucumber and thinly slice the onion. If the onion is too sharp, soak in cold water for 10 minutes and drain thoroughly.", "Gently squeeze excess water from the bread and tear it into even pieces.", "Combine bread, tomatoes, cucumber, onion and basil.", "Add the remaining vinegar, oil, salt and pepper and toss gently.", "Refrigerate for about 30 minutes. Toss again before serving and adjust acidity and salt."],
+      professionalTip: "The bread should be moist but structured, never a paste. Tomato juice, vinegar and oil continue to soften it, so do not over-wet it initially.", foodSafety: "Wash all raw vegetables and herbs under potable running water. Keep refrigerated, eat the same day and do not leave in a warm environment.",
+      allergens: "Contains gluten cereals (bread).", substitutions: "Replace traditional unsalted Tuscan bread with firm stale country bread; white-wine vinegar may replace red-wine vinegar.", products: "A structured LuxurEat (露意膳) extra-virgin olive oil",
+      nutrition: [["Energy", "About 1,160 kJ / 280 kcal"], ["Fat", "About 12 g"], ["of which saturates", "About 2 g"], ["Carbohydrate", "About 37 g"], ["of which sugars", "About 7 g"], ["Protein", "About 7 g"], ["Fibre", "About 4 g"], ["Sodium", "About 530 mg"]],
+      nutritionNote: "Estimated per serving; bread type, bread salt and actual seasoning will affect the result.",
+    },
+  }, ["recipe-olive-bruschetta", "recipe-olive-pinzimonio", "academy-olive-oil-basics"]);
+
+  addDocumentedRecipe("olive-pinzimonio", images.recipeOlivePinzimonio, "olive-oil", {
+    eyebrow: "橄榄油食谱", title: "意式生蔬菜配橄榄油蘸汁", meta: "RECIPE · 橄榄油食谱",
+    intro: "Pinzimonio 以新鲜、脆爽的时令蔬菜搭配特级初榨橄榄油、盐、黑胡椒和少量柠檬汁，直接展现优质橄榄油的果香、苦味和辛香感。",
+    recipe: {
+      description: "Pinzimonio di Verdure · Italian Raw Vegetables with Olive-Oil Dip",
+      time: "20分钟", difficulty: "简单", servings: "4人份", region: "意大利多个地区均有传统", oil: "适合直接品尝的高品质特级初榨橄榄油。",
+      ingredients: ["胡萝卜160克", "西芹120克", "茴香球200克", "红甜椒150克", "小萝卜100克", "菊苣或红菊苣120克", "特级初榨橄榄油60克（约66毫升）", "新鲜柠檬汁20克", "细盐2克", "现磨黑胡椒适量"],
+      steps: ["所有蔬菜在流动饮用水下充分洗净并彻底擦干。", "胡萝卜、西芹、茴香和甜椒切成长条，小萝卜对半切，菊苣分成适合手持的叶片。", "将橄榄油、柠檬汁、盐和黑胡椒放入小碗，用叉子快速搅拌形成暂时乳化的蘸汁。", "将蔬菜分类摆放在冷盘中，蘸汁按人数分装成小碗，现蘸现食。"],
+      professionalTip: "蔬菜必须新鲜、脆爽，橄榄油也不应有明显氧化、哈喇或陈旧气味。", foodSafety: "生食蔬菜要避免与处理生肉、生鱼的砧板和刀具交叉污染。切配后冷藏保存，建议2小时内上桌。",
+      allergens: "标准配方不含欧盟14大主要过敏原；仍需根据实际加工原料和消费者个体情况确认。", substitutions: "可随季节加入黄瓜、樱桃番茄或甜菊苣，但应保持适合生食、脆爽和方便手持。", products: "LuxurEat（露意膳）特级初榨橄榄油产品",
+      nutrition: [["能量", "约790千焦 / 190千卡"], ["脂肪", "约15克"], ["其中饱和脂肪", "约2克"], ["碳水化合物", "约13克"], ["其中糖", "约7克"], ["蛋白质", "约3克"], ["膳食纤维", "约5克"], ["钠", "约300毫克"]],
+      nutritionNote: "营养数据为每份估算值，实际结果会随蔬菜种类、橄榄油实际食用量和调味量变化。",
+    },
+  }, {
+    eyebrow: "Olive Oil Recipes", title: "Italian Raw Vegetables with Olive-Oil Dip", meta: "RECIPE · Olive Oil",
+    intro: "Pinzimonio pairs crisp seasonal vegetables with extra-virgin olive oil, salt, pepper and a little lemon, showing the oil’s fruit, bitterness and pepperiness with almost no cooking.",
+    recipe: {
+      description: "Pinzimonio di Verdure",
+      time: "20 min", difficulty: "Easy", servings: "Serves 4", region: "Traditional in several regions of Italy", oil: "A high-quality extra-virgin olive oil suitable for tasting raw.",
+      ingredients: ["160 g carrots", "120 g celery", "200 g fennel bulb", "150 g red sweet pepper", "100 g radishes", "120 g chicory or radicchio", "60 g extra-virgin olive oil (about 66 ml)", "20 g fresh lemon juice", "2 g fine salt", "Freshly ground black pepper"],
+      steps: ["Wash all vegetables thoroughly under potable running water and dry completely.", "Cut carrots, celery, fennel and pepper into batons, halve the radishes and separate chicory into hand-held leaves.", "Whisk the oil, lemon juice, salt and pepper with a fork to make a temporary emulsion.", "Arrange the vegetables by type on a chilled platter, divide the dip into individual bowls and dip only when eating."],
+      professionalTip: "Vegetables must be fresh and crisp, and the oil must be free from oxidised, rancid or stale aromas.", foodSafety: "Prevent cross-contamination with boards and knives used for raw meat or fish. Refrigerate after cutting and serve within 2 hours, sooner in hot conditions.",
+      allergens: "The standard recipe contains none of the EU’s 14 major allergens; confirm against the actual processed ingredients and individual needs.", substitutions: "Use seasonal cucumber, cherry tomatoes or endive, while keeping the selection crisp, suitable for raw service and easy to hold.", products: "LuxurEat (露意膳) extra-virgin olive oil range",
+      nutrition: [["Energy", "About 790 kJ / 190 kcal"], ["Fat", "About 15 g"], ["of which saturates", "About 2 g"], ["Carbohydrate", "About 13 g"], ["of which sugars", "About 7 g"], ["Protein", "About 3 g"], ["Fibre", "About 5 g"], ["Sodium", "About 300 mg"]],
+      nutritionNote: "Estimated per serving; vegetable selection, the amount of oil actually eaten and seasoning will change the result.",
+    },
+  }, ["recipe-olive-panzanella", "recipe-olive-bruschetta", "academy-olive-tasting"]);
+
+  addDocumentedRecipe("light-fennel-orange-salad", images.recipeLightFennelOrangeSalad, "olive-oil", {
+    eyebrow: "健康轻食", title: "西西里茴香橙子黑橄榄沙拉", meta: "RECIPE · 健康轻食", intro: "清脆茴香、鲜甜橙子与黑橄榄组成西西里风格沙拉，以橙汁和特级初榨橄榄油完成清爽调味。",
+    recipe: { description: "Insalata di Finocchi, Arance e Olive Nere", time: "20分钟", difficulty: "简单", servings: "4人份", region: "西西里", oil: "果香清晰、苦辣度温和的特级初榨橄榄油。",
+      ingredients: ["茴香球500克", "橙子400克（约3个，以去皮后重量计）", "去核黑橄榄80克", "特级初榨橄榄油25克（约28毫升）", "新鲜橙汁20克", "细盐1.5克", "现磨黑胡椒适量", "茴香叶少量，装饰用"],
+      steps: ["茴香洗净并彻底擦干，保留少量茴香叶；球茎纵向切半后切成均匀薄片。", "橙子去皮并彻底去除白色筋膜，在碗上方切出果肉瓣并保留流出的果汁。", "黑橄榄对半切开。", "将20克橙汁、橄榄油、盐和黑胡椒搅拌成调味汁。", "茴香、橙子和橄榄轻轻混合，淋入调味汁再次拌匀。", "以茴香叶装饰并尽快上桌。"],
+      professionalTip: "茴香要切得均匀而薄；橙子应多汁、酸甜平衡，才能让沙拉保持清爽。", foodSafety: "所有生食材料应充分清洗。若提前准备，请将各部分分开冷藏，食用前再混合。", allergens: "标准配方不含欧盟14大主要过敏原；加工橄榄仍需核对标签。", substitutions: "可使用其他风味温和的去核黑橄榄；不要使用糖浆罐头橙子。", products: "LuxurEat（露意膳）特级初榨橄榄油产品",
+      nutrition: [["能量", "约640千焦 / 155千卡"], ["脂肪", "约9克"], ["其中饱和脂肪", "约1.5克"], ["碳水化合物", "约18克"], ["其中糖", "约12克"], ["蛋白质", "约3克"], ["膳食纤维", "约6克"], ["钠", "约260毫克"]], nutritionNote: "营养数据为每份估算值，实际结果会随橙子、橄榄及调味量变化。" },
+  }, { eyebrow: "Healthy Light Meals", title: "Fennel, Orange and Black Olive Salad", meta: "RECIPE · Healthy Light Meals", intro: "Crisp fennel, sweet orange and black olives form a Sicilian-style salad finished with fresh orange juice and extra-virgin olive oil.",
+    recipe: { description: "Insalata di Finocchi, Arance e Olive Nere", time: "20 min", difficulty: "Easy", servings: "Serves 4", region: "Sicily", oil: "A clearly fruity extra-virgin olive oil with gentle bitterness and pepperiness.", ingredients: ["500 g fennel bulbs", "400 g oranges (about 3, peeled weight)", "80 g pitted black olives", "25 g extra-virgin olive oil (about 28 ml)", "20 g fresh orange juice", "1.5 g fine salt", "Freshly ground black pepper", "A few fennel fronds to garnish"], steps: ["Wash and dry the fennel, reserving a few fronds. Halve the bulbs lengthways and slice evenly and thinly.", "Peel the oranges, remove all white pith and cut out the segments over a bowl, retaining the juice.", "Halve the olives.", "Whisk 20 g orange juice with the oil, salt and pepper.", "Gently combine fennel, orange and olives, add the dressing and toss again.", "Garnish with fennel fronds and serve promptly."], professionalTip: "Slice the fennel evenly and thinly; choose juicy oranges with balanced sweetness and acidity.", foodSafety: "Wash all raw ingredients thoroughly. If preparing ahead, refrigerate the components separately and combine just before serving.", allergens: "The standard recipe contains none of the EU’s 14 major allergens; check the label on processed olives.", substitutions: "Use another mild pitted black olive; do not use oranges canned in syrup.", products: "LuxurEat (露意膳) extra-virgin olive oil range", nutrition: [["Energy", "About 640 kJ / 155 kcal"], ["Fat", "About 9 g"], ["of which saturates", "About 1.5 g"], ["Carbohydrate", "About 18 g"], ["of which sugars", "About 12 g"], ["Protein", "About 3 g"], ["Fibre", "About 6 g"], ["Sodium", "About 260 mg"]], nutritionNote: "Estimated per serving; oranges, olives and seasoning will affect the result." },
+  }, ["recipe-light-grilled-zucchini", "recipe-light-sea-bass-acqua-pazza"]);
+
+  addDocumentedRecipe("light-grilled-zucchini", images.recipeLightGrilledZucchini, "olive-oil", {
+    eyebrow: "健康轻食", title: "香草柠檬腌烤西葫芦", meta: "RECIPE · 健康轻食", intro: "薄切西葫芦经高温快速烤制，再以柠檬、薄荷、蒜与橄榄油短暂腌渍，保留清脆质地。",
+    recipe: { description: "Zucchine Grigliate al Limone e Menta", time: "35分钟（含短暂腌渍）", difficulty: "简单", servings: "4人份", region: "意大利家庭料理", oil: "清新、果香温和的特级初榨橄榄油。", ingredients: ["西葫芦700克", "特级初榨橄榄油30克（约33毫升）", "新鲜柠檬汁25克", "蒜1瓣（约5克），切末", "新鲜薄荷8克，或欧芹10克", "细盐2.5克", "现磨黑胡椒适量"], steps: ["西葫芦洗净擦干，纵向切成4–5毫米厚片。", "烤盘或烤架充分预热。", "西葫芦分批铺开，每面烤约1–2分钟至出现烤痕且刚刚变软，不要堆叠。", "橄榄油、柠檬汁、蒜、盐和黑胡椒混合，加入切碎薄荷。", "将温热西葫芦分层摆放，每层刷少量调味汁。", "静置约15分钟入味；若不立即食用，应冷藏保存。"], professionalTip: "不要把西葫芦烤得过软；高温短时加热才能保留结构和清新感。", foodSafety: "烤后尽快冷却或及时食用。含新鲜蒜的油汁不可在室温长期存放。", allergens: "标准配方不含欧盟14大主要过敏原。", substitutions: "薄荷可换为欧芹；部分柠檬汁可换为白酒醋。", products: "LuxurEat（露意膳）特级初榨橄榄油产品", nutrition: [["能量", "约485千焦 / 115千卡"], ["脂肪", "约8克"], ["其中饱和脂肪", "约1克"], ["碳水化合物", "约7克"], ["其中糖", "约5克"], ["蛋白质", "约3克"], ["膳食纤维", "约2克"], ["钠", "约260毫克"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Healthy Light Meals", title: "Grilled Courgettes with Lemon and Mint", meta: "RECIPE · Healthy Light Meals", intro: "Thin courgette slices are grilled quickly, then briefly marinated with lemon, mint, garlic and olive oil to retain their bite.", recipe: { description: "Zucchine Grigliate al Limone e Menta", time: "35 min, including a short marinade", difficulty: "Easy", servings: "Serves 4", region: "Italian home cooking", oil: "A fresh, gently fruity extra-virgin olive oil.", ingredients: ["700 g courgettes", "30 g extra-virgin olive oil (about 33 ml)", "25 g fresh lemon juice", "1 garlic clove (about 5 g), minced", "8 g fresh mint, or 10 g parsley", "2.5 g fine salt", "Freshly ground black pepper"], steps: ["Wash and dry the courgettes, then slice lengthways 4–5 mm thick.", "Preheat a griddle or grill thoroughly.", "Grill in uncrowded batches for 1–2 minutes per side, until marked and just tender.", "Mix the oil, lemon juice, garlic, salt and pepper, then add chopped mint.", "Layer the warm courgettes, brushing each layer with a little dressing.", "Rest for about 15 minutes. Refrigerate if not serving immediately."], professionalTip: "Do not overcook the courgettes; brief high heat preserves their structure and freshness.", foodSafety: "Cool promptly or serve at once. Oil containing fresh garlic must not be stored at room temperature for extended periods.", allergens: "The standard recipe contains none of the EU’s 14 major allergens.", substitutions: "Replace mint with parsley; replace part of the lemon juice with white-wine vinegar.", products: "LuxurEat (露意膳) extra-virgin olive oil range", nutrition: [["Energy", "About 485 kJ / 115 kcal"], ["Fat", "About 8 g"], ["of which saturates", "About 1 g"], ["Carbohydrate", "About 7 g"], ["of which sugars", "About 5 g"], ["Protein", "About 3 g"], ["Fibre", "About 2 g"], ["Sodium", "About 260 mg"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-light-fennel-orange-salad", "recipe-light-sea-bass-acqua-pazza"]);
+
+  addDocumentedRecipe("light-sea-bass-acqua-pazza", images.recipeLightSeaBass, "olive-oil", {
+    eyebrow: "健康轻食", title: "意式番茄水煮海鲈鱼", meta: "RECIPE · 健康轻食", intro: "海鲈鱼在番茄、蒜、白葡萄酒和少量水构成的浅汤中轻柔煮熟，是坎帕尼亚经典的清淡鱼料理。",
+    recipe: { description: "Branzino all’Acqua Pazza", time: "30分钟", difficulty: "中等", servings: "4人份", region: "坎帕尼亚及意大利南部", oil: "中等果香、适合鱼类的特级初榨橄榄油。", ingredients: ["去骨海鲈鱼排600克", "樱桃番茄350克，对半切", "水180毫升", "干白葡萄酒80毫升，可选", "特级初榨橄榄油25克", "蒜2瓣（约10克）", "新鲜欧芹15克", "细盐3克", "现磨黑胡椒适量"], steps: ["鱼排擦干，确认无残留鱼刺，以盐和黑胡椒轻调味。", "宽锅加入橄榄油和拍裂的蒜，以中低火加热至出香。", "加入番茄，中火翻炒约3分钟。", "倒入白葡萄酒并煮1分钟使酒精挥发；不用酒时直接加等量水。", "加入180毫升水，煮至轻微沸腾。", "鱼排皮面朝下放入浅汤，盖锅以小火煮约6–8分钟。", "根据厚度轻轻翻面，继续煮2–4分钟，中心温度达到63°C。", "取出鱼排，汤汁按需稍微收浓。", "加入欧芹，调整盐和黑胡椒。", "将番茄和浅汤浇在鱼排周围，立即上桌。"], professionalTip: "Acqua pazza 是浅汤，不是大量水煮；液体只需帮助鱼肉温和熟成并形成鲜味汁液。", foodSafety: "生鱼应冷藏并与即食食材分开处理；中心温度达到63°C。剩余成品应在2小时内冷却冷藏。", allergens: "含鱼类；白葡萄酒可能含亚硫酸盐。", substitutions: "可用海鲷替代海鲈鱼；省略葡萄酒时增加80毫升水。", products: "LuxurEat（露意膳）特级初榨橄榄油产品", nutrition: [["能量", "约1045千焦 / 250千卡"], ["脂肪", "约10克"], ["其中饱和脂肪", "约2克"], ["碳水化合物", "约5克"], ["其中糖", "约3克"], ["蛋白质", "约36克"], ["膳食纤维", "约1.5克"], ["钠", "约440毫克"]], nutritionNote: "营养数据为每份估算值；葡萄酒是否使用会影响结果。" },
+  }, { eyebrow: "Healthy Light Meals", title: "Sea Bass in Acqua Pazza", meta: "RECIPE · Healthy Light Meals", intro: "Sea bass cooks gently in a shallow broth of tomato, garlic, white wine and water in this light Campanian classic.", recipe: { description: "Branzino all’Acqua Pazza", time: "30 min", difficulty: "Medium", servings: "Serves 4", region: "Campania and Southern Italy", oil: "A medium-fruity extra-virgin olive oil suited to fish.", ingredients: ["600 g boneless sea-bass fillets", "350 g cherry tomatoes, halved", "180 ml water", "80 ml dry white wine, optional", "25 g extra-virgin olive oil", "2 garlic cloves (about 10 g)", "15 g fresh parsley", "3 g fine salt", "Freshly ground black pepper"], steps: ["Pat the fish dry, remove any pin bones and season lightly with salt and pepper.", "Warm the oil and crushed garlic in a wide pan over medium-low heat.", "Add the tomatoes and cook over medium heat for about 3 minutes.", "Add the wine and boil for 1 minute; if omitting it, add the same volume of water.", "Add 180 ml water and bring to a gentle simmer.", "Place the fish skin-side down in the shallow broth, cover and cook gently for 6–8 minutes.", "Depending on thickness, turn carefully and cook for another 2–4 minutes, to 63°C at the centre.", "Remove the fish and reduce the broth slightly if needed.", "Add parsley and adjust salt and pepper.", "Spoon the tomatoes and broth around the fish and serve immediately."], professionalTip: "Acqua pazza is a shallow broth, not a large pot of water; use only enough liquid to cook the fish gently and make a savoury sauce.", foodSafety: "Keep raw fish chilled and separate from ready-to-eat food; cook to 63°C. Cool leftovers and refrigerate within 2 hours.", allergens: "Contains fish; white wine may contain sulphites.", substitutions: "Use sea bream instead of sea bass; omit the wine and add 80 ml extra water.", products: "LuxurEat (露意膳) extra-virgin olive oil range", nutrition: [["Energy", "About 1,045 kJ / 250 kcal"], ["Fat", "About 10 g"], ["of which saturates", "About 2 g"], ["Carbohydrate", "About 5 g"], ["of which sugars", "About 3 g"], ["Protein", "About 36 g"], ["Fibre", "About 1.5 g"], ["Sodium", "About 440 mg"]], nutritionNote: "Estimated per serving; using wine will affect the result." },
+  }, ["recipe-light-fennel-orange-salad", "recipe-light-grilled-zucchini"]);
+
+  addDocumentedRecipe("family-spaghetti-pomodoro", images.recipeFamilyPomodoro, "olive-oil", {
+    eyebrow: "适合中国家庭的意大利菜", title: "经典番茄意面", meta: "RECIPE · 家庭意大利菜", intro: "以番茄、蒜、罗勒和橄榄油完成的意大利国民经典，材料容易获得，关键在于酱汁收浓与面水乳化。",
+    recipe: { description: "Spaghetti al Pomodoro", time: "35分钟", difficulty: "简单", servings: "4人份", region: "意大利国民经典", oil: "中等果香的特级初榨橄榄油。", ingredients: ["干 Spaghetti 320克", "番茄泥 Passata 500克", "特级初榨橄榄油30克", "蒜1瓣（约5克）", "新鲜罗勒12克", "细盐约7克（含煮面水）", "保留煮面水约150毫升"], steps: ["宽锅中加入橄榄油和拍裂的蒜，以中低火加热至出香，不要上色过深。", "加入番茄泥和少量盐，中小火煮约15–20分钟，期间偶尔搅拌。", "加入一半罗勒，继续煮至酱汁浓稠而仍有流动性。", "另锅烧足量水，加盐后放入意面。", "意面煮至比包装标示的 al dente 时间少约1分钟，保留约150毫升面水。", "意面转入番茄酱锅，加入少量面水，中火翻拌约1分钟。", "按需要继续少量补充面水，使酱汁均匀包裹面条。", "关火，加入剩余罗勒并拌匀。", "装盘后可淋少量橄榄油，立即上桌。"], professionalTip: "不要用糖修正番茄酱；应选择质量更好的番茄泥，或通过延长收汁获得自然甜度。", foodSafety: "开封番茄泥和煮熟意面应及时冷藏，不要在室温长时间放置。", allergens: "含麸质谷物；如使用含蛋意面则另含蛋。", substitutions: "可使用优质罐装番茄泥、全麦或无麸质意面；罗勒不建议用香菜替代。", products: "LuxurEat（露意膳）特级初榨橄榄油与意面产品", nutrition: [["能量", "约1530千焦 / 365千卡"], ["脂肪", "约9克"], ["其中饱和脂肪", "约1.5克"], ["碳水化合物", "约62克"], ["其中糖", "约7克"], ["蛋白质", "约12克"], ["膳食纤维", "约4克"], ["钠", "取决于煮面水盐度"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Italian Food for Chinese Homes", title: "Classic Spaghetti al Pomodoro", meta: "RECIPE · Italian Home Cooking", intro: "This Italian staple uses tomato, garlic, basil and olive oil. The ingredients are accessible; reducing the sauce and emulsifying with pasta water make the difference.", recipe: { description: "Spaghetti al Pomodoro", time: "35 min", difficulty: "Easy", servings: "Serves 4", region: "An Italian national classic", oil: "A medium-fruity extra-virgin olive oil.", ingredients: ["320 g dried spaghetti", "500 g tomato passata", "30 g extra-virgin olive oil", "1 garlic clove (about 5 g)", "12 g fresh basil", "About 7 g fine salt, including pasta water", "About 150 ml reserved pasta water"], steps: ["Warm the oil and crushed garlic over medium-low heat until aromatic, without deep browning.", "Add the passata and a little salt; simmer for 15–20 minutes, stirring occasionally.", "Add half the basil and cook until thick but still fluid.", "Bring plenty of water to the boil in another pot, salt it and add the pasta.", "Cook until about 1 minute short of the package’s al dente time and reserve 150 ml pasta water.", "Transfer the pasta to the sauce, add a little pasta water and toss over medium heat for 1 minute.", "Add more pasta water in small amounts until the sauce coats the spaghetti evenly.", "Turn off the heat, add the remaining basil and toss.", "Plate, finish with a little oil if desired and serve immediately."], professionalTip: "Do not correct tomato sauce with sugar; choose better passata or reduce it longer for natural sweetness.", foodSafety: "Refrigerate opened passata and cooked pasta promptly; do not leave them at room temperature for long.", allergens: "Contains gluten cereals; egg pasta also contains egg.", substitutions: "Use quality canned passata, whole-wheat pasta or certified gluten-free pasta. Do not replace basil with coriander in the standard version.", products: "LuxurEat (露意膳) extra-virgin olive oil and pasta products", nutrition: [["Energy", "About 1,530 kJ / 365 kcal"], ["Fat", "About 9 g"], ["of which saturates", "About 1.5 g"], ["Carbohydrate", "About 62 g"], ["of which sugars", "About 7 g"], ["Protein", "About 12 g"], ["Fibre", "About 4 g"], ["Sodium", "Depends on pasta-water salinity"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-family-zucchini-frittata", "recipe-family-chicken-cacciatora"]);
+
+  addDocumentedRecipe("family-zucchini-frittata", images.recipeFamilyFrittata, "olive-oil", {
+    eyebrow: "适合中国家庭的意大利菜", title: "西葫芦意式煎蛋", meta: "RECIPE · 家庭意大利菜", intro: "先炒去西葫芦多余水分，再与鸡蛋和帕玛森凝固成柔嫩烘蛋，是适合家庭平底锅完成的意大利日常菜。",
+    recipe: { description: "Frittata di Zucchine", time: "35分钟", difficulty: "简单", servings: "4人份", region: "意大利家庭料理", oil: "果香温和的特级初榨橄榄油。", ingredients: ["鸡蛋6个（约300克）", "西葫芦450克", "洋葱80克", "帕玛森奶酪30克，磨碎", "特级初榨橄榄油20克", "细盐2.5克", "现磨黑胡椒适量"], steps: ["西葫芦洗净擦干，切成薄片；洋葱切细丝。", "不粘平底锅加入一半橄榄油，中火炒洋葱至变软。", "加入西葫芦和少量盐，中高火炒至水分明显减少，约6–8分钟。", "鸡蛋打入大碗，加入帕玛森、剩余盐和黑胡椒，搅匀。", "将炒好的西葫芦稍微放凉后加入蛋液。", "擦净锅底，加入剩余橄榄油并以中低火加热。", "倒入蛋液，轻轻晃平。", "盖锅，以小火煮8–10分钟，直至边缘凝固、中心仍略湿。", "借助大盘翻面，或放入预热烤箱上火完成表面。", "继续加热3–5分钟，中心温度达到71°C。", "静置5分钟后切块上桌。"], professionalTip: "西葫芦必须先炒去多余水分，否则烘蛋会松散并渗水。", foodSafety: "带壳鸡蛋应完全加热；中心温度达到71°C。高风险人群应使用巴氏杀菌蛋制品。", allergens: "含蛋、牛奶（帕玛森）。", substitutions: "帕玛森可换为 Grana Padano；无乳糖奶酪并不等于不含牛奶蛋白。", products: "LuxurEat（露意膳）特级初榨橄榄油产品", nutrition: [["能量", "约990千焦 / 235千卡"], ["脂肪", "约17克"], ["其中饱和脂肪", "约5.5克"], ["碳水化合物", "约6克"], ["其中糖", "约4克"], ["蛋白质", "约16克"], ["膳食纤维", "约1.5克"], ["钠", "约500毫克"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Italian Food for Chinese Homes", title: "Courgette Frittata", meta: "RECIPE · Italian Home Cooking", intro: "Courgettes are sautéed to remove excess moisture, then set with eggs and Parmigiano in an everyday Italian frittata suited to a home frying pan.", recipe: { description: "Frittata di Zucchine", time: "35 min", difficulty: "Easy", servings: "Serves 4", region: "Italian home cooking", oil: "A gently fruity extra-virgin olive oil.", ingredients: ["6 eggs (about 300 g)", "450 g courgettes", "80 g onion", "30 g Parmigiano, grated", "20 g extra-virgin olive oil", "2.5 g fine salt", "Freshly ground black pepper"], steps: ["Wash and dry the courgettes and slice thinly; thinly slice the onion.", "Warm half the oil in a non-stick pan and soften the onion over medium heat.", "Add courgettes and a little salt; cook over medium-high heat for 6–8 minutes until much of the moisture evaporates.", "Beat the eggs with Parmigiano, remaining salt and pepper.", "Cool the courgettes slightly and add them to the egg mixture.", "Wipe the pan, add the remaining oil and warm over medium-low heat.", "Pour in the egg mixture and level it gently.", "Cover and cook over low heat for 8–10 minutes, until the edges set and the centre remains slightly moist.", "Turn with a large plate, or finish the top under a preheated grill.", "Cook for another 3–5 minutes, to 71°C at the centre.", "Rest for 5 minutes, then slice and serve."], professionalTip: "Cook excess water out of the courgettes first or the frittata will be loose and watery.", foodSafety: "Cook shell eggs fully to 71°C at the centre. Use pasteurised egg products for high-risk diners.", allergens: "Contains egg and milk (Parmigiano).", substitutions: "Replace Parmigiano with Grana Padano. Lactose-free cheese is not the same as milk-protein-free cheese.", products: "LuxurEat (露意膳) extra-virgin olive oil range", nutrition: [["Energy", "About 990 kJ / 235 kcal"], ["Fat", "About 17 g"], ["of which saturates", "About 5.5 g"], ["Carbohydrate", "About 6 g"], ["of which sugars", "About 4 g"], ["Protein", "About 16 g"], ["Fibre", "About 1.5 g"], ["Sodium", "About 500 mg"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-family-spaghetti-pomodoro", "recipe-family-chicken-cacciatora"]);
+
+  addDocumentedRecipe("family-chicken-cacciatora", images.recipeFamilyCacciatora, "olive-oil", {
+    eyebrow: "适合中国家庭的意大利菜", title: "意式猎人烩鸡", meta: "RECIPE · 家庭意大利菜", intro: "鸡腿与洋葱、胡萝卜、西芹、番茄、白葡萄酒和香草慢炖，是中部意大利风格浓郁而适合家庭操作的主菜。",
+    recipe: { description: "Pollo alla Cacciatora", time: "约1小时", difficulty: "中等", servings: "4人份", region: "意大利中部，多地区有变体", oil: "结构感中等的特级初榨橄榄油。", ingredients: ["带骨去皮鸡腿900克", "番茄泥400克", "洋葱100克", "胡萝卜80克", "西芹60克", "特级初榨橄榄油30克", "干白葡萄酒100毫升", "蒜1瓣（约5克）", "迷迭香1枝", "月桂叶1片", "细盐5克", "现磨黑胡椒适量"], steps: ["鸡腿擦干，以盐和黑胡椒调味。", "厚底锅加入橄榄油，中高火分批将鸡腿表面煎至金黄。", "鸡腿取出备用，锅中保留油脂。", "加入切碎的洋葱、胡萝卜和西芹，中火炒5–7分钟。", "加入蒜、迷迭香和月桂叶，炒至出香。", "倒入白葡萄酒，刮起锅底焦香物并煮至液体约减半。", "加入番茄泥并搅匀。", "鸡腿放回锅中，酱汁应覆盖鸡肉约一半。", "煮沸后转小火，半盖锅盖炖约30–35分钟。", "期间翻动鸡腿，并按需少量加水。", "确认鸡肉最厚处中心温度达到74°C。", "取出迷迭香和月桂叶。", "按需收浓酱汁并调整盐和黑胡椒。", "静置数分钟后上桌。"], professionalTip: "鸡肉分批充分上色是风味基础；锅底焦香物必须用葡萄酒或水完整刮起。", foodSafety: "不要清洗生鸡肉；处理后清洁双手、砧板与台面。中心温度达到74°C，剩余成品在2小时内冷却冷藏。", allergens: "基础配方不含欧盟14大主要过敏原；葡萄酒可能含亚硫酸盐，番茄泥或高汤需核对标签。", substitutions: "可用其他带骨鸡腿或整鸡分件；葡萄酒可用低盐高汤或水替代。", products: "LuxurEat（露意膳）特级初榨橄榄油产品", nutrition: [["能量", "约1900千焦 / 455千卡"], ["脂肪", "约26克"], ["其中饱和脂肪", "约6克"], ["碳水化合物", "约11克"], ["其中糖", "约7克"], ["蛋白质", "约44克"], ["膳食纤维", "约3克"], ["钠", "约760毫克"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Italian Food for Chinese Homes", title: "Chicken Cacciatora", meta: "RECIPE · Italian Home Cooking", intro: "Chicken thighs braised with onion, carrot, celery, tomato, white wine and herbs make a deeply flavoured Central Italian-style main course for the home kitchen.", recipe: { description: "Pollo alla Cacciatora", time: "About 1 hr", difficulty: "Medium", servings: "Serves 4", region: "Central Italy, with regional variations", oil: "A medium-structured extra-virgin olive oil.", ingredients: ["900 g bone-in, skinless chicken thighs", "400 g tomato passata", "100 g onion", "80 g carrot", "60 g celery", "30 g extra-virgin olive oil", "100 ml dry white wine", "1 garlic clove (about 5 g)", "1 rosemary sprig", "1 bay leaf", "5 g fine salt", "Freshly ground black pepper"], steps: ["Pat the chicken dry and season with salt and pepper.", "Heat the oil in a heavy pan and brown the chicken in batches over medium-high heat.", "Remove the chicken, leaving the fat in the pan.", "Add chopped onion, carrot and celery and cook for 5–7 minutes.", "Add garlic, rosemary and bay and cook until aromatic.", "Pour in the wine, scrape up the browned residue and reduce the liquid by about half.", "Add the passata and stir.", "Return the chicken; the sauce should come about halfway up the pieces.", "Bring to the boil, reduce to low, partially cover and simmer for 30–35 minutes.", "Turn the chicken during cooking and add a little water if needed.", "Check that the thickest part reaches 74°C.", "Remove rosemary and bay.", "Reduce the sauce if needed and adjust salt and pepper.", "Rest for a few minutes before serving."], professionalTip: "Deep browning in uncrowded batches builds the flavour; deglaze every browned bit from the pan.", foodSafety: "Do not wash raw chicken. Clean hands, boards and worktops after handling it. Cook to 74°C and refrigerate leftovers within 2 hours.", allergens: "The base recipe contains none of the EU’s 14 major allergens; wine may contain sulphites, and passata or stock labels should be checked.", substitutions: "Use other bone-in thighs or a jointed chicken; replace wine with low-salt stock or water.", products: "LuxurEat (露意膳) extra-virgin olive oil range", nutrition: [["Energy", "About 1,900 kJ / 455 kcal"], ["Fat", "About 26 g"], ["of which saturates", "About 6 g"], ["Carbohydrate", "About 11 g"], ["of which sugars", "About 7 g"], ["Protein", "About 44 g"], ["Fibre", "About 3 g"], ["Sodium", "About 760 mg"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-family-spaghetti-pomodoro", "recipe-family-zucchini-frittata"]);
+
+  addDocumentedRecipe("truffle-summer-crostini", images.recipeTruffleCrostini, "truffle", {
+    eyebrow: "松露食谱", title: "翁布里亚夏季黑松露烤面包", meta: "RECIPE · 松露食谱", intro: "翁布里亚风格烤面包以蒜香橄榄油承接夏季松露，低温处理并在最后刨片，保留易挥发香气。",
+    recipe: { description: "Crostini al Tartufo Estivo", time: "20分钟", difficulty: "简单", servings: "4人份", region: "翁布里亚", oil: "风味温和、不压过松露的特级初榨橄榄油。", ingredients: ["乡村面包200克，切8片", "夏季松露 Tuber aestivum 30克", "特级初榨橄榄油50克", "蒜1瓣（约5克）", "细盐1.5克"], steps: ["松露以软刷彻底刷去泥土，快速冲洗后立即擦干。", "将20克松露细磨，剩余10克留作刨片。", "橄榄油与拍裂的蒜以极低火温热，不要让蒜上色。", "移除蒜并让油稍微降温，再拌入磨碎松露和盐。", "面包烤至两面金黄酥脆。", "趁热将松露油酱均匀涂在烤面包上。", "刨上剩余松露，立即上桌。"], professionalTip: "松露香气具有挥发性，不应长时间高温加热；磨碎部分只在油稍降温后加入。", foodSafety: "松露属于带土食材，必须刷洗干净、擦干并冷藏保存。", allergens: "含麸质谷物（面包）。", substitutions: "可用其他黑松露替代，但应按香气强度调整用量。", products: "LuxurEat（露意膳）松露与特级初榨橄榄油产品", nutrition: [["能量", "约1090千焦 / 260千卡"], ["脂肪", "约13克"], ["其中饱和脂肪", "约2克"], ["碳水化合物", "约26克"], ["其中糖", "约3克"], ["蛋白质", "约6克"], ["膳食纤维", "约2.5克"], ["钠", "约400毫克"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Truffle Recipes", title: "Summer Truffle Crostini", meta: "RECIPE · Truffle", intro: "Umbrian-style crostini use garlic-scented olive oil to carry summer truffle, handled at low heat and shaved at the end to preserve its volatile aroma.", recipe: { description: "Crostini al Tartufo Estivo", time: "20 min", difficulty: "Easy", servings: "Serves 4", region: "Umbria", oil: "A mild extra-virgin olive oil that will not overpower the truffle.", ingredients: ["200 g country bread, cut into 8 slices", "30 g summer truffle (Tuber aestivum)", "50 g extra-virgin olive oil", "1 garlic clove (about 5 g)", "1.5 g fine salt"], steps: ["Brush all soil from the truffle, rinse briefly and dry immediately.", "Finely grate 20 g truffle and reserve 10 g for shaving.", "Warm the oil and crushed garlic over very low heat without browning the garlic.", "Remove the garlic, let the oil cool slightly, then mix in the grated truffle and salt.", "Toast the bread until golden and crisp on both sides.", "Spread the warm toast evenly with the truffle oil mixture.", "Shave over the remaining truffle and serve immediately."], professionalTip: "Truffle aroma is volatile, so avoid prolonged high heat; add the grated truffle only after the oil cools slightly.", foodSafety: "Truffles carry soil and must be brushed clean, dried and kept refrigerated.", allergens: "Contains gluten cereals (bread).", substitutions: "Use another black truffle, adjusting the quantity to its aroma intensity.", products: "LuxurEat (露意膳) truffle and extra-virgin olive oil products", nutrition: [["Energy", "About 1,090 kJ / 260 kcal"], ["Fat", "About 13 g"], ["of which saturates", "About 2 g"], ["Carbohydrate", "About 26 g"], ["of which sugars", "About 3 g"], ["Protein", "About 6 g"], ["Fibre", "About 2.5 g"], ["Sodium", "About 400 mg"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-truffle-trout", "recipe-truffle-lamb"]);
+
+  addDocumentedRecipe("truffle-trout", images.recipeTruffleTrout, "truffle", {
+    eyebrow: "松露食谱", title: "翁布里亚黑松露鳟鱼", meta: "RECIPE · 松露食谱", intro: "来自翁布里亚 Valnerina 的传统搭配，以温和烹调的鳟鱼承接黑松露和蒜香橄榄油。",
+    recipe: { description: "Trota al Tartufo Nero", time: "35分钟", difficulty: "中等", servings: "2人份", region: "翁布里亚 Valnerina", oil: "温和果香的特级初榨橄榄油。", ingredients: ["整条去内脏鳟鱼2条，每条约300克", "黑松露30克", "特级初榨橄榄油30克", "蒜1瓣（约5克）", "细盐3克", "新鲜欧芹5克，可选"], steps: ["鳟鱼清理干净，冲洗后彻底擦干。", "鱼腹和表面轻撒盐。", "烤箱预热至190°C，鳟鱼放入烤盘并淋少量橄榄油。", "烤约15–18分钟，至鱼肉刚熟、中心温度达到63°C。", "其余橄榄油与拍裂的蒜以低火温热，不要上色。", "移除蒜，加入20克细磨黑松露。", "鳟鱼去头、去骨并保持鱼肉完整。", "将松露油汁淋在鱼肉上。", "刨上剩余10克松露，可用欧芹点缀后立即上桌。"], professionalTip: "酱汁应保持简单，鱼肉也不要过熟；温润鱼肉能承接松露，而不会被强烈调味覆盖。", foodSafety: "生鱼应冷藏并与即食食材分开处理；中心温度达到63°C。剩余成品及时冷藏。", allergens: "含鱼类。", substitutions: "可用肉质细嫩的淡水鱼替代，但不应称为传统 Valnerina 版本。", products: "LuxurEat（露意膳）黑松露与特级初榨橄榄油产品", nutrition: [["能量", "约2280千焦 / 545千卡"], ["脂肪", "约35克"], ["其中饱和脂肪", "约6克"], ["碳水化合物", "约1克"], ["其中糖", "少于1克"], ["蛋白质", "约63克"], ["膳食纤维", "约0.5克"], ["钠", "约730毫克"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Truffle Recipes", title: "Trout with Black Truffle", meta: "RECIPE · Truffle", intro: "A Valnerina tradition from Umbria, pairing gently cooked trout with black truffle and garlic-scented olive oil.", recipe: { description: "Trota al Tartufo Nero", time: "35 min", difficulty: "Medium", servings: "Serves 2", region: "Valnerina, Umbria", oil: "A gently fruity extra-virgin olive oil.", ingredients: ["2 whole gutted trout, about 300 g each", "30 g black truffle", "30 g extra-virgin olive oil", "1 garlic clove (about 5 g)", "3 g fine salt", "5 g fresh parsley, optional"], steps: ["Clean the trout, rinse and dry thoroughly.", "Season the cavities and surfaces lightly with salt.", "Preheat the oven to 190°C, place the trout in a roasting dish and drizzle with a little oil.", "Roast for 15–18 minutes, until just cooked and 63°C at the centre.", "Warm the remaining oil and crushed garlic over low heat without browning.", "Remove the garlic and add 20 g finely grated black truffle.", "Remove the heads and bones while keeping the fillets intact.", "Spoon over the truffle oil.", "Shave over the remaining 10 g truffle, garnish with parsley if desired and serve immediately."], professionalTip: "Keep the sauce simple and the fish moist; gentle trout carries the truffle without masking it.", foodSafety: "Keep raw fish chilled and separate from ready-to-eat food; cook to 63°C and refrigerate leftovers promptly.", allergens: "Contains fish.", substitutions: "Use another delicate freshwater fish, but do not present it as the traditional Valnerina version.", products: "LuxurEat (露意膳) black truffle and extra-virgin olive oil products", nutrition: [["Energy", "About 2,280 kJ / 545 kcal"], ["Fat", "About 35 g"], ["of which saturates", "About 6 g"], ["Carbohydrate", "About 1 g"], ["of which sugars", "Less than 1 g"], ["Protein", "About 63 g"], ["Fibre", "About 0.5 g"], ["Sodium", "About 730 mg"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-truffle-summer-crostini", "recipe-truffle-lamb"]);
+
+  addDocumentedRecipe("truffle-lamb", images.recipeTruffleLamb, "truffle", {
+    eyebrow: "松露食谱", title: "翁布里亚黑松露烩羊肉", meta: "RECIPE · 松露食谱", intro: "翁布里亚 Valnerina 风格慢炖羊肉，以白葡萄酒、迷迭香和黑松露完成；松露在最后加入，避免香气流失。",
+    recipe: { description: "Agnello al Tartufo Nero", time: "约1小时45分钟", difficulty: "中等", servings: "6人份", region: "翁布里亚 Valnerina", oil: "结构感中等的特级初榨橄榄油。", ingredients: ["去骨羊肩或羊腿肉1.2千克，切约4厘米块", "黑松露50克", "特级初榨橄榄油35克", "蒜2瓣（约10克）", "迷迭香2克", "干白葡萄酒180毫升", "低盐或无盐高汤约250毫升，按需", "细盐7克", "现磨黑胡椒适量"], steps: ["羊肉擦干，以盐和黑胡椒调味。", "厚底锅加入橄榄油，中高火分批将羊肉煎至表面金黄。", "羊肉取出备用。", "锅中加入拍裂的蒜和迷迭香，短暂炒香。", "羊肉放回锅中，倒入白葡萄酒。", "刮起锅底焦香物，煮至酒液约减半。", "加入足量高汤，使液体达到羊肉约一半高度。", "煮沸后转小火，半盖锅盖炖约60–75分钟。", "期间翻动并按需补充少量高汤，直至羊肉柔嫩。", "确认中心温度至少达到63°C并静置；慢炖通常会达到更高温度。", "关火，加入30克细磨黑松露拌入酱汁。", "装盘后刨上剩余20克松露，立即上桌。"], professionalTip: "松露应在烹调结束时加入；长时间炖煮会显著削弱其香气。", foodSafety: "生羊肉应使用独立砧板并避免交叉污染。整块羊肉最低中心温度63°C并静置，慢炖菜通常加热至更高温度。", allergens: "基础配方不含欧盟14大主要过敏原；高汤可能含西芹或麸质，葡萄酒可能含亚硫酸盐。", substitutions: "可用羊肩或羊腿；葡萄酒可用高汤替代。", products: "LuxurEat（露意膳）黑松露与特级初榨橄榄油产品", nutrition: [["能量", "约2130千焦 / 510千卡"], ["脂肪", "约25克"], ["其中饱和脂肪", "约8克"], ["碳水化合物", "约2克"], ["其中糖", "约1克"], ["蛋白质", "约57克"], ["膳食纤维", "少于1克"], ["钠", "约580毫克"]], nutritionNote: "营养数据为每份估算值。" },
+  }, { eyebrow: "Truffle Recipes", title: "Lamb with Black Truffle", meta: "RECIPE · Truffle", intro: "A Valnerina-style lamb braise with white wine, rosemary and black truffle; the truffle is added at the end to preserve its aroma.", recipe: { description: "Agnello al Tartufo Nero", time: "About 1 hr 45 min", difficulty: "Medium", servings: "Serves 6", region: "Valnerina, Umbria", oil: "A medium-structured extra-virgin olive oil.", ingredients: ["1.2 kg boneless lamb shoulder or leg, cut into 4 cm pieces", "50 g black truffle", "35 g extra-virgin olive oil", "2 garlic cloves (about 10 g)", "2 g rosemary", "180 ml dry white wine", "About 250 ml low-salt or unsalted stock, as needed", "7 g fine salt", "Freshly ground black pepper"], steps: ["Pat the lamb dry and season with salt and pepper.", "Heat the oil in a heavy pan and brown the lamb in batches over medium-high heat.", "Remove the lamb.", "Briefly cook crushed garlic and rosemary in the pan.", "Return the lamb and add the wine.", "Scrape up the browned residue and reduce the wine by about half.", "Add enough stock to come halfway up the lamb.", "Bring to the boil, reduce to low, partially cover and braise for 60–75 minutes.", "Turn the meat and add small amounts of stock as needed, until tender.", "Ensure the centre reaches at least 63°C and rest; a braise normally reaches a higher temperature.", "Turn off the heat and stir 30 g finely grated black truffle into the sauce.", "Plate, shave over the remaining 20 g truffle and serve immediately."], professionalTip: "Add truffle at the end; prolonged braising significantly weakens its aroma.", foodSafety: "Use a separate board for raw lamb and prevent cross-contamination. Whole cuts require at least 63°C plus a rest; braises normally cook hotter.", allergens: "The base recipe contains none of the EU’s 14 major allergens; stock may contain celery or gluten and wine may contain sulphites.", substitutions: "Use lamb shoulder or leg; replace wine with stock.", products: "LuxurEat (露意膳) black truffle and extra-virgin olive oil products", nutrition: [["Energy", "About 2,130 kJ / 510 kcal"], ["Fat", "About 25 g"], ["of which saturates", "About 8 g"], ["Carbohydrate", "About 2 g"], ["of which sugars", "About 1 g"], ["Protein", "About 57 g"], ["Fibre", "Less than 1 g"], ["Sodium", "About 580 mg"]], nutritionNote: "Estimated per serving." },
+  }, ["recipe-truffle-summer-crostini", "recipe-truffle-trout"]);
+
+  // Keep the documented recipes verbatim in Chinese and aligned with their English translations.
+  Object.assign(articles["en-recipe-light-fennel-orange-salad"], { title: "Sicilian Fennel, Orange and Black Olive Salad" });
+  Object.assign(articles["en-recipe-light-grilled-zucchini"], { title: "Marinated Grilled Zucchini" });
+  Object.assign(articles["en-recipe-light-sea-bass-acqua-pazza"], { title: "Sea Bass all’Acqua Pazza" });
+  Object.assign(articles["en-recipe-truffle-summer-crostini"], { title: "Umbrian Crostini with Summer Black Truffle" });
+  Object.assign(articles["en-recipe-truffle-trout"], { title: "Umbrian Trout with Black Truffle" });
+  Object.assign(articles["en-recipe-truffle-lamb"], { title: "Umbrian Lamb with Black Truffle" });
+  Object.assign(articles["en-recipe-family-zucchini-frittata"], { title: "Italian Zucchini Frittata" });
+  Object.assign(articles["en-recipe-family-chicken-cacciatora"], { title: "Italian Hunter-Style Chicken" });
+
+  const localiseChineseRecipe = (text) => text
+      .replaceAll("干 Spaghetti", "干意大利细面")
+      .replaceAll("番茄泥 Passata", "番茄泥")
+      .replaceAll("番茄 Passata", "番茄泥")
+      .replaceAll("比包装标示的 al dente 时间", "比包装标示的最佳嚼劲时间")
+      .replaceAll("达到 al dente", "达到理想嚼劲")
+      .replaceAll("Aglio, Olio e Peperoncino", "蒜香辣椒橄榄油意面")
+      .replaceAll("Panzanella", "托斯卡纳面包沙拉")
+      .replaceAll("Pinzimonio", "意式生蔬菜配橄榄油蘸汁")
+      .replaceAll("Acqua pazza", "意式番茄水煮")
+      .replaceAll("Tuber aestivum", "夏季黑松露")
+      .replaceAll("Valnerina", "瓦尔内里纳")
+      .replaceAll("Grana Padano", "格拉娜帕达诺奶酪");
+  Object.values(articles).forEach((article) => {
+    if (article.lang !== "zh" || article.type !== "recipe" || !article.recipe) return;
+    article.intro = localiseChineseRecipe(article.intro);
+    Object.entries(article.recipe).forEach(([key, value]) => {
+      if (typeof value === "string") article.recipe[key] = localiseChineseRecipe(value);
+      if (Array.isArray(value)) article.recipe[key] = value.map((item) => Array.isArray(item) ? item.map(localiseChineseRecipe) : localiseChineseRecipe(item));
+    });
+    article.recipe.description = "";
+  });
+
   const recipeProfiles = {
     "truffle-eggs": { zh: ["参考：意大利家庭早餐", "含蛋；如使用黄油需注意牛奶过敏原", "鸡蛋可按个人饮食替换；松露片可用适量松露产品替代", "特级初榨橄榄油或黄油，按实际产品标签使用", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Italian home breakfast", "Contains egg; butter adds a milk allergen", "Use a dietary egg alternative if appropriate; truffle slices may be replaced by a suitable truffle product", "Extra-virgin olive oil or butter, following the product label", "Truffle catalogue (subject to live stock and label)" ] },
     "truffle-toast": { zh: ["参考：意大利早午餐", "含麸质、蛋、奶；刺山柑按实际包装确认", "乡村面包可替换为法棍或无麸质面包；罗比奥拉可替换为里科塔", "风味清新的特级初榨橄榄油", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Italian brunch", "Contains gluten, egg and milk; check capers on the package", "Replace country bread with baguette or gluten-free bread; robiola with ricotta", "A fresh extra-virgin olive oil", "Truffle catalogue (subject to live stock and label)" ] },
@@ -748,9 +1030,22 @@
     "sweet-bread-butter-caviar": { zh: ["参考：威尼斯风味甜咸小食", "含麸质、奶、鱼类；面包与鱼子酱标签需确认", "奶油蛋卷可换小片法棍；黄油可用无乳涂抹酱但需确认鱼子酱搭配", "此食谱以无额外用油为主，可用少量温和橄榄油收尾", "鱼子酱产品目录（以实际库存和标签为准）"], en: ["Reference: Venetian-style sweet-savoury bite", "Contains gluten, milk and fish; check bread and caviar labels", "Brioche can be replaced with baguette; use a dairy-free spread only after checking compatibility", "No added oil is required; a little mild olive oil can finish", "Caviar catalogue (subject to live stock and label)" ] },
     "truffle-tiramisu": { zh: ["参考：威尼托甜点的创意表达", "含蛋、奶、麸质；咖啡利口酒可能含酒精", "马斯卡彭可用奶油奶酪；手指饼可按包装替换为无麸质版本", "此食谱以松露油为风味点缀，不建议过量", "松露产品目录（以实际库存和标签为准）"], en: ["Reference: Veneto-inspired dessert", "Contains egg, milk and gluten; coffee liqueur may contain alcohol", "Mascarpone can be replaced by cream cheese; check a gluten-free biscuit label", "Truffle oil is a finishing accent and should be used sparingly", "Truffle catalogue (subject to live stock and label)" ] },
   };
+  const recipeProductCategories = {
+    "truffle-eggs": "truffle",
+    "truffle-toast": "truffle",
+    "truffle-tagliolini": "truffle",
+    "truffle-ravioli": "truffle",
+    "black-truffle-risotto": "truffle",
+    "mushroom-soup": "truffle",
+    "beef-carpaccio-scallop-truffle": "truffle",
+    "shrimp-tartare-truffle": "truffle",
+    "sweet-bread-butter-caviar": "caviar",
+    "truffle-tiramisu": "truffle",
+  };
   Object.entries(articles).forEach(([id, article]) => {
     if (article.type !== "recipe" || !article.recipe) return;
     const key = id.replace(/^(?:zh|en)-recipe-/, "");
+    article.productCategory = recipeProductCategories[key] || (article.topic === "olive" ? "olive-oil" : article.topic);
     const profile = recipeProfiles[key]?.[article.lang];
     if (!profile) return;
     ["region", "allergens", "substitutions", "oil", "products"].forEach((field, index) => {

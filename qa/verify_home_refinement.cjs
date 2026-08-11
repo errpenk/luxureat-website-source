@@ -10,16 +10,16 @@ const styles = read("integration.css");
 [
   "意大利卓越品质的<br/><span class=\"text-secondary\">至臻之艺</span>",
   "探索地道风味，品味真正的意大利制造",
-  "journal.html#reader-zh-harvest",
+  "about-us.html#reader-zh-harvest",
   "contact.html#global-footprint",
-  "news.html#news-center",
+  "brand.html#news-center",
   'id="meet-us"',
   ">立即联系我们</a>",
 ].forEach((value) => assert.ok(home.includes(value), `missing: ${value}`));
 
 assert.ok(read("zh/contact.html").includes('id="global-footprint"'));
-assert.ok(read("zh/news.html").includes("brand-news-global.webp"));
-assert.ok(read("zh/rituals.html").includes(">食材购买</h2>"));
+assert.ok(read("zh/brand.html").includes("brand-news-global.webp"));
+assert.ok(read("zh/recipe.html").includes(">食材购买</h2>"));
 assert.ok(read("assets/js/journal.js").includes('articles[readerHash]'));
 assert.ok(read("assets/js/events.js").includes('${newsIndexHref}#exhibition-map'));
 assert.ok(read("assets/js/events.js").includes("LuxurEat（露意膳）"));

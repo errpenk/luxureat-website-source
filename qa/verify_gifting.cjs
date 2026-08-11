@@ -7,7 +7,7 @@ const assert = (condition, message) => { if (!condition) throw new Error(message
   const browser = await chromium.launch();
   for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
     const page = await browser.newPage({ viewport });
-    await page.goto(`${BASE_URL}/zh/gifting.html`, { waitUntil: "domcontentloaded" });
+    await page.goto(`${BASE_URL}/zh/cooperation.html`, { waitUntil: "domcontentloaded" });
     const result = await page.evaluate(() => ({
       text: document.body.textContent.replace(/\s+/g, " "),
       hero: document.querySelector("h1")?.textContent.replace(/\s+/g, "").trim(),

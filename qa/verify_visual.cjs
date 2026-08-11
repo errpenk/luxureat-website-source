@@ -67,7 +67,7 @@ async function main() {
   if (await page.locator(".lux-nav-flyout:visible").count() !== 1) fail("mobile submenu accordion did not open exactly one section");
   await page.screenshot({ path: path.join(QA_DIR, "zh-home-mobile-menu.png"), fullPage: true });
 
-  await inspectOfficialPage(page, "/zh/caviar.html", "zh-caviar-mobile.png", "Chinese mobile caviar");
+  await inspectOfficialPage(page, "/zh/product.html", "zh-caviar-mobile.png", "Chinese mobile caviar");
   const productHero = await page.locator(".lux-products-main .lux-dark-photo-bg").first().evaluate((node) => getComputedStyle(node).backgroundImage);
   if (!productHero.includes("products-hero-caviar.jpg")) fail("Chinese product hero image is missing");
   await inspectOfficialPage(page, "/en/certification.html", "en-certification-mobile.png", "English mobile certification");

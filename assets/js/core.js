@@ -198,7 +198,7 @@ addEventListener("pointerdown", () => {
   document.querySelectorAll(`${luxAutoplaySelector}[data-lux-play-blocked]`).forEach(startLuxVideo);
 }, { passive: true });
 
-document.querySelectorAll(".lux-home-market-system, .lux-home-gifting").forEach((section) => {
+document.querySelectorAll(".lux-home-market-system").forEach((section) => {
   if (!("IntersectionObserver" in window)) {
     section.classList.add("is-media-ready");
     return;
@@ -213,7 +213,7 @@ document.querySelectorAll(".lux-home-market-system, .lux-home-gifting").forEach(
 
 const initLuxScrollReveal = () => {
   if (document.querySelector(".lux-products-main")) return;
-  if (document.body.classList.contains("lux-academy-page")) return;
+  if (document.body.classList.contains("lux-academy-page") || document.body.classList.contains("lux-new-page")) return;
   if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const elements = document.querySelectorAll([
     "body > header:not(.lux-header)",
@@ -228,6 +228,9 @@ const initLuxScrollReveal = () => {
     "main section figure",
     "body > section blockquote",
     "main section blockquote",
+    ".lux-home-partnership-process li",
+    ".lux-brand-promise-copy",
+    ".lux-brand-promise-card > div",
   ].join(","));
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => target.classList.toggle("is-in-view", isIntersecting));
@@ -393,28 +396,37 @@ const luxMenu = document.querySelector(".lux-menu");
 
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["全球合作", "gifting-editorial"]]],
-    ["journal.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["时令随笔", "seasonal-notes"]]],
-    ["caviar.html", "系列产品", [["产品全览", "product-catalogue"]]],
-    ["rituals.html", "食谱艺术", [["意式风味食谱", "italian-flavor-recipes"], ["橄榄油食谱", "olive-recipes"], ["松露食谱", "truffle-recipes"], ["健康轻食", "healthy-light-recipes"], ["适合中国家庭的意大利菜", "china-family-recipes"]]],
-    ["news.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
-    ["blog.html", "知识博客", [["探索意大利", "?topic=culture"], ["意大利美食学院", "?topic=academy"], ["鱼子酱学院", "?topic=caviar"], ["橄榄油学院", "?topic=olive"], ["意式 Gelato", "?topic=gelato"], ["营养与配料指南", "?topic=nutrition"]]],
-    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["获奖记录", "award-proofs"], ["品质与认证", "certification-glossary"]]],
-    ["gifting.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
+    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["合作流程", "partnership-process"]]],
+    ["about-us.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["品牌承诺", "brand-promise"], ["时令随笔", "seasonal-notes"]]],
+    ["new.html", "热门新品", [["橄榄油", "olive-oil"], ["披萨", "pizza"], ["意式手工冰淇淋", "gelato"]]],
+    ["product.html", "系列产品", [["产品全览", "product-catalogue"]]],
+    ["recipe.html", "食谱艺术", [["意式风味食谱", "italian-flavor-recipes"], ["橄榄油食谱", "olive-recipes"], ["松露食谱", "truffle-recipes"], ["健康轻食", "healthy-light-recipes"], ["适合中国家庭的意大利菜", "china-family-recipes"], ["食谱库", "recipe-library"]]],
+    ["brand.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
+    ["blog.html", "知识博客", [["探索意大利", "?topic=culture"], ["鱼子酱学院", "?topic=caviar"], ["橄榄油学院", "?topic=olive"], ["披萨学院", "?topic=pizza"], ["松露学院", "?topic=truffle"], ["意式手工冰淇淋", "?topic=gelato"], ["营养与配料指南", "?topic=nutrition"], ["意大利美食词典", "?topic=dictionary"], ["生产者、大师与产地故事", "?topic=producers"]]],
+    ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["获奖记录", "award-proofs"], ["品质与认证", "certification-glossary"], ["合作图集", "partnership-gallery"]]],
+    ["cooperation.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Global Partnership", "gifting-editorial"]]],
-    ["journal.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Seasonal Notes", "seasonal-notes"]]],
-    ["products.html", "Products", [["Premium Products", "product-catalogue"]]],
-    ["rituals.html", "Recipe Art", [["Italian Flavor Recipes", "italian-flavor-recipes"], ["Olive Oil Recipes", "olive-recipes"], ["Truffle Recipes", "truffle-recipes"], ["Healthy Light Meals", "healthy-light-recipes"], ["Italian Food for Chinese Homes", "china-family-recipes"]]],
-    ["news.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
-    ["blog.html", "Blog", [["Explore Italy", "?topic=culture"], ["Italian Food Academy", "?topic=academy"], ["Caviar Academy", "?topic=caviar"], ["Olive Oil Academy", "?topic=olive"], ["Italian Gelato", "?topic=gelato"], ["Nutrition & Ingredients", "?topic=nutrition"]]],
-    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Award Records", "award-proofs"], ["Quality & Certification", "certification-glossary"]]],
-    ["gifting.html", "Cooperation", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
+    ["about-us.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Brand Promise", "brand-promise"], ["Seasonal Notes", "seasonal-notes"]]],
+    ["new.html", "New Arrivals", [["Olive Oil", "olive-oil"], ["Pizza", "pizza"], ["Gelato", "gelato"]]],
+    ["product.html", "Products", [["Premium Products", "product-catalogue"]]],
+    ["recipe.html", "Recipe Art", [["Italian Flavor Recipes", "italian-flavor-recipes"], ["Olive Oil Recipes", "olive-recipes"], ["Truffle Recipes", "truffle-recipes"], ["Healthy Light Meals", "healthy-light-recipes"], ["Italian Food for Chinese Homes", "china-family-recipes"], ["Recipe Library", "recipe-library"]]],
+    ["brand.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
+    ["blog.html", "Blog", [["Explore Italy", "?topic=culture"], ["Caviar Academy", "?topic=caviar"], ["Olive Oil Academy", "?topic=olive"], ["Pizza Academy", "?topic=pizza"], ["Truffle Academy", "?topic=truffle"], ["Italian Gelato", "?topic=gelato"], ["Nutrition & Ingredients", "?topic=nutrition"], ["Italian Food Dictionary", "?topic=dictionary"], ["Producers, Masters & Stories of Place", "?topic=producers"]]],
+    ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Award Records", "award-proofs"], ["Quality & Certification", "certification-glossary"], ["Partnership Gallery", "partnership-gallery"]]],
+    ["cooperation.html", "Cooperation", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
     ["contact.html", "Contact", [["Brand Consultation", "brand-consultation"], ["Global Presence", "global-footprint"]]],
   ],
 };
+
+const luxHeader = document.querySelector(".lux-header");
+if (luxHeader) {
+  const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
+  syncHeaderSurface();
+  window.addEventListener("scroll", syncHeaderSurface, { passive: true });
+}
 
 if (luxNav && luxMenu) {
   const language = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
@@ -493,9 +505,7 @@ if (luxNav && luxMenu) {
     }));
   }
 
-  const pairedPage = language === "zh"
-    ? currentPage === "caviar.html" ? "products.html" : currentPage
-    : currentPage === "products.html" ? "caviar.html" : currentPage;
+  const pairedPage = currentPage;
   const languageLinks = document.querySelectorAll(".lux-lang a");
   if (languageLinks.length === 2 && pairedPage !== "bag.html") {
     languageLinks[0].href = language === "zh" ? "#" : pageHref(pairedPage, "zh");
@@ -762,7 +772,7 @@ function initLuxGiftScroller() {
 }
 
 function initLuxPartnershipLightbox() {
-  const triggers = [...document.querySelectorAll("[data-partnership-image]")];
+  const triggers = [...document.querySelectorAll("[data-partnership-image], .lux-brand-promise-card > img")];
   if (!triggers.length || typeof HTMLDialogElement === "undefined") return;
 
   const isChinese = document.documentElement.lang?.toLowerCase().startsWith("zh");
@@ -778,6 +788,8 @@ function initLuxPartnershipLightbox() {
   const close = () => dialog.open && dialog.close();
 
   triggers.forEach((trigger) => {
+    if (!trigger.hasAttribute("role")) trigger.setAttribute("role", "button");
+    if (!trigger.hasAttribute("tabindex")) trigger.tabIndex = 0;
     const sourceImage = trigger.matches("img") ? trigger : trigger.querySelector("img");
     if (!sourceImage) return;
     trigger.setAttribute("aria-label", `${viewLabel}：${sourceImage.alt}`);
@@ -1029,6 +1041,19 @@ function initLuxAwardLightbox() {
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
 }
 
+async function createLuxBotProof(challenge) {
+  if (!challenge || !window.crypto?.subtle) return null;
+  const random = new Uint8Array(16);
+  crypto.getRandomValues(random);
+  const nonce = Array.from(random, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  const encoder = new TextEncoder();
+  for (let proof = 0; proof <= 1000000; proof += 1) {
+    const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(`${challenge}:${nonce}:${proof}`)));
+    if (digest[0] === 0 && digest[1] < 16) return { nonce, proof };
+  }
+  return null;
+}
+
 (() => {
   const icons = {
     x: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>',
@@ -1208,7 +1233,7 @@ function initLuxAwardLightbox() {
     const account = window.LuxureatAccount;
     const email = form.elements.email;
     const emailHint = node.querySelector("[data-account-email-hint]");
-    if (!email.validity.valid) {
+    if (!email.value.trim() || !email.validity.valid) {
       emailHint.hidden = false;
       shake(emailHint);
       email.focus();
@@ -1242,24 +1267,8 @@ function initLuxAwardLightbox() {
     feedback.textContent = text.working;
     const data = new URLSearchParams(new FormData(form));
     const challenge = account.botChallenge;
-    if (!challenge || !window.crypto?.subtle) {
-      feedback.textContent = text.unavailable;
-      button.disabled = false;
-      return;
-    }
-    const random = new Uint8Array(16);
-    crypto.getRandomValues(random);
-    const botNonce = Array.from(random, (byte) => byte.toString(16).padStart(2, "0")).join("");
-    const encoder = new TextEncoder();
-    let botProof = -1;
-    for (let proof = 0; proof <= 1000000; proof += 1) {
-      const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(`${challenge}:${botNonce}:${proof}`)));
-      if (digest[0] === 0 && digest[1] < 16) {
-        botProof = proof;
-        break;
-      }
-    }
-    if (botProof < 0) {
+    const bot = await createLuxBotProof(challenge);
+    if (!bot) {
       feedback.textContent = text.unavailable;
       button.disabled = false;
       return;
@@ -1267,8 +1276,8 @@ function initLuxAwardLightbox() {
     data.set("action", "luxureat_account");
     data.set("nonce", account.nonce);
     data.set("bot_challenge", challenge);
-    data.set("bot_nonce", botNonce);
-    data.set("bot_proof", String(botProof));
+    data.set("bot_nonce", bot.nonce);
+    data.set("bot_proof", String(bot.proof));
     data.set("mode", node.dataset.accountMode || "login");
     data.set("lang", isZh() ? "zh" : "en");
     try {
@@ -1396,6 +1405,78 @@ function initLuxAwardLightbox() {
     const feedback = node.querySelector("[data-account-feedback]");
     feedback.textContent = state === "verified" ? copy().verified : state === "verification-failed" ? copy().verificationFailed : copy().loginRequired;
     feedback.classList.toggle("is-success", state === "verified");
+  });
+})();
+
+(() => {
+  const isZh = document.documentElement.lang?.toLowerCase().startsWith("zh");
+  const copy = isZh ? {
+    working: "正在准备确认邮件…",
+    success: "确认邮件已发送，请打开邮件完成订阅。",
+    unavailable: "订阅服务暂时不可用，请稍后再试。",
+  } : {
+    working: "Preparing your confirmation email…",
+    success: "Confirmation email sent. Open it to complete your subscription.",
+    unavailable: "Subscriptions are temporarily unavailable. Please try again later.",
+  };
+
+  document.addEventListener("submit", async (event) => {
+    if (!event.target.matches("[data-newsletter-form]")) return;
+    event.preventDefault();
+    const form = event.target;
+    const email = form.elements.email;
+    const feedback = form.querySelector("[data-newsletter-feedback]");
+    const button = form.querySelector("button[type='submit']");
+    feedback.classList.remove("is-success");
+    if (!email.value.trim() || !email.validity.valid) {
+      feedback.textContent = feedback.dataset.invalid;
+      email.focus();
+      return;
+    }
+    const account = window.LuxureatAccount;
+    if (!account?.ajaxUrl || !account?.newsletterNonce) {
+      feedback.textContent = copy.unavailable;
+      return;
+    }
+    button.disabled = true;
+    feedback.textContent = copy.working;
+    const bot = await createLuxBotProof(account.botChallenge);
+    if (!bot) {
+      feedback.textContent = copy.unavailable;
+      button.disabled = false;
+      return;
+    }
+    const data = new URLSearchParams(new FormData(form));
+    data.set("action", "luxureat_newsletter");
+    data.set("nonce", account.newsletterNonce);
+    data.set("bot_challenge", account.botChallenge);
+    data.set("bot_nonce", bot.nonce);
+    data.set("bot_proof", String(bot.proof));
+    data.set("lang", isZh ? "zh" : "en");
+    try {
+      const response = await fetch(account.ajaxUrl, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: data,
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.data?.message || copy.unavailable);
+      feedback.textContent = result.data?.message || copy.success;
+      feedback.classList.add("is-success");
+      form.reset();
+    } catch (error) {
+      feedback.textContent = error.message || copy.unavailable;
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  document.addEventListener("input", (event) => {
+    if (!event.target.matches("[data-newsletter-form] input[name='email']")) return;
+    const feedback = event.target.form.querySelector("[data-newsletter-feedback]");
+    feedback.textContent = "";
+    feedback.classList.remove("is-success");
   });
 })();
 

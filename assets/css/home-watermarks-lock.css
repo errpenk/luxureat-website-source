@@ -1,0 +1,8 @@
+/* Homepage background words are intentionally disabled in both language editions. */
+.lux-home-services::before,
+.lux-latest-event-carousel::before,
+.lux-home-timeline::before,
+.lux-home-why::before {
+  content: none !important;
+  display: none !important;
+}

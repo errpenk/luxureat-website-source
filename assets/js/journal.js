@@ -9,10 +9,11 @@ function initLuxReader() {
   const mapMount = document.querySelector("[data-exhibition-map]");
   const newsMount = document.querySelector("[data-news-center]");
   const aboutMount = document.querySelector("[data-about-story]");
+  const recipeLibraryMount = document.querySelector("[data-recipe-library-app]");
   const eventHash = decodeURIComponent(location.hash).replace(/^#event-/, "");
   const readerHash = decodeURIComponent(location.hash).replace(/^#reader-/, "");
   const triggers = document.querySelectorAll("[data-reader-open], [data-reader-archive], [data-event-open]");
-  if (!triggers.length && !eventMount && !mapMount && !newsMount && !aboutMount && !events.some((event) => event.id === eventHash)) return;
+  if (!triggers.length && !eventMount && !mapMount && !newsMount && !aboutMount && !recipeLibraryMount && !events.some((event) => event.id === eventHash)) return;
   if (!Object.keys(articles).length && !events.length) return;
 
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
@@ -33,6 +34,82 @@ function initLuxReader() {
       ["Quality & Traceability", ["en-mother-of-pearl"]],
     ];
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const renderRecipeLibrary = () => {
+    if (!recipeLibraryMount) return;
+    const copy = lang === "zh"
+      ? { region: "参考地区", ingredient: "核心原料", allRegions: "全部地区", allIngredients: "全部原料", clear: "清空筛选", count: "份食谱", read: "阅读详情", empty: "没有符合当前条件的食谱" }
+      : { region: "Reference region", ingredient: "Core ingredient", allRegions: "All regions", allIngredients: "All ingredients", clear: "Clear filters", count: "recipes", read: "View Details", empty: "No recipes match these filters" };
+    const ingredientGroups = [
+      ["olive-oil", lang === "zh" ? "橄榄油" : "Olive oil", /橄榄油|olive oil|extra-virgin/i],
+      ["truffle", lang === "zh" ? "松露" : "Truffle", /松露|truffle/i],
+      ["caviar", lang === "zh" ? "鱼子酱" : "Caviar", /鱼子酱|caviar/i],
+      ["pasta", lang === "zh" ? "意面与面粉" : "Pasta & flour", /意面|面粉|披萨|spaghetti|pasta|flour|pizza|ravioli|tagliolini/i],
+      ["rice", lang === "zh" ? "米" : "Rice", /卡纳罗利米|烩饭|rice|risotto|carnaroli/i],
+      ["egg", lang === "zh" ? "鸡蛋" : "Egg", /鸡蛋|蛋黄|蛋白|egg/i],
+      ["mushroom", lang === "zh" ? "菌菇" : "Mushroom", /蘑菇|香菇|牛肝菌|mushroom|porcini/i],
+      ["seafood", lang === "zh" ? "海鲜" : "Seafood", /虾|扇贝|鱼|shrimp|prawn|scallop|fish|caviar/i],
+      ["dairy", lang === "zh" ? "乳制品" : "Dairy", /牛奶|奶油|奶酪|黄油|马斯卡彭|milk|cream|cheese|butter|mascarpone|mozzarella/i],
+      ["vegetable", lang === "zh" ? "蔬菜" : "Vegetables", /番茄|茴香|橙子|西葫芦|胡萝卜|西芹|甜椒|tomato|fennel|orange|courgette|zucchini|carrot|celery|pepper/i],
+      ["meat", lang === "zh" ? "肉类" : "Meat", /鸡|羊|chicken|lamb/i],
+    ];
+    const regionGroups = [
+      ["piedmont", lang === "zh" ? "皮埃蒙特" : "Piedmont", /皮埃蒙特|piedmont/i],
+      ["lombardy", lang === "zh" ? "伦巴第" : "Lombardy", /伦巴第|lombardy/i],
+      ["liguria", lang === "zh" ? "利古里亚" : "Liguria", /利古里亚|ligurian/i],
+      ["veneto", lang === "zh" ? "威尼托" : "Veneto", /威尼斯|威尼托|venetian|veneto/i],
+      ["tuscany", lang === "zh" ? "托斯卡纳" : "Tuscany", /托斯卡纳|tuscany/i],
+      ["umbria", lang === "zh" ? "翁布里亚" : "Umbria", /翁布里亚|瓦尔内里纳|umbria|valnerina/i],
+      ["lazio", lang === "zh" ? "拉齐奥" : "Lazio", /拉齐奥|lazio/i],
+      ["campania", lang === "zh" ? "坎帕尼亚" : "Campania", /坎帕尼亚|那不勒斯|campania|naples/i],
+      ["sicily", lang === "zh" ? "西西里" : "Sicily", /西西里|sicily/i],
+      ["north", lang === "zh" ? "意大利北部" : "Northern Italy", /意大利北部|northern italian/i],
+      ["central", lang === "zh" ? "意大利中部" : "Central Italy", /意大利中部|central italy/i],
+      ["south", lang === "zh" ? "意大利南部" : "Southern Italy", /意大利南部|southern italy/i],
+      ["italy", lang === "zh" ? "意大利通用 / 跨地区" : "Italy-wide / Cross-regional", /./],
+    ];
+    const recipeRegions = (value = "") => {
+      const specific = regionGroups.slice(0, 9).filter(([, , pattern]) => pattern.test(value)).map(([key]) => key);
+      if (specific.length) return specific;
+      return [regionGroups.slice(9).find(([, , pattern]) => pattern.test(value))?.[0] || "italy"];
+    };
+    const recipes = Object.entries(articles)
+      .filter(([, article]) => article.type === "recipe" && article.lang === lang && article.recipe)
+      .map(([id, article]) => {
+        const searchable = [article.title, article.recipe.ingredients.join(" "), article.recipe.products || ""].join(" ");
+        return { id, article, regions: recipeRegions(article.recipe.region), ingredients: ingredientGroups.filter(([, , pattern]) => pattern.test(searchable)).map(([key]) => key) };
+      });
+    const regions = regionGroups.filter(([key]) => recipes.some((recipe) => recipe.regions.includes(key)));
+    const usedIngredients = ingredientGroups.filter(([key]) => recipes.some((recipe) => recipe.ingredients.includes(key)));
+    recipeLibraryMount.innerHTML = `
+      <div class="lux-recipe-library-controls">
+        <label><span>${copy.region}</span><select data-recipe-region><option value="">${copy.allRegions}</option>${regions.map(([key, label]) => `<option value="${key}">${label}</option>`).join("")}</select></label>
+        <label><span>${copy.ingredient}</span><select data-recipe-ingredient><option value="">${copy.allIngredients}</option>${usedIngredients.map(([key, label]) => `<option value="${key}">${label}</option>`).join("")}</select></label>
+        <button type="button" data-recipe-clear>${copy.clear}</button>
+        <p aria-live="polite" data-recipe-count></p>
+      </div>
+      <div class="lux-recipe-library-grid" data-recipe-grid></div>
+      <p class="lux-recipe-library-empty" data-recipe-empty hidden>${copy.empty}</p>`;
+    const regionSelect = recipeLibraryMount.querySelector("[data-recipe-region]");
+    const ingredientSelect = recipeLibraryMount.querySelector("[data-recipe-ingredient]");
+    const grid = recipeLibraryMount.querySelector("[data-recipe-grid]");
+    const count = recipeLibraryMount.querySelector("[data-recipe-count]");
+    const empty = recipeLibraryMount.querySelector("[data-recipe-empty]");
+    const update = () => {
+      const filtered = recipes.filter(({ regions, ingredients }) => (!regionSelect.value || regions.includes(regionSelect.value)) && (!ingredientSelect.value || ingredients.includes(ingredientSelect.value)));
+      grid.innerHTML = filtered.map(({ id, article, ingredients }) => `
+        <button type="button" class="lux-recipe-library-card" data-reader-open="${escapeHtml(id)}">
+          <span class="lux-recipe-library-media"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"><span class="lux-reader-cta">${copy.read}</span></span>
+          <span class="lux-recipe-library-copy"><small>${escapeHtml(article.recipe.region || article.eyebrow)}</small><strong>${escapeHtml(article.title)}</strong><span>${escapeHtml(article.recipe.time)} · ${escapeHtml(article.recipe.difficulty)}</span><span class="lux-recipe-library-tags">${ingredients.map((key) => `<i>${escapeHtml(ingredientGroups.find(([groupKey]) => groupKey === key)?.[1] || key)}</i>`).join("")}</span></span>
+        </button>`).join("");
+      count.textContent = `${filtered.length} ${copy.count}`;
+      empty.hidden = filtered.length > 0;
+    };
+    regionSelect.addEventListener("change", update);
+    ingredientSelect.addEventListener("change", update);
+    recipeLibraryMount.querySelector("[data-recipe-clear]").addEventListener("click", () => { regionSelect.value = ""; ingredientSelect.value = ""; update(); regionSelect.focus(); });
+    update();
+  };
+  renderRecipeLibrary();
   const localizeArchiveLabel = (value) => {
     if (lang !== "zh") return value;
     const labels = {
@@ -484,7 +561,7 @@ function initLuxReader() {
 
   const topicArt = (article, compact = false) => article.image
     ? `<img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">`
-    : `<div class="lux-reader-cover-art ${escapeHtml(article.artClass || "is-caviar")}" role="img" aria-label="${escapeHtml(article.title)}"><span>${escapeHtml(article.topicLabel || article.eyebrow)}</span><strong>${escapeHtml(article.topic === "olive" ? "OLIO" : article.topic === "gelato" ? "GELATO" : "CAVIAR")}</strong></div>`;
+    : `<div class="lux-reader-cover-art ${escapeHtml(article.artClass || "is-caviar")}" role="img" aria-label="${escapeHtml(article.title)}"></div>`;
 
   const render = (id, push) => {
     const article = articles[id];
@@ -495,8 +572,10 @@ function initLuxReader() {
     if (article.type === "recipe" && article.recipe) {
       const recipe = article.recipe;
       const recipeLabels = article.lang === "zh"
-        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", region: "参考产区", oil: "推荐用油", allergens: "过敏原提示", substitutions: "可替换食材", products: "相关产品" }
-        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", region: "Reference region", oil: "Suggested oil", allergens: "Allergen note", substitutions: "Substitutions", products: "Related products" };
+        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", products: "相关产品" }
+        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", products: "Related products" };
+      const productCategory = article.productCategory || (article.topic === "olive" ? "olive-oil" : article.topic);
+      const productHref = `${article.lang === "zh" ? "product.html" : "product.html"}${productCategory ? `?category=${productCategory}#product-catalogue` : ""}`;
       body.innerHTML = `
         <article class="lux-recipe-reader">
           <section class="lux-recipe-hero">
@@ -515,7 +594,6 @@ function initLuxReader() {
           <section class="lux-recipe-body">
             <aside class="lux-recipe-ingredients">
               <h3>${recipeLabels.ingredients}</h3>
-              <p>${escapeHtml(recipe.description)}</p>
               <ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
             </aside>
             <div class="lux-recipe-method">
@@ -526,9 +604,11 @@ function initLuxReader() {
           <section class="lux-recipe-nutrition">
             <header><h3>${recipeLabels.nutrition}</h3></header>
             <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
+            ${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${recipeLabels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ""}
           </section>
           <section class="lux-recipe-details">
-            ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions], [recipeLabels.products, recipe.products]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
+            ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.professionalTip, recipe.professionalTip], [recipeLabels.foodSafety, recipe.foodSafety], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
+            ${recipe.products ? `<div><dt>${recipeLabels.products}</dt><dd><a class="lux-recipe-product-link" href="${escapeHtml(productHref)}">${escapeHtml(recipe.products)}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></dd></div>` : ""}
           </section>
         </article>`;
       showReader(copy);
@@ -540,15 +620,31 @@ function initLuxReader() {
       : item?.type === "table"
         ? item.rows.flat().join(" ")
         : item?.lines?.join("") || item?.text || "";
-    const paragraphs = (content) => (Array.isArray(content) ? content : [content])
-      .map((item) => item?.type === "table"
+    const paragraphs = (content, mergeShortCopy = false) => {
+      const items = Array.isArray(content) ? content : [content];
+      if (mergeShortCopy && items.every((item) => typeof item === "string")) {
+        const groups = [];
+        for (const item of items) {
+          const isListItem = item.startsWith("• ");
+          const previous = groups.at(-1);
+          if (isListItem && previous?.type === "list") previous.items.push(item.slice(2));
+          else if (isListItem) groups.push({ type: "list", items: [item.slice(2)] });
+          else if (previous?.type === "copy") previous.items.push(item);
+          else groups.push({ type: "copy", items: [item] });
+        }
+        return groups.map((group) => group.type === "list"
+          ? `<ul class="lux-reader-prose-list">${group.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+          : `<p>${group.items.map(escapeHtml).join(article.lang === "zh" ? "" : " ")}</p>`).join("");
+      }
+      return items.map((item) => item?.type === "table"
         ? `<div class="lux-reader-table-wrap"><table><tbody>${item.rows.map((row, rowIndex) => `<tr>${row.map((cell) => `<${rowIndex ? "td" : "th"}>${escapeHtml(cell)}</${rowIndex ? "td" : "th"}>`).join("")}</tr>`).join("")}</tbody></table></div>`
         : item?.type === "strong"
         ? `<p class="lux-reader-inline-heading"><strong>${escapeHtml(item.text)}</strong></p>`
         : item?.type === "quote"
           ? `<blockquote class="lux-reader-indent-quote">${item.lines.map((line, index) => `<p>${item.bold?.includes(index) ? `<strong>${escapeHtml(line)}</strong>` : escapeHtml(line)}</p>`).join("")}</blockquote>`
           : `<p>${escapeHtml(item)}</p>`)
-      .join("");
+        .join("");
+    };
     const opening = article.opening || [];
     const plainText = [article.intro, ...opening, ...articleSections.flatMap(([, content]) => (Array.isArray(content) ? content : [content]).map(contentText))].join(" ");
     const units = article.lang === "zh" ? plainText.replace(/\s/g, "").length / 300 : (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length / 200;
@@ -572,7 +668,7 @@ function initLuxReader() {
       return `
           <section class="lux-reader-section" id="lux-reader-section-${index}">
             <h3>${escapeHtml(heading)}</h3>
-            ${paragraphs(content)}
+            ${paragraphs(content, ["dictionary", "producers"].includes(article.topic))}
             ${media.length ? `<div class="lux-reader-section-media">${media.map((item, mediaIndex) => `
               <figure>
                 <button type="button" class="lux-reader-image-button" data-reader-image="${escapeHtml(item.src)}" aria-label="${escapeHtml(article.lang === "zh" ? `放大查看：${item.alt || heading}` : `View full size: ${item.alt || heading}`)}">
@@ -607,6 +703,7 @@ function initLuxReader() {
           <div class="lux-reader-copy">
             ${openingHtml}
             ${sectionHtml}
+            ${article.cta ? `<a class="lux-reader-article-cta" href="${escapeHtml(article.cta.href)}">${escapeHtml(article.cta.label)}</a>` : ""}
             ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
           </div>
           <aside class="lux-reader-pull">

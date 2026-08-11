@@ -327,6 +327,8 @@ function initLuxCaviarControls() {
     if (event.key === "Escape") setSortOpen(false);
   });
 
+  const requestedCategory = new URLSearchParams(location.search).get("category");
+  filterButtons.find((button) => button.dataset.caviarFilterGroup === "category" && button.dataset.caviarFilter === requestedCategory)?.click();
   applyFilter();
   applyView();
   applySort();

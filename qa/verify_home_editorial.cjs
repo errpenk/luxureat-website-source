@@ -33,7 +33,7 @@ function assert(condition, message) {
       assert(result.sections === 2, "zh home should have two editorial modules");
       assert(result.maisonSections === 1 && result.maisonCards === 3, "zh group overview is incomplete");
       assert(result.maisonText.includes("认证农场") && result.maisonText.includes("Royal Kaluga") && result.maisonText.includes("TrufflEat"), "zh source brand narrative is incomplete");
-      assert(["news.html#recent-events", "gifting.html", "certification.html", "contact.html#global-footprint"].every((href) => result.maisonLinks.includes(href)), `zh group links are incomplete: ${result.maisonLinks}`);
+      assert(["brand.html#recent-events", "cooperation.html", "certification.html", "contact.html#global-footprint"].every((href) => result.maisonLinks.includes(href)), `zh group links are incomplete: ${result.maisonLinks}`);
       assert(result.facts === 2, "zh harvest should keep two facts");
       assert(result.services === 3, "zh gifting should keep three services");
       assert(result.harvestDisplay === "grid", "zh harvest editorial grid is missing");

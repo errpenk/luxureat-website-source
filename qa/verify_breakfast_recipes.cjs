@@ -9,7 +9,7 @@ const assert = (condition, message) => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 
-  await page.goto(`${BASE_URL}/zh/rituals.html`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE_URL}/zh/recipe.html`, { waitUntil: "domcontentloaded" });
   const cards = await page.evaluate(() => ({
     pageText: document.body.textContent,
     ids: [...document.querySelectorAll('[data-reader-open^="zh-recipe-"]')].map((node) => node.dataset.readerOpen),
@@ -26,6 +26,12 @@ const assert = (condition, message) => {
   assert(cards.pageText.includes("从早餐到甜点") && cards.pageText.replace(/\s+/g, "").includes("LuxurEat（露意膳）以意大利食谱为脉络"), "Chinese recipe introduction was not updated");
   assert(cards.jumpLinks.map(([, id]) => id).join("|") === "breakfast|first-courses|main-courses|desserts", `Chinese recipe navigation is wrong: ${cards.jumpLinks}`);
   assert(cards.jumpTargets, "one or more Chinese recipe navigation targets are missing");
+  const regionOptions = await page.locator("[data-recipe-region] option").allTextContents();
+  assert(regionOptions.includes("皮埃蒙特") && !regionOptions.some((label) => label.includes("风味") || label.includes("现代前菜")), `recipe regions were not consolidated: ${regionOptions}`);
+  await page.locator("[data-recipe-region]").selectOption("piedmont");
+  const piedmontRecipes = await page.locator(".lux-recipe-library-card").evaluateAll((nodes) => nodes.map((node) => node.dataset.readerOpen));
+  assert(piedmontRecipes.includes("zh-recipe-truffle-tagliolini") && piedmontRecipes.includes("zh-recipe-beef-carpaccio-scallop-truffle") && piedmontRecipes.includes("zh-recipe-black-truffle-risotto"), `Piedmont recipes were not grouped: ${piedmontRecipes}`);
+  await page.locator("[data-recipe-clear]").click();
   assert(await page.locator(".lux-recipe-anchor .lux-reader-card[data-reader-open] .lux-reader-cta").count() === await page.locator(".lux-recipe-anchor .lux-reader-card[data-reader-open]").count(), "Every recipe card needs the shared hover detail CTA");
   await page.locator('[data-recipe-panel-open="breakfast"]').click();
 
@@ -62,7 +68,7 @@ const assert = (condition, message) => {
   assert(toast.ingredients === 9 && toast.steps === 4, "second recipe content is incomplete");
   assert(toast.image.endsWith("/assets/media/journal/recipe-truffle-toast.webp"), "second recipe image is wrong");
 
-  await page.goto(`${BASE_URL}/en/rituals.html`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE_URL}/en/recipe.html`, { waitUntil: "domcontentloaded" });
   const english = await page.evaluate(() => ({
     pageText: document.body.textContent,
     ids: [...document.querySelectorAll('[data-reader-open^="en-recipe-"]')].map((node) => node.dataset.readerOpen),
@@ -72,7 +78,7 @@ const assert = (condition, message) => {
   assert(english.ids.includes("en-recipe-truffle-eggs") && english.ids.includes("en-recipe-truffle-toast"), "English recipe cards are missing");
   assert(english.pageText.includes("Italian Flavor Recipes") && english.jumpLinks.join("|") === "breakfast|first-courses|main-courses|desserts", "English recipe introduction or navigation is not synchronized");
 
-  await page.goto(`${BASE_URL}/zh/rituals.html`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE_URL}/zh/recipe.html`, { waitUntil: "domcontentloaded" });
   await page.locator('[data-recipe-panel-open="first-courses"]').click();
   const courses = await page.evaluate(() => {
     const cards = [...document.querySelectorAll(".lux-course-card")];
@@ -177,7 +183,7 @@ const assert = (condition, message) => {
     await page.locator(".lux-reader-close").evaluate((node) => node.click());
   }
 
-  await page.goto(`${BASE_URL}/en/rituals.html`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${BASE_URL}/en/recipe.html`, { waitUntil: "domcontentloaded" });
   assert(await page.locator("#first-courses h2").count() === 1, "English First Courses heading is missing");
   assert(await page.locator("#main-courses h2").count() === 1, "English Main Courses heading is missing");
   assert(await page.locator(".lux-main-course-card").count() === 2, "English Main Courses cards are incomplete");

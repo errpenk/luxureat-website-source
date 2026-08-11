@@ -10,7 +10,7 @@ function assert(condition, message) {
 
   for (const viewport of [{ width: 1366, height: 900 }, { width: 390, height: 844 }]) {
     const page = await browser.newPage({ viewport });
-    await page.goto(`file://${path.resolve(__dirname, "../zh/journal.html")}`, { waitUntil: "domcontentloaded" });
+    await page.goto(`file://${path.resolve(__dirname, "../zh/about-us.html")}`, { waitUntil: "domcontentloaded" });
     await page.waitForSelector(".lux-about-story .lux-reader-layout");
     const aboutImages = page.locator(".lux-about-image-button img");
     for (let index = 0; index < await aboutImages.count(); index += 1) {
@@ -158,7 +158,7 @@ function assert(condition, message) {
   }
 
   const english = await browser.newPage({ viewport: { width: 1366, height: 900 } });
-  await english.goto(`file://${path.resolve(__dirname, "../en/journal.html")}`, { waitUntil: "domcontentloaded" });
+  await english.goto(`file://${path.resolve(__dirname, "../en/about-us.html")}`, { waitUntil: "domcontentloaded" });
   await english.waitForSelector(".lux-about-story .lux-reader-layout");
   const englishResult = await english.evaluate(() => {
     const story = document.querySelector(".lux-about-story");

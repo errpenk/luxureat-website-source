@@ -1,0 +1,24 @@
+.lux-newsletter{padding:clamp(48px,5vw,68px) clamp(22px,5vw,80px) 28px;border-top:1px solid rgba(255,255,255,.72);background:#070707;color:#e5e2e1;font-family:var(--lux-page-heading)}
+.lux-newsletter+.lux-footer{border-top:0;padding-top:36px}
+.lux-visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.lux-newsletter-inner{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.85fr);align-items:end;gap:clamp(40px,8vw,140px)}
+.lux-newsletter-intro{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:center;gap:24px;min-width:0}
+.lux-newsletter-icon{display:block;width:76px;height:112px;object-fit:contain;object-position:left center;transform:translateX(20px)}
+.lux-newsletter-copy>span{display:block;margin-bottom:12px;color:#81d8d0;font:600 var(--lux-type-label-sm,12px)/1.2 var(--lux-page-heading);letter-spacing:.18em}
+.lux-newsletter-copy h2{margin:0 0 10px;color:#81d8d0;font:400 var(--lux-type-body-sm,13px)/1.5 var(--lux-page-heading);letter-spacing:0}
+.lux-newsletter-copy p{max-width:650px;margin:0;color:#bdc9c7}
+html body .lux-newsletter .lux-newsletter-copy>p,
+html body .lux-footer .lux-footer-brand>p{font-family:var(--lux-page-heading)!important;font-size:13px!important;font-weight:400!important;line-height:19.5px!important;letter-spacing:normal!important}
+.lux-newsletter-form>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px}
+.lux-newsletter-form input{box-sizing:border-box;min-width:0;padding:17px 2px;border:0;border-bottom:1px solid #81d8d0;outline:0;background:transparent;color:#f3f0eb;font:400 var(--lux-type-body-md,16px)/1.4 var(--lux-page-heading)}
+.lux-newsletter-form input::placeholder{color:#8f9997;opacity:1}
+.lux-newsletter-form button{min-width:150px;padding:14px 22px;border:1px solid #81d8d0;background:transparent;color:#81d8d0;font:600 var(--lux-type-label-md,14px)/1.2 var(--lux-page-heading);letter-spacing:.08em;transition:background-color .18s,border-color .18s,color .18s}
+.lux-newsletter-form button:hover,.lux-newsletter-form button:focus-visible{border-color:#81d8d0;background:#81d8d0;color:#003734}
+.lux-newsletter-form button:disabled{cursor:wait;opacity:.6}
+.lux-newsletter-form [data-newsletter-feedback]{min-height:24px;margin:12px 0 0;color:#ef9b91;font:400 var(--lux-type-body-sm,13px)/1.5 var(--lux-page-heading)}
+.lux-newsletter-form [data-newsletter-feedback].is-success{color:#81d8d0}
+.lux-home-topic-preview .lux-topic-preview-card figure{position:relative}
+.lux-home-topic-preview .lux-topic-preview-card figure::before{content:"";position:absolute;z-index:2;inset:14px;border:1px solid rgba(255,255,255,.56);border-radius:14px 14px 3px 3px;pointer-events:none}
+.lux-home-topic-preview .lux-topic-preview-card figure::after{content:"";position:absolute;z-index:2;inset:14px;background:linear-gradient(#e9c349,#e9c349) left top/42px 1px no-repeat,linear-gradient(#e9c349,#e9c349) left top/1px 42px no-repeat,linear-gradient(#e9c349,#e9c349) right top/42px 1px no-repeat,linear-gradient(#e9c349,#e9c349) right top/1px 42px no-repeat,linear-gradient(#81d8d0,#81d8d0) left bottom/34px 1px no-repeat,linear-gradient(#81d8d0,#81d8d0) left bottom/1px 34px no-repeat,linear-gradient(#81d8d0,#81d8d0) right bottom/34px 1px no-repeat,linear-gradient(#81d8d0,#81d8d0) right bottom/1px 34px no-repeat;opacity:.86;transition:opacity .25s ease;pointer-events:none}
+.lux-home-topic-preview .lux-topic-preview-card:is(:hover,:focus-visible) figure::after{opacity:1}
+@media(max-width:720px){.lux-newsletter{padding:42px 22px 24px}.lux-newsletter+.lux-footer{padding-top:28px}.lux-newsletter-inner{grid-template-columns:1fr;gap:26px}.lux-newsletter-intro{grid-template-columns:84px minmax(0,1fr);gap:18px}.lux-newsletter-icon{width:58px;height:84px;transform:translateX(14px)}.lux-newsletter-form>div{grid-template-columns:1fr;gap:12px}.lux-newsletter-form button{width:100%;min-height:52px}}

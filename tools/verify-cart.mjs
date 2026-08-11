@@ -30,7 +30,7 @@ const context = {
     scrollY: 0,
   },
   history: {},
-  location: { href: 'https://example.com/en/caviar.html', origin: 'https://example.com', pathname: '/en/caviar.html', search: '' },
+  location: { href: 'https://example.com/en/product.html', origin: 'https://example.com', pathname: '/en/product.html', search: '' },
   localStorage: {
     getItem(key) {
       return store.get(key) ?? null;

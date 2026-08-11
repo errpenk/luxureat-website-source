@@ -36,6 +36,10 @@ for (const file of [
 const products = load("assets/data/products.js", "LUXUREAT_PRODUCT_DATA");
 const events = load("assets/data/events.js", "LUXUREAT_EVENT_DATA");
 const journal = load("assets/data/journal.js", "LUXUREAT_ARTICLE_DATA");
+const recipeProductCategories = new Set(["caviar", "truffle", "olive-oil", "pizza", "gelato"]);
+for (const article of Object.values(journal.articles).filter((item) => item.type === "recipe")) {
+  assert(recipeProductCategories.has(article.productCategory), `${article.title} does not link to a matching product category`);
+}
 
 const media = [
   ...Object.values(products.images || {}),
@@ -54,6 +58,29 @@ const sourceFiles = [
   ...fs.readdirSync(path.join(root, "en")).filter((name) => name.endsWith(".html")).map((name) => `en/${name}`),
 ];
 const html = sourceFiles.map(read).join("\n");
+
+// A missing display glyph causes the browser to fall back per character, mixing
+// KingHwa and ZhiSong inside one heading. Keep the subset manifest aligned with
+// static headings and the dynamic title/name/label fields rendered as headings.
+const cjk = /[\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/g;
+const requiredHeadlineGlyphs = new Set();
+for (const file of sourceFiles.filter((name) => name.startsWith("zh/"))) {
+  for (const match of read(file).matchAll(/<h[1-6]\b[^>]*>([\s\S]*?)<\/h[1-6]>/gi)) {
+    for (const glyph of (match[1].replace(/<[^>]+>/g, "").match(cjk) || [])) requiredHeadlineGlyphs.add(glyph);
+  }
+}
+const dynamicHeadingKey = /\b(?:titleZh|zhTitle|title|nameZh|zhName|name|headingZh|heading|labelZh|label|categoryZh|eyebrowZh|kickerZh)\s*:\s*(["'`])([\s\S]*?)\1/g;
+for (const directory of ["assets/data", "assets/js"]) {
+  for (const name of fs.readdirSync(path.join(root, directory)).filter((file) => file.endsWith(".js"))) {
+    for (const match of read(`${directory}/${name}`).matchAll(dynamicHeadingKey)) {
+      for (const glyph of (match[2].match(cjk) || [])) requiredHeadlineGlyphs.add(glyph);
+    }
+  }
+}
+const headlineManifest = new Set(read("assets/fonts/KingHwaOldSong-site-glyphs.txt"));
+const missingHeadlineGlyphs = [...requiredHeadlineGlyphs].filter((glyph) => !headlineManifest.has(glyph));
+assert(!missingHeadlineGlyphs.length, `KingHwa headline subset is missing: ${missingHeadlineGlyphs.join("")}`);
+
 assert(!html.includes("assets/images/"), "HTML still references assets/images");
 assert(!html.includes("assets/article-images/"), "HTML still references assets/article-images");
 assert(!html.includes("latest-event.js"), "HTML still loads the obsolete latest-event.js");
@@ -67,6 +94,7 @@ assert(event?.poster?.endsWith("/marca-china-2026-poster.webp"), "latest event h
 const productRuntime = read("assets/js/products.js");
 assert(productRuntime.includes("const activeFilters = { category: new Set(), type: new Set() }"), "product filters do not expose category and label-type multi-select state");
 assert(productRuntime.includes("activeFilters.category.has(item.dataset.species)") && productRuntime.includes("activeFilters.type.has(item.dataset.productType)"), "product cards do not combine category and label-type filters");
+assert(productRuntime.includes('new URLSearchParams(location.search).get("category")') && productRuntime.includes('button.dataset.caviarFilter === requestedCategory'), "product category links do not initialize the matching catalogue filter");
 assert(productRuntime.includes('"未找到相关产品"') && productRuntime.includes("empty.hidden = visibleCount !== 0"), "product empty-search state is missing");
 
 const journalRuntime = read("assets/js/journal.js");
@@ -91,26 +119,34 @@ assert(journal.articles["en-mother-of-pearl"]?.title === "Caviar Labeling: Quali
 assert(journal.articles["en-champagne"].sections.length === 11, "sensory-analysis DOCX content is incomplete");
 assert(journal.articles["en-mother-of-pearl"].sectionMedia[0][0].src.includes("caviar-labeling-diagram"), "labeling diagram is missing");
 for (const locale of ["zh", "en"]) {
-  const news = read(`${locale}/news.html`);
+  const news = read(`${locale}/brand.html`);
   assert(news.includes("data-exhibition-map"), `${locale} exhibition map mount is missing`);
   assert(news.includes("data-news-center"), `${locale} News Centre mount is missing`);
 }
-assert(read("zh/news.html").includes("共同探索高端食品领域的创新方向与增长空间"), "Chinese Brand News hero copy is outdated");
+assert(read("zh/brand.html").includes("共同探索高端食品领域的创新方向与增长空间"), "Chinese Brand News hero copy is outdated");
 assert(journalRuntime.includes("发布 LuxurEat（露意膳）参与的国际食品展会") && !journalRuntime.includes('latest: "最新活动"'), "Chinese exhibition heading copy is outdated");
 assert(journalRuntime.includes("聚焦 LuxurEat（露意膳）的品牌动态、新品发布") && !journalRuntime.includes("Maison Journal"), "Chinese News Centre heading copy is outdated");
 assert(journalRuntime.includes("<strong>${escapeHtml(story.title)}</strong>"), "News Centre preview title is missing");
-assert(read("zh/journal.html").includes("阅读详情") && !read("zh/journal.html").includes("阅读详细叙事"), "Chinese featured journal link is outdated");
-assert(read("en/journal.html").includes("LuxurEat (露意膳) is a Chinese company established."), "English company description punctuation is outdated");
+assert(read("zh/about-us.html").includes("阅读详情") && !read("zh/about-us.html").includes("阅读详细叙事"), "Chinese featured journal link is outdated");
+assert(read("en/about-us.html").includes("LuxurEat (露意膳) is a Chinese company established."), "English company description punctuation is outdated");
 const accountRuntime = read("assets/js/core.js");
 assert(accountRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(accountRuntime.includes("luxProtectMaterialIcons(document)") && accountRuntime.includes('icon.classList.add("notranslate")') && accountRuntime.includes("icon.translate = false"), "Material Symbols are not protected from browser translation");
 const integrationStyles = read("integration.css");
+assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)"), "shared header top or mobile-menu surface styling is incomplete");
+assert(integrationStyles.includes(".lux-reader-close:hover") && integrationStyles.includes("border-color: #101010;") && integrationStyles.includes("box-shadow: none;"), "article-reader close hover does not retain the default thin border");
+assert(read("zh/about-us.html").includes("我们不使用的成分") && read("en/about-us.html").includes("Ingredients we do not use") && read("assets/css/journal.css").includes("lux-ingredient-standard-note"), "bilingual ingredient-exclusion statement is missing");
+assert(read("assets/css/journal.css").includes("width:100vw") && !read("assets/css/journal.css").includes("border-left"), "brand-promise note is not full-width or still has a left accent rule");
+assert(read("assets/js/certification-ui.js").includes("IntersectionObserver") && read("assets/css/certification.css").includes("is-scroll-flipped"), "certification glossary does not replay its scroll-triggered flip");
+assert(integrationStyles.includes(".lux-header { position: fixed; grid-template-columns: auto 1fr; }") && !integrationStyles.includes(".lux-header { position: sticky; grid-template-columns: auto 1fr; }"), "mobile header is not fixed over the hero at the top");
+assert(integrationStyles.includes(".lux-back-to-top:hover,.lux-back-to-top:focus-visible") && integrationStyles.includes("background:#9a6d22") && integrationStyles.includes("font: 700 13px/1.4"), "gold back-to-top hover or enlarged partnership detail link is missing");
+assert(read("assets/css/rituals.css").includes("border-color:#81d8d0;color:#81d8d0"), "recipe-library detail CTA does not turn Tiffany blue");
 assert(integrationStyles.includes('--lux-en-display: "Nyght Serif"') && integrationStyles.includes('--lux-en-heading: "Nyght Serif"') && read("en/contact.html").includes('NyghtSerif-Regular.woff2') && read("en/contact.html").includes('NyghtSerif-RegularItalic.woff2') && read("en/contact.html").includes('NyghtSerif-Bold.woff2'), "English headings do not use versioned Nyght Serif faces");
 assert(integrationStyles.includes('--lux-en-body: "Spectral"') && read("en/contact.html").includes('Spectral-Regular.woff2') && read("en/contact.html").includes('Spectral-Italic.woff2') && read("en/contact.html").includes('Spectral-SemiBold.woff2'), "English body copy does not use versioned Spectral faces");
 assert(integrationStyles.includes('html[lang^="en"] body *:not(.material-symbols-outlined)::before') && integrationStyles.includes('html[lang^="en"] body *:not(.material-symbols-outlined)::after') && integrationStyles.includes('font-family: var(--lux-en-heading) !important'), "English typography does not reject legacy text or generated-content fonts globally");
 assert(integrationStyles.includes(".lux-cert-glossary-grid") && integrationStyles.includes("grid-template-columns: repeat(2, minmax(0, 1fr)) !important") && integrationStyles.includes(".lux-cert-principle"), "mobile certification cards are not arranged in two columns");
 assert(integrationStyles.includes('--lux-zh-headline: "KingHwa Old Song Site"') && read("zh/contact.html").includes('KingHwaOldSong-site.woff2'), "Chinese headings do not use the complete KingHwa subset");
-assert(read("zh/journal.html").includes('LuxurEatZhiSong-site.woff2') && integrationStyles.includes('html[lang^="zh"] .lux-cert-awards h2'), "Journal body typography is not bundled and award records are not explicitly KingHwa");
+assert(read("zh/about-us.html").includes('LuxurEatZhiSong-site.woff2') && integrationStyles.includes('html[lang^="zh"] .lux-cert-awards h2'), "Journal body typography is not bundled and award records are not explicitly KingHwa");
 assert(integrationStyles.includes('--lux-zh-body: "LuxurEat ZhiSong Site"') && read("zh/contact.html").includes('LuxurEatZhiSong-site.woff2'), "Chinese body copy does not use the complete ZhiSong subset");
 assert(integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols-outlined)::before') && integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols-outlined)::after') && integrationStyles.includes('font-family: inherit !important'), "Chinese generated content does not inherit the current typography");
 const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
@@ -124,8 +160,8 @@ assert(!require("node:fs").existsSync("assets/fonts/LanternMingA-subset.woff2") 
 assert(integrationStyles.includes(".lux-info-icon:hover") && integrationStyles.includes("color: #9df5ec !important") && integrationStyles.includes("transform: scale(1.08)"), "gifting Lucide info icon interaction is incomplete");
 assert(integrationStyles.includes('html[lang^="zh"] .lux-home-maison blockquote') && integrationStyles.includes('html[lang^="zh"] .lux-event-card-copy strong') && integrationStyles.includes("-webkit-text-stroke: .16px currentColor"), "Chinese homepage quote and event titles do not use the strengthened KingHwa treatment");
 assert(integrationStyles.includes('html[lang^="zh"] body p.lux-footprint-video-title') && integrationStyles.includes('html[lang^="en"] body p.lux-footprint-video-title'), "contact footer title does not use the locale heading font");
-assert(read("zh/index.html").includes('href="contact.html">立即联系我们</a>') && read("en/index.html").includes('href="contact.html">Contact Us Now</a>'), "homepage contact CTA is not localized");
-assert(integrationStyles.includes(".lux-selected-products-kicker") && integrationStyles.includes(".lux-home-editorial-kicker") && integrationStyles.includes(".lux-home-editorial-folio") && integrationStyles.includes(".lux-home-why-copy > span") && integrationStyles.includes(".lux-meet-map-card > span") && integrationStyles.includes("font-size: 11px !important") && integrationStyles.includes("letter-spacing: .28em !important"), "homepage eyebrow labels do not share the Maison Overview typography");
+assert(read("zh/index.html").includes('href="contact.html">联系我们</a>') && read("en/index.html").includes('href="contact.html">Contact Us</a>'), "homepage contact CTA is not localized");
+assert(integrationStyles.includes(".lux-selected-products-kicker") && integrationStyles.includes(".lux-home-editorial-kicker") && integrationStyles.includes(".lux-home-why-copy > span") && integrationStyles.includes(".lux-meet-map-card > span") && integrationStyles.includes("font-size: 11px !important") && integrationStyles.includes("letter-spacing: .28em !important"), "homepage eyebrow labels do not share the Maison Overview typography");
 assert(integrationStyles.includes("Title-case labels need a larger optical size") && integrationStyles.includes("#selected-products .lux-selected-products-kicker") && integrationStyles.includes("#gifting-editorial .lux-home-editorial-kicker") && integrationStyles.includes("font-size: 14px !important"), "title-case homepage labels are still optically undersized");
 assert(integrationStyles.includes("Match the partnership CTA to Explore Partnership") && integrationStyles.includes("font-size: 18px !important") && integrationStyles.includes("line-height: 27px !important") && integrationStyles.includes("white-space: nowrap") && integrationStyles.includes("writing-mode: horizontal-tb"), "homepage partnership CTA does not match Explore Partnership horizontally");
 const allPageHtml = ["zh", "en"].flatMap((locale) => require("node:fs").readdirSync(locale).filter((name) => name.endsWith(".html")).map((name) => read(`${locale}/${name}`))).join("\n");
@@ -137,7 +173,7 @@ assert(!allPageHtml.includes("roberto@truffleat.com") && !allPageHtml.includes("
 assert(!allPageHtml.includes("?cc=") && !allPageHtml.includes("&cc="), "email links must not add a CC recipient");
 assert(allPageHtml.includes('href="mailto:china@luxureat.com"') && allPageHtml.includes('href="mailto:roberto@ugolinigroup.com"'), "direct China and Roberto mail links are missing");
 for (const locale of ["zh", "en"]) {
-  const giftingHtml = read(`${locale}/gifting.html`);
+  const giftingHtml = read(`${locale}/cooperation.html`);
   assert(giftingHtml.includes('href="mailto:roberto@ugolinigroup.com?subject='), `${locale} generic gifting email action does not default to Roberto`);
 }
 assert(integrationStyles.includes(".lux-caviar-empty") && integrationStyles.includes("grid-row: 1"), "product empty state is not aligned with the filter panel");
@@ -159,32 +195,39 @@ assert(read("assets/js/academy.js").includes('document.readyState === "complete"
 assert(productRuntime.includes('key: "price-asc"') && productRuntime.includes('key: "price-desc"') && productRuntime.includes("lux-sort-selected-icon"), "bilingual price sorting or its Lucide selection icon is incomplete");
 assert(integrationStyles.includes(".lux-about-story .lux-reader-quote") && integrationStyles.includes(".lux-reader-pull p") && integrationStyles.includes("grid-template-columns: 112px minmax(0, 1fr)"), "requested quote hierarchy or compact mobile product view is incomplete");
 assert(integrationStyles.includes(".lux-footer .lux-footer-brand > p") && integrationStyles.includes("font-size: var(--lux-type-body-sm) !important"), "footer description does not match navigation sizing");
-assert(read("en/index.html").includes('href="journal.html#reader-en-harvest" data-reader-open="en-harvest"') && read("zh/index.html").includes('href="journal.html#reader-zh-harvest" data-reader-open="zh-harvest"'), "homepage Values UI lacks a native article fallback");
+assert(read("en/index.html").includes('href="about-us.html#reader-en-harvest" data-reader-open="en-harvest"') && read("zh/index.html").includes('href="about-us.html#reader-zh-harvest" data-reader-open="zh-harvest"'), "homepage Values UI lacks a native article fallback");
 assert(accountRuntime.includes("else if (trigger.href) location.href = trigger.href"), "failed deferred reader loading has no native link fallback");
 assert(integrationStyles.includes("z-index: 120 !important") && integrationStyles.includes("html[lang] body #luxureat-china .lux-about-program-lead h2") && integrationStyles.includes("clamp(34px, 4vw, 58px)") && integrationStyles.includes(".lux-recent-events-head > span"), "sort layering or requested bilingual typography is incomplete");
 assert(integrationStyles.includes("About-page closing statement: restrained KingHwa display treatment") && integrationStyles.includes("clamp(22px, 2.2vw, 32px)"), "Chinese About closing statement does not use the reduced KingHwa treatment");
 assert(integrationStyles.includes('html[lang^="en"] .lux-about-story .lux-reader-quote') && integrationStyles.includes("#consumer-needs .lux-about-program-grid h3") && integrationStyles.includes("#consumer-needs .lux-product-characteristics-note strong") && integrationStyles.includes("color: #d0ac2d !important"), "English About statement scale or bilingual consumer gold headings are incomplete");
 assert(integrationStyles.includes("#mission-objectives .lux-about-program-grid h3") && integrationStyles.includes("-webkit-text-stroke: .6px #050505") && integrationStyles.includes("paint-order: stroke fill"), "bilingual mission headings do not use gold fill with a black outline");
 assert(read("zh/index.html").includes("<blockquote>品味的奢华") && read("en/index.html").includes("<blockquote>The luxury of taste") && integrationStyles.includes(".lux-home-maison-head > div:first-child > blockquote") && integrationStyles.includes("color: #004b47"), "homepage Maison baselines or the deep-green Services label are incomplete");
-assert(read("zh/gifting.html").includes("lux-gifting-hero lux-standard-hero") && read("en/gifting.html").includes("lux-gifting-hero lux-standard-hero") && integrationStyles.includes(".lux-gifting-hero .lux-hero-fade-both") && integrationStyles.includes("#000 100%"), "bilingual Gifting hero blend is incomplete");
-const sharedHeroPages = ["journal", "rituals", "news", "blog", "certification", "gifting", "contact"];
+assert(read("zh/cooperation.html").includes("lux-gifting-hero lux-standard-hero") && read("en/cooperation.html").includes("lux-gifting-hero lux-standard-hero") && integrationStyles.includes(".lux-gifting-hero .lux-hero-fade-both") && integrationStyles.includes("#000 100%"), "bilingual Gifting hero blend is incomplete");
+const sharedHeroPages = ["about-us", "recipe", "brand", "blog", "certification", "cooperation", "contact"];
+assert(read("zh/recipe.html").includes('data-recipe-library-app') && read("en/recipe.html").includes('data-recipe-library-app'), "bilingual unified recipe-library mounts are missing");
+assert(journalRuntime.includes("renderRecipeLibrary") && journalRuntime.includes("data-recipe-region") && journalRuntime.includes("data-recipe-ingredient"), "recipe archive does not provide shared region and ingredient filtering");
+assert(journalRuntime.includes('read: "阅读详情"') && journalRuntime.includes('class="lux-reader-cta"'), "recipe-library cards do not reuse the shared detail CTA");
+assert(journalRuntime.includes("lux-recipe-product-link") && journalRuntime.includes('href="${escapeHtml(productHref)}"') && journalRuntime.includes("?category=${productCategory}#product-catalogue"), "related recipe products are not linked to the localized catalogue category");
+assert(journalRuntime.includes("article.productCategory ||") && read("assets/data/journal.js").includes('"sweet-bread-butter-caviar": "caviar"') && read("assets/data/journal.js").includes('"truffle-eggs": "truffle"'), "legacy recipes do not map to their matching product category");
+assert(read("zh/product.html").includes('data-caviar-filter="caviar"') && read("en/product.html").includes('data-caviar-filter="caviar"'), "the caviar recipe category is missing from the bilingual product filters");
 assert(sharedHeroPages.every((page) => read(`zh/${page}.html`).includes("lux-page-top-hero") && read(`zh/${page}.html`).includes("lux-page-hero-content")), "Chinese editorial heroes do not use the shared structure");
 assert(sharedHeroPages.every((page) => read(`en/${page}.html`).includes("lux-page-top-hero") && read(`en/${page}.html`).includes("lux-page-hero-content")), "English editorial heroes do not use the shared structure");
 assert(integrationStyles.includes("Shared non-home hero: kicker, title and support copy form one centered stack") && integrationStyles.includes("gap: clamp(24px, 2.2vw, 32px) !important") && integrationStyles.includes("font-weight: 700 !important") && integrationStyles.includes("min-height: 100svh !important"), "shared non-home hero spacing, kicker weight, or viewport centering is incomplete");
-const heroTailPages = ["rituals", "news", "blog", "certification", "gifting", "contact"];
+const heroTailPages = ["recipe", "brand", "blog", "certification", "cooperation", "contact"];
 assert(heroTailPages.every((page) => read(`zh/${page}.html`).includes("lux-page-top-hero lux-hero-tail")) && heroTailPages.every((page) => read(`en/${page}.html`).includes("lux-page-top-hero lux-hero-tail")), "bilingual editorial hero tails are incomplete");
 assert(integrationStyles.includes("Editorial hero tail: one horizontal rule followed by a centered fading stem") && integrationStyles.includes("--lux-hero-stem-height: clamp(96px, 12svh, 150px)") && integrationStyles.includes("padding-bottom: calc(48px + var(--lux-hero-stem-height))"), "editorial hero tail styling or whole-composition centering is incomplete");
 assert(!read("zh/certification.html").includes('<div class="w-24 h-px bg-primary mx-auto"></div>') && !read("en/certification.html").includes('<div class="w-24 h-px bg-primary mx-auto"></div>'), "certification hero still contains a duplicate horizontal rule");
-assert(!read("zh/caviar.html").includes("lux-page-top-hero") && read("zh/caviar.html").includes("items-center justify-end") && !read("en/products.html").includes("lux-page-top-hero") && read("en/products.html").includes("items-center justify-end"), "product heroes are not horizontally centered in their bottom-aligned layout");
-assert(read("zh/caviar.html").indexOf("lux-product-count") < read("zh/caviar.html").indexOf("<header><strong>筛选条件") && read("en/products.html").indexOf("lux-product-count") < read("en/products.html").indexOf("<header><strong>Filter by"), "bilingual product counts are not above the filter headings");
+assert(!read("zh/product.html").includes("lux-page-top-hero") && read("zh/product.html").includes("items-center justify-end") && !read("en/product.html").includes("lux-page-top-hero") && read("en/product.html").includes("items-center justify-end"), "product heroes are not horizontally centered in their bottom-aligned layout");
+assert(read("zh/product.html").indexOf("lux-product-count") < read("zh/product.html").indexOf("<header><strong>筛选条件") && read("en/product.html").indexOf("lux-product-count") < read("en/product.html").indexOf("<header><strong>Filter by"), "bilingual product counts are not above the filter headings");
 assert(integrationStyles.includes("grid-template-rows: auto 1fr auto") && integrationStyles.includes(".lux-home-maison-head > div:first-child > span:first-child") && integrationStyles.includes("transform: translateY(1.7px)"), "Maison alignment is incomplete");
 assert(integrationStyles.includes("html[lang] body .lux-account-inline-actions button") && integrationStyles.includes("html[lang] body .lux-account-existing button") && integrationStyles.includes("font-size: 12px !important") && integrationStyles.includes("font-size: 14px !important"), "bilingual account helper-link sizing is inconsistent");
 assert(read("assets/fonts/ChineseTypography-SOURCE.md").includes("京華老宋体v3.0.ttf"), "KingHwa source metadata is not v3.0");
 assert(integrationStyles.includes("Every page-top hero follows the homepage's 14px / 18px support scale") && integrationStyles.includes("html[lang] body .lux-hero-kicker") && integrationStyles.includes("html[lang] body .lux-hero-support"), "bilingual page-top hero copy does not share the homepage scale");
 assert(accountRuntime.includes('document.querySelectorAll("#selected-products > .grid > .group")') && accountRuntime.includes("location.href = productLink.href"), "homepage product cards are not fully clickable");
+assert(integrationStyles.includes("#selected-products > .grid > .group > div:last-child > p") && integrationStyles.includes("max-height: 0") && integrationStyles.includes("margin-bottom: 0 !important") && integrationStyles.includes("left: 32px"), "homepage product labels, names and purchase actions are not compactly left-aligned");
 assert(integrationStyles.includes('html[lang^="zh"] :is(p, li, blockquote, figcaption, dt, dd)') && integrationStyles.includes("line-height: 1.75 !important"), "Chinese body copy does not use the enlarged reading scale");
 assert(integrationStyles.includes('html[lang^="zh"] :is(#lux-reader-title') && integrationStyles.includes('html[lang] body p.lux-footprint-video-title'), "bilingual modal/contact title scale is incomplete");
-const zhCaviar = read("zh/caviar.html");
+const zhCaviar = read("zh/product.html");
 assert(zhCaviar.includes("<strong>品味非凡</strong>") && zhCaviar.includes("<strong>合规可溯</strong>") && zhCaviar.includes("<strong>匠心臻选</strong>"), "Chinese product notes are outdated");
 const zhCertification = read("zh/certification.html");
 const enCertification = read("en/certification.html");
@@ -204,10 +247,18 @@ assert(integrationStyles.includes('font-family: "Material Symbols Outlined" !imp
 assert(integrationStyles.includes('.material-symbols-outlined::before') && integrationStyles.includes('content: attr(data-icon)'), "material icons do not render from non-translatable attributes");
 assert(!/<span\b[^>]*\bmaterial-symbols-outlined\b[^>]*>\s*[a-z0-9_]+\s*<\/span>/i.test(productRuntime + journalRuntime), "a dynamic material icon still exposes translatable ligature text");
 assert(integrationStyles.includes('font-size: 18px !important') && integrationStyles.includes('line-height: 1.65 !important'), "English body copy does not meet the enlarged reading scale");
-assert(productRuntime.includes('lang === "en" ? \' lang="zh-CN"\'') && integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && integrationStyles.includes('font-family: "KingHwa Labels", serif !important'), "Chinese product names in the English interface do not use the current KingHwa label subset");
+assert(productRuntime.includes('lang === "en" ? \' lang="zh-CN"\'') && integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && integrationStyles.includes('font-family: "KingHwa Old Song Site" !important'), "Chinese product names in the English interface do not use the KingHwa family");
 const zhBlog = read("zh/blog.html");
-assert(zhBlog.includes("从鱼子酱、橄榄油到意式 Gelato"), "Chinese Blog kicker is outdated");
-assert(zhBlog.includes("意大利美食学院") && zhBlog.includes("橄榄油") && zhBlog.includes("Gelato"), "Chinese food academy topics are missing");
+assert(zhBlog.includes("从松露、鱼子酱与橄榄油，到美食词典、生产者与产地故事"), "Chinese Blog kicker is outdated");
+const academyRuntime = read("assets/js/academy.js");
+assert(academyRuntime.includes('culture: "探索意大利"') && academyRuntime.includes('olive: "橄榄油学院"') && academyRuntime.includes('gelato: "意式手工冰淇淋"'), "Chinese Explore Italy topics are missing");
 assert(!zhBlog.includes("对于希望全面了解这种奢华食品每一处细微差别的人来说"), "obsolete Chinese Blog paragraph remains");
+assert(read("assets/css/journal.css").includes("scroll-margin-top:96px"), "Brand Promise does not land below the fixed header");
+const ritualStyles = read("assets/css/rituals.css");
+assert(ritualStyles.includes("border-color:#fff;color:#fff") && ritualStyles.includes(".lux-reader-cta:hover") && ritualStyles.includes("border-color:#81d8d0;color:#81d8d0"), "recipe-library detail CTA does not change from white to Tiffany on direct hover");
+assert(allPageHtml.includes('class="lux-newsletter"') && ["zh", "en"].every((locale) => read(`${locale}/index.html`).includes("data-newsletter-form")), "bilingual footer newsletter is missing");
+assert(accountRuntime.includes("createLuxBotProof") && accountRuntime.includes('action", "luxureat_newsletter"') && accountRuntime.includes("newsletterNonce"), "newsletter validation or secure submission runtime is incomplete");
+const themeBuilder = read("scripts/build-luxureat-theme.mjs");
+assert(themeBuilder.includes("luxureat_static_newsletter_ajax") && themeBuilder.includes("send_confirmation_email' => true"), "newsletter endpoint does not use verified MailPoet subscription");
 
 console.log("content architecture verification passed");

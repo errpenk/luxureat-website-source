@@ -17,7 +17,7 @@ function isAqua([r, g, b]) {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1366, height: 900 } });
 
-  await page.goto(`file://${path.resolve(__dirname, "../zh/journal.html")}`, { waitUntil: "domcontentloaded" });
+  await page.goto(`file://${path.resolve(__dirname, "../zh/about-us.html")}`, { waitUntil: "domcontentloaded" });
   const replacements = [
     ["zh-truffle", "世界鱼子酱版图：主要生产国与产业发展", "caviar-world-map.webp", 9, "更加多元化的全球产业格局", "5 分钟阅读"],
     ["zh-service", "意大利鱼子酱市场：欧洲领先的生产中心与全球出口力量", "italian-caviar-market.webp", 13, "鱼子酱产业发展的重要优势", "6 分钟阅读"],
@@ -75,6 +75,8 @@ function isAqua([r, g, b]) {
     const tocLink = document.querySelector(".lux-reader-toc a");
     const relatedCta = document.querySelector(".lux-reader-related-cta");
     const pullQuote = document.querySelector(".lux-reader-pull p");
+    const pull = document.querySelector(".lux-reader-pull");
+    const toc = document.querySelector(".lux-reader-toc");
     const firstParagraph = document.querySelector(".lux-reader-copy .lux-reader-section:first-child p:first-of-type");
     const closeButton = document.querySelector(".lux-reader-close");
     return {
@@ -92,6 +94,8 @@ function isAqua([r, g, b]) {
       relatedCtaFont: getComputedStyle(relatedCta).fontFamily,
       pullFontSize: parseFloat(getComputedStyle(pullQuote).fontSize),
       relatedCtaFontSize: parseFloat(getComputedStyle(relatedCta).fontSize),
+      pullOverflow: getComputedStyle(pull).overflowY,
+      tocOverflow: getComputedStyle(toc).overflowY,
       tocCount: document.querySelectorAll(".lux-reader-toc a").length,
       tocFirst: tocLink?.textContent.trim(),
       relatedOpacity: getComputedStyle(relatedCta).opacity,
@@ -118,6 +122,8 @@ function isAqua([r, g, b]) {
   assert(!result.relatedCtaFont.includes("KingHwa Old Song"), `related CTA should use body typography: ${result.relatedCtaFont}`);
   assert(result.pullFontSize <= 16, `reader pull quote should use original small size: ${result.pullFontSize}px`);
   assert(result.relatedCtaFontSize <= 16, `related CTA should use original small size: ${result.relatedCtaFontSize}px`);
+  assert(result.pullOverflow === "hidden", `reader side column should not clip the contents list: ${result.pullOverflow}`);
+  assert(result.tocOverflow === "auto", `reader contents list should scroll independently: ${result.tocOverflow}`);
   assert(result.tocCount >= 3, `reader toc is missing section links: ${result.tocCount}`);
   assert(result.tocFirst === "优雅与传统", `reader toc first item is wrong: ${result.tocFirst}`);
   assert(parseFloat(result.relatedOpacity) < 0.02, `related CTA should be hidden before hover: ${result.relatedOpacity}`);

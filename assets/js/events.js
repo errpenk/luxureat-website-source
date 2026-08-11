@@ -8,8 +8,8 @@
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const newsIndexHref = location.protocol === "file:" || location.pathname.endsWith(".html")
-    ? "news.html"
-    : lang === "zh" ? "/news/" : "/en/news/";
+    ? "brand.html"
+    : lang === "zh" ? "/brand/" : "/en/brand/";
   const carouselLabels = lang === "zh"
     ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
     : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "Meet Us", meetCopy: "Explore upcoming and completed LuxurEat (露意膳) exhibitions across China.", map: "View exhibition map" };

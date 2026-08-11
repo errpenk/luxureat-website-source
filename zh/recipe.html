@@ -1,0 +1,369 @@
+<!DOCTYPE html><html class="dark" lang="zh-CN" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<!-- lux:seo:start -->
+<title>食谱艺术 | LuxurEat（露意膳）</title>
+<meta name="description" content="从意大利地域风味到家庭餐桌，探索 LuxurEat（露意膳）的中英文食谱与烹饪灵感。">
+<!-- lux:seo:end -->
+<!-- Fonts -->
+
+<!-- lux:fonts:start -->
+<link rel="preload" href="../assets/fonts/KingHwaOldSong-site.woff2?v=20260811-font-coverage-seo-32" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/LuxurEatZhiSong-site.woff2?v=20260811-font-coverage-seo-32" as="font" type="font/woff2" crossorigin>
+<style data-lux-critical-fonts>@font-face{font-family:"KingHwa Old Song Site";src:url("../assets/fonts/KingHwaOldSong-site.woff2?v=20260811-font-coverage-seo-32") format("woff2");font-weight:700;font-style:normal;font-display:block}@font-face{font-family:"LuxurEat ZhiSong Site";src:url("../assets/fonts/LuxurEatZhiSong-site.woff2?v=20260811-font-coverage-seo-32") format("woff2");font-weight:400;font-style:normal;font-display:block}</style>
+<!-- lux:fonts:end -->
+<link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20260811-font-coverage-seo-32">
+<style>
+        body {
+            background-color: #000000;
+            color: #e5e2e1;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background: rgba(19, 19, 19, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, transparent 0%, #000000 100%);
+        }
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .line-draw {
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+        .line-draw.active {
+            width: 100px;
+        }
+    </style>
+
+<link rel="stylesheet" href="../integration.css?v=20260811-font-coverage-seo-32">
+<link rel="stylesheet" href="../assets/css/newsletter.css?v=20260811-font-coverage-seo-32">
+<link rel="stylesheet" href="../assets/css/rituals.css?v=20260809-ritual-label-mosaic-200">
+<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
+</head>
+<body class="bg-background text-on-background">
+<!-- lux:header:start -->
+<header class="lux-header">
+  <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
+  <nav class="lux-nav" aria-label="navigation"><a href="index.html">首页</a><a href="about-us.html">关于我们</a><a href="new.html">热门新品</a><a href="product.html">系列产品</a><a class="active" href="recipe.html">食谱艺术</a><a href="brand.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="cooperation.html">商务合作</a><a href="contact.html">联系我们</a></nav>
+  <div class="lux-actions">
+    <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="购物袋"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span class="lux-bag-count" data-bag-count hidden></span></a>
+    <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="个人登录"><svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></button>
+    <span class="lux-lang"><a class="active" href="#">ZH</a><span>/</span><a href="../en/recipe.html">EN</a></span>
+    <button class="lux-menu" type="button" data-open="关闭" data-closed="菜单" aria-expanded="false">菜单</button>
+  </div>
+</header>
+<!-- lux:header:end -->
+
+<!-- TopNavBar -->
+
+<main>
+<!-- Hero Section -->
+<section class="lux-page-top-hero lux-hero-tail lux-standard-hero relative h-[90vh] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center scale-105" data-alt="以 LuxurEat（露意膳） 食材共同烹饪意大利料理" style="background-image: url('../assets/media/brand/rituals-hero-cooking.webp')"></div>
+<div class="absolute inset-0 lux-hero-fade-both"></div>
+</div>
+<div class="lux-page-hero-content relative z-10 text-center px-margin-mobile md:px-margin-desktop">
+<span class="lux-hero-kicker">汇集意大利特色食谱，一同体验多元的舌尖滋味</span>
+<h1 class="zh-display-title text-white mb-6">食谱艺术</h1>
+<p class="lux-page-hero-subtitle lux-hero-support max-w-2xl mx-auto tracking-wide">
+                    从一份食谱开始，让LuxurEat（露意膳）的精选食材成为餐桌上的主角。无论是松露的浓郁香气、鱼子酱的细腻层次，还是意大利面的纯正风味，每一款产品都能为日常料理增添更精致的表达。通过简单的烹饪方式，将意大利美食传统带入每一次用餐，让优质食材、经典配方与现代生活自然相遇。
+                </p>
+</div>
+</section>
+<!-- Heritage Section (卓越传承) -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden lux-recipe-anchor" id="italian-flavor-recipes">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-5 reveal-on-scroll active">
+<span class="text-primary font-label-lg tracking-[0.3em] uppercase block mb-4">LuxurEat（露意膳） Recipe Atelier</span>
+<h2 class="font-headline-lg text-headline-lg mb-8">意式风味食谱</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">
+                        从早餐到甜点，LuxurEat（露意膳）以意大利食谱为脉络，将松露、鱼子酱与当季食材带入每一道菜。这里记录的不只是做法，更是对原料、火候与餐桌美学的理解。
+                    </p>
+<div class="flex items-center gap-4 mb-10">
+<div class="h-px bg-primary line-draw active"></div>
+<span class="font-label-lg text-primary tracking-widest">FROM ITALY, WITH TASTE</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant/80 italic border-l border-outline-variant/30 pl-6">
+                        每一道食谱都从食材本味出发：用清晰的步骤保留意大利料理的灵魂，也让LuxurEat（露意膳）的珍馐自然融入日常与宴席。
+                    </p>
+<nav class="lux-recipe-jump-nav lux-flavor-category-nav" aria-label="意式风味食谱分类">
+<button type="button" data-recipe-panel-open="breakfast" aria-controls="breakfast" aria-expanded="false"><span>01</span><strong>早餐</strong><b aria-hidden="true">↘︎</b></button>
+<button type="button" data-recipe-panel-open="first-courses" aria-controls="first-courses" aria-expanded="false"><span>02</span><strong>第一道主食</strong><b aria-hidden="true">↘︎</b></button>
+<button type="button" data-recipe-panel-open="main-courses" aria-controls="main-courses" aria-expanded="false"><span>03</span><strong>第二道主食</strong><b aria-hidden="true">↘︎</b></button>
+<button type="button" data-recipe-panel-open="desserts" aria-controls="desserts" aria-expanded="false"><span>04</span><strong>甜点</strong><b aria-hidden="true">↘︎</b></button>
+</nav>
+</div>
+<div class="md:col-span-6 md:col-start-7 relative reveal-on-scroll active">
+<div class="aspect-[4/5] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl" data-alt="厨师在餐桌前为松露意面刨上新鲜黑松露" data-lux-bg="../assets/media/brand/craftsmanship-truffle-chef.webp"></div>
+<div class="absolute -bottom-10 -left-10 w-64 h-64 border-l border-b border-primary/20 -z-10"></div>
+</div>
+</div>
+</section>
+<!-- Breakfast Recipes (早餐) -->
+<section class="bg-surface-container-low py-section-gap lux-recipe-anchor" id="breakfast" data-recipe-panel hidden>
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-20 reveal-on-scroll active">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">早餐</h2>
+<p class="font-label-lg text-primary tracking-[0.4em] uppercase">Breakfast Recipes</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+<div class="reveal-on-scroll lux-reader-card group cursor-pointer active">
+<div class="overflow-hidden mb-8 border border-outline-variant/10 lux-reader-media">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="松露鸡蛋" data-lux-bg="../assets/media/journal/recipe-truffle-eggs.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-truffle-eggs">阅读详情</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">松露鸡蛋</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            松露鸡蛋将新鲜鸡蛋的清爽与松露浓郁的香气完美融合，是适合早餐、早午餐或精致开胃菜的优雅选择。
+                        </p>
+</div>
+<div class="reveal-on-scroll lux-reader-card group cursor-pointer md:mt-24 active">
+<div class="overflow-hidden mb-8 border border-outline-variant/10 lux-reader-media">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="水煮蛋配松露烤面包片" data-lux-bg="../assets/media/journal/recipe-truffle-toast.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-truffle-toast">阅读详情</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">水煮蛋配松露烤面包片</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            金黄酥脆的面包与绵密水煮蛋、浓郁松露香气相互融合，为优雅的周日早午餐带来丰富层次。
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- First Courses (第一道主食) - Bento Grid Style -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto lux-recipe-anchor" id="first-courses" data-recipe-panel hidden>
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
+<div>
+<span class="text-primary font-label-lg tracking-[0.3em] uppercase block mb-4">First Courses</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg">第一道主食</h2>
+</div>
+<div class="max-w-sm text-right hidden md:block">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        从新鲜意面到丝滑烩饭，以松露的馥郁香气开启餐桌的第一重风味。
+                    </p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:auto-rows-[300px]">
+<div class="md:col-span-2 md:row-span-2 lux-dark-photo-block lux-course-card p-12 flex flex-col justify-end relative overflow-hidden group reveal-on-scroll lux-reader-card cursor-pointer active" data-reader-open="zh-recipe-truffle-tagliolini">
+<div class="lux-dark-photo-bg" data-alt="白松露或黑松露细面" data-lux-bg="../assets/media/journal/recipe-truffle-tagliolini.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-truffle-tagliolini">阅读详情</button>
+<div class="lux-ceremony-copy relative z-10">
+<span class="font-display-lg text-primary/30 text-[100px] leading-none block mb-4">01</span>
+<h4 class="font-headline-md text-headline-md mb-4">白松露或黑松露细面</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">新鲜鸡蛋细面拌入黄油和帕玛森奶酪，再以白松露或黑松露碎赋予难忘香气。</p>
+</div>
+</div>
+<div class="md:col-span-2 lux-dark-photo-block lux-course-card lux-reader-card group flex items-center p-12 reveal-on-scroll cursor-pointer active" data-reader-open="zh-recipe-truffle-ravioli">
+<div class="lux-dark-photo-bg" data-alt="松露奶油酱馄饨" data-lux-bg="../assets/media/journal/recipe-truffle-ravioli.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-truffle-ravioli">阅读详情</button>
+<div class="lux-ceremony-copy flex-1">
+<span class="font-label-lg text-primary block mb-2">02</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">松露奶油酱馄饨</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">软糯馄饨与香浓奶油松露酱相遇，是简单却令人印象深刻的特殊场合之选。</p>
+</div>
+</div>
+<div class="md:col-span-1 lux-dark-photo-block lux-course-card lux-reader-card group p-8 flex flex-col justify-between reveal-on-scroll cursor-pointer active" data-reader-open="zh-recipe-black-truffle-risotto">
+<div class="lux-dark-photo-bg" data-alt="黑松露烩饭" data-lux-bg="../assets/media/journal/recipe-black-truffle-risotto.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-black-truffle-risotto">阅读详情</button>
+<div class="lux-ceremony-copy">
+<span class="font-label-lg text-primary block mb-2">03</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">黑松露烩饭</h4>
+</div>
+<p class="lux-ceremony-copy font-label-sm text-on-surface-variant">卡纳罗利米的细腻口感与浓郁松露香气交融，带来丝滑而精致的风味。</p>
+</div>
+<div class="md:col-span-1 lux-dark-photo-block lux-course-card lux-reader-card group p-8 flex flex-col justify-between transition-colors duration-500 reveal-on-scroll cursor-pointer active" data-reader-open="zh-recipe-mushroom-soup">
+<div class="lux-dark-photo-bg" data-alt="奶油蘑菇浓汤" data-lux-bg="../assets/media/journal/recipe-mushroom-soup.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-mushroom-soup">阅读详情</button>
+<div class="lux-ceremony-copy">
+<span class="font-label-lg text-primary block mb-2">04</span>
+<h4 class="font-headline-sm text-headline-sm mb-2">奶油蘑菇浓汤</h4>
+</div>
+<p class="lux-ceremony-copy font-label-sm text-on-surface-variant">顺滑温暖的蘑菇汤散发森林香气，搭配烤面包丁或少许松露油更显丰盈。</p>
+</div>
+</div>
+</section>
+<!-- Main Courses (第二道主食) -->
+<section class="bg-surface-container-low py-section-gap lux-recipe-anchor" id="main-courses" data-recipe-panel hidden>
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-on-scroll active">
+<div>
+<span class="text-primary font-label-lg tracking-[0.3em] uppercase block mb-4">Main Courses</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg">第二道主食</h2>
+</div>
+<p class="max-w-sm text-right hidden md:block font-body-md text-body-md text-on-surface-variant">牛肉、扇贝与鲜虾的精致组合，以松露香气延展餐桌的丰盛层次。</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start">
+<article class="md:col-span-7 min-h-[520px] md:min-h-[620px] lux-dark-photo-block lux-main-course-card lux-reader-card group p-8 md:p-12 flex flex-col justify-end reveal-on-scroll cursor-pointer active" data-reader-open="zh-recipe-beef-carpaccio-scallop-truffle">
+<div class="lux-dark-photo-bg" data-alt="扇贝松露牛肉薄片" data-lux-bg="../assets/media/journal/recipe-beef-carpaccio-scallop-truffle.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-beef-carpaccio-scallop-truffle">阅读详情</button>
+<div class="lux-ceremony-copy relative z-10 max-w-xl">
+<span class="font-label-lg text-primary block mb-3">01</span>
+<h3 class="font-headline-md text-headline-md mb-4">扇贝松露牛肉薄片</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">鲜嫩扇贝、牛肉薄片与黑松露香气层层相融，精致而清爽。</p>
+</div>
+</article>
+<article class="md:col-span-5 md:mt-24 min-h-[460px] md:min-h-[540px] lux-dark-photo-block lux-main-course-card lux-reader-card group p-8 md:p-10 flex flex-col justify-end reveal-on-scroll cursor-pointer active" data-reader-open="zh-recipe-shrimp-tartare-truffle">
+<div class="lux-dark-photo-bg" data-alt="脆爽蔬菜松露虾仁鞑靼" data-lux-bg="../assets/media/journal/recipe-shrimp-tartare-truffle.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-shrimp-tartare-truffle">阅读详情</button>
+<div class="lux-ceremony-copy relative z-10">
+<span class="font-label-lg text-primary block mb-3">02</span>
+<h3 class="font-headline-sm text-headline-sm mb-4">脆爽蔬菜松露虾仁鞑靼</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">鲜虾的清甜与蔬菜的爽脆、松露的浓郁香气交织，轻盈且充满层次。</p>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Desserts (甜品) -->
+<section class="py-section-gap lux-recipe-anchor" id="desserts" data-recipe-panel hidden>
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<header class="text-center mb-20 reveal-on-scroll active">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-4">甜品</h2>
+<p class="font-label-lg text-primary tracking-[0.4em] uppercase">Desserts</p>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+<article class="reveal-on-scroll lux-reader-card lux-dessert-card group cursor-pointer md:mt-24 active" data-reader-open="zh-recipe-sweet-bread-butter-caviar">
+<div class="overflow-hidden mb-8 border border-outline-variant/10 lux-reader-media">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="甜面包配黄油和鱼子酱" data-lux-bg="../assets/media/journal/recipe-sweet-bread-butter-caviar.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-sweet-bread-butter-caviar">阅读详情</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">甜面包配黄油和鱼子酱</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">柔软香甜的奶油蛋卷面包，与黄油的醇厚奶香和鱼子酱的鲜美相遇，带来精致的甜咸对比。</p>
+</article>
+<article class="reveal-on-scroll lux-reader-card lux-dessert-card group cursor-pointer active" data-reader-open="zh-recipe-truffle-tiramisu">
+<div class="overflow-hidden mb-8 border border-outline-variant/10 lux-reader-media">
+<div class="aspect-video bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" data-alt="松露提拉米苏" data-lux-bg="../assets/media/journal/recipe-truffle-tiramisu.webp"></div>
+<button type="button" class="lux-reader-cta" data-reader-open="zh-recipe-truffle-tiramisu">阅读详情</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-4">松露提拉米苏</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">经典提拉米苏的绵密奶香与松露的浓郁香气交织，呈现意想不到的优雅层次。</p>
+</article>
+</div>
+</div>
+</section>
+<!-- Olive Oil Recipes (橄榄油食谱) -->
+<section class="lux-olive-recipe-editorial lux-recipe-anchor" id="olive-recipes">
+<header><span>OLIO ITALIANO</span><h2>橄榄油食谱</h2><p>从经典前菜、意面、托斯卡纳面包沙拉到生蔬菜蘸汁，理解特级初榨橄榄油在冷食与热食中的正确用法。</p></header>
+<div class="lux-olive-recipe-stories">
+<article class="lux-reader-card" data-reader-open="zh-recipe-olive-bruschetta"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-olive-bruschetta.webp" alt="番茄罗勒意式烤面包"></figure><div><span>ANTIPASTO</span><h3>番茄罗勒意式烤面包</h3><p>成熟番茄、酥脆面包与最后加入的橄榄油果香。</p><button type="button" data-reader-open="zh-recipe-olive-bruschetta">阅读详情 ↗</button></div></article>
+<article class="lux-reader-card" data-reader-open="zh-recipe-olive-pasta"><div><span>PASTA</span><h3>蒜香辣椒橄榄油意面</h3><p>以淀粉面水乳化蒜、辣椒和特级初榨橄榄油。</p><button type="button" data-reader-open="zh-recipe-olive-pasta">阅读详情 ↗</button></div><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-olive-aglio-olio.webp" alt="蒜香辣椒橄榄油意面"></figure></article>
+<article class="lux-reader-card" data-reader-open="zh-recipe-olive-panzanella"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-olive-panzanella.webp" alt="托斯卡纳面包沙拉"></figure><div><span>TOSCANA</span><h3>托斯卡纳面包沙拉</h3><p>陈面包吸收番茄、醋与橄榄油，同时保留结构。</p><button type="button" data-reader-open="zh-recipe-olive-panzanella">阅读详情 ↗</button></div></article>
+<article class="lux-reader-card" data-reader-open="zh-recipe-olive-pinzimonio"><div><span>CRUDITÀ</span><h3>意式生蔬菜配橄榄油蘸汁</h3><p>以时令脆蔬直接品尝优质橄榄油的果香与辛香。</p><button type="button" data-reader-open="zh-recipe-olive-pinzimonio">阅读详情 ↗</button></div><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-olive-pinzimonio.webp" alt="意式生蔬菜配橄榄油蘸汁"></figure></article>
+</div>
+</section>
+<section class="lux-recipe-theme lux-recipe-anchor" id="truffle-recipes">
+<header><span>TARTUFO</span><h2>松露食谱</h2><p>以翁布里亚传统为线索，让夏季松露与黑松露分别进入烤面包、鳟鱼和慢炖羊肉。</p></header>
+<div class="lux-recipe-theme-grid">
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-truffle-lamb"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-lamb.webp" alt="翁布里亚黑松露烩羊肉"></figure><div><span>BRASATO</span><h3>翁布里亚黑松露烩羊肉</h3><p>慢炖羊肉完成后再加入松露，保留深层香气。</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-truffle-trout"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-trout.webp" alt="翁布里亚黑松露鳟鱼"></figure><div><span>VALNERINA</span><h3>翁布里亚黑松露鳟鱼</h3><p>温润淡水鱼与黑松露的翁布里亚传统搭配。</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-truffle-summer-crostini"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-truffle-summer-crostini.webp" alt="翁布里亚夏季黑松露烤面包"></figure><div><span>UMBRIA</span><h3>翁布里亚夏季黑松露烤面包</h3><p>低温蒜香橄榄油承接夏季黑松露的细腻香气。</p></div></article>
+</div></section>
+<section class="lux-recipe-theme lux-recipe-anchor" id="healthy-light-recipes">
+<header><span>CUCINA LEGGERA</span><h2>健康轻食</h2><p>保留新鲜食材的质地与本味，减少厚重调味，让日常餐桌更轻盈。</p></header>
+<div class="lux-recipe-theme-grid">
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-light-fennel-orange-salad"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-light-fennel-orange-salad.webp" alt="西西里茴香橙子黑橄榄沙拉"></figure><div><span>SICILIA</span><h3>西西里茴香橙子黑橄榄沙拉</h3><p>清脆茴香与鲜甜橙子的西西里式组合。</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-light-grilled-zucchini"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-light-grilled-zucchini.webp" alt="香草柠檬腌烤西葫芦"></figure><div><span>GRIGLIA</span><h3>香草柠檬腌烤西葫芦</h3><p>高温短烤后以柠檬、香草和橄榄油短暂腌渍。</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-light-sea-bass-acqua-pazza"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-light-sea-bass-acqua-pazza.webp" alt="意式番茄水煮海鲈鱼"></figure><div><span>CAMPANIA</span><h3>意式番茄水煮海鲈鱼</h3><p>番茄、蒜和浅汤温和煮熟海鲈鱼。</p></div></article>
+</div></section>
+<section class="lux-recipe-theme lux-recipe-anchor" id="china-family-recipes">
+<header><span>CASA CINESE</span><h2>适合中国家庭的意大利菜</h2><p>优先选择在中国家庭厨房容易获得的食材与器具，用清晰步骤还原意大利风味。</p></header>
+<div class="lux-recipe-theme-grid">
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-family-spaghetti-pomodoro"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-family-spaghetti-pomodoro.webp" alt="经典番茄意面"></figure><div><span>CLASSICO</span><h3>经典番茄意面</h3><p>常见材料与面水乳化完成意大利国民经典。</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-family-zucchini-frittata"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-family-zucchini-frittata.webp" alt="西葫芦意式煎蛋"></figure><div><span>FRITTATA</span><h3>西葫芦意式煎蛋</h3><p>用家庭平底锅完成柔嫩而不渗水的煎蛋。</p></div></article>
+<article class="lux-recipe-theme-card lux-reader-card" data-reader-open="zh-recipe-family-chicken-cacciatora"><figure><img loading="lazy" decoding="async" src="../assets/media/journal/recipe-family-chicken-cacciatora.webp" alt="意式猎人烩鸡"></figure><div><span>CACCIATORA</span><h3>意式猎人烩鸡</h3><p>鸡腿、番茄、白葡萄酒和香草的家庭慢炖主菜。</p></div></article>
+</div></section>
+<section class="lux-recipe-library lux-recipe-anchor" id="recipe-library" data-recipe-library>
+<header><span>RICETTARIO LUXUREAT</span><h2>食谱库</h2><p>按参考产区与核心原料查找全部食谱，并从同一入口查看时间、难度、营养、过敏原、替代材料与关联产品。</p></header>
+<div class="lux-recipe-library-app" data-recipe-library-app></div>
+</section>
+<!-- CTA Section -->
+<section class="lux-promo-banner lux-full-bleed lux-dark-photo-block lux-bright-photo lux-photo-fade-bottom py-section-gap relative overflow-hidden">
+<div class="lux-dark-photo-bg" style="background-image: url('../assets/media/brand/ingredient-purchase-banner.webp')"></div>
+<div class="relative z-10 text-center px-margin-mobile">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6">食材购买</h2>
+<p class="lux-page-hero-subtitle lux-ingredient-purchase-copy lux-promo-support-copy">精选优质食材与多元调味产品，为家庭烹饪与专业餐饮提供稳定且高品质的选择。</p>
+<a class="inline-flex mt-8 px-12 py-4 border border-primary text-primary font-label-lg uppercase tracking-[0.2em] hover:bg-primary hover:text-on-primary transition-all duration-500 group active:scale-95" href="product.html">
+	                    系列产品
+	</a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+
+<script>
+        // Simple Intersection Observer for reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Also activate drawing lines if child exists
+                    const line = entry.target.querySelector('.line-draw');
+                    if (line) line.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroGradient = document.querySelector('.hero-gradient');
+            const heroBg = heroGradient?.previousElementSibling;
+            if (heroBg) {
+                heroBg.style.transform = `translateY(${scrolled * 0.4}px) scale(1.1)`;
+            }
+        });
+    </script>
+
+
+
+
+
+<!-- lux:footer:start -->
+<section class="lux-newsletter" aria-labelledby="lux-newsletter-title-zh">
+  <div class="lux-newsletter-inner">
+    <div class="lux-newsletter-intro"><img class="lux-newsletter-icon" loading="lazy" decoding="async" src="../assets/media/brand/newsletter-envelope.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-zh">LUXUREAT（露意膳）通讯｜订阅我们的更新</h2><p>接收产品上新、品牌活动与意式风味资讯。提交后，请通过邮件完成确认。</p></div></div>
+    <form class="lux-newsletter-form" data-newsletter-form novalidate>
+      <label class="lux-visually-hidden" for="lux-newsletter-email-zh">请输入电子邮箱</label>
+      <div><input id="lux-newsletter-email-zh" name="email" type="email" autocomplete="email" maxlength="120" placeholder="请输入电子邮箱"><button type="submit">确认订阅</button></div>
+      <input name="company" type="text" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
+      <p data-newsletter-feedback role="status" aria-live="polite" data-invalid="请输入有效的电子邮箱。"></p>
+    </form>
+  </div>
+</section>
+<footer class="lux-footer">
+  <div class="lux-footer-grid">
+    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>不止于进口，更致力于定义意大利高端美食在中国的新标准。<br>LuxurEat（露意膳）以正宗风味为根，以品质与安全为准则，将意大利饮食文化与创新体验带到中国。</p></div>
+    <nav><a href="index.html">首页</a><a href="about-us.html">关于我们</a><a href="new.html">热门新品</a><a href="product.html">系列产品</a><a href="recipe.html">食谱艺术</a><a href="brand.html">品牌新闻</a><a href="blog.html">知识博客</a><a href="certification.html">品质认证</a><a href="cooperation.html">商务合作</a><a href="contact.html">联系我们</a></nav>
+    <div class="lux-footer-social"><a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="lazy" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="lazy" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a></div>
+    <div><a href="mailto:china@luxureat.com">china@luxureat.com</a><a href="mailto:roberto@ugolinigroup.com">roberto@ugolinigroup.com</a><a href="tel:+8615721452475">+86 15721452475</a><div class="lux-footer-legal"><button type="button" data-footer-modal="privacy">隐私政策</button><button type="button" data-footer-modal="terms">销售条款</button><button type="button" data-footer-modal="shipping">配送说明</button></div></div>
+  </div>
+  <div class="lux-footer-bottom">© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W</div>
+</footer>
+<!-- lux:footer:end -->
+<!-- lux:scripts:start -->
+<script defer src="../assets/js/core.js?v=20260811-font-coverage-seo-32"></script>
+<script defer src="../assets/data/journal.js?v=20260811-font-coverage-seo-32"></script>
+<script defer src="../assets/js/journal.js?v=20260811-font-coverage-seo-32"></script>
+<!-- lux:scripts:end --></body></html>

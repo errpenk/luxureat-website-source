@@ -90,7 +90,7 @@ html.dark body.lux-academy-page {
 }
 .lux-academy-intro > span {
   grid-column: 1 / -1;
-  color: #006a64;
+  color: #9a6d22;
 }
 .lux-academy-intro h2 {
   margin: 0;
@@ -296,6 +296,19 @@ html.dark body.lux-academy-page {
   position: sticky;
   top: 112px;
 }
+.lux-academy-count {
+  margin: 0 0 22px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #bdb6ac;
+  color: #686159;
+  font: 700 14px/1.4 var(--lux-page-heading);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.lux-academy-count strong {
+  color: #006a64;
+  font: inherit;
+}
 .lux-academy-sidebar > label {
   display: block;
   margin-bottom: 9px;
@@ -338,7 +351,7 @@ html.dark body.lux-academy-page {
 }
 .lux-academy-latest h2 {
   margin: 0 0 18px;
-  color: #101010;
+  color: #686159;
   font: 700 14px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -552,6 +565,9 @@ html.dark body.lux-academy-page {
   opacity: .82;
   transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
 }
+.lux-header :is(.lux-bag-link, .lux-account-link) { display: none !important; }
+html[lang^="en"] .lux-nav { gap: clamp(7px, .8vw, 14px); }
+html[lang^="en"] .lux-nav > :is(a, .lux-nav-item) > a { letter-spacing: .1em !important; }
 .lux-icon-action:hover {
   color: #9df5ec;
   border-color: rgba(157,245,236,.32);
@@ -630,6 +646,8 @@ html.dark body.lux-academy-page {
   font-family: var(--lux-page-heading);
 }
 .lux-footer-grid {
+  --lux-footer-row-height: 30px;
+  --lux-footer-row-gap: 8px;
   max-width: 1440px;
   margin: 0 auto;
   display: grid;
@@ -648,7 +666,7 @@ html.dark body.lux-academy-page {
   display: block;
   color: #bdc9c7;
   text-decoration: none;
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 14px;
 }
 .lux-footer button {
@@ -666,14 +684,28 @@ html.dark body.lux-academy-page {
 .lux-footer a { transition: color .18s ease, transform .18s ease; }
 .lux-footer a:hover, .lux-footer button:hover { color: #9df5ec; transform: translateX(3px); }
 .lux-footer a:active, .lux-footer button:active { transform: translateX(3px) scale(.98); }
-.lux-footer-social { display: grid; align-content: start; }
+.lux-footer nav,
+.lux-footer-social,
+.lux-footer-grid > div:last-child {
+  display: grid;
+  grid-auto-rows: var(--lux-footer-row-height);
+  row-gap: var(--lux-footer-row-gap);
+  align-content: start;
+}
+.lux-footer :is(nav, .lux-footer-social, .lux-footer-grid > div:last-child) > :is(a, button),
+.lux-footer-legal button {
+  display: flex;
+  min-height: var(--lux-footer-row-height);
+  align-items: center;
+  align-self: stretch;
+}
 .lux-footer-social a,
 .lux-footer-social button { display: inline-flex; width: max-content; align-items: center; gap: 10px; }
 .lux-footer-social img { width: 22px; height: 22px; margin: 0; object-fit: contain; filter: none; }
-.lux-footer-legal { display: flex; flex-wrap: wrap; gap: 0 8px; margin-top: 6px; }
-.lux-footer-legal button { margin: 0; }
-.lux-footer-legal button:not(:last-child)::after { content: "·"; margin-left: 8px; color: #565f5d; }
-.lux-footer nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; align-content: start; }
+.lux-footer-legal { display: contents; }
+.lux-footer-legal button { width: max-content; margin: 0; }
+.lux-footer-legal button::after { display: none; }
+.lux-footer nav { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
 .lux-footer-bottom { max-width: 1440px; margin: 38px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #bdc9c7; font-size: 13px; }
 html[lang="en"] h1 {
   font-family: var(--lux-page-heading);
@@ -683,9 +715,16 @@ html[lang="en"] h1 {
   letter-spacing: -.035em !important;
 }
 .lux-footprint-card {
+  --lux-footprint-detail-size: var(--lux-type-body-sm, 13px);
   min-height: 160px;
   transition: transform .28s ease, border-color .28s ease, background .28s ease;
   transform-origin: center;
+}
+
+.lux-footprint-card > p:not(.lux-footprint-role),
+.lux-footprint-card > a {
+  font-size: var(--lux-footprint-detail-size) !important;
+  line-height: 1.5 !important;
 }
 .lux-footprint-card:hover,
 .lux-footprint-card:focus-within {
@@ -1223,14 +1262,14 @@ header:has(.lux-hero-fade-both) {
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
-  transition: opacity .18s ease, transform .18s ease, box-shadow .18s ease;
+  transition: opacity .18s ease, transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
 }
 .lux-back-to-top.visible {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
-.lux-back-to-top:hover { box-shadow: 0 10px 30px rgba(157,245,236,.24); }
+.lux-back-to-top:hover,.lux-back-to-top:focus-visible { border-color:#9a6d22;background:#9a6d22;color:#fff;box-shadow:0 10px 30px rgba(154,109,34,.3); }
 .lux-back-to-top-icon {
   width: 24px;
   height: 24px;
@@ -2132,7 +2171,7 @@ html.dark body {
 body { padding-top: 0 !important; }
 body:has(.lux-nav.open) { overflow-x: hidden; }
 @media (max-width: 1080px) {
-  .lux-header { position: sticky; grid-template-columns: auto 1fr; }
+  .lux-header { position: fixed; grid-template-columns: auto 1fr; }
   .lux-actions { gap: 12px; }
   .lux-nav {
     grid-column: 1 / -1;
@@ -2190,6 +2229,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-menu { display: inline-flex; }
   .lux-footer-grid { grid-template-columns: 1fr 1fr; }
 }
+
 @media (max-width: 720px) {
   .lux-header { padding-inline: 18px; }
   .lux-brand { width: 58px; }
@@ -3017,6 +3057,7 @@ html[lang^="en"] .lux-home-maison-head > div:first-child > h2 {
 html[lang^="en"] .lux-home-maison-head h2 {
   font-family: var(--lux-page-heading);
   font-weight: 500;
+  font-size: clamp(42px, 5.8vw, 86px);
 }
 .lux-home-maison-intro {
   gap: 18px;
@@ -3102,7 +3143,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   margin-top: auto;
   padding-top: 28px;
   color: #c9a227;
-  font: 600 12px/1.3 var(--lux-page-heading);
+  font: 600 16px/1.35 var(--lux-page-heading);
 }
 .lux-home-maison-grid > a:hover b,
 .lux-home-maison-grid > a:focus-visible b { color: #101010; }
@@ -3164,20 +3205,12 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   height: 1px;
   background: rgba(255, 255, 255, .16);
 }
-.lux-home-editorial-kicker,
-.lux-home-editorial-folio {
+.lux-home-editorial-kicker {
   grid-row: 2;
   align-self: center;
   margin: 0;
 }
 .lux-home-editorial-kicker { grid-column: 1 / 6; }
-.lux-home-editorial-folio {
-  grid-column: 9 / 13;
-  color: #77736d;
-  font: 600 10px/1.4 var(--lux-page-heading);
-  letter-spacing: .22em;
-  text-align: right;
-}
 .lux-home-editorial figure { margin: 0; }
 .lux-home-editorial img {
   width: 100%;
@@ -3225,9 +3258,6 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
 }
 .lux-home-harvest .lux-home-editorial-rule {
   background: rgba(241, 238, 232, .18);
-}
-.lux-home-harvest .lux-home-editorial-folio {
-  color: rgba(241, 238, 232, .42);
 }
 .lux-home-harvest .lux-home-harvest-copy {
   background: rgba(102, 100, 96, .42);
@@ -3393,10 +3423,6 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   }
   .lux-home-editorial-kicker {
     grid-column: 1 / 3;
-    grid-row: 2;
-  }
-  .lux-home-editorial-folio {
-    grid-column: 3 / 5;
     grid-row: 2;
   }
   .lux-home-gifting-image {
@@ -4474,9 +4500,9 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-reader-close:hover,
 .lux-reader-close:focus-visible {
   background: #9df5ec;
-  border-color: #9df5ec;
+  border-color: #101010;
   color: #003734;
-  box-shadow: 0 0 0 2px #101010;
+  box-shadow: none;
 }
 .lux-reader-back:active,
 .lux-reader-close:active {
@@ -4565,7 +4591,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 .lux-reader-content {
   display: grid;
-  grid-template-columns: 220px minmax(0, 720px) 1fr;
+  grid-template-columns: minmax(150px, .65fr) minmax(0, 2.2fr) minmax(150px, .75fr);
   gap: 40px;
   padding-top: 52px;
 }
@@ -4579,10 +4605,12 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   text-transform: uppercase;
 }
 .lux-reader-layout .lux-reader-copy {
+  min-width: 0;
   width: auto;
   margin: 0;
   padding: 0;
   color: #2b2a28;
+  overflow-wrap: anywhere;
 }
 .lux-reader-section {
   display: block;
@@ -4597,6 +4625,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   margin-top: 34px;
 }
 .lux-reader-section-media figure {
+  min-width: 0;
   margin: 0;
   border: 0;
   background: transparent;
@@ -4604,6 +4633,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 .lux-reader-image-button {
   display: block;
+  min-width: 0;
+  max-width: 100%;
   width: 100%;
   padding: 0;
   border: 0;
@@ -4611,6 +4642,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   cursor: zoom-in;
 }
 .lux-reader-section-media img {
+  display: block;
+  max-width: 100%;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: contain;
@@ -4644,6 +4677,10 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #2b2a28;
   font: 400 19px/1.75 var(--lux-page-heading);
   letter-spacing: 0;
+}
+.lux-reader-prose-list {
+  margin: 0 0 24px;
+  padding-left: 1.2em;
 }
 .lux-reader-layout .lux-reader-copy .lux-reader-inline-heading {
   margin: 30px 0 8px;
@@ -4721,14 +4758,29 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   font-weight: 700 !important;
 }
 @media (max-width: 720px) {
+  .lux-home-hero-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+  .lux-home-hero-actions .lux-home-hero-action {
+    flex: 1 1 0;
+    width: auto !important;
+    padding-inline: 10px !important;
+  }
   .lux-home-hero {
-    min-height: auto;
-    padding-block: 56px;
+    min-height: 100svh;
+    padding-block: 32px;
     overflow: hidden;
   }
   .lux-home-hero-content {
     top: 0;
     width: 100%;
+  }
+  .lux-home-hero .lux-hero-video {
+    object-position: center center;
   }
 }
 .lux-recipe-reader {
@@ -4892,6 +4944,19 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #151513;
   font: 700 16px/1.45 var(--lux-page-heading);
 }
+
+.lux-recipe-nutrition-note {
+  margin: 1.5rem 0 0;
+  color: var(--lux-text-muted, #6f6a63);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.lux-recipe-nutrition-note strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--lux-text, #171512);
+}
 .lux-recipe-details {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4914,6 +4979,10 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #242321;
   font: 400 14px/1.6 var(--lux-page-heading);
 }
+.lux-recipe-product-link { display: inline-flex; align-items: center; gap: 8px; color: #006a64; text-decoration: underline; text-underline-offset: 4px; }
+.lux-recipe-product-link:hover,
+.lux-recipe-product-link:focus-visible { color: #003f3c; }
+.lux-recipe-product-link .lux-lucide { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 .lux-recipe-topic-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4962,9 +5031,11 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-reader-pull {
   position: sticky;
   top: 92px;
+  display: flex;
+  flex-direction: column;
   align-self: start;
-  max-height: calc(100vh - 124px);
-  overflow-y: auto;
+  max-height: calc(100dvh - 124px);
+  overflow: hidden;
   padding-top: 16px;
   border-top: 1px solid #101010;
   color: #77736c;
@@ -4974,6 +5045,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 @media (max-width: 980px) {
   .lux-reader-pull {
     position: static;
+    display: block;
     max-height: none;
     overflow: visible;
   }
@@ -4985,10 +5057,28 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-toc {
   display: grid;
+  min-height: 0;
   gap: 12px;
+  align-content: start;
   margin-top: 26px;
-  padding-top: 18px;
+  padding: 18px 8px 4px 0;
   border-top: 1px solid #d7d2c8;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #bcb6ac transparent;
+  scrollbar-width: thin;
+}
+.lux-reader-toc::-webkit-scrollbar {
+  width: 4px;
+}
+.lux-reader-toc::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #bcb6ac;
+}
+@media (max-width: 980px) {
+  .lux-reader-toc {
+    overflow: visible;
+  }
 }
 .lux-reader-toc span {
   color: #77736c;
@@ -5028,6 +5118,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-related-grid button {
   display: grid;
+  align-content: start;
   gap: 8px;
   text-align: left;
   color: #101010;
@@ -5038,7 +5129,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   display: block;
   overflow: hidden;
   border: 0;
-  background: #070707;
+  background: #f4f2ee;
 }
 .lux-reader-related-media::after {
   content: "";
@@ -5053,6 +5144,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   opacity: 1;
 }
 .lux-reader-related-grid img {
+  display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
@@ -5845,7 +5937,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   margin-top: auto;
   padding-top: 20px;
   color: #087f78;
-  font: 700 11px/1.4 var(--lux-page-heading);
+  font: 700 13px/1.4 var(--lux-page-heading);
   letter-spacing: .08em;
   text-decoration: none;
   text-transform: uppercase;
@@ -6382,6 +6474,72 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     max-height: calc(100dvh - 78px);
     overscroll-behavior: contain;
   }
+}
+
+/* Every homepage upper-right watermark follows the PRODUCTS scale and anchor. */
+:is(
+  .lux-home-services::before,
+  .lux-home-selected-products-watermark,
+  .lux-latest-event-carousel::before,
+  .lux-home-market-watermark,
+  .lux-home-timeline::before
+) {
+  top: clamp(44px, 4.5vw, 72px) !important;
+  right: clamp(-46px, 1vw, 18px) !important;
+  width: auto !important;
+  font-size: clamp(112px, 13vw, 220px) !important;
+  line-height: .8 !important;
+  letter-spacing: -.065em !important;
+}
+@media (max-width: 767px) {
+  :is(
+    .lux-home-services::before,
+    .lux-home-selected-products-watermark,
+    .lux-latest-event-carousel::before,
+    .lux-home-market-watermark,
+    .lux-home-timeline::before
+  ) {
+    top: 68px !important;
+    right: -28px !important;
+    font-size: 76px !important;
+  }
+}
+
+/* English homepage watermarks use the Nyght Serif home display face. */
+html.lux-home-root[lang^="en"] :is(
+  .lux-home-services::before,
+  .lux-latest-event-carousel::before,
+  .lux-home-selected-products-watermark,
+  .lux-home-market-watermark,
+  .lux-home-timeline::before
+) {
+  font-family: "Nyght Serif" !important;
+  font-weight: 400 !important;
+}
+html.lux-home-root[lang^="en"] .lux-home-selected-products-watermark {
+  font-size: clamp(112px, 13vw, 220px) !important;
+  line-height: .8 !important;
+  letter-spacing: -.065em !important;
+}
+html.lux-home-root[lang^="en"] .lux-home-market-watermark {
+  font-size: clamp(96px, 8.2vw, 144px) !important;
+  line-height: .82 !important;
+  letter-spacing: -.1em !important;
+}
+html.lux-home-root[lang^="en"] .lux-home-timeline::before {
+  font-size: clamp(84px, 11vw, 176px) !important;
+  line-height: .82 !important;
+  letter-spacing: -.065em !important;
+}
+@media (max-width: 900px) {
+  html.lux-home-root[lang^="en"] .lux-home-timeline::before { font-size: 74px !important; }
+}
+@media (max-width: 767px) {
+  html.lux-home-root[lang^="en"] .lux-home-selected-products-watermark { font-size: 76px !important; }
+  html.lux-home-root[lang^="en"] .lux-home-market-watermark { font-size: clamp(58px, 16vw, 72px) !important; }
+}
+@media (max-width: 520px) {
+  html.lux-home-root[lang^="en"] .lux-home-timeline::before { font-size: 58px !important; }
 }
 @media (max-width: 980px) {
   [data-lux-caviar-controls] > div:first-child,
@@ -8122,9 +8280,9 @@ body {
 }
 .lux-home-timeline-visual img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
   object-fit: cover;
   opacity: 0;
   transform: scale(1.045);
@@ -8796,6 +8954,7 @@ html[lang^="en"] .lux-account-row button {
   font: 700 clamp(96px, 8.2vw, 144px)/.82 var(--lux-page-heading);
   letter-spacing: -.1em;
   white-space: normal;
+  text-align: right;
   pointer-events: none;
   text-transform: uppercase;
 }
@@ -8957,17 +9116,21 @@ html[lang^="en"] .lux-account-row button {
   background: #f2efe9;
   color: #151515;
 }
-.lux-home-services::before {
-  content: "SERVICES";
+.lux-home-services::before,
+.lux-home-selected-products-watermark {
   position: absolute;
-  z-index: -2;
+  z-index: 0;
   top: clamp(44px, 4.5vw, 72px);
   right: clamp(-46px, 1vw, 18px);
-  color: rgba(21,21,21,.045);
   font: 700 clamp(112px, 13vw, 220px)/.8 var(--lux-page-heading);
   letter-spacing: -.065em;
   white-space: nowrap;
   pointer-events: none;
+}
+.lux-home-services::before {
+  content: "SERVICES";
+  z-index: -2;
+  color: rgba(21,21,21,.045);
 }
 .lux-home-services::after {
   content: "";
@@ -8979,6 +9142,18 @@ html[lang^="en"] .lux-account-row button {
     radial-gradient(circle at 91% 19%, transparent 0 126px, rgba(203,165,28,.13) 127px 128px, transparent 129px),
     linear-gradient(90deg, transparent, rgba(203,165,28,.26), transparent) 87% 208px / 300px 1px no-repeat;
   pointer-events: none;
+}
+.lux-home-selected-products {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.lux-home-selected-products-watermark {
+  color: rgba(255,255,255,.10);
+}
+.lux-home-selected-products > :not(.lux-home-selected-products-watermark) {
+  position: relative;
+  z-index: 1;
 }
 .lux-home-services-inner {
   position: relative;
@@ -9131,7 +9306,7 @@ html[lang^="en"] .lux-account-row button {
   gap: 7px;
   margin-top: 24px;
   color: #087f78;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   transform-origin: left center;
   transition: color .22s ease, transform .22s ease;
@@ -9376,7 +9551,8 @@ html[lang^="en"] .lux-account-row button {
   .lux-home-services {
     padding: 72px 0;
   }
-  .lux-home-services::before {
+  .lux-home-services::before,
+  .lux-home-selected-products-watermark {
     top: 68px;
     right: -28px;
     font-size: 76px;
@@ -9469,8 +9645,8 @@ html[lang^="en"] .lux-account-row button {
   content: "EXHIBITION";
   position: absolute;
   z-index: -2;
-  top: -36px;
-  right: clamp(76px, 10vw, 170px);
+  top: clamp(44px, 4.5vw, 72px);
+  right: clamp(-46px, 1vw, 18px);
   color: rgba(0,106,100,.055);
   font: 700 clamp(96px, 13vw, 210px)/.8 var(--lux-page-heading);
   letter-spacing: -.07em;
@@ -9497,7 +9673,7 @@ html[lang^="en"] .lux-account-row button {
   z-index: 0;
   top: clamp(82px, 8vw, 126px);
   right: clamp(-70px, 2vw, 28px);
-  color: rgba(255,255,255,.035);
+  color: rgba(255,255,255,.10);
   font: 700 clamp(84px, 11vw, 176px)/.82 var(--lux-page-heading);
   letter-spacing: -.065em;
   white-space: nowrap;
@@ -9724,9 +9900,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   width: clamp(170px, 24vw, 340px);
   height: 42px;
   border: 0;
-  background:
-    linear-gradient(90deg, rgba(233,195,73,.48), transparent) 0 0 / 100% 1px no-repeat,
-    repeating-linear-gradient(90deg, rgba(157,245,236,.38) 0 1px, transparent 1px 26px) 0 100% / 100% 13px no-repeat;
+  background: repeating-linear-gradient(90deg, rgba(157,245,236,.38) 0 1px, transparent 1px 26px) 0 100% / 100% 13px no-repeat;
   pointer-events: none;
 }
 #selected-products > .grid > .group {
@@ -9738,7 +9912,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   z-index: 4;
   top: 18px;
   right: auto;
-  left: 18px;
+  left: 32px;
   padding: 8px 9px 8px 11px;
   border-left: 0;
   background: rgba(7,8,8,.72);
@@ -9766,6 +9940,146 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 #selected-products > .grid > .group:hover::after {
   opacity: 1;
 }
+#selected-products > .grid > .group > div:last-child > p {
+  max-height: 0;
+  margin-bottom: 0 !important;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .5s ease, margin-bottom .5s ease, opacity .5s ease;
+}
+#selected-products > .grid > .group:is(:hover, :focus-within) > div:last-child > p {
+  max-height: 8em;
+  margin-bottom: 24px !important;
+  opacity: 1;
+}
+
+/* Homepage product cards: angular editorial tiles based on the supplied reference. */
+#selected-products > .grid {
+  gap: clamp(22px, 2.4vw, 38px);
+}
+#selected-products > .grid > .group {
+  aspect-ratio: 1 / 1.04 !important;
+  overflow: visible !important;
+  isolation: isolate;
+  background: transparent !important;
+  clip-path: none;
+}
+#selected-products > .grid > .group > img,
+#selected-products > .grid > .group > div:first-of-type {
+  clip-path: polygon(0 36%, 31% 0, 100% 0, 100% 57%, 68% 100%, 0 100%);
+}
+#selected-products > .grid > .group > img {
+  opacity: .78 !important;
+  transition: transform .8s cubic-bezier(.4,0,.2,1), opacity .8s ease;
+}
+#selected-products > .grid > .group > div:first-of-type {
+  z-index: 2;
+  background: linear-gradient(145deg, rgba(8,8,8,.12) 8%, rgba(8,8,8,.32) 42%, rgba(8,8,8,.92) 100%) !important;
+  opacity: 1 !important;
+  transform-origin: center;
+  transition: transform .8s cubic-bezier(.4,0,.2,1);
+}
+#selected-products > .grid > .group::before {
+  content: "";
+  top: 12%;
+  right: auto;
+  left: 10.333%;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  background: #e9c349;
+  transform: translate(-50%, -50%);
+}
+#selected-products > .grid > .group::after {
+  content: none;
+}
+#selected-products > .grid > .group > div:last-child {
+  z-index: 4;
+  inset: 0 !important;
+  width: 100% !important;
+  padding: clamp(20px, 2vw, 30px) !important;
+  transform: none !important;
+  pointer-events: none;
+}
+#selected-products > .grid > .group > div:last-child > h3 {
+  position: absolute;
+  left: clamp(20px, 2vw, 30px);
+  bottom: clamp(20px, 2vw, 30px);
+  width: 58%;
+  margin: 0 !important;
+  color: #f4f2ee;
+  font-size: clamp(22px, 2.2vw, 34px) !important;
+  line-height: 1.08;
+  transition: opacity .55s ease, transform .55s cubic-bezier(.4,0,.2,1);
+}
+#selected-products > .grid > .group > div:last-child > p {
+  position: absolute;
+  top: auto;
+  right: auto;
+  left: clamp(20px, 2vw, 30px);
+  bottom: clamp(20px, 2vw, 30px);
+  width: 58%;
+  max-height: none;
+  margin: 0 !important;
+  overflow: visible;
+  color: rgba(244,242,238,.78);
+  font-size: clamp(11px, .9vw, 14px);
+  line-height: 1.55;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.4,0,.2,1);
+}
+#selected-products .lux-core-shop {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 32%;
+  height: 43%;
+  display: block;
+  padding: 0 !important;
+  border: 0 !important;
+  clip-path: polygon(100% 10%, 100% 100%, 10% 100%);
+  background: #313130 !important;
+  color: #f4f2ee !important;
+  text-align: center;
+  letter-spacing: .08em;
+  pointer-events: auto;
+  backdrop-filter: none;
+  transition: background .35s ease, color .35s ease;
+}
+#selected-products .lux-core-shop::before {
+  content: none;
+}
+#selected-products .lux-core-shop .lux-lucide {
+  position: absolute;
+  top: 70%;
+  left: 70%;
+  width: clamp(27px, 2.4vw, 38px);
+  height: clamp(27px, 2.4vw, 38px);
+  transform: translate(-50%, -50%);
+}
+#selected-products > .grid > .group:is(:hover, :focus-within) > img {
+  opacity: .92 !important;
+  transform: scale(1.025);
+}
+#selected-products > .grid > .group:is(:hover, :focus-within) > div:first-of-type {
+  transform: scale(1.025);
+}
+#selected-products > .grid > .group:is(:hover, :focus-within) > div:last-child > h3 {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+#selected-products > .grid > .group:is(:hover, :focus-within) > div:last-child > p {
+  max-height: none;
+  margin: 0 !important;
+  opacity: 1;
+  transform: translateY(0);
+}
+#selected-products .lux-core-shop:is(:hover, :focus-visible) {
+  background: #9df5ec !important;
+  color: #003734 !important;
+}
 
 @media (max-width: 767px) {
   #selected-products::before {
@@ -9778,6 +10092,17 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     top: 138px;
     width: 170px;
     height: 34px;
+  }
+  #selected-products > .grid > .group {
+    aspect-ratio: 1 / 1.12 !important;
+  }
+  #selected-products > .grid > .group > div:last-child > h3 {
+    width: 60%;
+    font-size: clamp(23px, 7vw, 31px) !important;
+  }
+  #selected-products > .grid > .group > div:last-child > p {
+    width: 50%;
+    font-size: 12px;
   }
 }
 
@@ -10209,7 +10534,10 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   margin: 0 0 20px;
   color: #171715;
 }
-.lux-product-count span { color: #087f78; }
+.lux-product-count strong {
+  color: #006a64;
+  font: inherit;
+}
 
 .lux-latest-event-carousel::before {
   content: none;
@@ -10291,8 +10619,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   content: "EXHIBITION";
   position: absolute;
   z-index: -2;
-  top: -36px;
-  right: clamp(76px, 10vw, 170px);
+  top: clamp(44px, 4.5vw, 72px);
+  right: clamp(-46px, 1vw, 18px);
   color: rgba(0,106,100,.055);
   font: 700 clamp(96px, 13vw, 210px)/.8 var(--lux-page-heading);
   letter-spacing: -.07em;
@@ -10389,7 +10717,6 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   transform: scale(1.04);
 }
 
-/* Caviar Academy refinements: complete fish artwork, restrained gold hover, clean editorial media. */
 .lux-academy-card.is-wide-cover .lux-academy-card-media {
   aspect-ratio: 16 / 8;
   background: #f4f2ee;
@@ -10454,9 +10781,12 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   background: #f4f2ee;
 }
 .lux-reader-related-grid button.is-wide-cover img {
-  object-fit: contain;
+  display: block;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
   object-position: center;
-  background: #f4f2ee;
+  background: transparent;
 }
 .lux-about-story .lux-reader-section-media,
 .lux-about-story .lux-about-carousel-track,
@@ -10562,7 +10892,6 @@ html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
   }
 }
 
-/* July 29 certification controls and editorial hierarchy. */
 .lux-cert-system-media {
   margin: 0;
 }
@@ -10635,16 +10964,16 @@ html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
 
 /* English typography standard: Nyght Serif titles with Spectral body copy. */
 html[lang^="en"] {
-  --lux-page-heading: "Nyght Serif", "KingHwa Old Song Complete", serif;
-  --lux-en-display: "Nyght Serif", "KingHwa Old Song Complete", serif;
-  --lux-en-heading: "Nyght Serif", "KingHwa Old Song Complete", serif;
-  --lux-en-body: "Spectral", "KingHwa Old Song Complete", serif;
+  --lux-page-heading: "Nyght Serif";
+  --lux-en-display: "Nyght Serif";
+  --lux-en-heading: "Nyght Serif";
+  --lux-en-body: "Spectral";
 }
 html.lux-home-root[lang^="en"] {
-  --lux-page-heading: "Nyght Serif Home", "KingHwa Old Song Complete", serif;
-  --lux-en-display: "Nyght Serif Home", "KingHwa Old Song Complete", serif;
-  --lux-en-heading: "Nyght Serif Home", "KingHwa Old Song Complete", serif;
-  --lux-en-body: "Spectral Home", "KingHwa Old Song Complete", serif;
+  --lux-page-heading: "Nyght Serif";
+  --lux-en-display: "Nyght Serif";
+  --lux-en-heading: "Nyght Serif";
+  --lux-en-body: "Spectral";
 }
 html[lang^="en"] body *:not(.material-symbols-outlined),
 html[lang^="en"] body *:not(.material-symbols-outlined)::before,
@@ -10659,13 +10988,13 @@ html[lang^="en"] :is(p, li, blockquote, figcaption, dt, dd) {
   font-size: 18px !important;
   line-height: 1.65 !important;
 }
-html[lang^="en"] :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm),
-html[lang^="en"] :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm) * {
+html[lang^="en"] body :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm),
+html[lang^="en"] body :is(h2, h3, h4, h5, h6, .font-headline, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm) * {
   font-family: var(--lux-en-heading) !important;
   font-weight: 400 !important;
 }
-html[lang^="en"] :is(h1, .font-display, .font-display-lg, .font-display-lg-mobile, #lux-reader-title, .lux-event-reader-intro h2),
-html[lang^="en"] :is(h1, .font-display, .font-display-lg, .font-display-lg-mobile, #lux-reader-title, .lux-event-reader-intro h2) * {
+html[lang^="en"] body :is(h1, .font-display, .font-display-lg, .font-display-lg-mobile, #lux-reader-title, .lux-event-reader-intro h2),
+html[lang^="en"] body :is(h1, .font-display, .font-display-lg, .font-display-lg-mobile, #lux-reader-title, .lux-event-reader-intro h2) * {
   font-family: var(--lux-en-display) !important;
   font-weight: 400 !important;
 }
@@ -10780,7 +11109,6 @@ html[lang] .material-symbols-outlined {
 }
 .lux-channel-services header h3 { margin-bottom: 0; }
 
-/* Keep the event CTA text-led on hover instead of filling the button. */
 .lux-event-detail-link:hover,
 .lux-event-detail-link:focus-visible {
   color: #006a64 !important;
@@ -10800,7 +11128,6 @@ html[lang^="en"] :is(
   .lux-selected-products-kicker,
   .lux-home-services header > span,
   .lux-home-editorial-kicker,
-  .lux-home-editorial-folio,
   .lux-home-why-copy > span,
   .lux-home-gifting .lux-action-copy,
   .lux-meet-map-card > span
@@ -10835,9 +11162,9 @@ html[lang^="en"] #gifting-editorial .lux-action-copy {
 
 /* Chinese typography standard: page-local WOFF2 subsets keep the two families fast and device-independent. */
 html[lang^="zh"] {
-  --lux-page-heading: "KingHwa Old Song Site", serif;
-  --lux-zh-headline: "KingHwa Old Song Site", serif;
-  --lux-zh-body: "LuxurEat ZhiSong Site", serif;
+  --lux-page-heading: "KingHwa Old Song Site";
+  --lux-zh-headline: "KingHwa Old Song Site";
+  --lux-zh-body: "LuxurEat ZhiSong Site";
   font-synthesis: none;
 }
 html[lang^="zh"] body *:not(.material-symbols-outlined)::before,
@@ -10848,8 +11175,8 @@ html[lang^="zh"] body,
 html[lang^="zh"] :is(p, li, blockquote, figcaption, label, small, dt, dd, th, td, button, input, textarea, select, a, span:not(.material-symbols-outlined)) {
   font-family: var(--lux-zh-body) !important;
 }
-html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .font-headline, .font-display-lg, .font-display-lg-mobile, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm, .lux-reader-related-grid strong, .lux-academy-latest strong),
-html[lang^="zh"] :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .font-headline, .font-display-lg, .font-display-lg-mobile, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm, .lux-reader-related-grid strong, .lux-academy-latest strong) * {
+html[lang^="zh"] body :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .font-headline, .font-display-lg, .font-display-lg-mobile, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm, .lux-reader-related-grid strong, .lux-academy-latest strong),
+html[lang^="zh"] body :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-display, .font-headline, .font-display-lg, .font-display-lg-mobile, .font-headline-lg, .font-headline-lg-mobile, .font-headline-md, .font-headline-sm, .lux-reader-related-grid strong, .lux-academy-latest strong) * {
   font-family: var(--lux-zh-headline) !important;
   font-weight: 700 !important;
   -webkit-text-stroke: .16px currentColor;
@@ -10980,7 +11307,6 @@ html[lang] .lux-reader-pull p {
   line-height: 1.5 !important;
 }
 
-/* Keep sorting above the catalogue and unclipped at tablet widths. */
 [data-lux-caviar-controls] {
   z-index: 100 !important;
   overflow: visible !important;
@@ -11153,13 +11479,23 @@ html[lang^="zh"] :is(.lux-bag-item, .lux-bag-recommendations) :not(.material-sym
   font-family: var(--lux-zh-headline) !important;
 }
 html.lux-home-root[lang^="zh"] {
-  --lux-page-heading: "KingHwa Old Song Site", serif;
-  --lux-zh-headline: "KingHwa Old Song Site", serif;
-  --lux-zh-body: "LuxurEat ZhiSong Site", serif;
+  --lux-page-heading: "KingHwa Old Song Site";
+  --lux-zh-headline: "KingHwa Old Song Site";
+  --lux-zh-body: "LuxurEat ZhiSong Site";
 }
 html[lang^="zh"] body.lux-home-page .lux-reader {
-  --lux-page-heading: "KingHwa Old Song Site", serif;
-  --lux-zh-headline: "KingHwa Old Song Site", serif;
+  --lux-page-heading: "KingHwa Old Song Site";
+  --lux-zh-headline: "KingHwa Old Song Site";
+}
+
+/* Keep compact display labels internally monofont; body text remains ZhiSong/Spectral elsewhere. */
+html[lang] body .lux-cert-network-story footer *,
+html[lang] body .lux-cert-results blockquote footer * {
+  font-family: inherit !important;
+}
+html[lang] body .leaflet-control-attribution,
+html[lang] body .leaflet-control-attribution * {
+  font-family: var(--lux-zh-body, var(--lux-en-body)) !important;
 }
 
 /* Every page-top hero follows the homepage's 14px / 18px support scale. */
@@ -11209,18 +11545,45 @@ html[lang] body .lux-account-existing button {
 
 /* Chinese product names remain KingHwa even inside the English interface. */
 html[lang^="en"] body [lang^="zh"] {
-  font-family: "KingHwa Labels", serif !important;
+  font-family: "KingHwa Old Song Site" !important;
   font-weight: 700 !important;
   -webkit-text-stroke: .16px currentColor;
   paint-order: stroke fill;
 }
 
-/* August 3 reference-layout refinements. */
 body.lux-academy-page .lux-scroll-reveal,
 body.lux-academy-page .lux-scroll-reveal.is-in-view {
   opacity: 1 !important;
   transform: none !important;
   transition: none !important;
+}
+html[lang] body.lux-academy-page :is(.lux-academy-count, .lux-academy-sidebar > label, .lux-academy-latest h2) {
+  font-family: var(--lux-zh-body, var(--lux-en-body)) !important;
+}
+html[lang] body.lux-academy-page .lux-academy-count {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+/* Keep the English academy sidebar headings typographically identical. */
+html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-sidebar > label, .lux-academy-latest h2) {
+  font-family: var(--lux-en-body) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .08em !important;
+}
+
+@media (min-width: 1000px) {
+  html[lang^="zh"] body.lux-academy-page .lux-academy-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 500px);
+    column-gap: 88px;
+  }
+  html[lang^="zh"] body.lux-academy-page .lux-academy-intro h2 {
+    font-size: clamp(52px, 4.6vw, 64px) !important;
+    white-space: nowrap;
+  }
 }
 
 .lux-home-topic-preview {
@@ -11233,27 +11596,11 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
 }
 .lux-home-topic-preview::before,
 .lux-home-topic-preview::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  pointer-events: none;
-}
-.lux-home-topic-preview::before {
-  top: 70px;
-  right: -90px;
-  width: 310px;
-  height: 310px;
-  background: rgba(157, 245, 236, .22);
-}
-.lux-home-topic-preview::after {
-  left: -110px;
-  bottom: 14%;
-  width: 260px;
-  height: 260px;
-  border: 1px solid rgba(137, 103, 15, .28);
+  display: none;
 }
 .lux-home-topic-preview-inner {
+  position: relative;
+  z-index: 1;
   width: min(1280px, 100%);
   margin-inline: auto;
 }
@@ -11287,9 +11634,19 @@ body.lux-academy-page .lux-scroll-reveal.is-in-view {
   font: 400 17px/1.75 var(--lux-zh-body, var(--lux-en-body));
 }
 .lux-home-topic-grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 24px;
+}
+.lux-home-topic-grid::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -16px;
+  border-top: 1px solid rgba(137, 103, 15, .2);
+  border-right: 1px solid rgba(0, 106, 100, .16);
+  pointer-events: none;
 }
 .lux-topic-preview-card {
   grid-column: span 5;
@@ -11645,7 +12002,6 @@ section[data-recipe-panel] {
 .lux-recipe-theme-card:hover p,
 .lux-recipe-theme-card:focus-within p { max-height: 110px; margin-top: 12px; opacity: .9; transform: none; }
 
-/* Three distinct editorial compositions follow the supplied recipe references. */
 #truffle-recipes { background: #fff; }
 #truffle-recipes > header,
 #healthy-light-recipes > header,
@@ -11783,6 +12139,18 @@ section[data-recipe-panel] {
 #china-family-recipes .lux-recipe-theme-card:nth-child(2) { grid-column: 2 / span 5; }
 #truffle-recipes .lux-recipe-theme-card:nth-child(3),
 #china-family-recipes .lux-recipe-theme-card:nth-child(3) { grid-column: 7 / span 5; }
+#china-family-recipes .lux-recipe-theme-card[data-reader-open$="family-spaghetti-pomodoro"] h3,
+#china-family-recipes .lux-recipe-theme-card[data-reader-open$="family-spaghetti-pomodoro"] p,
+#truffle-recipes .lux-recipe-theme-card[data-reader-open$="truffle-lamb"] h3,
+#truffle-recipes .lux-recipe-theme-card[data-reader-open$="truffle-lamb"] p {
+  text-shadow: 0 2px 3px rgba(0, 0, 0, .9);
+}
+.lux-recipe-library-card .lux-reader-cta:hover,
+.lux-recipe-library-card .lux-reader-cta:focus-visible {
+  border-color: #81d8d0;
+  background: #81d8d0;
+  color: #171715;
+}
 #truffle-recipes .lux-recipe-theme-card:nth-child(2) figure,
 #truffle-recipes .lux-recipe-theme-card:nth-child(3) figure,
 #china-family-recipes .lux-recipe-theme-card:nth-child(2) figure,
@@ -12027,4 +12395,830 @@ html[lang^="zh"] .lux-cert-awards h2 {
     font-size: 40px;
     line-height: 48px;
   }
+}
+
+.lux-header {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  transition: background-color .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+}
+.lux-header.is-scrolled {
+  background: rgba(8, 8, 8, .72);
+  border-bottom-color: rgba(233, 195, 73, .22);
+  backdrop-filter: blur(18px);
+}
+@media (max-width: 1080px) {
+  .lux-header:has(.lux-nav.open) {
+    background: rgba(7, 7, 7, .97);
+    border-bottom-color: rgba(233, 195, 73, .22);
+    backdrop-filter: blur(18px);
+  }
+}
+
+/* Final homepage watermark lock: every language follows PRODUCTS exactly. */
+.lux-home-services::before,
+.lux-home-selected-products-watermark,
+.lux-latest-event-carousel::before,
+.lux-home-market-watermark,
+.lux-home-timeline::before {
+  top: clamp(44px, 4.5vw, 72px) !important;
+  right: clamp(-46px, 1vw, 18px) !important;
+  width: auto !important;
+  font-size: clamp(112px, 13vw, 220px) !important;
+  line-height: .8 !important;
+  letter-spacing: -.065em !important;
+}
+.lux-home-market-watermark { text-align: right !important; }
+@media (max-width: 767px) {
+  .lux-home-services::before,
+  .lux-home-selected-products-watermark,
+  .lux-latest-event-carousel::before,
+  .lux-home-market-watermark,
+  .lux-home-timeline::before {
+    top: 68px !important;
+    right: -28px !important;
+    font-size: 76px !important;
+  }
+}
+
+/* Homepage partnership study 03: manufacturing-floor reference layout. */
+.lux-home-partnership-continuum {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, transparent 0 36%, rgba(203, 165, 28, .065) 36.08% 36.15%, transparent 36.23%),
+    #f2efe9;
+}
+.lux-home-partnership-continuum::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 24%;
+  right: -11vw;
+  width: clamp(420px, 54vw, 920px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(7, 127, 120, .11);
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 0 42%, rgba(203, 165, 28, .12) 42.15% 42.32%, transparent 42.48%);
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+.lux-home-partnership-continuum > section {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+.lux-home-partnership-continuum > .lux-home-why {
+  overflow: visible;
+}
+.lux-home-partnership-continuum > .lux-home-why::after {
+  display: none;
+}
+.lux-home-partnership-continuum > .lux-home-partnership-manufacturing::before {
+  display: none;
+}
+.lux-home-page > .lux-home-partnership-continuum {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1800px;
+}
+.lux-home-partnership-manufacturing {
+  --lux-partnership-gold: #d2ad34;
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 88% 90%, transparent 0 190px, rgba(7, 127, 120, .07) 191px 192px, transparent 193px),
+    linear-gradient(145deg, transparent 0 72%, rgba(203, 165, 28, .055) 72.1% 72.25%, transparent 72.35%),
+    #f2efe9;
+  color: #171715;
+}
+.lux-home-partnership-manufacturing::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -148px;
+  right: -8vw;
+  width: clamp(300px, 42vw, 720px);
+  aspect-ratio: 1.55;
+  border: 1px solid rgba(7, 127, 120, .1);
+  border-radius: 50%;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+.lux-home-partnership-manufacturing > * {
+  position: relative;
+  z-index: 1;
+}
+.lux-home-partnership-manufacturing-top {
+  width: min(100%, 1560px);
+  margin: 0 auto;
+  padding: clamp(72px, 8vw, 128px) clamp(24px, 5vw, 80px) clamp(42px, 4vw, 60px);
+}
+.lux-home-partnership-manufacturing-head {
+  position: relative;
+  width: 100%;
+  min-height: 220px;
+  margin: 0 0 clamp(36px, 4vw, 58px);
+}
+.lux-home-partnership-manufacturing-head-copy {
+  width: min(860px, calc(100% - 330px));
+}
+.lux-home-partnership-manufacturing-head-copy > span,
+.lux-home-partnership-process header > span {
+  display: block;
+  margin-bottom: 16px;
+  color: #087f78;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .26em;
+}
+.lux-home-partnership-manufacturing-head h2,
+.lux-home-partnership-process h2 {
+  margin: 0;
+  font: 700 clamp(40px, 4.6vw, 72px)/1.02 var(--lux-page-heading);
+  letter-spacing: -.025em;
+}
+.lux-home-partnership-manufacturing-head-copy p {
+  max-width: 780px;
+  margin: 24px 0 0;
+  color: #615d57;
+  font: 400 17px/1.75 var(--lux-page-heading);
+}
+.lux-home-partnership-manufacturing-orbits {
+  position: absolute;
+  top: 0;
+  right: 2%;
+  width: 300px;
+  height: 210px;
+}
+.lux-home-partnership-manufacturing-orbits::before {
+  content: "";
+  position: absolute;
+  inset: 18px 36px 2px 52px;
+  border: 1px solid rgba(23, 79, 73, .25);
+  border-radius: 50%;
+}
+.lux-home-partnership-manufacturing-orbits figure {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  border: 6px solid #f4f2ee;
+  border-radius: 50%;
+  box-shadow: 0 14px 36px rgba(17, 36, 33, .18);
+}
+.lux-home-partnership-manufacturing-orbits figure:first-child {
+  top: 0;
+  right: 0;
+  width: 154px;
+  height: 154px;
+}
+.lux-home-partnership-manufacturing-orbits figure:last-child {
+  bottom: 0;
+  left: 0;
+  width: 112px;
+  height: 112px;
+}
+.lux-home-partnership-manufacturing-orbits img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lux-home-partnership-manufacturing-gallery {
+  display: grid;
+  grid-template-columns: 1.24fr 1fr 1fr;
+  grid-template-rows: repeat(2, clamp(210px, 21vw, 315px));
+  gap: 14px;
+}
+.lux-home-partnership-manufacturing-gallery figure {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #d9d6d0;
+}
+.lux-home-partnership-manufacturing-gallery .is-main {
+  grid-row: 1 / 3;
+}
+.lux-home-partnership-manufacturing-gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.lux-home-partnership-manufacturing-gallery .is-main img {
+  object-position: 48% center;
+}
+.lux-home-partnership-manufacturing-advantages {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(1180px, 100%);
+  margin: 40px auto 0;
+  border: 0;
+  background: transparent;
+}
+.lux-home-partnership-manufacturing-advantages > div {
+  min-height: 126px;
+  padding: 25px 28px;
+  border: 0;
+}
+.lux-home-partnership-manufacturing-advantages > div:last-child { border-right: 0; }
+.lux-home-partnership-manufacturing-advantages dt {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #171715;
+  font: 700 clamp(20px, 2vw, 28px)/1.2 var(--lux-page-heading);
+}
+.lux-home-partnership-manufacturing-advantages dt .material-symbols-outlined {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  border: 1px solid var(--lux-partnership-gold);
+  border-radius: 50%;
+  color: #9c7b0c;
+  font-size: 23px !important;
+}
+.lux-home-partnership-manufacturing-advantages dd {
+  margin: 12px 0 0;
+  color: #706a62;
+  font: 400 14px/1.5 var(--lux-page-heading);
+}
+.lux-home-partnership-process {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(78px, 8vw, 128px) clamp(24px, 5vw, 80px);
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(9, 12, 13, .9), rgba(9, 12, 13, .94)),
+    url("assets/media/brand/home-partnership-process.webp") center 48% / cover no-repeat;
+  color: #fff;
+}
+.lux-home-partnership-process-inner {
+  width: min(100%, 1400px);
+  margin: 0 auto;
+  text-align: center;
+}
+.lux-home-partnership-process header {
+  width: min(820px, 100%);
+  margin: 0 auto;
+}
+.lux-home-partnership-process header > span { color: #e8bd37; }
+.lux-home-partnership-process h2 {
+  font-size: clamp(38px, 4.2vw, 64px);
+  line-height: 1.08;
+}
+.lux-home-partnership-process header p {
+  max-width: 720px;
+  margin: 22px auto 0;
+  color: #c3c0ba;
+  font: 400 16px/1.75 var(--lux-page-heading);
+}
+.lux-home-partnership-process ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: clamp(44px, 5vw, 72px) 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.lux-home-partnership-process li {
+  position: relative;
+  min-height: 238px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .13);
+  background: rgba(18, 22, 23, .72);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease, background-color .28s ease;
+}
+.lux-home-partnership-process li:hover,
+.lux-home-partnership-process li:focus-within {
+  z-index: 2;
+  border-color: rgba(210, 173, 52, .7);
+  background: rgba(20, 24, 24, .9);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, .38), inset 0 0 0 1px rgba(210, 173, 52, .12);
+  transform: translateY(-7px);
+}
+.lux-home-partnership-process li::before,
+.lux-home-partnership-process li::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+.lux-home-partnership-process li::before {
+  top: 0;
+  left: 0;
+  width: 92px;
+  height: 2px;
+  background: var(--lux-partnership-gold);
+  box-shadow: 0 0 22px rgba(210, 173, 52, .55);
+}
+.lux-home-partnership-process li::after {
+  right: -52px;
+  bottom: -52px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(210, 173, 52, .22);
+  border-radius: 50%;
+}
+.lux-home-partnership-process details {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 30px;
+}
+.lux-home-partnership-process summary {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 22px;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+.lux-home-partnership-process summary::-webkit-details-marker { display: none; }
+.lux-home-partnership-process summary > span { display: grid; gap: 12px; }
+.lux-home-partnership-process summary em {
+  color: var(--lux-partnership-gold);
+  font: 600 11px/1.3 var(--lux-page-heading);
+  font-style: normal;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.lux-home-partnership-process summary em::after { content: " ＋"; }
+.lux-home-partnership-process details[open] summary em::after { content: " －"; }
+.lux-home-partnership-process details > div {
+  margin: 24px 0 0 68px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(210, 173, 52, .28);
+}
+.lux-home-partnership-process summary:hover h3,
+.lux-home-partnership-process summary:focus-visible h3 { color: #e8c85f; }
+.lux-home-partnership-process li b {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  margin: 0;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lux-partnership-gold);
+  color: #17130a;
+  font: 700 16px/1 var(--lux-page-heading);
+}
+.lux-home-partnership-process li h3 {
+  margin: 0;
+  color: #fff;
+  font: 700 24px/1.2 var(--lux-page-heading);
+}
+.lux-home-partnership-process li p {
+  margin: 14px 0 0;
+  color: #bdb9b2;
+  font: 400 15px/1.7 var(--lux-page-heading);
+}
+.lux-home-partnership-process details > div p + p { margin-top: 12px; }
+.lux-home-partnership-process-inner > a {
+  display: inline-flex;
+  width: 236.40625px;
+  min-height: 67px;
+  margin-top: 42px;
+  padding: 20px 48px;
+  align-items: center;
+  justify-content: center;
+  background: var(--lux-partnership-gold);
+  color: #17130a;
+  font: 700 18px/27px var(--lux-page-heading);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color .2s ease, transform .2s ease;
+}
+html[lang^="en"] .lux-home-partnership-process-inner > a {
+  padding-inline: 20px;
+  letter-spacing: .22em;
+}
+.lux-home-partnership-manufacturing-head.lux-scroll-reveal h2,
+.lux-home-partnership-process header.lux-scroll-reveal h2 {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .72s ease, transform .72s cubic-bezier(.2, .7, .25, 1);
+}
+.lux-home-partnership-manufacturing-head.lux-scroll-reveal.is-in-view h2,
+.lux-home-partnership-process header.lux-scroll-reveal.is-in-view h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+.lux-home-partnership-process-inner > a:hover,
+.lux-home-partnership-process-inner > a:focus-visible {
+  background: #8eece6;
+  color: #071110;
+  transform: translateY(-2px);
+}
+@media (max-width: 900px) {
+  .lux-home-partnership-manufacturing-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(300px, 58vw) repeat(2, minmax(180px, 34vw));
+  }
+  .lux-home-partnership-manufacturing-gallery .is-main {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .lux-home-partnership-manufacturing-advantages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-home-partnership-manufacturing-advantages > div:nth-child(2) { border-right: 0; }
+  .lux-home-partnership-manufacturing-advantages > div:nth-child(-n + 2) { border-bottom: 0; }
+  .lux-home-partnership-manufacturing-advantages > div:last-child { grid-column: 1 / -1; }
+  .lux-home-partnership-process ol { grid-template-columns: 1fr; }
+  .lux-home-partnership-process li { min-height: 0; }
+}
+@media (max-width: 560px) {
+  .lux-home-partnership-manufacturing-top,
+  .lux-home-partnership-process { padding-inline: 18px; }
+  .lux-home-partnership-manufacturing-gallery {
+    gap: 8px;
+    grid-template-rows: 310px repeat(2, 180px);
+  }
+  .lux-home-partnership-manufacturing-advantages { margin-top: 8px; }
+  .lux-home-partnership-manufacturing-advantages > div {
+    min-height: 108px;
+    padding: 20px 18px;
+  }
+  .lux-home-partnership-manufacturing-head { min-height: 0; }
+  .lux-home-partnership-manufacturing-head-copy { width: 100%; }
+  .lux-home-partnership-manufacturing-orbits {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 190px;
+    height: 116px;
+    margin: 26px 0 0 auto;
+  }
+  .lux-home-partnership-manufacturing-orbits figure:first-child { width: 92px; height: 92px; }
+  .lux-home-partnership-manufacturing-orbits figure:last-child { width: 72px; height: 72px; }
+  .lux-home-partnership-manufacturing-advantages { grid-template-columns: 1fr; }
+  .lux-home-partnership-manufacturing-advantages > div,
+  .lux-home-partnership-manufacturing-advantages > div:nth-child(2) {
+    grid-column: auto;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .lux-home-partnership-manufacturing-advantages > div:last-child { border-bottom: 0; }
+  .lux-home-partnership-process li { padding: 24px; }
+  .lux-home-partnership-process details { padding: 0; }
+  .lux-home-partnership-process details > div { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lux-home-partnership-manufacturing-head.lux-scroll-reveal h2,
+  .lux-home-partnership-process header.lux-scroll-reveal h2 {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .lux-home-partnership-process li { transition: none; }
+}
+
+/* Brand-promise cards: equal-height copy keeps every gold rule on one baseline. */
+.lux-brand-promise-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.lux-brand-promise-card > div {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+.lux-brand-promise-card > div::after {
+  height: 0 !important;
+  margin-top: auto !important;
+  padding-top: 20px;
+  border-bottom: 1px solid #9a7420;
+  box-sizing: content-box;
+  background: transparent !important;
+}
+
+/* Full-bleed partnership gallery and shared zoom interaction. */
+.lux-home-partnership-manufacturing-gallery {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+.lux-home-partnership-manufacturing-gallery figure[data-partnership-image] {
+  cursor: zoom-in;
+}
+.lux-home-partnership-manufacturing-gallery figure[data-partnership-image] img {
+  transition: transform .35s ease, filter .35s ease;
+}
+.lux-home-partnership-manufacturing-gallery figure[data-partnership-image]:hover img,
+.lux-home-partnership-manufacturing-gallery figure[data-partnership-image]:focus-visible img {
+  filter: brightness(.82) saturate(1.12);
+  transform: scale(1.035);
+}
+.lux-home-partnership-manufacturing-gallery figure[data-partnership-image]:focus-visible,
+.lux-brand-promise-showcase img[role="button"]:focus-visible {
+  outline: 2px solid #9a7420;
+  outline-offset: -4px;
+}
+
+/* The promise imagery leads and reaches both viewport edges. */
+.lux-brand-promise-showcase {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: 0;
+}
+.lux-brand-promise-copy::after {
+  display: none;
+}
+.lux-brand-promise-showcase img[role="button"] {
+  cursor: zoom-in;
+  transition: filter .3s ease;
+}
+.lux-brand-promise-showcase img[role="button"]:hover,
+.lux-brand-promise-showcase img[role="button"]:focus-visible {
+  filter: brightness(.82) saturate(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-home-partnership-manufacturing-gallery figure[data-partnership-image] img,
+  .lux-brand-promise-showcase img[role="button"] {
+    transition: none;
+  }
+  .lux-home-partnership-manufacturing-gallery figure[data-partnership-image]:hover img,
+  .lux-home-partnership-manufacturing-gallery figure[data-partnership-image]:focus-visible img {
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .lux-home-partnership-process {
+    background:
+      linear-gradient(rgba(9, 12, 13, .9), rgba(9, 12, 13, .94)),
+      url("assets/media/brand/home-partnership-process-mobile.webp") center / cover no-repeat;
+  }
+}
+
+/* Certification partnership gallery: one feature image with four rotating previews. */
+.lux-cert-partnership-gallery {
+  width: 100vw;
+  margin: clamp(72px, 10vw, 150px) 0 -120px calc(50% - 50vw);
+  padding: clamp(72px, 8vw, 128px) clamp(24px, 5vw, 80px) clamp(42px, 4vw, 64px);
+  scroll-margin-top: 88px;
+  overflow: hidden;
+  background: #fbfaf7;
+  color: #151919;
+}
+.lux-cert-partnership-gallery-shell {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto auto;
+  row-gap: clamp(24px, 3vw, 44px);
+  width: min(100%, 1440px);
+  margin: 0 auto;
+}
+.lux-cert-partnership-gallery header {
+  grid-column: 7 / 13;
+  grid-row: 1;
+  z-index: 2;
+  align-self: start;
+  padding: clamp(18px, 2vw, 28px) clamp(10px, 3vw, 46px);
+}
+.lux-cert-partnership-gallery header > span {
+  display: block;
+  margin-bottom: 12px;
+  color: #087f78;
+  font: 700 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.lux-cert-partnership-gallery h2 {
+  margin: 0;
+  color: #151919;
+  font: 500 clamp(48px, 6vw, 88px)/.96 var(--lux-page-heading);
+  letter-spacing: -.025em;
+}
+.lux-cert-partnership-gallery header p {
+  max-width: 600px;
+  margin: 18px 0 0;
+  color: #59615f;
+  font: 400 14px/1.75 var(--lux-page-heading);
+}
+.lux-cert-partnership-notes {
+  display: grid;
+  max-width: 600px;
+  margin-top: 24px;
+  border-bottom: 1px solid rgba(21, 25, 25, .12);
+}
+.lux-cert-partnership-notes article {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 8px 0;
+  border-top: 1px solid rgba(21, 25, 25, .12);
+}
+.lux-cert-partnership-notes .lux-lucide {
+  width: 24px;
+  height: 24px;
+  color: #087f78;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lux-cert-partnership-notes strong,
+.lux-cert-partnership-notes span { display: block; }
+.lux-cert-partnership-notes strong {
+  margin-bottom: 3px;
+  color: #202625;
+  font: 700 13px/1.35 var(--lux-page-heading);
+  letter-spacing: .04em;
+}
+.lux-cert-partnership-notes span {
+  color: #68706e;
+  font: 400 12px/1.55 var(--lux-page-heading);
+}
+.lux-cert-partnership-main {
+  position: relative;
+  grid-column: 1 / 6;
+  grid-row: 1;
+  min-height: 0;
+  height: auto;
+  align-self: stretch;
+  margin: 0;
+  overflow: hidden;
+  background: #d8d6d0;
+  box-shadow: 0 22px 56px rgba(34, 37, 35, .14);
+}
+.lux-cert-partnership-main > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: opacity .22s ease, transform .65s ease;
+}
+.lux-cert-partnership-main > img:focus-visible {
+  outline: 3px solid #0abab5;
+  outline-offset: -3px;
+}
+.lux-cert-partnership-main > img.is-changing { opacity: .72; transform: scale(1.012); }
+.lux-cert-partnership-thumbs {
+  display: grid;
+  grid-column: 1 / 13;
+  grid-row: 2;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  gap: clamp(14px, 1.7vw, 28px);
+  z-index: 3;
+  align-self: end;
+  align-items: end;
+  padding-top: 0;
+  pointer-events: none;
+}
+.lux-cert-partnership-thumbs button {
+  display: block;
+  position: relative;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #d8d6d0;
+  box-shadow: 0 14px 36px rgba(34, 37, 35, .16);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.lux-cert-partnership-thumbs button.is-current {
+  outline: 3px solid #0abab5;
+  outline-offset: -3px;
+}
+.lux-cert-partnership-thumbs button.is-current img { filter: brightness(.72); }
+.lux-cert-partnership-thumbs button[hidden] { display: none; }
+.lux-cert-partnership-thumbs button:nth-child(2n) { height: auto; }
+.lux-cert-partnership-thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter .25s ease, transform .55s ease;
+}
+.lux-cert-partnership-thumbs button:hover img,
+.lux-cert-partnership-thumbs button:focus-visible img {
+  filter: brightness(.84);
+  transform: scale(1.035);
+}
+.lux-cert-partnership-controls {
+  display: flex;
+  width: max-content;
+  gap: 14px;
+  align-items: center;
+  margin: 18px 0 0;
+  padding: 6px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(10, 14, 14, .56);
+  box-shadow: none;
+  backdrop-filter: blur(12px);
+}
+.lux-cert-partnership-controls button {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  transition: color .2s ease, background .2s ease;
+}
+.lux-cert-partnership-controls button:hover,
+.lux-cert-partnership-controls button:focus-visible {
+  color: #004b47 !important;
+  background: #9df5ec;
+}
+.lux-cert-partnership-controls .lux-lucide {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.lux-cert-partnership-controls span {
+  text-align: center;
+  min-width: 44px;
+  font: 600 11px/1 var(--lux-page-heading);
+}
+.lux-cert-partnership-expand {
+  display: inline-flex;
+  grid-column: 1 / 13;
+  grid-row: 3;
+  gap: 12px;
+  min-height: 46px;
+  align-items: center;
+  justify-self: center;
+  padding: 0 24px;
+  border: 1px solid rgba(8,127,120,.34);
+  border-radius: 999px;
+  color: #075f5a;
+  background: transparent;
+  font: 600 12px/1 var(--lux-page-heading);
+  letter-spacing: .08em;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+.lux-cert-partnership-expand::after { content: "+"; font-size: 19px; line-height: 1; }
+.lux-cert-partnership-expand[aria-expanded="true"]::after { content: "−"; }
+.lux-cert-partnership-expand:hover,
+.lux-cert-partnership-expand:focus-visible {
+  border-color: #0abab5;
+  color: #003f3c;
+  background: rgba(10,186,181,.12);
+}
+@media (max-width: 760px) {
+  .lux-cert-partnership-gallery { margin-top: 72px; padding: 70px 18px 48px; }
+  .lux-cert-partnership-gallery-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 24px;
+  }
+  .lux-cert-partnership-gallery header { grid-column: 1; grid-row: 1; padding: 0; }
+  .lux-cert-partnership-gallery h2 { font-size: clamp(44px, 15vw, 66px); }
+  .lux-cert-partnership-main {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 0;
+    height: min(76vw, 390px);
+  }
+  .lux-cert-partnership-thumbs {
+    grid-column: 1;
+    grid-row: 3;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0;
+  }
+  .lux-cert-partnership-thumbs button,
+  .lux-cert-partnership-thumbs button:nth-child(2n) { height: auto; aspect-ratio: 4 / 3; }
+  .lux-cert-partnership-expand { grid-column: 1; grid-row: 4; }
+  .lux-cert-partnership-controls {
+    margin-top: 18px;
+  }
+  .lux-cert-partnership-controls button { width: 42px; height: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lux-cert-partnership-main > img,
+  .lux-cert-partnership-thumbs img,
+  .lux-cert-partnership-controls button { transition: none; transform: none !important; }
+}
+
+/* Preserve the journey numbers' original display style and move only their anchor. */
+.lux-home-timeline-steps article > span::after,
+.lux-home-timeline-steps article.is-active > span::after {
+  right: auto;
+  left: -30px;
+  transform: translate(-100%, -50%) scale(.9);
+}
+.lux-home-timeline-steps article.is-active > span::after {
+  transform: translate(-100%, -50%) scale(1);
 }

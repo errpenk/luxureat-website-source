@@ -42,8 +42,8 @@ function rgbNumbers(color) {
   assert(r <= 5 && g >= 100 && g <= 112 && b >= 94 && b <= 106, `latest event icon is not TrufflEat green: ${result.iconColor}`);
 
   const detailHref = await page.locator("[data-latest-event] .lux-event-detail-link").getAttribute("href");
-  assert(detailHref === "news.html#event-fhc-shanghai-2026", `event detail does not target Brand News: ${detailHref}`);
-  await page.goto(`${BASE_URL}/zh/news.html#event-fhc-shanghai-2026`, { waitUntil: "domcontentloaded" });
+  assert(detailHref === "brand.html#event-fhc-shanghai-2026", `event detail does not target Brand News: ${detailHref}`);
+  await page.goto(`${BASE_URL}/zh/brand.html#event-fhc-shanghai-2026`, { waitUntil: "domcontentloaded" });
   await page.waitForSelector(".lux-event-reader-article figure img");
   const readerImage = await page.locator(".lux-event-reader-article figure img").first().getAttribute("src");
   assert(readerImage.endsWith("/assets/media/events/fhc-shanghai-2026-banner.webp"), `event article detail image should use the wide expo banner: ${readerImage}`);
