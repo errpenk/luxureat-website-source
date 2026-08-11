@@ -6463,6 +6463,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
 }
 
 @media (max-width: 1080px) {
+  .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
     position: fixed;
     top: 0;
@@ -6470,6 +6471,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     overflow: hidden;
     background: rgba(7, 7, 7, .97);
   }
+  .lux-header.is-menu-open .lux-nav.open,
   .lux-header:has(.lux-nav.open) .lux-nav.open {
     max-height: calc(100dvh - 78px);
     overscroll-behavior: contain;
@@ -12409,6 +12411,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   backdrop-filter: blur(18px);
 }
 @media (max-width: 1080px) {
+  .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
     background: rgba(7, 7, 7, .97);
     border-bottom-color: rgba(233, 195, 73, .22);

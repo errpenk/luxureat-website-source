@@ -525,8 +525,14 @@ if (luxNav && luxMenu) {
 
   const setOpen = (open) => {
     luxNav.classList.toggle("open", open);
+    luxHeader?.classList.toggle("is-menu-open", open);
     luxMenu.setAttribute("aria-expanded", String(open));
     luxMenu.textContent = open ? luxMenu.dataset.open : luxMenu.dataset.closed;
+    if (open) {
+      const currentItem = luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item");
+      currentItem?.classList.add("is-expanded");
+      currentItem?.querySelector(".lux-nav-toggle")?.setAttribute("aria-expanded", "true");
+    }
     if (!open) {
       luxNav.querySelectorAll(".lux-nav-item.is-expanded").forEach((item) => item.classList.remove("is-expanded"));
       luxNav.querySelectorAll(".lux-nav-toggle").forEach((toggle) => toggle.setAttribute("aria-expanded", "false"));

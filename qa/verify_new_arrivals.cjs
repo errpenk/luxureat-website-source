@@ -63,7 +63,7 @@ assert(!pageStyles.includes(".lux-new-product-visual::after { opacity: .72") && 
 assert(pageStyles.includes("background: #fff") && pageStyles.includes("color: #004b47"), "new-arrivals full-width white canvas or deep-green accents are missing");
 assert(styles.includes(".lux-header :is(.lux-bag-link, .lux-account-link) { display: none !important; }"), "shopping bag and account controls are not hidden");
 assert(pageStyles.includes("background: #0f0f10") && pageStyles.includes("data-chef") === false, "new-arrivals black sections are missing");
-assert(pageStyles.includes("grid-template-rows: 205px auto") && pageStyles.includes("aspect-ratio: 1 / 1"), "square lower-row about mosaic is missing");
+assert(pageStyles.includes("grid-template-rows: 205px minmax(0, 1fr)") && pageStyles.includes("grid-template-rows: 180px calc((100vw - 16px) / 3)") && pageStyles.includes("height: 100%; object-fit: cover"), "about mosaic does not use browser-stable fixed rows");
 assert(pageStyles.includes(".lux-chef-advice-stage { display: grid") && pageStyles.includes(".lux-chef-advice-slide[hidden] { display: grid !important; visibility: hidden; pointer-events: none; }"), "chef carousel height is not locked to its tallest slide");
 const carousel = read("assets/js/new-arrivals.js");
 assert(carousel.includes("setInterval") && carousel.includes("data-chef-slide"), "chef recommendations do not rotate automatically");
