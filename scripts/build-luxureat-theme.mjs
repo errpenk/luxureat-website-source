@@ -201,7 +201,7 @@ Theme Name: LuxurEat Static
 Theme URI: https://github.com/errpenk/luxureat-website-source
 Author: LuxurEat
 Description: Static LuxurEat bilingual prototype packaged as a WordPress theme.
-Version: 1.0.7
+Version: 1.0.8
 Requires at least: 6.0
 Text Domain: luxureat-static
 */

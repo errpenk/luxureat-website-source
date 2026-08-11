@@ -662,13 +662,13 @@ function initLuxReader() {
     ].filter(([, value]) => value);
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
     const figureLabel = article.lang === "zh" ? "图" : "Figure";
-    const openingHtml = opening.length ? `<section class="lux-reader-section lux-reader-section-opening">${paragraphs(opening)}</section>` : "";
+    const openingHtml = opening.length ? `<section class="lux-reader-section lux-reader-section-opening">${paragraphs(opening, Boolean(article.slug))}</section>` : "";
     const sectionHtml = articleSections.map(([heading, content], index) => {
       const media = article.sectionMedia?.[index] || [];
       return `
           <section class="lux-reader-section" id="lux-reader-section-${index}">
             <h3>${escapeHtml(heading)}</h3>
-            ${paragraphs(content, ["dictionary", "producers"].includes(article.topic))}
+            ${paragraphs(content, Boolean(article.slug))}
             ${media.length ? `<div class="lux-reader-section-media">${media.map((item, mediaIndex) => `
               <figure>
                 <button type="button" class="lux-reader-image-button" data-reader-image="${escapeHtml(item.src)}" aria-label="${escapeHtml(article.lang === "zh" ? `放大查看：${item.alt || heading}` : `View full size: ${item.alt || heading}`)}">

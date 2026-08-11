@@ -124,6 +124,7 @@ assert(readerRuntime.includes('"知识博客"') && readerRuntime.includes("artic
 assert(!readerRuntime.includes('article.topic === "olive" ? "OLIO"') && readerRuntime.includes('aria-label="${escapeHtml(article.title)}"></div>'), "reader synthetic covers still render text");
 assert(readerRuntime.includes("article.archive || article.eyebrow"), "article cover captions do not use archive labels");
 assert(readerRuntime.includes("item.archive || item.eyebrow"), "related articles do not use archive labels");
+assert(readerRuntime.includes("paragraphs(opening, Boolean(article.slug))") && readerRuntime.includes("paragraphs(content, Boolean(article.slug))"), "knowledge-blog articles do not merge consecutive short lines into paragraphs");
 const styles = read("integration.css");
 assert(styles.includes(".lux-academy-card:hover .lux-reader-cta") && styles.includes("background: #89670f"), "academy cover hover treatment is missing");
 assert(styles.includes(".lux-academy-latest button:hover img"), "latest-post hover treatment is missing");
