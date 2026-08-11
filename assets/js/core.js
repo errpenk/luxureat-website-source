@@ -234,7 +234,7 @@ const initLuxScrollReveal = () => {
   ].join(","));
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => target.classList.toggle("is-in-view", isIntersecting));
-  }, { rootMargin: "0px 0px -8%", threshold: .06 });
+  }, { rootMargin: "0px 0px -8%", threshold: 0 });
   elements.forEach((element) => {
     if (element.matches(".reveal-on-scroll, .opacity-0") || element.closest("[hidden], dialog")) return;
     element.classList.add("lux-scroll-reveal");
