@@ -59,27 +59,32 @@ const sourceFiles = [
 ];
 const html = sourceFiles.map(read).join("\n");
 
-// A missing display glyph causes the browser to fall back per character, mixing
-// KingHwa and ZhiSong inside one heading. Keep the subset manifest aligned with
-// static headings and the dynamic title/name/label fields rendered as headings.
+// A missing glyph makes the browser fall back per character and visibly mixes
+// Chinese families. Cover every Chinese character used by static and dynamic
+// content in both site fonts, rather than trying to predict where it renders.
 const cjk = /[\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/g;
-const requiredHeadlineGlyphs = new Set();
-for (const file of sourceFiles.filter((name) => name.startsWith("zh/"))) {
-  for (const match of read(file).matchAll(/<h[1-6]\b[^>]*>([\s\S]*?)<\/h[1-6]>/gi)) {
-    for (const glyph of (match[1].replace(/<[^>]+>/g, "").match(cjk) || [])) requiredHeadlineGlyphs.add(glyph);
-  }
-}
-const dynamicHeadingKey = /\b(?:titleZh|zhTitle|title|nameZh|zhName|name|headingZh|heading|labelZh|label|categoryZh|eyebrowZh|kickerZh)\s*:\s*(["'`])([\s\S]*?)\1/g;
-for (const directory of ["assets/data", "assets/js"]) {
-  for (const name of fs.readdirSync(path.join(root, directory)).filter((file) => file.endsWith(".js"))) {
-    for (const match of read(`${directory}/${name}`).matchAll(dynamicHeadingKey)) {
-      for (const glyph of (match[2].match(cjk) || [])) requiredHeadlineGlyphs.add(glyph);
-    }
-  }
-}
-const headlineManifest = new Set(read("assets/fonts/KingHwaOldSong-site-glyphs.txt"));
-const missingHeadlineGlyphs = [...requiredHeadlineGlyphs].filter((glyph) => !headlineManifest.has(glyph));
-assert(!missingHeadlineGlyphs.length, `KingHwa headline subset is missing: ${missingHeadlineGlyphs.join("")}`);
+const chineseSources = [
+  ...sourceFiles,
+  ...["assets/data", "assets/js"].flatMap((directory) => fs.readdirSync(path.join(root, directory))
+    .filter((name) => name.endsWith(".js")).map((name) => `${directory}/${name}`)),
+  "site.config.mjs",
+];
+const requiredChineseGlyphs = new Set(chineseSources.flatMap((file) => read(file).match(cjk) || []));
+const siteGlyphManifest = new Set(read("assets/fonts/KingHwaOldSong-site-glyphs.txt").match(cjk) || []);
+const missingSiteGlyphs = [...requiredChineseGlyphs].filter((glyph) => !siteGlyphManifest.has(glyph));
+assert(!missingSiteGlyphs.length, `Chinese site fonts are missing: ${missingSiteGlyphs.join("")}`);
+
+const typographyCss = ["integration.css", ...fs.readdirSync(path.join(root, "assets/css"))
+  .filter((name) => name.endsWith(".css") && !name.startsWith("tailwind-"))
+  .map((name) => `assets/css/${name}`)].map(read).join("\n");
+const allowedFontFamilies = new Set([
+  "inherit", '"Material Symbols Outlined"', '"Nyght Serif"', '"Spectral"',
+  '"KingHwa Old Song Site"', '"LuxurEat ZhiSong Site"',
+]);
+const unapprovedFontFamilies = [...typographyCss.matchAll(/font-family\s*:\s*([^;}]+)/g)]
+  .map((match) => match[1].replace(/\s*!important\s*$/, "").trim())
+  .filter((family) => !family.startsWith("var(") && !allowedFontFamilies.has(family));
+assert(!unapprovedFontFamilies.length, `unapproved text font declaration(s): ${[...new Set(unapprovedFontFamilies)].join(", ")}`);
 
 assert(!html.includes("assets/images/"), "HTML still references assets/images");
 assert(!html.includes("assets/article-images/"), "HTML still references assets/article-images");

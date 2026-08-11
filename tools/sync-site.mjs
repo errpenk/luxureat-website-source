@@ -14,7 +14,8 @@ const slugFor = (item, lang) => item[`${lang}Slug`];
 const link = (slug) => `${slug}.html`;
 
 function seoFor(page) {
-  return `<!-- lux:seo:start -->\n<title>${esc(page.seo.title)}</title>\n<meta name="description" content="${esc(page.seo.description)}">\n<!-- lux:seo:end -->`;
+  const robots = page.indexable === false ? '\n<meta name="robots" content="noindex,follow">' : "";
+  return `<!-- lux:seo:start -->\n<title>${esc(page.seo.title)}</title>\n<meta name="description" content="${esc(page.seo.description)}">${robots}\n<!-- lux:seo:end -->`;
 }
 
 function headerFor(page) {

@@ -23,15 +23,26 @@ const escapeXml = (value) => String(value)
   .replace(/"/g, '&quot;')
   .replace(/'/g, '&apos;');
 
-const urls = [...new Set(pages.filter(isIndexable).map(toUrl))];
+const publicPages = pages.filter(isIndexable);
+const alternates = new Map(publicPages.map((page) => [`${page.key}:${page.lang}`, toUrl(page)]));
+const urls = [...new Map(publicPages.map((page) => [toUrl(page), page])).entries()];
 const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...urls.map((url) => `  <url><loc>${escapeXml(url)}</loc></url>`),
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+  ...urls.map(([url, page]) => {
+    const zh = alternates.get(`${page.key}:zh`);
+    const en = alternates.get(`${page.key}:en`);
+    const links = [
+      zh && `    <xhtml:link rel="alternate" hreflang="zh-CN" href="${escapeXml(zh)}" />`,
+      en && `    <xhtml:link rel="alternate" hreflang="en" href="${escapeXml(en)}" />`,
+      zh && `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(zh)}" />`,
+    ].filter(Boolean);
+    return [`  <url>`, `    <loc>${escapeXml(url)}</loc>`, ...links, `  </url>`].join('\n');
+  }),
   '</urlset>',
   '',
 ].join('\n');
 
 fs.mkdirSync(path.dirname(output), { recursive: true });
 fs.writeFileSync(output, xml, 'utf8');
-console.log(`Wrote ${urls.length} indexable URL(s) to ${output}`);
+console.log(`Wrote ${urls.length} indexable URL(s) with language alternates to ${output}`);

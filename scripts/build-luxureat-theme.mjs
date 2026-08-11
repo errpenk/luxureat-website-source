@@ -224,7 +224,7 @@ function buildAssetCatalogPhp() {
 function buildSeoCatalogPhp() {
   return pages.map((page) => {
     const alternate = pages.find((candidate) => candidate.key === page.key && candidate.lang !== page.lang);
-    return `        '${escapePhpString(page.route)}' => array('title' => '${escapePhpString(page.seo.title)}', 'description' => '${escapePhpString(page.seo.description)}', 'lang' => '${page.lang}', 'alternate' => '${escapePhpString(alternate?.route || page.route)}'),`;
+    return `        '${escapePhpString(page.route)}' => array('title' => '${escapePhpString(page.seo.title)}', 'description' => '${escapePhpString(page.seo.description)}', 'lang' => '${page.lang}', 'alternate' => '${escapePhpString(alternate?.route || page.route)}', 'indexable' => ${page.indexable === false ? 'false' : 'true'}),`;
   }).join('\n');
 }
 
@@ -387,6 +387,9 @@ function luxureat_static_seo_head() {
     $alternate = isset($catalog[$meta['alternate']]) ? $catalog[$meta['alternate']] : null;
     $zh_route = $meta['lang'] === 'zh' ? $route : $meta['alternate'];
     $canonical = luxureat_static_url($route);
+    if (empty($meta['indexable'])) {
+        echo '<meta name="robots" content="noindex,follow">' . "\n";
+    }
     echo '<link rel="canonical" href="' . esc_url($canonical) . '">' . "\n";
     echo '<link rel="alternate" hreflang="zh-CN" href="' . esc_url(luxureat_static_url($zh_route)) . '">' . "\n";
     if ($alternate) {

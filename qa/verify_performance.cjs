@@ -10,8 +10,8 @@ const gzipSize = (file) => zlib.gzipSync(read(file), { level: 9 }).length;
 const css = read("integration.css").toString();
 
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
-assert.ok(size("assets/fonts/KingHwaOldSong-site.woff2") <= 560 * 1024, "Chinese site headline subset exceeds 560 KB");
-assert.ok(size("assets/fonts/LuxurEatZhiSong-site.woff2") <= 320 * 1024, "Chinese site body subset exceeds 320 KB");
+assert.ok(size("assets/fonts/KingHwaOldSong-site.woff2") <= 1400 * 1024, "complete KingHwa site font exceeds 1.4 MB");
+assert.ok(size("assets/fonts/LuxurEatZhiSong-site.woff2") <= 360 * 1024, "complete ZhiSong site font exceeds 360 KB");
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
@@ -56,7 +56,7 @@ for (const slug of ["about-us", "product", "recipe", "brand", "blog", "certifica
   const page = read(`zh/${slug}.html`).toString();
   const headline = "assets/fonts/KingHwaOldSong-site.woff2";
   const body = "assets/fonts/LuxurEatZhiSong-site.woff2";
-  assert.ok(size(headline) + size(body) <= 900 * 1024, `${slug} Chinese critical fonts exceed 900 KB`);
+  assert.ok(size(headline) + size(body) <= 1760 * 1024, `${slug} complete Chinese site fonts exceed 1.76 MB`);
   assert.match(page, /rel="preload"[^>]+KingHwaOldSong-site\.woff2/);
   assert.match(page, /rel="preload"[^>]+LuxurEatZhiSong-site\.woff2/);
 }
