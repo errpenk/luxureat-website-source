@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-ingredients-territory"] = revive({"lang":"zh","slug":"ingredients-territory","topic":"culture","topicLabel":"探索意大利","artClass":"is-culture","eyebrow":"从产地到餐桌","title":"从产地到餐桌：读懂一份意大利食材","meta":"探索意大利 · 2026","archive":"产地与应用","intro":"用产地、品种、生产、标签、保存和使用六组信息，建立一套可核对的意大利食材阅读方法。","opening":["一个意大利名称或一张产地照片，并不足以说明食材品质。真正有用的产品资料，应让读者知道原料来自哪里、使用什么品种或配方、经过怎样的加工、如何储运，以及在厨房中适合怎样使用。","这套方法既适用于橄榄油、奶酪和面食，也适用于鱼子酱、调味品与未来新品。不同品类的技术指标不同，但透明信息、批次意识和正确保存是共同基础。"],"sections":[["第一步：识别名称与类别",["先区分产品通用名称、商品名、等级和风味描述。一个富有吸引力的名称不一定代表法定等级；“传统”“手工”或“天然”等词也需要具体定义和证据。","阅读时应优先查看标签上的正式名称、配料、净含量、生产者或责任主体，再把宣传语作为辅助信息。"]],["第二步：理解产地与品种",["产地能够提示气候、农业和地方方法，但不能单独决定品质。品种、成熟度、年份、原料批次和生产者选择，都会让同一地区的产品呈现差异。","若产品带有受保护的地理标志，应核对标识和适用规范。地理标志说明名称与产地、知识或方法之间的联系，不等于所有产品味道完全相同。"]],["第三步：把加工写清楚",["机械萃取、研磨、发酵、熟成、干燥、盐渍或巴氏处理会改变产品结构和保存方式。专业内容应解释工艺目的及其对风味、质地和使用的影响。","不应根据一张图片推断全部生产过程。涉及温度、时间、认证或等级时，应以生产者技术文件、正式标签和适用法规为准。"]],["第四步：保存与运输也是品质的一部分",["光、热、氧气、湿度和时间会影响许多食材。冷链产品还需要连续的温度管理。消费者应同时阅读未开封与开封后的保存条件，而不是只看保质期日期。","购买后延续正确保存，才能让产地与工艺带来的特征抵达餐桌。若包装破损、冷链中断或气味异常，应优先考虑安全，而不是勉强使用。"]],["第五步：从风味线索走向实际应用",["产品说明可以提供香气、质地、酸度、盐度或辛香线索，但搭配仍需考虑菜肴强度、温度和份量。好的建议应解释为什么适合，而不是只列出昂贵食材。","LuxurEat（露意膳）的内容将知识文章、食谱和产品页面相互连接：文章解释判断框架，食谱示范使用，产品页则承担具体配料、规格、过敏原与储存信息。"]],["第六步：检查证据与更新日期",["网站、包装和技术资料可能承担不同功能。包装提供法定信息，技术文件补充规格和操作条件，文章则帮助理解背景。三者出现差异时，应优先核对最新正式文件并联系责任主体。","批次、配方、法规和供应范围可能变化，因此重要结论应带有日期或版本。能够说明资料从何而来、何时更新，以及哪些内容仍待确认，是可信任产品沟通的一部分。"]]],"asideSummary":"以六组可核对信息读懂食材，让产地故事、技术资料、保存要求和厨房应用彼此衔接。","relatedSlugs":["italian-food-culture","nutrition-labels","clean-label"],"image":"assets/media/academy/culture-cover-04.webp","column":"探索意大利","related":["zh-academy-italian-food-culture","zh-academy-nutrition-labels","zh-academy-clean-label"],"sectionMedia":[]});
+})();

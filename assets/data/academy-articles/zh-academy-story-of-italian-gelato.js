@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-story-of-italian-gelato"] = revive({"slug":"story-of-italian-gelato","lang":"zh","topic":"gelato","topicLabel":"意式手工冰淇淋学院","column":"意式手工冰淇淋学院","artClass":"is-gelato","eyebrow":"意式手工冰淇淋学院","title":"意式手工冰淇淋的故事：从早期冷冻甜品到手工冰淇淋专卖店","meta":"意式手工冰淇淋学院 · 2026","archive":"学院 / 文化","imageFile":"story-of-italian-gelato.webp","intro":"意式手工冰淇淋的历史并不是某一次“发明”的故事，而是一段逐渐演变的过程：早期冷冻甜品、意大利宫廷文化、技术实验与手工艺传统，最终共同塑造了今天我们熟悉的手工冰淇淋专卖店。","opening":[],"sections":[["现代意式手工冰淇淋之前",["早在现代制冷技术出现之前，多个古代文化就曾使用雪、冰、水果、糖浆和甜味饮料制作冰凉甜品。这些食物并不是现代意义上的意式手工冰淇淋，却说明人类对冷冻甜品的兴趣远早于今天的制作技术。","在意大利，文艺复兴时期的宫廷——尤其是佛罗伦萨及其他重要文化中心——经常出现在关于精致冷冻甜品发展的历史叙述中。由于这一时期的配方、技术与传说并不完全一致，更准确的理解方式，是把文艺复兴视为长期演变的一部分，而不是为意式手工冰淇淋指定一个唯一的“诞生日”。"]],["从宫廷甜品到手工技艺",["随着降温和制冷方法改善，专业制作逐渐变得可行，冷冻甜品也开始走出精英阶层的餐桌。真正重要的变化并不只是增加了某种原料，而是形成了一套手工制作知识。","手工冰淇淋师开始成为理解温度、冻结、糖分平衡、质地、季节性以及不同食材特性的人。不同口味需要不同调整，而不是套用一个万能配方。"]],["意大利手工冰淇淋专卖店",["随着时间推移，手工冰淇淋专卖店成为意大利社区生活中常见的一部分。它形成了一种很特别的社交空间：比餐厅随意，比普通咖啡馆更专门，同时又和街道、广场以及晚间散步的节奏紧密相连。","这种“精湛工艺 + 轻松日常”的组合，解释了为什么意式手工冰淇淋会成为如此有代表性的意大利饮食文化符号。高度专业的技术，最终可以浓缩成最简单的体验：一个杯子、一个蛋筒，以及在柜台前选中的一种口味。"]],["经典原料与持续创新",["开心果、榛子、巧克力、咖啡、柑橘、时令水果和纯牛奶口味仍是经典参照。它们的优势在于原料本身清晰可辨，而不是靠过度复杂来制造存在感。","与此同时，传统从来不意味着停滞。当代意式手工冰淇淋仍在探索新的搭配，但核心原则没有改变：风味要清晰，质地要服务于风味，整体配方要保持平衡。"]],["LuxurEat（露意膳） 视角",["LuxurEat（露意膳） 把这段历史视为创新的起点，而不是边界。LuxurEat（露意膳） 松露意式手工冰淇淋将传统意大利冷冻甜品形式与意大利最具辨识度的高端食材之一——松露——结合，把创新呈现为意大利烹饪好奇心的延续，而不是对传统的否定。"]]],"sectionMedia":[],"asideSummary":"意式手工冰淇淋的历史并不是某一次“发明”的故事，而是一段逐渐演变的过程：早期冷冻甜品、意大利宫廷文化、技术实验与手工艺传统，最终共同塑造了今天我们熟悉的手工冰淇淋专卖店。","relatedSlugs":["italian-gelato-vs-ice-cream","truffle-meets-dessert","truffle-gelato-at-home"],"image":"assets/media/academy/story-of-italian-gelato.webp","related":["zh-academy-italian-gelato-vs-ice-cream","zh-academy-truffle-meets-dessert","zh-academy-truffle-gelato-at-home"]});
+})();

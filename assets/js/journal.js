@@ -96,11 +96,15 @@ function initLuxReader() {
     const empty = recipeLibraryMount.querySelector("[data-recipe-empty]");
     const update = () => {
       const filtered = recipes.filter(({ regions, ingredients }) => (!regionSelect.value || regions.includes(regionSelect.value)) && (!ingredientSelect.value || ingredients.includes(ingredientSelect.value)));
-      grid.innerHTML = filtered.map(({ id, article, ingredients }) => `
-        <button type="button" class="lux-recipe-library-card" data-reader-open="${escapeHtml(id)}">
+      grid.innerHTML = filtered.map(({ id, article, ingredients }) => {
+        const slug = id.replace(/^(?:zh|en)-recipe-/, "");
+        const href = location.pathname.endsWith(".html") ? `recipe.html?recipe=${encodeURIComponent(slug)}` : `${encodeURIComponent(slug)}/`;
+        return `
+        <a href="${href}" class="lux-recipe-library-card" data-reader-open="${escapeHtml(id)}">
           <span class="lux-recipe-library-media"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"><span class="lux-reader-cta">${copy.read}</span></span>
           <span class="lux-recipe-library-copy"><small>${escapeHtml(article.recipe.region || article.eyebrow)}</small><strong>${escapeHtml(article.title)}</strong><span>${escapeHtml(article.recipe.time)} · ${escapeHtml(article.recipe.difficulty)}</span><span class="lux-recipe-library-tags">${ingredients.map((key) => `<i>${escapeHtml(ingredientGroups.find(([groupKey]) => groupKey === key)?.[1] || key)}</i>`).join("")}</span></span>
-        </button>`).join("");
+        </a>`;
+      }).join("");
       count.textContent = `${filtered.length} ${copy.count}`;
       empty.hidden = filtered.length > 0;
     };
@@ -575,7 +579,11 @@ function initLuxReader() {
         ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", products: "相关产品" }
         : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", products: "Related products" };
       const productCategory = article.productCategory || (article.topic === "olive" ? "olive-oil" : article.topic);
-      const productHref = `${article.lang === "zh" ? "product.html" : "product.html"}${productCategory ? `?category=${productCategory}#product-catalogue` : ""}`;
+      const productIndex = document.querySelector('.lux-nav a[href$="product.html"], .lux-nav a[href$="/product/"]')?.href || "product.html";
+      const productUrl = new URL(productIndex, location.href);
+      if (productCategory) productUrl.searchParams.set("category", productCategory);
+      productUrl.hash = productCategory ? "product-catalogue" : "";
+      const productHref = productUrl.href;
       body.innerHTML = `
         <article class="lux-recipe-reader">
           <section class="lux-recipe-hero">

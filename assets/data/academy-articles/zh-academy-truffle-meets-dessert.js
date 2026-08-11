@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-truffle-meets-dessert"] = revive({"slug":"truffle-meets-dessert","lang":"zh","topic":"gelato","topicLabel":"意式手工冰淇淋学院","column":"意式手工冰淇淋学院","artClass":"is-gelato","eyebrow":"意式手工冰淇淋学院","title":"松露不只属于咸味料理：当松露遇见甜点","meta":"意式手工冰淇淋学院 · 2026","archive":"学院 / 文化","imageFile":"truffle-meets-dessert.webp","intro":"提到松露，人们通常想到意面、烩饭、鸡蛋和奶酪。但松露首先是一种以香气见长的食材，而香气完全可以与甜味、乳制品、巧克力以及其他甜点元素形成出人意料却协调的组合。","opening":[],"sections":[["从香气理解松露",["松露的个性很大程度上通过复杂香气被感知。因此，即使使用量不大，也可能改变整道菜的感受。温度、脂肪以及味道温和的配角食材，都会影响这些香气如何释放和被感知。","这一原则在咸味料理中很常见，也能解释为什么松露可以进入部分甜点。目标不是把甜点做成“咸味”，而是在不压过其他元素的前提下，让松露依然能够被清楚辨认。"]],["甜与咸并非对立面",["现代料理经常利用对比：海盐焦糖、水果配奶酪、蜂蜜配成熟奶酪、辣椒配巧克力，或特级初榨橄榄油搭配蛋糕和意式手工冰淇淋。当甜、苦、咸、脂肪感与香气保持比例时，这些组合就能成立。","松露也可以遵循同样的逻辑。谨慎使用时，它泥土般深沉而复杂的香气能够为甜味料理增加层次，而不只是制造噱头。"]],["巧克力、蜂蜜与奶油",["黑巧克力尤其值得尝试，因为苦味与烘烤香能成为松露有力的香气伙伴。白巧克力则提供相反的方向：更甜、更奶油化的背景，让松露成为意外出现的香气重点。","蜂蜜可以连接甜与咸；奶油类基底则味道温和、脂肪感柔顺，有利于承载香气。这也是松露能够被用于奶油、酱汁、半冷冻甜点以及冷冻甜品的原因之一。"]],["为什么意式手工冰淇淋合适",["意式手工冰淇淋很适合做这类尝试，因为它的质地可以承载香气，同时甜度又能得到控制。随着意式手工冰淇淋在口中逐渐软化，感官体验会分层展开：先是奶油感和甜味，随后更明显的香气逐渐出现。","因此，一款成功的松露意式手工冰淇淋应该强调平衡，而不是让松露味道具有攻击性。松露需要有明确存在感，但甜品本身仍必须保留意式手工冰淇淋应有的顺滑与愉悦感。"]],["LuxurEat（露意膳） 视角",["这是 LuxurEat（露意膳） 产品故事最适合自然进入“学院”内容的位置之一。LuxurEat（露意膳） 松露意式手工冰淇淋粉末基底正是围绕这种反差构思：通过更简化的制备形式，让原本更常见于专业餐厅厨房的意大利风格松露甜品，也能在更广泛的场景中实现，同时让松露始终成为体验核心。"]]],"sectionMedia":[],"asideSummary":"提到松露，人们通常想到意面、烩饭、鸡蛋和奶酪。但松露首先是一种以香气见长的食材，而香气完全可以与甜味、乳制品、巧克力以及其他甜点元素形成出人意料却协调的组合。","relatedSlugs":["italian-gelato-vs-ice-cream","story-of-italian-gelato","truffle-gelato-at-home"],"image":"assets/media/academy/truffle-meets-dessert.webp","related":["zh-academy-italian-gelato-vs-ice-cream","zh-academy-story-of-italian-gelato","zh-academy-truffle-gelato-at-home"]});
+})();

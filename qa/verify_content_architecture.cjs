@@ -25,8 +25,10 @@ for (const file of [
   "assets/data/products.js",
   "assets/data/events.js",
   "assets/data/journal.js",
+  "assets/data/academy-index.js",
   "assets/data/brand.js",
   "assets/js/core.js",
+  "assets/js/engagement.js",
   "assets/js/products.js",
   "assets/js/events.js",
   "assets/js/journal.js",
@@ -135,8 +137,9 @@ assert(journalRuntime.includes("<strong>${escapeHtml(story.title)}</strong>"), "
 assert(read("zh/about-us.html").includes("阅读详情") && !read("zh/about-us.html").includes("阅读详细叙事"), "Chinese featured journal link is outdated");
 assert(read("en/about-us.html").includes("LuxurEat (露意膳) is a Chinese company established."), "English company description punctuation is outdated");
 const accountRuntime = read("assets/js/core.js");
-assert(accountRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
-assert(accountRuntime.includes("luxProtectMaterialIcons(document)") && accountRuntime.includes('icon.classList.add("notranslate")') && accountRuntime.includes("icon.translate = false"), "Material Symbols are not protected from browser translation");
+const engagementRuntime = read("assets/js/engagement.js");
+assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
+assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
 assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)"), "shared header top or mobile-menu surface styling is incomplete");
 assert(integrationStyles.includes(".lux-reader-close:hover") && integrationStyles.includes("border-color: #101010;") && integrationStyles.includes("box-shadow: none;"), "article-reader close hover does not retain the default thin border");
@@ -188,7 +191,7 @@ assert(integrationStyles.includes("align-items: center") && integrationStyles.in
 for (const locale of ["zh", "en"]) {
   assert(read(`${locale}/index.html`).includes("lux-home-why-orbit"), `${locale} homepage partnership circle is missing`);
   const home = read(`${locale}/index.html`);
-  assert(/class="lux-hero-video"[^>]*\bautoplay\b[^>]*\bpreload="auto"/.test(home), `${locale} homepage hero video does not request immediate playback`);
+  assert(/data-lux-autoplay[^>]*class="lux-hero-video"[^>]*\bpreload="none"/.test(home), `${locale} homepage hero video does not defer transfer`);
   assert(home.includes("data-lux-deferred-scripts") && !home.includes('defer src="../assets/data/products.js'), `${locale} homepage noncritical scripts still block DOMContentLoaded`);
 }
 assert(accountRuntime.includes("data-lux-deferred-scripts"), "mobile-first-load script deferral logic is incomplete");
@@ -212,7 +215,9 @@ const sharedHeroPages = ["about-us", "recipe", "brand", "blog", "certification",
 assert(read("zh/recipe.html").includes('data-recipe-library-app') && read("en/recipe.html").includes('data-recipe-library-app'), "bilingual unified recipe-library mounts are missing");
 assert(journalRuntime.includes("renderRecipeLibrary") && journalRuntime.includes("data-recipe-region") && journalRuntime.includes("data-recipe-ingredient"), "recipe archive does not provide shared region and ingredient filtering");
 assert(journalRuntime.includes('read: "阅读详情"') && journalRuntime.includes('class="lux-reader-cta"'), "recipe-library cards do not reuse the shared detail CTA");
-assert(journalRuntime.includes("lux-recipe-product-link") && journalRuntime.includes('href="${escapeHtml(productHref)}"') && journalRuntime.includes("?category=${productCategory}#product-catalogue"), "related recipe products are not linked to the localized catalogue category");
+assert(journalRuntime.includes('href="${href}" class="lux-recipe-library-card"') && journalRuntime.includes('id.replace(/^(?:zh|en)-recipe-/'), "recipe cards do not expose crawlable localized detail links");
+assert(journalRuntime.includes("lux-recipe-product-link") && journalRuntime.includes('href="${escapeHtml(productHref)}"') && journalRuntime.includes('.lux-nav a[href$="product.html"], .lux-nav a[href$="/product/"]') && journalRuntime.includes('productUrl.searchParams.set("category", productCategory)'), "related recipe products do not reuse the localized product route and category filter");
+assert(read("assets/css/rituals.css").includes(".lux-recipe-library-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}"), "mobile recipe library is not a two-column grid");
 assert(journalRuntime.includes("article.productCategory ||") && read("assets/data/journal.js").includes('"sweet-bread-butter-caviar": "caviar"') && read("assets/data/journal.js").includes('"truffle-eggs": "truffle"'), "legacy recipes do not map to their matching product category");
 assert(read("zh/product.html").includes('data-caviar-filter="caviar"') && read("en/product.html").includes('data-caviar-filter="caviar"'), "the caviar recipe category is missing from the bilingual product filters");
 assert(sharedHeroPages.every((page) => read(`zh/${page}.html`).includes("lux-page-top-hero") && read(`zh/${page}.html`).includes("lux-page-hero-content")), "Chinese editorial heroes do not use the shared structure");
@@ -257,13 +262,15 @@ assert(productRuntime.includes('lang === "en" ? \' lang="zh-CN"\'') && integrati
 const zhBlog = read("zh/blog.html");
 assert(zhBlog.includes("从松露、鱼子酱与橄榄油，到美食词典、生产者与产地故事"), "Chinese Blog kicker is outdated");
 const academyRuntime = read("assets/js/academy.js");
+assert(academyRuntime.includes("loadAcademyArticle") && academyRuntime.includes("academy-articles/") && academyRuntime.includes("trigger.click()"), "academy reader data is not loaded one article at a time and replayed on demand");
+assert(!zhBlog.includes("assets/data/academy.js") && !zhBlog.includes("assets/data/academy-columns.js") && !zhBlog.includes("assets/data/journal.js") && zhBlog.includes("assets/data/academy-index.js"), "Blog still downloads full article data before interaction");
 assert(academyRuntime.includes('culture: "探索意大利"') && academyRuntime.includes('olive: "橄榄油学院"') && academyRuntime.includes('gelato: "意式手工冰淇淋"'), "Chinese Explore Italy topics are missing");
 assert(!zhBlog.includes("对于希望全面了解这种奢华食品每一处细微差别的人来说"), "obsolete Chinese Blog paragraph remains");
 assert(read("assets/css/journal.css").includes("scroll-margin-top:96px"), "Brand Promise does not land below the fixed header");
 const ritualStyles = read("assets/css/rituals.css");
 assert(ritualStyles.includes("border-color:#fff;color:#fff") && ritualStyles.includes(".lux-reader-cta:hover") && ritualStyles.includes("border-color:#81d8d0;color:#81d8d0"), "recipe-library detail CTA does not change from white to Tiffany on direct hover");
 assert(allPageHtml.includes('class="lux-newsletter"') && ["zh", "en"].every((locale) => read(`${locale}/index.html`).includes("data-newsletter-form")), "bilingual footer newsletter is missing");
-assert(accountRuntime.includes("createLuxBotProof") && accountRuntime.includes('action", "luxureat_newsletter"') && accountRuntime.includes("newsletterNonce"), "newsletter validation or secure submission runtime is incomplete");
+assert(engagementRuntime.includes("createLuxBotProof") && engagementRuntime.includes('action", "luxureat_newsletter"') && engagementRuntime.includes("newsletterNonce"), "newsletter validation or secure submission runtime is incomplete");
 const themeBuilder = read("scripts/build-luxureat-theme.mjs");
 assert(themeBuilder.includes("luxureat_static_newsletter_ajax") && themeBuilder.includes("send_confirmation_email' => true"), "newsletter endpoint does not use verified MailPoet subscription");
 

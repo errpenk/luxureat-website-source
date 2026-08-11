@@ -283,6 +283,15 @@ html.dark body.lux-academy-page {
   transform-origin: left center;
   transition: color .2s ease, border-color .2s ease, transform .2s ease;
 }
+.lux-academy-card-copy h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+.lux-product-card-description + small,
+[data-caviar-item] h2 a {
+  color: inherit;
+  text-decoration: none;
+}
 .lux-academy-card-copy > button:hover,
 .lux-academy-card-copy > button:focus-visible {
   color: #89670f;
@@ -4523,6 +4532,44 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   background: #f4f2ee;
   color: #101010;
 }
+.lux-article-page {
+  padding-top: 96px;
+  background: #f4f2ee;
+}
+.lux-breadcrumb {
+  width: min(1180px, calc(100% - 40px));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  padding-top: 24px;
+  color: #686159;
+  font: 600 13px/1.5 var(--lux-page-heading);
+}
+.lux-breadcrumb a { color: #006a64; text-decoration: none; }
+.lux-breadcrumb a:hover,
+.lux-breadcrumb a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.lux-breadcrumb [aria-current="page"] { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lux-seo-facts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+.lux-seo-facts > div {
+  display: grid;
+  grid-template-columns: minmax(130px, .35fr) 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid #d7d2c8;
+}
+.lux-seo-facts dt { color: #006a64; font-weight: 700; }
+.lux-seo-facts dd { margin: 0; }
+@media (max-width: 700px) {
+  .lux-seo-facts > div { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (max-width: 1080px) {
+  .lux-article-page { padding-top: 72px; }
+}
 .lux-reader-rule {
   height: 1px;
   margin-bottom: 28px;
@@ -4558,7 +4605,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   letter-spacing: 0;
   text-transform: uppercase;
 }
-.lux-reader-hero-copy h2 {
+.lux-reader-hero-copy :is(h1, h2) {
   max-width: 760px;
   margin: 0;
   color: #101010;
@@ -4666,7 +4713,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
     grid-template-columns: 1fr;
   }
 }
-.lux-reader-layout .lux-reader-copy h3 {
+.lux-reader-layout .lux-reader-copy :is(h2, h3) {
   margin: 0 0 16px;
   color: #006a64;
   font: 700 30px/1.18 var(--lux-page-heading);
@@ -4825,7 +4872,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   letter-spacing: .24em;
   text-transform: uppercase;
 }
-.lux-recipe-intro h2 {
+.lux-recipe-intro :is(h1, h2) {
   margin: 18px 0 26px;
   color: #f4f2ee;
   font: 700 clamp(46px, 6vw, 82px)/.98 var(--lux-page-heading);
@@ -4866,8 +4913,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   gap: clamp(48px, 8vw, 112px);
   padding: clamp(64px, 8vw, 104px) clamp(18px, 4vw, 56px);
 }
-.lux-recipe-body h3,
-.lux-recipe-nutrition h3 {
+.lux-recipe-body :is(h2, h3),
+.lux-recipe-nutrition :is(h2, h3) {
   margin: 12px 0 28px;
   color: #101010;
   font: 700 clamp(30px, 4vw, 48px)/1.05 var(--lux-page-heading);
@@ -4925,7 +4972,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   display: flex;
   align-items: baseline;
 }
-.lux-recipe-nutrition h3 {
+.lux-recipe-nutrition :is(h2, h3) {
   margin-top: 0;
 }
 .lux-recipe-nutrition dl {
@@ -5368,7 +5415,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
     gap: 8px;
     margin-bottom: 24px;
   }
-  .lux-reader-hero-copy h2 {
+  .lux-reader-hero-copy :is(h1, h2) {
     font-size: clamp(42px, 15vw, 72px) !important;
     line-height: .92 !important;
   }

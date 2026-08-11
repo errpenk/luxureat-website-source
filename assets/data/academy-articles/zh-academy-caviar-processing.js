@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-caviar-processing"] = revive({"slug":"caviar-processing","lang":"zh","eyebrow":"鱼子酱知识科普","title":"鱼子酱加工工艺","meta":"鱼子酱知识科普 · 2026","image":"assets/media/academy/caviar-processing-cover.webp","intro":"鱼子酱加工全程以手工完成，从鱼卵甄选、Malossol轻盐法，到装罐与熟成都需要精确控制。","opening":["只有当鱼卵自然成熟时才会处理鲟鱼，这一时期通常位于10月至次年4月的寒冷月份。为了判断准确成熟时机，每条鲟鱼都会接受超声检查。","鱼卵应在尚未完全成熟时采收，以保留承受盐分渗透压所需的良好韧性。"],"sections":[["取卵",["加工完全以手工进行。卵巢囊会被小心取出，鲟鱼肉则用于制作鱼柳或分切产品，并单独加工。"]],["过筛",["使用网孔尺寸合适的筛网，将鱼卵轻柔地从卵巢膜中分离，避免损伤颗粒。"]],["清洗与分选",["随后用冷水清洗并分选鱼卵。根据鲟鱼品种，鱼卵会按色泽、尺寸与风味分类。"]],["盐渍",["盐渍是鱼子酱制作的关键步骤。在欧洲，鱼子酱普遍采用Malossol轻盐法，每公斤鱼子酱约使用40克盐，约占总重量的3.5%。整个过程由人工谨慎完成；“Malossol”标识也代表高品质。"]],["装罐与熟成",["盐渍后，鱼子酱会装入约1.8公斤的原装罐中熟成2至4个月。期间定期翻转罐身，使盐分均匀分布。在–2°C至–4°C恒温保存时，原装状态可保存约18个月。"]],["装罐与熟成",["盐渍后，鱼子酱会装入约1.8公斤的原装罐中熟成2至4个月。期间定期翻转罐身，使盐分均匀分布。在–2°C至–4°C恒温保存时，原装状态可保存约18个月。"]],["分装",["随后将鱼子酱分装为30克、50克、100克、250克和500克的零售罐。"]],["鱼子酱保质期",["完成分装后，鱼子酱保质期约为6个月；开封后最多应在3天内食用。所有保存时间均以0°C至4°C冷藏为前提，更高温度会显著缩短保质期。"]],["鱼子酱可以烹煮吗？",["鱼子酱不应直接加热烹煮。应搭配冷食或温热菜肴，以保留其独特的质地与风味。"]]],"sectionMedia":[[{"src":"assets/media/academy/caviar-processing-02.webp","alt":"鱼子酱加工工艺"},{"src":"assets/media/academy/caviar-processing-03.webp","alt":"鱼子酱加工工艺"}],[{"src":"assets/media/academy/caviar-processing-04.webp","alt":"鱼子酱加工工艺"}],[],[{"src":"assets/media/academy/caviar-processing-05.webp","alt":"鱼子酱加工工艺"}],[{"src":"assets/media/academy/main-types-of-caviar-cover.webp","alt":"鱼子酱加工工艺"}],[],[{"src":"assets/media/academy/caviar-processing-07.webp","alt":"鱼子酱加工工艺"}],[],[]],"relatedSlugs":["baerii-caviar","beluga-caviar","main-types-of-caviar"],"asideSummary":"本文逐步说明鱼卵成熟判断、手工取卵与过筛、Malossol盐渍、熟成、分装、冷藏和食用要求。","topic":"caviar","topicLabel":"鱼子酱学院","column":"鱼子酱学院","archive":"加工","wideCover":false,"related":["zh-academy-baerii-caviar","zh-academy-beluga-caviar","zh-academy-main-types-of-caviar"]});
+})();

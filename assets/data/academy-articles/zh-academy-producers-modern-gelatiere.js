@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-producers-modern-gelatiere"] = revive({"slug":"producers-modern-gelatiere","lang":"zh","topic":"producers","topicLabel":"生产者、大师与产地故事","column":"生产者、大师与产地故事","eyebrow":"生产者、大师与产地故事","title":"意式冰淇淋师：从经验手艺到现代配方技术","meta":"生产者、大师与产地故事 · 2026","archive":"生产者、大师与产地故事","image":"assets/media/academy/producers-modern-gelatiere.webp","intro":"站在意式冰淇淋柜台前，我们看到的是一排颜色、口味和柔软质地。但柜台后面的工作远比“把牛奶和糖冻起来”复杂。制作意式手工冰淇淋的专业人员被称为 gelatiere。","opening":["今天的优秀冰淇淋师既是手艺人，也越来越像食品技术人员。"],"sections":[["一种口味就是一套平衡",["牛奶、奶油、水、糖、水果、坚果和巧克力拥有完全不同的组成。","因此：","开心果冰淇淋不能简单等于“基础奶味冰淇淋 + 开心果”；","水果雪葩也不能只靠“水果 + 水 + 糖”随意混合。","糖不仅提供甜味，也影响冻结；","脂肪影响口感和香气；","水分影响冰晶；","固形物会改变最终结构。","所以真正的冰淇淋师需要理解的是“平衡”。"]],["现代冰淇淋师越来越技术化",["意大利专业培训机构 Carpigiani Gelato University 对现代冰淇淋师的描述非常有代表性：过去更多依赖经验的手艺人，如今越来越需要理解原料、设备、生产技术、食品趋势和配方研究。","这并不意味着传统消失了。","恰恰相反。","技术让传统口味能够更稳定地呈现。"]],["经典口味为什么最考验技术？",["一个非常复杂的口味可以通过很多元素制造刺激。","但牛奶、开心果、榛子或柠檬这类经典口味没有太多地方可以隐藏问题。","原料不好，马上吃得出来。","甜度不平衡，马上能够感觉到。","质地粗糙，也无法靠装饰弥补。","因此，“简单”往往比复杂更考验技术。"]],["冰淇淋师也在不断创新",["现代冰淇淋已经远远超出传统香草、巧克力和水果。","专业冰淇淋师不断探索：","香料；","茶；","咖啡；","酒类；","橄榄油；","奶酪；","咸味食材；","植物基配方。","Carpigiani Gelato University 今天的专业教学内容本身就覆盖原料分析、配方平衡、雪葩、植物基冰淇淋以及餐厅应用等大量现代方向。","创新真正成立的前提仍然相同：","新食材不能摧毁冰淇淋原本应该具有的质地和平衡。"]],["LuxurEat(露意膳)视角",["这正是 LuxurEat(露意膳) 松露意式冰淇淋概念最适合出现的文化背景。","松露进入冰淇淋并不应该只是为了制造一个“奇怪口味”。","它应该被当成一次配方问题：","怎样控制甜味；","怎样保留奶油般质地；","怎样让松露香气被感知；","怎样让两种完全不同的意大利饮食传统能够共存。","当消费者理解冰淇淋师真正做的事情之后，LuxurEat(露意膳) 的松露冰淇淋也就不再只是一个噱头。","它变成了意大利手工冰淇淋不断探索新原料这条传统中的一种现代应用。"]]],"sectionMedia":[[],[],[],[],[]],"asideSummary":"站在意式冰淇淋柜台前，我们看到的是一排颜色、口味和柔软质地。但柜台后面的工作远比“把牛奶和糖冻起来”复杂。制作意式手工冰淇淋的专业人员被称为 gelatiere。","related":["zh-academy-producers-truffle-hunters","zh-academy-producers-parmigiano-cheesemakers","zh-academy-producers-modena-acetaia"]});
+})();

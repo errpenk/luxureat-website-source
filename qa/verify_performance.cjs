@@ -25,7 +25,9 @@ for (const file of [
 ]) assert.ok(size(`assets/media/brand/${file}`) <= 520 * 1024, `${file} exceeds 520 KB`);
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 60 * 1024, "shared CSS exceeds the 60 KB compressed budget");
-assert.ok(gzipSize("assets/js/core.js") <= 22 * 1024, "critical shared JavaScript exceeds the 22 KB compressed budget");
+assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScript still includes optional interactions");
+assert.ok(gzipSize("assets/js/engagement.js") <= 13 * 1024, "optional account and footer JavaScript exceeds 13 KB compressed");
+assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
 assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px"/);
 assert.match(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.doesNotMatch(css, /font-display:\s*swap/, "custom fonts still permit an old-font flash");
@@ -34,11 +36,12 @@ assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
   assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster\.webp/);
-  assert.match(home, /class="lux-hero-video"[^>]+autoplay[^>]+preload="auto"/);
+  assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
   assert.match(home, /data-lux-deferred-scripts/);
   assert.match(home, /rel="icon"[^>]+luxureat-logo\.png/);
-  assert.match(home, lang === "zh" ? /rel="preload"[^>]+KingHwaOldSong-site\.woff2/ : /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
-  assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-site\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
+  assert.match(home, lang === "zh" ? /rel="preload"[^>]+KingHwaOldSong-home-critical\.woff2/ : /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
+  assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-home-subset\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
+  if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-site|LuxurEatZhiSong-site)\.woff2/);
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
@@ -47,7 +50,12 @@ for (const lang of ["zh", "en"]) {
 
 const allHtml = ["zh", "en"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n");
 assert.doesNotMatch(allHtml, /assets\/fonts\/[^"']+\.(?:woff2|ttf)(?!\?v=)/, "a page still contains an unversioned font URL");
+for (const match of allHtml.matchAll(/<img\b[^>]*(?:\.avif|\.gif|\.jpe?g|\.png|\.webp)[^>]*>/gi)) {
+  assert.match(match[0], /\bwidth="\d+"/i, "a raster image has no intrinsic width");
+  assert.match(match[0], /\bheight="\d+"/i, "a raster image has no intrinsic height");
+}
 assert.match(read("zh/index.html").toString(), /data-lux-mobile-src="\.\.\/assets\/media\/brand\/home-service-selection-mobile\.webp"/);
+assert.match(read("zh/index.html").toString(), /srcset="\.\.\/assets\/media\/brand\/[^"']+-mobile\.webp \d+w, \.\.\/assets\/media\/brand\/[^"']+ \d+w" sizes="100vw"/, "critical responsive images do not expose a native srcset");
 for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter((name) => name.endsWith("-mobile.webp"))) {
   assert.ok(size(`assets/media/brand/${file}`) <= 120 * 1024, `${file} exceeds the 120 KB mobile image budget`);
 }
@@ -57,8 +65,9 @@ for (const slug of ["about-us", "product", "recipe", "brand", "blog", "certifica
   const headline = "assets/fonts/KingHwaOldSong-site.woff2";
   const body = "assets/fonts/LuxurEatZhiSong-site.woff2";
   assert.ok(size(headline) + size(body) <= 1760 * 1024, `${slug} complete Chinese site fonts exceed 1.76 MB`);
-  assert.match(page, /rel="preload"[^>]+KingHwaOldSong-site\.woff2/);
-  assert.match(page, /rel="preload"[^>]+LuxurEatZhiSong-site\.woff2/);
+  assert.match(page, /rel="preload"[^>]+KingHwaOldSong-[^"']+(?:critical|subset)\.woff2/);
+  assert.match(page, /rel="preload"[^>]+LuxurEatZhiSong-[^"']+(?:critical|subset)\.woff2/);
+  assert.doesNotMatch(page, /rel="preload"[^>]+(?:KingHwaOldSong-site|LuxurEatZhiSong-site)\.woff2/);
 }
 
 const videoMarkup = ["en", "zh"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n") + read("assets/js/events.js").toString();

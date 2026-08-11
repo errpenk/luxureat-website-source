@@ -1,4 +1,4 @@
-export const assetVersion = "20260812-mobile-hero-tails-38";
+export const assetVersion = "20260812-recipe-seo-44";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -67,7 +67,7 @@ export const pages = [
   page("zh", "new", "new", ["journal-data", "journal", "new-arrivals"]),
   page("zh", "recipe", "rituals", ["journal-data", "journal"]),
   page("zh", "brand", "news", ["event-data", "journal-data", "journal"]),
-  page("zh", "blog", "blog", ["journal-data", "academy-data", "academy-columns", "academy", "journal"]),
+  page("zh", "blog", "blog", ["academy-index", "academy"]),
   page("zh", "certification", "certification", ["certification-ui"]),
   page("zh", "cooperation", "gifting", ["brand-data", "brand"]),
   page("zh", "contact", "contact", ["brand-data", "brand"]),
@@ -78,7 +78,7 @@ export const pages = [
   page("en", "new", "new", ["journal-data", "journal", "new-arrivals"]),
   page("en", "recipe", "rituals", ["journal-data", "journal"]),
   page("en", "brand", "news", ["event-data", "journal-data", "journal"]),
-  page("en", "blog", "blog", ["journal-data", "academy-data", "academy-columns", "academy", "journal"]),
+  page("en", "blog", "blog", ["academy-index", "academy"]),
   page("en", "certification", "certification", ["certification-ui"]),
   page("en", "cooperation", "gifting", ["brand-data", "brand"]),
   page("en", "contact", "contact", ["brand-data", "brand"]),
@@ -90,15 +90,14 @@ export const scripts = {
   "product-data": { src: "assets/data/products.js", dependencies: [] },
   "event-data": { src: "assets/data/events.js", dependencies: [] },
   "journal-data": { src: "assets/data/journal.js", dependencies: [] },
-  "academy-data": { src: "assets/data/academy.js", dependencies: ["journal-data"] },
-  "academy-columns": { src: "assets/data/academy-columns.js", dependencies: ["academy-data"] },
+  "academy-index": { src: "assets/data/academy-index.js", dependencies: [] },
   "brand-data": { src: "assets/data/brand.js", dependencies: [] },
   core: { src: "assets/js/core.js", dependencies: [] },
   "new-arrivals": { src: "assets/js/new-arrivals.js", dependencies: [] },
   products: { src: "assets/js/products.js", dependencies: ["product-data"] },
   events: { src: "assets/js/events.js", dependencies: ["event-data"] },
   journal: { src: "assets/js/journal.js", dependencies: ["journal-data"] },
-  academy: { src: "assets/js/academy.js", dependencies: ["academy-columns"] },
+  academy: { src: "assets/js/academy.js", dependencies: ["academy-index"] },
   brand: { src: "assets/js/brand.js", dependencies: ["brand-data"] },
 };
 

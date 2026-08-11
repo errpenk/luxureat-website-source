@@ -44,7 +44,9 @@
   const renderSlide = (event, index) => {
     const copy = event[lang];
     const mapHref = event.mapHref || `https://maps.apple.com/?q=${encodeURIComponent(event.mapQuery)}`;
-    const newsHref = `${newsIndexHref}#event-${event.id}`;
+    const newsHref = location.protocol === "file:" || location.pathname.endsWith(".html")
+      ? `${newsIndexHref}#event-${event.id}`
+      : `${lang === "zh" ? "" : "/en"}/events/${encodeURIComponent(event.id)}/`;
     return `<article class="lux-latest-event-slide" role="group" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">

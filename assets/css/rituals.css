@@ -13,7 +13,7 @@
 .lux-recipe-library-controls button:hover,.lux-recipe-library-controls button:focus-visible{border-color:#006a64;color:#fff;background:#006a64}
 .lux-recipe-library-controls>p{margin:0 0 14px;color:#006a64;font:700 13px/1.3 var(--lux-page-heading);white-space:nowrap}
 .lux-recipe-library-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;margin-top:42px}
-.lux-recipe-library-card{display:grid;min-width:0;padding:0 0 28px;border:0;border-bottom:1px solid #aaa397;color:inherit;background:transparent;text-align:left;cursor:pointer}
+.lux-recipe-library-card{display:grid;min-width:0;padding:0 0 28px;border:0;border-bottom:1px solid #aaa397;color:inherit;background:transparent;text-align:left;text-decoration:none;cursor:pointer}
 .lux-recipe-library-media{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#d4d0c8}
 .lux-recipe-library-media:after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.56),transparent 52%);opacity:.35;transition:opacity .3s}
 .lux-recipe-library-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
@@ -34,7 +34,10 @@
 .lux-recipe-library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:600px){.lux-recipe-library{padding-inline:18px}
-.lux-recipe-library-controls,.lux-recipe-library-grid{grid-template-columns:1fr}
+.lux-recipe-library-controls{grid-template-columns:1fr}
+.lux-recipe-library-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+.lux-recipe-library-copy{gap:7px;padding-top:14px}
+.lux-recipe-library-copy strong{font-size:clamp(18px,5vw,24px)}
 .lux-recipe-library-controls{padding-inline:0;background:transparent}
 .lux-recipe-library-controls button{width:100%}
 }

@@ -1,0 +1,11 @@
+(() => {
+  const root = new URL("../../../", document.currentScript?.src || location.href);
+  const revive = (value) => {
+    if (typeof value === "string" && value.startsWith("assets/")) return new URL(value, root).href;
+    if (Array.isArray(value)) return value.map(revive);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, revive(item)]));
+    return value;
+  };
+  const data = window.LUXUREAT_ARTICLE_DATA ||= { articles: {} };
+  data.articles["zh-academy-gelato-flavours"] = revive({"lang":"zh","slug":"gelato-flavours","topic":"gelato","topicLabel":"意式手工冰淇淋学院","artClass":"is-gelato","eyebrow":"意式手工冰淇淋风味","title":"经典口味：意式手工冰淇淋如何表达原料","meta":"意式手工冰淇淋 · 2026","archive":"风味实验室","intro":"从牛奶、香草、巧克力、咖啡、榛子、开心果和水果出发，理解不同原料如何改变甜度、质地与香气。","opening":["低温会减慢香气释放，也会改变甜味感受，因此一款好的意式手工冰淇淋不能只靠增加糖或香精让味道更响亮。配方需要尊重原料自身的脂肪、含水量、酸度、纤维和可可或坚果固形物，再调整冻结和服务状态。","经典口味之所以经久不衰，是因为它们能清楚展示制作能力：牛奶味考验干净与平衡，巧克力考验可可与甜度，坚果考验烘焙和油脂，水果则考验成熟度、酸度与季节。"],"sections":[["牛奶与香草：看似简单的基准",["牛奶口味没有浓烈配料遮挡，乳香、甜度、冰晶和余味都很直接。原料品质、加热处理和冷链稍有问题，异味或粗糙感就容易被发现。","香草来源与形态不同，香荚、提取物和天然香料的标示及使用方式应以产品资料为准。好的香草风味应与乳基融合，而不是只留下单一甜香。"]],["巧克力与咖啡：苦甜结构",["巧克力口味要平衡可可固形物、可可脂、其他脂肪与糖。深色不必然意味着可可含量更高，名称和配料才是依据。苦味、酸感、烘焙香与甜度需要在低温下仍然清楚。","咖啡的烘焙度、萃取方式和加入量会影响香气与水分。过度烘焙或过量可能只剩焦苦，过弱则在冷冻后失去辨识度。"]],["榛子与开心果：坚果的真实感",["坚果含有较多脂肪和固形物，会显著改变黏度、冻结与融化。烘焙能发展香气，但过度会带来焦苦；储存不当还可能出现氧化陈味。","开心果并不天然呈现荧光绿色，颜色会随品种、烘焙和配方变化。选择时更应关注配料、香气、细腻度与是否存在油腻或香精感，而不是追求夸张色泽。"]],["水果与季节：水分和酸度的挑战",["草莓、柠檬、桃、莓果等含水、糖和酸差异明显，不能共用一套比例。成熟度改变风味，也改变需要补充的糖与固形物。水果雪葩通常不以乳为主体，但具体配方仍需确认过敏原和交叉接触。","LuxurEat（露意膳）介绍口味时，会区分原料事实、感官描述和产品信息。常见口味已经足以展示意式手工冰淇淋的专业：真实、清晰、不过度遮盖，并在每一口保持细腻层次。"]],["做一场四口味比较",["选择牛奶、巧克力、坚果和水果四类，每次只取少量，从颜色、第一香气、甜度、细腻度到余味依次记录。中间饮水并稍作停顿，避免前一款的糖和脂肪持续影响判断。","比较能够帮助消费者理解配方差异，也能帮助门店调整菜单层次。口味数量并非越多越专业，原料清楚、轮换有节奏和批次稳定更重要。"]],["关于颜色和命名",["口味名应与实际配料和适用标示一致。颜色可以来自原料本身或依法使用的着色成分，消费者应通过标签确认，而不是用“越自然越灰暗”之类经验法判断。门店展示也应避免让装饰物暗示并未使用的主要原料。"]]],"asideSummary":"经典口味不是保守选择，而是最直接的工艺测试：每种原料都需要独立处理水分、脂肪、酸度和香气。","relatedSlugs":["gelato-vs-ice-cream","gelato-history","ugolini-gelato-mix"],"image":"assets/media/academy/gelato-cover-04.webp","column":"意式手工冰淇淋学院","related":["zh-academy-gelato-vs-ice-cream","zh-academy-gelato-history","zh-academy-ugolini-gelato-mix"],"sectionMedia":[]});
+})();
