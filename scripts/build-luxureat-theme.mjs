@@ -9,6 +9,7 @@ const sourceDir = path.resolve(process.argv[2] || process.cwd());
 const outputRoot = path.resolve(process.argv[3] || process.cwd());
 const themeDir = path.join(outputRoot, 'luxureat-static');
 const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
+const buildIdentifier = String(process.env.GITHUB_SHA || 'local').replace(/[^a-f0-9]/gi, '').slice(0, 40) || 'local';
 
 const pageInputs = pages.map(({ lang, slug, file }) => [lang, slug, file]);
 
@@ -200,7 +201,7 @@ Theme Name: LuxurEat Static
 Theme URI: https://github.com/errpenk/luxureat-website-source
 Author: LuxurEat
 Description: Static LuxurEat bilingual prototype packaged as a WordPress theme.
-Version: 1.0.3
+Version: 1.0.4
 Requires at least: 6.0
 Text Domain: luxureat-static
 */
@@ -1418,11 +1419,14 @@ add_action('after_switch_theme', 'luxureat_static_flush_rewrites');
 add_action('switch_theme', 'flush_rewrite_rules');
 
 function luxureat_static_refresh_changed_routes() {
-    $route_version = md5(wp_json_encode(array(luxureat_static_routes(), luxureat_static_aliases())));
+    $route_version = md5(wp_json_encode(array(luxureat_static_routes(), luxureat_static_aliases(), '${escapePhpString(buildIdentifier)}')));
     if (get_option('luxureat_static_route_version') === $route_version) {
         return;
     }
     flush_rewrite_rules(false);
+    if (function_exists('wp_cache_clear_cache')) {
+        wp_cache_clear_cache();
+    }
     update_option('luxureat_static_route_version', $route_version, false);
 }
 add_action('init', 'luxureat_static_refresh_changed_routes', 20);

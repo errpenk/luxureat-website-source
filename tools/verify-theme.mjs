@@ -115,6 +115,7 @@ assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.in
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
 assert(functionsPhp.includes('luxureat_static_refresh_changed_routes') && functionsPhp.includes('luxureat_static_route_version'), 'theme updates refresh changed WordPress routes once');
+assert(functionsPhp.includes("function_exists('wp_cache_clear_cache')") && functionsPhp.includes('wp_cache_clear_cache();'), 'theme deployments clear stale WP Super Cache pages once');
 assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && functionsPhp.includes('status_header(410)') && functionsPhp.includes("header('X-Robots-Tag: noindex, nofollow'"), 'spam and noncanonical public URLs return an explicit non-indexable 410');
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
 assert(functionsPhp.includes('luxureat_static_utility_noindex_header') && functionsPhp.includes("header('X-Robots-Tag: noindex, follow'"), 'bag, cart, checkout and account pages are crawlable but explicitly non-indexable');
