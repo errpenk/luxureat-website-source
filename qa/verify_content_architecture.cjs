@@ -141,7 +141,7 @@ const engagementRuntime = read("assets/js/engagement.js");
 assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
-assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)"), "shared header top or mobile-menu surface styling is incomplete");
+assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)") && integrationStyles.includes("mix-blend-mode: difference"), "shared header contrast or mobile-menu surface styling is incomplete");
 assert(integrationStyles.includes(".lux-reader-close:hover") && integrationStyles.includes("border-color: #101010;") && integrationStyles.includes("box-shadow: none;"), "article-reader close hover does not retain the default thin border");
 assert(read("zh/about-us.html").includes("我们不使用的成分") && read("en/about-us.html").includes("Ingredients we do not use") && read("assets/css/journal.css").includes("lux-ingredient-standard-note"), "bilingual ingredient-exclusion statement is missing");
 assert(read("assets/css/journal.css").includes("width:100vw") && !read("assets/css/journal.css").includes("border-left"), "brand-promise note is not full-width or still has a left accent rule");
