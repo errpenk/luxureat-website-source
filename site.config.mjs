@@ -1,4 +1,4 @@
-export const assetVersion = "20260812-cookie-font-alignment-62";
+export const assetVersion = "20260812-scroll-footer-group-63";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -22,7 +22,7 @@ export const navigation = [
 
 export const seo = {
   zh: {
-    home: ["LuxurEat（露意膳） | 意大利高端美食与品牌合作", "LuxurEat（露意膳）专注意大利高端美食、地道风味与中国市场合作，提供产品、食谱、品牌内容与专业服务。"],
+    home: ["LuxurEat（露意膳）Group | 意大利高端美食与品牌合作", "LuxurEat（露意膳）Group 专注意大利高端美食、地道风味与中国市场合作，提供产品、食谱、品牌内容与专业服务。"],
     journal: ["关于我们 | LuxurEat（露意膳）", "了解 LuxurEat（露意膳）的品牌传承、产地故事、品质承诺与时令观察。"],
     new: ["热门新品 | LuxurEat（露意膳）", "发现 LuxurEat（露意膳）的意大利橄榄油、披萨与意式手工冰淇淋等热门新品。"],
     products: ["系列产品 | LuxurEat（露意膳）", "浏览 LuxurEat（露意膳）精选意大利高端美食与松露、鱼子酱等系列产品。"],
@@ -35,7 +35,7 @@ export const seo = {
     bag: ["购物袋 | LuxurEat（露意膳）", "查看并管理您在 LuxurEat（露意膳）购物袋中的已选产品。"],
   },
   en: {
-    home: ["LuxurEat | Premium Italian Food & Brand Partnerships", "Discover premium Italian food, authentic regional flavours, recipes, brand stories and professional market partnerships from LuxurEat."],
+    home: ["LuxurEat Group | Premium Italian Food & Brand Partnerships", "Discover premium Italian food, authentic regional flavours, recipes, brand stories and professional market partnerships from LuxurEat Group."],
     journal: ["About Us | LuxurEat", "Discover LuxurEat's brand heritage, stories of place, quality promise and seasonal observations."],
     new: ["New Arrivals | LuxurEat", "Discover new Italian olive oil, pizza and artisan Gelato selections from LuxurEat."],
     products: ["Products | LuxurEat", "Browse LuxurEat's selected premium Italian foods, truffle products, caviar and culinary collections."],

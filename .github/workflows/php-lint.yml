@@ -13,12 +13,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'wordpress-plugins/**/*.php'
-      - 'wordpress-plugins/luxureat-github-sync/README.md'
-      - 'tools/build-github-sync-plugin.mjs'
-      - 'tools/verify-github-sync-plugin.mjs'
-      - '.github/workflows/php-lint.yml'
   workflow_dispatch:
 
 permissions:

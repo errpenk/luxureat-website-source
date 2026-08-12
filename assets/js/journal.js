@@ -117,7 +117,7 @@ function initLuxReader() {
   const localizeArchiveLabel = (value) => {
     if (lang !== "zh") return value;
     const labels = {
-      MAISON: "品牌",
+      GROUP: "品牌",
       MASTERCLASS: "大师课",
       RECIPE: "食谱",
       ATLAS: "产业版图",
@@ -385,7 +385,7 @@ function initLuxReader() {
     aboutMount.innerHTML = `
       <div class="lux-recent-events-inner">
         <header class="lux-recent-events-head">
-          <span>Maison Story</span>
+          <span>Group Story</span>
           <h2>${escapeHtml(aboutLabels.title)}</h2>
         </header>
       </div>

@@ -56,7 +56,7 @@
   };
   const articles = {
     "zh-about": {
-      lang: "zh", eyebrow: "关于我们", title: "LuxurEat（露意膳）｜从意大利家族餐桌，到世界高端美食版图", meta: "MAISON · 品牌故事",
+      lang: "zh", eyebrow: "关于我们", title: "LuxurEat（露意膳）｜从意大利家族餐桌，到世界高端美食版图", meta: "GROUP · 品牌故事",
       image: images.aboutRoberto,
       intro: "LuxurEat（露意膳）的故事，始于意大利家庭餐桌上代代相传的味道。",
       opening: [
@@ -98,7 +98,7 @@
       related: ["zh-harvest", "zh-truffle", "zh-service"],
     },
     "zh-harvest": {
-      lang: "zh", eyebrow: "品牌理念", title: "LuxurEat（露意膳）的理念与哲学", meta: "MAISON · 理念与哲学",
+      lang: "zh", eyebrow: "品牌理念", title: "LuxurEat（露意膳）的理念与哲学", meta: "GROUP · 理念与哲学",
       image: images.philosophy,
       coverPosition: "center top",
       cardImage: images.aboutHeritageGift,
@@ -429,7 +429,7 @@
       related: ["zh-champagne", "zh-truffle", "zh-service"],
     },
     "en-about": {
-      lang: "en", eyebrow: "About Us", title: "LuxurEat (露意膳)｜From an Italian Family Table to the Global Gourmet Landscape", meta: "MAISON · Brand Story",
+      lang: "en", eyebrow: "About Us", title: "LuxurEat (露意膳)｜From an Italian Family Table to the Global Gourmet Landscape", meta: "GROUP · Brand Story",
       image: images.aboutRoberto,
       intro: "The LuxurEat (露意膳) story begins with flavors passed down through generations at an Italian family table.",
       opening: [
@@ -471,7 +471,7 @@
       related: ["en-harvest", "en-truffle", "en-service"],
     },
     "en-harvest": {
-      lang: "en", eyebrow: "Brand Philosophy", title: "The Philosophy and Values of LuxurEat (露意膳)", meta: "MAISON · Philosophy & Values",
+      lang: "en", eyebrow: "Brand Philosophy", title: "The Philosophy and Values of LuxurEat (露意膳)", meta: "GROUP · Philosophy & Values",
       image: images.philosophy,
       coverPosition: "center top",
       cardImage: images.aboutHeritageGift,
@@ -489,7 +489,7 @@
       related: ["en-service", "en-malossol", "en-champagne"],
     },
     "en-harvest-craft": {
-      lang: "en", eyebrow: "Maison Heritage", title: "The Art of the Harvest", meta: "MASTERCLASS · October 2024",
+      lang: "en", eyebrow: "Group Heritage", title: "The Art of the Harvest", meta: "MASTERCLASS · October 2024",
       image: images.harvest,
       intro: "Caviar harvesting is an act of judgment. Temperature, pearl tension, maturity, salting, and aroma must meet in a narrow window; once that window closes, no amount of service theatre can restore the first truth of the roe.",
       sections: [

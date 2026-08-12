@@ -1912,7 +1912,7 @@ if ($is_checkout_page) $body_classes[] = 'lux-checkout-page';
 <main class="lux-wp-page-main">
 <?php while (have_posts()) : the_post(); ?>
     <header class="lux-wp-page-title">
-        <p><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '安全结算' : 'Secure checkout') : ($is_zh_page ? '会员中心' : 'Maison Account')); ?></p>
+        <p><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '安全结算' : 'Secure checkout') : ($is_zh_page ? '会员中心' : 'Group Account')); ?></p>
         <h1><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '确认订单' : 'Checkout') : ($is_account_page ? ($is_zh_page ? '我的账户' : 'My account') : get_the_title())); ?></h1>
     </header>
     <div class="lux-wp-page-content"><?php the_content(); ?></div>

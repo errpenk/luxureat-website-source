@@ -11182,7 +11182,7 @@ html[lang^="en"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h
   line-height: 1.04 !important;
 }
 
-/* Homepage eyebrow labels share the Maison Overview type scale. */
+/* Homepage eyebrow labels share the Group Overview type scale. */
 html[lang^="en"] :is(
   .lux-home-maison-head > div > span:first-child,
   .lux-selected-products-kicker,
@@ -11199,7 +11199,7 @@ html[lang^="en"] :is(
   letter-spacing: .28em !important;
 }
 
-/* Title-case labels need a larger optical size than the all-caps Maison label. */
+/* Title-case labels need a larger optical size than the all-caps Group label. */
 html[lang^="en"] #selected-products .lux-selected-products-kicker,
 html[lang^="en"] #gifting-editorial .lux-home-editorial-kicker {
   font-size: 14px !important;
