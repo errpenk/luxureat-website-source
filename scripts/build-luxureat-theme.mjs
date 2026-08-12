@@ -298,6 +298,7 @@ function articlePageHtml(article, imageDimensions) {
   </article></main>`;
   html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(article.title)} | LuxurEat</title>\n<meta name="description" content="${escapeHtml(article.intro)}">\n<!-- lux:seo:end -->`);
   const alternate = articleInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
+  html = html.replace(`<a class="active" href="#">${article.lang === 'zh' ? 'ZH' : 'EN'}</a>`, `<a class="active" href="<?php echo esc_url(luxureat_static_url('${articleRoute(article)}')); ?>">${article.lang === 'zh' ? 'ZH' : 'EN'}</a>`);
   if (alternate) {
     const currentBlogLink = article.lang === 'zh' ? '../en/blog.html' : '../zh/blog.html';
     html = html.replace(`href="${currentBlogLink}"`, `href="<?php echo esc_url(luxureat_static_url('${articleRoute(alternate)}')); ?>"`);
@@ -311,6 +312,7 @@ function detailPageHtml({ lang, pageKey, title, description, route, alternateRou
   let html = fs.readFileSync(path.join(sourceDir, sourcePage.file), 'utf8');
   html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(title)} | LuxurEat</title>\n<meta name="description" content="${escapeHtml(description)}">\n<!-- lux:seo:end -->`);
   const otherLang = lang === 'zh' ? 'en' : 'zh';
+  html = html.replace(`<a class="active" href="#">${lang === 'zh' ? 'ZH' : 'EN'}</a>`, `<a class="active" href="<?php echo esc_url(luxureat_static_url('${route}')); ?>">${lang === 'zh' ? 'ZH' : 'EN'}</a>`);
   const oldLanguageLink = lang === 'zh' ? `../en/${sourcePage.slug}.html` : `../zh/${sourcePage.slug}.html`;
   html = html.replace(`href="${oldLanguageLink}"`, `href="<?php echo esc_url(luxureat_static_url('${alternateRoute}')); ?>"`);
   html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n${body}\n$2`);

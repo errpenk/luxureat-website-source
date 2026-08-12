@@ -12,7 +12,9 @@ const luxGetCookieConsent = () => {
 };
 const luxSetCookieConsent = (value) => {
   try { localStorage.setItem(luxCookieConsentKey, value); } catch { /* Storage may be disabled. */ }
+  document.documentElement.dataset.luxCookieConsent = value;
 };
+document.documentElement.dataset.luxCookieConsent = luxGetCookieConsent() || "unset";
 let luxAnalyticsLoaded = false;
 const loadAnalytics = () => {
   if (!luxDelayedAnalytics || luxAnalyticsLoaded || luxGetCookieConsent() !== "analytics") return;
@@ -68,34 +70,26 @@ if (["required", "verified", "verification-failed"].includes(new URLSearchParams
     label: "Cookie preferences",
     text: "We use necessary cookies for core features. With your permission, analytics cookies help us improve the website.",
     privacy: "Privacy Policy",
+    cookie: "Cookie Policy",
     necessary: "Necessary only",
     accept: "Accept analytics",
-    settings: "Cookie settings",
   } : {
     label: "Cookie 设置",
     text: "我们使用必要 Cookie 保障基本功能；经您同意后，分析 Cookie 将帮助我们改进网站。",
     privacy: "隐私政策",
+    cookie: "Cookie Policy",
     necessary: "仅使用必要 Cookie",
     accept: "接受分析 Cookie",
-    settings: "Cookie 设置",
   };
   const banner = document.createElement("section");
   banner.className = "lux-cookie-banner";
   banner.setAttribute("role", "region");
   banner.setAttribute("aria-label", copy.label);
   banner.hidden = true;
-  banner.innerHTML = `<img src="${new URL("../media/brand/luxureat-logo.png", luxCoreUrl)}" alt="LuxurEat"><div><p>${copy.text}</p><button type="button" data-footer-modal="privacy">${copy.privacy}</button></div><div class="lux-cookie-actions"><button type="button" data-cookie-choice="necessary">${copy.necessary}</button><button type="button" data-cookie-choice="analytics">${copy.accept}</button></div>`;
+  banner.innerHTML = `<img src="${new URL("../media/brand/luxureat-logo.png", luxCoreUrl)}" alt="LuxurEat"><div><p>${copy.text}</p><span class="lux-cookie-policy-links"><button type="button" data-footer-modal="privacy">${copy.privacy}</button><span aria-hidden="true">/</span><button type="button" data-footer-modal="cookie">${copy.cookie}</button></span></div><div class="lux-cookie-actions"><button type="button" data-cookie-choice="necessary">${copy.necessary}</button><button type="button" data-cookie-choice="analytics">${copy.accept}</button></div>`;
   document.body.appendChild(banner);
 
-  document.querySelectorAll(".lux-footer-legal").forEach((legal) => {
-    const settings = document.createElement("button");
-    settings.type = "button";
-    settings.dataset.cookieSettings = "";
-    settings.textContent = copy.settings;
-    legal.appendChild(settings);
-  });
   document.addEventListener("click", (event) => {
-    if (event.target.closest("[data-cookie-settings]")) banner.hidden = false;
     const choice = event.target.closest("[data-cookie-choice]")?.dataset.cookieChoice;
     if (!choice) return;
     luxSetCookieConsent(choice);
