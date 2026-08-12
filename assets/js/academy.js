@@ -142,8 +142,7 @@ function initCaviarAcademy() {
     renderLatest(topic);
     applyFilters(topic);
   };
-  const params = new URLSearchParams(location.search);
-  const requestedTopic = params.get("topic") || ({
+  const topicFromHash = () => ({
     "culture-academy": "culture",
     "food-academy": "culture",
     "caviar-academy": "caviar",
@@ -155,11 +154,21 @@ function initCaviarAcademy() {
     "italian-food-dictionary": "dictionary",
     "producers-stories": "producers",
   }[location.hash.slice(1)] || "all");
+  const scrollToTopics = () => requestAnimationFrame(() => {
+    const headerOffset = innerWidth <= 1080 ? 82 : 108;
+    scrollTo({ top: scrollY + topicNav.getBoundingClientRect().top - headerOffset, behavior: "smooth" });
+  });
+  const params = new URLSearchParams(location.search);
+  const requestedTopic = params.get("topic") || topicFromHash();
   const requestedQuery = params.get("q");
   if (requestedQuery) search.value = requestedQuery;
   topicNav.addEventListener("click", (event) => {
     const button = event.target.closest("[data-academy-topic-filter]");
     if (button) setTopic(button.dataset.academyTopicFilter);
+  });
+  addEventListener("hashchange", () => {
+    setTopic(topicFromHash());
+    scrollToTopics();
   });
 
   search.addEventListener("input", () => {
@@ -174,10 +183,7 @@ function initCaviarAcademy() {
       if (ready) list.querySelector(`[data-reader-open="${id}"]`)?.click();
     });
   }
-  if (params.has("topic") || location.hash) requestAnimationFrame(() => {
-    const headerOffset = innerWidth <= 1080 ? 82 : 108;
-    scrollTo({ top: scrollY + topicNav.getBoundingClientRect().top - headerOffset, behavior: "smooth" });
-  });
+  if (params.has("topic") || location.hash) scrollToTopics();
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initCaviarAcademy, { once: true });

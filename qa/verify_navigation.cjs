@@ -77,10 +77,10 @@ assert(!fs.existsSync(path.join(root, "en/private.html")), "extra English privat
 const core = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is missing");
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
-assert(core.includes('["blog.html", "知识博客"') && core.includes('["探索意大利", "?topic=culture"]') && core.includes('["营养与配料指南", "?topic=nutrition"]'), "Chinese Blog topics are incomplete");
+assert(core.includes('["blog.html", "知识博客"') && core.includes('["探索意大利", "culture-academy"]') && core.includes('["营养与配料指南", "nutrition-guide"]'), "Chinese Blog topics are incomplete");
 assert(!core.includes('["意大利美食学院", "?topic=academy"]') && !core.includes('["Italian Food Academy", "?topic=academy"]'), "Food Academy is still duplicated in Blog navigation");
-assert(core.includes('["意式手工冰淇淋", "?topic=gelato"]') && !core.includes('["意式 Gelato", "?topic=gelato"]'), "Chinese Gelato academy label is not localized");
-assert(core.includes('["blog.html", "Blog"') && core.includes('["Explore Italy", "?topic=culture"]') && core.includes('["Nutrition & Ingredients", "?topic=nutrition"]'), "English Blog topics are incomplete");
+assert(core.includes('["意式手工冰淇淋", "gelato-academy"]') && !core.includes('["意式 Gelato", "gelato-academy"]'), "Chinese Gelato academy label is not localized");
+assert(core.includes('["blog.html", "Blog"') && core.includes('["Explore Italy", "culture-academy"]') && core.includes('["Nutrition & Ingredients", "nutrition-guide"]'), "English Blog topics are incomplete");
 assert(core.includes('["cooperation.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"]'), "Chinese gifting submenu is incorrect");
 assert(core.includes('["about-us.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["品牌承诺", "brand-promise"], ["时令随笔", "seasonal-notes"]]'), "Chinese About Us submenu is incorrect");
 assert(core.includes('["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]'), "Chinese contact submenu is incorrect");

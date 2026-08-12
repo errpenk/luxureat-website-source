@@ -109,10 +109,11 @@ for (const lang of ["zh", "en"]) {
 }
 const zhBlog = read("zh/blog.html");
 assert(zhBlog.includes("全部内容") && zhBlog.includes("<h2>知识、起源与工艺</h2>") && zhBlog.includes("橄榄油"), "Chinese academy introduction is not localized");
-assert(read("assets/js/core.js").includes('"探索意大利", "?topic=culture"') && read("assets/js/core.js").includes('"营养与配料指南", "?topic=nutrition"'), "Chinese Blog submenu is incomplete");
+assert(read("assets/js/core.js").includes('"探索意大利", "culture-academy"') && read("assets/js/core.js").includes('"营养与配料指南", "nutrition-guide"'), "Chinese Blog submenu is incomplete");
 assert(!read("assets/js/core.js").includes('"意大利美食学院", "?topic=academy"'), "Food Academy is still a separate Blog submenu");
-assert(read("assets/js/core.js").includes('"披萨学院", "?topic=pizza"'), "Chinese Pizza Academy submenu is missing");
+assert(read("assets/js/core.js").includes('"披萨学院", "pizza-academy"'), "Chinese Pizza Academy submenu is missing");
 const runtime = read("assets/js/academy.js");
+assert(runtime.includes('addEventListener("hashchange"') && runtime.includes("topicFromHash"), "Blog topic anchors do not update the current page");
 assert(runtime.includes('search.addEventListener("input"') && runtime.includes("data-reader-open") && runtime.includes("data-academy-topic-filter"), "academy search, topic filters or reader integration is missing");
 assert(runtime.includes("academy-articles/") && !runtime.includes('../data/academy.js') && !runtime.includes('../data/academy-columns.js'), "academy reader does not load one article at a time");
 assert(runtime.includes('href="${articleHref(article)}"'), "academy cards do not expose crawlable article URLs");
