@@ -721,7 +721,7 @@ if (luxNav && luxMenu) {
     if (!restore(position)) return;
     let attempts = 0;
     const retry = () => {
-      if (restoreCancelled || attempts++ >= 20) return;
+      if (restoreCancelled || attempts++ >= 100) return;
       restore(position);
       setTimeout(retry, 100);
     };
