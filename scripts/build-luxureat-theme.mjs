@@ -61,7 +61,7 @@ const eventRoute = (event) => `${event.lang === 'zh' ? '' : 'en/'}events/${event
 const recipeRoute = (recipe) => `${recipe.lang === 'zh' ? '' : 'en/'}recipe/${recipe.slug}`;
 
 function ensureSource() {
-  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'silian_luxureat.txt', 'google053137c136af2773.html', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
+  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'google053137c136af2773.html', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
   for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
@@ -694,7 +694,6 @@ function luxureat_static_search_metadata_endpoint() {
     $request_path = parse_url($request_uri, PHP_URL_PATH);
     $files = array(
         '/google053137c136af2773.html' => array('google053137c136af2773.html', 'text/html; charset=UTF-8'),
-        '/silian_luxureat.txt' => array('silian_luxureat.txt', 'text/plain; charset=UTF-8'),
         '/sitemap.xml' => array('sitemap.xml', 'application/xml; charset=UTF-8'),
     );
 
@@ -1961,7 +1960,6 @@ async function build() {
   fs.copyFileSync(path.join(sourceDir, 'integration.css'), path.join(themeDir, 'integration.css'));
   fs.copyFileSync(path.join(sourceDir, '.htaccess'), path.join(themeDir, '.htaccess'));
   fs.copyFileSync(path.join(sourceDir, 'robots.txt'), path.join(themeDir, 'robots.txt'));
-  fs.copyFileSync(path.join(sourceDir, 'silian_luxureat.txt'), path.join(themeDir, 'silian_luxureat.txt'));
   fs.copyFileSync(path.join(sourceDir, 'google053137c136af2773.html'), path.join(themeDir, 'google053137c136af2773.html'));
   execFileSync(process.execPath, [path.join(sourceDir, 'tools/generate-sitemap.mjs'), path.join(themeDir, 'sitemap.xml')]);
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
