@@ -1,4 +1,4 @@
-export const assetVersion = "20260812-scroll-footer-group-64";
+export const assetVersion = "20260812-scroll-footer-group-65";
 
 export const contact = {
   email: "china@luxureat.com",
