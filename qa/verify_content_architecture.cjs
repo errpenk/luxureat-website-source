@@ -138,6 +138,8 @@ assert(read("zh/about-us.html").includes("阅读详情") && !read("zh/about-us.h
 assert(read("en/about-us.html").includes("LuxurEat (露意膳) is a Chinese company established."), "English company description punctuation is outdated");
 const accountRuntime = read("assets/js/core.js");
 const engagementRuntime = read("assets/js/engagement.js");
+assert(accountRuntime.includes('luxureat_cookie_consent') && accountRuntime.includes('data-cookie-choice="necessary"') && accountRuntime.includes('data-cookie-choice="analytics"'), "bilingual cookie consent controls are missing");
+assert(accountRuntime.includes('luxGetCookieConsent() !== "analytics"') && accountRuntime.includes('data-cookie-settings'), "analytics is not gated by consent or cookie settings cannot be reopened");
 assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
