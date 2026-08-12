@@ -69,10 +69,10 @@ function footerFor(page) {
 </section>
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div class="lux-footer-brand"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>${copy.description}</p></div>
+    <div class="lux-footer-brand"><div class="lux-footer-brand-main"><img loading="lazy" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>${copy.description}</p></div><div class="lux-footer-legal">${legal}</div></div>
     <nav>${nav}</nav>
     <div class="lux-footer-social">${social}</div>
-    <div><a href="mailto:${contact.email}">${contact.email}</a><a href="mailto:${contact.secondaryEmail}">${contact.secondaryEmail}</a><a href="tel:${contact.phoneHref}">${contact.phone}</a><div class="lux-footer-legal">${legal}</div></div>
+    <div><a href="mailto:${contact.email}">${contact.email}</a><a href="mailto:${contact.secondaryEmail}">${contact.secondaryEmail}</a><a href="tel:${contact.phoneHref}">${contact.phone}</a></div>
   </div>
   <div class="lux-footer-bottom">${copy.copyright}</div>
 </footer>

@@ -664,13 +664,16 @@ html[lang^="en"] .lux-nav > :is(a, .lux-nav-item) > a { letter-spacing: .1em !im
   gap: 30px;
 }
 .lux-footer-brand {
+  display: block;
+}
+.lux-footer-brand-main {
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
   align-items: center;
   gap: 24px;
 }
-.lux-footer-brand > img { width: 112px; height: 112px; object-fit: contain; filter: invert(1) brightness(1.35); }
-.lux-footer .lux-footer-brand > p { margin: 0; font-size: var(--lux-type-body-sm) !important; line-height: 1.5 !important; }
+.lux-footer-brand-main > img { width: 112px; height: 112px; object-fit: contain; filter: invert(1) brightness(1.35); }
+.lux-footer .lux-footer-brand-main > p { margin: 0; font-size: var(--lux-type-body-sm) !important; line-height: 1.5 !important; }
 .lux-footer a, .lux-footer button, .lux-footer p {
   display: block;
   color: #bdc9c7;
@@ -711,9 +714,11 @@ html[lang^="en"] .lux-nav > :is(a, .lux-nav-item) > a { letter-spacing: .1em !im
 .lux-footer-social a,
 .lux-footer-social button { display: inline-flex; width: max-content; align-items: center; gap: 10px; }
 .lux-footer-social img { width: 22px; height: 22px; margin: 0; object-fit: contain; filter: none; }
-.lux-footer-legal { display: contents; }
-.lux-footer-legal button { width: max-content; margin: 0; }
+.lux-footer-legal { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 20px; }
+.lux-footer-legal button { width: max-content; min-height: 30px; margin: 0; }
 .lux-footer-legal button::after { display: none; }
+html[lang^="zh"] .lux-footer-legal [data-footer-modal="cookie"],
+html[lang^="zh"] .lux-cookie-policy-title { font-family: var(--lux-zh-body) !important; font-weight: 400 !important; }
 .lux-footer nav { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
 .lux-footer-bottom { max-width: 1440px; margin: 38px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.08); color: #bdc9c7; font-size: 13px; }
 html[lang="en"] h1 {
@@ -2136,7 +2141,7 @@ header:has(.lux-hero-fade-both) {
 .lux-cookie-provider a { color: #006a64; text-underline-offset: 3px; }
 .lux-cookie-policy-actions { position: sticky; bottom: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; padding-top: 14px; background: #eeeae5; }
 .lux-cookie-policy-actions button { min-height: 44px; padding: 10px 12px; border: 1px solid #006a64; background: transparent; color: #006a64; font: 600 13px/1.4 var(--lux-page-heading); cursor: pointer; }
-.lux-cookie-policy-actions button:last-child { background: #006a64; color: #fff; }
+.lux-cookie-policy-actions button:first-child { background: #006a64; color: #fff; }
 .lux-cookie-policy-actions button[aria-pressed="true"] { border-color: #9a6d22; box-shadow: inset 0 -3px #9a6d22; }
 .lux-footer-qr {
   width: min(280px, 100%);
@@ -6023,8 +6028,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   #inquiry .lux-partner-card { min-height: 320px; }
 }
 @media (max-width: 720px) {
-  .lux-footer-brand { grid-template-columns: 84px minmax(0, 1fr); gap: 18px; }
-  .lux-footer-brand > img { width: 84px; height: 84px; }
+  .lux-footer-brand-main { grid-template-columns: 84px minmax(0, 1fr); gap: 18px; }
+  .lux-footer-brand-main > img { width: 84px; height: 84px; }
 }
 
 /* Search, editorial news, and narrow product controls. */
