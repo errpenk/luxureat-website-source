@@ -4,12 +4,6 @@ const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) =>
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 
-if (document.documentElement.lang.startsWith("zh") && !luxSaveData) {
-  const enableFullFonts = () => setTimeout(() => document.documentElement.classList.add("lux-full-fonts"), luxIsMobile ? 15000 : 1500);
-  if (document.readyState === "complete") enableFullFonts();
-  else addEventListener("load", enableFullFonts, { once: true });
-}
-
 const luxDelayedAnalytics = document.querySelector("script[data-lux-analytics-src]");
 if (luxDelayedAnalytics) {
   let loaded = false;

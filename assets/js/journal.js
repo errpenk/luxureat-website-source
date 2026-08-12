@@ -735,7 +735,7 @@ function initLuxReader() {
                       ${item.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt="">` : topicArt(item, true)}
                       <span class="lux-reader-related-cta">${copy.read}</span>
                     </span>
-                    <span>${escapeHtml(item.archive || item.eyebrow)}</span>
+                    <span>${escapeHtml(item.archive || item.eyebrow || item.topicLabel)}</span>
                     <strong>${escapeHtml(item.title)}</strong>
                   </button>` : "";
               }).join("")}
@@ -883,5 +883,5 @@ function initLuxReader() {
 }
 
 
-if (document.readyState === "complete") initLuxReader();
-else document.addEventListener("DOMContentLoaded", initLuxReader, { once: true });
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initLuxReader, { once: true });
+else initLuxReader();
