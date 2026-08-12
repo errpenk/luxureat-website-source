@@ -94,7 +94,6 @@ for (const file of [
   'screenshot.png',
   'README.md',
   'robots.txt',
-  'silian_luxureat.txt',
   'sitemap.xml',
   'google053137c136af2773.html',
 ]) {
@@ -123,9 +122,6 @@ assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && 
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
 assert(functionsPhp.includes('luxureat_static_utility_noindex_header') && functionsPhp.includes("header('X-Robots-Tag: noindex, follow'"), 'bag, cart, checkout and account pages are crawlable but explicitly non-indexable');
 assert(functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes('luxureat_static_robots_txt') && functionsPhp.includes('luxureat_baidu_site_verification'), 'search metadata and verification endpoints ship in the generated theme');
-assert(functionsPhp.includes("'/silian_luxureat.txt' => array('silian_luxureat.txt', 'text/plain; charset=UTF-8')"), 'Baidu dead-link list is exposed as plain text at the site root');
-const baiduDeadLinks = read(path.join(themeDir, 'silian_luxureat.txt')).trim().split('\n');
-assert(baiduDeadLinks.length === 5 && baiduDeadLinks.every((url) => url.startsWith('https://luxureat.cn/product/')), 'Baidu dead-link list contains only the five retired product URLs');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
