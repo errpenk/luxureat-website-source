@@ -1,7 +1,3 @@
-const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
-  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-}[char]));
-
 function initLuxFooterActions() {
   const triggers = document.querySelectorAll("[data-footer-modal]");
   if (!triggers.length) return;
@@ -542,15 +538,10 @@ async function createLuxBotProof(challenge) {
 })();
 
 (() => {
-  const isZh = document.documentElement.lang?.toLowerCase().startsWith("zh");
-  const copy = isZh ? {
-    working: "正在准备确认邮件…",
-    success: "确认邮件已发送，请打开邮件完成订阅。",
-    unavailable: "订阅服务暂时不可用，请稍后再试。",
-  } : {
-    working: "Preparing your confirmation email…",
-    success: "Confirmation email sent. Open it to complete your subscription.",
-    unavailable: "Subscriptions are temporarily unavailable. Please try again later.",
+  const copy = {
+    working: "正在准备确认邮件…\nPreparing your confirmation email…",
+    success: "确认邮件已发送，请打开邮件完成订阅。\nConfirmation email sent. Open it to complete your subscription.",
+    unavailable: "订阅失败，请稍后再试。\nSubscription failed. Please try again later.",
   };
 
   document.addEventListener("submit", async (event) => {
@@ -563,9 +554,11 @@ async function createLuxBotProof(challenge) {
     feedback.classList.remove("is-success");
     if (!email.value.trim() || !email.validity.valid) {
       feedback.textContent = feedback.dataset.invalid;
+      email.setAttribute("aria-invalid", "true");
       email.focus();
       return;
     }
+    email.removeAttribute("aria-invalid");
     const account = window.LuxureatAccount;
     if (!account?.ajaxUrl || !account?.newsletterNonce) {
       feedback.textContent = copy.unavailable;
@@ -585,7 +578,6 @@ async function createLuxBotProof(challenge) {
     data.set("bot_challenge", account.botChallenge);
     data.set("bot_nonce", bot.nonce);
     data.set("bot_proof", String(bot.proof));
-    data.set("lang", isZh ? "zh" : "en");
     try {
       const response = await fetch(account.ajaxUrl, {
         method: "POST",
@@ -608,6 +600,7 @@ async function createLuxBotProof(challenge) {
   document.addEventListener("input", (event) => {
     if (!event.target.matches("[data-newsletter-form] input[name='email']")) return;
     const feedback = event.target.form.querySelector("[data-newsletter-feedback]");
+    event.target.removeAttribute("aria-invalid");
     feedback.textContent = "";
     feedback.classList.remove("is-success");
   });
@@ -640,4 +633,3 @@ async function createLuxBotProof(challenge) {
 
 initLuxFooterActions();
 window.LuxEngagementReady = true;
-

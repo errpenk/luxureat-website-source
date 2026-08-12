@@ -15,7 +15,7 @@ html body .lux-footer .lux-footer-brand>p{font-family:var(--lux-page-heading)!im
 .lux-newsletter-form button{min-width:150px;padding:14px 22px;border:1px solid #81d8d0;background:transparent;color:#81d8d0;font:600 var(--lux-type-label-md,14px)/1.2 var(--lux-page-heading);letter-spacing:.08em;transition:background-color .18s,border-color .18s,color .18s}
 .lux-newsletter-form button:hover,.lux-newsletter-form button:focus-visible{border-color:#81d8d0;background:#81d8d0;color:#003734}
 .lux-newsletter-form button:disabled{cursor:wait;opacity:.6}
-.lux-newsletter-form [data-newsletter-feedback]{min-height:24px;margin:12px 0 0;color:#ef9b91;font:400 var(--lux-type-body-sm,13px)/1.5 var(--lux-page-heading)}
+.lux-newsletter-form [data-newsletter-feedback]{min-height:24px;margin:12px 0 0;color:#ef9b91;font:400 var(--lux-type-body-sm,13px)/1.5 var(--lux-page-heading);white-space:pre-line}
 .lux-newsletter-form [data-newsletter-feedback].is-success{color:#81d8d0}
 .lux-home-topic-preview .lux-topic-preview-card figure{position:relative}
 .lux-home-topic-preview .lux-topic-preview-card figure::before{content:"";position:absolute;z-index:2;inset:14px;border:1px solid rgba(255,255,255,.56);border-radius:14px 14px 3px 3px;pointer-events:none}
