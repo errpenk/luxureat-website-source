@@ -1,4 +1,4 @@
-export const assetVersion = "20260812-newsletter-double-optin-57";
+export const assetVersion = "20260812-lightweight-cookie-consent-58";
 
 export const contact = {
   email: "china@luxureat.com",

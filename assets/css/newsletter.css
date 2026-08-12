@@ -17,8 +17,18 @@ html body .lux-footer .lux-footer-brand>p{font-family:var(--lux-page-heading)!im
 .lux-newsletter-form button:disabled{cursor:wait;opacity:.6}
 .lux-newsletter-form [data-newsletter-feedback]{min-height:24px;margin:12px 0 0;color:#ef9b91;font:400 var(--lux-type-body-sm,13px)/1.5 var(--lux-page-heading);white-space:pre-line}
 .lux-newsletter-form [data-newsletter-feedback].is-success{color:#81d8d0}
+.lux-cookie-banner{position:fixed;z-index:10000;right:18px;bottom:18px;left:18px;box-sizing:border-box;max-width:720px;margin-left:auto;padding:18px;display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:center;gap:16px;border:1px solid rgba(129,216,208,.55);background:rgba(7,7,7,.97);box-shadow:0 16px 48px rgba(0,0,0,.3);color:#f3f0eb;font:400 13px/1.5 var(--lux-page-heading)}
+.lux-cookie-banner[hidden]{display:none}
+.lux-cookie-banner img{width:48px;height:48px;object-fit:contain;filter:invert(1)}
+.lux-cookie-banner p{margin:0 0 5px}
+.lux-cookie-banner button{padding:0;border:0;background:transparent;color:#81d8d0;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.lux-cookie-actions{display:flex;align-items:center;gap:10px}
+.lux-cookie-actions button{min-height:42px;padding:9px 13px;border:1px solid #81d8d0;text-decoration:none;white-space:nowrap}
+.lux-cookie-actions button:last-child{background:#81d8d0;color:#003734}
+.lux-cookie-banner button:hover,.lux-cookie-banner button:focus-visible{color:#e9c349;border-color:#e9c349;outline:none}
+.lux-cookie-actions button:last-child:hover,.lux-cookie-actions button:last-child:focus-visible{background:#e9c349;color:#16120a}
 .lux-home-topic-preview .lux-topic-preview-card figure{position:relative}
 .lux-home-topic-preview .lux-topic-preview-card figure::before{content:"";position:absolute;z-index:2;inset:14px;border:1px solid rgba(255,255,255,.56);border-radius:14px 14px 3px 3px;pointer-events:none}
 .lux-home-topic-preview .lux-topic-preview-card figure::after{content:"";position:absolute;z-index:2;inset:14px;background:linear-gradient(#e9c349,#e9c349) left top/42px 1px no-repeat,linear-gradient(#e9c349,#e9c349) left top/1px 42px no-repeat,linear-gradient(#e9c349,#e9c349) right top/42px 1px no-repeat,linear-gradient(#e9c349,#e9c349) right top/1px 42px no-repeat,linear-gradient(#81d8d0,#81d8d0) left bottom/34px 1px no-repeat,linear-gradient(#81d8d0,#81d8d0) left bottom/1px 34px no-repeat,linear-gradient(#81d8d0,#81d8d0) right bottom/34px 1px no-repeat,linear-gradient(#81d8d0,#81d8d0) right bottom/1px 34px no-repeat;opacity:.86;transition:opacity .25s ease;pointer-events:none}
 .lux-home-topic-preview .lux-topic-preview-card:is(:hover,:focus-visible) figure::after{opacity:1}
-@media(max-width:720px){.lux-newsletter{padding:42px 22px 24px}.lux-newsletter+.lux-footer{padding-top:28px}.lux-newsletter-inner{grid-template-columns:1fr;gap:26px}.lux-newsletter-intro{grid-template-columns:84px minmax(0,1fr);gap:18px}.lux-newsletter-icon{width:58px;height:84px;transform:translateX(14px)}.lux-newsletter-form>div{grid-template-columns:1fr;gap:12px}.lux-newsletter-form button{width:100%;min-height:52px}}
+@media(max-width:720px){.lux-newsletter{padding:42px 22px 24px}.lux-newsletter+.lux-footer{padding-top:28px}.lux-newsletter-inner{grid-template-columns:1fr;gap:26px}.lux-newsletter-intro{grid-template-columns:84px minmax(0,1fr);gap:18px}.lux-newsletter-icon{width:58px;height:84px;transform:translateX(14px)}.lux-newsletter-form>div{grid-template-columns:1fr;gap:12px}.lux-newsletter-form button{width:100%;min-height:52px}.lux-cookie-banner{right:10px;bottom:10px;left:10px;padding:15px;grid-template-columns:40px 1fr;gap:10px}.lux-cookie-banner img{width:36px;height:36px}.lux-cookie-actions{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr}.lux-cookie-actions button{white-space:normal}}
