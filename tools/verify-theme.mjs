@@ -318,6 +318,7 @@ assert(!runtimeJs.includes('lux-account-social') && !runtimeJs.includes('Or Sign
 assert(runtimeJs.includes('luxureat_checkout') && runtimeJs.includes('LuxureatCheckout') && runtimeJs.includes('AbortController'), 'bag checkout uses one bounded WordPress request');
 assert(runtimeJs.includes('initLuxFooterActions'), 'runtime scripts initializes footer policy and social popups');
 assert(runtimeJs.includes('data-footer-modal'), 'runtime scripts listens to footer modal buttons');
+assert(runtimeJs.includes('if (isLegal) body.scrollTop = 0') && runtimeJs.includes('body.focus({ preventScroll: true })'), 'legal modals always reopen at the top without focus moving their scroll position');
 assert(runtimeJs.includes('mouseenter'), 'runtime scripts opens gift scenario info on hover');
 assert(runtimeJs.includes('lux-reader-layout'), 'runtime scripts renders the editorial article reader layout');
 assert(runtimeJs.includes('lux-reader-cover') && runtimeJs.includes('lux-reader-related-media'), 'runtime scripts renders the editorial article images');
@@ -393,6 +394,7 @@ assert(integrationCss.includes('.lux-hero-fade-both'), 'integration.css supports
 assert(integrationCss.includes('.lux-card-photo'), 'integration.css supports dark photo card backgrounds');
 assert(integrationCss.includes('font: 700 34px/1.1 var(--lux-page-heading)'), 'product-detail prices use a clearer non-hairline font');
 assert(integrationCss.includes('.lux-footer-modal'), 'integration.css styles footer light-background modals');
+assert(integrationCss.includes('max-height: calc(100dvh - 32px)') && integrationCss.includes('-webkit-overflow-scrolling: touch') && integrationCss.includes('touch-action: pan-y'), 'legal modals remain independently scrollable on mobile viewports');
 assert(!integrationCss.includes('.lux-reader-layout .lux-reader-intro:first-letter'), 'article reader does not enlarge or recolor the first character');
 assert(integrationCss.includes('.lux-reader-cta'), 'integration.css styles card reading hover calls to action');
 assert(integrationCss.includes('transform: translate(-50%, -50%)') && integrationCss.includes('place-items: center'), 'reader detail buttons stay centered inside image cards');

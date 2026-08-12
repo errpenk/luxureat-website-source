@@ -2065,6 +2065,7 @@ header:has(.lux-hero-fade-both) {
   display: grid;
   place-items: center;
   padding: clamp(16px, 4vw, 42px);
+  overflow: hidden;
 }
 .lux-footer-modal-backdrop {
   position: absolute;
@@ -2083,11 +2084,23 @@ header:has(.lux-hero-fade-both) {
   padding: clamp(28px, 5vw, 48px);
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  min-height: 0;
+  overflow: hidden;
 }
 .lux-footer-modal-body.is-legal {
+  flex: 1 1 auto;
+  min-height: 0;
   max-height: min(74vh, 760px);
-  overflow: auto;
+  max-height: min(74dvh, 760px);
+  overflow-x: hidden;
+  overflow-y: auto;
   padding-right: 12px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   scrollbar-width: none;
 }
 .lux-footer-modal-body.is-legal::-webkit-scrollbar { display: none; }
@@ -11230,6 +11243,12 @@ html[lang^="zh"] {
 html[lang^="zh"] body *:not(.material-symbols-outlined)::before,
 html[lang^="zh"] body *:not(.material-symbols-outlined)::after {
   font-family: inherit !important;
+}
+.lux-inline-arrow {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -.12em;
 }
 html[lang^="zh"] body,
 html[lang^="zh"] :is(p, li, blockquote, figcaption, label, small, dt, dd, th, td, button, input, textarea, select, a, span:not(.material-symbols-outlined)) {

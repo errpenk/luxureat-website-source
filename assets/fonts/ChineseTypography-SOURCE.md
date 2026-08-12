@@ -7,7 +7,8 @@
 - Original font: https://github.com/lxgw/LxgwNeoZhiSong/releases/download/v1.066/LXGWNeoZhiSong.ttf
 - License: IPA Font License Agreement 1.0, bundled as `LXGWNeoZhiSong-LICENSE.md`
 - Site-wide web derivative: `LuxurEatZhiSong-site.woff2`
-- Homepage critical subset: `LuxurEatZhiSong-home-subset.woff2` (navigation and first-screen copy; the web subset remains the fallback)
+- Homepage hero subset: `LuxurEatZhiSong-hero-critical.woff2` (navigation, consent banner, and first-screen copy)
+- Homepage page subset: `LuxurEatZhiSong-home-subset.woff2` (remaining homepage copy; the web subset remains the fallback)
 
 The derivative uses a distinct family and filename. To replace it with the original program, download the original font from the URL above and change the corresponding `@font-face` source in `integration.css`. The web derivative was produced with fontTools by retaining the characters used in `zh/`, `assets/data/`, and `assets/js/`, then generating WOFF2 with all layout features.
 
@@ -19,7 +20,7 @@ The derivative uses a distinct family and filename. To replace it with the origi
 - Designer metadata: TerryWang 王廷瑞
 - Site-wide web derivative: `KingHwaOldSong-site.woff2`
 - Site-wide Chinese coverage manifest: `KingHwaOldSong-site-glyphs.txt`. It contains every Chinese glyph and Chinese punctuation mark used by static pages and dynamic content. Keep the manifest and both site-wide WOFF2 files in sync whenever Chinese copy changes.
-- Homepage subsets: `KingHwaOldSong-home-critical.woff2` and `LuxurEatZhiSong-home-subset.woff2` cover the current static and deferred homepage copy without requesting the full Chinese fonts.
+- Homepage subsets: `KingHwaOldSong-home-critical.woff2`, `LuxurEatZhiSong-hero-critical.woff2`, and `LuxurEatZhiSong-home-subset.woff2` cover the first screen and remaining homepage copy without requesting the full Chinese fonts. Their source characters are recorded in the adjacent `*-glyphs.txt` manifests.
 - Inner-page critical subsets: `KingHwaOldSong-<slug>-critical.woff2` and `LuxurEatZhiSong-<slug>-critical.woff2`; each Chinese inner page preloads only its own current typography while the full web subsets remain fallbacks for future copy.
 
 ## Production delivery
