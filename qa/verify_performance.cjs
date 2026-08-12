@@ -50,6 +50,7 @@ for (const lang of ["zh", "en"]) {
 
 const allHtml = ["zh", "en"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n");
 assert.doesNotMatch(allHtml, /assets\/fonts\/[^"']+\.(?:woff2|ttf)(?!\?v=)/, "a page still contains an unversioned font URL");
+assert.doesNotMatch(allHtml, /srcset="([^" ]+-mobile\.webp) \d+w, \1 \d+w"/, "a responsive image repeats its mobile source as the desktop candidate");
 for (const match of allHtml.matchAll(/<img\b[^>]*(?:\.avif|\.gif|\.jpe?g|\.png|\.webp)[^>]*>/gi)) {
   assert.match(match[0], /\bwidth="\d+"/i, "a raster image has no intrinsic width");
   assert.match(match[0], /\bheight="\d+"/i, "a raster image has no intrinsic height");
