@@ -96,5 +96,6 @@ assert(journal.includes("#event-"), "event hash opening is missing");
 assert(css.includes(".lux-narrative-link"), "shared narrative link styling is missing");
 assert(css.includes(".lux-recent-events"), "recent-events styling is missing");
 assert(css.includes(".lux-event-reader"), "event reader styling is missing");
+assert(read("scripts/build-luxureat-theme.mjs").includes("luxureat_static_url('${route}')") && css.includes("color: #005b55"), "detail-page language links or light-surface navigation are not explicit");
 
 console.log("event verification passed");

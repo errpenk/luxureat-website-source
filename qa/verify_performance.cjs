@@ -26,7 +26,7 @@ for (const file of [
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 60 * 1024, "shared CSS exceeds the 60 KB compressed budget");
 assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScript still includes optional interactions");
-assert.ok(gzipSize("assets/js/engagement.js") <= 13 * 1024, "optional account and footer JavaScript exceeds 13 KB compressed");
+assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional account, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? "240px 0px" : "1200px"/);
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);

@@ -3,7 +3,7 @@ function initLuxFooterActions() {
   if (!triggers.length) return;
 
   const isZh = document.documentElement.lang?.startsWith("zh");
-  const privacyZh = `最后更新日期：2026年7月23日
+  const privacyZh = `最后更新日期：2026年8月12日
 
 LuxurEat（露意膳）尊重并保护您的个人信息。本政策说明我们在您访问网站、注册账户、购买商品、参加活动或联系我们时，如何收集、使用、存储、共享和保护个人信息，以及您依法享有的权利。
 
@@ -62,7 +62,7 @@ LuxurEat（露意膳）尊重并保护您的个人信息。本政策说明我们
 露意膳（上海）贸易有限公司
 注册地址：上海市金山区枫泾镇曹黎路38弄19号5312室
 联系邮箱：info@luxureat.com`;
-  const privacyEn = `Last updated: July 23, 2026
+  const privacyEn = `Last updated: August 12, 2026
 
 LuxurEat (露意膳) respects and protects your personal information. This policy explains how we collect, use, store, share and protect information when you visit our website, register an account, place an order, attend an event or contact us.
 
@@ -109,21 +109,97 @@ Third-party services follow their own privacy rules. For complaints, contact inf
 Luxureat (Shanghai) Trading Co., Ltd.
 Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai
 info@luxureat.com`;
+  const cookieZh = `最后更新日期：2026年8月12日
+
+本 Cookie Policy 说明 LuxurEat（露意膳）网站使用 Cookie、本地存储及类似技术的方式，并帮助您自行选择是否允许分析功能。
+
+一、必要 Cookie 与本地存储
+必要技术用于维持网站安全、表单防滥用、登录会话、购物袋、订阅请求及保存您的 Cookie 选择。它们仅为提供您主动请求的基本功能而使用；停用后，网站部分功能可能无法正常工作。由于这些技术属于网站运行所必需，不能通过下方分析选项关闭，但您仍可在浏览器中清除它们。
+
+二、分析 Cookie
+只有在您选择“接受分析 Cookie”后，网站才会加载 Google Analytics／Google tag，用于了解页面访问、来源、浏览器和设备类别、近似地区及站内互动等汇总使用情况，以评估内容和性能。Google LLC 可能根据其服务规则处理相关技术信息，且处理地点可能位于中国大陆境外。您可通过 Google 隐私政策了解其处理规则及权利渠道。
+
+三、您的选择
+选择“仅使用必要 Cookie”不会影响一般浏览和核心功能；选择“接受分析 Cookie”会启用上述分析功能。您可以随时回到网页底部的 Cookie Policy 更改选择。若您从接受改为仅必要，页面将刷新并停止继续加载分析功能；清除浏览器网站数据后，网站会再次询问您的选择。
+
+四、联系我们
+如需了解或行使与个人信息有关的权利，请联系 info@luxureat.com。`;
+  const cookieEn = `Last updated: August 12, 2026
+
+This Cookie Policy explains how the LuxurEat (露意膳) website uses cookies, local storage and similar technologies, and lets you decide whether analytics may be enabled.
+
+1. Necessary cookies and local storage
+Necessary technologies support site security, anti-abuse checks, sign-in sessions, the shopping bag, subscription requests and storage of your Cookie choice. They are used only to provide core features you request. Some functions may not work if they are disabled. They cannot be switched off through the analytics choice below, but you can clear them in your browser.
+
+2. Analytics cookies
+Google Analytics / Google tag loads only after you choose “Accept analytics”. It may collect page visits, referral source, browser and device category, approximate region and site interactions in order to assess content and performance. Google LLC may process related technical information under its service terms, including outside mainland China. Please see the Google Privacy Policy for its practices and rights channels.
+
+3. Your choice
+“Necessary only” does not affect ordinary browsing or core features. “Accept analytics” enables the analytics described above. You may return to Cookie Policy in the footer at any time to change your choice. Changing from analytics to necessary only refreshes the page and stops further analytics loading. Clearing site data will cause the website to ask again.
+
+4. Contact
+For information or requests concerning personal information, contact info@luxureat.com.`;
+  const termsZh = `本销售条款适用于通过 LuxurEat（露意膳）网站或经双方确认的其他渠道进行的商品交易，并与订单页面、商品说明及双方另行确认的内容共同构成交易约定。
+
+商品名称、规格、配料、产地、价格、库存及适用条件以提交订单时展示并最终确认的信息为准。因页面更新、库存变化或明显错误需要调整的，我们会及时与您沟通，未经确认不会更换为实质不同的商品。
+
+订单、付款、发票及优惠依实际确认记录处理。商品图片可能因拍摄、屏幕显示或批次包装存在合理差异，但不影响依法应当符合的质量、安全和标签要求。请在购买和食用前查看标签、配料、过敏原、保存条件及食用说明。
+
+消费者依法享有退换货、质量保障和售后服务权利。鲜活易腐、定制、开封后可能影响食品安全或品质的商品，是否适用无理由退货，按照商品性质、购买时的显著提示、消费者确认及中国大陆现行法律规定处理。若收到的商品存在质量、错发、缺损或运输异常，请妥善保存商品、包装及相关凭证并尽快联系我们，我们将依法核实并提供适当处理。
+
+在法律允许的范围内，因不可抗力、公共管理措施、承运环节异常或其他合理不可控因素影响履约的，双方可协商延期、替代履行、取消或退款。任何条款均不排除或限制消费者依法享有的强制性权利。
+
+本条款适用中华人民共和国大陆地区法律。争议优先通过友好协商解决；协商不成的，可依法向有管辖权的机构投诉、请求调解或通过司法途径解决。`;
+  const termsEn = `These Terms of Sale apply to purchases made through the LuxurEat (露意膳) website or other channels confirmed by both parties, together with the order page, product information and any separately agreed terms.
+
+Product name, specification, ingredients, origin, price, availability and applicable conditions are based on the information displayed and finally confirmed when an order is placed. If an update, stock change or obvious error requires adjustment, we will contact you and will not substitute a materially different product without confirmation.
+
+Orders, payment, invoices and promotions are handled according to the confirmed transaction record. Images may reasonably differ because of photography, screen display or packaging batches, without affecting applicable quality, safety and labelling duties. Please review labels, ingredients, allergens, storage conditions and serving instructions before purchase and consumption.
+
+Consumers retain all statutory rights concerning returns, quality and after-sales service. Whether fresh, perishable, customised or opened food products qualify for a change-of-mind return depends on product characteristics, prominent pre-purchase notice, customer confirmation and applicable mainland China law. For quality issues, incorrect items, damage or delivery abnormalities, preserve the product, packaging and relevant evidence and contact us promptly so that an appropriate remedy can be provided under law.
+
+Where performance is affected by force majeure, public measures, carrier disruption or other reasonably uncontrollable events, the parties may agree on delay, replacement, cancellation or refund. Nothing in these terms excludes or restricts mandatory consumer rights.
+
+These terms are governed by the laws applicable in mainland China. Disputes should first be addressed through good-faith consultation and may otherwise be referred to a competent complaint, mediation or judicial channel.`;
+  const shippingZh = `我们根据商品属性、收货地区、季节和订单要求选择适当的包装、温控措施及承运服务。可配送范围、运费、预计安排和特殊限制以订单页面或下单前的实际确认为准。
+
+请提供真实、完整且可联系的收货信息，并在需要预约或温控交付时保持通讯正常。因地址错误、无人接收、拒收或未按约定配合收货造成的额外安排，我们会与您联系并依实际情况处理。
+
+配送时间为合理预计，可能受库存、天气、交通、节假日、公共管理措施、承运能力及偏远地区条件影响。出现明显延误或无法按原计划交付时，我们将尽力提供可行的更新或解决方案。
+
+签收时请合理检查外包装、数量及可见状态。若发现破损、渗漏、温控异常、错发或缺失，请保留商品、包装、运单及影像等凭证并尽快联系我们。食品应按标签及商品说明及时冷藏、冷冻或以其他适当方式保存。
+
+商品交付、风险承担、损失处理及售后责任，按照订单约定、商品性质、实际履行情况及中华人民共和国大陆地区现行法律规定确定。`;
+  const shippingEn = `We select suitable packaging, temperature-control measures and carriers according to product characteristics, destination, season and order requirements. Delivery coverage, charges, estimated arrangements and special restrictions are those shown or confirmed before the order is placed.
+
+Please provide accurate, complete and reachable delivery information and remain available where scheduled or temperature-controlled delivery is required. If an incorrect address, absence, refusal or failure to cooperate with an agreed delivery requires further arrangements, we will contact you and handle the matter according to the circumstances.
+
+Delivery dates are reasonable estimates and may be affected by inventory, weather, traffic, public holidays, public measures, carrier capacity and remote-area conditions. If a material delay or inability to follow the original plan occurs, we will make reasonable efforts to provide an update or solution.
+
+On delivery, reasonably inspect the outer packaging, quantity and visible condition. For damage, leakage, temperature concerns, incorrect items or shortages, retain the goods, packaging, waybill and relevant images and contact us promptly. Food should be refrigerated, frozen or otherwise stored as stated on its label and product information.
+
+Delivery, transfer of risk, loss handling and after-sales responsibility are determined by the order terms, product characteristics, actual performance and applicable mainland China law.`;
   const scriptSrc = document.querySelector("script[src*='assets/js/engagement.js']")?.src || location.href;
   const asset = (file) => new URL(`../media/brand/${file}`, scriptSrc).href;
   const copy = isZh
     ? {
       close: "关闭",
-      privacy: ["LuxurEat（露意膳）用户服务协议和隐私政策", privacyZh],
-      terms: ["销售条款", "所有商品以确认订单与付款记录为准。鱼子酱等冷链商品因食品安全原因，发出后非质量问题不支持退换；如运输异常，请在签收后 24 小时内联系我们。"],
-      shipping: ["配送说明", "我们采用 0-4°C 冷链包装与预约配送。发货前会确认收货时间，偏远地区或特殊活动订单将由顾问单独确认时效。"],
+      privacy: ["隐私政策", privacyZh],
+      cookie: ["Cookie Policy", cookieZh],
+      terms: ["销售条款", termsZh],
+      shipping: ["配送说明", shippingZh],
+      necessary: "仅使用必要 Cookie",
+      analytics: "接受分析 Cookie",
       wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
     }
     : {
       close: "Close",
-      privacy: ["LuxurEat (露意膳) Terms of Service and Privacy Policy", privacyEn],
-      terms: ["Terms of Sale", "Orders are confirmed by written order details and payment records. For food-safety reasons, shipped cold-chain goods are not returnable unless quality or transport issues are reported within 24 hours of delivery."],
-      shipping: ["Shipping", "We ship with 0-4°C cold-chain packaging and scheduled delivery. Timing is confirmed before dispatch; remote areas and special-event orders are coordinated by a concierge."],
+      privacy: ["Privacy Policy", privacyEn],
+      cookie: ["Cookie Policy", cookieEn],
+      terms: ["Terms of Sale", termsEn],
+      shipping: ["Shipping", shippingEn],
+      necessary: "Necessary only",
+      analytics: "Accept analytics",
       wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
     };
 
@@ -146,8 +222,10 @@ info@luxureat.com`;
     const qr = key === "wechat" ? `<img loading="eager" fetchpriority="high" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.webp")}" alt="WeChat QR">` : "";
     const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
-    body.classList.toggle("is-legal", key === "privacy");
-    body.innerHTML = `<h2>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${note}${qr}`;
+    body.classList.toggle("is-legal", ["privacy", "cookie", "terms", "shipping"].includes(key));
+    const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p><div class="lux-cookie-policy-actions"><button type="button" data-cookie-choice="necessary">${copy.necessary}</button><button type="button" data-cookie-choice="analytics">${copy.analytics}</button></div>` : "";
+    body.innerHTML = `<h2>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${cookieActions}${note}${qr}`;
+    body.querySelectorAll("[data-cookie-choice]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.cookieChoice === document.documentElement.dataset.luxCookieConsent)));
     closeButton.textContent = copy.close;
     modal.hidden = false;
     document.body.classList.add("lux-reader-open");
@@ -159,6 +237,7 @@ info@luxureat.com`;
   };
 
   document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-cookie-choice]") && !modal.hidden) close();
     const trigger = event.target.closest("[data-footer-modal]");
     if (trigger) {
       event.preventDefault();
@@ -611,6 +690,7 @@ async function createLuxBotProof(challenge) {
     mail: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
     phone: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.91.33 1.8.62 2.65a2 2 0 0 1-.45 2.11L8 9.71a16 16 0 0 0 6.29 6.29l1.23-1.23a2 2 0 0 1 2.11-.45c.85.29 1.74.5 2.65.62A2 2 0 0 1 22 16.92z"></path></svg>',
     shield: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>',
+    cookie: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><circle cx="8.5" cy="8.5" r=".5" fill="currentColor"></circle><circle cx="9" cy="15" r=".5" fill="currentColor"></circle><circle cx="15" cy="13" r=".5" fill="currentColor"></circle></svg>',
     file: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>',
     truck: '<svg class="lux-lucide lux-inline-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg>',
   };
@@ -626,6 +706,7 @@ async function createLuxBotProof(challenge) {
   document.querySelectorAll(".lux-footprint-card a[href^='mailto:']").forEach((node) => prependIcon(node, icons.mail));
   document.querySelectorAll(".lux-footprint-card a[href^='tel:']").forEach((node) => prependIcon(node, icons.phone));
   document.querySelectorAll(".lux-footer [data-footer-modal='privacy']").forEach((node) => prependIcon(node, icons.shield));
+  document.querySelectorAll(".lux-footer [data-footer-modal='cookie']").forEach((node) => prependIcon(node, icons.cookie));
   document.querySelectorAll(".lux-footer [data-footer-modal='terms']").forEach((node) => prependIcon(node, icons.file));
   document.querySelectorAll(".lux-footer [data-footer-modal='shipping']").forEach((node) => prependIcon(node, icons.truck));
 })();
