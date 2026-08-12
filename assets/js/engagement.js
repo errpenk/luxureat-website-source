@@ -215,16 +215,21 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
   const open = (key) => {
     const item = copy[key];
     if (!item) return;
+    const isLegal = ["privacy", "cookie", "terms", "shipping"].includes(key);
     const qr = key === "wechat" ? `<img loading="eager" fetchpriority="high" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.webp")}" alt="WeChat QR">` : "";
     const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
-    body.classList.toggle("is-legal", ["privacy", "cookie", "terms", "shipping"].includes(key));
+    body.classList.toggle("is-legal", isLegal);
     const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p>` : "";
     body.innerHTML = `<h2${key === "cookie" ? ' class="lux-cookie-policy-title"' : ""}>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${cookieActions}${note}${qr}`;
     closeButton.textContent = copy.close;
     modal.hidden = false;
     document.body.classList.add("lux-reader-open");
-    body.focus();
+    if (isLegal) body.scrollTop = 0;
+    requestAnimationFrame(() => {
+      if (isLegal) body.scrollTop = 0;
+      body.focus({ preventScroll: true });
+    });
   };
   const close = () => {
     modal.hidden = true;
