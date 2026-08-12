@@ -10,6 +10,7 @@
     "check": "npm run site:check && npm run images:check && node qa/verify_content_architecture.cjs && node qa/verify_events.cjs && node qa/verify_navigation.cjs && node qa/verify_seo.cjs && node qa/verify_academy.cjs && node qa/verify_new_arrivals.cjs && node qa/verify_contact_form.cjs && node qa/verify_performance.cjs && node tools/verify-cart.mjs && npm run theme:check"
   },
   "devDependencies": {
+    "leaflet": "1.9.4",
     "sharp": "^0.35.3"
   }
 }

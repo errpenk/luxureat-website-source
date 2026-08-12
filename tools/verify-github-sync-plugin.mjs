@@ -46,8 +46,9 @@ assert(admin.includes('check_admin_referer('), 'admin actions verify nonces');
 assert(admin.includes('LuxurEat_GitHub_Sync_Admin::allowed_repositories'), 'admin uses a fixed allow-list of repositories');
 assert(admin.includes('errpenk/luxureat-website-source'), 'admin defaults to the source repository');
 assert(admin.includes('errpenk/luxureat-wordpress-theme'), 'admin can target the theme repository');
-assert(admin.includes('type="password"'), 'admin renders the GitHub token as a password input');
-assert(!admin.includes("value='<?php echo esc_attr($token)"), 'admin does not echo the stored token');
+assert(admin.includes('LUXUREAT_GITHUB_SYNC_TOKEN') && admin.includes("getenv('LUXUREAT_GITHUB_SYNC_TOKEN')"), 'admin reads the GitHub token from server configuration');
+assert(!admin.includes('name="github_token"') && !admin.includes('type="password"'), 'admin does not accept a GitHub token through WordPress settings');
+assert(admin.includes('remove_legacy_token') && admin.includes("unset($stored['github_token'])"), 'admin removes legacy plaintext tokens from WordPress options');
 assert(admin.includes('not recommended'), 'admin warns that the theme repository is not the preferred content target');
 
 const exporter = read(files.exporter);
@@ -70,6 +71,7 @@ const readme = read(files.readme);
 assert(readme.includes('fine-grained personal access token'), 'plugin README documents fine-grained token setup');
 assert(readme.includes('Contents: Read and write'), 'plugin README documents the required GitHub permission');
 assert(readme.includes('errpenk/luxureat-website-source'), 'plugin README recommends the source repository');
+assert(readme.includes('LUXUREAT_GITHUB_SYNC_TOKEN'), 'plugin README documents server-side token configuration');
 
 const uninstall = read(files.uninstall);
 assert(uninstall.includes('delete_option'), 'uninstall removes stored options');

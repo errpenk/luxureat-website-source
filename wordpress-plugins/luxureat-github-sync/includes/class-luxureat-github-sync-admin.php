@@ -10,6 +10,7 @@ class LuxurEat_GitHub_Sync_Admin {
     const NOTICE_TRANSIENT_PREFIX = 'luxureat_github_sync_notice_';
 
     public static function init() {
+        self::remove_legacy_token();
         add_action('admin_menu', array(__CLASS__, 'add_admin_page'));
         add_action('admin_post_luxureat_github_sync_save', array(__CLASS__, 'save_settings'));
         add_action('admin_post_luxureat_github_sync_run', array(__CLASS__, 'sync_now'));
@@ -33,7 +34,6 @@ class LuxurEat_GitHub_Sync_Admin {
             'repository' => 'errpenk/luxureat-website-source',
             'branch' => 'main',
             'file_path' => 'content/wordpress-export.json',
-            'github_token' => '',
             'last_sync_at' => '',
             'last_commit_url' => '',
         );
@@ -42,6 +42,15 @@ class LuxurEat_GitHub_Sync_Admin {
     public static function get_options() {
         $stored = get_option(self::OPTION_NAME, array());
         return wp_parse_args(is_array($stored) ? $stored : array(), self::default_options());
+    }
+
+    public static function github_token() {
+        if (defined('LUXUREAT_GITHUB_SYNC_TOKEN') && is_string(LUXUREAT_GITHUB_SYNC_TOKEN)) {
+            return trim(LUXUREAT_GITHUB_SYNC_TOKEN);
+        }
+
+        $environment_token = getenv('LUXUREAT_GITHUB_SYNC_TOKEN');
+        return is_string($environment_token) ? trim($environment_token) : '';
     }
 
     public static function add_admin_page() {
@@ -113,14 +122,13 @@ class LuxurEat_GitHub_Sync_Admin {
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="luxureat_github_sync_token">GitHub token</label></th>
+                            <th scope="row">GitHub token</th>
                             <td>
-                                <input id="luxureat_github_sync_token" name="github_token" type="password" class="regular-text" value="" autocomplete="off">
                                 <p class="description">
-                                    <?php if (!empty($options['github_token'])) : ?>
-                                        A token is stored. Leave this field blank to keep it.
+                                    <?php if (self::github_token() !== '') : ?>
+                                        Configured securely through <code>LUXUREAT_GITHUB_SYNC_TOKEN</code>.
                                     <?php else : ?>
-                                        Paste a fine-grained GitHub token with Contents: Read and write for the selected repository.
+                                        Not configured. Add <code>LUXUREAT_GITHUB_SYNC_TOKEN</code> to <code>wp-config.php</code> or the server environment.
                                     <?php endif; ?>
                                 </p>
                             </td>
@@ -183,13 +191,6 @@ class LuxurEat_GitHub_Sync_Admin {
         $options['branch'] = $branch;
         $options['file_path'] = $file_path;
 
-        if (isset($_POST['github_token'])) {
-            $token = trim(sanitize_text_field(wp_unslash($_POST['github_token'])));
-            if ($token !== '') {
-                $options['github_token'] = $token;
-            }
-        }
-
         update_option(self::OPTION_NAME, $options, false);
         self::redirect_with_notice('success', 'Settings saved.');
     }
@@ -207,8 +208,9 @@ class LuxurEat_GitHub_Sync_Admin {
             self::redirect_with_notice('error', 'The selected GitHub repository is not allowed.');
         }
 
-        if (empty($options['github_token'])) {
-            self::redirect_with_notice('error', 'Add and save a GitHub token before syncing.');
+        $token = self::github_token();
+        if ($token === '') {
+            self::redirect_with_notice('error', 'Configure LUXUREAT_GITHUB_SYNC_TOKEN before syncing.');
         }
 
         $exporter = new LuxurEat_GitHub_Sync_Exporter();
@@ -219,7 +221,7 @@ class LuxurEat_GitHub_Sync_Admin {
             self::redirect_with_notice('error', 'WordPress could not encode the export payload.');
         }
 
-        $client = new LuxurEat_GitHub_Sync_GitHub_Client($options['github_token']);
+        $client = new LuxurEat_GitHub_Sync_GitHub_Client($token);
         $message = sprintf(
             'Export WordPress content from %s',
             wp_parse_url(home_url('/'), PHP_URL_HOST)
@@ -254,6 +256,16 @@ class LuxurEat_GitHub_Sync_Admin {
         }
 
         return $file_path;
+    }
+
+    private static function remove_legacy_token() {
+        $stored = get_option(self::OPTION_NAME, array());
+        if (!is_array($stored) || !array_key_exists('github_token', $stored)) {
+            return;
+        }
+
+        unset($stored['github_token']);
+        update_option(self::OPTION_NAME, $stored, false);
     }
 
     private static function redirect_with_notice($type, $message) {

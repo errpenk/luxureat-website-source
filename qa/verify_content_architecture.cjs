@@ -105,7 +105,8 @@ assert(productRuntime.includes('new URLSearchParams(location.search).get("catego
 assert(productRuntime.includes('"未找到相关产品"') && productRuntime.includes("empty.hidden = visibleCount !== 0"), "product empty-search state is missing");
 
 const journalRuntime = read("assets/js/journal.js");
-assert(journalRuntime.includes("leaflet@1.9.4"), "Leaflet map runtime is missing");
+assert(journalRuntime.includes('luxJournalAsset("vendor/leaflet/leaflet.js")'), "self-hosted Leaflet map runtime is missing");
+assert(!journalRuntime.includes("unpkg.com/leaflet"), "Leaflet still depends on a third-party script CDN");
 assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM China basemap is missing");
 assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
 assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
@@ -286,6 +287,6 @@ assert(integrationStyles.includes('html[lang] body .lux-home-hero-actions .lux-h
 assert(accountRuntime.includes('classList.toggle("is-light-surface", Boolean(document.querySelector(".lux-article-page")))') && integrationStyles.includes(".lux-lang > a, .lux-lang > span") && integrationStyles.includes("color: #101010") && integrationStyles.includes("mix-blend-mode: normal") && integrationStyles.includes("filter: none"), "light article pages do not switch every transparent-header item to black");
 assert(engagementRuntime.includes("正在准备确认邮件") && engagementRuntime.includes("Preparing your confirmation email") && engagementRuntime.includes('email.setAttribute("aria-invalid", "true")'), "newsletter feedback is not bilingual or accessible");
 assert(!engagementRuntime.includes("const luxEscapeCoreHtml"), "deferred engagement runtime redeclares a core global and cannot load");
-assert(themeBuilder.includes("already_subscribed") && themeBuilder.includes("confirmation_sent") && themeBuilder.includes("该邮箱已订阅") && themeBuilder.includes("This email is already subscribed"), "newsletter endpoint does not distinguish confirmed and pending subscribers");
+assert(themeBuilder.includes("state' => 'confirmation_sent'") && !themeBuilder.includes("state' => 'already_subscribed'"), "newsletter endpoint exposes subscriber state");
 
 console.log("content architecture verification passed");
