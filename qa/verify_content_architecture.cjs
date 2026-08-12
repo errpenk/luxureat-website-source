@@ -274,6 +274,7 @@ assert(engagementRuntime.includes("createLuxBotProof") && engagementRuntime.incl
 const themeBuilder = read("scripts/build-luxureat-theme.mjs");
 assert(themeBuilder.includes("luxureat_static_newsletter_ajax") && themeBuilder.includes("send_confirmation_email' => true"), "newsletter endpoint does not use verified MailPoet subscription");
 assert(integrationStyles.includes('html[lang^="en"] body .lux-hero-support') && integrationStyles.includes("font-weight: 400 !important"), "English page-top support copy is still bold");
-assert(integrationStyles.includes('html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action') && integrationStyles.includes("border-bottom: 1px solid currentColor !important") && integrationStyles.includes("font-size: 18px !important"), "English homepage hero actions do not match the support-copy scale or underline treatment");
+assert(integrationStyles.includes('html[lang] body .lux-home-hero-actions .lux-home-hero-action') && integrationStyles.includes("border-bottom: 1px solid currentColor !important") && integrationStyles.includes("color: #e9c349 !important") && integrationStyles.includes("transform: scale(1.035)"), "bilingual homepage hero actions do not use the requested underline and gold hover treatment");
+assert(accountRuntime.includes('classList.toggle("is-light-surface", Boolean(document.querySelector(".lux-article-page")))') && integrationStyles.includes(".lux-header.is-light-surface:not(.is-scrolled)") && integrationStyles.includes("mix-blend-mode: normal") && integrationStyles.includes("filter: none"), "light article pages do not switch the transparent header to dark navigation");
 
 console.log("content architecture verification passed");
