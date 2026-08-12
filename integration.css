@@ -665,13 +665,13 @@ html[lang^="en"] .lux-nav > :is(a, .lux-nav-item) > a { letter-spacing: .1em !im
 }
 .lux-footer-brand {
   display: block;
-  transform: translateX(-12px);
 }
 .lux-footer-brand-main {
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
   align-items: center;
   gap: 24px;
+  transform: translateX(-24px);
 }
 .lux-footer-brand-main > img { width: 112px; height: 112px; object-fit: contain; filter: invert(1) brightness(1.35); }
 .lux-footer .lux-footer-brand-main > p { margin: 0; font-size: var(--lux-type-body-sm) !important; line-height: 1.5 !important; }
@@ -6025,8 +6025,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   #inquiry .lux-partner-card { min-height: 320px; }
 }
 @media (max-width: 720px) {
-  .lux-footer-brand { transform: none; }
-  .lux-footer-brand-main { grid-template-columns: 84px minmax(0, 1fr); gap: 18px; }
+  .lux-footer-brand-main { grid-template-columns: 84px minmax(0, 1fr); gap: 18px; transform: none; }
   .lux-footer-brand-main > img { width: 84px; height: 84px; }
 }
 
