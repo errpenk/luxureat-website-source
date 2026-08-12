@@ -496,7 +496,7 @@ const luxNavigation = {
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Maison Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Group Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
     ["about-us.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Brand Promise", "brand-promise"], ["Seasonal Notes", "seasonal-notes"]]],
     ["new.html", "New Arrivals", [["Olive Oil", "olive-oil"], ["Pizza", "pizza"], ["Gelato", "gelato"]]],
     ["product.html", "Products", [["Premium Products", "product-catalogue"]]],
@@ -541,10 +541,6 @@ if (luxNav && luxMenu) {
     link.href = pageHref(href);
     link.textContent = label;
     link.classList.toggle("active", href === currentPage);
-    link.addEventListener("click", () => {
-      const target = new URL(pageHref(href), location.href);
-      sessionStorage.setItem(`luxureatScroll:${target.pathname}`, "0");
-    });
     item.appendChild(link);
 
     const toggle = document.createElement("button");
@@ -682,6 +678,11 @@ if (luxNav && luxMenu) {
   const key = `luxureatScroll:${location.pathname}`;
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
+  const navigation = performance.getEntriesByType?.("navigation")[0];
+  if (navigation?.type === "reload" || performance.navigation?.type === 1) {
+    sessionStorage.removeItem(key);
+  }
+
   const save = () => sessionStorage.setItem(key, String(window.scrollY || 0));
   const restore = () => {
     const target = location.hash && document.querySelector(location.hash);
@@ -693,7 +694,7 @@ if (luxNav && luxMenu) {
     window.scrollTo(0, Number.isFinite(y) ? y : 0);
   };
 
-  document.addEventListener("DOMContentLoaded", () => requestAnimationFrame(restore));
+  window.addEventListener("pageshow", () => requestAnimationFrame(restore));
   window.addEventListener("pagehide", save);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") save();

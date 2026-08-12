@@ -8,6 +8,7 @@ const read = (file) => fs.readFileSync(path.join(root, file));
 const size = (file) => fs.statSync(path.join(root, file)).size;
 const gzipSize = (file) => zlib.gzipSync(read(file), { level: 9 }).length;
 const css = read("integration.css").toString();
+const core = read("assets/js/core.js").toString();
 
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
 assert.ok(size("assets/fonts/KingHwaOldSong-site.woff2") <= 1400 * 1024, "complete KingHwa site font exceeds 1.4 MB");
@@ -34,8 +35,10 @@ assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeo
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
 assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/, "mobile analytics still competes with first-screen content");
-assert.doesNotMatch(css, /font-display:\s*swap/, "custom fonts still permit an old-font flash");
+assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 1024, true, "material icon subset exceeds 12 KB");
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
+assert.match(core, /navigation\?\.type === "reload"[\s\S]*?sessionStorage\.removeItem\(key\)/, "explicit refresh does not reset the current scroll position");
+assert.doesNotMatch(core, /sessionStorage\.setItem\(`luxureatScroll:\$\{target\.pathname\}`/, "navigation still resets previously saved page positions");
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
@@ -49,6 +52,11 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
+  assert.match(home, /font-display:swap/);
+  assert.match(home, /rel="preload"[^>]+MaterialSymbolsOutlined-subset\.ttf/);
+  const footer = home.match(/<footer class="lux-footer">[\s\S]*?<\/footer>/)?.[0] || "";
+  assert.doesNotMatch(footer, /loading="lazy"/, "footer still delays its small local graphics");
+  assert.match(footer, /loading="eager" fetchpriority="low"/, "footer graphics do not load early at low priority");
   assert.doesNotMatch(home, /<script\b(?=[^>]*\bsrc=)(?![^>]*\b(?:defer|async)\b)/i);
 }
 
