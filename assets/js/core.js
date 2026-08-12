@@ -10,6 +10,24 @@ if (document.documentElement.lang.startsWith("zh") && !luxSaveData) {
   else addEventListener("load", enableFullFonts, { once: true });
 }
 
+const luxDelayedAnalytics = document.querySelector("script[data-lux-analytics-src]");
+if (luxDelayedAnalytics) {
+  let loaded = false;
+  const loadAnalytics = () => {
+    if (loaded) return;
+    loaded = true;
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = luxDelayedAnalytics.dataset.luxAnalyticsSrc;
+    document.head.appendChild(script);
+  };
+  const scheduleAnalytics = () => { if (!luxSaveData) setTimeout(loadAnalytics, luxIsMobile ? 15000 : 1000); };
+  if (document.readyState === "complete") scheduleAnalytics();
+  else addEventListener("load", scheduleAnalytics, { once: true });
+  addEventListener("pointerdown", loadAnalytics, { once: true, passive: true });
+  addEventListener("keydown", loadAnalytics, { once: true });
+}
+
 const luxCoreUrl = new URL(document.currentScript.src);
 const luxEngagementUrl = new URL("engagement.js", luxCoreUrl);
 luxEngagementUrl.search = luxCoreUrl.search;

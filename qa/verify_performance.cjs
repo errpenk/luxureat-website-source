@@ -33,6 +33,8 @@ assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? "240px 0px" :
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
+assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
+assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/, "mobile analytics still competes with first-screen content");
 assert.match(read("tools/sync-site.mjs").toString(), /font-display:swap/, "critical text fonts do not render immediately");
 assert.match(css, /font-family: "Material Symbols Outlined";[\s\S]{0,180}font-display: swap/, "icon font still blocks first paint");
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
