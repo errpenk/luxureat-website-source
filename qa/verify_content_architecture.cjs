@@ -273,5 +273,7 @@ assert(allPageHtml.includes('class="lux-newsletter"') && ["zh", "en"].every((loc
 assert(engagementRuntime.includes("createLuxBotProof") && engagementRuntime.includes('action", "luxureat_newsletter"') && engagementRuntime.includes("newsletterNonce"), "newsletter validation or secure submission runtime is incomplete");
 const themeBuilder = read("scripts/build-luxureat-theme.mjs");
 assert(themeBuilder.includes("luxureat_static_newsletter_ajax") && themeBuilder.includes("send_confirmation_email' => true"), "newsletter endpoint does not use verified MailPoet subscription");
+assert(integrationStyles.includes('html[lang^="en"] body .lux-hero-support') && integrationStyles.includes("font-weight: 400 !important"), "English page-top support copy is still bold");
+assert(integrationStyles.includes('html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action') && integrationStyles.includes("border-bottom: 1px solid currentColor !important") && integrationStyles.includes("font-size: 18px !important"), "English homepage hero actions do not match the support-copy scale or underline treatment");
 
 console.log("content architecture verification passed");

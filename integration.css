@@ -13292,3 +13292,31 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
 .lux-home-timeline-steps article.is-active > span::after {
   transform: translate(-100%, -50%) scale(1);
 }
+
+/* English page-top support copy stays readable without display-weight emphasis. */
+html[lang^="en"] body .lux-hero-support {
+  font-weight: 400 !important;
+}
+
+/* Homepage hero CTAs share the support-copy scale and use a single underline. */
+html[lang^="en"] body .lux-home-hero-actions {
+  flex-wrap: wrap;
+}
+html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action {
+  flex: 0 0 auto;
+  width: auto !important;
+  min-height: 44px;
+  padding: 10px 0 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid currentColor !important;
+  background: transparent !important;
+  color: #9df5ec !important;
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  backdrop-filter: none;
+}
+html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action:hover,
+html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
+  background: transparent !important;
+  color: #fff !important;
+}
