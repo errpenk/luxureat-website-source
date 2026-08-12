@@ -991,6 +991,11 @@ function luxureat_static_trim_plugin_assets() {
     }
 }
 add_action('wp_enqueue_scripts', 'luxureat_static_trim_plugin_assets', 999);
+add_action('wp_print_styles', 'luxureat_static_trim_plugin_assets', PHP_INT_MAX);
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action('wp_enqueue_scripts', 'wp_enqueue_emoji_styles');
+add_filter('emoji_svg_url', '__return_false');
 
 function luxureat_static_bot_challenge() {
     $payload = time() . '.' . wp_generate_password(16, false, false);
