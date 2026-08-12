@@ -197,9 +197,9 @@ for (const locale of ["zh", "en"]) {
 assert(accountRuntime.includes("data-lux-deferred-scripts"), "mobile-first-load script deferral logic is incomplete");
 assert(!accountRuntime.includes("luxDeferredScripts.textContent") && accountRuntime.includes('["../data/products.js", "../data/events.js", "../data/journal.js"]'), "deferred script loading is not restricted to the trusted local catalog");
 assert(accountRuntime.includes('event.target.closest?.("[data-reader-open]")') && accountRuntime.includes("trigger.click()"), "the first deferred article click is not replayed after its runtime loads");
-assert(journalRuntime.includes('document.readyState === "complete"') && journalRuntime.includes("initLuxReader()"), "the reader runtime does not cover deferred and post-load initialization");
+assert(journalRuntime.includes('document.readyState === "loading"') && journalRuntime.includes("initLuxReader()"), "the reader runtime does not cover deferred and post-load initialization");
 assert(productRuntime.includes('document.readyState === "complete"') && productRuntime.includes("initLuxProductDetails()") && productRuntime.includes("renderInitialBag()"), "the product runtime does not cover deferred and post-load initialization");
-assert(read("assets/js/academy.js").includes('document.readyState === "complete"'), "the academy runtime can initialize after its reader runtime");
+assert(read("assets/js/academy.js").includes('document.readyState === "loading"'), "the academy runtime can initialize after its reader runtime");
 assert(productRuntime.includes('key: "price-asc"') && productRuntime.includes('key: "price-desc"') && productRuntime.includes("lux-sort-selected-icon"), "bilingual price sorting or its Lucide selection icon is incomplete");
 assert(integrationStyles.includes(".lux-about-story .lux-reader-quote") && integrationStyles.includes(".lux-reader-pull p") && integrationStyles.includes("grid-template-columns: 112px minmax(0, 1fr)"), "requested quote hierarchy or compact mobile product view is incomplete");
 assert(integrationStyles.includes(".lux-footer .lux-footer-brand > p") && integrationStyles.includes("font-size: var(--lux-type-body-sm) !important"), "footer description does not match navigation sizing");

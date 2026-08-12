@@ -24,16 +24,19 @@ const loadAcademyArticle = (id) => {
   academyArticleLoading.set(id, loading);
   return loading;
 };
+const academyTriggerSelector = '[data-reader-open*="-academy-"], [data-reader-related*="-academy-"]';
+const academyTriggerId = (trigger) => trigger?.dataset.readerOpen || trigger?.dataset.readerRelated;
 document.addEventListener("pointerover", (event) => {
-  const trigger = event.target.closest?.('[data-reader-open*="-academy-"]');
-  if (trigger) loadAcademyArticle(trigger.dataset.readerOpen);
+  const id = academyTriggerId(event.target.closest?.(academyTriggerSelector));
+  if (id) loadAcademyArticle(id);
 }, { passive: true });
 document.addEventListener("click", (event) => {
-  const trigger = event.target.closest?.('[data-reader-open*="-academy-"]');
-  if (!trigger || window.LUXUREAT_ARTICLE_DATA?.articles?.[trigger.dataset.readerOpen]?.sections) return;
+  const trigger = event.target.closest?.(academyTriggerSelector);
+  const id = academyTriggerId(trigger);
+  if (!id || window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  loadAcademyArticle(trigger.dataset.readerOpen).then((ready) => { if (ready) trigger.click(); });
+  loadAcademyArticle(id).then((ready) => { if (ready) trigger.click(); });
 }, true);
 
 function initCaviarAcademy() {
@@ -164,11 +167,18 @@ function initCaviarAcademy() {
     applyFilters(topic);
   });
   setTopic(["culture", "caviar", "olive", "pizza", "gelato", "nutrition", "truffle", "dictionary", "producers"].includes(requestedTopic) ? requestedTopic : requestedTopic === "academy" ? "culture" : "all");
+  const requestedArticle = params.get("article");
+  if (requestedArticle) {
+    const id = `${lang}-academy-${requestedArticle}`;
+    loadAcademyArticle(id).then((ready) => {
+      if (ready) list.querySelector(`[data-reader-open="${id}"]`)?.click();
+    });
+  }
   if (params.has("topic") || location.hash) requestAnimationFrame(() => {
     const headerOffset = innerWidth <= 1080 ? 82 : 108;
     scrollTo({ top: scrollY + topicNav.getBoundingClientRect().top - headerOffset, behavior: "smooth" });
   });
 }
 
-if (document.readyState === "complete") initCaviarAcademy();
-else document.addEventListener("DOMContentLoaded", initCaviarAcademy, { once: true });
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initCaviarAcademy, { once: true });
+else initCaviarAcademy();

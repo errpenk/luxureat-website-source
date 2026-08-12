@@ -3,7 +3,7 @@
   src: url("assets/fonts/MaterialSymbolsOutlined-subset.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined" !important;
