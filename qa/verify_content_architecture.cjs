@@ -144,6 +144,8 @@ assert(engagementRuntime.includes('cookie: ["Cookie Policy"') && engagementRunti
 assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
+const newsletterStyles = read("assets/css/newsletter.css");
+const coreScript = read("assets/js/core.js");
 assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)") && integrationStyles.includes("mix-blend-mode: difference"), "shared header contrast or mobile-menu surface styling is incomplete");
 assert(integrationStyles.includes(".lux-reader-close:hover") && integrationStyles.includes("border-color: #101010;") && integrationStyles.includes("box-shadow: none;"), "article-reader close hover does not retain the default thin border");
 assert(read("zh/about-us.html").includes("我们不使用的成分") && read("en/about-us.html").includes("Ingredients we do not use") && read("assets/css/journal.css").includes("lux-ingredient-standard-note"), "bilingual ingredient-exclusion statement is missing");
@@ -205,7 +207,10 @@ assert(productRuntime.includes('document.readyState === "complete"') && productR
 assert(read("assets/js/academy.js").includes('document.readyState === "loading"'), "the academy runtime can initialize after its reader runtime");
 assert(productRuntime.includes('key: "price-asc"') && productRuntime.includes('key: "price-desc"') && productRuntime.includes("lux-sort-selected-icon"), "bilingual price sorting or its Lucide selection icon is incomplete");
 assert(integrationStyles.includes(".lux-about-story .lux-reader-quote") && integrationStyles.includes(".lux-reader-pull p") && integrationStyles.includes("grid-template-columns: 112px minmax(0, 1fr)"), "requested quote hierarchy or compact mobile product view is incomplete");
-assert(integrationStyles.includes(".lux-footer .lux-footer-brand > p") && integrationStyles.includes("font-size: var(--lux-type-body-sm) !important"), "footer description does not match navigation sizing");
+assert(integrationStyles.includes(".lux-footer .lux-footer-brand-main > p") && integrationStyles.includes("font-size: var(--lux-type-body-sm) !important"), "footer description does not match navigation sizing");
+assert(coreScript.includes('cookie: "Cookie Policy"') && coreScript.includes('cookie: "Cookie政策"'), "cookie policy labels are not bilingual");
+assert(coreScript.indexOf('data-cookie-choice="analytics"') < coreScript.indexOf('data-cookie-choice="necessary"'), "analytics cookie choice is not first");
+assert(newsletterStyles.includes("backdrop-filter:blur(16px)") && newsletterStyles.includes("font:400 13px/1.5"), "cookie banner glass or matching typography is missing");
 assert(read("en/index.html").includes('href="about-us.html#reader-en-harvest" data-reader-open="en-harvest"') && read("zh/index.html").includes('href="about-us.html#reader-zh-harvest" data-reader-open="zh-harvest"'), "homepage Values UI lacks a native article fallback");
 assert(accountRuntime.includes("else if (trigger.href) location.href = trigger.href"), "failed deferred reader loading has no native link fallback");
 assert(integrationStyles.includes("z-index: 120 !important") && integrationStyles.includes("html[lang] body #luxureat-china .lux-about-program-lead h2") && integrationStyles.includes("clamp(34px, 4vw, 58px)") && integrationStyles.includes(".lux-recent-events-head > span"), "sort layering or requested bilingual typography is incomplete");

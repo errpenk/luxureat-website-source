@@ -111,7 +111,7 @@ Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai
 info@luxureat.com`;
   const cookieZh = `最后更新日期：2026年8月12日
 
-本 Cookie Policy 说明 LuxurEat（露意膳）网站使用 Cookie、本地存储及类似技术的方式，并帮助您自行选择是否允许分析功能。
+本 Cookie政策说明 LuxurEat（露意膳）网站使用 Cookie、本地存储及类似技术的方式，并帮助您自行选择是否允许分析功能。
 
 一、必要 Cookie 与本地存储
 必要技术用于维持网站安全、表单防滥用、登录会话、购物袋、订阅请求及保存您的 Cookie 选择。它们仅为提供您主动请求的基本功能而使用；停用后，网站部分功能可能无法正常工作。由于这些技术属于网站运行所必需，不能通过下方分析选项关闭，但您仍可在浏览器中清除它们。
@@ -120,7 +120,7 @@ info@luxureat.com`;
 只有在您选择“接受分析 Cookie”后，网站才会加载 Google Analytics／Google tag，用于了解页面访问、来源、浏览器和设备类别、近似地区及站内互动等汇总使用情况，以评估内容和性能。Google LLC 可能根据其服务规则处理相关技术信息，且处理地点可能位于中国大陆境外。您可通过 Google 隐私政策了解其处理规则及权利渠道。
 
 三、您的选择
-选择“仅使用必要 Cookie”不会影响一般浏览和核心功能；选择“接受分析 Cookie”会启用上述分析功能。您可以随时回到网页底部的 Cookie Policy 更改选择。若您从接受改为仅必要，页面将刷新并停止继续加载分析功能；清除浏览器网站数据后，网站会再次询问您的选择。
+选择“仅使用必要 Cookie”不会影响一般浏览和核心功能；选择“接受分析 Cookie”会启用上述分析功能。您可以随时回到网页底部的 Cookie政策更改选择。若您从接受改为仅必要，页面将刷新并停止继续加载分析功能；清除浏览器网站数据后，网站会再次询问您的选择。
 
 四、联系我们
 如需了解或行使与个人信息有关的权利，请联系 info@luxureat.com。`;
@@ -185,7 +185,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     ? {
       close: "关闭",
       privacy: ["隐私政策", privacyZh],
-      cookie: ["Cookie Policy", cookieZh],
+      cookie: ["Cookie政策", cookieZh],
       terms: ["销售条款", termsZh],
       shipping: ["配送说明", shippingZh],
       necessary: "仅使用必要 Cookie",
@@ -223,8 +223,8 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
     body.classList.toggle("is-legal", ["privacy", "cookie", "terms", "shipping"].includes(key));
-    const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p><div class="lux-cookie-policy-actions"><button type="button" data-cookie-choice="necessary">${copy.necessary}</button><button type="button" data-cookie-choice="analytics">${copy.analytics}</button></div>` : "";
-    body.innerHTML = `<h2>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${cookieActions}${note}${qr}`;
+    const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p><div class="lux-cookie-policy-actions"><button type="button" data-cookie-choice="analytics">${copy.analytics}</button><button type="button" data-cookie-choice="necessary">${copy.necessary}</button></div>` : "";
+    body.innerHTML = `<h2${key === "cookie" ? ' class="lux-cookie-policy-title"' : ""}>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${cookieActions}${note}${qr}`;
     body.querySelectorAll("[data-cookie-choice]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.cookieChoice === document.documentElement.dataset.luxCookieConsent)));
     closeButton.textContent = copy.close;
     modal.hidden = false;

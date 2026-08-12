@@ -77,7 +77,7 @@ if (["required", "verified", "verification-failed"].includes(new URLSearchParams
     label: "Cookie 设置",
     text: "我们使用必要 Cookie 保障基本功能；经您同意后，分析 Cookie 将帮助我们改进网站。",
     privacy: "隐私政策",
-    cookie: "Cookie Policy",
+    cookie: "Cookie政策",
     necessary: "仅使用必要 Cookie",
     accept: "接受分析 Cookie",
   };
@@ -86,7 +86,7 @@ if (["required", "verified", "verification-failed"].includes(new URLSearchParams
   banner.setAttribute("role", "region");
   banner.setAttribute("aria-label", copy.label);
   banner.hidden = true;
-  banner.innerHTML = `<img src="${new URL("../media/brand/luxureat-logo.png", luxCoreUrl)}" alt="LuxurEat"><div><p>${copy.text}</p><span class="lux-cookie-policy-links"><button type="button" data-footer-modal="privacy">${copy.privacy}</button><span aria-hidden="true">/</span><button type="button" data-footer-modal="cookie">${copy.cookie}</button></span></div><div class="lux-cookie-actions"><button type="button" data-cookie-choice="necessary">${copy.necessary}</button><button type="button" data-cookie-choice="analytics">${copy.accept}</button></div>`;
+  banner.innerHTML = `<img src="${new URL("../media/brand/luxureat-logo.png", luxCoreUrl)}" alt="LuxurEat"><div><p>${copy.text}</p><span class="lux-cookie-policy-links"><button type="button" data-footer-modal="privacy">${copy.privacy}</button><span aria-hidden="true">/</span><button type="button" data-footer-modal="cookie">${copy.cookie}</button></span></div><div class="lux-cookie-actions"><button type="button" data-cookie-choice="analytics">${copy.accept}</button><button type="button" data-cookie-choice="necessary">${copy.necessary}</button></div>`;
   document.body.appendChild(banner);
 
   document.addEventListener("click", (event) => {
