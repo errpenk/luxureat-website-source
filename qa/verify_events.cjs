@@ -96,6 +96,7 @@ assert(journal.includes("#event-"), "event hash opening is missing");
 assert(css.includes(".lux-narrative-link"), "shared narrative link styling is missing");
 assert(css.includes(".lux-recent-events"), "recent-events styling is missing");
 assert(css.includes(".lux-event-reader"), "event reader styling is missing");
-assert(read("scripts/build-luxureat-theme.mjs").includes("luxureat_static_url('${route}')") && css.includes("color: #005b55"), "detail-page language links or light-surface navigation are not explicit");
+assert(read("scripts/build-luxureat-theme.mjs").includes("luxureat_static_url('${route}')") && read("assets/js/core.js").includes('pageItems.some(([href]) => href === pairedPage)'), "detail-page language links are not preserved");
+assert(css.includes('.lux-lang > a.active') && css.includes("color: #005b55") && css.includes("filter: none"), "light-surface navigation does not keep black controls with only the current language green");
 
 console.log("event verification passed");

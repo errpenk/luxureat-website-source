@@ -665,6 +665,7 @@ html[lang^="en"] .lux-nav > :is(a, .lux-nav-item) > a { letter-spacing: .1em !im
 }
 .lux-footer-brand {
   display: block;
+  transform: translateX(-12px);
 }
 .lux-footer-brand-main {
   display: grid;
@@ -2139,10 +2140,6 @@ header:has(.lux-hero-fade-both) {
 }
 .lux-cookie-provider { margin-top: 18px !important; }
 .lux-cookie-provider a { color: #006a64; text-underline-offset: 3px; }
-.lux-cookie-policy-actions { position: sticky; bottom: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; padding-top: 14px; background: #eeeae5; }
-.lux-cookie-policy-actions button { min-height: 44px; padding: 10px 12px; border: 1px solid #006a64; background: transparent; color: #006a64; font: 600 13px/1.4 var(--lux-page-heading); cursor: pointer; }
-.lux-cookie-policy-actions button:first-child { background: #006a64; color: #fff; }
-.lux-cookie-policy-actions button[aria-pressed="true"] { border-color: #9a6d22; box-shadow: inset 0 -3px #9a6d22; }
 .lux-footer-qr {
   width: min(280px, 100%);
   aspect-ratio: 1;
@@ -6028,6 +6025,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   #inquiry .lux-partner-card { min-height: 320px; }
 }
 @media (max-width: 720px) {
+  .lux-footer-brand { transform: none; }
   .lux-footer-brand-main { grid-template-columns: 84px minmax(0, 1fr); gap: 18px; }
   .lux-footer-brand-main > img { width: 84px; height: 84px; }
 }
@@ -13351,13 +13349,17 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
 
 /* Light article tops use an explicit dark navigation state; scrolling restores the dark glass header. */
 .lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-brand, .lux-nav > a, .lux-nav-item > a, .lux-actions > .lux-icon-action, .lux-actions > .lux-menu, .lux-lang > a, .lux-lang > span) {
-  color: #005b55;
+  color: #101010;
   mix-blend-mode: normal;
 }
 .lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) .lux-brand img {
-  filter: invert(28%) sepia(29%) saturate(1379%) hue-rotate(127deg) brightness(83%) contrast(101%);
+  filter: none;
 }
-.lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav > a, .lux-nav-item > a, .lux-lang > a):is(:hover, .active) {
+.lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav > a, .lux-nav-item > a):hover {
+  color: #101010;
+  border-bottom-color: currentColor;
+}
+.lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) .lux-lang > a.active {
   color: #005b55;
   border-bottom-color: currentColor;
 }
