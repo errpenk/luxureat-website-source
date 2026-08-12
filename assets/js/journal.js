@@ -143,9 +143,7 @@ function initLuxReader() {
     if (!document.querySelector('link[data-lux-leaflet]')) {
       const stylesheet = document.createElement("link");
       stylesheet.rel = "stylesheet";
-      stylesheet.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
-      stylesheet.integrity = "sha256-p4NxAoJBhIINfQ3yn+RltJ9VxSHxNSvHNxgynexlxs=";
-      stylesheet.crossOrigin = "";
+      stylesheet.href = luxJournalAsset("vendor/leaflet/leaflet.css");
       stylesheet.dataset.luxLeaflet = "";
       document.head.append(stylesheet);
     }
@@ -157,9 +155,7 @@ function initLuxReader() {
         return;
       }
       const script = document.createElement("script");
-      script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
-      script.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
-      script.crossOrigin = "";
+      script.src = luxJournalAsset("vendor/leaflet/leaflet.js");
       script.dataset.luxLeaflet = "";
       script.addEventListener("load", () => resolve(window.L), { once: true });
       script.addEventListener("error", reject, { once: true });

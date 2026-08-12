@@ -40,6 +40,9 @@ assert(/node scripts\/build-luxureat-theme\.mjs/.test(workflow), 'workflow build
 assert(/node tools\/verify-theme\.mjs/.test(workflow), 'workflow verifies the built theme');
 assert(/php -l/.test(workflow), 'workflow lints generated PHP files');
 assert(/THEME_REPO_DEPLOY_KEY:\s*\$\{\{\s*secrets\.THEME_REPO_DEPLOY_KEY\s*\}\}/.test(workflow), 'workflow reads deploy key from GitHub Secrets');
+assert((workflow.match(/secrets\.THEME_REPO_DEPLOY_KEY/g) || []).length === 1, 'deploy key is exposed to only one workflow step');
+assert(!/BAIDU_PUSH_TOKEN|data\.zz\.baidu\.com/.test(workflow), 'workflow does not send a search token over plaintext HTTP');
+assert([...workflow.matchAll(/^\s*uses:\s*([^\s#]+)/gm)].every(([, action]) => /@[0-9a-f]{40}$/.test(action)), 'workflow pins every third-party action to a full commit SHA');
 assert(/git@github\.com:errpenk\/luxureat-wordpress-theme\.git/.test(workflow), 'workflow pushes to the theme repository');
 assert(/\.publish\/theme/.test(workflow), 'workflow publishes only the built theme folder');
 assert(/rsync\s+-a\s+--delete/.test(workflow), 'workflow mirrors the built theme into the publish worktree');
@@ -64,8 +67,8 @@ assert(dependabot.includes('package-ecosystem: github-actions'), 'Dependabot mon
 assert(dependabot.includes('interval: weekly'), 'Dependabot checks GitHub Actions weekly');
 
 const codeql = read(codeqlPath);
-assert(codeql.includes('github/codeql-action/init@v4'), 'CodeQL workflow initializes the official GitHub action');
-assert(codeql.includes('github/codeql-action/analyze@v4'), 'CodeQL workflow runs the official analyzer');
+assert(/github\/codeql-action\/init@[0-9a-f]{40}/.test(codeql), 'CodeQL workflow pins the official initializer to a commit SHA');
+assert(/github\/codeql-action\/analyze@[0-9a-f]{40}/.test(codeql), 'CodeQL workflow pins the official analyzer to a commit SHA');
 assert(codeql.includes('security-events: write'), 'CodeQL workflow can upload security results');
 assert(codeql.includes('javascript-typescript'), 'CodeQL scans JavaScript and TypeScript');
 assert(!codeql.includes('language: php'), 'CodeQL workflow does not request unsupported PHP analysis');

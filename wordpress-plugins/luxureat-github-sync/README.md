@@ -31,14 +31,22 @@ Optional repository:
 
 - `errpenk/luxureat-wordpress-theme`
 
-Keep the token private. The plugin stores it in WordPress options and never prints the stored token back into the admin form.
+Keep the token private. The plugin reads it from the `LUXUREAT_GITHUB_SYNC_TOKEN` PHP constant or server environment and does not store it in the WordPress database.
+
+Recommended `wp-config.php` setup (place it above the `That's all, stop editing` line):
+
+```php
+define('LUXUREAT_GITHUB_SYNC_TOKEN', 'github_pat_REPLACE_WITH_YOUR_TOKEN');
+```
+
+If an older plugin version stored a token in WordPress options, this version removes that legacy value during initialization. Configure the constant before upgrading, then revoke the old token and create a replacement.
 
 ## Install
 
 1. Upload `luxureat-github-sync.zip` in WordPress under Plugins -> Add New -> Upload Plugin.
 2. Activate **LuxurEat GitHub Sync**.
 3. Open Tools -> LuxurEat GitHub Sync.
-4. Paste the GitHub token.
+4. Add `LUXUREAT_GITHUB_SYNC_TOKEN` to `wp-config.php` or the server environment.
 5. Keep the repository set to `errpenk/luxureat-website-source`.
 6. Keep the file path as `content/wordpress-export.json`.
 7. Click **Save Settings**.

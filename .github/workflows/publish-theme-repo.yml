@@ -30,18 +30,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
-    env:
-      THEME_REPO_DEPLOY_KEY: ${{ secrets.THEME_REPO_DEPLOY_KEY }}
-      BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
-
     steps:
       - name: Checkout source
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
@@ -68,6 +64,8 @@ jobs:
           find "$GITHUB_WORKSPACE/.deploy/luxureat-static" -name '*.php' -print0 | xargs -0 -n 1 php -l
 
       - name: Add GitHub deploy key
+        env:
+          THEME_REPO_DEPLOY_KEY: ${{ secrets.THEME_REPO_DEPLOY_KEY }}
         run: |
           test -n "$THEME_REPO_DEPLOY_KEY"
           install -m 700 -d ~/.ssh
@@ -102,157 +100,3 @@ jobs:
           fi
         env:
           GIT_SSH_COMMAND: ssh -i ~/.ssh/theme_repo_key
-
-      - name: Build changed Baidu URL list
-        env:
-          BAIDU_URLS_FILE: ${{ runner.temp }}/baidu-urls.txt
-          BAIDU_BASE_SHA: ${{ github.event.before }}
-        run: |
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import path from 'node:path';
-          import { execFileSync } from 'node:child_process';
-          import { pathToFileURL } from 'node:url';
-          import { pages, scripts } from './site.config.mjs';
-
-          const site = 'https://luxureat.cn';
-          const excludedSlugs = new Set(['bag', 'cart', 'checkout', 'account', 'login', 'register']);
-          const baseSha = (process.env.BAIDU_BASE_SHA || '').trim();
-          const headSha = (process.env.GITHUB_SHA || '').trim();
-          const isZeroSha = /^0+$/.test(baseSha);
-          const fullSubmission = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' || !baseSha || isZeroSha;
-
-          const isIndexable = (page) => page && page.indexable !== false && !excludedSlugs.has(page.slug);
-          const toUrl = (page) => {
-            const route = String(page.route || '').replace(/^\/+|\/+$/g, '');
-            if (!route || route === 'zh') return `${site}/`;
-            if (route.startsWith('zh/')) return `${site}/${route.slice(3)}/`;
-            return `${site}/${route}/`;
-          };
-          const pageSignature = (page) => JSON.stringify({
-            lang: page?.lang,
-            slug: page?.slug,
-            key: page?.key,
-            file: page?.file,
-            route: page?.route,
-            scripts: page?.scripts,
-            indexable: page?.indexable,
-          });
-          const pageIdentity = (page) => `${page?.lang || ''}:${page?.slug || ''}`;
-
-          let changedFiles = new Set();
-          let previousPages = [];
-
-          if (!fullSubmission) {
-            try {
-              execFileSync('git', ['cat-file', '-e', `${baseSha}^{commit}`], { stdio: 'ignore' });
-            } catch {
-              execFileSync('git', ['fetch', '--no-tags', '--depth=1', 'origin', baseSha], { stdio: 'inherit' });
-            }
-
-            const changed = execFileSync(
-              'git',
-              ['diff', '--name-only', '--diff-filter=ACMRT', baseSha, headSha],
-              { encoding: 'utf8' }
-            );
-            changedFiles = new Set(changed.split('\n').map((value) => value.trim()).filter(Boolean));
-
-            if (changedFiles.has('site.config.mjs')) {
-              try {
-                const previousConfig = execFileSync('git', ['show', `${baseSha}:site.config.mjs`], { encoding: 'utf8' });
-                const previousConfigPath = path.resolve('.baidu-prev-site.config.mjs');
-                fs.writeFileSync(previousConfigPath, previousConfig, 'utf8');
-                const previousModule = await import(`${pathToFileURL(previousConfigPath).href}?sha=${baseSha}`);
-                previousPages = Array.isArray(previousModule.pages) ? previousModule.pages : [];
-                fs.unlinkSync(previousConfigPath);
-              } catch (error) {
-                console.log(`Could not read previous site.config.mjs: ${error.message}`);
-              }
-            }
-          }
-
-          const selected = new Map();
-          const addPage = (page, reason) => {
-            if (!isIndexable(page)) return;
-            const url = toUrl(page);
-            const existing = selected.get(url) || new Set();
-            existing.add(reason);
-            selected.set(url, existing);
-          };
-
-          if (fullSubmission) {
-            for (const page of pages) addPage(page, 'manual/full run');
-          } else {
-            for (const page of pages) {
-              if (!isIndexable(page)) continue;
-
-              if (changedFiles.has(page.file)) {
-                addPage(page, `page source changed: ${page.file}`);
-              }
-
-              for (const handle of page.scripts || []) {
-                const script = scripts[handle];
-                const source = script?.src || '';
-                if (source.startsWith('assets/data/') && changedFiles.has(source)) {
-                  addPage(page, `content data changed: ${source}`);
-                }
-              }
-            }
-
-            if (changedFiles.has('site.config.mjs')) {
-              const previousByIdentity = new Map(previousPages.map((page) => [pageIdentity(page), page]));
-              for (const page of pages) {
-                if (!isIndexable(page)) continue;
-                const previous = previousByIdentity.get(pageIdentity(page));
-                if (!previous || pageSignature(previous) !== pageSignature(page)) {
-                  addPage(page, previous ? 'page configuration changed' : 'new page added');
-                }
-              }
-            }
-          }
-
-          const urls = [...selected.keys()];
-          fs.writeFileSync(process.env.BAIDU_URLS_FILE, urls.length ? `${urls.join('\n')}\n` : '', 'utf8');
-
-          if (!fullSubmission) {
-            console.log(`Changed files in this push (${changedFiles.size}):`);
-            console.log(changedFiles.size ? [...changedFiles].join('\n') : '(none)');
-          }
-
-          if (!urls.length) {
-            console.log('No new or content-changed indexable pages need Baidu submission.');
-          } else {
-            console.log(`Prepared ${urls.length} changed indexable URL(s) for Baidu:`);
-            for (const [url, reasons] of selected) {
-              console.log(`${url} <- ${[...reasons].join('; ')}`);
-            }
-          }
-          NODE
-
-      - name: Push changed URLs to Baidu
-        env:
-          BAIDU_URLS_FILE: ${{ runner.temp }}/baidu-urls.txt
-        run: |
-          if [ -z "$BAIDU_PUSH_TOKEN" ]; then
-            echo "::warning::BAIDU_PUSH_TOKEN is not configured; skipping Baidu URL submission."
-            exit 0
-          fi
-
-          if [ ! -s "$BAIDU_URLS_FILE" ]; then
-            echo "No changed indexable URLs to submit to Baidu."
-            exit 0
-          fi
-
-          if ! response="$(curl --fail-with-body -sS \
-            -H 'Content-Type: text/plain' \
-            --data-binary @"$BAIDU_URLS_FILE" \
-            "http://data.zz.baidu.com/urls?site=https://luxureat.cn&token=${BAIDU_PUSH_TOKEN}")"; then
-            echo "Baidu response: $response"
-            echo "::warning::Baidu URL submission request failed."
-            exit 0
-          fi
-
-          echo "Baidu response: $response"
-          if printf '%s' "$response" | grep -q '"error"'; then
-            echo "::warning::Baidu returned an error response: $response"
-          fi
