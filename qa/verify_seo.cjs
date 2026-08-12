@@ -34,9 +34,8 @@ try {
       const html = read(`${language}/${name}`);
       assert.equal((html.match(/<title>/g) || []).length, 1, `${language}/${name} needs one title`);
       assert.equal((html.match(/<meta name="description"/g) || []).length, 1, `${language}/${name} needs one description`);
-      const visibleText = html
-        .replace(/<!--[\s\S]*?-->/g, " ")
-        .replace(/<(?:script|style)\b[\s\S]*?<\/(?:script|style)>/gi, " ")
+      const visibleText = (html.split(/<body\b[^>]*>/i)[1] || "")
+        .split("</body>")[0]
         .replace(/<[^>]+>/g, " ");
       assert.doesNotMatch(visibleText, /\bmaison\b/i, `${language}/${name} still exposes Maison to visitors or search engines`);
     }
