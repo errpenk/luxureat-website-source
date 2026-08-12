@@ -596,7 +596,7 @@ if (luxNav && luxMenu) {
 
   const pairedPage = currentPage;
   const languageLinks = document.querySelectorAll(".lux-lang a");
-  if (languageLinks.length === 2 && pairedPage !== "bag.html") {
+  if (languageLinks.length === 2 && pairedPage !== "bag.html" && pageItems.some(([href]) => href === pairedPage)) {
     languageLinks[0].href = language === "zh" ? "#" : pageHref(pairedPage, "zh");
     languageLinks[1].href = language === "en" ? "#" : pageHref(pairedPage, "en");
   }

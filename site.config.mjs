@@ -1,4 +1,4 @@
-export const assetVersion = "20260812-cookie-footer-polish-60";
+export const assetVersion = "20260812-cookie-routing-polish-61";
 
 export const contact = {
   email: "china@luxureat.com",

@@ -120,7 +120,7 @@ info@luxureat.com`;
 只有在您选择“接受分析 Cookie”后，网站才会加载 Google Analytics／Google tag，用于了解页面访问、来源、浏览器和设备类别、近似地区及站内互动等汇总使用情况，以评估内容和性能。Google LLC 可能根据其服务规则处理相关技术信息，且处理地点可能位于中国大陆境外。您可通过 Google 隐私政策了解其处理规则及权利渠道。
 
 三、您的选择
-选择“仅使用必要 Cookie”不会影响一般浏览和核心功能；选择“接受分析 Cookie”会启用上述分析功能。您可以随时回到网页底部的 Cookie政策更改选择。若您从接受改为仅必要，页面将刷新并停止继续加载分析功能；清除浏览器网站数据后，网站会再次询问您的选择。
+您可以在首次出现的 Cookie 提示中选择“仅使用必要 Cookie”或“接受分析 Cookie”。前者不会影响一般浏览和核心功能，后者会启用上述分析功能。如需重新选择，请清除浏览器中的本站数据，网站会再次询问您的选择。
 
 四、联系我们
 如需了解或行使与个人信息有关的权利，请联系 info@luxureat.com。`;
@@ -135,7 +135,7 @@ Necessary technologies support site security, anti-abuse checks, sign-in session
 Google Analytics / Google tag loads only after you choose “Accept analytics”. It may collect page visits, referral source, browser and device category, approximate region and site interactions in order to assess content and performance. Google LLC may process related technical information under its service terms, including outside mainland China. Please see the Google Privacy Policy for its practices and rights channels.
 
 3. Your choice
-“Necessary only” does not affect ordinary browsing or core features. “Accept analytics” enables the analytics described above. You may return to Cookie Policy in the footer at any time to change your choice. Changing from analytics to necessary only refreshes the page and stops further analytics loading. Clearing site data will cause the website to ask again.
+On the initial Cookie notice, you may choose “Necessary only” or “Accept analytics”. The first does not affect ordinary browsing or core features; the second enables the analytics described above. To choose again, clear this website’s data in your browser and the website will ask again.
 
 4. Contact
 For information or requests concerning personal information, contact info@luxureat.com.`;
@@ -188,8 +188,6 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
       cookie: ["Cookie政策", cookieZh],
       terms: ["销售条款", termsZh],
       shipping: ["配送说明", shippingZh],
-      necessary: "仅使用必要 Cookie",
-      analytics: "接受分析 Cookie",
       wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
     }
     : {
@@ -198,8 +196,6 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
       cookie: ["Cookie Policy", cookieEn],
       terms: ["Terms of Sale", termsEn],
       shipping: ["Shipping", shippingEn],
-      necessary: "Necessary only",
-      analytics: "Accept analytics",
       wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
     };
 
@@ -223,9 +219,8 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
     body.classList.toggle("is-legal", ["privacy", "cookie", "terms", "shipping"].includes(key));
-    const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p><div class="lux-cookie-policy-actions"><button type="button" data-cookie-choice="analytics">${copy.analytics}</button><button type="button" data-cookie-choice="necessary">${copy.necessary}</button></div>` : "";
+    const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p>` : "";
     body.innerHTML = `<h2${key === "cookie" ? ' class="lux-cookie-policy-title"' : ""}>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${cookieActions}${note}${qr}`;
-    body.querySelectorAll("[data-cookie-choice]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.cookieChoice === document.documentElement.dataset.luxCookieConsent)));
     closeButton.textContent = copy.close;
     modal.hidden = false;
     document.body.classList.add("lux-reader-open");
