@@ -103,6 +103,8 @@ for (const file of [
 const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
+const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
+assert(!/srcset="[^"\n]*get_template_directory_uri\(\) \. '\/assets\/[^']+ \d+w/.test(generatedPages), 'generated srcset descriptors remain outside PHP asset paths');
 assert(fs.statSync(path.join(themeDir, 'screenshot.png')).size <= 100 * 1024, 'theme preview screenshot stays below 100 KB');
 assert(!walk(themeDir).some((file) => path.basename(file) === '.DS_Store'), 'theme package excludes Finder metadata');
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
