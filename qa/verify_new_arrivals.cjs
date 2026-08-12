@@ -22,7 +22,7 @@ for (const lang of ["zh", "en"]) {
     assert(html.includes(`href="${productsPage}?category=${category}#product-catalogue"`), `${lang}/new.html is missing the ${category} purchase link`);
   }
   for (const topic of ["olive", "pizza", "gelato"]) {
-    assert(html.includes(`href="blog.html?topic=${topic}"`), `${lang}/new.html is missing the ${topic} academy link`);
+    assert(html.includes(`href="blog.html#${topic}-academy"`), `${lang}/new.html is missing the ${topic} academy link`);
   }
   for (const image of ["chef-olive-oil.webp", "chef-pizza.webp", "chef-gelato.webp", "feature-origin.webp", "feature-foodservice.webp", "feature-supply.webp"]) {
     assert(html.includes(`assets/media/new-arrivals/${image}`), `${lang}/new.html is missing ${image}`);

@@ -36,6 +36,9 @@ for (const lang of ["zh", "en"]) {
       const href = match[1];
       if (/^(?:https?:|mailto:|tel:|javascript:)/.test(href) || href === "#") continue;
       const [rawPath, fragment = ""] = href.split("#");
+      if (rawPath.includes("?")) {
+        assert(/^product\.html\?category=[a-z0-9-]+$/.test(rawPath), `${lang}/${file} uses an unsupported public query link ${href}`);
+      }
       const cleanPath = rawPath.split("?")[0];
       const target = path.resolve(directory, cleanPath || file);
       assert(fs.existsSync(target), `${lang}/${file} links to missing target ${href}`);
