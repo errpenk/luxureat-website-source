@@ -12202,7 +12202,7 @@ section[data-recipe-panel] {
 #china-family-recipes .lux-recipe-theme-card[data-reader-open$="family-spaghetti-pomodoro"] p,
 #truffle-recipes .lux-recipe-theme-card[data-reader-open$="truffle-lamb"] h3,
 #truffle-recipes .lux-recipe-theme-card[data-reader-open$="truffle-lamb"] p {
-  text-shadow: 0 2px 3px rgba(0, 0, 0, .9);
+  text-shadow: 0 2px 6px #000, 0 7px 24px #000, 0 0 44px rgba(0, 0, 0, .96);
 }
 .lux-recipe-library-card .lux-reader-cta:hover,
 .lux-recipe-library-card .lux-reader-cta:focus-visible {
@@ -12466,6 +12466,21 @@ html[lang^="zh"] .lux-cert-awards h2 {
   background: rgba(8, 8, 8, .72);
   border-bottom-color: rgba(233, 195, 73, .22);
   backdrop-filter: blur(18px);
+}
+body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) {
+  color: #171715;
+}
+body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) .lux-brand img {
+  filter: none;
+}
+body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav a, .lux-actions a, .lux-lang, .lux-icon-action, .lux-menu) {
+  color: #171715;
+}
+body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav a:hover, .lux-nav a.active, .lux-actions a:hover, .lux-lang a.active) {
+  color: #006d68;
+}
+body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) .lux-menu {
+  border-color: rgba(23, 23, 21, .45);
 }
 @media (max-width: 1080px) {
   .lux-header.is-menu-open,
