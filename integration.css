@@ -12467,20 +12467,15 @@ html[lang^="zh"] .lux-cert-awards h2 {
   border-bottom-color: rgba(233, 195, 73, .22);
   backdrop-filter: blur(18px);
 }
-body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) {
-  color: #171715;
-}
-body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) .lux-brand img {
-  filter: none;
-}
-body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav a, .lux-actions a, .lux-lang, .lux-icon-action, .lux-menu) {
-  color: #171715;
-}
-body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav a:hover, .lux-nav a.active, .lux-actions a:hover, .lux-lang a.active) {
-  color: #006d68;
-}
-body.lux-light-top .lux-header:not(.is-scrolled):not(.is-menu-open) .lux-menu {
-  border-color: rgba(23, 23, 21, .45);
+@supports (mix-blend-mode: difference) {
+  .lux-header:not(.is-scrolled):not(.is-menu-open) :is(.lux-brand, .lux-nav > a, .lux-nav-item > a, .lux-actions > .lux-icon-action, .lux-actions > .lux-menu, .lux-lang > a:not(.active), .lux-lang > span) {
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+  .lux-header:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav > a, .lux-nav-item > a):is(:hover, .active) {
+    color: #fff;
+    border-bottom-color: currentColor;
+  }
 }
 @media (max-width: 1080px) {
   .lux-header.is-menu-open,
