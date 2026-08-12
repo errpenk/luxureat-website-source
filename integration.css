@@ -13298,11 +13298,11 @@ html[lang^="en"] body .lux-hero-support {
   font-weight: 400 !important;
 }
 
-/* Homepage hero CTAs share the support-copy scale and use a single underline. */
-html[lang^="en"] body .lux-home-hero-actions {
+/* Both homepage hero CTA pairs use one underline instead of a frame. */
+html[lang] body .lux-home-hero-actions {
   flex-wrap: wrap;
 }
-html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action {
+html[lang] body .lux-home-hero-actions .lux-home-hero-action {
   flex: 0 0 auto;
   width: auto !important;
   min-height: 44px;
@@ -13311,12 +13311,39 @@ html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action {
   border-bottom: 1px solid currentColor !important;
   background: transparent !important;
   color: #9df5ec !important;
-  font-size: 18px !important;
-  font-weight: 400 !important;
+  transform-origin: center;
+  transition: color .18s ease, border-color .18s ease, transform .18s ease;
   backdrop-filter: none;
 }
-html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action:hover,
-html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
+html[lang^="en"] body .lux-home-hero-actions .lux-home-hero-action {
+  font-size: 18px !important;
+  font-weight: 400 !important;
+}
+html[lang] body .lux-home-hero-actions .lux-home-hero-action:hover,
+html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
   background: transparent !important;
-  color: #fff !important;
+  color: #e9c349 !important;
+  transform: scale(1.035);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[lang] body .lux-home-hero-actions .lux-home-hero-action {
+    transition: none;
+  }
+  html[lang] body .lux-home-hero-actions .lux-home-hero-action:hover,
+  html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
+    transform: none;
+  }
+}
+
+/* Light article tops use an explicit dark navigation state; scrolling restores the dark glass header. */
+.lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-brand, .lux-nav > a, .lux-nav-item > a, .lux-actions > .lux-icon-action, .lux-actions > .lux-menu, .lux-lang > a:not(.active), .lux-lang > span) {
+  color: #101010;
+  mix-blend-mode: normal;
+}
+.lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) .lux-brand img {
+  filter: none;
+}
+.lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-nav > a, .lux-nav-item > a):is(:hover, .active) {
+  color: #006a64;
+  border-bottom-color: currentColor;
 }

@@ -464,6 +464,7 @@ const luxNavigation = {
 
 const luxHeader = document.querySelector(".lux-header");
 if (luxHeader) {
+  luxHeader.classList.toggle("is-light-surface", Boolean(document.querySelector(".lux-article-page")));
   const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
   syncHeaderSurface();
   window.addEventListener("scroll", syncHeaderSurface, { passive: true });
