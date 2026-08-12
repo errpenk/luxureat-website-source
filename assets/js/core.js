@@ -683,18 +683,55 @@ if (luxNav && luxMenu) {
     sessionStorage.removeItem(key);
   }
 
-  const save = () => sessionStorage.setItem(key, String(window.scrollY || 0));
-  const restore = () => {
+  const save = () => {
+    const anchor = document.elementFromPoint(innerWidth / 2, innerHeight / 3)?.closest?.("[id]");
+    sessionStorage.setItem(key, JSON.stringify({
+      y: window.scrollY || 0,
+      anchor: anchor?.id || "",
+      offset: anchor?.getBoundingClientRect().top || 0,
+    }));
+  };
+  const savedPosition = () => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(key) || "0");
+      return typeof saved === "number" ? { y: saved } : saved;
+    } catch {
+      return { y: 0 };
+    }
+  };
+  const restore = (position) => {
     const target = location.hash && document.querySelector(location.hash);
     if (target) {
       target.scrollIntoView();
-      return;
+      return false;
     }
-    const y = Number(sessionStorage.getItem(key) || 0);
-    window.scrollTo(0, Number.isFinite(y) ? y : 0);
+    const anchor = position.anchor && document.getElementById(position.anchor);
+    if (anchor) {
+      window.scrollBy(0, anchor.getBoundingClientRect().top - position.offset);
+    } else {
+      window.scrollTo(0, Number.isFinite(position.y) ? position.y : 0);
+    }
+    return true;
   };
 
-  window.addEventListener("pageshow", () => requestAnimationFrame(restore));
+  let restoreCancelled = false;
+  const restoreWhenReady = () => {
+    restoreCancelled = false;
+    const position = savedPosition();
+    if (!restore(position)) return;
+    let attempts = 0;
+    const retry = () => {
+      if (restoreCancelled || attempts++ >= 20) return;
+      restore(position);
+      setTimeout(retry, 100);
+    };
+    requestAnimationFrame(retry);
+  };
+
+  ["wheel", "touchstart", "pointerdown", "keydown"].forEach((eventName) => {
+    window.addEventListener(eventName, () => { restoreCancelled = true; }, { passive: true });
+  });
+  window.addEventListener("pageshow", restoreWhenReady);
   window.addEventListener("pagehide", save);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") save();

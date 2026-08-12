@@ -39,6 +39,9 @@ assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 102
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
 assert.match(core, /navigation\?\.type === "reload"[\s\S]*?sessionStorage\.removeItem\(key\)/, "explicit refresh does not reset the current scroll position");
 assert.doesNotMatch(core, /sessionStorage\.setItem\(`luxureatScroll:\$\{target\.pathname\}`/, "navigation still resets previously saved page positions");
+assert.match(core, /elementFromPoint\(innerWidth \/ 2, innerHeight \/ 3\)[\s\S]*?anchor\?\.id/, "scroll restoration does not remember the visible content anchor");
+assert.match(core, /anchor\.getBoundingClientRect\(\)\.top - position\.offset[\s\S]*?setTimeout\(retry, 100\)/, "scroll restoration does not follow asynchronous layout changes");
+assert.match(core, /"wheel", "touchstart", "pointerdown", "keydown"/, "user input cannot cancel delayed scroll restoration");
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
