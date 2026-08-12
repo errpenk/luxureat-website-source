@@ -213,8 +213,8 @@ function fontPreloads(page) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
   }
   const links = fonts.filter(([, , , , preload = true]) => preload).map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${assetVersion}" as="font" type="font/woff2" crossorigin>`).join("\n");
-  const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:${style};font-display:block}`).join("");
-  const localeFonts = page.lang === "zh" ? 'html[lang^="zh"]{--lux-zh-headline:"KingHwa Page Critical","KingHwa Old Song Site"!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : "";
+  const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${assetVersion}") format("woff2");font-weight:${weight};font-style:${style};font-display:swap}`).join("");
+  const localeFonts = page.lang === "zh" ? 'html[lang^="zh"]{--lux-page-heading:"KingHwa Page Critical","Songti SC",serif!important;--lux-zh-headline:"KingHwa Page Critical","Songti SC",serif!important;--lux-zh-body:"ZhiSong Page Critical","Songti SC",serif!important}html.lux-full-fonts[lang^="zh"]{--lux-page-heading:"KingHwa Page Critical","KingHwa Old Song Site","Songti SC",serif!important;--lux-zh-headline:"KingHwa Page Critical","KingHwa Old Song Site","Songti SC",serif!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site","Songti SC",serif!important}' : "";
   return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}${localeFonts}</style>\n<!-- lux:fonts:end -->`;
 }
 

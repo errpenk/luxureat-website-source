@@ -1,6 +1,14 @@
 const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
+const luxIsMobile = matchMedia("(max-width: 640px)").matches;
+const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
+
+if (document.documentElement.lang.startsWith("zh") && !luxSaveData) {
+  const enableFullFonts = () => setTimeout(() => document.documentElement.classList.add("lux-full-fonts"), luxIsMobile ? 15000 : 1500);
+  if (document.readyState === "complete") enableFullFonts();
+  else addEventListener("load", enableFullFonts, { once: true });
+}
 
 const luxCoreUrl = new URL(document.currentScript.src);
 const luxEngagementUrl = new URL("engagement.js", luxCoreUrl);
@@ -45,19 +53,15 @@ if ("IntersectionObserver" in window) {
       loadLuxBackground(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: "400px" });
+  }, { rootMargin: luxIsMobile ? "200px" : "400px" });
   luxLazyBackgrounds.forEach((element) => backgroundObserver.observe(element));
 } else {
   luxLazyBackgrounds.forEach(loadLuxBackground);
 }
 
-if (matchMedia("(max-width: 640px)").matches) {
+if (luxIsMobile) {
   document.querySelectorAll("img[data-lux-mobile-src]").forEach((image) => {
-    if (image.dataset.luxSrc && image.closest(".lux-home-service-card")) {
-      image.loading = "eager";
-      image.src = image.dataset.luxMobileSrc;
-      delete image.dataset.luxSrc;
-    } else if (image.dataset.luxSrc) image.dataset.luxSrc = image.dataset.luxMobileSrc;
+    if (image.dataset.luxSrc) image.dataset.luxSrc = image.dataset.luxMobileSrc;
     else image.src = image.dataset.luxMobileSrc;
     delete image.dataset.luxMobileSrc;
   });
@@ -73,7 +77,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: "1200px" });
+  }, { rootMargin: luxIsMobile ? "240px 0px" : "1200px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);
@@ -111,7 +115,7 @@ if (luxDeferredScripts) {
       .catch(() => false);
     return loading;
   };
-  const scheduleDeferredScripts = () => setTimeout(loadDeferredScripts, matchMedia("(max-width: 640px)").matches ? 3500 : 800);
+  const scheduleDeferredScripts = () => { if (!luxIsMobile) setTimeout(loadDeferredScripts, 800); };
   if (document.readyState === "complete") scheduleDeferredScripts();
   else addEventListener("load", scheduleDeferredScripts, { once: true });
   addEventListener("scroll", loadDeferredScripts, { once: true, passive: true });
@@ -189,7 +193,7 @@ const luxVideoObserver = "IntersectionObserver" in window
     } else {
       target.pause();
     }
-  }), { rootMargin: "600px 0px", threshold: .01 })
+  }), { rootMargin: luxIsMobile ? "0px" : "600px 0px", threshold: .01 })
   : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
@@ -199,6 +203,7 @@ const initLuxVideo = (video) => {
   video.addEventListener("canplay", () => startLuxVideo(video), { once: true });
   if (video.matches(".lux-hero-video")) {
     const startHero = () => {
+      if (luxIsMobile || luxSaveData) return;
       video.preload = "auto";
       startLuxVideo(video);
     };

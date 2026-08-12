@@ -28,9 +28,11 @@ assert.ok(gzipSize("integration.css") <= 60 * 1024, "shared CSS exceeds the 60 K
 assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScript still includes optional interactions");
 assert.ok(gzipSize("assets/js/engagement.js") <= 13 * 1024, "optional account and footer JavaScript exceeds 13 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
-assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px"/);
-assert.match(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
-assert.doesNotMatch(css, /font-display:\s*swap/, "custom fonts still permit an old-font flash");
+assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? "240px 0px" : "1200px"/);
+assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
+assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
+assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
+assert.match(read("tools/sync-site.mjs").toString(), /font-display:swap/, "critical text fonts do not render immediately");
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
 
 for (const lang of ["zh", "en"]) {

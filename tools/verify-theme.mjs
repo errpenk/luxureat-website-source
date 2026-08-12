@@ -153,6 +153,8 @@ assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_type . ' + ' .
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('academy/beluga-caviar-cover-new-page-bg.png'), 'checkout cart items receive branded product images');
 assert(functionsPhp.includes('function luxureat_static_woo_catalog()') && functionsPhp.includes("'LuxureatWooCatalog'") && functionsPhp.includes("'stockQuantity'"), 'product pages receive live WooCommerce price, image, and stock data');
+assert(functionsPhp.includes("'zh' => array('core')") && functionsPhp.includes("'en' => array('core')"), 'WordPress homepages enqueue only the critical runtime');
+assert(functionsPhp.includes('function luxureat_static_trim_plugin_assets()') && functionsPhp.includes("'jetpack-stats'") && !functionsPhp.includes("'google_gtagjs', 'jquery'"), 'static routes remove duplicate commerce analytics without removing Google Analytics');
 assert(functionsPhp.includes("get_transient('luxureat_static_woo_catalog')") && functionsPhp.includes("MINUTE_IN_SECONDS"), 'repeated anonymous page checks reuse the short WooCommerce catalogue cache');
 assert(functionsPhp.includes("html_entity_decode(get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8')"), 'WooCommerce currency symbols render as characters rather than escaped HTML entities');
 assert(functionsPhp.includes("if ($product->get_image_id())") && functionsPhp.includes('return $images;'), 'checkout keeps WooCommerce product images when they exist');
@@ -328,7 +330,7 @@ assert(runtimeJs.includes('badge.classList.add("is-updating")'), 'bag badges upd
 assert(runtimeJs.includes('window.LuxureatBag?.items?.()'), 'shared bag events read the live bag instead of resetting its count');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(!runtimeJs.includes('requestIdleCallback') && runtimeJs.includes('const prefetched = new Set()'), 'runtime scripts avoid downloading every linked page during idle time');
-assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('rootMargin: "600px 0px"') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts preload background video near the viewport and suppress native media controls');
+assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('luxIsMobile ? "0px" : "600px 0px"') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts preload background video near the viewport and suppress native media controls');
 assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
 assert(runtimeJs.includes('.hidden ='), 'runtime scripts hides filtered-out caviar product cards');
