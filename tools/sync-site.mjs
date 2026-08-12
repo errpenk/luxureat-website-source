@@ -105,7 +105,7 @@ function protectMaterialIconMarkup(html) {
 
 function addMobileImageSources(file, html, dimensions) {
   return html.replace(/<img\b[^>]*>/gi, (tag) => {
-    const source = tag.match(/\b(?:data-lux-src|src)=["'](\.\.\/assets\/media\/[^"']+\.(?:webp|png|jpe?g))["']/i)?.[1];
+    const source = tag.match(/\s(?:data-lux-src|src)=["'](\.\.\/assets\/media\/[^"']+\.(?:webp|png|jpe?g))["']/i)?.[1];
     if (!source) return tag;
     const mobile = tag.match(/\bdata-lux-mobile-src=["']([^"']+)["']/i)?.[1]
       || source.replace(/\.(?:webp|png|jpe?g)$/i, "-mobile.webp");
@@ -113,11 +113,14 @@ function addMobileImageSources(file, html, dimensions) {
     let output = /\bdata-lux-mobile-src=/.test(tag)
       ? tag
       : tag.replace(/^<img\b/i, `<img data-lux-mobile-src="${mobile}"`);
-    if (!/\bdata-lux-src=/.test(output) && !/\bsrcset=/.test(output)) {
+    if (!/\bdata-lux-src=/.test(output)) {
       const mobileWidth = dimensions.get(mobile)?.[0];
       const desktopWidth = dimensions.get(source)?.[0];
       if (mobileWidth && desktopWidth) {
-        output = output.replace(/^<img\b/i, `<img srcset="${mobile} ${mobileWidth}w, ${source} ${desktopWidth}w" sizes="100vw"`);
+        const srcset = `srcset="${mobile} ${mobileWidth}w, ${source} ${desktopWidth}w"`;
+        output = /\bsrcset=["'][^"']*["']/i.test(output)
+          ? output.replace(/\bsrcset=["'][^"']*["']/i, srcset)
+          : output.replace(/^<img\b/i, `<img ${srcset} sizes="100vw"`);
       }
     }
     return output;

@@ -201,6 +201,9 @@ function rewriteHref(href, currentLang) {
 function convertHtmlSource(html, lang) {
   html = stripKnownLocalIncludes(html);
 
+  html = html.replace(/\bsrcset=(["'])([^"']+)\1/g, (_match, quote, value) => {
+    return `srcset=${quote}${value.replace(/\.\.\/assets\/([^\s,]+)/g, (_asset, assetPath) => phpThemeAsset(assetPath))}${quote}`;
+  });
   html = html.replace(/\b(src|href|poster|data-lux-bg|data-lux-src)=(["'])\.\.\/assets\/([^"']+)\2/g, (_match, attr, quote, assetPath) => {
     return `${attr}=${quote}${phpThemeAsset(assetPath)}${quote}`;
   });
