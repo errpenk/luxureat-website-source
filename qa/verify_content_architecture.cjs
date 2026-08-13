@@ -258,6 +258,8 @@ assert(enContact.includes('d="M8 2h8l-1 7') && enContact.includes('d="m12 2 3.1 
 assert(zhCertification.includes(">品质与认证</h2>") && enCertification.includes(">Quality &amp; Certification</h2>"), "certification glossary title is not localized");
 assert(zhCertification.includes('id="cert-leadership-title-zh">行业领先</h2>') && enCertification.includes('id="cert-leadership-title-en">Industry Leadership</h2>'), "bilingual Thailand industry-leadership section is missing");
 assert((zhCertification.match(/cert-thailand-leadership-[a-z]+\.webp/g) || []).length === 5 && (enCertification.match(/cert-thailand-leadership-[a-z]+\.webp/g) || []).length === 5, "industry-leadership section must use all five supplied images");
+const zhLeadership = zhCertification.match(/<section class="lux-cert-leadership"[\s\S]*?<\/section>/)?.[0] || "";
+assert((zhLeadership.match(/<figure data-cert-hover-image data-partnership-image>/g) || []).length === 5 && integrationStyles.includes('.lux-cert-leadership-gallery figure:last-child'), "industry-leadership images are not all interactive or fully visible on mobile");
 assert(zhCertification.indexOf('id="cert-leadership-title-zh"') < zhCertification.indexOf('id="certification-glossary"'), "industry leadership must appear above Quality & Certification");
 assert(zhCertification.includes("px-margin-mobile md:px-margin-desktop") && enCertification.includes("px-margin-mobile md:px-margin-desktop"), "certification main container still uses desktop padding on mobile");
 assert((zhCertification.match(/data-cert-media-carousel/g) || []).length >= 2, "certification image carousels are incomplete");

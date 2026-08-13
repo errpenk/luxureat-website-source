@@ -8109,17 +8109,28 @@ body {
   background: #f3f0e9;
 }
 .lux-cert-leadership-gallery figure {
+  position: relative;
   min-width: 0;
   aspect-ratio: 3 / 4;
   margin: 0;
   overflow: hidden;
   background: #d8d4cc;
+  outline: 0;
 }
 .lux-cert-leadership-gallery img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+  transition: transform .55s cubic-bezier(.2,.75,.25,1), filter .55s ease;
+}
+.lux-cert-leadership-gallery figure:hover img,
+.lux-cert-leadership-gallery figure:focus-visible img {
+  filter: brightness(.82) saturate(1.12);
+  transform: scale(1.055);
+}
+.lux-cert-leadership-gallery figure:focus-visible {
+  box-shadow: inset 0 0 0 3px #9df5ec;
 }
 .lux-collab-mosaic,
 .lux-channel-showcase,
@@ -8451,17 +8462,16 @@ body {
   .lux-cert-leadership h2 { font-size: 40px; }
   .lux-cert-leadership p { font-size: 14px; line-height: 22px; }
   .lux-cert-leadership-gallery {
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: min(76vw, 320px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
     gap: 4px;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
-    scrollbar-width: none;
+    overflow: visible;
   }
-  .lux-cert-leadership-gallery::-webkit-scrollbar { display: none; }
-  .lux-cert-leadership-gallery figure { scroll-snap-align: start; }
+  .lux-cert-leadership-gallery figure:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 2px);
+    justify-self: center;
+  }
   .lux-collab-mosaic,
   .lux-channel-showcase,
   .lux-cert-capability,
@@ -8501,6 +8511,11 @@ body {
   .lux-product-catalog:not(.is-list)[data-visible-count="1"] {
     grid-template-columns: 1fr !important;
   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lux-cert-leadership-gallery img { transition: none; }
+  .lux-cert-leadership-gallery figure:hover img,
+  .lux-cert-leadership-gallery figure:focus-visible img { transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .lux-cert-quote-slides [data-cert-quote],
