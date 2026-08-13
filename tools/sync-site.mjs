@@ -80,8 +80,8 @@ function footerFor(page) {
 }
 
 function scriptsFor(page) {
-  const eager = page.key === "home" ? page.scripts.filter((handle) => handle === "core") : page.scripts;
-  const lazy = page.key === "home" ? page.scripts.filter((handle) => handle !== "core") : [];
+  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core"].includes(handle)) : page.scripts;
+  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core"].includes(handle)) : [];
   const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
@@ -108,7 +108,10 @@ function addMobileImageSources(file, html, dimensions) {
     const source = tag.match(/\s(?:data-lux-src|src)=["'](\.\.\/assets\/media\/[^"']+\.(?:webp|png|jpe?g))["']/i)?.[1];
     if (!source) return tag;
     const mobile = tag.match(/\bdata-lux-mobile-src=["']([^"']+)["']/i)?.[1]
-      || source.replace(/\.(?:webp|png|jpe?g)$/i, "-mobile.webp");
+      || ["-mobile.webp", "-720.webp"]
+        .map((suffix) => source.replace(/\.(?:avif|webp|png|jpe?g)$/i, suffix))
+        .find((candidate) => fs.existsSync(path.resolve(path.dirname(file), candidate)));
+    if (!mobile) return tag;
     if (!fs.existsSync(path.resolve(path.dirname(file), mobile))) return tag;
     let output = /\bdata-lux-mobile-src=/.test(tag)
       ? tag

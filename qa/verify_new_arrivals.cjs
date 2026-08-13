@@ -28,7 +28,7 @@ for (const lang of ["zh", "en"]) {
     assert(html.includes(`assets/media/new-arrivals/${image}`), `${lang}/new.html is missing ${image}`);
   }
   for (let index = 1; index <= 5; index += 1) assert(html.includes(`assets/media/new-arrivals/brand-purpose-0${index}.`), `${lang}/new.html is missing brand-purpose-0${index}`);
-  const mosaicImages = [...html.matchAll(/brand-purpose-(0\d)\.(?:jpg|webp)/g)].map((match) => match[1]);
+  const mosaicImages = [...html.matchAll(/\bsrc="[^"]*brand-purpose-(0\d)\.(?:jpg|webp)"/g)].map((match) => match[1]);
   assert(mosaicImages.join(",") === "04,05,03,01,02", `${lang}/new.html brand-purpose image order is incorrect`);
   const discovery = html.match(/<section class="lux-new-discovery"[\s\S]*?<\/section>\s*<\/main>/)?.[0] || "";
   assert(discovery && !discovery.includes("<a "), `${lang}/new.html discovery layouts must not contain additional UI links`);

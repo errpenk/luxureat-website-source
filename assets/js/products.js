@@ -28,6 +28,7 @@ function syncLuxWooCatalog() {
 }
 
 syncLuxWooCatalog();
+window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
 function renderLuxProductCatalog() {
   const grid = document.querySelector("[data-caviar-grid]");

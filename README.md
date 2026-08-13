@@ -62,7 +62,7 @@ These rules apply to every future page update:
 
 ## Image Uploads
 
-New images under `assets/media/` are optimized automatically before preview and theme deployment. Large JPG and PNG files are converted to WebP, oversized WebP files are recompressed, and the longest edge is limited to 2000 pixels.
+New images under `assets/media/` are optimized automatically before preview and theme deployment. Large JPG and PNG files are converted to WebP, oversized WebP files are recompressed, and the longest edge is limited to 2000 pixels. Images wider than 720 pixels and larger than 100 KB also receive a mobile WebP candidate; the site synchronizer adds native `srcset` markup and dynamic content uses the same generated image map.
 
 Run the same process locally before committing:
 

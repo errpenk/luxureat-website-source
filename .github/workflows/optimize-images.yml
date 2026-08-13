@@ -8,6 +8,7 @@ on:
     paths:
       - 'assets/media/**'
       - 'tools/optimize-images.mjs'
+      - 'tools/generate-responsive-images.mjs'
       - 'package.json'
       - 'package-lock.json'
   workflow_dispatch:
