@@ -122,12 +122,18 @@ if (luxIsMobile) {
   document.querySelectorAll("img[data-lux-mobile-src]").forEach((image) => {
     if (image.dataset.luxSrc) image.dataset.luxSrc = image.dataset.luxMobileSrc;
     else image.src = image.dataset.luxMobileSrc;
+    delete image.dataset.luxSrcset;
+    delete image.dataset.luxSizes;
     delete image.dataset.luxMobileSrc;
   });
 }
 const luxLazyImages = document.querySelectorAll("img[data-lux-src]");
 const loadLuxImage = (image) => {
+  if (image.dataset.luxSrcset) image.srcset = image.dataset.luxSrcset;
+  if (image.dataset.luxSizes) image.sizes = image.dataset.luxSizes;
   image.src = image.dataset.luxSrc;
+  delete image.dataset.luxSrcset;
+  delete image.dataset.luxSizes;
   delete image.dataset.luxSrc;
 };
 if ("IntersectionObserver" in window) {

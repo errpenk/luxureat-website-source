@@ -77,7 +77,7 @@ const missingSiteGlyphs = [...requiredChineseGlyphs].filter((glyph) => !siteGlyp
 assert(!missingSiteGlyphs.length, `Chinese site fonts are missing: ${missingSiteGlyphs.join("")}`);
 
 const typographyCss = ["integration.css", ...fs.readdirSync(path.join(root, "assets/css"))
-  .filter((name) => name.endsWith(".css") && !name.startsWith("tailwind-"))
+  .filter((name) => name.endsWith(".css") && !name.endsWith(".min.css") && !name.startsWith("tailwind-"))
   .map((name) => `assets/css/${name}`)].map(read).join("\n");
 const allowedFontFamilies = new Set([
   "inherit", '"Material Symbols Outlined"', '"Nyght Serif"', '"Spectral"',

@@ -20,7 +20,7 @@ The derivative uses a distinct family and filename. To replace it with the origi
 - Designer metadata: TerryWang 王廷瑞
 - Site-wide web derivative: `KingHwaOldSong-site.woff2`
 - Site-wide Chinese coverage manifest: `KingHwaOldSong-site-glyphs.txt`. It contains every Chinese glyph and Chinese punctuation mark used by static pages and dynamic content. Keep the manifest and both site-wide WOFF2 files in sync whenever Chinese copy changes.
-- Homepage subsets: `KingHwaOldSong-home-critical.woff2`, `LuxurEatZhiSong-hero-critical.woff2`, and `LuxurEatZhiSong-home-subset.woff2` cover the first screen and remaining homepage copy without requesting the full Chinese fonts. Their source characters are recorded in the adjacent `*-glyphs.txt` manifests.
+- Homepage subsets: `KingHwaOldSong-hero-critical.woff2` contains only the Chinese hero title and is preloaded; `KingHwaOldSong-home-critical.woff2`, `LuxurEatZhiSong-hero-critical.woff2`, and `LuxurEatZhiSong-home-subset.woff2` cover the remaining homepage copy without requesting the full Chinese fonts. Their source characters are recorded in the adjacent `*-glyphs.txt` manifests.
 - Inner-page critical subsets: `KingHwaOldSong-<slug>-critical.woff2` and `LuxurEatZhiSong-<slug>-critical.woff2`; each Chinese inner page preloads only its own current typography while the full web subsets remain fallbacks for future copy.
 
 ## Production delivery
