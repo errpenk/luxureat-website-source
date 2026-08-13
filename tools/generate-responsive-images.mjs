@@ -31,7 +31,8 @@ for (const source of originals) {
   let target = fs.existsSync(handmade) ? handmade : null;
   if (!target && (info.width || 0) > mobileWidth && fs.statSync(source).size > sourceThreshold) {
     target = variantFor(source, "-720");
-    const stale = !fs.existsSync(target) || fs.statSync(target).mtimeMs < fs.statSync(source).mtimeMs;
+    const stale = !fs.existsSync(target)
+      || (!checkOnly && !process.env.CI && fs.statSync(target).mtimeMs < fs.statSync(source).mtimeMs);
     if (stale && !checkOnly) {
       const temporary = `${target}.tmp-${process.pid}`;
       for (const quality of [78, 72, 66, 60]) {
