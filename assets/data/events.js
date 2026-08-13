@@ -101,11 +101,11 @@
           city: "长沙",
           category: "行业展会",
           paragraphs: [
-            "2026年9月18日至20日，LuxurEat（露意膳）将携TrufflEat、CaviarEat与TinCaviar亮相长沙第十一届中国国际食品餐饮博览会。",
+            "2026年9月18日至20日，LuxurEat（露意膳）将携TrufflEat、CaviarEat与Ugolini亮相长沙第十一届中国国际食品餐饮博览会。",
             "作为国家内贸流通重点展会、中部地区唯一获得UFI认证的食品餐饮专业展，本届食餐会展览面积达8.1万平方米，预计汇聚1200余家企业和15余万人次观众。",
             "LuxurEat（露意膳）将以松露、鱼子酱及意大利高端食品，呈现传统风味、精选品质与现代创新，并与餐饮、零售、经销及行业合作伙伴共同探索中国市场的新机遇。诚邀您莅临现场，与我们相见长沙。"
           ],
-          intro: "作为国家内贸流通重点展会、中部地区唯一获得UFI认证的食品餐饮专业展，第十一届中国国际食品餐饮博览会将于2026年9月18日至20日在长沙国际会展中心举办。LuxurEat（露意膳）将携TrufflEat、CaviarEat与TinCaviar亮相，与全国及国际市场的专业伙伴相见。",
+          intro: "作为国家内贸流通重点展会、中部地区唯一获得UFI认证的食品餐饮专业展，第十一届中国国际食品餐饮博览会将于2026年9月18日至20日在长沙国际会展中心举办。LuxurEat（露意膳）将携TrufflEat、CaviarEat与Ugolini亮相，与全国及国际市场的专业伙伴相见。",
           sections: [
             ["国家级食品餐饮商贸平台", "本届食餐会由商务部流通产业促进中心、湖南文体旅集团主办，湖南会展集团承办，是贯通食品餐饮全产业链、联通国内国际市场的国家级商贸平台。自2016年首届落地长沙以来，展会已连续成功举办十届。"],
             ["十年积累与产业影响力", "历届食餐会累计展览面积77.3万平方米，汇聚14800余家参展企业，专业观众总量突破151.1万人次，吸引全国40余个省区市及全球50多个国家和地区的客商参与，累计达成现场交易及意向订单345.8亿元。展会持续打通食品餐饮全产业链上下游，为湘味产业出海与全国渠道拓市提供重要载体。"],
@@ -133,11 +133,11 @@
           city: "Changsha",
           category: "Trade Fair",
           paragraphs: [
-            "From September 18 to 20, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, and TinCaviar at the 11th China International Food & Catering Expo in Changsha.",
+            "From September 18 to 20, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, and Ugolini at the 11th China International Food & Catering Expo in Changsha.",
             "A key national exhibition for domestic trade and Central China’s only UFI-certified professional food and catering fair, the 2026 expo will span 81,000 square metres and is expected to bring together more than 1,200 exhibitors and over 150,000 visits.",
             "Through truffles, caviar, and premium Italian foods, LuxurEat (露意膳) will bring together traditional flavor, selected quality, and modern innovation while exploring new opportunities in China with partners across foodservice, retail, distribution, and the wider industry. We warmly invite you to meet us in Changsha."
           ],
-          intro: "The 11th China International Food & Catering Expo will take place at the Changsha International Convention and Exhibition Centre from September 18 to 20, 2026. As a key national exhibition for domestic trade and Central China’s only UFI-certified professional food and catering fair, it will welcome LuxurEat (露意膳), TrufflEat, CaviarEat, and TinCaviar alongside partners from China and international markets.",
+          intro: "The 11th China International Food & Catering Expo will take place at the Changsha International Convention and Exhibition Centre from September 18 to 20, 2026. As a key national exhibition for domestic trade and Central China’s only UFI-certified professional food and catering fair, it will welcome LuxurEat (露意膳), TrufflEat, CaviarEat, and Ugolini alongside partners from China and international markets.",
           sections: [
             ["A national food and catering trade platform", "Hosted by the Circulation Industry Promotion Center of the Ministry of Commerce and Hunan Culture, Sports and Tourism Group, and organized by Hunan Convention and Exhibition Group, the expo is a national trade platform connecting the entire food and catering value chain with domestic and international markets. It has been held successfully in Changsha for ten consecutive editions since its launch in 2016."],
             ["Ten years of industry impact", "Across its first ten editions, the expo accumulated 773,000 square metres of exhibition space, welcomed more than 14,800 exhibitors and 1.511 million professional visits, and attracted participants from over 40 Chinese provinces, autonomous regions and municipalities as well as more than 50 countries and regions. On-site transactions and intended orders reached RMB 34.58 billion, supporting the international development of Hunan cuisine and wider national channel expansion."],
@@ -179,7 +179,7 @@
           city: "广州",
           category: "行业展会",
           paragraphs: [
-            "2026年9月8日至9日，LuxurEat（露意膳） 将携旗下 TrufflEat、CaviarEat、TinCaviar 等品牌亮相 MARCA CHINA 广州国际自有品牌展。",
+            "2026年9月8日至9日，LuxurEat（露意膳） 将携旗下 TrufflEat、CaviarEat、Ugolini 等品牌亮相 MARCA CHINA 广州国际自有品牌展。",
             "MARCA CHINA 广州国际自有品牌展是中国极具影响力的自有品牌专业贸易展览会。展会聚焦食品及日用品领域，汇集超500家源头厂商与贴牌代工企业。",
             "作为连接国际食品品牌、优质生产商与全球市场的平台，我们将以此次展会为窗口，持续发掘具有市场潜力的产品、供应资源与合作模式，推动高品质食品在中国与国际市场之间建立更清晰、更长久的连接。"
           ],
@@ -207,7 +207,7 @@
           city: "Guangzhou",
           category: "Trade Fair",
           paragraphs: [
-            "On September 8–9, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, TinCaviar, and more at MARCA CHINA Private Label Fair.",
+            "On September 8–9, 2026, LuxurEat (露意膳) will present TrufflEat, CaviarEat, Ugolini, and more at MARCA CHINA Private Label Fair.",
             "MARCA CHINA is one of China’s most influential professional trade exhibitions dedicated to private-label products, the event brings together more than 500 direct manufacturers and private-label production partners.",
             "LuxurEat (露意膳)will use the exhibition to discover promising products, sourcing resources, and new partnership models, while fostering stronger and more enduring connections between premium food businesses in China and international markets."
           ],
