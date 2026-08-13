@@ -129,7 +129,7 @@
 
     if (!config?.ajaxUrl || !config?.nonce) {
       setFeedback(text.opening, true);
-      window.location.href = `mailto:errpenk@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:roberto@ugolinigroup.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       return;
     }
 

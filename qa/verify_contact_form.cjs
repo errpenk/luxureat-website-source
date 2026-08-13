@@ -33,7 +33,7 @@ assert.ok(zh.includes('class="font-headline-md text-secondary">产品与品鉴�
 assert.ok(en.includes('class="font-headline-md text-secondary">Product & Tasting Consultation'));
 
 assert.ok(runtime.includes('window.LuxureatContact'));
-assert.ok(runtime.includes('mailto:errpenk@gmail.com'));
+assert.ok(runtime.includes('mailto:roberto@ugolinigroup.com'));
 assert.ok(runtime.includes('data.get("name")') && runtime.includes('data.get("inquiry_type")') && runtime.includes('data.get("phone")'));
 assert.ok(runtime.includes('["name", "email", "inquiry_type", "message"]'));
 assert.ok(runtime.includes('"酒店餐饮与专业供应": "Fornitura per hotel, ristorazione e professionisti"'));
@@ -46,7 +46,7 @@ assert.ok(css.includes('.lux-contact-main'));
 assert.ok(css.includes('.lux-contact-left'));
 assert.ok(css.includes('--lux-footprint-detail-size: var(--lux-type-body-sm, 13px)'));
 assert.ok(css.includes('.lux-footprint-card > p:not(.lux-footprint-role)'));
-assert.ok(themeBuilder.includes("wp_mail('errpenk@gmail.com'"));
+assert.ok(themeBuilder.includes("wp_mail('roberto@ugolinigroup.com'"));
 assert.ok(themeBuilder.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"));
 for (const label of ["Nome: ", "Telefono: ", "E-mail: ", "Messaggio:", "Non fornito"]) assert.ok(themeBuilder.includes(label));
 assert.ok(themeBuilder.includes("wp_ajax_nopriv_luxureat_contact"));
