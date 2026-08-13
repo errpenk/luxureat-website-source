@@ -148,7 +148,7 @@ assert(functionsPhp.includes('function luxureat_static_seo_head()') && functions
 assert(functionsPhp.includes('luxureat_static_disable_yoast_output') && functionsPhp.includes("remove_action('wpseo_head'") && functionsPhp.includes('Front_End_Integration::class'), 'static routes use the theme SEO output without duplicate Yoast metadata');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
-assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_contact") && functionsPhp.includes("wp_mail('roberto@ugolinigroup.com'"), 'contact enquiries are emailed to the requested recipient');
+assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_contact") && functionsPhp.includes("wp_mail('errpenk@gmail.com'"), 'contact enquiries are emailed to the requested recipient');
 assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_create_nonce('luxureat_contact')"), 'contact pages receive a nonce-protected AJAX endpoint');
 assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_type . ' + ' . $phone"), 'contact email subjects contain name, enquiry type, and phone');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
