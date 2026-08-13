@@ -1423,7 +1423,7 @@ function luxureat_static_contact_ajax() {
         . "E-mail: " . $email . "\n\n"
         . "Messaggio:\n" . $content;
     $headers = array('Reply-To: ' . $name . ' <' . $email . '>');
-    if (!wp_mail('errpenk@gmail.com', $subject, $body, $headers)) {
+    if (!wp_mail('roberto@ugolinigroup.com', $subject, $body, $headers)) {
         wp_send_json_error(array('message' => $message('暂时无法发送，请稍后再试。', 'Your message could not be sent. Please try again later.')), 500);
     }
     set_transient($rate_key, 1, 30);
