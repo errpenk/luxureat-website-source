@@ -36,6 +36,8 @@ assert.ok(runtime.includes('window.LuxureatContact'));
 assert.ok(runtime.includes('mailto:errpenk@gmail.com'));
 assert.ok(runtime.includes('data.get("name")') && runtime.includes('data.get("inquiry_type")') && runtime.includes('data.get("phone")'));
 assert.ok(runtime.includes('["name", "email", "inquiry_type", "message"]'));
+assert.ok(runtime.includes('"酒店餐饮与专业供应": "Fornitura per hotel, ristorazione e professionisti"'));
+assert.ok(runtime.includes('const subject = `${data.get("name")} + ${inquiryLabels[data.get("inquiry_type")]}`'));
 assert.ok(css.includes('.lux-contact-field-error.is-shaking'));
 assert.ok(css.includes('.lux-required-icon'));
 assert.ok(css.includes('.lux-contact-services li:hover'));
@@ -45,6 +47,8 @@ assert.ok(css.includes('.lux-contact-left'));
 assert.ok(css.includes('--lux-footprint-detail-size: var(--lux-type-body-sm, 13px)'));
 assert.ok(css.includes('.lux-footprint-card > p:not(.lux-footprint-role)'));
 assert.ok(themeBuilder.includes("wp_mail('errpenk@gmail.com'"));
+assert.ok(themeBuilder.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"));
+for (const label of ["Nome: ", "Telefono: ", "E-mail: ", "Messaggio:", "Non fornito"]) assert.ok(themeBuilder.includes(label));
 assert.ok(themeBuilder.includes("wp_ajax_nopriv_luxureat_contact"));
 
 console.log("Contact form verification passed.");
