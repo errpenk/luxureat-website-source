@@ -43,6 +43,7 @@
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   const renderSlide = (event, index) => {
     const copy = event[lang];
+    const displayPoster = event.displayPoster || event.poster;
     const mapHref = event.mapHref || `https://maps.apple.com/?q=${encodeURIComponent(event.mapQuery)}`;
     const newsHref = location.protocol === "file:" || location.pathname.endsWith(".html")
       ? `${newsIndexHref}#event-${event.id}`
@@ -50,7 +51,7 @@
     return `<article class="lux-latest-event-slide" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">
-          <img loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(event.poster)}">
+          <img loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(displayPoster)}">
         </figure>
         <div class="lux-event-copy">
           <h2>${escapeHtml(copy.title)}</h2>
@@ -76,7 +77,7 @@
         </div>` : ""}
       </div>
       ${events.length > 1 ? `<div class="lux-event-thumbnails" role="tablist" aria-label="${escapeHtml(carouselLabels.carousel)}">
-        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img loading="lazy" fetchpriority="low" decoding="async" src="${escapeHtml(event.poster)}" alt=""></button>`).join("")}
+        ${events.map((event, index) => `<button type="button" role="tab" data-event-carousel-index="${index}" aria-selected="${index === 0}" aria-label="${escapeHtml(`${carouselLabels.select} ${event[lang].title}`)}"><img width="160" height="163" loading="lazy" fetchpriority="low" decoding="async" src="${escapeHtml(event.thumbnail || event.displayPoster || event.poster)}" alt=""></button>`).join("")}
       </div>` : ""}
     </div>
     <div class="lux-meet-map">

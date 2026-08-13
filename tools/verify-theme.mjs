@@ -301,7 +301,7 @@ assert(runtimeJs.includes('data-account-email-hint') && runtimeJs.includes('icon
 assert(runtimeJs.includes('${icons.eyeOff}</button>') && runtimeJs.includes('revealing ? icons.eye : icons.eyeOff'), 'EyeOff represents hidden passwords and Eye represents visible passwords');
 assert(!runtimeJs.includes('event.target === modal()'), 'the account dialog closes only through its explicit close control');
 assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
-assert(runtimeJs.includes('src="${escapeHtml(event.poster)}"'), 'event thumbnails use the same square poster shown in the carousel');
+assert(runtimeJs.includes('event.thumbnail || event.displayPoster || event.poster'), 'event thumbnails use delivery-sized poster assets');
 assert(runtimeJs.includes('"/en/brand/"') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`${newsIndexHref}#event-${event.id}`') && runtimeJs.includes('href="${newsIndexHref}#exhibition-map"'), 'event details use static links locally and pretty bilingual routes in WordPress');
 assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
 assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
