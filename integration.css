@@ -7584,6 +7584,11 @@ input[type="search"]::-webkit-search-decoration {
 .lux-cert-card:focus-visible .lux-cert-card-face {
   box-shadow: 0 0 0 2px #8beee5;
 }
+@media (min-width: 768px) {
+  .lux-cert-glossary-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
 @media (max-width: 640px) {
   .lux-page-hero-subtitle {
     font-size: 16px;
@@ -12345,6 +12350,9 @@ section[data-recipe-panel] {
   margin: 0;
   padding: 32px 24px clamp(72px, 8vw, 112px);
   background: #131313;
+}
+.lux-cert-results:has(+ .lux-cert-awards) {
+  margin-bottom: 0;
 }
 .lux-cert-brand-row {
   display: grid;
