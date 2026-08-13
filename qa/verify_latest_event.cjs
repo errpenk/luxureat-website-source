@@ -24,6 +24,7 @@ function rgbNumbers(color) {
     return {
       title: section.querySelector("h2")?.textContent.trim(),
       poster: section.querySelector(".lux-event-frame img")?.getAttribute("src"),
+      thumbnail: section.querySelector(".lux-event-thumbnails img")?.getAttribute("src"),
       location: locationLink.textContent.trim(),
       mapHref: locationLink.href,
       slides: section.querySelectorAll(".lux-latest-event-slide").length,
@@ -34,7 +35,8 @@ function rgbNumbers(color) {
   });
 
   assert(result.title === "LuxurEat（露意膳）亮相FHC上海环球食品展。", `latest event title did not render: ${result.title}`);
-  assert(result.poster.endsWith("/assets/media/events/fhc-shanghai-2026.webp"), `home event poster should use the FHC poster: ${result.poster}`);
+  assert(result.poster.endsWith("/assets/media/events/fhc-shanghai-2026-640.webp"), `home event poster should use the delivery-sized FHC poster: ${result.poster}`);
+  assert(result.thumbnail.endsWith("/assets/media/events/fhc-shanghai-2026-160.webp"), `home event thumbnail should use the thumbnail-sized FHC poster: ${result.thumbnail}`);
   assert(result.location === expectedLocation, `latest event location mismatch: ${result.location}`);
   assert(result.mapHref.startsWith("https://maps.apple.com/"), `latest event map link mismatch: ${result.mapHref}`);
   assert(result.slides === 4, `latest event carousel should contain four slides: ${result.slides}`);
