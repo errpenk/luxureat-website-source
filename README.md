@@ -47,8 +47,6 @@ After changing content, run the unified check:
 npm run check
 ```
 
-The homepage uses a generated, route-specific CSS bundle. After changing `integration.css`, homepage markup, or homepage runtime classes, refresh it with `npm run css:build`; the unified check rejects stale output.
-
 ## Performance Guardrails
 
 These rules apply to every future page update:
