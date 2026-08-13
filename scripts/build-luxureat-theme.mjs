@@ -1707,8 +1707,11 @@ add_filter('wp_headers', 'luxureat_static_cache_headers');
 
 function luxureat_static_hide_server_version() {
     header_remove('X-Powered-By');
+    if (!is_admin() && !is_user_logged_in() && !is_account_page() && !is_cart() && !is_checkout()) {
+        header('Cache-Control: public, max-age=300, s-maxage=1800, stale-while-revalidate=86400', true);
+    }
 }
-add_action('send_headers', 'luxureat_static_hide_server_version', 999);
+add_action('send_headers', 'luxureat_static_hide_server_version', PHP_INT_MAX);
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'rsd_link');
 add_filter('the_generator', '__return_empty_string');

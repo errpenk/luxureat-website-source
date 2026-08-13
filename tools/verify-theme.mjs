@@ -115,6 +115,7 @@ assert(functionsPhp.includes("'zh/product' => array('core', 'product-data', 'pro
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
 assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');
+assert(functionsPhp.includes('s-maxage=1800') && functionsPhp.includes("add_action('send_headers', 'luxureat_static_hide_server_version', PHP_INT_MAX)"), 'functions.php reapplies anonymous browser and edge caching after plugins');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
 assert(functionsPhp.includes('luxureat_static_refresh_changed_routes') && functionsPhp.includes('luxureat_static_route_version'), 'theme updates refresh changed WordPress routes once');
