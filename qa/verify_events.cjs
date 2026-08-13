@@ -29,6 +29,10 @@ assert(event, "Changsha 2026 event data is missing");
 assert(event.status === "latest", "Changsha 2026 must be the latest event");
 assert(secondEvent?.status === "latest", "Marca China 2026 must also be a latest event");
 assert(sialEvent?.status === "latest", "SIAL Guangzhou 2026 must also be a latest event");
+assert(fhcEvent.displayWidth === 520 && fhcEvent.displayHeight === 529, "FHC delivery image dimensions are missing");
+for (const item of [event, secondEvent, sialEvent]) {
+  assert(item.displayWidth === 520 && item.displayHeight === 528, `${item.id} delivery image dimensions are missing`);
+}
 assert(secondEvent?.zh?.articleTitle === "LuxurEat（露意膳）亮相广州国际自有品牌展。", "Marca China Chinese title is wrong");
 assert(events.filter((item) => item.status === "latest").length === 4, "All four current events must render as latest");
 assert(event.mapQuery === "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133", "Changsha map address is wrong");
@@ -87,6 +91,7 @@ assert(latestEvent.includes('!matchMedia("(max-width: 767px)").matches'), "home 
 assert(journal.includes('(prefers-reduced-motion: reduce), (max-width: 767px)'), "About Us carousel autoplay is not paused on mobile");
 assert(read("assets/js/core.js").includes('(prefers-reduced-motion: reduce), (max-width: 767px)'), "shared carousels are not paused on mobile");
 assert(latestEvent.includes("data-event-carousel-step"), "home event carousel controls are missing");
+assert(latestEvent.includes('width="${event.displayWidth}" height="${event.displayHeight}"'), "home event posters do not expose intrinsic dimensions");
 assert(latestEvent.includes("#event-${event.id}"), "home latest event detail hash is missing");
 assert(latestEvent.includes("const newsIndexHref = location.protocol") && latestEvent.includes("`${newsIndexHref}#event-${event.id}`"), "home latest event does not resolve Brand News for static and WordPress routes");
 assert(latestEvent.includes('href="${newsIndexHref}#exhibition-map"'), "home exhibition map does not resolve Brand News for static and WordPress routes");
