@@ -1002,6 +1002,17 @@ remove_action('wp_print_styles', 'print_emoji_styles');
 remove_action('wp_enqueue_scripts', 'wp_enqueue_emoji_styles');
 add_filter('emoji_svg_url', '__return_false');
 
+function luxureat_static_resource_hints($urls, $relation_type) {
+    if ($relation_type !== 'preconnect') {
+        return $urls;
+    }
+    return array_values(array_filter($urls, function ($url) {
+        $href = is_array($url) && isset($url['href']) ? $url['href'] : $url;
+        return !preg_match('#^(?:https?:)?//[ic]0\\.wp\\.com/?$#i', (string) $href);
+    }));
+}
+add_filter('wp_resource_hints', 'luxureat_static_resource_hints', 10, 2);
+
 function luxureat_static_filter_plugin_style($html, $handle) {
     $path = luxureat_static_current_path();
     $aliases = luxureat_static_aliases();

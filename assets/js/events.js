@@ -51,7 +51,7 @@
     return `<article class="lux-latest-event-slide" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">
-          <img loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(displayPoster)}">
+          <img width="${event.displayWidth}" height="${event.displayHeight}" loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(displayPoster)}">
         </figure>
         <div class="lux-event-copy">
           <h2>${escapeHtml(copy.title)}</h2>

@@ -511,9 +511,10 @@ const luxNavigation = {
 
 const luxHeader = document.querySelector(".lux-header");
 if (luxHeader) {
+  const initiallyScrolled = window.scrollY > 1;
   luxHeader.classList.toggle("is-light-surface", Boolean(document.querySelector(".lux-article-page")));
+  luxHeader.classList.toggle("is-scrolled", initiallyScrolled);
   const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
-  syncHeaderSurface();
   window.addEventListener("scroll", syncHeaderSurface, { passive: true });
 }
 
@@ -742,20 +743,30 @@ if (luxNav && luxMenu) {
   const lang = () => document.documentElement.lang?.startsWith("zh") ? "返回顶部" : "Back to top";
 
   const init = () => {
+    const sentinel = document.createElement("span");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.style.cssText = "position:absolute;top:360px;width:1px;height:1px;pointer-events:none;opacity:0";
     const button = document.createElement("button");
     button.type = "button";
     button.className = "lux-back-to-top";
     button.setAttribute("aria-label", lang());
     button.innerHTML = '<svg class="lux-back-to-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg>';
+    document.body.prepend(sentinel);
     document.body.appendChild(button);
 
-    const update = () => button.classList.toggle("visible", window.scrollY > 360);
     button.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
       sessionStorage.setItem(`luxureatScroll:${location.pathname}`, "0");
     });
-    window.addEventListener("scroll", update, { passive: true });
-    update();
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => {
+        button.classList.toggle("visible", !entry.isIntersecting && entry.boundingClientRect.top < 0);
+      }).observe(sentinel);
+    } else {
+      const update = () => button.classList.toggle("visible", window.scrollY > 360);
+      window.addEventListener("scroll", update, { passive: true });
+      update();
+    }
   };
 
   document.addEventListener("DOMContentLoaded", init);

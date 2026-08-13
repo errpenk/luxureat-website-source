@@ -52,6 +52,8 @@ assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/
 assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 1024, true, "material icon subset exceeds 12 KB");
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
 assert.match(core, /navigation\?\.type === "reload"[\s\S]*?sessionStorage\.removeItem\(key\)/, "explicit refresh does not reset the current scroll position");
+assert.match(core, /new IntersectionObserver\(\(\[entry\]\) =>[\s\S]*?\.observe\(sentinel\)/, "back-to-top visibility still relies on scroll-time layout reads");
+assert.match(core, /const initiallyScrolled = window\.scrollY > 1;[\s\S]*?luxHeader\.classList\.toggle\("is-light-surface"/, "header initialization reads scroll position after mutating layout");
 assert.doesNotMatch(core, /sessionStorage\.setItem\(`luxureatScroll:\$\{target\.pathname\}`/, "navigation still resets previously saved page positions");
 assert.match(core, /elementFromPoint\(innerWidth \/ 2, innerHeight \/ 3\)[\s\S]*?anchor\?\.id/, "scroll restoration does not remember the visible content anchor");
 assert.match(core, /anchor\.getBoundingClientRect\(\)\.top - position\.offset[\s\S]*?setTimeout\(retry, 100\)/, "scroll restoration does not follow asynchronous layout changes");
