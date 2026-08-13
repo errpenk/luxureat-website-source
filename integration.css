@@ -7581,6 +7581,12 @@ input[type="search"]::-webkit-search-decoration {
   font: 700 14px/1.3 var(--lux-page-heading);
   text-align: center;
 }
+.lux-cert-card-back p {
+  display: none;
+  margin: 0;
+  color: #5c5b57;
+  text-align: center;
+}
 .lux-cert-card:focus-visible .lux-cert-card-face {
   box-shadow: 0 0 0 2px #8beee5;
 }
@@ -7624,12 +7630,48 @@ input[type="search"]::-webkit-search-decoration {
   .lux-cert-glossary-grid .lux-cert-card-face {
     padding: 18px 8px;
   }
+  .lux-cert-glossary-grid .lux-cert-card-back {
+    gap: clamp(4px, 1.3vw, 7px);
+    padding: 8px 5px;
+  }
+  .lux-cert-glossary-grid .lux-cert-card-back img,
+  .lux-cert-glossary-grid .lux-cert-card[data-certification="FDA"] .lux-cert-card-back img,
+  .lux-cert-glossary-grid .lux-cert-card[data-certification="Excellent Taste 2025"] .lux-cert-card-back img {
+    max-width: 68%;
+    max-height: clamp(36px, 11.5vw, 56px);
+    transform: none;
+  }
+  .lux-cert-glossary-grid .lux-cert-card-back strong {
+    font-size: clamp(8px, 2.2vw, 11px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+  .lux-cert-glossary-grid .lux-cert-card-back p {
+    display: block;
+    font-size: clamp(8px, 2.3vw, 10px) !important;
+    line-height: 1.25 !important;
+    font-weight: 500;
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+  html[lang="en"] .lux-cert-glossary-grid .lux-cert-card-back {
+    gap: clamp(3px, 1vw, 5px);
+    padding: 7px 4px;
+  }
+  html[lang="en"] .lux-cert-glossary-grid .lux-cert-card-back img,
+  html[lang="en"] .lux-cert-glossary-grid .lux-cert-card[data-certification="FDA"] .lux-cert-card-back img,
+  html[lang="en"] .lux-cert-glossary-grid .lux-cert-card[data-certification="Excellent Taste 2025"] .lux-cert-card-back img {
+    max-height: clamp(32px, 10vw, 48px);
+  }
+  html[lang="en"] .lux-cert-glossary-grid .lux-cert-card-back strong {
+    font-size: clamp(7.5px, 2vw, 10px);
+  }
   .lux-cert-glossary-grid .lux-cert-card-front h5 {
     font-size: 11px;
   }
   .lux-cert-glossary-grid .lux-cert-card-front p {
-    font-size: 9px;
-    line-height: 1.45;
+    font-size: 9px !important;
+    line-height: 1.45 !important;
   }
   .lux-cert-principle {
     display: grid !important;
