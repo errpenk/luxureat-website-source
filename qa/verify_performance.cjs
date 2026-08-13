@@ -13,13 +13,14 @@ const htaccess = read(".htaccess").toString();
 
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
 assert.match(htaccess, /css\|js\|mjs\|ttf\|woff2/, "static TTF fonts do not receive the immutable cache lifetime");
-assert.ok(size("assets/media/brand/home-hero-truffle-poster-lite.webp") <= 14 * 1024, "homepage delivery poster exceeds 14 KB");
+assert.ok(size("assets/media/brand/home-hero-truffle-poster-lite-v2.webp") <= 9 * 1024, "homepage delivery poster exceeds 9 KB");
 assert.ok(size("assets/media/brand/luxureat-logo-144.webp") <= 5 * 1024, "homepage delivery logo exceeds 5 KB");
+assert.ok(size("assets/media/brand/luxureat-logo-64.webp") <= 2 * 1024 && size("assets/media/brand/luxureat-logo-96.webp") <= 3 * 1024, "navigation logos exceed their delivery budgets");
 for (const service of ["selection", "partnership", "foodservice"]) {
-  assert.ok(size(`assets/media/brand/home-service-${service}-640.webp`) <= 50 * 1024, `${service} service image exceeds 50 KB`);
+  assert.ok(size(`assets/media/brand/home-service-${service}-420.webp`) <= 24 * 1024, `${service} service image exceeds 24 KB`);
 }
 for (const event of ["fhc-shanghai-2026", "cifie-changsha-2026-poster", "marca-china-2026-poster", "sial-guangzhou-2026"]) {
-  assert.ok(size(`assets/media/events/${event}-640.webp`) <= 52 * 1024, `${event} delivery image exceeds 52 KB`);
+  assert.ok(size(`assets/media/events/${event}-520.webp`) <= 38 * 1024, `${event} delivery image exceeds 38 KB`);
   assert.ok(size(`assets/media/events/${event}-160.webp`) <= 7 * 1024, `${event} thumbnail exceeds 7 KB`);
 }
 assert.ok(size("assets/fonts/KingHwaOldSong-site.woff2") <= 1400 * 1024, "complete KingHwa site font exceeds 1.4 MB");
@@ -57,7 +58,7 @@ assert.match(core, /"wheel", "touchstart", "pointerdown", "keydown"/, "user inpu
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
-  assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite\.webp/);
+  assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite-v2\.webp/);
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
   assert.match(home, /data-lux-deferred-scripts/);

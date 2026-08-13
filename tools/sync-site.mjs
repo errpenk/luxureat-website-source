@@ -33,7 +33,7 @@ function headerFor(page) {
 
   return `<!-- lux:header:start -->
 <header class="lux-header">
-  <a class="lux-brand" href="index.html"><img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"></a>
+  <a class="lux-brand" href="index.html"><img width="64" height="64" loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo-64.webp" srcset="../assets/media/brand/luxureat-logo-64.webp 64w, ../assets/media/brand/luxureat-logo-96.webp 96w" sizes="(max-width: 1080px) 96px, 64px" alt="LuxurEat"></a>
   <nav class="lux-nav" aria-label="${labels.nav}">${nav}</nav>
   <div class="lux-actions">
     <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="${labels.bag}">${bagIcon}<span class="lux-bag-count" data-bag-count hidden></span></a>
