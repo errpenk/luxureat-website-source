@@ -193,6 +193,7 @@ function fontPreloads(page) {
   const critical = zhCritical[page.key] || zhCritical.home;
   const fonts = page.lang === "zh"
     ? [
+      ...(page.key === "home" ? [["KingHwaOldSong-hero-critical.woff2", "KingHwa Hero Critical", 700]] : []),
       [critical[0], "KingHwa Page Critical", 700, "normal", page.key !== "home"],
       ["KingHwaOldSong-site.woff2", "KingHwa Old Song Site", 700, "normal", false],
       ...(page.key === "home" ? [["LuxurEatZhiSong-hero-critical.woff2", "ZhiSong Hero Critical", 400]] : []),
@@ -213,15 +214,15 @@ function fontPreloads(page) {
   if (page.lang === "en" && ["home", "products", "bag"].includes(page.key)) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
   }
-  const versionFor = (font) => ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font4` : assetVersion;
-  const preloadFonts = fonts.filter(([, , , , preload = true]) => preload).sort(([font]) => font === "LuxurEatZhiSong-hero-critical.woff2" ? -1 : 0);
+  const versionFor = (font) => ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
+  const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
     ...preloadFonts.map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${versionFor(font)}" as="font" type="font/woff2" crossorigin>`),
     ...(page.key === "home" ? [] : [`<link rel="preload" href="../assets/fonts/MaterialSymbolsOutlined-subset.ttf?v=${assetVersion}" as="font" type="font/ttf" crossorigin>`]),
   ].join("\n");
   const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${versionFor(font)}") format("woff2");font-weight:${weight};font-style:${style};font-display:swap}`).join("");
   const headlineFonts = '"KingHwa Page Critical","KingHwa Old Song Site"';
-  const localeFonts = page.lang === "zh" ? `html[lang^="zh"]{--lux-page-heading:${headlineFonts}!important;--lux-zh-headline:${headlineFonts}!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}${page.key === "home" ? 'html[lang^="zh"] body :is(.lux-header,.lux-home-hero,.lux-cookie-banner) :is(p,a,span,button){font-family:"ZhiSong Hero Critical","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : ""}` : "";
+  const localeFonts = page.lang === "zh" ? `html[lang^="zh"]{--lux-page-heading:${headlineFonts}!important;--lux-zh-headline:${headlineFonts}!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}${page.key === "home" ? 'html[lang^="zh"] .lux-home-hero{--lux-zh-headline:"KingHwa Hero Critical","KingHwa Page Critical","KingHwa Old Song Site"}html[lang^="zh"] body :is(.lux-header,.lux-home-hero,.lux-cookie-banner) :is(p,a,span,button){font-family:"ZhiSong Hero Critical","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : ""}` : "";
   return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}${localeFonts}</style>\n<!-- lux:fonts:end -->`;
 }
 

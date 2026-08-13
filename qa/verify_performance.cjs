@@ -28,6 +28,7 @@ assert.ok(size("assets/fonts/LuxurEatZhiSong-site.woff2") <= 360 * 1024, "comple
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-hero-critical.woff2") <= 64 * 1024, "Chinese home hero font exceeds 64 KB");
+assert.ok(size("assets/fonts/KingHwaOldSong-hero-critical.woff2") <= 16 * 1024, "Chinese home hero headline font exceeds 16 KB");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/LuxurEatZhiSongWeb-subset.woff2")), "retired full ZhiSong font remains bundled");
 assert.ok(size("assets/media/brand/home-hero-truffle-mobile.m4v") <= 320 * 1024, "mobile hero video exceeds 320 KB");
@@ -68,6 +69,7 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /rel="icon"[^>]+luxureat-logo\.png/);
   if (lang === "en") assert.match(home, /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
   assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-hero-critical\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
+  if (lang === "zh") assert.match(home, /rel="preload"[^>]+KingHwaOldSong-hero-critical\.woff2/);
   if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-home-critical|LuxurEatZhiSong-home-subset)\.woff2/);
   if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-site|LuxurEatZhiSong-site)\.woff2/);
   assert.match(home, /class="lux-home-page /);
