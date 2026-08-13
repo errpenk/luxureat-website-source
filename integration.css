@@ -8462,16 +8462,13 @@ body {
   .lux-cert-leadership h2 { font-size: 40px; }
   .lux-cert-leadership p { font-size: 14px; line-height: 22px; }
   .lux-cert-leadership-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     grid-auto-flow: row;
     gap: 4px;
     overflow: visible;
   }
-  .lux-cert-leadership-gallery figure:last-child {
-    grid-column: 1 / -1;
-    width: calc(50% - 2px);
-    justify-self: center;
-  }
+  .lux-cert-leadership-gallery figure:nth-child(-n + 2) { grid-column: span 3; }
+  .lux-cert-leadership-gallery figure:nth-child(n + 3) { grid-column: span 2; }
   .lux-collab-mosaic,
   .lux-channel-showcase,
   .lux-cert-capability,
@@ -12368,47 +12365,59 @@ html[lang^="zh"] .lux-cert-awards h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 410px;
-  padding: 32px;
+  min-height: 500px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px;
   overflow: hidden;
   background: #131313;
 }
 .lux-cert-award-stack figure {
-  width: min(290px, 38vw);
-  margin: 0 -22px;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 330px;
+  aspect-ratio: 3 / 4;
+  margin: 0 -12px;
   border: 10px solid #292929;
   background: #fff;
   box-shadow: 0 20px 42px rgba(0, 0, 0, .22);
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition: flex-grow .45s cubic-bezier(.2,.75,.25,1), transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .25s ease;
   cursor: zoom-in;
 }
 .lux-cert-award-stack figure:first-child {
-  transform: rotate(-3deg) translateY(18px);
+  transform: translateY(34px);
+}
+.lux-cert-award-stack figure:nth-child(2),
+.lux-cert-award-stack figure:nth-child(4) {
+  transform: translateY(14px);
+}
+.lux-cert-award-stack figure:nth-child(3) {
+  z-index: 2;
+  transform: translateY(-18px);
 }
 .lux-cert-award-stack figure:last-child {
   z-index: 1;
-  transform: rotate(2deg) translateY(-18px);
+  transform: translateY(34px);
 }
 .lux-cert-award-stack figure:hover,
 .lux-cert-award-stack figure:focus-within {
   z-index: 5;
-  transform: translateY(-22px) scale(1.1);
+  flex-grow: 2.35;
+  transform: translateY(-16px) scale(1.025);
   box-shadow: 0 30px 58px rgba(0, 0, 0, .32);
 }
 .lux-cert-award-stack button {
   display: grid;
   width: 100%;
-  min-height: 255px;
-  padding: 34px;
+  height: 100%;
+  padding: clamp(18px, 2.5vw, 38px);
   place-items: center;
-  background: #fff;
+  background:
+    linear-gradient(#d9d9d9, #d9d9d9) center 18% / 52% 2px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 15px, #ececec 15px 17px) center 66% / 70% 30% no-repeat,
+    #fff;
   cursor: zoom-in;
-}
-.lux-cert-award-stack figure > div {
-  display: grid;
-  min-height: 320px;
-  padding: 46px;
-  place-items: center;
 }
 .lux-cert-award-dialog {
   width: min(880px, calc(100vw - 32px));
@@ -12442,23 +12451,11 @@ html[lang^="zh"] .lux-cert-awards h2 {
 }
 .lux-cert-award-stack img {
   width: 100%;
-  max-height: 165px;
+  max-height: 42%;
   object-fit: contain;
 }
-.lux-cert-award-stack figcaption {
-  display: grid;
-  gap: 4px;
-  padding: 18px 20px;
-  border-top: 1px solid #ddd8cf;
-  color: #171715;
-  text-align: center;
-}
-.lux-cert-award-stack figcaption strong {
-  font: 700 16px/1.4 var(--lux-page-heading);
-}
-.lux-cert-award-stack figcaption span {
-  color: #686159;
-  font: 400 12px/1.5 var(--lux-page-heading);
+@media (prefers-reduced-motion: reduce) {
+  .lux-cert-award-stack figure { transition: none; }
 }
 @media (max-width: 820px) {
   .lux-home-topic-preview header {
@@ -12555,20 +12552,25 @@ html[lang^="zh"] .lux-cert-awards h2 {
     min-height: 240px;
   }
   .lux-cert-award-stack {
-    flex-direction: column;
-    gap: 24px;
-    min-height: 0;
-    padding: 28px 18px;
+    min-height: 230px;
+    padding: 30px 5px;
   }
   .lux-cert-award-stack figure {
-    width: min(100%, 330px);
-    margin: 0;
-    transform: none !important;
+    width: auto;
+    margin: 0 -3px;
+    border-width: 4px;
   }
-  .lux-cert-award-stack figure > div {
-    min-height: 250px;
-    padding: 32px;
+  .lux-cert-award-stack figure:first-child,
+  .lux-cert-award-stack figure:last-child { transform: translateY(14px); }
+  .lux-cert-award-stack figure:nth-child(2),
+  .lux-cert-award-stack figure:nth-child(4) { transform: translateY(6px); }
+  .lux-cert-award-stack figure:nth-child(3) { transform: translateY(-6px); }
+  .lux-cert-award-stack figure:hover,
+  .lux-cert-award-stack figure:focus-within {
+    flex-grow: 2.8;
+    transform: translateY(-6px) scale(1.02);
   }
+  .lux-cert-award-stack button { padding: 8px; }
   .lux-cert-awards h2 {
     font-size: 40px;
     line-height: 48px;
