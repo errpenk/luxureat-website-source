@@ -7609,11 +7609,22 @@ input[type="search"]::-webkit-search-decoration {
     max-height: 96px;
   }
   .lux-cert-glossary-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
   }
   .lux-cert-glossary-grid .lux-cert-card,
   .lux-cert-glossary-grid .lux-cert-card-inner {
-    min-height: 280px;
+    min-height: 230px;
+  }
+  .lux-cert-glossary-grid .lux-cert-card-face {
+    padding: 18px 8px;
+  }
+  .lux-cert-glossary-grid .lux-cert-card-front h5 {
+    font-size: 11px;
+  }
+  .lux-cert-glossary-grid .lux-cert-card-front p {
+    font-size: 9px;
+    line-height: 1.45;
   }
   .lux-cert-principle {
     display: grid !important;
@@ -12335,6 +12346,33 @@ section[data-recipe-panel] {
   padding: clamp(72px, 8vw, 112px) 24px;
   background: #131313;
 }
+.lux-cert-brand-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(20px, 4vw, 64px);
+  max-width: 920px;
+  margin: 0 auto clamp(48px, 6vw, 78px);
+}
+.lux-cert-brand-row > * {
+  display: grid;
+  min-width: 0;
+  height: 88px;
+  place-items: center;
+}
+.lux-cert-brand-row img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 76px;
+  object-fit: contain;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.lux-cert-brand-row a:hover img,
+.lux-cert-brand-row a:focus-visible img {
+  opacity: .72;
+  transform: translateY(-3px);
+}
 .lux-cert-awards > header {
   max-width: 940px;
   margin: 0 auto 56px;
@@ -12361,11 +12399,16 @@ html[lang^="zh"] .lux-cert-awards h2 {
   color: #aaa69f;
   font: 400 16px/1.75 var(--lux-page-heading);
 }
+.lux-cert-awards header p a {
+  color: #9df5ec;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .lux-cert-award-stack {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 500px;
+  height: 500px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 48px 32px;
@@ -12377,7 +12420,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   flex: 1 1 0;
   min-width: 0;
   max-width: 330px;
-  aspect-ratio: 3 / 4;
+  height: 370px;
   margin: 0 -12px;
   border: 10px solid #292929;
   background: #fff;
@@ -12455,7 +12498,8 @@ html[lang^="zh"] .lux-cert-awards h2 {
   object-fit: contain;
 }
 @media (prefers-reduced-motion: reduce) {
-  .lux-cert-award-stack figure { transition: none; }
+  .lux-cert-award-stack figure,
+  .lux-cert-brand-row img { transition: none; }
 }
 @media (max-width: 820px) {
   .lux-home-topic-preview header {
@@ -12552,11 +12596,12 @@ html[lang^="zh"] .lux-cert-awards h2 {
     min-height: 240px;
   }
   .lux-cert-award-stack {
-    min-height: 230px;
+    height: 230px;
     padding: 30px 5px;
   }
   .lux-cert-award-stack figure {
     width: auto;
+    height: 170px;
     margin: 0 -3px;
     border-width: 4px;
   }
@@ -12571,6 +12616,12 @@ html[lang^="zh"] .lux-cert-awards h2 {
     transform: translateY(-6px) scale(1.02);
   }
   .lux-cert-award-stack button { padding: 8px; }
+  .lux-cert-brand-row {
+    gap: 8px;
+    margin-bottom: 42px;
+  }
+  .lux-cert-brand-row > * { height: 58px; }
+  .lux-cert-brand-row img { max-height: 48px; }
   .lux-cert-awards h2 {
     font-size: 40px;
     line-height: 48px;
