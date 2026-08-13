@@ -12342,8 +12342,8 @@ section[data-recipe-panel] {
 #china-family-recipes .lux-recipe-theme-card:nth-child(2) figure,
 #china-family-recipes .lux-recipe-theme-card:nth-child(3) figure { min-height: 360px; }
 .lux-cert-awards {
-  margin: clamp(96px, 10vw, 150px) 0 0;
-  padding: clamp(72px, 8vw, 112px) 24px;
+  margin: 0;
+  padding: 32px 24px clamp(72px, 8vw, 112px);
   background: #131313;
 }
 .lux-cert-brand-row {
@@ -12420,7 +12420,8 @@ html[lang^="zh"] .lux-cert-awards h2 {
   flex: 1 1 0;
   min-width: 0;
   max-width: 330px;
-  height: 370px;
+  height: auto;
+  aspect-ratio: 3 / 4;
   margin: 0 -12px;
   border: 10px solid #292929;
   background: #fff;
@@ -12601,7 +12602,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   }
   .lux-cert-award-stack figure {
     width: auto;
-    height: 170px;
+    height: auto;
     margin: 0 -3px;
     border-width: 4px;
   }
