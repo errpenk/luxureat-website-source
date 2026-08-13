@@ -57,7 +57,7 @@ const page = (lang, slug, key, scripts, indexable = true) => ({
   route: slug === "index" ? lang : `${lang}/${slug}`,
   seo: { title: seo[lang][key][0], description: seo[lang][key][1] },
   indexable,
-  scripts: ["core", ...scripts],
+  scripts: ["image-variants", "core", ...scripts],
 });
 
 export const pages = [
@@ -86,13 +86,14 @@ export const pages = [
 ];
 
 export const scripts = {
+  "image-variants": { src: "assets/data/image-variants.js", dependencies: [] },
   "certification-ui": { src: "assets/js/certification-ui.js", dependencies: [] },
   "product-data": { src: "assets/data/products.js", dependencies: [] },
   "event-data": { src: "assets/data/events.js", dependencies: [] },
   "journal-data": { src: "assets/data/journal.js", dependencies: [] },
   "academy-index": { src: "assets/data/academy-index.js", dependencies: [] },
   "brand-data": { src: "assets/data/brand.js", dependencies: [] },
-  core: { src: "assets/js/core.js", dependencies: [] },
+  core: { src: "assets/js/core.js", dependencies: ["image-variants"] },
   "new-arrivals": { src: "assets/js/new-arrivals.js", dependencies: [] },
   products: { src: "assets/js/products.js", dependencies: ["product-data"] },
   events: { src: "assets/js/events.js", dependencies: ["event-data"] },

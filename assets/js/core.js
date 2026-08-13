@@ -4,6 +4,24 @@ const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) =>
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
+const luxImageSource = (source) => {
+  if (!luxIsMobile || !source) return source;
+  try {
+    const url = new URL(source, document.baseURI);
+    const marker = url.pathname.indexOf("/assets/");
+    const variant = marker < 0 ? null : window.LUXUREAT_IMAGE_VARIANTS?.[url.pathname.slice(marker + 8)];
+    return variant ? new URL(`../${variant}`, luxCoreUrl).href : source;
+  } catch { return source; }
+};
+window.luxImageSource = luxImageSource;
+window.luxResponsiveData = (value) => {
+  if (typeof value === "string") return luxImageSource(value);
+  if (Array.isArray(value)) return value.map(window.luxResponsiveData);
+  if (value && typeof value === "object") {
+    Object.entries(value).forEach(([key, item]) => { value[key] = window.luxResponsiveData(item); });
+  }
+  return value;
+};
 
 const luxDelayedAnalytics = document.querySelector("script[data-lux-analytics-src]");
 const luxCookieConsentKey = "luxureat_cookie_consent";
@@ -102,7 +120,7 @@ if (["required", "verified", "verification-failed"].includes(new URLSearchParams
 
 const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg]");
 const loadLuxBackground = (element) => {
-  element.style.backgroundImage = `url("${element.dataset.luxBg}")`;
+  element.style.backgroundImage = `url("${luxImageSource(element.dataset.luxBg)}")`;
   delete element.dataset.luxBg;
 };
 

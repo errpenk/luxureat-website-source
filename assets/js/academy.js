@@ -41,6 +41,7 @@ document.addEventListener("click", (event) => {
 
 function initCaviarAcademy() {
   const data = window.LUXUREAT_ACADEMY_DATA;
+  window.luxResponsiveData?.(data);
   const list = document.querySelector("[data-academy-list]");
   const latest = document.querySelector("[data-academy-latest]");
   const search = document.querySelector("[data-academy-search]");

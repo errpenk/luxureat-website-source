@@ -84,11 +84,27 @@ for (const lang of ["zh", "en"]) {
 }
 
 const allHtml = ["zh", "en"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n");
+assert.match(allHtml, /assets\/data\/image-variants\.js/);
+assert.ok(size("assets/data/image-variants.js") <= 30 * 1024, "responsive image manifest exceeds 30 KB");
 assert.doesNotMatch(allHtml, /assets\/fonts\/[^"']+\.(?:woff2|ttf)(?!\?v=)/, "a page still contains an unversioned font URL");
 assert.doesNotMatch(allHtml, /srcset="([^" ]+-mobile\.webp) \d+w, \1 \d+w"/, "a responsive image repeats its mobile source as the desktop candidate");
 for (const match of allHtml.matchAll(/<img\b[^>]*(?:\.avif|\.gif|\.jpe?g|\.png|\.webp)[^>]*>/gi)) {
   assert.match(match[0], /\bwidth="\d+"/i, "a raster image has no intrinsic width");
   assert.match(match[0], /\bheight="\d+"/i, "a raster image has no intrinsic height");
+}
+for (const lang of ["zh", "en"]) for (const name of fs.readdirSync(path.join(root, lang)).filter((file) => file.endsWith(".html"))) {
+  const html = read(`${lang}/${name}`).toString();
+  for (const match of html.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+    const source = match[1].split(/[?#]/, 1)[0];
+    if (!/^\.\.\/assets\/media\/.*\.(?:avif|jpe?g|png|webp)$/i.test(source)) continue;
+    const file = path.resolve(root, lang, source);
+    const intrinsicWidth = Number(match[0].match(/\bwidth=["'](\d+)["']/i)?.[1]);
+    if (!fs.existsSync(file) || intrinsicWidth <= 720 || size(path.relative(root, file)) <= 100 * 1024) continue;
+    assert.match(match[0], /\bsrcset=/i, `${lang}/${name} has a large image without a mobile candidate: ${source}`);
+  }
+}
+for (const runtime of ["academy", "events", "journal", "products"]) {
+  assert.match(read(`assets/js/${runtime}.js`).toString(), /luxResponsiveData/, `${runtime} does not select responsive dynamic images`);
 }
 assert.match(read("zh/index.html").toString(), /data-lux-mobile-src="\.\.\/assets\/media\/brand\/home-service-selection-mobile\.webp"/);
 assert.match(read("zh/index.html").toString(), /srcset="\.\.\/assets\/media\/brand\/[^"']+-mobile\.webp \d+w, \.\.\/assets\/media\/brand\/[^"']+ \d+w" sizes="100vw"/, "critical responsive images do not expose a native srcset");

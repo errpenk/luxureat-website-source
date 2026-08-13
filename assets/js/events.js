@@ -1,4 +1,5 @@
 (function () {
+  window.luxResponsiveData?.(window.LUXUREAT_EVENT_DATA);
   const assetBase = new URL("../", document.currentScript?.src || location.href);
   const asset = (path) => new URL(path, assetBase).href;
   const section = document.querySelector("[data-latest-event]");

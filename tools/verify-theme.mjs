@@ -111,7 +111,8 @@ assert(!walk(themeDir).some((file) => path.basename(file) === '.DS_Store'), 'the
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
-assert(functionsPhp.includes("'zh/product' => array('core', 'product-data', 'products')"), 'functions.php loads account state before cart initialization');
+assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'product-data', 'products')"), 'functions.php loads responsive images and account state before cart initialization');
+assert(functionsPhp.includes("'core' => array('src' => 'assets/js/core.js', 'dependencies' => array('image-variants'))"), 'core runtime does not depend on responsive image mappings');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
 assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');

@@ -3,6 +3,8 @@ const luxJournalAsset = (path) => new URL(path, luxJournalAssetBase).href;
 
 function initLuxReader() {
   const articleData = window.LUXUREAT_ARTICLE_DATA || {};
+  window.luxResponsiveData?.(articleData);
+  window.luxResponsiveData?.(window.LUXUREAT_EVENT_DATA);
   const articles = articleData.articles || {};
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
   const eventMount = document.querySelector("[data-recent-events]");
