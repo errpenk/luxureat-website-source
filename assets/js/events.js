@@ -47,7 +47,7 @@
     const newsHref = location.protocol === "file:" || location.pathname.endsWith(".html")
       ? `${newsIndexHref}#event-${event.id}`
       : `${lang === "zh" ? "" : "/en"}/events/${encodeURIComponent(event.id)}/`;
-    return `<article class="lux-latest-event-slide" role="group" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
+    return `<article class="lux-latest-event-slide" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">
           <img loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(event.poster)}">

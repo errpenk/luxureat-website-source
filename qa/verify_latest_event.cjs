@@ -27,6 +27,7 @@ function rgbNumbers(color) {
       location: locationLink.textContent.trim(),
       mapHref: locationLink.href,
       slides: section.querySelectorAll(".lux-latest-event-slide").length,
+      explicitSlideRoles: section.querySelectorAll('.lux-latest-event-slide[role="group"]').length,
       controls: section.querySelectorAll("[data-event-carousel-step]").length,
       iconColor: getComputedStyle(icon).color,
     };
@@ -37,6 +38,7 @@ function rgbNumbers(color) {
   assert(result.location === expectedLocation, `latest event location mismatch: ${result.location}`);
   assert(result.mapHref.startsWith("https://maps.apple.com/"), `latest event map link mismatch: ${result.mapHref}`);
   assert(result.slides === 4, `latest event carousel should contain four slides: ${result.slides}`);
+  assert(result.explicitSlideRoles === 0, "event slides must keep their native article role");
   assert(result.controls === 2, `latest event carousel controls are missing: ${result.controls}`);
   const [r, g, b] = rgbNumbers(result.iconColor);
   assert(r <= 5 && g >= 100 && g <= 112 && b >= 94 && b <= 106, `latest event icon is not TrufflEat green: ${result.iconColor}`);
