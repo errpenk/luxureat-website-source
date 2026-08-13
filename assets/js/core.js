@@ -86,7 +86,7 @@ if (["required", "verified", "verification-failed"].includes(new URLSearchParams
   banner.setAttribute("role", "region");
   banner.setAttribute("aria-label", copy.label);
   banner.hidden = true;
-  banner.innerHTML = `<img src="${new URL("../media/brand/luxureat-logo.png", luxCoreUrl)}" alt="LuxurEat"><div><p>${copy.text}</p><span class="lux-cookie-policy-links"><button type="button" data-footer-modal="privacy">${copy.privacy}</button><span aria-hidden="true">/</span><button type="button" data-footer-modal="cookie">${copy.cookie}</button></span></div><div class="lux-cookie-actions"><button type="button" data-cookie-choice="analytics">${copy.accept}</button><button type="button" data-cookie-choice="necessary">${copy.necessary}</button></div>`;
+  banner.innerHTML = `<img width="64" height="64" src="${new URL("../media/brand/luxureat-logo-64.webp", luxCoreUrl)}" alt="LuxurEat"><div><p>${copy.text}</p><span class="lux-cookie-policy-links"><button type="button" data-footer-modal="privacy">${copy.privacy}</button><span aria-hidden="true">/</span><button type="button" data-footer-modal="cookie">${copy.cookie}</button></span></div><div class="lux-cookie-actions"><button type="button" data-cookie-choice="analytics">${copy.accept}</button><button type="button" data-cookie-choice="necessary">${copy.necessary}</button></div>`;
   document.body.appendChild(banner);
 
   document.addEventListener("click", (event) => {

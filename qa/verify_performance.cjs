@@ -47,6 +47,7 @@ assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eag
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
 assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
+assert.match(core, /luxureat-logo-64\.webp/, "cookie banner does not use the delivery-sized logo");
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/, "mobile analytics still competes with first-screen content");
 assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 1024, true, "material icon subset exceeds 12 KB");
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
