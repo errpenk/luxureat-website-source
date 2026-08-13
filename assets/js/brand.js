@@ -19,8 +19,8 @@
     success: "信息已发送，我们会尽快与您联系。",
     failed: "暂时无法发送，请稍后再试。",
     opening: "正在打开您的邮件应用…",
-    labels: ["姓名", "电话", "电子邮箱", "咨询内容"],
-    notProvided: "未提供",
+    labels: ["Nome", "Telefono", "E-mail", "Messaggio"],
+    notProvided: "Non fornito",
   } : {
     required: "Please complete all required fields.",
     invalidEmail: "Please enter a valid email address.",
@@ -29,8 +29,8 @@
     success: "Your message has been sent. We will be in touch soon.",
     failed: "Your message could not be sent. Please try again later.",
     opening: "Opening your email app…",
-    labels: ["Name", "Phone", "Email", "Message"],
-    notProvided: "Not provided",
+    labels: ["Nome", "Telefono", "E-mail", "Messaggio"],
+    notProvided: "Non fornito",
   };
   const feedback = form.querySelector("[data-contact-feedback]");
   const submit = form.querySelector('[type="submit"]');
@@ -100,7 +100,23 @@
     if (!validate()) return;
 
     const data = new FormData(form);
-    const subject = `${data.get("name")} + ${data.get("inquiry_type")} + ${data.get("phone")}`;
+    const inquiryLabels = {
+      "产品与采购咨询": "Richieste su prodotti e acquisti",
+      "经销及渠道合作": "Distribuzione e partnership commerciali",
+      "酒店餐饮与专业供应": "Fornitura per hotel, ristorazione e professionisti",
+      "自有品牌与私人定制": "Private label e personalizzazione su misura",
+      "企业礼赠与项目合作": "Regali aziendali e collaborazioni di progetto",
+      "品牌、媒体合作": "Collaborazioni con brand e media",
+      "其他": "Altro",
+      "Product & Purchasing Enquiries": "Richieste su prodotti e acquisti",
+      "Distribution & Channel Partnerships": "Distribuzione e partnership commerciali",
+      "Hospitality, Catering & Professional Supply": "Fornitura per hotel, ristorazione e professionisti",
+      "Private Label & Bespoke Customisation": "Private label e personalizzazione su misura",
+      "Corporate Gifting & Project Partnerships": "Regali aziendali e collaborazioni di progetto",
+      "Brand & Media Partnerships": "Collaborazioni con brand e media",
+      "Other": "Altro",
+    };
+    const subject = `${data.get("name")} + ${inquiryLabels[data.get("inquiry_type")]}`;
     const body = [
       `${text.labels[0]}：${data.get("name")}`,
       `${text.labels[1]}：${data.get("phone") || text.notProvided}`,

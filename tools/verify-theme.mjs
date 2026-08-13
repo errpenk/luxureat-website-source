@@ -150,7 +150,7 @@ assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php d
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_contact") && functionsPhp.includes("wp_mail('errpenk@gmail.com'"), 'contact enquiries are emailed to the requested recipient');
 assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_create_nonce('luxureat_contact')"), 'contact pages receive a nonce-protected AJAX endpoint');
-assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_type . ' + ' . $phone"), 'contact email subjects contain name, enquiry type, and phone');
+assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"), 'contact email subjects contain only the name and Italian enquiry type');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
 assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('academy/beluga-caviar-cover-new-page-bg.png'), 'checkout cart items receive branded product images');
 assert(functionsPhp.includes('function luxureat_static_woo_catalog()') && functionsPhp.includes("'LuxureatWooCatalog'") && functionsPhp.includes("'stockQuantity'"), 'product pages receive live WooCommerce price, image, and stock data');
