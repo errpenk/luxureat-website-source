@@ -1008,10 +1008,10 @@ function luxureat_static_resource_hints($urls, $relation_type) {
     }
     return array_values(array_filter($urls, function ($url) {
         $href = is_array($url) && isset($url['href']) ? $url['href'] : $url;
-        return !preg_match('#^(?:https?:)?//[ic]0\\.wp\\.com/?$#i', (string) $href);
+        return !preg_match('#^(?:(?:https?:)?//)?[ic]0\\.wp\\.com/?$#i', (string) $href);
     }));
 }
-add_filter('wp_resource_hints', 'luxureat_static_resource_hints', 10, 2);
+add_filter('wp_resource_hints', 'luxureat_static_resource_hints', PHP_INT_MAX, 2);
 
 function luxureat_static_filter_plugin_style($html, $handle) {
     $path = luxureat_static_current_path();
