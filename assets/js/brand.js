@@ -64,7 +64,7 @@
   };
   const validate = () => {
     let firstInvalid = null;
-    ["name", "phone", "inquiry_type", "message"].forEach((name) => {
+    ["name", "email", "inquiry_type", "message"].forEach((name) => {
       clearError(name);
       const control = field(name);
       if (!String(control?.value || "").trim()) {
@@ -72,7 +72,6 @@
         firstInvalid ||= control;
       }
     });
-    clearError("email");
     const email = field("email");
     if (email.value && !email.validity.valid) {
       showError("email");
@@ -104,8 +103,8 @@
     const subject = `${data.get("name")} + ${data.get("inquiry_type")} + ${data.get("phone")}`;
     const body = [
       `${text.labels[0]}：${data.get("name")}`,
-      `${text.labels[1]}：${data.get("phone")}`,
-      `${text.labels[2]}：${data.get("email") || text.notProvided}`,
+      `${text.labels[1]}：${data.get("phone") || text.notProvided}`,
+      `${text.labels[2]}：${data.get("email")}`,
       "",
       `${text.labels[3]}：`,
       data.get("message"),
@@ -114,7 +113,7 @@
 
     if (!config?.ajaxUrl || !config?.nonce) {
       setFeedback(text.opening, true);
-      window.location.href = `mailto:roberto@ugolinigroup.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:errpenk@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       return;
     }
 
