@@ -12349,6 +12349,7 @@ section[data-recipe-panel] {
 .lux-cert-awards {
   margin: 0;
   padding: 32px 24px clamp(72px, 8vw, 112px);
+  overflow: hidden;
   background: #131313;
 }
 .lux-cert-results:has(+ .lux-cert-awards) {
@@ -12417,10 +12418,13 @@ html[lang^="zh"] .lux-cert-awards h2 {
   justify-content: center;
   align-items: center;
   height: 500px;
+  min-height: 500px;
+  max-height: 500px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 48px 32px;
   overflow: hidden;
+  contain: layout paint;
   background: #131313;
 }
 .lux-cert-award-stack figure {
@@ -12428,6 +12432,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   flex: 1 1 0;
   min-width: 0;
   max-width: 330px;
+  max-height: 390px;
   height: auto;
   aspect-ratio: 3 / 4;
   margin: 0 -12px;
@@ -12606,11 +12611,14 @@ html[lang^="zh"] .lux-cert-awards h2 {
   }
   .lux-cert-award-stack {
     height: 230px;
+    min-height: 230px;
+    max-height: 230px;
     padding: 30px 5px;
   }
   .lux-cert-award-stack figure {
     width: auto;
     height: auto;
+    max-height: 170px;
     margin: 0 -3px;
     border-width: 4px;
   }
