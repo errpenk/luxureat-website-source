@@ -511,11 +511,20 @@ const luxNavigation = {
 
 const luxHeader = document.querySelector(".lux-header");
 if (luxHeader) {
-  const initiallyScrolled = window.scrollY > 1;
   luxHeader.classList.toggle("is-light-surface", Boolean(document.querySelector(".lux-article-page")));
-  luxHeader.classList.toggle("is-scrolled", initiallyScrolled);
-  const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
-  window.addEventListener("scroll", syncHeaderSurface, { passive: true });
+  if ("IntersectionObserver" in window) {
+    const headerSentinel = document.createElement("span");
+    headerSentinel.setAttribute("aria-hidden", "true");
+    headerSentinel.style.cssText = "position:absolute;top:1px;width:1px;height:1px;pointer-events:none;opacity:0";
+    document.body.prepend(headerSentinel);
+    new IntersectionObserver(([entry]) => {
+      luxHeader.classList.toggle("is-scrolled", !entry.isIntersecting && entry.boundingClientRect.top < 0);
+    }).observe(headerSentinel);
+  } else {
+    const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
+    window.addEventListener("scroll", syncHeaderSurface, { passive: true });
+    syncHeaderSurface();
+  }
 }
 
 if (luxNav && luxMenu) {
