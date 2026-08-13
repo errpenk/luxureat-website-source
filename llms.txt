@@ -1,0 +1,31 @@
+# LuxurEat (露意膳) Group
+
+> LuxurEat connects premium Italian food producers with professional buyers, hospitality, retail, and distribution partners in China and international markets.
+
+The website is bilingual in Chinese and English. It presents LuxurEat's products, recipes, brand knowledge, quality standards, market services, and partnership opportunities. Use the Chinese or English links below according to the user's language.
+
+## Chinese
+
+- [首页](https://luxureat.cn/): LuxurEat 露意膳集团与意大利高端美食概览
+- [系列产品](https://luxureat.cn/product/): 松露、鱼子酱及意大利高端食品
+- [食谱艺术](https://luxureat.cn/recipe/): 产品应用与食谱
+- [品牌新闻](https://luxureat.cn/brand/): 品牌动态与活动
+- [知识博客](https://luxureat.cn/blog/): 食材知识与专业指南
+- [品质认证](https://luxureat.cn/certification/): 质量、产地与合规体系
+- [商务合作](https://luxureat.cn/cooperation/): 进口、渠道与市场合作
+- [联系我们](https://luxureat.cn/contact/): 中国与国际团队联系方式
+
+## English
+
+- [Home](https://luxureat.cn/en/): LuxurEat Group and premium Italian food overview
+- [Products](https://luxureat.cn/en/product/): Truffles, caviar, and premium Italian foods
+- [Recipe Art](https://luxureat.cn/en/recipe/): Product applications and recipes
+- [Brand News](https://luxureat.cn/en/brand/): Brand news and events
+- [Blog](https://luxureat.cn/en/blog/): Ingredient knowledge and professional guides
+- [Certification](https://luxureat.cn/en/certification/): Quality, origin, and compliance systems
+- [Cooperation](https://luxureat.cn/en/cooperation/): Import, distribution, and market partnerships
+- [Contact](https://luxureat.cn/en/contact/): China and international team contacts
+
+## Optional
+
+- [Sitemap](https://luxureat.cn/sitemap.xml): Complete index of public bilingual pages

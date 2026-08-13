@@ -1,16 +1,20 @@
 {
   "private": true,
   "scripts": {
+    "css:build": "node tools/build-home-css.mjs",
+    "css:check": "node tools/build-home-css.mjs --check",
     "site:sync": "node tools/sync-site.mjs",
     "site:check": "node tools/sync-site.mjs --check",
     "images:optimize": "node tools/optimize-images.mjs",
     "images:check": "node tools/optimize-images.mjs --check",
-    "theme:build": "node scripts/build-luxureat-theme.mjs . .deploy",
+    "theme:build": "npm run css:build && node scripts/build-luxureat-theme.mjs . .deploy",
     "theme:check": "npm run theme:build && node tools/verify-theme.mjs .deploy",
-    "check": "npm run site:check && npm run images:check && node qa/verify_content_architecture.cjs && node qa/verify_events.cjs && node qa/verify_navigation.cjs && node qa/verify_seo.cjs && node qa/verify_academy.cjs && node qa/verify_new_arrivals.cjs && node qa/verify_contact_form.cjs && node qa/verify_performance.cjs && node tools/verify-cart.mjs && npm run theme:check"
+    "check": "npm run site:check && npm run css:check && npm run images:check && node qa/verify_content_architecture.cjs && node qa/verify_events.cjs && node qa/verify_navigation.cjs && node qa/verify_seo.cjs && node qa/verify_academy.cjs && node qa/verify_new_arrivals.cjs && node qa/verify_contact_form.cjs && node qa/verify_performance.cjs && node tools/verify-cart.mjs && npm run theme:check"
   },
   "devDependencies": {
     "leaflet": "1.9.4",
+    "lightningcss": "^1.33.0",
+    "purgecss": "^8.0.0",
     "sharp": "^0.35.3"
   }
 }

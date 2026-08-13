@@ -20,10 +20,20 @@ try {
 
   const robots = read("robots.txt");
   assert.match(robots, /^User-agent: \*$/m);
+  assert.equal((robots.match(/^User-agent: \*$/gm) || []).length, 1, "wildcard crawler group must be unique for Baidu compatibility");
+  assert.doesNotMatch(robots, /^Allow: \/$/m, "default crawl access does not need a redundant Allow rule");
   assert.match(robots, /Allow: \/wp-admin\/admin-ajax\.php/);
   assert.doesNotMatch(robots, /Disallow: \/(?:en\/)?(?:bag|cart|checkout|my-account)\//, "Google must crawl utility pages to see their noindex directive");
   assert.match(robots, /Sitemap: https:\/\/luxureat\.cn\/sitemap\.xml/);
   assert.doesNotMatch(robots, /Disallow: \/assets\//, "search engines need access to render assets");
+
+  const llms = read("llms.txt");
+  assert.match(llms, /^# LuxurEat \(露意膳\) Group$/m);
+  assert.match(llms, /^> .+/m);
+  assert.match(llms, /^## Chinese$/m);
+  assert.match(llms, /^## English$/m);
+  assert.match(llms, /\[Products\]\(https:\/\/luxureat\.cn\/en\/product\/\)/);
+  assert.doesNotMatch(llms, /^(?!- \[[^\]]+\]\(https:\/\/luxureat\.cn\/)[^\n]*https:\/\/luxureat\.cn\//m, "site links must use llms.txt Markdown list format");
 
   for (const language of ["zh", "en"]) {
     const bag = read(`${language}/bag.html`);

@@ -16,6 +16,7 @@ assert.ok(size("assets/fonts/LuxurEatZhiSong-site.woff2") <= 360 * 1024, "comple
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-hero-critical.woff2") <= 64 * 1024, "Chinese home hero font exceeds 64 KB");
+assert.ok(size("assets/fonts/KingHwaOldSong-hero-critical.woff2") <= 48 * 1024, "Chinese home headline font exceeds 48 KB");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/LuxurEatZhiSongWeb-subset.woff2")), "retired full ZhiSong font remains bundled");
 assert.ok(size("assets/media/brand/home-hero-truffle-mobile.m4v") <= 320 * 1024, "mobile hero video exceeds 320 KB");
@@ -27,6 +28,8 @@ for (const file of [
 ]) assert.ok(size(`assets/media/brand/${file}`) <= 520 * 1024, `${file} exceeds 520 KB`);
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 60 * 1024, "shared CSS exceeds the 60 KB compressed budget");
+assert.ok(gzipSize("assets/css/integration-home.min.css") <= 34 * 1024, "homepage CSS exceeds the 34 KB compressed budget");
+assert.doesNotMatch(read("assets/css/integration-home.min.css").toString(), /url\(["']?assets\//, "homepage CSS contains a root-relative source path after moving under assets/css");
 assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScript still includes optional interactions");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional account, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
@@ -52,11 +55,14 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /rel="icon"[^>]+luxureat-logo\.png/);
   if (lang === "en") assert.match(home, /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
   assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-hero-critical\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
+  if (lang === "zh") assert.match(home, /rel="preload"[^>]+KingHwaOldSong-hero-critical\.woff2/);
   if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-home-critical|LuxurEatZhiSong-home-subset)\.woff2/);
   if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-site|LuxurEatZhiSong-site)\.woff2/);
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
+  assert.match(home, /assets\/css\/integration-home\.min\.css/);
+  assert.doesNotMatch(home, /href="\.\.\/integration\.css/);
   assert.match(home, /font-display:swap/);
   assert.doesNotMatch(home, /rel="preload"[^>]+MaterialSymbolsOutlined-subset\.ttf/);
   const footer = home.match(/<footer class="lux-footer">[\s\S]*?<\/footer>/)?.[0] || "";
@@ -73,6 +79,13 @@ for (const match of allHtml.matchAll(/<img\b[^>]*(?:\.avif|\.gif|\.jpe?g|\.png|\
   assert.match(match[0], /\bheight="\d+"/i, "a raster image has no intrinsic height");
 }
 assert.match(read("zh/index.html").toString(), /data-lux-mobile-src="\.\.\/assets\/media\/brand\/home-service-selection-mobile\.webp"/);
+assert.doesNotMatch(read("zh/index.html").toString(), /@keyframes fadeInUp/);
+for (const service of ["selection", "partnership", "foodservice"]) {
+  assert.match(read("zh/index.html").toString(), new RegExp(`data-lux-srcset="[^\"]*home-service-${service}-480\\.webp 480w, [^\"]*home-service-${service}-800\\.webp 800w"`));
+  assert.ok(read(`assets/media/brand/home-service-${service}-480.webp`).length > 0);
+  assert.ok(read(`assets/media/brand/home-service-${service}-800.webp`).length > 0);
+}
+assert.match(read("assets/js/core.js").toString(), /image\.srcset = image\.dataset\.luxSrcset/);
 assert.match(read("zh/index.html").toString(), /srcset="\.\.\/assets\/media\/brand\/[^"']+-mobile\.webp \d+w, \.\.\/assets\/media\/brand\/[^"']+ \d+w" sizes="100vw"/, "critical responsive images do not expose a native srcset");
 for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter((name) => name.endsWith("-mobile.webp"))) {
   assert.ok(size(`assets/media/brand/${file}`) <= 120 * 1024, `${file} exceeds the 120 KB mobile image budget`);

@@ -1,7 +1,5 @@
 # LuxurEat search crawler policy
 User-agent: *
-Allow: /
-
 Disallow: /wp-admin/
 Allow: /wp-admin/admin-ajax.php
 Disallow: /wp-login.php

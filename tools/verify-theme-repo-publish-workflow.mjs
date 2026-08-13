@@ -35,6 +35,7 @@ const workflow = read(workflowPath);
 assert(/name:\s*Publish Theme Repository/.test(workflow), 'workflow has a clear publish name');
 assert(/permissions:\s*\n\s*contents:\s*read/.test(workflow), 'workflow uses read-only GITHUB_TOKEN permissions');
 assert(/push:\s*\n\s*branches:\s*\n\s*-\s*main/.test(workflow), 'workflow runs on pushes to main');
+assert(workflow.includes("- 'robots.txt'") && workflow.includes("- 'llms.txt'"), 'search metadata changes publish the theme');
 assert(/workflow_dispatch:/.test(workflow), 'workflow can be run manually');
 assert(/node scripts\/build-luxureat-theme\.mjs/.test(workflow), 'workflow builds the WordPress theme');
 assert(/node tools\/verify-theme\.mjs/.test(workflow), 'workflow verifies the built theme');
