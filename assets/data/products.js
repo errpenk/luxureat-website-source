@@ -109,7 +109,6 @@
     "复合调味品": "compound-condiment",
     "复合调味汁": "compound-sauce",
   };
-
   const rows = [
     ["white-truffle-oil-60ml", "Olio aromatizzato al tartufo bianco", "白松露风味油", "60 ml", "oil", "CITA06022511070074", "1517909002-101 / 1517909002-102 / 2103909000-103", "2029-10-12"],
     ["white-truffle-oil-250ml", "Olio aromatizzato al tartufo bianco", "白松露风味油", "250 ml", "oil", "CITA06022511070074", "1517909002-101 / 1517909002-102 / 2103909000-103", "2029-10-12"],
@@ -142,7 +141,9 @@
     const image = productImages[index];
     const family = labelFamilies[familyFor(slug)];
     const common = {
-      id: slug, sku: slug, unit, category: "truffle", typeKey: typeKeys[family.zh.type], registration, hsCode, validUntil,
+      id: slug, sku: slug, unit, category: "truffle",
+      categories: index < 4 ? ["truffle", "olive-oil"] : ["truffle"],
+      typeKey: typeKeys[family.zh.type], registration, hsCode, validUntil,
       manufacturer: "APPENNINO FOOD GROUP SPA", image,
       gallery: [image, ...(galleries[category] || [])],
       catalogOnly: true, amount: 0, currency: "", priceLabel: "TEST",

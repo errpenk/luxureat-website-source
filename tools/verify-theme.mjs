@@ -252,8 +252,7 @@ assert(!zhGifting.includes('企业专线'), 'gift inquiry phone does not show th
 assert(!zhCaviar.includes('top-[89px]'), 'Chinese caviar filter toolbar does not leave an 89px sticky gap under the header');
 assert(zhCaviar.includes('top-[78px]'), 'Chinese caviar filter toolbar sticks directly below the desktop header');
 assert(zhCaviar.includes('data-caviar-filter="all"'), 'Chinese caviar page has an all filter button');
-assert(zhCaviar.includes('data-caviar-filter="truffle"'), 'Chinese product page consolidates current products into the truffle filter');
-assert(zhCaviar.includes('data-caviar-filter="pizza"') && zhCaviar.includes('data-caviar-filter="olive-oil"') && zhCaviar.includes('data-caviar-filter="gelato"'), 'Chinese product page covers the upcoming pizza, olive-oil and gelato filters');
+assert(zhCaviar.includes('data-caviar-filter="caviar"') && zhCaviar.includes('data-caviar-filter="truffle"') && zhCaviar.includes('data-caviar-filter="pizza"') && zhCaviar.includes('data-caviar-filter="olive-oil"') && zhCaviar.includes('data-caviar-filter="gelato"'), 'Chinese product page restores the original product-category filters');
 assert(zhCaviar.includes('data-caviar-view="grid"'), 'Chinese caviar page has a grid view button');
 assert(zhCaviar.includes('data-caviar-view="list"'), 'Chinese caviar page has a list view button');
 assert(zhCaviar.includes('data-caviar-sort'), 'Chinese caviar page has a sort control');
@@ -347,6 +346,8 @@ assert(productDataJs.includes('window.LUXUREAT_PRODUCT_DATA'), 'product data is 
 assert(productDataJs.includes('products[`zh-${slug}`]') && productDataJs.includes('products[`en-${slug}`]'), 'product data file builds bilingual product records');
 assert(productDataJs.includes('white-truffle-oil-60ml') && productDataJs.includes('winter-black-truffle-juice-350ml'), 'bilingual product records cover the registered Appennino catalogue');
 assert(productDataJs.includes('const productImageOrder = [2, 1, 4, 3, 6, 7, 5, 8, 9, 11, 10, 13, 12, 16, 14, 15, 18, 19, 20, 17, 23, 21, 22, 24]') && productDataJs.includes('priceLabel: "TEST"'), 'Appennino catalogue maps 24 Italian-labelled mockups by product and uses TEST pricing');
+assert(productDataJs.includes('categories: index < 4 ? ["truffle", "olive-oil"] : ["truffle"]'), 'Appennino catalogue assigns PDF rows 1-4 to both truffle and olive-oil categories');
+assert(runtimeJs.includes('<strong>即将上新</strong><span>未找到相关产品</span>') && runtimeJs.includes('<strong>Coming Soon</strong><span>No related products found</span>'), 'bilingual empty product states announce upcoming products');
 const articleDataJs = read(path.join(themeDir, 'assets/data/journal.js'));
 assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.includes('media/journal'), 'journal data is separated into assets/data/journal.js');
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
@@ -503,7 +504,10 @@ assert(zhCertification.includes('cert-capability-background.m4v') && enCertifica
 assert(zhCertification.includes('cert-quality-production.webp') && enCertification.includes('cert-quality-production.webp'), 'bilingual certification capability sections use the supplied truffle production photo');
 assert(zhCertification.includes('data-cert-quote-carousel') && enCertification.includes('data-cert-quote-carousel'), 'bilingual certification network stories provide previous and next quote controls');
 assert(integrationCss.includes('width: 100vw') && integrationCss.includes('.lux-cert-capability-overlay'), 'new editorial sections fill the page and the capability video has a dark overlay');
-assert(enCertification.includes('ou-kosher-2026.png') && enCertification.includes('halal-2026.png') && enCertification.includes('vegan-2026.png') && enCertification.includes('excellent-taste-2025.avif') && enCertification.includes('fda-2026.png'), 'English certification page uses the refreshed certification assets');
+assert(enCertification.includes('ou-kosher-2026.png') && enCertification.includes('halal-2026.png') && enCertification.includes('vegan-2026.png'), 'English certification glossary uses the refreshed certification assets');
+assert(zhCertification.includes('品牌与行业合作') && enCertification.includes('Brand &amp; Industry Partnerships'), 'bilingual certification pages name the Appennino section as a brand and industry partnership');
+assert(zhCertification.includes('appennino/brcgs-certificate.pdf') && zhCertification.includes('appennino/fssc-22000-certificate.pdf') && zhCertification.includes('appennino/ifs-food-certificate.pdf'), 'Chinese partnership section links the three supplied Appennino certificates');
+assert(enCertification.includes('appennino/brcgs-certificate.pdf') && enCertification.includes('appennino/fssc-22000-certificate.pdf') && enCertification.includes('appennino/ifs-food-certificate.pdf'), 'English partnership section links the three supplied Appennino certificates');
 assert(zhCertification.includes('cert-quality-system.m4v') && enCertification.includes('cert-quality-system.m4v'), 'bilingual certification system sections use the compressed background film');
 const certificationVideo = path.join(themeDir, 'assets/media/brand/cert-quality-system.m4v');
 assert(fs.existsSync(certificationVideo) && fs.statSync(certificationVideo).size < 1.5 * 1024 * 1024, 'certification background film stays below 1.5 MB');

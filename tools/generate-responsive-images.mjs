@@ -9,7 +9,7 @@ const manifestFile = path.join(root, "assets/data/image-variants.js");
 const checkOnly = process.argv.includes("--check");
 const mobileWidth = 720;
 const sourceThreshold = 100 * 1024;
-const outputLimit = 120 * 1024;
+const outputLimit = 72 * 1024;
 const raster = /\.(?:avif|jpe?g|png|webp)$/i;
 
 const walk = (directory) => fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -29,13 +29,27 @@ for (const source of originals) {
   const info = await sharp(source).metadata();
   const handmade = variantFor(source, "-mobile");
   let target = fs.existsSync(handmade) ? handmade : null;
+  if (target && fs.statSync(target).size > outputLimit) {
+    if (checkOnly) {
+      missing.push(relative(target));
+    } else {
+      const temporary = `${target}.tmp-${process.pid}`;
+      for (const quality of [56, 48, 40, 32, 24, 20]) {
+        if (fs.existsSync(temporary)) fs.rmSync(temporary);
+        await sharp(target).rotate().resize({ width: mobileWidth, withoutEnlargement: true }).webp({ quality, effort: 6 }).toFile(temporary);
+        if (fs.statSync(temporary).size <= outputLimit) break;
+      }
+      fs.renameSync(temporary, target);
+      generated += 1;
+    }
+  }
   if (!target && (info.width || 0) > mobileWidth && fs.statSync(source).size > sourceThreshold) {
     target = variantFor(source, "-720");
-    const stale = !fs.existsSync(target)
+    const stale = !fs.existsSync(target) || fs.statSync(target).size > outputLimit
       || (!checkOnly && !process.env.CI && fs.statSync(target).mtimeMs < fs.statSync(source).mtimeMs);
     if (stale && !checkOnly) {
       const temporary = `${target}.tmp-${process.pid}`;
-      for (const quality of [78, 72, 66, 60]) {
+      for (const quality of [64, 56, 48, 40, 32, 24, 20]) {
         if (fs.existsSync(temporary)) fs.rmSync(temporary);
         await sharp(source).rotate().resize({ width: mobileWidth, withoutEnlargement: true }).webp({ quality, effort: 6 }).toFile(temporary);
         if (fs.statSync(temporary).size <= outputLimit) break;

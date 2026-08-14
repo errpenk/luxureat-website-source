@@ -4767,6 +4767,13 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   text-align: center;
   font: 700 18px/1.5 var(--lux-page-heading);
 }
+.lux-caviar-empty strong,
+.lux-caviar-empty span { display: block; }
+.lux-caviar-empty strong {
+  margin-bottom: 6px;
+  color: #9df5ec;
+  font-size: 24px;
+}
 .lux-caviar-empty[hidden] {
   display: none;
 }
@@ -8130,7 +8137,7 @@ body {
   width: 100vw;
   max-width: 100vw;
   margin: 0 calc(50% - 50vw) clamp(72px, 10vw, 150px);
-  padding-top: clamp(54px, 7vw, 96px);
+  padding-top: clamp(36px, 4vw, 56px);
   overflow: hidden;
   background: #f3f0e9;
   color: #171b1b;
@@ -12390,7 +12397,7 @@ section[data-recipe-panel] {
 #china-family-recipes .lux-recipe-theme-card:nth-child(3) figure { min-height: 360px; }
 .lux-cert-awards {
   margin: 0;
-  padding: 32px 24px clamp(72px, 8vw, 112px);
+  padding: 32px 24px 24px;
   overflow: hidden;
   background: #131313;
 }
@@ -12426,7 +12433,7 @@ section[data-recipe-panel] {
 }
 .lux-cert-awards > header {
   max-width: 940px;
-  margin: 0 auto 56px;
+  margin: 0 auto 38px;
 }
 .lux-cert-awards > header {
   text-align: center;
@@ -12450,6 +12457,29 @@ html[lang^="zh"] .lux-cert-awards h2 {
   color: #aaa69f;
   font: 400 16px/1.75 var(--lux-page-heading);
 }
+.lux-cert-partner-intro {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 48px);
+  text-align: left;
+}
+.lux-cert-partner-intro p + p { margin-top: 18px; }
+.lux-cert-partner-logo {
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+}
+.lux-cert-partner-logo img {
+  width: 100%;
+  height: auto;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.lux-cert-partner-logo:hover img,
+.lux-cert-partner-logo:focus-visible img {
+  opacity: .72;
+  transform: translateY(-3px);
+}
 .lux-cert-awards header p a {
   color: #9df5ec;
   text-decoration: underline;
@@ -12459,9 +12489,9 @@ html[lang^="zh"] .lux-cert-awards h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px;
-  min-height: 500px;
-  max-height: 500px;
+  height: 410px;
+  min-height: 410px;
+  max-height: 410px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 48px 32px;
@@ -12487,12 +12517,9 @@ html[lang^="zh"] .lux-cert-awards h2 {
 .lux-cert-award-stack figure:first-child {
   transform: translateY(34px);
 }
-.lux-cert-award-stack figure:nth-child(2),
-.lux-cert-award-stack figure:nth-child(4) {
-  transform: translateY(14px);
-}
-.lux-cert-award-stack figure:nth-child(3) {
+.lux-cert-award-stack figure:nth-child(2) {
   z-index: 2;
+  flex-grow: 1.22;
   transform: translateY(-18px);
 }
 .lux-cert-award-stack figure:last-child {
@@ -12506,6 +12533,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   transform: translateY(-16px) scale(1.025);
   box-shadow: 0 30px 58px rgba(0, 0, 0, .32);
 }
+.lux-cert-award-stack > figure > a,
 .lux-cert-award-stack button {
   display: grid;
   width: 100%;
@@ -12518,6 +12546,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
     #fff;
   cursor: zoom-in;
 }
+.lux-cert-award-stack > figure > a { padding: 0; }
 .lux-cert-award-dialog {
   width: min(880px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
@@ -12550,7 +12579,8 @@ html[lang^="zh"] .lux-cert-awards h2 {
 }
 .lux-cert-award-stack img {
   width: 100%;
-  max-height: 42%;
+  height: 100%;
+  max-height: none;
   object-fit: contain;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -12652,10 +12682,10 @@ html[lang^="zh"] .lux-cert-awards h2 {
     min-height: 240px;
   }
   .lux-cert-award-stack {
-    height: 230px;
-    min-height: 230px;
-    max-height: 230px;
-    padding: 30px 5px;
+    height: 205px;
+    min-height: 205px;
+    max-height: 205px;
+    padding: 18px 5px;
   }
   .lux-cert-award-stack figure {
     width: auto;
@@ -12666,9 +12696,11 @@ html[lang^="zh"] .lux-cert-awards h2 {
   }
   .lux-cert-award-stack figure:first-child,
   .lux-cert-award-stack figure:last-child { transform: translateY(14px); }
-  .lux-cert-award-stack figure:nth-child(2),
-  .lux-cert-award-stack figure:nth-child(4) { transform: translateY(6px); }
-  .lux-cert-award-stack figure:nth-child(3) { transform: translateY(-6px); }
+  .lux-cert-award-stack figure:nth-child(2) {
+    z-index: 3;
+    flex-grow: 1.45;
+    transform: translateY(-8px);
+  }
   .lux-cert-award-stack figure:hover,
   .lux-cert-award-stack figure:focus-within {
     flex-grow: 2.8;
@@ -12681,6 +12713,20 @@ html[lang^="zh"] .lux-cert-awards h2 {
   }
   .lux-cert-brand-row > * { height: 58px; }
   .lux-cert-brand-row img { max-height: 48px; }
+  .lux-cert-partner-intro {
+    display: contents;
+  }
+  .lux-cert-awards > header {
+    display: flex;
+    flex-direction: column;
+  }
+  .lux-cert-awards > header h2 { order: 2; }
+  .lux-cert-partner-logo {
+    order: 1;
+    width: 92px;
+    margin: 0 auto 20px;
+  }
+  .lux-cert-partner-intro > div { order: 3; text-align: left; }
   .lux-cert-awards h2 {
     font-size: 40px;
     line-height: 48px;
