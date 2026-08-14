@@ -59,7 +59,7 @@ function renderLuxProductCatalog() {
     : `${encodeURIComponent(product.id)}/`;
 
   grid.innerHTML = entries.map(([key, product], index) => `
-    <article class="group cursor-pointer flex flex-col gap-6${product.catalogOnly ? " is-catalog-only" : ""}" data-caviar-item data-species="${product.category || speciesFor(key)}" data-product-type="${luxEscapeProductHtml(product.typeKey || "")}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
+    <article class="group cursor-pointer flex flex-col gap-6${product.catalogOnly ? " is-catalog-only" : ""}" data-caviar-item data-species="${luxEscapeProductHtml((product.categories || [product.category || speciesFor(key)]).join(" "))}" data-product-type="${luxEscapeProductHtml(product.typeKey || "")}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
       <div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container-low" data-product-open="${luxEscapeProductHtml(key)}" role="button" tabindex="0" aria-label="${luxEscapeProductHtml(labels.detail)}: ${luxEscapeProductHtml(product.title)}">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0" style="background-image: url('${luxEscapeProductHtml(product.image)}');"></div>
       </div>
@@ -135,7 +135,9 @@ function initLuxCaviarControls() {
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const empty = document.createElement("p");
   empty.className = "lux-caviar-empty";
-  empty.textContent = lang === "zh" ? "未找到相关产品" : "No related products found";
+  empty.innerHTML = lang === "zh"
+    ? "<strong>即将上新</strong><span>未找到相关产品</span>"
+    : "<strong>Coming Soon</strong><span>No related products found</span>";
   empty.hidden = true;
   grid.insertAdjacentElement("afterend", empty);
 
@@ -205,7 +207,7 @@ function initLuxCaviarControls() {
     let visibleCount = 0;
 
     items.forEach((item) => {
-      const matchesSpecies = !activeFilters.category.size || activeFilters.category.has(item.dataset.species);
+      const matchesSpecies = !activeFilters.category.size || item.dataset.species.split(" ").some((category) => activeFilters.category.has(category));
       const matchesType = !activeFilters.type.size || activeFilters.type.has(item.dataset.productType);
       const matchesSearch = !searchTerm || item.textContent.toLocaleLowerCase(lang === "zh" ? "zh-CN" : "en").includes(searchTerm);
       const matchesFilter = matchesSpecies && matchesType && matchesSearch;
@@ -219,7 +221,9 @@ function initLuxCaviarControls() {
       count.textContent = String(visibleCount);
     }
     grid.dataset.visibleCount = String(visibleCount);
+    const shouldCenterEmpty = visibleCount === 0 && empty.hidden;
     empty.hidden = visibleCount !== 0;
+    if (shouldCenterEmpty) requestAnimationFrame(() => empty.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" }));
   };
 
   const applyView = () => {
