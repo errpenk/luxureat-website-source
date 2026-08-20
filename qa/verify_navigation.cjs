@@ -89,7 +89,7 @@ assert(journalRuntime.includes('class="lux-reader-article-links"') && journalRun
 assert(integrationCss.includes(".lux-reader-article-links { display: flex; flex-direction: column;"), "knowledge article links are not displayed one per line");
 assert(productRuntime.includes("productFamily") && productRuntime.includes("productUse") && productRuntime.includes(".sort((a, b) => b.score - a.score"), "product recommendations are not deterministically ranked by relevance");
 assert(journalRuntime.includes('data-lux-cta-location="article-body"') && journalRuntime.includes('data-lux-cta-location="recipe-details"'), "contextual article or recipe links are missing");
-assert(journalRuntime.includes("safeDetailHref") && productRuntime.includes("#reader-${lang}-recipe-${slug}"), "contextual links still depend on WordPress-reserved query variables");
+assert(journalRuntime.includes("safeDetailHref") && journalRuntime.includes('detailHref("recipe"') && productRuntime.includes('detailHref("recipe"'), "contextual links still depend on WordPress-reserved query variables or static relative paths");
 assert(coreRuntime.includes('luxGetCookieConsent() !== "analytics"') && coreRuntime.includes('window.luxTrack("cta_click"'), "CTA analytics do not respect consent or emit the expected event");
 assert(integrationCss.includes(".lux-cert-awards header p a:hover") && integrationCss.includes("outline: 1px solid #81d8d0"), "brand and industry partnership links do not share the site link interaction states");
 assert(journalRuntime.includes('get("recipe")') && productRuntime.includes('get("product")'), "public recipe or product query route is not handled");

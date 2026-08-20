@@ -355,8 +355,9 @@ function initLuxProductDetails() {
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const requestedProduct = new URLSearchParams(location.search).get("product");
   const localized = (zh, en) => lang === "zh" ? zh : en;
-  const recipeRef = (slug, zh, en) => [localized(zh, en), `recipe.html#reader-${lang}-recipe-${slug}`];
-  const guideRef = (slug, zh, en) => [localized(zh, en), `blog.html#reader-${lang}-academy-${slug}`];
+  const detailHref = (page, hash) => `${document.querySelector(`.lux-nav a[href$="${page}.html"], .lux-nav a[href$="/${page}/"]`)?.href || `${page}.html`}#${hash}`;
+  const recipeRef = (slug, zh, en) => [localized(zh, en), detailHref("recipe", `reader-${lang}-recipe-${slug}`)];
+  const guideRef = (slug, zh, en) => [localized(zh, en), detailHref("blog", `reader-${lang}-academy-${slug}`)];
   const related = (links) => ({
     title: localized("相关食谱与知识", "Related Recipes & Guides"),
     links,
