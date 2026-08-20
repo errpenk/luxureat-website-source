@@ -53,13 +53,14 @@ function initLuxReader() {
   const topicPatterns = { truffle: /松露|truffle/i, olive: /橄榄油|olive oil|extra virgin/i, caviar: /鱼子酱|caviar/i, pizza: /披萨|pizza/i, gelato: /冰淇淋|gelato/i };
   const topicFor = (id, article) => article.topic && contentLinks[article.topic] ? article.topic : Object.entries(topicPatterns).find(([, pattern]) => pattern.test(`${id} ${article.title || ""} ${(article.recipe?.ingredients || []).join(" ")}`))?.[0];
   const localized = (zh, en) => lang === "zh" ? zh : en;
+  const detailHref = (page, hash) => `${document.querySelector(`.lux-nav a[href$="${page}.html"], .lux-nav a[href$="/${page}/"]`)?.href || `${page}.html`}#${hash}`;
   const safeDetailHref = (href) => href
-    .replace(/^blog\.html\?article=([^&#]+).*$/, `blog.html#reader-${lang}-academy-$1`)
-    .replace(/^recipe\.html\?recipe=([^&#]+).*$/, `recipe.html#reader-${lang}-recipe-$1`)
-    .replace(/^product\.html\?product=([^&#]+).*$/, `product.html#product-${lang}-$1`);
+    .replace(/^blog\.html\?article=([^&#]+).*$/, (_, slug) => detailHref("blog", `reader-${lang}-academy-${slug}`))
+    .replace(/^recipe\.html\?recipe=([^&#]+).*$/, (_, slug) => detailHref("recipe", `reader-${lang}-recipe-${slug}`))
+    .replace(/^product\.html\?product=([^&#]+).*$/, (_, slug) => detailHref("product", `product-${lang}-${slug}`));
   const safeLink = (link) => link ? { ...link, href: safeDetailHref(link.href) } : link;
-  const guideLink = (slug, zh, en) => ({ label: localized(zh, en), href: `blog.html#reader-${lang}-academy-${slug}` });
-  const recipeLink = (slug, zh, en) => ({ label: localized(zh, en), href: `recipe.html#reader-${lang}-recipe-${slug}` });
+  const guideLink = (slug, zh, en) => ({ label: localized(zh, en), href: detailHref("blog", `reader-${lang}-academy-${slug}`) });
+  const recipeLink = (slug, zh, en) => ({ label: localized(zh, en), href: detailHref("recipe", `reader-${lang}-recipe-${slug}`) });
   const productLink = (href, zh, en) => ({ label: localized(zh, en), href: safeDetailHref(href) });
   const recipeKnowledgeRules = [
     [/truffle-tiramisu/, [guideLink("truffle-meets-dessert", "松露甜点中如何平衡香气与甜味", "How to Balance Truffle Aroma and Sweetness in Desserts"), guideLink("truffle-truffle-aroma-pairing", "理解松露用量与风味搭配", "Understanding Truffle Quantity and Flavour Pairing")]],
