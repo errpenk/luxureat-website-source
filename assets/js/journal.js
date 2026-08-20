@@ -36,6 +36,110 @@ function initLuxReader() {
       ["Quality & Traceability", ["en-mother-of-pearl"]],
     ];
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const requestedRecipe = new URLSearchParams(location.search).get("recipe");
+  const contentLinks = lang === "zh" ? {
+    truffle: { knowledge: { label: "为什么松露只需要一点？理解松露的香气与风味搭配", href: "blog.html?article=truffle-truffle-aroma-pairing" }, recipe: { label: "查看白松露或黑松露细面食谱 →", href: "recipe.html?recipe=truffle-tagliolini" }, product: "松露产品目录（以实际库存和标签为准）", productCategory: "truffle" },
+    olive: { knowledge: { label: "如何选择、使用与保存特级初榨橄榄油", href: "blog.html?article=choose-use-store-evo" }, recipe: { label: "查看蒜香橄榄油意面食谱 →", href: "recipe.html?recipe=olive-pasta" }, product: "橄榄油产品目录（以实际库存和标签为准）", productCategory: "olive-oil" },
+    caviar: { knowledge: { label: "鱼子酱的风味搭配与品鉴", href: "blog.html?article=pairings-class" }, recipe: { label: "查看甜面包配黄油和鱼子酱食谱 →", href: "recipe.html?recipe=sweet-bread-butter-caviar" } },
+    pizza: { knowledge: { label: "意大利披萨的面团、发酵与烘烤基础", href: "blog.html?article=pizza-fundamentals" }, recipe: { label: "查看经典玛格丽特披萨食谱 →", href: "recipe.html?recipe=pizza-margherita" } },
+    gelato: { knowledge: { label: "意式手工冰淇淋与普通冰淇淋有什么不同？", href: "blog.html?article=gelato-vs-ice-cream" }, recipe: { label: "查看经典意式手工冰淇淋食谱 →", href: "recipe.html?recipe=gelato-classic" } },
+  } : {
+    truffle: { knowledge: { label: "Why Does Truffle Often Need Only a Little? Understanding Aroma and Pairing", href: "blog.html?article=truffle-truffle-aroma-pairing" }, recipe: { label: "View the Tagliolini with White or Black Truffle recipe →", href: "recipe.html?recipe=truffle-tagliolini" }, product: "Truffle product catalogue (subject to current stock and labels)", productCategory: "truffle" },
+    olive: { knowledge: { label: "How to Choose, Use and Store Extra Virgin Olive Oil", href: "blog.html?article=choose-use-store-evo" }, recipe: { label: "View the Garlic and Olive Oil Pasta recipe →", href: "recipe.html?recipe=olive-pasta" }, product: "Olive oil product catalogue (subject to current stock and labels)", productCategory: "olive-oil" },
+    caviar: { knowledge: { label: "Caviar Flavour Pairing and Tasting", href: "blog.html?article=pairings-class" }, recipe: { label: "View the Sweet Bread with Butter and Caviar recipe →", href: "recipe.html?recipe=sweet-bread-butter-caviar" } },
+    pizza: { knowledge: { label: "Italian Pizza Dough, Fermentation and Baking Fundamentals", href: "blog.html?article=pizza-fundamentals" }, recipe: { label: "View the Classic Margherita Pizza recipe →", href: "recipe.html?recipe=pizza-margherita" } },
+    gelato: { knowledge: { label: "How Is Italian Gelato Different from Ordinary Ice Cream?", href: "blog.html?article=gelato-vs-ice-cream" }, recipe: { label: "View the Classic Italian Gelato recipe →", href: "recipe.html?recipe=gelato-classic" } },
+  };
+  const topicPatterns = { truffle: /松露|truffle/i, olive: /橄榄油|olive oil|extra virgin/i, caviar: /鱼子酱|caviar/i, pizza: /披萨|pizza/i, gelato: /冰淇淋|gelato/i };
+  const topicFor = (id, article) => article.topic && contentLinks[article.topic] ? article.topic : Object.entries(topicPatterns).find(([, pattern]) => pattern.test(`${id} ${article.title || ""} ${(article.recipe?.ingredients || []).join(" ")}`))?.[0];
+  const localized = (zh, en) => lang === "zh" ? zh : en;
+  const guideLink = (slug, zh, en) => ({ label: localized(zh, en), href: `blog.html?article=${slug}` });
+  const recipeLink = (slug, zh, en) => ({ label: localized(zh, en), href: `recipe.html?recipe=${slug}` });
+  const productLink = (href, zh, en) => ({ label: localized(zh, en), href });
+  const recipeKnowledgeRules = [
+    [/truffle-tiramisu/, [guideLink("truffle-meets-dessert", "松露甜点中如何平衡香气与甜味", "How to Balance Truffle Aroma and Sweetness in Desserts"), guideLink("truffle-truffle-aroma-pairing", "理解松露用量与风味搭配", "Understanding Truffle Quantity and Flavour Pairing")]],
+    [/truffle-summer-crostini/, [guideLink("truffle-truffle-types", "夏季松露与其他松露有什么不同？", "How Summer Truffle Differs from Other Truffles"), guideLink("truffle-buying-truffle-products", "整颗松露与松露制品应该如何选择？", "Choosing Whole Truffles and Truffle Products")]],
+    [/(?:black-truffle-risotto|truffle-ravioli|mushroom-soup)/, [guideLink("truffle-buying-truffle-products", "为烩饭、馄饨与汤选择合适的松露产品", "Choosing Truffle Products for Risotto, Ravioli and Soup"), guideLink("truffle-truffle-aroma-pairing", "温度与脂肪如何释放松露香气", "How Temperature and Fat Release Truffle Aroma")]],
+    [/(?:beef-carpaccio-scallop-truffle|shrimp-tartare-truffle|truffle-trout|truffle-lamb)/, [guideLink("truffle-truffle-types", "不同松露适合搭配哪些肉类与海鲜？", "Which Truffles Suit Meat and Seafood?"), guideLink("truffle-truffle-aroma-pairing", "松露与主食材的风味平衡原则", "Balancing Truffle with the Main Ingredient")]],
+    [/(?:truffle-eggs|truffle-toast|truffle-tagliolini)/, [guideLink("truffle-truffle-aroma-pairing", "鸡蛋、黄油与意面为什么适合松露？", "Why Eggs, Butter and Pasta Suit Truffle"), guideLink("truffle-truffle-types", "根据菜式选择白松露、黑松露或夏季松露", "Choosing White, Black or Summer Truffle for a Dish")]],
+    [/olive-bruschetta/, [guideLink("olive-tasting", "烤面包如何帮助品鉴橄榄油？", "How Bruschetta Helps You Taste Olive Oil"), guideLink("olive-how-to-choose", "选择适合生食和蘸食的橄榄油", "Choosing Olive Oil for Raw Serving and Dipping")]],
+    [/olive-panzanella/, [guideLink("olive-recipes-guide", "橄榄油在托斯卡纳面包沙拉中的作用", "The Role of Olive Oil in Tuscan Panzanella"), guideLink("olive-tasting", "用香气、苦味与辛辣感调整沙拉", "Balancing Salad with Aroma, Bitterness and Pungency")]],
+    [/olive-pinzimonio/, [guideLink("olive-how-to-choose", "如何选择适合生蔬菜蘸食的橄榄油", "How to Choose Olive Oil for Raw Vegetables"), guideLink("olive-tasting", "通过 Pinzimonio 练习橄榄油品鉴", "Practising Olive Oil Tasting with Pinzimonio")]],
+    [/(?:light-fennel-orange-salad|light-grilled-zucchini|light-sea-bass-acqua-pazza)/, [guideLink("olive-tasting", "用香气、苦味与辛辣感搭配清淡菜式", "Pairing Light Dishes with Aroma, Bitterness and Pungency"), guideLink("olive-nutrition", "橄榄油在均衡饮食中的用量与位置", "Olive Oil Portions in a Balanced Diet")]],
+    [/olive-pasta/, [guideLink("choose-use-store-evo", "意面用橄榄油的选择、使用与保存", "Choosing, Using and Storing Olive Oil for Pasta"), guideLink("olive-oil-basics", "理解特级初榨橄榄油的基础特征", "Understanding Extra Virgin Olive Oil Basics")]],
+    [/family-spaghetti-pomodoro/, [guideLink("pasta-academy", "番茄酱汁应该搭配什么意面形状？", "Which Pasta Shapes Suit Tomato Sauce?"), guideLink("dictionary-pasta-risotto", "意面与烩饭基础术语", "Essential Pasta and Risotto Terms")]],
+    [/(?:family-zucchini-frittata|family-chicken-cacciatora)/, [guideLink("cooking-techniques", "这道家庭料理使用的意大利烹饪技法", "Italian Techniques Used in This Home-Style Dish")]],
+  ];
+  const articleContentLinks = {
+    "allergens-guide": [recipeLink("family-zucchini-frittata", "通过西葫芦烘蛋识别鸡蛋与乳制品过敏原", "Identify Egg and Dairy Allergens in a Courgette Frittata"), productLink("product.html?product=white-truffle-sauce-80g", "查看白松露酱的配料与过敏原信息", "Review Ingredients and Allergens for White Truffle Sauce")],
+    "baerii-caviar": [recipeLink("sweet-bread-butter-caviar", "用贝氏鲟鱼子酱完成黄油甜面包", "Finish Buttered Sweet Bread with Baerii Caviar")],
+    "beluga-caviar": [recipeLink("sweet-bread-butter-caviar", "参考黄油与鱼子酱的经典呈现方式", "See a Classic Butter-and-Caviar Presentation")],
+    "caviar-processing": [recipeLink("sweet-bread-butter-caviar", "观察轻盐鱼子酱在温热食谱中的使用", "Use Malossol Caviar in a Warm Recipe")],
+    "china-italian-evo": [recipeLink("olive-pasta", "用蒜香意面理解橄榄油在中国家庭厨房的应用", "Use Garlic Pasta to Explore EVOO in Chinese Home Kitchens"), productLink("new.html#olive-oil", "查看即将推出的意大利橄榄油系列", "Explore the Upcoming Italian Olive Oil Range")],
+    "china-italian-gelato": [recipeLink("gelato-classic", "在家制作基础意式手工冰淇淋", "Make a Classic Gelato Base at Home"), productLink("new.html#gelato", "查看意式手工冰淇淋新品计划", "Explore the Upcoming Gelato Range")],
+    "china-pizza-pinsa": [recipeLink("pizza-margherita", "先用玛格丽特披萨练习面团与炉温", "Practise Dough and Oven Control with Margherita Pizza"), productLink("new.html#pizza", "查看披萨与 Pinsa 原料计划", "Explore the Pizza and Pinsa Ingredient Range")],
+    "choose-use-store-evo": [recipeLink("olive-pasta", "把橄榄油用于蒜香意面的乳化收尾", "Use EVOO to Emulsify and Finish Garlic Pasta"), recipeLink("olive-bruschetta", "把橄榄油用于烤面包生食调味", "Use EVOO Raw on Bruschetta"), productLink("new.html#olive-oil", "查看意大利橄榄油产品计划", "Explore the Italian Olive Oil Range")],
+    "clean-label": [recipeLink("mushroom-soup", "从菌菇汤配料理解“简单配方”", "Explore Simple Ingredient Lists with Mushroom Soup"), productLink("product.html?product=winter-black-truffle-sauce-80g", "核对冬季黑松露酱的正式标签", "Review the Winter Black Truffle Sauce Label")],
+    "cooking-techniques": [recipeLink("family-chicken-cacciatora", "用猎人烩鸡练习煎香与慢炖", "Practise Browning and Braising with Chicken Cacciatora"), recipeLink("light-sea-bass-acqua-pazza", "用海鲈鱼练习温和水煮火候", "Practise Gentle Cooking with Acqua Pazza Sea Bass")],
+    "dictionary-cheese-cured-meat": [recipeLink("pizza-margherita", "在玛格丽特披萨中认识莫扎里拉奶酪", "Understand Mozzarella through Margherita Pizza"), recipeLink("truffle-toast", "用奶酪与松露烤面包理解风味搭配", "Explore Cheese Pairing with Truffle Toast")],
+    "dictionary-cooking-methods": [recipeLink("family-chicken-cacciatora", "用猎人烩鸡理解煎与炖", "Understand Browning and Braising with Chicken Cacciatora"), recipeLink("light-grilled-zucchini", "用烤西葫芦理解 Griglia 烹饪", "Understand Griglia Cooking with Courgettes")],
+    "dictionary-food-labels": [productLink("product.html?product=summer-truffle-slices-water-350g", "用水浸夏季松露片练习阅读食品标签", "Practise Reading a Food Label with Summer Truffle Slices")],
+    "dictionary-italian-menu": [recipeLink("family-chicken-cacciatora", "从猎人烩鸡认识意大利主菜", "Learn Italian Main-Course Terms with Chicken Cacciatora"), recipeLink("gelato-classic", "从意式手工冰淇淋认识甜点栏目", "Learn Dessert Menu Terms with Gelato")],
+    "dictionary-pasta-risotto": [recipeLink("family-spaghetti-pomodoro", "用番茄意面理解意面形状与酱汁", "Understand Pasta Shapes with Spaghetti al Pomodoro"), recipeLink("black-truffle-risotto", "用黑松露烩饭理解 Risotto 技法", "Understand Risotto Technique with Black Truffle Risotto")],
+    "evo-chocolate-dessert": [recipeLink("gelato-classic", "在经典意式冰淇淋上尝试少量橄榄油", "Try a Small EVOO Finish on Classic Gelato"), productLink("new.html#olive-oil", "选择适合甜点的意大利橄榄油", "Explore Italian Olive Oils for Desserts")],
+    "evo-vs-common-cooking-oil": [recipeLink("light-grilled-zucchini", "用烤西葫芦比较橄榄油的完成风味", "Compare Finishing Flavour on Grilled Courgettes"), recipeLink("olive-pasta", "观察橄榄油在意面乳化中的作用", "See EVOO's Role in Pasta Emulsification"), productLink("new.html#olive-oil", "查看意大利橄榄油产品方向", "Explore the Italian Olive Oil Range")],
+    "gelato-flavours": [recipeLink("gelato-classic", "用基础配方练习牛奶、香草与坚果风味", "Practise Milk, Vanilla and Nut Flavours with a Classic Base"), productLink("new.html#gelato", "查看意式手工冰淇淋基底与新品", "Explore Gelato Bases and New Products")],
+    "gelato-history": [recipeLink("gelato-classic", "从经典配方理解现代意式手工冰淇淋", "Connect Gelato History with a Classic Modern Recipe")],
+    "gelato-vs-ice-cream": [recipeLink("gelato-classic", "用经典配方比较空气量与食用温度", "Compare Overrun and Serving Temperature with a Classic Recipe"), productLink("new.html#gelato", "查看意式手工冰淇淋产品计划", "Explore the Gelato Product Plan")],
+    "history-of-caviar": [recipeLink("sweet-bread-butter-caviar", "从经典食谱认识鱼子酱的现代餐桌应用", "See Caviar's Modern Table Role in a Classic Recipe")],
+    "ingredients-territory": [recipeLink("light-sea-bass-acqua-pazza", "从海鲈鱼、番茄与橄榄油理解产地组合", "Explore Terroir through Sea Bass, Tomato and Olive Oil"), productLink("product.html?product=whole-summer-truffles-35g", "查看整颗夏季松露的产地与标签信息", "Review Origin and Label Details for Whole Summer Truffle")],
+    "italian-food-culture": [recipeLink("family-spaghetti-pomodoro", "从番茄意面进入意大利家庭餐桌", "Enter Italian Home Cooking through Spaghetti al Pomodoro"), recipeLink("olive-panzanella", "从托斯卡纳面包沙拉理解地方饮食", "Explore Regional Food through Tuscan Panzanella")],
+    "italian-gelato-vs-ice-cream": [recipeLink("gelato-classic", "实际制作并比较意式手工冰淇淋质地", "Make Gelato and Compare Its Texture with Ice Cream"), productLink("new.html#gelato", "了解意式手工冰淇淋原料计划", "Explore the Gelato Ingredient Plan")],
+    "italy-regions": [recipeLink("black-truffle-risotto", "从北部烩饭理解地域差异", "Explore Northern Italy through Truffle Risotto"), recipeLink("pizza-margherita", "从那不勒斯披萨理解南部传统", "Explore Southern Italy through Neapolitan Pizza")],
+    "kaluga-amur-caviar": [recipeLink("sweet-bread-butter-caviar", "用黄油甜面包比较卡露伽与其他鱼子酱", "Compare Kaluga with Other Caviars on Buttered Sweet Bread")],
+    "main-types-of-caviar": [recipeLink("sweet-bread-butter-caviar", "用同一基础食谱比较不同鱼子酱类型", "Compare Caviar Types with One Neutral Recipe")],
+    "modern-pinsa-romana": [recipeLink("pizza-margherita", "先掌握披萨面团，再理解 Pinsa 的差异", "Master Pizza Dough before Comparing Pinsa"), productLink("new.html#pizza", "查看披萨与 Pinsa 原料系列", "Explore Pizza and Pinsa Ingredients")],
+    "neapolitan-roman-pizza-styles": [recipeLink("pizza-margherita", "用玛格丽特披萨实践那不勒斯风格", "Practise Neapolitan Style with Margherita Pizza"), productLink("new.html#pizza", "查看适合不同披萨风格的原料方向", "Explore Ingredients for Different Pizza Styles")],
+    "nutrition-labels": [recipeLink("light-fennel-orange-salad", "用清淡沙拉理解每份营养与用油量", "Understand Portions and Oil Quantity with a Light Salad"), productLink("product.html?product=white-truffle-evoo-60ml", "查看白松露特级初榨橄榄油营养标签", "Review the Nutrition Label for White Truffle EVOO")],
+    "nutrition-myths": [recipeLink("light-grilled-zucchini", "用简单食谱把营养判断放回份量", "Put Nutrition Claims Back into Portion Context")],
+    "olive-cultivars": [recipeLink("olive-pinzimonio", "用生蔬菜比较不同橄榄品种的风味", "Compare Olive Cultivars with Pinzimonio"), productLink("new.html#olive-oil", "查看意大利橄榄油品种计划", "Explore the Italian Olive Cultivar Range")],
+    "olive-fasting": [recipeLink("light-fennel-orange-salad", "把橄榄油放回完整的一餐，而非空腹饮用", "Use Olive Oil in a Complete Meal, Not as a Fasting Cure"), recipeLink("olive-panzanella", "通过面包沙拉控制实际用油份量", "Control Real Portions with Panzanella")],
+    "olive-how-to-choose": [recipeLink("olive-pinzimonio", "用生蔬菜判断橄榄油是否适合生食", "Judge Raw-Serving EVOO with Pinzimonio"), productLink("new.html#olive-oil", "查看不同用途的意大利橄榄油", "Explore Italian Olive Oils for Different Uses")],
+    "olive-myths": [recipeLink("olive-pasta", "在加热与乳化中验证橄榄油常见误区", "Test Common EVOO Myths through Heating and Emulsification"), recipeLink("light-grilled-zucchini", "在烤制菜式中观察橄榄油风味", "Observe EVOO Flavour in a Grilled Dish")],
+    "olive-nutrition": [recipeLink("light-fennel-orange-salad", "用茴香橙子沙拉控制橄榄油份量", "Control EVOO Portions with Fennel and Orange Salad"), productLink("new.html#olive-oil", "查看意大利橄榄油产品计划", "Explore the Italian Olive Oil Range")],
+    "olive-oil-basics": [recipeLink("olive-bruschetta", "从烤面包开始认识特级初榨橄榄油", "Start Understanding EVOO with Bruschetta"), productLink("new.html#olive-oil", "查看特级初榨橄榄油产品方向", "Explore the Extra Virgin Olive Oil Range")],
+    "olive-recipes-guide": [recipeLink("olive-panzanella", "在托斯卡纳面包沙拉中生用橄榄油", "Use EVOO Raw in Tuscan Panzanella"), recipeLink("olive-pasta", "在蒜香意面中用橄榄油完成乳化", "Emulsify Garlic Pasta with EVOO"), productLink("new.html#olive-oil", "查看适合不同菜式的橄榄油", "Explore Olive Oils for Different Dishes")],
+    "olive-regions": [recipeLink("olive-pinzimonio", "用生蔬菜比较不同产区橄榄油", "Compare Regional Olive Oils with Pinzimonio"), productLink("new.html#olive-oil", "查看意大利不同产区的橄榄油计划", "Explore Olive Oils from Different Italian Regions")],
+    "olive-storage": [recipeLink("olive-pasta", "用保存良好的橄榄油完成蒜香意面", "Finish Garlic Pasta with Properly Stored EVOO"), productLink("new.html#olive-oil", "查看橄榄油包装与储存建议", "Explore Olive Oil Packaging and Storage")],
+    "olive-tasting": [recipeLink("olive-bruschetta", "用烤面包进行橄榄油品鉴", "Taste Olive Oil with Bruschetta"), recipeLink("olive-pinzimonio", "用生蔬菜比较苦味与辛辣感", "Compare Bitterness and Pungency with Pinzimonio")],
+    "oscetra-caviar": [recipeLink("sweet-bread-butter-caviar", "用黄油甜面包衬托奥西特拉的坚果风味", "Highlight Oscetra's Nutty Notes with Buttered Sweet Bread")],
+    "pairings-class": [recipeLink("sweet-bread-butter-caviar", "用鱼子酱练习咸度、脂肪与温度平衡", "Balance Salt, Fat and Temperature with Caviar"), recipeLink("truffle-trout", "用松露鳟鱼练习香气强度搭配", "Practise Aroma Intensity with Truffle Trout")],
+    "pasta-academy": [recipeLink("family-spaghetti-pomodoro", "用番茄意面实践形状与酱汁搭配", "Practise Shape-and-Sauce Pairing with Spaghetti al Pomodoro"), recipeLink("truffle-tagliolini", "用细面理解酱汁附着与出锅收尾", "Understand Sauce Cling and Finishing with Tagliolini")],
+    "pizza-fundamentals": [recipeLink("pizza-margherita", "从和面到烘烤完成玛格丽特披萨", "Make Margherita Pizza from Dough to Bake"), productLink("new.html#pizza", "查看披萨面粉与专业原料计划", "Explore Pizza Flour and Professional Ingredients")],
+    "pizza-pinsa-at-home": [recipeLink("pizza-margherita", "先用玛格丽特面团建立家庭发酵基准", "Establish a Home Fermentation Baseline with Margherita Dough"), productLink("new.html#pizza", "查看家庭披萨与 Pinsa 原料", "Explore Home Pizza and Pinsa Ingredients")],
+    "producers-modena-acetaia": [recipeLink("light-fennel-orange-salad", "用茴香橙子沙拉理解酸甜调味平衡", "Explore Sweet-and-Sour Balance with Fennel and Orange Salad")],
+    "producers-modern-gelatiere": [recipeLink("gelato-classic", "用经典配方理解现代冰淇淋师的配方平衡", "Understand Modern Gelato Balancing with a Classic Recipe"), productLink("new.html#gelato", "查看专业意式手工冰淇淋基底计划", "Explore Professional Gelato Base Plans")],
+    "producers-neapolitan-pizzaiuolo": [recipeLink("pizza-margherita", "用玛格丽特披萨理解披萨师的技艺", "Understand Pizzaiuolo Craft through Margherita Pizza"), productLink("new.html#pizza", "查看专业披萨原料方向", "Explore Professional Pizza Ingredients")],
+    "producers-parmigiano-cheesemakers": [recipeLink("truffle-ravioli", "在松露馄饨中使用帕尔马干酪完成收尾", "Finish Truffle Ravioli with Parmigiano Reggiano"), recipeLink("pizza-margherita", "比较帕尔马干酪与莫扎里拉的使用位置", "Compare the Roles of Parmigiano and Mozzarella")],
+    "producers-truffle-hunters": [recipeLink("truffle-summer-crostini", "把采集到的夏季松露用于烤面包", "Use Summer Truffle from the Hunt on Crostini"), productLink("product.html?product=whole-summer-truffles-35g", "查看整颗夏季松露产品", "View Whole Summer Truffle")],
+    "regional-traditions": [recipeLink("family-chicken-cacciatora", "从猎人烩鸡理解地方家庭传统", "Explore Regional Home Traditions with Chicken Cacciatora"), recipeLink("olive-panzanella", "从面包沙拉理解托斯卡纳传统料理", "Explore Tuscan Cucina Povera through Panzanella")],
+    "sevruga-caviar": [recipeLink("sweet-bread-butter-caviar", "用黄油甜面包平衡闪光鲟浓郁风味", "Balance Sevruga's Intensity with Buttered Sweet Bread")],
+    "story-of-italian-evo": [recipeLink("olive-panzanella", "从托斯卡纳面包沙拉理解橄榄油日常传统", "See EVOO's Everyday Tradition through Panzanella"), productLink("new.html#olive-oil", "查看意大利橄榄油产品故事", "Explore the Italian Olive Oil Story")],
+    "story-of-italian-gelato": [recipeLink("gelato-classic", "用经典配方连接冰冻甜品历史与现代工艺", "Connect Frozen-Dessert History with a Modern Gelato Recipe"), productLink("new.html#gelato", "查看意式手工冰淇淋系列计划", "Explore the Gelato Range")],
+    "story-of-italian-pizza": [recipeLink("pizza-margherita", "用玛格丽特披萨连接那不勒斯历史与今天", "Connect Neapolitan History with Today's Margherita Pizza"), productLink("new.html#pizza", "查看意大利披萨原料计划", "Explore the Italian Pizza Ingredient Range")],
+    "table-etiquette": [recipeLink("olive-panzanella", "用共享面包沙拉实践意大利餐桌节奏", "Practise Italian Table Sharing with Panzanella"), recipeLink("pizza-margherita", "用披萨理解分食与共同用餐", "Explore Sharing and Togetherness with Pizza")],
+    "truffle-buying-truffle-products": [recipeLink("truffle-ravioli", "在馄饨中使用松露酱", "Use Truffle Sauce in Ravioli"), recipeLink("mushroom-soup", "在菌菇汤中使用松露制品", "Use Truffle Products in Mushroom Soup"), productLink("product.html?product=white-truffle-sauce-80g", "查看适合精细菜式的白松露酱", "View White Truffle Sauce for Refined Dishes"), productLink("product.html?product=summer-truffle-slices-50g", "查看适合点缀的夏季松露片", "View Summer Truffle Slices for Garnishing")],
+    "truffle-gelato-at-home": [recipeLink("gelato-classic", "先制作适合加入松露的冰淇淋基底", "Prepare a Gelato Base Suitable for Truffle"), recipeLink("truffle-tiramisu", "比较松露在另一种甜点中的使用", "Compare Truffle in Another Dessert"), productLink("product.html?product=truffle-honey-170g", "用松露蜂蜜尝试甜味松露搭配", "Try Sweet Truffle Pairing with Truffle Honey")],
+    "truffle-italian-truffle-map": [recipeLink("truffle-lamb", "用松露羊肉理解中部产区风味", "Explore Central Italian Flavour with Truffle Lamb"), recipeLink("black-truffle-risotto", "用烩饭理解北部松露料理", "Explore Northern Truffle Cooking through Risotto"), productLink("product.html?product=whole-summer-truffles-55g", "查看整颗夏季松露", "View Whole Summer Truffle")],
+    "truffle-meets-dessert": [recipeLink("truffle-tiramisu", "用松露完成提拉米苏", "Make Tiramisu with Truffle"), recipeLink("gelato-classic", "以经典冰淇淋基底尝试松露甜点", "Use a Classic Gelato Base for a Truffle Dessert"), productLink("product.html?product=truffle-honey-50g", "查看适合甜点的松露蜂蜜", "View Truffle Honey for Desserts")],
+    "truffle-truffle-aroma-pairing": [recipeLink("truffle-tagliolini", "用细面突出松露香气", "Showcase Truffle Aroma with Tagliolini"), recipeLink("truffle-eggs", "体验松露与鸡蛋的经典搭配", "Try the Classic Truffle-and-Egg Pairing"), productLink("product.html?product=white-truffle-oil-60ml", "查看适合出锅调味的白松露油", "View White Truffle Oil for Finishing")],
+    "truffle-truffle-types": [recipeLink("black-truffle-risotto", "用黑松露制作烩饭", "Make Risotto with Black Truffle"), recipeLink("truffle-summer-crostini", "用夏季松露制作烤面包", "Make Crostini with Summer Truffle"), productLink("product.html?product=summer-truffle-slices-50g", "查看夏季松露片", "View Summer Truffle Slices"), productLink("product.html?product=winter-black-truffle-sauce-80g", "查看冬季黑松露酱", "View Winter Black Truffle Sauce")],
+    "truffle-what-is-truffle": [recipeLink("truffle-eggs", "从鸡蛋开始认识松露香气", "Start Understanding Truffle Aroma with Eggs"), recipeLink("truffle-summer-crostini", "用烤面包体验夏季松露质地", "Experience Summer Truffle Texture on Crostini"), productLink("product.html?product=whole-summer-truffles-35g", "查看整颗夏季松露的原料形态", "View Whole Summer Truffle")],
+    "ugolini-gelato-mix": [recipeLink("gelato-classic", "用经典配方理解冰淇淋基底的作用", "Understand Gelato Base Function with a Classic Recipe"), productLink("new.html#gelato", "查看意式手工冰淇淋基底新品", "Explore the Upcoming Gelato Base")],
+    "white-sturgeon-caviar": [recipeLink("sweet-bread-butter-caviar", "用黄油甜面包衬托白鲟鱼子酱的细腻口感", "Highlight White Sturgeon Caviar with Buttered Sweet Bread")],
+  };
+  const knowledgeForRecipe = (id, article, fallback) => article.recipe?.knowledge ? [article.recipe.knowledge] : recipeKnowledgeRules.find(([pattern]) => pattern.test(id))?.[1] || (fallback ? [fallback] : []);
+  const recipeForArticle = (article, fallback) => [article.cta, ...(article.slug ? articleContentLinks[article.slug] || [] : fallback ? [fallback] : [])].filter((link, index, links) => link && links.findIndex((item) => item?.href === link.href) === index);
   const renderRecipeLibrary = () => {
     if (!recipeLibraryMount) return;
     const copy = lang === "zh"
@@ -573,15 +677,18 @@ function initLuxReader() {
     const copy = labels();
     if (article.type === "recipe" && article.recipe) {
       const recipe = article.recipe;
+      const relatedContent = contentLinks[topicFor(id, article)] || {};
+      const relatedKnowledge = knowledgeForRecipe(id, article, relatedContent.knowledge);
       const recipeLabels = article.lang === "zh"
-        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", products: "相关产品" }
-        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", products: "Related products" };
-      const productCategory = article.productCategory || (article.topic === "olive" ? "olive-oil" : article.topic);
+        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", knowledge: "相关知识", products: "相关产品" }
+        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", knowledge: "Related guide", products: "Related products" };
+      const productCategory = article.productCategory || relatedContent.productCategory;
       const productIndex = document.querySelector('.lux-nav a[href$="product.html"], .lux-nav a[href$="/product/"]')?.href || "product.html";
       const productUrl = new URL(productIndex, location.href);
       if (productCategory) productUrl.searchParams.set("category", productCategory);
       productUrl.hash = productCategory ? "product-catalogue" : "";
       const productHref = productUrl.href;
+      const productCta = recipe.products || relatedContent.product;
       body.innerHTML = `
         <article class="lux-recipe-reader">
           <section class="lux-recipe-hero">
@@ -614,7 +721,8 @@ function initLuxReader() {
           </section>
           <section class="lux-recipe-details">
             ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.professionalTip, recipe.professionalTip], [recipeLabels.foodSafety, recipe.foodSafety], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
-            ${recipe.products ? `<div><dt>${recipeLabels.products}</dt><dd><a class="lux-recipe-product-link" href="${escapeHtml(productHref)}">${escapeHtml(recipe.products)}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></dd></div>` : ""}
+            ${relatedKnowledge.length ? `<div><dt>${recipeLabels.knowledge}</dt><dd><nav class="flex flex-col items-start gap-2" aria-label="${recipeLabels.knowledge}">${relatedKnowledge.map((link) => `<a class="lux-recipe-product-link" href="${escapeHtml(link.href)}">${escapeHtml(link.label)}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`).join("")}</nav></dd></div>` : ""}
+            ${productCta ? `<div><dt>${recipeLabels.products}</dt><dd><a class="lux-recipe-product-link" href="${escapeHtml(productHref)}" data-lux-cta data-lux-cta-type="product" data-lux-cta-id="${escapeHtml(id)}" data-lux-cta-location="recipe-details">${escapeHtml(productCta)}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></dd></div>` : ""}
           </section>
         </article>`;
       showReader(copy);
@@ -669,6 +777,11 @@ function initLuxReader() {
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
     const figureLabel = article.lang === "zh" ? "图" : "Figure";
     const openingHtml = opening.length ? `<section class="lux-reader-section lux-reader-section-opening">${paragraphs(opening, Boolean(article.slug))}</section>` : "";
+    const articleLinks = recipeForArticle(article, contentLinks[article.topic]?.recipe);
+    const primaryArticleLink = articleLinks[0];
+    const secondaryArticleLinks = articleLinks.slice(1);
+    const middleSectionIndex = Math.max(0, Math.ceil(articleSections.length / 2) - 1);
+    const linkType = (href) => href.includes("recipe=") ? "recipe" : /(?:product|new)\.html/.test(href) ? "product" : "content";
     const sectionHtml = articleSections.map(([heading, content], index) => {
       const media = article.sectionMedia?.[index] || [];
       return `
@@ -682,7 +795,8 @@ function initLuxReader() {
                 </button>
                 <figcaption>${figureLabel} ${String(mediaIndex + 1).padStart(2, "0")} / ${escapeHtml(heading)}</figcaption>
               </figure>`).join("")}</div>` : ""}
-          </section>`;
+          </section>
+          ${primaryArticleLink && index === middleSectionIndex ? `<nav class="lux-reader-article-links lux-reader-inline-links" aria-label="${escapeHtml(copy.related)}"><a class="lux-recipe-product-link" href="${escapeHtml(primaryArticleLink.href)}" data-lux-cta data-lux-cta-type="${linkType(primaryArticleLink.href)}" data-lux-cta-id="${escapeHtml(article.slug || id)}" data-lux-cta-location="article-body">${escapeHtml(primaryArticleLink.label.replace(/\s*→\s*$/, ""))}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></nav>` : ""}`;
     }).join("");
     const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(article.tocLabels?.[index] || heading)}</a>`).join("");
 
@@ -709,7 +823,7 @@ function initLuxReader() {
           <div class="lux-reader-copy">
             ${openingHtml}
             ${sectionHtml}
-            ${article.cta ? `<a class="lux-reader-article-cta" href="${escapeHtml(article.cta.href)}">${escapeHtml(article.cta.label)}</a>` : ""}
+            ${secondaryArticleLinks.length ? `<nav class="lux-reader-article-links" aria-label="${escapeHtml(copy.related)}">${secondaryArticleLinks.map((link) => `<a class="lux-recipe-product-link" href="${escapeHtml(link.href)}" data-lux-cta data-lux-cta-type="${linkType(link.href)}" data-lux-cta-id="${escapeHtml(article.slug || id)}" data-lux-cta-location="article-related">${escapeHtml(link.label.replace(/\s*→\s*$/, ""))}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`).join("")}</nav>` : ""}
             ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
           </div>
           <aside class="lux-reader-pull">
@@ -799,6 +913,7 @@ function initLuxReader() {
       renderArchive(false);
       return;
     }
+    if (window.LuxureatReturnFromInternalLink?.()) return;
     reader.hidden = true;
     document.body.classList.remove("lux-reader-open");
     stack.length = 0;
@@ -878,6 +993,7 @@ function initLuxReader() {
   if (location.hash === "#archive") renderArchive(false);
   else if (events.some((event) => event.id === eventHash)) renderEvent(eventHash);
   else if (articles[readerHash]) open(readerHash);
+  else if (requestedRecipe && articles[`${lang}-recipe-${requestedRecipe}`]) open(`${lang}-recipe-${requestedRecipe}`);
 }
 
 

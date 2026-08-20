@@ -352,6 +352,24 @@ function initLuxProductDetails() {
   const products = productData.products || {};
   const hash = location.hash || "";
   if (!Object.keys(products).length) return;
+  const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
+  const requestedProduct = new URLSearchParams(location.search).get("product");
+  const localized = (zh, en) => lang === "zh" ? zh : en;
+  const recipeRef = (slug, zh, en) => [localized(zh, en), `recipe.html?recipe=${slug}`];
+  const guideRef = (slug, zh, en) => [localized(zh, en), `blog.html?article=${slug}`];
+  const related = (links) => ({
+    title: localized("相关食谱与知识", "Related Recipes & Guides"),
+    links,
+  });
+  const productContentRules = [
+    [/truffle-honey-/, related([recipeRef("truffle-tiramisu", "用松露蜂蜜制作提拉米苏", "Make Tiramisu with Truffle Honey"), recipeRef("truffle-toast", "在烤面包上搭配松露蜂蜜", "Pair Truffle Honey with Toast"), guideRef("truffle-meets-dessert", "松露蜂蜜与甜点的风味平衡", "Balancing Truffle Honey in Desserts"), guideRef("truffle-truffle-aroma-pairing", "控制松露蜂蜜的用量与香气", "Controlling Truffle Honey Quantity and Aroma")])],
+    [/whole-summer-truffles-/, related([recipeRef("truffle-summer-crostini", "用整颗夏季松露制作烤面包", "Make Crostini with Whole Summer Truffle"), recipeRef("truffle-tagliolini", "把夏季松露刨在细面上", "Shave Summer Truffle over Tagliolini"), guideRef("truffle-truffle-types", "夏季松露与白松露、黑松露的区别", "How Summer Truffle Differs from White and Black Truffle"), guideRef("truffle-buying-truffle-products", "整颗松露的选择与使用方法", "How to Choose and Use Whole Truffle")])],
+    [/summer-truffle-slices-/, related([recipeRef("black-truffle-risotto", "在烩饭中使用夏季松露片", "Use Summer Truffle Slices in Risotto"), recipeRef("truffle-tagliolini", "在细面中加入夏季松露片", "Add Summer Truffle Slices to Tagliolini"), guideRef("truffle-truffle-types", "认识夏季松露的香气与适用菜式", "Understanding Summer Truffle Aroma and Uses"), guideRef("truffle-buying-truffle-products", "松露片的选择、用量与保存", "Choosing, Portioning and Storing Truffle Slices")])],
+    [/(?:white|black|winter-black)-truffle-sauce-/, related([recipeRef("truffle-ravioli", "在松露馄饨中使用松露酱", "Use Truffle Sauce in Ravioli"), recipeRef("mushroom-soup", "用松露酱提升菌菇汤香气", "Add Truffle Sauce to Mushroom Soup"), guideRef("truffle-buying-truffle-products", "根据菜式选择白松露酱或黑松露酱", "Choosing White or Black Truffle Sauce for a Dish"), guideRef("truffle-truffle-aroma-pairing", "松露酱与黄油、奶油和菌菇的搭配", "Pairing Truffle Sauce with Butter, Cream and Mushrooms")])],
+    [/winter-black-truffle-juice-/, related([recipeRef("black-truffle-risotto", "用冬季黑松露汁调味烩饭", "Season Risotto with Winter Black Truffle Juice"), guideRef("truffle-truffle-aroma-pairing", "松露汁的温度、用量与香气控制", "Temperature, Quantity and Aroma Control for Truffle Juice"), guideRef("truffle-truffle-types", "冬季黑松露的风味特征", "Flavour Characteristics of Winter Black Truffle")])],
+    [/white-truffle-(?:oil|evoo)-/, related([recipeRef("truffle-eggs", "用白松露油调味炒蛋", "Season Eggs with White Truffle Oil"), recipeRef("truffle-tagliolini", "在细面出锅后加入白松露油", "Finish Tagliolini with White Truffle Oil"), guideRef("truffle-truffle-aroma-pairing", "白松露油与鸡蛋、意面的搭配逻辑", "Why White Truffle Oil Suits Eggs and Pasta")])],
+  ];
+  const oliveContent = related([recipeRef("olive-pasta", "用特级初榨橄榄油制作蒜香意面", "Make Garlic Pasta with Extra Virgin Olive Oil"), recipeRef("olive-bruschetta", "用烤面包品鉴橄榄油", "Taste Olive Oil with Bruschetta"), guideRef("choose-use-store-evo", "特级初榨橄榄油的选择、使用与保存", "Choosing, Using and Storing Extra Virgin Olive Oil")]);
 
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
   const catalogUnit = () => document.documentElement.lang?.startsWith("zh") ? "份" : "unit";
@@ -435,18 +453,37 @@ function initLuxProductDetails() {
     });
   };
 
+  const productFamily = (productId) => productId
+    .replace(/-(?:60ml|250ml|50g|55g|80g|110g|170g|180g|275g|350g|350ml|500g)$/, "")
+    .replace(/-(?:water|oil)$/, "");
+  const productUse = (productId) => /honey/.test(productId) ? "sweet"
+    : /(?:oil|evoo)/.test(productId) ? "finishing"
+      : /(?:slices|whole)/.test(productId) ? "truffle-piece"
+        : /(?:sauce|juice)/.test(productId) ? "sauce"
+          : "";
+
   const render = (id, push) => {
     const product = products[id];
     if (!product) return;
     if (push && !detail.hidden && currentProductId && currentProductId !== id) productStack.push(currentProductId);
     currentProductId = id;
     const labels = copy();
+    const content = productContentRules.find(([pattern]) => pattern.test(product.id))?.[1] || (product.categories?.includes("olive-oil") ? oliveContent : null);
     const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
     const prefix = id.startsWith("zh-") ? "zh-" : "en-";
     const recommendations = Object.entries(products)
       .filter(([key]) => key !== id && key.startsWith(prefix))
-      .sort(() => Math.random() - .5)
-      .slice(0, 6);
+      .map(([key, item], index) => ({
+        key,
+        item,
+        index,
+        score: (productFamily(key) === productFamily(id) ? 100 : 0)
+          + (productUse(key) && productUse(key) === productUse(id) ? 40 : 0)
+          + (item.categories?.some((category) => product.categories?.includes(category)) ? 10 : 0),
+      }))
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .slice(0, 6)
+      .map(({ key, item }) => [key, item]);
     body.innerHTML = `
       <article>
         <section class="lux-product-hero">
@@ -482,6 +519,7 @@ function initLuxProductDetails() {
         <section class="lux-product-story">
           <h3>${labels.story}</h3>
           <p>${luxEscapeProductHtml(product.desc)}</p>
+          ${content ? `<nav class="lux-reader-article-links" aria-label="${luxEscapeProductHtml(content.title)}">${content.links.map(([label, href]) => `<a class="lux-recipe-product-link" href="${luxEscapeProductHtml(href)}" data-lux-cta data-lux-cta-type="content" data-lux-cta-id="${luxEscapeProductHtml(product.id)}" data-lux-cta-location="product-story-related">${luxEscapeProductHtml(label)}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`).join("")}</nav>` : ""}
         </section>
         ${recommendations.length ? `<section class="lux-product-recent">
           <div class="lux-product-recent-inner">
@@ -504,6 +542,11 @@ function initLuxProductDetails() {
           </div>
         </section>` : ""}
       </article>`;
+    window.luxTrack?.("view_item", {
+      currency: product.currency,
+      value: Number(product.amount) || 0,
+      items: [{ item_id: product.id, item_name: product.title }],
+    });
     backButton.textContent = labels.back;
     backButton.hidden = !productStack.length;
     closeButton.textContent = labels.close;
@@ -559,6 +602,7 @@ function initLuxProductDetails() {
     syncSelectedQuantity(Number(output?.value || output?.textContent || 1) + Number(button.dataset.productQuantity));
   });
   const close = () => {
+    if (window.LuxureatReturnFromInternalLink?.()) return;
     detail.hidden = true;
     document.body.classList.remove("lux-reader-open");
     if (openedByPush) history.replaceState(null, "", `${location.pathname}${location.search}`);
@@ -596,7 +640,7 @@ function initLuxProductDetails() {
     if (event.key === "Escape" && !detail.hidden) close();
   });
 
-  const initialId = hash.replace(/^#product-/, "");
+  const initialId = hash.replace(/^#product-/, "") || Object.keys(products).find((key) => key.startsWith(`${lang}-`) && products[key].id === requestedProduct) || "";
   if (products[initialId]) render(initialId, false);
 }
 
@@ -895,7 +939,13 @@ function initLuxProductDetails() {
   document.addEventListener("click", (event) => {
     const addButton = event.target.closest("[data-bag-add]");
     if (addButton) {
-      api.add(productFromButton(addButton));
+      const addedProduct = productFromButton(addButton);
+      api.add(addedProduct);
+      window.luxTrack?.("add_to_cart", {
+        currency: addedProduct.currency,
+        value: (Number(addedProduct.price) || 0) * (Number(addedProduct.quantity) || 1),
+        items: [{ item_id: addedProduct.id, item_name: addedProduct.title, quantity: Number(addedProduct.quantity) || 1 }],
+      });
       addButton.dataset.bagOriginal ||= addButton.textContent.trim();
       addButton.textContent = locale() === "zh" ? "已加入" : "Added";
       setTimeout(() => { addButton.textContent = addButton.dataset.bagOriginal; }, 900);

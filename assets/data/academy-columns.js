@@ -379,7 +379,11 @@
         "zh-academy-truffle-buying-truffle-products",
         "zh-academy-truffle-what-is-truffle",
         "zh-academy-truffle-truffle-types"
-      ]
+      ],
+      "cta": {
+        "label": "查看白松露或黑松露细面食谱 →",
+        "href": "recipe.html?recipe=truffle-tagliolini"
+      }
     },
     {
       "slug": "truffle-buying-truffle-products",
@@ -888,7 +892,11 @@
         "en-academy-truffle-buying-truffle-products",
         "en-academy-truffle-what-is-truffle",
         "en-academy-truffle-truffle-types"
-      ]
+      ],
+      "cta": {
+        "label": "View the Tagliolini with White or Black Truffle recipe →",
+        "href": "recipe.html?recipe=truffle-tagliolini"
+      }
     },
     {
       "slug": "truffle-buying-truffle-products",
