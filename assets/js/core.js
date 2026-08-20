@@ -30,7 +30,8 @@ window.luxResponsiveData = (value) => {
     const link = event.target.closest?.("a[href]");
     if (!link || event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === "_blank" || link.hasAttribute("download")) return;
     const target = new URL(link.href, location.href);
-    if (target.origin !== location.origin || !/\b(?:article|recipe|product)=/.test(target.search) || `${target.pathname}${target.search}` === pageKey()) return;
+    const detailTarget = /\b(?:article|recipe|product)=/.test(target.search) || /^#(?:reader|product)-/.test(target.hash);
+    if (target.origin !== location.origin || !detailTarget || `${target.pathname}${target.search}${target.hash}` === `${location.pathname}${location.search}${location.hash}`) return;
     history.replaceState({ ...(history.state || {}), luxReturnScroll: {
       window: scrollY,
       reader: document.querySelector(".lux-reader-body")?.scrollTop || 0,
