@@ -133,8 +133,8 @@ assert(core.includes('["食谱库", "recipe-library"]') && core.includes('["Reci
 assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && core.includes('luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item")'), "mobile navigation does not expose the current page submenu without :has support");
 assert(core.includes('classList.toggle("is-scrolled", window.scrollY > 1)') && !core.includes('document.body.classList.contains("lux-home-page")'), "shared header does not react to the top scroll state on every page");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");
-assert(core.includes('luxureat_internal_return') && core.includes('luxReturnScroll') && core.includes('history.back()'), "internal content links do not preserve their source reading position");
-assert(journalRuntime.includes('LuxureatReturnFromInternalLink') && productRuntime.includes('LuxureatReturnFromInternalLink'), "content detail close actions do not return to the source page");
+assert(core.includes('luxureat_internal_trail') && core.includes('luxReturnScroll') && core.includes('LuxureatBackInternalLink') && core.includes('history.back()'), "internal content links do not preserve their multi-page trail and source reading position");
+assert(journalRuntime.includes('LuxureatBackInternalLink') && productRuntime.includes('LuxureatBackInternalLink') && journalRuntime.includes('LuxureatCloseInternalLink') && productRuntime.includes('LuxureatCloseInternalLink'), "content details do not separate Back trail traversal from Close-on-current-section behavior");
 
 const submenuTargets = {
   zh: {

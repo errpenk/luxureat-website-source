@@ -24,6 +24,9 @@ const loadAcademyArticle = (id) => {
   academyArticleLoading.set(id, loading);
   return loading;
 };
+window.luxLoadAcademyArticle = loadAcademyArticle;
+const academyHashId = decodeURIComponent(location.hash).replace(/^#reader-/, "");
+if (window.LUXUREAT_ACADEMY_DATA?.articles?.[academyHashId]) loadAcademyArticle(academyHashId);
 const academyTriggerSelector = '[data-reader-open*="-academy-"], [data-reader-related*="-academy-"]';
 const academyTriggerId = (trigger) => trigger?.dataset.readerOpen || trigger?.dataset.readerRelated;
 document.addEventListener("pointerover", (event) => {

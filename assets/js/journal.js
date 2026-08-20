@@ -633,7 +633,7 @@ function initLuxReader() {
   const showReader = (copy) => {
     reader.hidden = false;
     document.body.classList.add("lux-reader-open");
-    backButton.hidden = stack.length === 0;
+    backButton.hidden = stack.length === 0 && !window.LuxureatHasInternalBack?.();
     backButton.textContent = copy.back;
     reader.querySelector(".lux-reader-close").textContent = copy.close;
     body.focus();
@@ -680,6 +680,7 @@ function initLuxReader() {
     if (!article) return;
     if (push && currentId) stack.push(currentId);
     currentId = id;
+    if (location.hash !== `#reader-${id}`) history.replaceState(history.state, "", `${location.pathname}${location.search}#reader-${id}`);
     const copy = labels();
     if (article.type === "recipe" && article.recipe) {
       const recipe = article.recipe;
@@ -919,7 +920,7 @@ function initLuxReader() {
       renderArchive(false);
       return;
     }
-    if (window.LuxureatReturnFromInternalLink?.()) return;
+    window.LuxureatCloseInternalLink?.();
     reader.hidden = true;
     document.body.classList.remove("lux-reader-open");
     stack.length = 0;
@@ -955,6 +956,18 @@ function initLuxReader() {
     open(trigger.dataset.readerOpen);
   });
   body.addEventListener("click", (event) => {
+    const detailLink = event.target.closest('a[href*="#reader-"]');
+    if (detailLink) {
+      const target = new URL(detailLink.href, location.href);
+      const id = decodeURIComponent(target.hash).replace(/^#reader-/, "");
+      const showTarget = () => { if (articles[id]) render(id, true); };
+      if (target.origin === location.origin && target.pathname === location.pathname && (articles[id] || window.luxLoadAcademyArticle)) {
+        event.preventDefault();
+        if (articles[id]) showTarget();
+        else window.luxLoadAcademyArticle(id).then(showTarget);
+        return;
+      }
+    }
     const imageTrigger = event.target.closest("[data-reader-image]");
     if (imageTrigger) {
       const image = imageLightbox.querySelector("img");
@@ -991,6 +1004,7 @@ function initLuxReader() {
     const previous = stack.pop();
     if (previous === "__archive") renderArchive(false);
     else if (previous) render(previous, false);
+    else window.LuxureatBackInternalLink?.();
   });
   closeButtons.forEach((button) => button.addEventListener("click", close));
   document.addEventListener("keydown", (event) => {

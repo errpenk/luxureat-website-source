@@ -270,6 +270,7 @@ const runtimeJs = [
   'assets/js/journal.js',
 ].map((file) => read(path.join(themeDir, file))).join('\n');
 const brandJs = read(path.join(themeDir, 'assets/js/brand.js'));
+const academyJs = read(path.join(themeDir, 'assets/js/academy.js'));
 assert(runtimeJs.includes('initLuxCaviarControls'), 'runtime scripts initializes caviar filter, view, and sort controls');
 assert(runtimeJs.includes('data-caviar-item data-species') && runtimeJs.includes('data-price="${Number(product.amount) || 0}"'), 'runtime scripts renders sortable product cards from product data');
 assert(runtimeJs.includes('data-caviar-filter'), 'runtime scripts listens to caviar filter buttons');
@@ -324,9 +325,14 @@ assert(runtimeJs.includes('data-footer-modal'), 'runtime scripts listens to foot
 assert(runtimeJs.includes('if (isLegal) body.scrollTop = 0') && runtimeJs.includes('body.focus({ preventScroll: true })'), 'legal modals always reopen at the top without focus moving their scroll position');
 assert(runtimeJs.includes('mouseenter'), 'runtime scripts opens gift scenario info on hover');
 assert(runtimeJs.includes('lux-reader-layout'), 'runtime scripts renders the editorial article reader layout');
+assert(academyJs.includes('window.luxLoadAcademyArticle = loadAcademyArticle') && academyJs.includes('const academyHashId = decodeURIComponent(location.hash)'), 'direct knowledge links load their article before opening the reader');
+assert(runtimeJs.includes("event.target.closest('a[href*=\"#reader-\"]')") && runtimeJs.includes('window.luxLoadAcademyArticle(id).then(showTarget)'), 'same-page knowledge links open the requested article instead of only changing the hash');
 assert(runtimeJs.includes('lux-reader-cover') && runtimeJs.includes('lux-reader-related-media'), 'runtime scripts renders the editorial article images');
 assert(runtimeJs.includes('lux-reader-layout') && runtimeJs.includes('lux-reader-quote'), 'runtime scripts renders long-form reader articles');
 assert(runtimeJs.includes('scrollRestoration'), 'runtime scripts restores saved scroll positions manually');
+assert(runtimeJs.includes('luxureat_internal_trail') && runtimeJs.includes('trail.slice(-20)') && runtimeJs.includes('window.LuxureatHasInternalBack = hasInternalBack'), 'internal detail navigation keeps a bounded multi-page return trail');
+assert(runtimeJs.includes('window.LuxureatBackInternalLink') && runtimeJs.includes('window.LuxureatCloseInternalLink') && !runtimeJs.includes('LuxureatReturnFromInternalLink'), 'Back traverses the internal trail while Close stays on the current section');
+assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.includes('location.hash.startsWith("#product-")'), 'reader and product detail routes remain restorable while Close clears only the current detail hash');
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
 assert(runtimeJs.includes('Please sign in before continuing to checkout.') && runtimeJs.includes('window.LuxureatAccount?.loggedIn'), 'bag checkout prompts guests to sign in before syncing the cart');
@@ -367,6 +373,11 @@ assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css h
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
 assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
 assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
+assert((integrationCss.match(/width: 72px;/g) || []).length >= 2 && (integrationCss.match(/height: 38px;/g) || []).length >= 2, 'reader and product Back/Close controls keep one bilingual desktop/mobile size');
+assert(integrationCss.includes('@media (max-width: 720px)') && integrationCss.includes('.lux-menu {\n    width: 72px;\n    height: 38px;'), 'mobile Menu uses the same 72 by 38 control size as Back and Close');
+assert(integrationCss.includes('font: 700 12px/1 var(--lux-page-heading)') && (integrationCss.match(/letter-spacing: \.12em;/g) || []).length >= 2 && (integrationCss.match(/text-transform: uppercase;/g) || []).length >= 2, 'reader Back/Close typography matches the product detail controls');
+assert(integrationCss.includes('.lux-reader-back { left: 14px; }') && integrationCss.includes('.lux-reader-close { right: 14px; margin-left: 0; }'), 'mobile reader Back/Close positions match the product detail controls');
+assert((integrationCss.match(/border-width: \.5px;/g) || []).length >= 2 && (integrationCss.match(/outline: none;/g) || []).length >= 2 && (integrationCss.match(/box-shadow: inset 0 0 0 1px #101010;/g) || []).length >= 2 && integrationCss.includes('.lux-product-close:active { transform: none; }') && integrationCss.includes('.lux-reader-close:active { transform: none; }'), 'Close controls keep their size while showing a fine outer line and an attached inset interaction stroke');
 assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles the shared product-detail view');
 assert(integrationCss.includes('.lux-product-gallery'), 'integration.css styles product image galleries');
 assert(integrationCss.includes('.lux-checkout-page') && integrationCss.includes('.lux-home-gifting-title'), 'checkout and homepage editorial layers receive branded styling');
