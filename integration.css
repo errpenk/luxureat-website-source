@@ -1456,8 +1456,11 @@ header:has(.lux-hero-fade-both) {
   position: absolute;
   top: 14px;
   z-index: 3;
+  width: 72px;
+  height: 38px;
   min-height: 38px;
-  padding: 8px 12px;
+  box-sizing: border-box;
+  padding: 0;
   border: 1px solid rgba(0,106,100,.35);
   color: #006a64;
   background: rgba(240,238,235,.86);
@@ -1467,13 +1470,14 @@ header:has(.lux-hero-fade-both) {
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
 }
 .lux-product-back { left: 14px; }
-.lux-product-close { right: 14px; border-color: #101010; }
+.lux-product-close { right: 14px; border-color: #101010; border-width: .5px; outline: none; }
 .lux-product-close:hover,
-.lux-product-close:focus-visible {
+.lux-product-close:focus-visible,
+.lux-product-close:active {
   background: #9df5ec;
-  border-color: #9df5ec;
+  border-color: #101010;
   color: #003734;
-  box-shadow: 0 0 0 2px #101010;
+  box-shadow: inset 0 0 0 1px #101010;
 }
 .lux-product-back:hover,
 .lux-product-back:focus-visible {
@@ -1481,10 +1485,10 @@ header:has(.lux-hero-fade-both) {
   border-color: #101010;
   color: #f4f2ee;
 }
-.lux-product-back:active,
-.lux-product-close:active {
+.lux-product-back:active {
   transform: scale(.98);
 }
+.lux-product-close:active { transform: none; }
 .lux-product-body {
   height: 100%;
   overflow-y: auto;
@@ -2268,6 +2272,16 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-brand { width: 58px; }
   .lux-brand img { width: 54px; height: 54px; }
   .lux-lang { letter-spacing: .12em; }
+  .lux-menu {
+    width: 72px;
+    height: 38px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font: 700 12px/1 var(--lux-page-heading);
+    letter-spacing: .12em;
+  }
   .lux-actions > a { display: none; }
   .lux-actions > .lux-icon-action { display: inline-flex; }
   .lux-footer-grid { grid-template-columns: 1fr; }
@@ -4508,19 +4522,23 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 .lux-reader-back,
 .lux-reader-close {
-  min-width: 44px;
-  min-height: 34px;
-  padding: 8px 12px;
-  border: 1px solid #101010;
-  background: #f4f2ee;
-  color: #101010;
-  font: 600 12px/1 var(--lux-page-heading);
-  letter-spacing: 0;
+  width: 72px;
+  height: 38px;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid rgba(0,106,100,.35);
+  background: rgba(240,238,235,.86);
+  color: #006a64;
+  font: 700 12px/1 var(--lux-page-heading);
+  letter-spacing: .12em;
+  text-transform: uppercase;
   transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
 }
 .lux-reader-close {
   margin-left: auto;
-  font-weight: 700;
+  border-color: #101010;
+  border-width: .5px;
+  outline: none;
 }
 .lux-reader-back:hover,
 .lux-reader-back:focus-visible,
@@ -4531,15 +4549,29 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #f4f2ee;
 }
 .lux-reader-close:hover,
-.lux-reader-close:focus-visible {
+.lux-reader-close:focus-visible,
+.lux-reader-close:active {
   background: #9df5ec;
   border-color: #101010;
   color: #003734;
-  box-shadow: none;
+  box-shadow: inset 0 0 0 1px #101010;
 }
-.lux-reader-back:active,
-.lux-reader-close:active {
+.lux-reader-back:active {
   transform: scale(.98);
+}
+.lux-reader-close:active { transform: none; }
+@media (max-width: 640px) {
+  .lux-reader-header {
+    min-height: 66px;
+    padding: 0;
+  }
+  .lux-reader-back,
+  .lux-reader-close {
+    position: absolute;
+    top: 14px;
+  }
+  .lux-reader-back { left: 14px; }
+  .lux-reader-close { right: 14px; margin-left: 0; }
 }
 .lux-reader-body {
   min-height: 0;

@@ -549,7 +549,7 @@ function initLuxProductDetails() {
       items: [{ item_id: product.id, item_name: product.title }],
     });
     backButton.textContent = labels.back;
-    backButton.hidden = !productStack.length;
+    backButton.hidden = !productStack.length && !window.LuxureatHasInternalBack?.();
     closeButton.textContent = labels.close;
     syncSelectedQuantity(1);
     updateProductBagState();
@@ -574,7 +574,7 @@ function initLuxProductDetails() {
       if (previous) {
         render(previous, false);
         history.replaceState({ luxProduct: previous }, "", `#product-${previous}`);
-      }
+      } else window.LuxureatBackInternalLink?.();
       return;
     }
     const recentScroll = event.target.closest("[data-product-recent-scroll]");
@@ -603,10 +603,10 @@ function initLuxProductDetails() {
     syncSelectedQuantity(Number(output?.value || output?.textContent || 1) + Number(button.dataset.productQuantity));
   });
   const close = () => {
-    if (window.LuxureatReturnFromInternalLink?.()) return;
+    window.LuxureatCloseInternalLink?.();
     detail.hidden = true;
     document.body.classList.remove("lux-reader-open");
-    if (openedByPush) history.replaceState(null, "", `${location.pathname}${location.search}`);
+    if (location.hash.startsWith("#product-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
     openedByPush = false;
     currentProductId = "";
     productStack.length = 0;

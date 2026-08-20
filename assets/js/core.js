@@ -24,32 +24,52 @@ window.luxResponsiveData = (value) => {
 };
 
 (() => {
-  const returnKey = "luxureat_internal_return";
-  const pageKey = () => `${location.pathname}${location.search}`;
+  const trailKey = "luxureat_internal_trail";
+  const route = (url = location) => `${url.pathname}${url.search}${url.hash}`;
+  const readTrail = () => {
+    try {
+      const trail = JSON.parse(sessionStorage.getItem(trailKey) || "[]");
+      return Array.isArray(trail) ? trail.filter((entry) => entry?.from && entry?.to && Date.now() - entry.time < 1800000) : [];
+    } catch { return []; }
+  };
+  const writeTrail = (trail) => {
+    try {
+      if (trail.length) sessionStorage.setItem(trailKey, JSON.stringify(trail.slice(-20)));
+      else sessionStorage.removeItem(trailKey);
+    } catch { /* Storage may be disabled. */ }
+  };
+  const hasInternalBack = () => readTrail().at(-1)?.to === route();
   document.addEventListener("click", (event) => {
     const link = event.target.closest?.("a[href]");
     if (!link || event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === "_blank" || link.hasAttribute("download")) return;
     const target = new URL(link.href, location.href);
     const detailTarget = /\b(?:article|recipe|product)=/.test(target.search) || /^#(?:reader|product)-/.test(target.hash);
-    if (target.origin !== location.origin || !detailTarget || `${target.pathname}${target.search}${target.hash}` === `${location.pathname}${location.search}${location.hash}`) return;
+    if (target.origin !== location.origin || !detailTarget || target.pathname === location.pathname || route(target) === route()) return;
     history.replaceState({ ...(history.state || {}), luxReturnScroll: {
       window: scrollY,
       reader: document.querySelector(".lux-reader-body")?.scrollTop || 0,
       product: document.querySelector(".lux-product-body")?.scrollTop || 0,
     } }, "", location.href);
-    try { sessionStorage.setItem(returnKey, JSON.stringify({ target: `${target.pathname}${target.search}`, time: Date.now() })); } catch { /* Storage may be disabled. */ }
+    const trail = readTrail();
+    if (trail.at(-1)?.to !== route()) trail.length = 0;
+    trail.push({ from: route(), to: route(target), time: Date.now() });
+    writeTrail(trail);
   }, true);
-  window.LuxureatReturnFromInternalLink = () => {
-    try {
-      const entry = JSON.parse(sessionStorage.getItem(returnKey) || "null");
-      if (!entry || entry.target !== pageKey() || Date.now() - entry.time > 1800000) return false;
-      sessionStorage.removeItem(returnKey);
-      history.back();
-      return true;
-    } catch {
-      try { sessionStorage.removeItem(returnKey); } catch { /* Storage may be disabled. */ }
-      return false;
-    }
+  window.LuxureatHasInternalBack = hasInternalBack;
+  window.LuxureatBackInternalLink = () => {
+    if (!hasInternalBack()) return false;
+    const trail = readTrail();
+    trail.pop();
+    writeTrail(trail);
+    history.back();
+    return true;
+  };
+  window.LuxureatCloseInternalLink = () => {
+    if (!hasInternalBack()) return false;
+    const trail = readTrail();
+    trail.pop();
+    writeTrail(trail);
+    return true;
   };
   addEventListener("pageshow", () => requestAnimationFrame(() => {
     const saved = history.state?.luxReturnScroll;
