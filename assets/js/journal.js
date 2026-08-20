@@ -53,9 +53,14 @@ function initLuxReader() {
   const topicPatterns = { truffle: /松露|truffle/i, olive: /橄榄油|olive oil|extra virgin/i, caviar: /鱼子酱|caviar/i, pizza: /披萨|pizza/i, gelato: /冰淇淋|gelato/i };
   const topicFor = (id, article) => article.topic && contentLinks[article.topic] ? article.topic : Object.entries(topicPatterns).find(([, pattern]) => pattern.test(`${id} ${article.title || ""} ${(article.recipe?.ingredients || []).join(" ")}`))?.[0];
   const localized = (zh, en) => lang === "zh" ? zh : en;
-  const guideLink = (slug, zh, en) => ({ label: localized(zh, en), href: `blog.html?article=${slug}` });
-  const recipeLink = (slug, zh, en) => ({ label: localized(zh, en), href: `recipe.html?recipe=${slug}` });
-  const productLink = (href, zh, en) => ({ label: localized(zh, en), href });
+  const safeDetailHref = (href) => href
+    .replace(/^blog\.html\?article=([^&#]+).*$/, `blog.html#reader-${lang}-academy-$1`)
+    .replace(/^recipe\.html\?recipe=([^&#]+).*$/, `recipe.html#reader-${lang}-recipe-$1`)
+    .replace(/^product\.html\?product=([^&#]+).*$/, `product.html#product-${lang}-$1`);
+  const safeLink = (link) => link ? { ...link, href: safeDetailHref(link.href) } : link;
+  const guideLink = (slug, zh, en) => ({ label: localized(zh, en), href: `blog.html#reader-${lang}-academy-${slug}` });
+  const recipeLink = (slug, zh, en) => ({ label: localized(zh, en), href: `recipe.html#reader-${lang}-recipe-${slug}` });
+  const productLink = (href, zh, en) => ({ label: localized(zh, en), href: safeDetailHref(href) });
   const recipeKnowledgeRules = [
     [/truffle-tiramisu/, [guideLink("truffle-meets-dessert", "松露甜点中如何平衡香气与甜味", "How to Balance Truffle Aroma and Sweetness in Desserts"), guideLink("truffle-truffle-aroma-pairing", "理解松露用量与风味搭配", "Understanding Truffle Quantity and Flavour Pairing")]],
     [/truffle-summer-crostini/, [guideLink("truffle-truffle-types", "夏季松露与其他松露有什么不同？", "How Summer Truffle Differs from Other Truffles"), guideLink("truffle-buying-truffle-products", "整颗松露与松露制品应该如何选择？", "Choosing Whole Truffles and Truffle Products")]],
@@ -138,8 +143,8 @@ function initLuxReader() {
     "ugolini-gelato-mix": [recipeLink("gelato-classic", "用经典配方理解冰淇淋基底的作用", "Understand Gelato Base Function with a Classic Recipe"), productLink("new.html#gelato", "查看意式手工冰淇淋基底新品", "Explore the Upcoming Gelato Base")],
     "white-sturgeon-caviar": [recipeLink("sweet-bread-butter-caviar", "用黄油甜面包衬托白鲟鱼子酱的细腻口感", "Highlight White Sturgeon Caviar with Buttered Sweet Bread")],
   };
-  const knowledgeForRecipe = (id, article, fallback) => article.recipe?.knowledge ? [article.recipe.knowledge] : recipeKnowledgeRules.find(([pattern]) => pattern.test(id))?.[1] || (fallback ? [fallback] : []);
-  const recipeForArticle = (article, fallback) => [article.cta, ...(article.slug ? articleContentLinks[article.slug] || [] : fallback ? [fallback] : [])].filter((link, index, links) => link && links.findIndex((item) => item?.href === link.href) === index);
+  const knowledgeForRecipe = (id, article, fallback) => (article.recipe?.knowledge ? [article.recipe.knowledge] : recipeKnowledgeRules.find(([pattern]) => pattern.test(id))?.[1] || (fallback ? [fallback] : [])).map(safeLink);
+  const recipeForArticle = (article, fallback) => [article.cta, ...(article.slug ? articleContentLinks[article.slug] || [] : fallback ? [fallback] : [])].map(safeLink).filter((link, index, links) => link && links.findIndex((item) => item?.href === link.href) === index);
   const renderRecipeLibrary = () => {
     if (!recipeLibraryMount) return;
     const copy = lang === "zh"
