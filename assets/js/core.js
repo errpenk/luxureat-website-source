@@ -23,6 +23,46 @@ window.luxResponsiveData = (value) => {
   return value;
 };
 
+(() => {
+  const returnKey = "luxureat_internal_return";
+  const pageKey = () => `${location.pathname}${location.search}`;
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest?.("a[href]");
+    if (!link || event.defaultPrevented || event.button > 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === "_blank" || link.hasAttribute("download")) return;
+    const target = new URL(link.href, location.href);
+    if (target.origin !== location.origin || !/\b(?:article|recipe|product)=/.test(target.search) || `${target.pathname}${target.search}` === pageKey()) return;
+    history.replaceState({ ...(history.state || {}), luxReturnScroll: {
+      window: scrollY,
+      reader: document.querySelector(".lux-reader-body")?.scrollTop || 0,
+      product: document.querySelector(".lux-product-body")?.scrollTop || 0,
+    } }, "", location.href);
+    try { sessionStorage.setItem(returnKey, JSON.stringify({ target: `${target.pathname}${target.search}`, time: Date.now() })); } catch { /* Storage may be disabled. */ }
+  }, true);
+  window.LuxureatReturnFromInternalLink = () => {
+    try {
+      const entry = JSON.parse(sessionStorage.getItem(returnKey) || "null");
+      if (!entry || entry.target !== pageKey() || Date.now() - entry.time > 1800000) return false;
+      sessionStorage.removeItem(returnKey);
+      history.back();
+      return true;
+    } catch {
+      try { sessionStorage.removeItem(returnKey); } catch { /* Storage may be disabled. */ }
+      return false;
+    }
+  };
+  addEventListener("pageshow", () => requestAnimationFrame(() => {
+    const saved = history.state?.luxReturnScroll;
+    if (!saved) return;
+    scrollTo(0, saved.window);
+    const reader = document.querySelector(".lux-reader-body");
+    const product = document.querySelector(".lux-product-body");
+    if (reader) reader.scrollTop = saved.reader;
+    if (product) product.scrollTop = saved.product;
+    const { luxReturnScroll, ...state } = history.state;
+    history.replaceState(state, "", location.href);
+  }));
+})();
+
 const luxDelayedAnalytics = document.querySelector("script[data-lux-analytics-src]");
 const luxCookieConsentKey = "luxureat_cookie_consent";
 const luxGetCookieConsent = () => {
@@ -42,6 +82,23 @@ const loadAnalytics = () => {
   script.src = luxDelayedAnalytics.dataset.luxAnalyticsSrc;
   document.head.appendChild(script);
 };
+window.luxTrack = (eventName, params = {}) => {
+  if (luxGetCookieConsent() !== "analytics") return;
+  if (typeof window.gtag === "function") window.gtag("event", eventName, params);
+  else if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: eventName, ...params });
+};
+document.addEventListener("click", (event) => {
+  const cta = event.target.closest?.("[data-lux-cta]");
+  if (!cta) return;
+  const params = {
+    content_type: cta.dataset.luxCtaType || "content",
+    item_id: cta.dataset.luxCtaId || "",
+    link_url: cta.href || "",
+    cta_location: cta.dataset.luxCtaLocation || "",
+  };
+  window.luxTrack("select_content", params);
+  window.luxTrack("cta_click", params);
+});
 if (luxDelayedAnalytics) {
   const scheduleAnalytics = () => { if (!luxSaveData) setTimeout(loadAnalytics, luxIsMobile ? 15000 : 1000); };
   if (luxGetCookieConsent() === "analytics") {

@@ -5061,6 +5061,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-recipe-product-link:hover,
 .lux-recipe-product-link:focus-visible { color: #003f3c; }
 .lux-recipe-product-link .lux-lucide { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.lux-reader-article-links { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; margin-top: 44px; }
+.lux-reader-inline-links { margin-bottom: 44px; }
 .lux-recipe-topic-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -12481,9 +12483,20 @@ html[lang^="zh"] .lux-cert-awards h2 {
   transform: translateY(-3px);
 }
 .lux-cert-awards header p a {
-  color: #9df5ec;
+  color: #81d8d0;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color .25s ease, text-decoration-color .25s ease;
+}
+.lux-cert-awards header p a:hover,
+.lux-cert-awards header p a:focus-visible {
+  color: #fff;
+  text-decoration-color: #fff;
+}
+.lux-cert-awards header p a:focus-visible {
+  outline: 1px solid #81d8d0;
+  outline-offset: 4px;
 }
 .lux-cert-award-stack {
   display: flex;

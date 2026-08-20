@@ -51,6 +51,47 @@ for (const lang of ["zh", "en"]) {
 
 const journalData = fs.readFileSync(path.join(root, "assets/data/journal.js"), "utf8");
 const productData = fs.readFileSync(path.join(root, "assets/data/products.js"), "utf8");
+const journalRuntime = fs.readFileSync(path.join(root, "assets/js/journal.js"), "utf8");
+const productRuntime = fs.readFileSync(path.join(root, "assets/js/products.js"), "utf8");
+const coreRuntime = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
+const integrationCss = fs.readFileSync(path.join(root, "integration.css"), "utf8");
+const academyIndex = fs.readFileSync(path.join(root, "assets/data/academy-index.js"), "utf8");
+const linkedRuntimes = `${journalRuntime}\n${productRuntime}`;
+const directRecipeSlugs = [...linkedRuntimes.matchAll(/recipe\.html\?recipe=([a-z0-9-]+)/g)].map(([, slug]) => slug);
+const helperRecipeSlugs = [...linkedRuntimes.matchAll(/recipeLink\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
+const productRecipeSlugs = [...productRuntime.matchAll(/recipeRef\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
+const productGuideSlugs = [...productRuntime.matchAll(/guideRef\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
+const recipeLinkSlugs = [...directRecipeSlugs, ...helperRecipeSlugs, ...productRecipeSlugs];
+for (const slug of recipeLinkSlugs) {
+  for (const lang of ["zh", "en"]) assert(journalData.includes(`"${lang}-recipe-${slug}":`) || journalData.includes(`addDocumentedRecipe("${slug}"`), `mapped ${lang} recipe is missing: ${slug}`);
+}
+const directGuideSlugs = [...linkedRuntimes.matchAll(/blog\.html\?article=([a-z0-9-]+)/g)].map(([, slug]) => slug);
+const helperGuideSlugs = [...linkedRuntimes.matchAll(/guideLink\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
+const guideLinkSlugs = [...directGuideSlugs, ...helperGuideSlugs, ...productGuideSlugs];
+for (const slug of guideLinkSlugs) {
+  assert((academyIndex.match(new RegExp(`"slug":"${slug}"`, "g")) || []).length >= 2, `mapped bilingual article is missing: ${slug}`);
+}
+for (const [, slug] of linkedRuntimes.matchAll(/product\.html\?product=([a-z0-9-]+)/g)) {
+  assert(productData.includes(`["${slug}",`), `mapped product is missing: ${slug}`);
+}
+const academySlugs = new Set([...academyIndex.matchAll(/"slug":"([a-z0-9-]+)"/g)].map(([, slug]) => slug));
+const articleMapBlock = journalRuntime.match(/const articleContentLinks = \{([\s\S]*?)\n  \};\n  const knowledgeForRecipe/)?.[1] || "";
+const mappedArticleSlugs = new Set([...articleMapBlock.matchAll(/^\s+"([a-z0-9-]+)": \[/gm)].map(([, slug]) => slug));
+assert(mappedArticleSlugs.size === academySlugs.size && [...academySlugs].every((slug) => mappedArticleSlugs.has(slug)), "the 66 knowledge articles do not each have a curated internal-link mapping");
+assert(new Set(recipeLinkSlugs).size >= 10, "internal recipe links are not sufficiently varied");
+assert(new Set(guideLinkSlugs).size >= 10, "internal guide links are not sufficiently varied");
+assert(new Set(productRecipeSlugs).size >= 8, "product-to-recipe links are not sufficiently varied");
+assert(new Set(productGuideSlugs).size >= 4, "product-to-guide links are not sufficiently varied");
+assert(productRuntime.includes("content.links.map"), "product links are still constrained to one recipe and one guide");
+assert(journalRuntime.includes("relatedKnowledge.map") && journalRuntime.includes("const secondaryArticleLinks = articleLinks.slice(1)"), "recipe or article links are still constrained to one related item");
+assert(journalRuntime.includes("item?.href === link.href"), "optional article CTAs are not safely deduplicated");
+assert(journalRuntime.includes('class="lux-reader-article-links"') && journalRuntime.includes('class="lux-recipe-product-link"'), "knowledge article links do not reuse the shared internal-link interaction style");
+assert(integrationCss.includes(".lux-reader-article-links { display: flex; flex-direction: column;"), "knowledge article links are not displayed one per line");
+assert(productRuntime.includes("productFamily") && productRuntime.includes("productUse") && productRuntime.includes(".sort((a, b) => b.score - a.score"), "product recommendations are not deterministically ranked by relevance");
+assert(journalRuntime.includes('data-lux-cta-location="article-body"') && journalRuntime.includes('data-lux-cta-location="recipe-details"'), "contextual article or recipe links are missing");
+assert(coreRuntime.includes('luxGetCookieConsent() !== "analytics"') && coreRuntime.includes('window.luxTrack("cta_click"'), "CTA analytics do not respect consent or emit the expected event");
+assert(integrationCss.includes(".lux-cert-awards header p a:hover") && integrationCss.includes("outline: 1px solid #81d8d0"), "brand and industry partnership links do not share the site link interaction states");
+assert(journalRuntime.includes('get("recipe")') && productRuntime.includes('get("product")'), "public recipe or product query route is not handled");
 for (const lang of ["zh", "en"]) {
   const directory = path.join(root, lang);
   for (const file of fs.readdirSync(directory).filter((name) => name.endsWith(".html"))) {
@@ -91,6 +132,8 @@ assert(core.includes('["食谱库", "recipe-library"]') && core.includes('["Reci
 assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && core.includes('luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item")'), "mobile navigation does not expose the current page submenu without :has support");
 assert(core.includes('classList.toggle("is-scrolled", window.scrollY > 1)') && !core.includes('document.body.classList.contains("lux-home-page")'), "shared header does not react to the top scroll state on every page");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");
+assert(core.includes('luxureat_internal_return') && core.includes('luxReturnScroll') && core.includes('history.back()'), "internal content links do not preserve their source reading position");
+assert(journalRuntime.includes('LuxureatReturnFromInternalLink') && productRuntime.includes('LuxureatReturnFromInternalLink'), "content detail close actions do not return to the source page");
 
 const submenuTargets = {
   zh: {
