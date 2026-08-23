@@ -74,7 +74,6 @@ assert((zh.match(/阅读详情/g) || []).length === 3, "Chinese recommended reci
 for (const productCopy of ["橄榄油产品目录（以实际库存和标签为准）", "披萨产品目录（以实际库存和标签为准）", "意式手工冰淇淋产品目录（以实际库存和标签为准）"]) assert(read("assets/data/journal.js").includes(productCopy), `New-arrivals recipe product link is missing ${productCopy}`);
 assert(styles.includes(".lux-recipe-product-link .lux-lucide") && !read("assets/css/rituals.css").includes(".lux-recipe-product-link"), "Recipe product-link UI is not shared across reader pages");
 assert(read("assets/css/rituals.css").includes(".lux-recipe-theme-card > div > span { display: none; }"), "Recipe cards still show their gold category labels");
-assert(read("assets/js/journal.js").includes('productUrl.searchParams.set("category", productCategory)') && read("assets/js/journal.js").includes('productUrl.hash = productCategory ? "product-catalogue" : ""'), "Recipe product links do not open their matching catalogue category");
 assert(pageStyles.includes("pointer-events: none") && pageStyles.includes("article:hover .lux-new-recipe-cta"), "recommended recipe details are not hover-revealed");
 assert(pageStyles.includes(".lux-new-features article strong") && (pageStyles.match(/font: 500 clamp\(28px, 2\.8vw, 40px\)\/1\.1/g) || []).length >= 2, "feature and recipe titles do not share the same type size");
 assert((pageStyles.match(/font: 400 18px\/1\.75/g) || []).length >= 3, "feature, recipe and about copy do not share the same type size");

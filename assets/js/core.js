@@ -288,7 +288,7 @@ if (luxDeferredScripts) {
 }
 
 document.querySelectorAll("#selected-products > .grid > .group").forEach((card) => {
-  const productLink = card.querySelector("[data-product-open]");
+  const productLink = card.querySelector("[data-product-open], [data-series-link]");
   if (!productLink) return;
   card.setAttribute("role", "link");
   card.tabIndex = 0;
@@ -583,7 +583,7 @@ const luxNavigation = {
     ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["合作流程", "partnership-process"]]],
     ["about-us.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["品牌承诺", "brand-promise"], ["时令随笔", "seasonal-notes"]]],
     ["new.html", "热门新品", [["橄榄油", "olive-oil"], ["披萨", "pizza"], ["意式手工冰淇淋", "gelato"]]],
-    ["product.html", "系列产品", [["产品全览", "product-catalogue"]]],
+    ["product.html", "系列产品", [["全部分类", "product-catalogue"], ["鱼子酱", "?category=caviar#product-catalogue"], ["松露", "?category=truffle#product-catalogue"], ["披萨", "?category=pizza#product-catalogue"], ["橄榄油", "?category=olive-oil#product-catalogue"], ["意大利面", "?category=pasta#product-catalogue"], ["意式手工冰淇淋", "?category=gelato#product-catalogue"]]],
     ["recipe.html", "食谱艺术", [["意式风味食谱", "italian-flavor-recipes"], ["橄榄油食谱", "olive-recipes"], ["松露食谱", "truffle-recipes"], ["健康轻食", "healthy-light-recipes"], ["适合中国家庭的意大利菜", "china-family-recipes"], ["食谱库", "recipe-library"]]],
     ["brand.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
     ["blog.html", "知识博客", [["探索意大利", "culture-academy"], ["鱼子酱学院", "caviar-academy"], ["橄榄油学院", "olive-academy"], ["披萨学院", "pizza-academy"], ["松露学院", "truffle-academy"], ["意式手工冰淇淋", "gelato-academy"], ["营养与配料指南", "nutrition-guide"], ["意大利美食词典", "italian-food-dictionary"], ["生产者、大师与产地故事", "producers-stories"]]],
@@ -595,7 +595,7 @@ const luxNavigation = {
     ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Group Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
     ["about-us.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Brand Promise", "brand-promise"], ["Seasonal Notes", "seasonal-notes"]]],
     ["new.html", "New Arrivals", [["Olive Oil", "olive-oil"], ["Pizza", "pizza"], ["Gelato", "gelato"]]],
-    ["product.html", "Products", [["Premium Products", "product-catalogue"]]],
+    ["product.html", "Products", [["All Categories", "product-catalogue"], ["Caviar", "?category=caviar#product-catalogue"], ["Truffle", "?category=truffle#product-catalogue"], ["Pizza", "?category=pizza#product-catalogue"], ["Olive Oil", "?category=olive-oil#product-catalogue"], ["Italian Pasta", "?category=pasta#product-catalogue"], ["Italian Gelato", "?category=gelato#product-catalogue"]]],
     ["recipe.html", "Recipe Art", [["Italian Flavor Recipes", "italian-flavor-recipes"], ["Olive Oil Recipes", "olive-recipes"], ["Truffle Recipes", "truffle-recipes"], ["Healthy Light Meals", "healthy-light-recipes"], ["Italian Food for Chinese Homes", "china-family-recipes"], ["Recipe Library", "recipe-library"]]],
     ["brand.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
     ["blog.html", "Blog", [["Explore Italy", "culture-academy"], ["Caviar Academy", "caviar-academy"], ["Olive Oil Academy", "olive-academy"], ["Pizza Academy", "pizza-academy"], ["Truffle Academy", "truffle-academy"], ["Italian Gelato", "gelato-academy"], ["Nutrition & Ingredients", "nutrition-guide"], ["Italian Food Dictionary", "italian-food-dictionary"], ["Producers, Masters & Stories of Place", "producers-stories"]]],

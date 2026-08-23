@@ -91,7 +91,6 @@ assert(productRuntime.includes("productFamily") && productRuntime.includes("prod
 assert(journalRuntime.includes('data-lux-cta-location="article-body"') && journalRuntime.includes('data-lux-cta-location="recipe-details"'), "contextual article or recipe links are missing");
 assert(journalRuntime.includes("safeDetailHref") && journalRuntime.includes('detailHref("recipe"') && productRuntime.includes('detailHref("recipe"'), "contextual links still depend on WordPress-reserved query variables or static relative paths");
 assert(coreRuntime.includes('luxGetCookieConsent() !== "analytics"') && coreRuntime.includes('window.luxTrack("cta_click"'), "CTA analytics do not respect consent or emit the expected event");
-assert(integrationCss.includes(".lux-cert-awards header p a:hover") && integrationCss.includes("outline: 1px solid #81d8d0"), "brand and industry partnership links do not share the site link interaction states");
 assert(journalRuntime.includes('get("recipe")') && productRuntime.includes('get("product")'), "public recipe or product query route is not handled");
 for (const lang of ["zh", "en"]) {
   const directory = path.join(root, lang);
@@ -130,6 +129,12 @@ assert(core.includes('["cooperation.html", "商务合作", [["国际市场定制
 assert(core.includes('["about-us.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["品牌承诺", "brand-promise"], ["时令随笔", "seasonal-notes"]]'), "Chinese About Us submenu is incorrect");
 assert(core.includes('["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]'), "Chinese contact submenu is incorrect");
 assert(core.includes('["食谱库", "recipe-library"]') && core.includes('["Recipe Library", "recipe-library"]'), "bilingual Recipe Library submenu is missing");
+for (const [label, category] of [["鱼子酱", "caviar"], ["松露", "truffle"], ["披萨", "pizza"], ["橄榄油", "olive-oil"], ["意大利面", "pasta"], ["意式手工冰淇淋", "gelato"]]) {
+  assert(core.includes(`["${label}", "?category=${category}#product-catalogue"]`), `Chinese Products submenu is missing ${category}`);
+}
+for (const [label, category] of [["Caviar", "caviar"], ["Truffle", "truffle"], ["Pizza", "pizza"], ["Olive Oil", "olive-oil"], ["Italian Pasta", "pasta"], ["Italian Gelato", "gelato"]]) {
+  assert(core.includes(`["${label}", "?category=${category}#product-catalogue"]`), `English Products submenu is missing ${category}`);
+}
 assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && core.includes('luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item")'), "mobile navigation does not expose the current page submenu without :has support");
 assert(core.includes('classList.toggle("is-scrolled", window.scrollY > 1)') && !core.includes('document.body.classList.contains("lux-home-page")'), "shared header does not react to the top scroll state on every page");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");

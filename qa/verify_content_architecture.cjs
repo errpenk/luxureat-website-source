@@ -39,8 +39,29 @@ const products = load("assets/data/products.js", "LUXUREAT_PRODUCT_DATA");
 const events = load("assets/data/events.js", "LUXUREAT_EVENT_DATA");
 const journal = load("assets/data/journal.js", "LUXUREAT_ARTICLE_DATA");
 const recipeProductCategories = new Set(["caviar", "truffle", "olive-oil", "pizza", "gelato"]);
+const recipeLinkedProductCategories = new Set([...recipeProductCategories, "pasta"]);
+const pastaProducts = Object.entries(products.products).filter(([key, product]) => key.startsWith("zh-") && product.category === "pasta");
+assert(pastaProducts.length === 23, "bilingual pasta catalogue does not contain all 23 supplied products");
+assert(pastaProducts.every(([, product]) => product.typeKey === "pasta" && product.eyebrow === "面食" && product.gallery.length === 4), "pasta category, label type or four-image gallery is incomplete");
+assert(pastaProducts.every(([, product]) => product.gallery[0] === product.image && product.gallery.slice(1).every((image) => image.includes("/products/pasta/process-"))), "pasta gallery does not preserve each lead image before the three supplied process images");
+assert(Object.keys(products.products).filter((key) => key.startsWith("en-") && products.products[key].category === "pasta").length === 23, "English pasta catalogue does not contain all 23 supplied products");
+for (const locale of ["zh", "en"]) {
+  const productPage = read(`${locale}/product.html`);
+  assert(productPage.indexOf('data-caviar-filter="pasta"') < productPage.indexOf('data-caviar-filter="gelato"'), `${locale} Pasta category is not listed before Italian Gelato`);
+  assert(productPage.indexOf('data-caviar-filter="pasta"') < productPage.indexOf('data-caviar-filter="seasoning-oil"'), `${locale} Pasta label type is not listed before Seasoning Oil`);
+}
+assert(read("zh/product.html").includes('"KingHwa Labels Critical"'), "mixed Chinese product titles do not keep KingHwa for Latin characters and numerals");
 for (const article of Object.values(journal.articles).filter((item) => item.type === "recipe")) {
   assert(recipeProductCategories.has(article.productCategory), `${article.title} does not link to a matching product category`);
+  assert(article.productCategories?.length && article.productCategories.every((category) => recipeLinkedProductCategories.has(category)), `${article.title} has incomplete related-product categories`);
+}
+for (const slug of ["truffle-tagliolini", "truffle-ravioli", "olive-pasta", "family-spaghetti-pomodoro"]) {
+  const categories = journal.articles[`zh-recipe-${slug}`].productCategories;
+  assert(categories.includes("pasta") && categories.length === 2, `${slug} does not link to both pasta and its paired product category`);
+}
+for (const slug of ["truffle-summer-crostini", "truffle-trout", "truffle-lamb"]) {
+  const categories = journal.articles[`zh-recipe-${slug}`].productCategories;
+  assert(categories.includes("truffle") && categories.includes("olive-oil"), `${slug} does not link to both truffle and olive-oil products`);
 }
 
 const media = [
@@ -101,9 +122,23 @@ assert(event?.poster?.endsWith("/marca-china-2026-poster.webp"), "latest event h
 const productRuntime = read("assets/js/products.js");
 assert(productRuntime.includes("const activeFilters = { category: new Set(), type: new Set() }"), "product filters do not expose category and label-type multi-select state");
 assert(productRuntime.includes('item.dataset.species.split(" ").some((category) => activeFilters.category.has(category))') && productRuntime.includes("activeFilters.type.has(item.dataset.productType)"), "product cards do not combine multi-category and label-type filters");
-assert(productRuntime.includes('new URLSearchParams(location.search).get("category")') && productRuntime.includes('button.dataset.caviarFilter === requestedCategory'), "product category links do not initialize the matching catalogue filter");
+assert(productRuntime.includes('new URLSearchParams(location.search).getAll("category")') && productRuntime.includes("requestedCategories.forEach") && productRuntime.includes('button.dataset.caviarFilter === category'), "single or multi-category product links do not initialize the matching catalogue filters");
 assert(productRuntime.includes("<strong>即将上新</strong><span>未找到相关产品</span>") && productRuntime.includes("<strong>Coming Soon</strong><span>No related products found</span>") && productRuntime.includes("empty.hidden = visibleCount !== 0"), "bilingual product empty-search state is missing");
 assert(productRuntime.includes("shouldCenterEmpty") && productRuntime.includes('empty.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" })'), "empty product state does not center itself when first shown");
+assert(productRuntime.includes("data-product-image-zoom") && productRuntime.includes("imageLightbox.showModal()"), "product detail image lightbox is missing");
+assert((productRuntime.match(/openImageLightbox\(/g) || []).length === 1 && productRuntime.includes('classList.toggle("is-secondary", galleryButton.dataset.productGallery !== "0")'), "product thumbnails must only switch images while the main image alone opens the lightbox");
+assert(productRuntime.includes("const pastaContent = related(") && productRuntime.includes('product.categories?.includes("pasta") ? pastaContent'), "pasta product details do not expose relevant recipe and knowledge CTAs");
+for (const slug of ["olive-pasta", "pasta-academy", "dictionary-pasta-risotto", "cooking-techniques"]) {
+  assert(productRuntime.includes(`\"${slug}\"`), `pasta CTA target is missing: ${slug}`);
+}
+for (const locale of ["zh", "en"]) {
+  assert(read(`${locale}/about-us.html`).includes("lux-brand-promise-link"), `${locale} brand-promise verification link is not using the deep-green treatment`);
+}
+assert(read("integration.css").includes(".lux-brand-promise-link") && read("integration.css").includes("color: #145a4a"), "brand-promise verification link is not deep green");
+assert(read("integration.css").includes("color: #806018") && read("integration.css").includes("border-color: #806018"), "brand-promise verification link hover is not deep gold");
+for (const selector of [".lux-recipe-product-link", ".lux-breadcrumb a", ".woocommerce-account .woocommerce-MyAccount-content a"]) {
+  assert(read("integration.css").includes(selector), `deep-green internal link interaction is incomplete: ${selector}`);
+}
 
 const journalRuntime = read("assets/js/journal.js");
 assert(journalRuntime.includes('luxJournalAsset("vendor/leaflet/leaflet.js")'), "self-hosted Leaflet map runtime is missing");
@@ -143,9 +178,21 @@ const engagementRuntime = read("assets/js/engagement.js");
 assert(accountRuntime.includes('luxureat_cookie_consent') && accountRuntime.includes('data-cookie-choice="necessary"') && accountRuntime.includes('data-cookie-choice="analytics"'), "bilingual cookie consent controls are missing");
 assert(accountRuntime.includes('luxGetCookieConsent() !== "analytics"') && accountRuntime.includes('data-footer-modal="cookie"'), "analytics is not gated by consent or Cookie Policy cannot be opened");
 assert(engagementRuntime.includes('cookie: ["Cookie Policy"') && engagementRuntime.includes("termsZh") && engagementRuntime.includes("shippingZh"), "bilingual Cookie, sale or shipping policies are incomplete");
+assert(engagementRuntime.includes('panel.classList.toggle("is-legal", isLegal)'), "legal footer dialogs do not expose their positioning state");
 assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
+assert(/\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close\s*\{[^}]*top:\s*12px;[^}]*right:\s*14px;[^}]*border-color:\s*#101010;[^}]*border-width:\s*\.5px;/s.test(integrationStyles), "legal dialog close position or border does not match the blog reader close control");
+assert(/\.lux-reader-close:active,[\s\S]*?\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close:hover,[\s\S]*?background:\s*#9df5ec;[\s\S]*?box-shadow:\s*inset 0 0 0 1px #101010;[\s\S]*?transform:\s*none;/s.test(integrationStyles), "legal dialog close interaction does not reuse the blog reader close interaction");
+assert(/\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-body\s*\{[^}]*margin-top:\s*0;[^}]*padding-top:\s*72px;/s.test(integrationStyles), "legal dialog scroll viewport does not start at the panel top like the blog reader");
+assert(/\.lux-footer-modal-panel\.is-legal::before\s*\{[^}]*height:\s*62px;[^}]*background:\s*rgba\(238, 234, 229, \.82\);[^}]*backdrop-filter:\s*blur\(12px\);/s.test(integrationStyles), "legal dialog mask does not match the panel tone or blur scrolling text beneath its close bar");
+assert(/\.lux-product-thumb\s*\{[^}]*background:\s*#fff;/s.test(integrationStyles) && /\.lux-product-image\s*\{[^}]*background:\s*#fff;/s.test(integrationStyles), "product detail image containers are not white");
+assert(/\.lux-product-thumb img\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center;/s.test(integrationStyles) && /\.lux-product-image img\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center;/s.test(integrationStyles), "product detail images are not centered without cropping");
+assert(/\.lux-product-thumb:not\(:first-child\) img,[\s\S]*?\.lux-product-image\.is-secondary img\s*\{[^}]*object-fit:\s*cover;/s.test(integrationStyles), "secondary product gallery images do not fill their containers");
+assert(/\.lux-product-recent-media\s*\{[^}]*background:\s*#fff;/s.test(integrationStyles) && /\.lux-product-recent-media > img\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center;/s.test(integrationStyles), "recommended product thumbnails are not fully contained on white");
+assert(/\.lux-product-recent-media:hover > img,[\s\S]*?transform:\s*scale\(1\.025\);/s.test(integrationStyles), "recommended product thumbnails do not provide the subtle hover zoom");
+assert(!productRuntime.includes('"TEST"') && read("assets/data/products.js").includes('priceLabel: "PRICE"'), "product catalogue labels are not uniformly PRICE");
+assert(/\.lux-product-catalog \[data-caviar-item\] > div:first-child > div:first-child\s*\{[^}]*background-repeat:\s*no-repeat\s*!important;[^}]*background-size:\s*contain\s*!important;/s.test(integrationStyles), "product catalogue images are still cropped");
 const newsletterStyles = read("assets/css/newsletter.css");
 const coreScript = read("assets/js/core.js");
 assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)") && integrationStyles.includes("mix-blend-mode: difference"), "shared header contrast or mobile-menu surface styling is incomplete");
@@ -221,12 +268,14 @@ assert(integrationStyles.includes(".lux-footer .lux-footer-brand-main > p") && i
 assert(coreScript.includes('cookie: "Cookie Policy"') && coreScript.includes('cookie: "Cookie政策"'), "cookie policy labels are not bilingual");
 assert(coreScript.indexOf('data-cookie-choice="analytics"') < coreScript.indexOf('data-cookie-choice="necessary"'), "analytics cookie choice is not first");
 assert(newsletterStyles.includes("backdrop-filter:blur(16px)") && newsletterStyles.includes('html[lang^="zh"] body .lux-cookie-banner :is(p,button){font-family:var(--lux-zh-body)!important}') && newsletterStyles.includes('html[lang^="en"] body .lux-cookie-banner :is(p,button){font-family:var(--lux-en-body)!important}'), "cookie banner glass or locale typography is missing");
+assert(newsletterStyles.includes("max-width:720px;margin-right:auto") && !newsletterStyles.includes("max-width:720px;margin-left:auto"), "cookie banner is not anchored to the lower-left corner");
 assert(read("en/index.html").includes('href="about-us.html#reader-en-harvest" data-reader-open="en-harvest"') && read("zh/index.html").includes('href="about-us.html#reader-zh-harvest" data-reader-open="zh-harvest"'), "homepage Values UI lacks a native article fallback");
 assert(accountRuntime.includes("else if (trigger.href) location.href = trigger.href"), "failed deferred reader loading has no native link fallback");
 assert(integrationStyles.includes("z-index: 120 !important") && integrationStyles.includes("html[lang] body #luxureat-china .lux-about-program-lead h2") && integrationStyles.includes("clamp(34px, 4vw, 58px)") && integrationStyles.includes(".lux-recent-events-head > span"), "sort layering or requested bilingual typography is incomplete");
 assert(integrationStyles.includes("About-page closing statement: restrained KingHwa display treatment") && integrationStyles.includes("clamp(22px, 2.2vw, 32px)"), "Chinese About closing statement does not use the reduced KingHwa treatment");
 assert(integrationStyles.includes('html[lang^="en"] .lux-about-story .lux-reader-quote') && integrationStyles.includes("#consumer-needs .lux-about-program-grid h3") && integrationStyles.includes("#consumer-needs .lux-product-characteristics-note strong") && integrationStyles.includes("color: #d0ac2d !important"), "English About statement scale or bilingual consumer gold headings are incomplete");
 assert(integrationStyles.includes("#mission-objectives .lux-about-program-grid h3") && integrationStyles.includes("-webkit-text-stroke: .6px #050505") && integrationStyles.includes("paint-order: stroke fill"), "bilingual mission headings do not use gold fill with a black outline");
+assert(/\.lux-cert-awards header p a:hover,[\s\S]*?color:\s*#e9c349;[\s\S]*?text-decoration-color:\s*#e9c349;/s.test(integrationStyles), "certification partnership links do not turn gold on interaction");
 assert(read("zh/index.html").includes("<blockquote>品味的奢华") && read("en/index.html").includes("<blockquote>The luxury of taste") && integrationStyles.includes(".lux-home-maison-head > div:first-child > blockquote") && integrationStyles.includes("color: #004b47"), "homepage Maison baselines or the deep-green Services label are incomplete");
 assert(read("zh/cooperation.html").includes("lux-gifting-hero lux-standard-hero") && read("en/cooperation.html").includes("lux-gifting-hero lux-standard-hero") && integrationStyles.includes(".lux-gifting-hero .lux-hero-fade-both") && integrationStyles.includes("#000 100%"), "bilingual Gifting hero blend is incomplete");
 const sharedHeroPages = ["about-us", "recipe", "brand", "blog", "certification", "cooperation", "contact"];
@@ -234,7 +283,7 @@ assert(read("zh/recipe.html").includes('data-recipe-library-app') && read("en/re
 assert(journalRuntime.includes("renderRecipeLibrary") && journalRuntime.includes("data-recipe-region") && journalRuntime.includes("data-recipe-ingredient"), "recipe archive does not provide shared region and ingredient filtering");
 assert(journalRuntime.includes('read: "阅读详情"') && journalRuntime.includes('class="lux-reader-cta"'), "recipe-library cards do not reuse the shared detail CTA");
 assert(journalRuntime.includes('href="${href}" class="lux-recipe-library-card"') && journalRuntime.includes('id.replace(/^(?:zh|en)-recipe-/'), "recipe cards do not expose crawlable localized detail links");
-assert(journalRuntime.includes("lux-recipe-product-link") && journalRuntime.includes('href="${escapeHtml(productHref)}"') && journalRuntime.includes('.lux-nav a[href$="product.html"], .lux-nav a[href$="/product/"]') && journalRuntime.includes('productUrl.searchParams.set("category", productCategory)'), "related recipe products do not reuse the localized product route and category filter");
+assert(journalRuntime.includes("lux-recipe-product-link") && journalRuntime.includes('href="${escapeHtml(productHref)}"') && journalRuntime.includes('.lux-nav a[href$="product.html"], .lux-nav a[href$="/product/"]') && journalRuntime.includes('productUrl.searchParams.set("category", productCategories.join(","))'), "related recipe products do not reuse the localized product route and complete category filters");
 assert(read("assets/css/rituals.css").includes(".lux-recipe-library-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}"), "mobile recipe library is not a two-column grid");
 assert(journalRuntime.includes("article.productCategory ||") && read("assets/data/journal.js").includes('"sweet-bread-butter-caviar": "caviar"') && read("assets/data/journal.js").includes('"truffle-eggs": "truffle"'), "legacy recipes do not map to their matching product category");
 assert(read("zh/product.html").includes('data-caviar-filter="truffle"') && read("zh/product.html").includes('data-caviar-filter="olive-oil"') && read("en/product.html").includes('data-caviar-filter="truffle"') && read("en/product.html").includes('data-caviar-filter="olive-oil"'), "the restored bilingual truffle and olive-oil product filters are missing");

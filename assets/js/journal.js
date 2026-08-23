@@ -689,11 +689,13 @@ function initLuxReader() {
       const recipeLabels = article.lang === "zh"
         ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", knowledge: "相关知识", products: "相关产品" }
         : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", knowledge: "Related guide", products: "Related products" };
-      const productCategory = article.productCategory || relatedContent.productCategory;
+      const productCategories = article.productCategories?.length
+        ? article.productCategories
+        : [article.productCategory || relatedContent.productCategory].filter(Boolean);
       const productIndex = document.querySelector('.lux-nav a[href$="product.html"], .lux-nav a[href$="/product/"]')?.href || "product.html";
       const productUrl = new URL(productIndex, location.href);
-      if (productCategory) productUrl.searchParams.set("category", productCategory);
-      productUrl.hash = productCategory ? "product-catalogue" : "";
+      if (productCategories.length) productUrl.searchParams.set("category", productCategories.join(","));
+      productUrl.hash = productCategories.length ? "product-catalogue" : "";
       const productHref = productUrl.href;
       const productCta = recipe.products || relatedContent.product;
       body.innerHTML = `
