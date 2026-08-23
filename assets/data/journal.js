@@ -1045,10 +1045,26 @@
     "sweet-bread-butter-caviar": "caviar",
     "truffle-tiramisu": "truffle",
   };
+  const recipeProductCategoryGroups = {
+    "truffle-tagliolini": ["truffle", "pasta"],
+    "truffle-ravioli": ["truffle", "pasta"],
+    "olive-pasta": ["olive-oil", "pasta"],
+    "family-spaghetti-pomodoro": ["olive-oil", "pasta"],
+    "truffle-summer-crostini": ["truffle", "olive-oil"],
+    "truffle-trout": ["truffle", "olive-oil"],
+    "truffle-lamb": ["truffle", "olive-oil"],
+  };
+  const recipeProductLabels = {
+    "truffle-tagliolini": { zh: "LuxurEat（露意膳）松露与意大利面产品", en: "LuxurEat (露意膳) truffle and pasta products" },
+    "truffle-ravioli": { zh: "LuxurEat（露意膳）松露与意大利面产品", en: "LuxurEat (露意膳) truffle and pasta products" },
+    "olive-pasta": { zh: "LuxurEat（露意膳）特级初榨橄榄油与意大利面产品", en: "LuxurEat (露意膳) extra-virgin olive oil and pasta products" },
+  };
   Object.entries(articles).forEach(([id, article]) => {
     if (article.type !== "recipe" || !article.recipe) return;
     const key = id.replace(/^(?:zh|en)-recipe-/, "");
     article.productCategory = recipeProductCategories[key] || (article.topic === "olive" ? "olive-oil" : article.topic);
+    article.productCategories = recipeProductCategoryGroups[key] || [article.productCategory];
+    if (recipeProductLabels[key]) article.recipe.products = recipeProductLabels[key][article.lang];
     const profile = recipeProfiles[key]?.[article.lang];
     if (!profile) return;
     ["region", "allergens", "substitutions", "oil", "products"].forEach((field, index) => {

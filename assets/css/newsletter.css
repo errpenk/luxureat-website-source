@@ -17,7 +17,7 @@ html body .lux-footer .lux-footer-brand-main>p{font-family:var(--lux-page-headin
 .lux-newsletter-form button:disabled{cursor:wait;opacity:.6}
 .lux-newsletter-form [data-newsletter-feedback]{min-height:24px;margin:12px 0 0;color:#ef9b91;font:400 var(--lux-type-body-sm,13px)/1.5 var(--lux-page-heading);white-space:pre-line}
 .lux-newsletter-form [data-newsletter-feedback].is-success{color:#81d8d0}
-.lux-cookie-banner{position:fixed;z-index:10000;right:18px;bottom:18px;left:18px;box-sizing:border-box;max-width:720px;margin-left:auto;padding:18px;display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:center;gap:16px;border:1px solid rgba(157,245,236,.38);background:rgba(7,7,7,.78);-webkit-backdrop-filter:blur(16px) saturate(135%);backdrop-filter:blur(16px) saturate(135%);box-shadow:0 18px 54px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.08);color:#f3f0eb;font:400 13px/1.5 var(--lux-page-heading)}
+.lux-cookie-banner{position:fixed;z-index:10000;right:18px;bottom:18px;left:18px;box-sizing:border-box;max-width:720px;margin-right:auto;padding:18px;display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:center;gap:16px;border:1px solid rgba(157,245,236,.38);background:rgba(7,7,7,.78);-webkit-backdrop-filter:blur(16px) saturate(135%);backdrop-filter:blur(16px) saturate(135%);box-shadow:0 18px 54px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.08);color:#f3f0eb;font:400 13px/1.5 var(--lux-page-heading)}
 .lux-cookie-banner[hidden]{display:none}
 .lux-cookie-banner img{width:48px;height:48px;object-fit:contain;filter:invert(1)}
 .lux-cookie-banner p{margin:0 0 5px}

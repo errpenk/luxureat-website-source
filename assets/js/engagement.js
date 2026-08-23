@@ -210,6 +210,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     </section>`;
   document.body.appendChild(modal);
 
+  const panel = modal.querySelector(".lux-footer-modal-panel");
   const body = modal.querySelector(".lux-footer-modal-body");
   const closeButton = modal.querySelector(".lux-footer-modal-close");
   const open = (key) => {
@@ -220,6 +221,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
     body.classList.toggle("is-legal", isLegal);
+    panel.classList.toggle("is-legal", isLegal);
     const cookieActions = key === "cookie" ? `<p class="lux-cookie-provider"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></p>` : "";
     body.innerHTML = `<h2${key === "cookie" ? ' class="lux-cookie-policy-title"' : ""}>${luxEscapeCoreHtml(item[0])}</h2><p>${luxEscapeCoreHtml(item[1])}</p>${cookieActions}${note}${qr}`;
     closeButton.textContent = copy.close;

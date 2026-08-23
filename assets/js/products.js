@@ -41,7 +41,7 @@ function renderLuxProductCatalog() {
     : { add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details" };
   const formatMoney = (product) => product.priceLabel || `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
   const formatPreviewPrice = (product) => product.catalogOnly
-    ? `${product.priceLabel || "TEST"} / ${lang === "zh" ? "份" : "unit"}`
+    ? `${product.priceLabel || "PRICE"} / ${lang === "zh" ? "份" : "unit"}`
     : `${formatMoney(product)} / ${product.unit}`;
   const stockLabel = (product) => product.available === false
     ? labels.unavailable
@@ -335,8 +335,13 @@ function initLuxCaviarControls() {
     if (event.key === "Escape") setSortOpen(false);
   });
 
-  const requestedCategory = new URLSearchParams(location.search).get("category");
-  filterButtons.find((button) => button.dataset.caviarFilterGroup === "category" && button.dataset.caviarFilter === requestedCategory)?.click();
+  const requestedCategories = new URLSearchParams(location.search).getAll("category")
+    .flatMap((value) => value.split(","))
+    .map((value) => value.trim())
+    .filter(Boolean);
+  requestedCategories.forEach((category) => {
+    filterButtons.find((button) => button.dataset.caviarFilterGroup === "category" && button.dataset.caviarFilter === category)?.click();
+  });
   applyFilter();
   applyView();
   applySort();
@@ -369,8 +374,10 @@ function initLuxProductDetails() {
     [/(?:white|black|winter-black)-truffle-sauce-/, related([recipeRef("truffle-ravioli", "在松露馄饨中使用松露酱", "Use Truffle Sauce in Ravioli"), recipeRef("mushroom-soup", "用松露酱提升菌菇汤香气", "Add Truffle Sauce to Mushroom Soup"), guideRef("truffle-buying-truffle-products", "根据菜式选择白松露酱或黑松露酱", "Choosing White or Black Truffle Sauce for a Dish"), guideRef("truffle-truffle-aroma-pairing", "松露酱与黄油、奶油和菌菇的搭配", "Pairing Truffle Sauce with Butter, Cream and Mushrooms")])],
     [/winter-black-truffle-juice-/, related([recipeRef("black-truffle-risotto", "用冬季黑松露汁调味烩饭", "Season Risotto with Winter Black Truffle Juice"), guideRef("truffle-truffle-aroma-pairing", "松露汁的温度、用量与香气控制", "Temperature, Quantity and Aroma Control for Truffle Juice"), guideRef("truffle-truffle-types", "冬季黑松露的风味特征", "Flavour Characteristics of Winter Black Truffle")])],
     [/white-truffle-(?:oil|evoo)-/, related([recipeRef("truffle-eggs", "用白松露油调味炒蛋", "Season Eggs with White Truffle Oil"), recipeRef("truffle-tagliolini", "在细面出锅后加入白松露油", "Finish Tagliolini with White Truffle Oil"), guideRef("truffle-truffle-aroma-pairing", "白松露油与鸡蛋、意面的搭配逻辑", "Why White Truffle Oil Suits Eggs and Pasta")])],
+    [/truffle-fettuccine/, related([recipeRef("truffle-tagliolini", "用松露宽面实践经典松露意面", "Make a Classic Truffle Pasta with Truffle Fettuccine"), guideRef("truffle-truffle-aroma-pairing", "掌握松露意面的温度与风味平衡", "Balance Temperature and Aroma in Truffle Pasta"), guideRef("pasta-academy", "根据面型、酱汁与火候完成意面", "Match Pasta Shape, Sauce and Cooking Time")])],
   ];
   const oliveContent = related([recipeRef("olive-pasta", "用特级初榨橄榄油制作蒜香意面", "Make Garlic Pasta with Extra Virgin Olive Oil"), recipeRef("olive-bruschetta", "用烤面包品鉴橄榄油", "Taste Olive Oil with Bruschetta"), guideRef("choose-use-store-evo", "特级初榨橄榄油的选择、使用与保存", "Choosing, Using and Storing Extra Virgin Olive Oil")]);
+  const pastaContent = related([recipeRef("olive-pasta", "用意面实践酱汁乳化与出锅收汁", "Practise Sauce Emulsification and Finishing with Pasta"), guideRef("pasta-academy", "根据意面形状、酱汁与火候做选择", "Choose by Pasta Shape, Sauce and Cooking Time"), guideRef("dictionary-pasta-risotto", "认识长面、宽面与管状意面的区别", "Understand Long, Ribbon and Tubular Pasta Shapes"), guideRef("cooking-techniques", "掌握面水、火候与乳化的基础技巧", "Master Pasta Water, Timing and Emulsification")]);
 
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
   const catalogUnit = () => document.documentElement.lang?.startsWith("zh") ? "份" : "unit";
@@ -396,6 +403,21 @@ function initLuxProductDetails() {
   detail.hidden = true;
   detail.innerHTML = `<div class="lux-product-backdrop" data-product-close></div><section class="lux-product-panel" role="dialog" aria-modal="true" aria-labelledby="lux-product-title"><button class="lux-product-back" type="button" data-product-back hidden></button><button class="lux-product-close" type="button" data-product-close></button><div class="lux-product-body" tabindex="-1"></div></section>`;
   document.body.appendChild(detail);
+  const imageLightbox = document.createElement("dialog");
+  imageLightbox.className = "lux-product-image-lightbox";
+  imageLightbox.setAttribute("aria-label", lang === "zh" ? "产品图片放大预览" : "Enlarged product image");
+  imageLightbox.innerHTML = `<button type="button" aria-label="${lang === "zh" ? "关闭放大图片" : "Close enlarged image"}">×</button><img alt="">`;
+  document.body.appendChild(imageLightbox);
+  const openImageLightbox = (src, alt) => {
+    const image = imageLightbox.querySelector("img");
+    image.src = src;
+    image.alt = alt;
+    imageLightbox.showModal();
+  };
+  imageLightbox.querySelector("button").addEventListener("click", () => imageLightbox.close());
+  imageLightbox.addEventListener("click", (event) => {
+    if (event.target === imageLightbox) imageLightbox.close();
+  });
   const body = detail.querySelector(".lux-product-body");
   const backButton = detail.querySelector(".lux-product-back");
   const closeButton = detail.querySelector(".lux-product-close");
@@ -469,7 +491,9 @@ function initLuxProductDetails() {
     if (push && !detail.hidden && currentProductId && currentProductId !== id) productStack.push(currentProductId);
     currentProductId = id;
     const labels = copy();
-    const content = productContentRules.find(([pattern]) => pattern.test(product.id))?.[1] || (product.categories?.includes("olive-oil") ? oliveContent : null);
+    const content = productContentRules.find(([pattern]) => pattern.test(product.id))?.[1]
+      || (product.categories?.includes("olive-oil") ? oliveContent : null)
+      || (product.categories?.includes("pasta") ? pastaContent : null);
     const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
     const prefix = id.startsWith("zh-") ? "zh-" : "en-";
     const recommendations = Object.entries(products)
@@ -492,13 +516,13 @@ function initLuxProductDetails() {
             <div class="lux-product-thumbs" aria-label="${luxEscapeProductHtml(product.title)} gallery">
               ${galleryImages.map((src, index) => `<button type="button" class="lux-product-thumb${index === 0 ? " is-active" : ""}" data-product-gallery="${index}" aria-label="${luxEscapeProductHtml(product.title)} ${index + 1}"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(src)}" alt="${luxEscapeProductHtml(product.title)} ${index + 1}"></button>`).join("")}
             </div>
-            <div class="lux-product-image"><img loading="lazy" decoding="async" data-product-main-image src="${luxEscapeProductHtml(galleryImages[0] || product.image)}" alt="${luxEscapeProductHtml(product.title)}"></div>
+            <button type="button" class="lux-product-image" data-product-image-zoom aria-label="${luxEscapeProductHtml(localized("放大查看", "Enlarge"))}：${luxEscapeProductHtml(product.title)}"><img loading="lazy" decoding="async" data-product-main-image src="${luxEscapeProductHtml(galleryImages[0] || product.image)}" alt="${luxEscapeProductHtml(product.title)}"></button>
           </div>
           <div class="lux-product-summary">
             <span>${luxEscapeProductHtml(product.eyebrow)}</span>
             <h2 id="lux-product-title">${luxEscapeProductHtml(product.title)}</h2>
             <p>${luxEscapeProductHtml(product.desc)}</p>
-            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(product.priceLabel || "TEST") : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em>`}</strong>
+            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(product.priceLabel || "PRICE") : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em>`}</strong>
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
               <div class="lux-product-qty" aria-label="${luxEscapeProductHtml(labels.qty)}">
@@ -529,7 +553,7 @@ function initLuxProductDetails() {
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
               <div class="lux-product-recent-media"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}"></div>
               <strong>${luxEscapeProductHtml(item.title)}</strong>
-              <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "TEST")} / ${luxEscapeProductHtml(catalogUnit())}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
+              <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "PRICE")} / ${luxEscapeProductHtml(catalogUnit())}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
               <div class="lux-product-recent-actions">
                 <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-price-label="${luxEscapeProductHtml(item.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}"${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
@@ -591,9 +615,16 @@ function initLuxProductDetails() {
       if (thumbImage && mainImage) {
         mainImage.src = thumbImage.src;
         mainImage.alt = thumbImage.alt;
+        mainImage.closest(".lux-product-image")?.classList.toggle("is-secondary", galleryButton.dataset.productGallery !== "0");
         detail.querySelectorAll("[data-product-gallery]").forEach((button) => button.classList.remove("is-active"));
         galleryButton.classList.add("is-active");
       }
+      return;
+    }
+    const zoomButton = event.target.closest("[data-product-image-zoom]");
+    if (zoomButton) {
+      const image = zoomButton.querySelector("img");
+      if (image) openImageLightbox(image.src, image.alt);
       return;
     }
     const button = event.target.closest("[data-product-quantity]");
@@ -638,7 +669,13 @@ function initLuxProductDetails() {
     if (!detail.hidden) close();
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !detail.hidden) close();
+    if (event.key !== "Escape") return;
+    if (imageLightbox.open) {
+      event.preventDefault();
+      imageLightbox.close();
+      return;
+    }
+    if (!detail.hidden) close();
   });
 
   const initialId = hash.replace(/^#product-/, "") || Object.keys(products).find((key) => key.startsWith(`${lang}-`) && products[key].id === requestedProduct) || "";
@@ -885,9 +922,9 @@ function initLuxProductDetails() {
       : `<div class="p-8 border border-outline-variant/30 text-on-surface-variant">${lang === "zh" ? "您的购物袋暂时为空。" : "Your shopping bag is empty."}</div>`;
 
     const testPricing = items.some((item) => item.priceLabel);
-    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal); el.classList.toggle("is-test-price", testPricing); });
-    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, shipping); el.classList.toggle("is-test-price", testPricing); });
-    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = testPricing ? "TEST" : money(currency, subtotal + shipping); el.classList.toggle("is-test-price", testPricing); });
+    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = testPricing ? "PRICE" : money(currency, subtotal); el.classList.toggle("is-test-price", testPricing); });
+    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = testPricing ? "PRICE" : money(currency, shipping); el.classList.toggle("is-test-price", testPricing); });
+    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = testPricing ? "PRICE" : money(currency, subtotal + shipping); el.classList.toggle("is-test-price", testPricing); });
   };
 
   const checkout = async (button) => {

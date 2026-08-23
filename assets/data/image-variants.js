@@ -126,6 +126,8 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand/home-partnership-italy-pavilion.webp": "media/brand/home-partnership-italy-pavilion-mobile.webp",
   "media/brand/home-partnership-process.webp": "media/brand/home-partnership-process-mobile.webp",
   "media/brand/home-partnership-tasting.webp": "media/brand/home-partnership-tasting-mobile.webp",
+  "media/brand/home-selected-seasoning-oil.webp": "media/brand/home-selected-seasoning-oil-720.webp",
+  "media/brand/home-selected-truffle.webp": "media/brand/home-selected-truffle-720.webp",
   "media/brand/home-service-foodservice.webp": "media/brand/home-service-foodservice-mobile.webp",
   "media/brand/home-service-partnership.webp": "media/brand/home-service-partnership-mobile.webp",
   "media/brand/home-service-selection.webp": "media/brand/home-service-selection-mobile.webp",
@@ -206,5 +208,6 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/new-arrivals/filmstrip-exhibition-02.jpg": "media/new-arrivals/filmstrip-exhibition-02-720.webp",
   "media/new-arrivals/filmstrip-exhibition-03.webp": "media/new-arrivals/filmstrip-exhibition-03-720.webp",
   "media/new-arrivals/filmstrip-exhibition-04.jpg": "media/new-arrivals/filmstrip-exhibition-04-720.webp",
-  "media/new-arrivals/italian-table-sharing.webp": "media/new-arrivals/italian-table-sharing-720.webp"
+  "media/new-arrivals/italian-table-sharing.webp": "media/new-arrivals/italian-table-sharing-720.webp",
+  "media/products/pasta/chitarrine-di-campofilone.webp": "media/products/pasta/chitarrine-di-campofilone-720.webp"
 };
