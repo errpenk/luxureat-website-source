@@ -1295,7 +1295,11 @@ header:has(.lux-hero-fade-both) {
   width: 24px;
   height: 24px;
 }
-.lux-reader-open { overflow: hidden; }
+html:has(body.lux-reader-open),
+body.lux-reader-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
 .lux-reader[hidden], .lux-info-popover[hidden] { display: none !important; }
 .lux-reader-card { position: relative; }
 .lux-reader-media { position: relative; }
@@ -4655,6 +4659,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   min-height: 0;
   height: 100%;
   overflow-y: auto;
+  overscroll-behavior: contain;
   outline: none;
   background: #f4f2ee;
 }
