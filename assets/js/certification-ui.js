@@ -51,7 +51,15 @@ document.querySelectorAll("[data-cert-partnership-gallery]").forEach((gallery) =
   const show = (nextIndex) => {
     index = (nextIndex + thumbs.length) % thumbs.length;
     const selected = thumbs[index];
+    const preview = selected.querySelector("img");
     main.classList.add("is-changing");
+    if (preview?.srcset) {
+      main.srcset = preview.srcset;
+      main.sizes = preview.sizes || "100vw";
+    } else {
+      main.removeAttribute("srcset");
+      main.removeAttribute("sizes");
+    }
     main.src = selected.dataset.src;
     main.alt = selected.dataset.alt;
     status.textContent = `${index + 1} / ${thumbs.length}`;

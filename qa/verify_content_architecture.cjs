@@ -323,6 +323,7 @@ assert(zhCertification.includes("px-margin-mobile md:px-margin-desktop") && enCe
 assert((zhCertification.match(/data-cert-media-carousel/g) || []).length >= 2, "certification image carousels are incomplete");
 assert(zhCertification.includes("data-cert-quote-prev") && zhCertification.includes("data-cert-quote-next"), "certification quote controls are missing");
 assert(!zhCertification.includes('aria-label="全球合作图片导航"') && !enCertification.includes('aria-label="Global partnership image navigation"'), "duplicate image-side quote controls remain");
+assert(read("assets/js/certification-ui.js").includes('main.removeAttribute("srcset")') && read("assets/js/certification-ui.js").includes("main.srcset = preview.srcset"), "partnership gallery does not replace the responsive main-image source");
 assert(accountRuntime.includes("function initLuxGiftScroller()") && accountRuntime.includes("grid.addEventListener(\"mouseleave\", start)"), "gifting catalogue autoplay is missing");
 assert(journalRuntime.includes("aboutMount.querySelectorAll(\"[data-about-carousel]\")"), "About Us carousel autoplay is missing");
 assert(read("assets/js/events.js").includes('meet: "Meet Us"'), "English Exhibition Atlas heading is not Meet Us");

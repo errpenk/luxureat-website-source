@@ -90,6 +90,7 @@ assert(integrationCss.includes(".lux-reader-article-links { display: flex; flex-
 assert(productRuntime.includes("productFamily") && productRuntime.includes("productUse") && productRuntime.includes(".sort((a, b) => b.score - a.score"), "product recommendations are not deterministically ranked by relevance");
 assert(journalRuntime.includes('data-lux-cta-location="article-body"') && journalRuntime.includes('data-lux-cta-location="recipe-details"'), "contextual article or recipe links are missing");
 assert(journalRuntime.includes("safeDetailHref") && journalRuntime.includes('detailHref("recipe"') && productRuntime.includes('detailHref("recipe"'), "contextual links still depend on WordPress-reserved query variables or static relative paths");
+assert(journalRuntime.includes('.replace(/^([a-z-]+)\\.html(?=[?#]|$)/, (_, page) => pageHref(page))'), "contextual page links are not converted to deployed pretty URLs");
 assert(coreRuntime.includes('luxGetCookieConsent() !== "analytics"') && coreRuntime.includes('window.luxTrack("cta_click"'), "CTA analytics do not respect consent or emit the expected event");
 assert(journalRuntime.includes('get("recipe")') && productRuntime.includes('get("product")'), "public recipe or product query route is not handled");
 for (const lang of ["zh", "en"]) {
