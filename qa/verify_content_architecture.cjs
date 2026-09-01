@@ -108,6 +108,33 @@ const unapprovedFontFamilies = [...typographyCss.matchAll(/font-family\s*:\s*([^
   .map((match) => match[1].replace(/\s*!important\s*$/, "").trim())
   .filter((family) => !family.startsWith("var(") && !allowedFontFamilies.has(family));
 assert(!unapprovedFontFamilies.length, `unapproved text font declaration(s): ${[...new Set(unapprovedFontFamilies)].join(", ")}`);
+const marketServicesCss = read("assets/css/market-services.css");
+assert(marketServicesCss.includes('html[lang^="zh"] .lux-market-services-page [lang="en"] {\n  font-family: var(--lux-zh-body) !important;'), "Chinese market and service pages do not use one complete ZhiSong stack for English text");
+assert(!marketServicesCss.includes('[style*="margin-top:clamp"]'), "market-services.css still depends on inline-style string matching");
+for (const cityAsset of ["shanghai", "beijing", "guangzhou", "shenzhen", "chengdu-chongqing"]) {
+  assert(fs.existsSync(path.join(root, `assets/media/market-cities/${cityAsset}.svg`)), `missing city SVG: ${cityAsset}`);
+  assert(marketServicesCss.includes(`../media/market-cities/${cityAsset}.svg`), `city SVG is not used: ${cityAsset}`);
+}
+for (const locale of ["zh", "en"]) {
+  const home = read(`${locale}/index.html`);
+  for (const href of ["china-market-insights.html", "import-export-services.html", "cooperation.html"]) {
+    assert(home.includes(`class="lux-home-process-card-link" href="${href}"`), `${locale} homepage process card does not link to ${href}`);
+  }
+  const market = read(`${locale}/china-market-insights.html`);
+  assert(market.includes(locale === "zh" ? "中意贸易已有坚实基础" : "established Italy–China trade base"), `${locale} market explanations do not include a data-led trade conclusion`);
+  assert(market.includes('class="lux-market-section-bridge"'), `${locale} market page is missing the trade-to-wine image bridge`);
+  const services = read(`${locale}/import-export-services.html`);
+  assert(services.includes('class="lux-service-section-bridge"'), `${locale} service page is missing the why-to-brand image bridge`);
+}
+const importExportRuntime = read("assets/js/import-export.js");
+assert(importExportRuntime.includes('classList.add("is-auto-flipped")') && importExportRuntime.includes("faqVisual.offsetHeight - faqVisual.parentElement.clientHeight"), "service-page viewport flips or full FAQ image travel are missing");
+assert(importExportRuntime.includes('link.classList.contains("is-tapped")') && importExportRuntime.includes('card.classList.toggle("is-tapped")'), "service-page hover interactions do not have touch equivalents");
+assert(marketServicesCss.includes("#business-development .lux-ms-card {\n  padding: 0 24px 30px;") && marketServicesCss.includes("background: #111514;\n}\n.lux-why-image-strip"), "service-page borderless business cards or dark image separators are missing");
+assert(marketServicesCss.includes("background: linear-gradient(#e9e6df 0 50%, #ebe7df 50%)") && marketServicesCss.includes("background: linear-gradient(#111514 0 50%, #ebe7df 50%)") && marketServicesCss.includes("background-color: #111514") && marketServicesCss.includes("background-blend-mode: normal"), "section image bridges do not inherit adjoining backgrounds or dark city SVG treatment is missing");
+assert(marketServicesCss.includes(".lux-faq-tools {\n    position: sticky;\n    top: 72px;") && marketServicesCss.includes("#italian-wine .lux-ms-heading .lux-ms-lead { color: #292621; }"), "mobile FAQ tools are not sticky or wine copy lacks light-background contrast");
+const marketInsightsRuntime = read("assets/js/market-insights.js");
+assert(marketInsightsRuntime.includes('document.querySelectorAll("[data-market-copy-group]")') && marketServicesCss.includes("content: attr(data-market-card-explanation)"), "market-card explanatory copy transitions are missing");
+assert(marketServicesCss.includes("grid-auto-rows: clamp(250px, 18vw, 330px)") && marketServicesCss.includes(".lux-service-bento a small {\n  position: absolute;"), "service bento cards do not keep a fixed hover footprint");
 
 assert(!html.includes("assets/images/"), "HTML still references assets/images");
 assert(!html.includes("assets/article-images/"), "HTML still references assets/article-images");
@@ -182,6 +209,7 @@ assert(engagementRuntime.includes('panel.classList.toggle("is-legal", isLegal)')
 assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
+assert(integrationStyles.includes(".lux-home-process-card-link::after") && integrationStyles.includes('content: "查看详情  →"') && integrationStyles.includes('content: "View Details  →"'), "homepage process cards are missing their visible bilingual detail affordance");
 assert(/\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close\s*\{[^}]*top:\s*12px;[^}]*right:\s*14px;[^}]*border-color:\s*#101010;[^}]*border-width:\s*\.5px;/s.test(integrationStyles), "legal dialog close position or border does not match the blog reader close control");
 assert(/\.lux-reader-close:active,[\s\S]*?\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close:hover,[\s\S]*?background:\s*#9df5ec;[\s\S]*?box-shadow:\s*inset 0 0 0 1px #101010;[\s\S]*?transform:\s*none;/s.test(integrationStyles), "legal dialog close interaction does not reuse the blog reader close interaction");
 assert(/\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-body\s*\{[^}]*margin-top:\s*0;[^}]*padding-top:\s*72px;/s.test(integrationStyles), "legal dialog scroll viewport does not start at the panel top like the blog reader");

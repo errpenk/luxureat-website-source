@@ -20,15 +20,18 @@ for (const lang of ["zh", "en"]) {
     const aboutLabel = lang === "zh" ? "关于我们" : "About Us";
     const certificationLabel = lang === "zh" ? "品质认证" : "Certification";
     const productHref = 'href="product.html"';
-    assert((header.match(/<a\b/g) || []).length === 10, `${lang}/${file} does not have the aligned ten-page navigation`);
+    assert((header.match(/<a\b/g) || []).length === 12, `${lang}/${file} does not have the aligned twelve-page navigation`);
     assert(header.includes(`href="brand.html">${newsLabel}</a>`), `${lang}/${file} is missing Brand News navigation`);
     assert(new RegExp(`(?:class="active" )?href="blog\\.html">${blogLabel}</a>`).test(header), `${lang}/${file} is missing Blog navigation`);
     assert(header.includes(`href="recipe.html">${recipeLabel}</a>`), `${lang}/${file} has the wrong Recipe Art label`);
     assert(header.includes(`href="about-us.html">${aboutLabel}</a>`), `${lang}/${file} has the wrong About Us label`);
     assert(header.includes(`href="certification.html">${certificationLabel}</a>`) || header.includes(`href="certification.html" class="active">${certificationLabel}</a>`) || header.includes(`class="active" href="certification.html">${certificationLabel}</a>`), `${lang}/${file} is missing certification navigation`);
+    assert(new RegExp(`(?:class="active" )?href="china-market-insights\\.html">${lang === "zh" ? "中国市场" : "China Market"}</a>`).test(header), `${lang}/${file} is missing China Market navigation`);
+    assert(header.includes(`href="import-export-services.html">${lang === "zh" ? "中国服务" : "China Services"}</a>`) || header.includes(`class="active" href="import-export-services.html">${lang === "zh" ? "中国服务" : "China Services"}</a>`), `${lang}/${file} is missing China Services navigation`);
     assert(header.indexOf('href="about-us.html"') > header.indexOf('href="index.html"') && header.indexOf('href="about-us.html"') < header.indexOf('href="recipe.html"'), `${lang}/${file} does not place About Us directly after Home`);
     assert(header.indexOf('href="new.html"') > header.indexOf('href="about-us.html"') && header.indexOf('href="new.html"') < header.indexOf(productHref), `${lang}/${file} does not place New Arrivals before Products`);
     assert(header.indexOf('href="blog.html"') > header.indexOf('href="brand.html"') && header.indexOf('href="blog.html"') < header.indexOf('href="certification.html"'), `${lang}/${file} does not place Blog directly after Brand News`);
+    assert(header.indexOf('href="china-market-insights.html"') < header.indexOf('href="import-export-services.html"') && header.indexOf('href="import-export-services.html"') < header.indexOf('href="cooperation.html"'), `${lang}/${file} does not use the China Market, China Services, Cooperation order`);
     assert(!html.includes(lang === "zh" ? "品鉴艺术" : ">Rituals<"), `${lang}/${file} still contains the old ritual label`);
     assert(!html.includes(lang === "zh" ? ">品牌志<" : ">Journal<"), `${lang}/${file} still contains the old About Us label`);
 
@@ -112,6 +115,10 @@ assert(fs.existsSync(path.join(root, "zh/blog.html")), "Chinese Blog page is mis
 assert(fs.existsSync(path.join(root, "en/blog.html")), "English Blog page is missing");
 assert(fs.existsSync(path.join(root, "en/certification.html")), "English certification page is missing");
 for (const lang of ["zh", "en"]) {
+  assert(fs.existsSync(path.join(root, lang, "china-market-insights.html")), `${lang} China Market Insights page is missing`);
+  assert(fs.existsSync(path.join(root, lang, "import-export-services.html")), `${lang} Import & Export Services page is missing`);
+}
+for (const lang of ["zh", "en"]) {
   for (const file of ["about-us.html", "product.html", "recipe.html", "brand.html", "cooperation.html"]) {
     assert(fs.existsSync(path.join(root, lang, file)), `${lang}/${file} is missing`);
   }
@@ -123,6 +130,8 @@ assert(!fs.existsSync(path.join(root, "en/private.html")), "extra English privat
 const core = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is missing");
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
+assert(core.includes('["china-market-insights.html", "中国市场"') && core.includes('["china-market-insights.html", "China Market"'), "bilingual China Market navigation is missing");
+assert(core.includes('["import-export-services.html", "中国服务"') && core.includes('["import-export-services.html", "China Services"'), "bilingual China Services navigation is missing");
 assert(core.includes('["blog.html", "知识博客"') && core.includes('["探索意大利", "culture-academy"]') && core.includes('["营养与配料指南", "nutrition-guide"]'), "Chinese Blog topics are incomplete");
 assert(!core.includes('["意大利美食学院", "?topic=academy"]') && !core.includes('["Italian Food Academy", "?topic=academy"]'), "Food Academy is still duplicated in Blog navigation");
 assert(core.includes('["意式手工冰淇淋", "gelato-academy"]') && !core.includes('["意式 Gelato", "gelato-academy"]'), "Chinese Gelato academy label is not localized");
@@ -154,6 +163,8 @@ const submenuTargets = {
     "blog.html": [],
     "certification.html": ["responsible-trade", "quality-system", "certification-system", "award-proofs", "certification-glossary"],
     "cooperation.html": ["private-label", "partnership-cases", "business-partnership", "china-partnership", "inquiry"],
+    "china-market-insights.html": ["market-overview", "cities", "italy-china-trade", "italian-food-beverage", "italian-wine", "market-judgement"],
+    "import-export-services.html": ["import-into-china", "sourcing-export", "market-entry", "brand-digital", "business-development", "why-luxureat-china", "faq"],
     "contact.html": ["brand-consultation", "global-footprint"],
   },
   en: {
@@ -166,6 +177,8 @@ const submenuTargets = {
     "blog.html": [],
     "certification.html": ["responsible-trade", "quality-system", "certification-system", "award-proofs", "certification-glossary"],
     "cooperation.html": ["private-label", "partnership-cases", "business-partnership", "china-partnership", "inquiry"],
+    "china-market-insights.html": ["market-overview", "cities", "italy-china-trade", "italian-food-beverage", "italian-wine", "market-judgement"],
+    "import-export-services.html": ["import-into-china", "sourcing-export", "market-entry", "brand-digital", "business-development", "why-luxureat-china", "faq"],
     "contact.html": ["brand-consultation", "global-footprint"],
   },
 };

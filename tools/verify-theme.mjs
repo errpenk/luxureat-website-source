@@ -17,6 +17,8 @@ const expectedRoutes = [
   'zh/brand',
   'zh/cooperation',
   'zh/certification',
+  'zh/china-market-insights',
+  'zh/import-export-services',
   'zh/contact',
   'zh/bag',
   'en',
@@ -27,6 +29,8 @@ const expectedRoutes = [
   'en/brand',
   'en/cooperation',
   'en/certification',
+  'en/china-market-insights',
+  'en/import-export-services',
   'en/contact',
   'en/bag',
 ];

@@ -13,6 +13,8 @@ The website is bilingual in Chinese and English. It presents LuxurEat's products
 - [知识博客](https://luxureat.cn/blog/): 食材知识与专业指南
 - [品质认证](https://luxureat.cn/certification/): 质量、产地与合规体系
 - [商务合作](https://luxureat.cn/cooperation/): 进口、渠道与市场合作
+- [中国市场洞察](https://luxureat.cn/china-market-insights/): 中国市场、城市、意中贸易与行业数据
+- [进出口服务](https://luxureat.cn/import-export-services/): 进口中国、中国采购、市场落地与商务拓展
 - [联系我们](https://luxureat.cn/contact/): 中国与国际团队联系方式
 
 ## English
@@ -24,6 +26,8 @@ The website is bilingual in Chinese and English. It presents LuxurEat's products
 - [Blog](https://luxureat.cn/en/blog/): Ingredient knowledge and professional guides
 - [Certification](https://luxureat.cn/en/certification/): Quality, origin, and compliance systems
 - [Cooperation](https://luxureat.cn/en/cooperation/): Import, distribution, and market partnerships
+- [China Market Insights](https://luxureat.cn/en/china-market-insights/): Chinese markets, cities, Italy–China trade, and industry data
+- [Import & Export Services](https://luxureat.cn/en/import-export-services/): Import into China, sourcing, market entry, and business development
 - [Contact](https://luxureat.cn/en/contact/): China and international team contacts
 
 ## Optional

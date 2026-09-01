@@ -1,4 +1,4 @@
-export const assetVersion = "20260824-code-audit-20";
+export const assetVersion = "20260901-market-services-31";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -16,6 +16,8 @@ export const navigation = [
   { key: "news", zh: "品牌新闻", en: "Brand News", zhSlug: "brand", enSlug: "brand" },
   { key: "blog", zh: "知识博客", en: "Blog", zhSlug: "blog", enSlug: "blog" },
   { key: "certification", zh: "品质认证", en: "Certification", zhSlug: "certification", enSlug: "certification" },
+  { key: "market-insights", zh: "中国市场", en: "China Market", zhSlug: "china-market-insights", enSlug: "china-market-insights" },
+  { key: "import-export", zh: "中国服务", en: "China Services", zhSlug: "import-export-services", enSlug: "import-export-services" },
   { key: "gifting", zh: "商务合作", en: "Cooperation", zhSlug: "cooperation", enSlug: "cooperation" },
   { key: "contact", zh: "联系我们", en: "Contact", zhSlug: "contact", enSlug: "contact" },
 ];
@@ -31,6 +33,8 @@ export const seo = {
     blog: ["知识博客 | LuxurEat（露意膳）", "系统探索松露学院、意大利美食词典、生产者与产地故事，以及鱼子酱、橄榄油等意大利食材知识。"],
     certification: ["品质认证 | LuxurEat（露意膳）", "了解 LuxurEat（露意膳）的产地证明、质量体系、认证文件、责任贸易与合作项目。"],
     gifting: ["商务合作 | LuxurEat（露意膳）", "探索 LuxurEat（露意膳）的国际市场定制、品牌合作、渠道方案与中国市场服务。"],
+    "market-insights": ["中国市场洞察 | LuxurEat（露意膳）", "了解中国市场规模、城市与经济中心、意中贸易，以及意大利食品、饮料和葡萄酒的市场数据。"],
+    "import-export": ["中国进出口与市场服务 | LuxurEat（露意膳）", "了解 LuxurEat China 的进口中国、中国采购与出口、市场落地、品牌数字化与商务拓展服务。"],
     contact: ["联系我们 | LuxurEat（露意膳）", "联系 LuxurEat（露意膳），咨询品牌、产品、渠道与商务合作。"],
     bag: ["购物袋 | LuxurEat（露意膳）", "查看并管理您在 LuxurEat（露意膳）购物袋中的已选产品。"],
   },
@@ -44,6 +48,8 @@ export const seo = {
     blog: ["Knowledge Blog | LuxurEat", "Explore the Truffle Academy, Italian Food Dictionary, producers and stories of place, caviar, olive oil and Italian craft."],
     certification: ["Quality & Certification | LuxurEat", "Explore LuxurEat's origin records, quality systems, certification documents, responsible trade and partnership projects."],
     gifting: ["Cooperation | LuxurEat", "Explore LuxurEat private label, brand partnerships, channel solutions and services for the China market."],
+    "market-insights": ["China Market Insights | LuxurEat", "Explore China's market scale, cities and economic centres, Italy–China trade, and market data for Italian food, beverages and wine."],
+    "import-export": ["China Import, Export & Market Services | LuxurEat", "Explore LuxurEat China services for importing into China, sourcing and export, market entry, brand digitalisation and business development."],
     contact: ["Contact | LuxurEat", "Contact LuxurEat for brand, product, distribution and business partnership enquiries."],
     bag: ["Shopping Bag | LuxurEat", "Review and manage the products selected in your LuxurEat shopping bag."],
   },
@@ -70,6 +76,8 @@ export const pages = [
   page("zh", "blog", "blog", ["academy-index", "academy"]),
   page("zh", "certification", "certification", ["certification-ui"]),
   page("zh", "cooperation", "gifting", ["brand-data", "brand"]),
+  page("zh", "china-market-insights", "market-insights", ["market-insights-ui"]),
+  page("zh", "import-export-services", "import-export", ["import-export-ui"]),
   page("zh", "contact", "contact", ["brand-data", "brand"]),
   page("zh", "bag", "bag", ["product-data", "products"], false),
   page("en", "index", "home", ["product-data", "event-data", "events", "journal-data", "journal", "products"]),
@@ -81,6 +89,8 @@ export const pages = [
   page("en", "blog", "blog", ["academy-index", "academy"]),
   page("en", "certification", "certification", ["certification-ui"]),
   page("en", "cooperation", "gifting", ["brand-data", "brand"]),
+  page("en", "china-market-insights", "market-insights", ["market-insights-ui"]),
+  page("en", "import-export-services", "import-export", ["import-export-ui"]),
   page("en", "contact", "contact", ["brand-data", "brand"]),
   page("en", "bag", "bag", ["product-data", "products"], false),
 ];
@@ -88,6 +98,8 @@ export const pages = [
 export const scripts = {
   "image-variants": { src: "assets/data/image-variants.js", dependencies: [] },
   "certification-ui": { src: "assets/js/certification-ui.js", dependencies: [] },
+  "market-insights-ui": { src: "assets/js/market-insights.js", dependencies: [] },
+  "import-export-ui": { src: "assets/js/import-export.js", dependencies: [] },
   "product-data": { src: "assets/data/products.js", dependencies: [] },
   "event-data": { src: "assets/data/events.js", dependencies: [] },
   "journal-data": { src: "assets/data/journal.js", dependencies: [] },

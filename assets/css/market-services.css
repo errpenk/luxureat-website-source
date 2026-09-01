@@ -1,0 +1,1638 @@
+html[lang^="zh"] .lux-market-services-page [lang="en"] {
+  font-family: var(--lux-zh-body) !important;
+  font-weight: 400 !important;
+  -webkit-text-stroke: 0;
+}
+.lux-market-services-page {
+  background: #131313;
+  color: #e5e2e1;
+}
+.lux-market-services-page * { box-sizing: border-box; }
+.lux-ms-hero { min-height: min(78vh, 760px); }
+.lux-ms-hero-media {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  opacity: .62;
+  transform: scale(1.01);
+}
+.lux-ms-hero-market .lux-ms-hero-media { background-image: url("../media/brand/contact-hero-consulting.webp"); }
+.lux-ms-hero-services .lux-ms-hero-media { background-image: url("../media/brand/gifting-hero-cooperation.webp"); }
+.lux-ms-hero .lux-page-hero-content { width: min(100%, 1040px); }
+.lux-ms-hero .lux-hero-support { max-width: 780px; margin-inline: auto; }
+.lux-ms-cta a:focus-visible,
+.lux-ms-faq summary:focus-visible,
+.lux-ms-inline-link:focus-visible { outline: 1px solid #9df5ec; outline-offset: 4px; }
+.lux-ms-shell { width: min(100% - 48px, 1400px); margin: 0 auto; }
+.lux-ms-section {
+  padding: clamp(64px, 7vw, 96px) 0;
+  scroll-margin-top: 98px;
+  border-bottom: 1px solid rgba(189, 201, 199, .12);
+}
+.lux-ms-section.is-muted {
+  width: 100%;
+  background: #1a1d1c;
+}
+.lux-ms-section.is-muted > .lux-ms-shell { width: min(100% - 48px, 1400px); }
+.lux-ms-section.is-light { background: #f3efe8; color: #171918; }
+.lux-ms-section.is-light :is(.lux-ms-heading h2, .lux-ms-card h3, .lux-ms-card h4) { color: #171918; }
+.lux-ms-section.is-light :is(.lux-ms-lead, .lux-ms-prose p, .lux-ms-card p, .lux-ms-card li, .lux-ms-note) { color: #454b48; }
+.lux-ms-section.is-light .lux-ms-eyebrow { color: #006f68; }
+.lux-ms-section.is-light .lux-ms-heading h2 em { color: #866512; }
+.lux-ms-section.is-light .lux-ms-card { border-top-color: rgba(23, 25, 24, .24); }
+.lux-ms-section.is-light .lux-ms-card li::before { background: #006f68; }
+.lux-ms-heading {
+  display: grid;
+  grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr);
+  gap: clamp(24px, 4vw, 60px);
+  align-items: start;
+  margin-bottom: clamp(32px, 4vw, 54px);
+}
+.lux-ms-eyebrow {
+  display: block;
+  margin-bottom: 14px;
+  color: #9df5ec;
+  font: 600 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.lux-ms-heading .lux-ms-eyebrow,
+.lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.lux-ms-heading .lux-ms-eyebrow::before,
+.lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  background: currentColor;
+  -webkit-mask: center / contain no-repeat;
+  mask: center / contain no-repeat;
+}
+.lux-market-insights-page :is(.lux-ms-heading .lux-ms-eyebrow, .lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m7 16 4-4 4 4 6-6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m7 16 4-4 4 4 6-6'/%3E%3C/svg%3E");
+}
+.lux-import-export-page :is(.lux-ms-heading .lux-ms-eyebrow, .lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow)::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='14' x='2' y='6' rx='2'/%3E%3Cpath d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 12h.01M2 13a18.15 18.15 0 0 0 20 0'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='14' x='2' y='6' rx='2'/%3E%3Cpath d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 12h.01M2 13a18.15 18.15 0 0 0 20 0'/%3E%3C/svg%3E");
+}
+.lux-ms-heading h2,
+.lux-ms-cta h2 {
+  margin: 0;
+  color: #e5e2e1;
+  font: 400 clamp(40px, 5.8vw, 72px)/.98 var(--lux-page-heading);
+}
+.lux-ms-heading > div:last-child > h3 { margin-bottom: 12px !important; }
+.lux-ms-heading h2 em,
+.lux-ms-cta h2 em { color: #e9c349; font-style: normal; }
+.lux-ms-lead,
+.lux-ms-prose p,
+.lux-ms-note {
+  color: #bdc9c7;
+  font: 400 clamp(16px, 1.35vw, 19px)/1.7 var(--lux-zh-body, var(--lux-page-heading));
+}
+html[lang="en"] :is(.lux-ms-lead, .lux-ms-prose p, .lux-ms-note) { font-family: var(--lux-en-body); }
+.lux-ms-lead { max-width: 760px; margin: 0; }
+.lux-ms-prose { display: grid; gap: 16px; }
+.lux-ms-prose p { margin: 0; }
+.lux-ms-prose-after { margin-top: 32px; }
+.lux-service-process { margin-top: clamp(34px, 4vw, 52px); }
+.lux-ms-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 48px);
+  row-gap: clamp(28px, 4vw, 42px);
+}
+.lux-ms-stat {
+  position: relative;
+  min-height: 110px;
+  padding: 18px 0 0;
+}
+.lux-ms-stat::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 42px; height: 1px; background: rgba(157, 245, 236, .62); }
+.lux-ms-stat strong {
+  display: block;
+  color: #e9c349;
+  font: 400 clamp(30px, 4vw, 54px)/1 Georgia, "Times New Roman", serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.lux-ms-stat span {
+  display: block;
+  margin-top: 10px;
+  color: #bdc9c7;
+  font: 600 12px/1.55 var(--lux-page-heading);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.lux-ms-source {
+  margin: 20px 0 0;
+  color: #87918f;
+  font: 400 13px/1.65 var(--lux-zh-body, var(--lux-page-heading));
+}
+html[lang="en"] .lux-ms-source { font-family: var(--lux-en-body); }
+.lux-ms-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(28px, 4vw, 56px); row-gap: clamp(28px, 4vw, 44px); }
+.lux-ms-card-grid.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.lux-ms-card {
+  padding: 18px 0 4px;
+  border-top: 1px solid rgba(189, 201, 199, .28);
+}
+.lux-ms-card h3,
+.lux-ms-card h4 {
+  margin: 0 0 10px;
+  color: #e5e2e1;
+  font: 400 clamp(24px, 2.8vw, 36px)/1.12 var(--lux-page-heading);
+}
+.lux-ms-card h4 { font-size: clamp(20px, 2vw, 28px); }
+.lux-ms-card p,
+.lux-ms-card li {
+  color: #bdc9c7;
+  font: 400 15px/1.65 var(--lux-zh-body, var(--lux-page-heading));
+}
+html[lang="en"] :is(.lux-ms-card p, .lux-ms-card li) { font-family: var(--lux-en-body); }
+.lux-ms-card p { margin: 0; }
+.lux-ms-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+.lux-ms-card li { position: relative; padding-left: 18px; }
+.lux-ms-card li::before { content: ""; position: absolute; left: 0; top: .77em; width: 6px; height: 1px; background: #9df5ec; }
+.lux-ms-card-label {
+  display: block;
+  margin-bottom: 14px;
+  color: #9df5ec;
+  font: 600 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.lux-ms-process {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(18px, 2.5vw, 32px);
+}
+.lux-ms-process article { position: relative; min-height: 130px; padding: 18px 0 0; border-top: 1px solid rgba(189, 201, 199, .28); }
+.lux-ms-process h3 { margin: 0 0 12px; color: #e5e2e1; font: 400 26px/1.1 var(--lux-page-heading); }
+.lux-ms-process p { margin: 0; color: #9da7a5; font: 400 14px/1.6 var(--lux-zh-body, var(--lux-page-heading)); }
+html[lang="en"] .lux-ms-process p { font-family: var(--lux-en-body); }
+.lux-ms-notice { max-width: 960px; margin-top: 22px; padding: 0; }
+.lux-ms-notice p { margin: 0; color: #bdc9c7; font: 400 15px/1.65 var(--lux-zh-body, var(--lux-page-heading)); }
+html[lang="en"] .lux-ms-notice p { font-family: var(--lux-en-body); }
+.lux-ms-faq { display: grid; border-top: 1px solid rgba(189, 201, 199, .3); }
+.lux-ms-faq details { border-bottom: 1px solid rgba(189, 201, 199, .3); }
+.lux-ms-faq summary {
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 16px 4px;
+  color: #e5e2e1;
+  font: 400 clamp(19px, 2vw, 26px)/1.35 var(--lux-page-heading);
+  cursor: pointer;
+  list-style: none;
+}
+.lux-ms-faq summary::-webkit-details-marker { display: none; }
+.lux-ms-faq summary::after { content: "+"; color: #9df5ec; font: 300 30px/1 var(--lux-page-heading); transition: transform .2s ease; }
+.lux-ms-faq details[open] summary::after { transform: rotate(45deg); }
+.lux-ms-faq details > div { max-width: 900px; padding: 0 48px 20px 4px; }
+.lux-ms-faq p { margin: 0; color: #bdc9c7; font: 400 16px/1.7 var(--lux-zh-body, var(--lux-page-heading)); }
+html[lang="en"] .lux-ms-faq p { font-family: var(--lux-en-body); }
+.lux-ms-inline-link { color: #e9c349; text-underline-offset: .25em; transition: color .2s ease; }
+.lux-ms-inline-link:hover { color: #9df5ec; }
+.lux-ms-cta { padding: clamp(72px, 8vw, 110px) 0; text-align: center; background: #171918; }
+.lux-ms-cta .lux-ms-shell { max-width: 940px; }
+.lux-ms-cta p { max-width: 760px; margin: 20px auto 28px; color: #bdc9c7; font: 400 17px/1.75 var(--lux-zh-body, var(--lux-page-heading)); }
+html[lang="en"] .lux-ms-cta p { font-family: var(--lux-en-body); }
+.lux-ms-cta a {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0 8px;
+  border-bottom: 1px solid rgba(233, 195, 73, .72);
+  color: #e9c349;
+  font: 600 13px/1.4 var(--lux-page-heading);
+  letter-spacing: .12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.lux-ms-cta a:hover { color: #9df5ec; border-color: #9df5ec; transform: translateY(-2px); }
+@media (max-width: 900px) {
+  .lux-ms-heading { grid-template-columns: 1fr; gap: 28px; }
+  .lux-ms-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-ms-card-grid.is-three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-ms-process { grid-template-columns: 1fr; }
+  .lux-ms-process article { min-height: 0; }
+}
+@media (max-width: 640px) {
+  .lux-ms-hero { min-height: 680px; }
+  .lux-ms-hero-market .lux-ms-hero-media { background-position: 58% center; }
+  .lux-ms-shell,
+  .lux-ms-section.is-muted > .lux-ms-shell,
+  .lux-ms-section.is-light > .lux-ms-shell { width: min(100% - 32px, 1400px); }
+  .lux-ms-section { padding: 56px 0; }
+  .lux-ms-stats,
+  .lux-ms-card-grid,
+  .lux-ms-card-grid.is-three { grid-template-columns: 1fr; }
+  .lux-ms-stat { min-height: 100px; }
+  .lux-ms-faq summary { min-height: 68px; padding-block: 20px; }
+  .lux-ms-faq details > div { padding-right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lux-ms-faq summary::after,
+  .lux-ms-cta a,
+  .lux-ms-inline-link { transition: none; }
+}
+
+/* China Market: long-form editorial layout based on the supplied reference. */
+.lux-market-insights-page {
+  background: #f5f3ee;
+  color: #27231f;
+}
+.lux-market-insights-page .lux-ms-section,
+.lux-market-insights-page .lux-ms-section.is-muted,
+.lux-market-insights-page .lux-ms-section.is-light {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(78px, 8vw, 118px) 0;
+  border: 0;
+  background: #f5f3ee;
+  color: #27231f;
+}
+.lux-market-insights-page .lux-ms-section.is-muted { background: #eeebe5; }
+.lux-market-insights-page .lux-ms-heading {
+  display: block;
+  max-width: 900px;
+  margin: 0 auto clamp(44px, 5vw, 68px);
+  text-align: center;
+}
+.lux-market-insights-page .lux-ms-heading > div:first-child { display: grid; justify-items: center; }
+.lux-market-insights-page .lux-ms-heading .lux-ms-eyebrow {
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #9b7518;
+}
+.lux-market-insights-page .lux-ms-heading .lux-ms-eyebrow::before {
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+}
+.lux-market-insights-page .lux-ms-heading h2 {
+  color: #27231f;
+  font-size: clamp(38px, 5vw, 66px);
+  line-height: 1;
+}
+.lux-market-insights-page .lux-ms-heading h2 em { color: #a57c17; }
+.lux-market-insights-page .lux-ms-heading .lux-ms-lead {
+  max-width: 760px;
+  margin: 22px auto 0;
+  color: #625c54;
+}
+.lux-market-insights-page .lux-ms-prose,
+.lux-market-insights-page .lux-ms-notice,
+.lux-market-insights-page .lux-ms-source {
+  max-width: 920px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+.lux-market-insights-page .lux-ms-prose p,
+.lux-market-insights-page .lux-ms-notice p,
+.lux-market-insights-page .lux-ms-source { color: #69635b; }
+.lux-market-insights-page .lux-ms-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.8vw, 38px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.lux-market-insights-page .lux-ms-stat {
+  min-height: 164px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 28px 22px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 15px 42px rgba(44, 37, 27, .1);
+}
+.lux-market-insights-page .lux-ms-stat::before { display: none; }
+.lux-market-insights-page .lux-ms-stat strong { color: #9c7415; }
+.lux-market-insights-page .lux-ms-stat span { color: #625c54; }
+.lux-market-insights-page #market-overview .lux-ms-prose { margin-top: 42px !important; }
+.lux-market-insights-page #market-overview .lux-ms-stat {
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 15px 42px rgba(20, 17, 12, .2);
+  transition: transform .35s ease, filter .35s ease, box-shadow .35s ease;
+}
+.lux-market-insights-page #market-overview .lux-ms-stat > :is(strong, span) {
+  transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.lux-market-insights-page #market-overview .lux-ms-stat[data-market-card-explanation]::after {
+  content: attr(data-market-card-explanation);
+  position: absolute;
+  inset: 22px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font: 400 16px/1.7 var(--lux-zh-body, var(--lux-page-heading));
+  text-align: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+  pointer-events: none;
+}
+html[lang="en"] .lux-market-insights-page #market-overview .lux-ms-stat[data-market-card-explanation]::after { font-family: var(--lux-en-body); }
+.lux-market-insights-page #market-overview .lux-ms-stat:hover {
+  z-index: 1;
+  transform: translateY(-7px) scale(1.015);
+  filter: saturate(1.08) brightness(1.06);
+  box-shadow: 0 22px 48px rgba(20, 17, 12, .28);
+}
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(1) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/contact-global-footprint-poster.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/cert-network-shanghai-expo.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/home-partnership-fair.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(4) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/contact-global-network.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(5) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/gifting-global-partnership.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(6) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/contact-partnership-dining.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat span { color: rgba(255, 255, 255, .86); }
+.lux-market-insights-page #cities .lux-ms-card-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 43px;
+}
+.lux-market-insights-page #cities > .lux-ms-shell > .lux-ms-eyebrow {
+  display: block;
+  margin: 0 0 24px;
+  color: #9b7518;
+  text-align: center;
+}
+.lux-market-insights-page #cities .lux-ms-card {
+  position: relative;
+  min-height: 270px;
+  display: grid;
+  align-content: center;
+  padding: 70px 24px 32px;
+  border: 0;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 13px 36px rgba(44, 37, 27, .1);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.lux-market-insights-page #cities .lux-ms-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 86px;
+  height: 86px;
+  transform: translate(-50%, -50%);
+  border: 3px solid #f5f3ee;
+  border-radius: 50%;
+  background-color: #111514;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 68% auto;
+  background-blend-mode: normal;
+  box-shadow: 0 7px 22px rgba(44, 37, 27, .18);
+  transition: transform .4s cubic-bezier(.2,.7,.2,1), border-color .3s ease;
+}
+.lux-market-insights-page #cities .lux-ms-card:nth-child(1)::before { background-image: url("../media/market-cities/shanghai.svg"); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(2)::before { background-image: url("../media/market-cities/beijing.svg"); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(3)::before { background-image: url("../media/market-cities/guangzhou.svg"); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(4)::before { background-image: url("../media/market-cities/shenzhen.svg"); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(5)::before { background-image: url("../media/market-cities/chengdu-chongqing.svg"); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(even) { transform: translateY(24px); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(odd):hover { transform: translateY(-8px); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(even):hover { transform: translateY(16px); }
+.lux-market-insights-page #cities .lux-ms-card:hover { box-shadow: 0 22px 48px rgba(44, 37, 27, .17); }
+.lux-market-insights-page #cities .lux-ms-card:hover::before {
+  transform: translate(-50%, -50%) scale(1.08);
+  border-color: #9c7415;
+}
+.lux-market-insights-page #cities .lux-ms-card h3 { color: #27231f; }
+.lux-market-insights-page #cities .lux-ms-card h3 { transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.2,1); }
+.lux-market-insights-page #cities .lux-ms-card p {
+  position: absolute;
+  inset: 74px 22px 24px;
+  display: grid;
+  place-items: center;
+  color: #69635b;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .35s cubic-bezier(.2,.7,.2,1);
+}
+html[lang="en"] .lux-market-insights-page #cities .lux-ms-card { min-height: 330px; }
+html[lang="en"] .lux-market-insights-page #cities .lux-ms-card p {
+  inset: 70px 16px 18px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.52;
+}
+.lux-market-growth { margin-top: clamp(72px, 9vw, 118px); }
+.lux-market-growth > .lux-ms-eyebrow {
+  display: block;
+  color: #9b7518;
+  text-align: center;
+}
+.lux-market-growth .lux-ms-stats {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 30px);
+  max-width: 980px;
+  margin-top: 24px;
+}
+.lux-market-growth .lux-ms-stat {
+  min-height: 0;
+  padding: 20px 8px;
+  background: transparent;
+  box-shadow: none;
+  transition: transform .3s ease, color .3s ease;
+}
+.lux-market-growth .lux-ms-stat:hover { transform: translateY(-7px); }
+.lux-market-growth .lux-ms-stat strong { transition: color .3s ease; }
+.lux-market-growth .lux-ms-stat:hover strong { color: #006f68; }
+.lux-market-insights-page [data-market-copy-target] {
+  min-height: 3.5em;
+  transition: opacity .14s ease, transform .14s ease;
+}
+.lux-market-insights-page [data-market-copy-target].is-changing { opacity: 0; transform: translateY(7px); }
+html[lang="en"] .lux-market-growth .lux-ms-stat strong {
+  max-width: 100%;
+  font-size: clamp(30px, 3vw, 40px);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.lux-market-banner {
+  position: relative;
+  width: 100%;
+  height: clamp(240px, 34vw, 470px);
+  margin: 0;
+  overflow: hidden;
+  background: #111;
+}
+.lux-market-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .58), rgba(0, 0, 0, .08) 50%, rgba(0, 0, 0, .5));
+}
+.lux-market-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 46%; }
+.lux-market-insights-page #italy-china-trade { background: #e9e6df; }
+.lux-market-insights-page #italian-wine > .lux-ms-shell > .lux-ms-eyebrow {
+  display: block;
+  color: #9b7518;
+  text-align: center;
+}
+.lux-market-insights-page .lux-market-data { background: #e9e6df; }
+.lux-market-data-guide {
+  max-width: 760px;
+  margin: 16px auto 0;
+  color: #797168;
+  font: 400 14px/1.7 var(--lux-zh-body, var(--lux-page-heading));
+  text-align: center;
+}
+html[lang="en"] .lux-market-data-guide { font-family: var(--lux-en-body); }
+.lux-market-data-tabs {
+  width: fit-content;
+  display: flex;
+  gap: 6px;
+  margin: 0 auto clamp(36px, 5vw, 60px);
+  padding: 6px;
+  border: 1px solid rgba(39, 35, 31, .15);
+  border-radius: 0;
+  background: rgba(255, 255, 255, .56);
+  box-shadow: none;
+}
+.lux-market-data-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 0;
+  color: #625c54;
+  background: transparent;
+  font: 600 13px/1.3 var(--lux-page-heading);
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, transform .2s ease;
+}
+html[lang="en"] .lux-market-data-tabs button { font-family: var(--lux-en-body); }
+.lux-market-data-tabs button:hover { color: #27231f; transform: translateY(-1px); }
+.lux-market-data-tabs button[aria-selected="true"] { color: #f7f4ed; background: #171918; }
+.lux-market-data-tabs button:focus-visible { outline: 2px solid #007c74; outline-offset: 3px; }
+.lux-market-data-tabs .lux-lucide { width: 19px; height: 19px; flex: 0 0 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.lux-market-data-panels { max-width: 1080px; margin: 0 auto; }
+.lux-market-data-panel[hidden] { display: none; }
+.lux-market-data-period { opacity: 0; transform: translateY(18px); }
+.lux-market-data-period + .lux-market-data-period { margin-top: clamp(38px, 5vw, 62px); }
+.lux-market-data-period h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  color: #8d6812;
+  font: 600 13px/1.4 var(--lux-page-heading);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+html[lang="en"] .lux-market-data-period h3 { font-family: var(--lux-en-body); }
+.lux-market-data-period h3 .lux-lucide { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.lux-market-insights-page #italy-china-trade .lux-ms-stats {
+  gap: clamp(24px, 4vw, 54px);
+  max-width: 980px;
+  margin-top: 24px;
+}
+.lux-market-insights-page #italy-china-trade .lux-ms-stat {
+  min-height: 0;
+  padding: 22px 10px;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+}
+.lux-market-insights-page #italy-china-trade .lux-ms-stat strong [data-market-number] {
+  display: inline;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.lux-market-metric {
+  position: relative;
+  width: fit-content;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-inline: auto;
+  cursor: help;
+  outline: none;
+}
+.lux-market-metric > .lux-lucide {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .48;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.lux-market-metric > [data-market-number] { transition: color .25s ease, transform .25s ease; }
+.lux-market-metric-popover {
+  position: absolute;
+  z-index: 20;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  width: min(290px, 76vw);
+  display: block !important;
+  margin: 0 !important;
+  padding: 14px 16px;
+  border: 1px solid rgba(233, 195, 73, .56);
+  color: #f3efe8 !important;
+  background: #171918;
+  font: 400 14px/1.6 var(--lux-zh-body, var(--lux-page-heading)) !important;
+  letter-spacing: normal !important;
+  text-align: left;
+  text-transform: none !important;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 8px);
+  transition: opacity .28s ease, transform .28s cubic-bezier(.2, .7, .25, 1), visibility .28s;
+  pointer-events: none;
+}
+html[lang="en"] .lux-market-metric-popover { font-family: var(--lux-en-body) !important; }
+.lux-market-metric-popover::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid rgba(233, 195, 73, .56);
+  border-bottom: 1px solid rgba(233, 195, 73, .56);
+  background: #171918;
+  transform: translate(-50%, -5px) rotate(45deg);
+}
+.lux-market-metric:is(:hover, :focus, :focus-visible) { z-index: 5; }
+.lux-market-metric:is(:hover, :focus, :focus-visible) > [data-market-number] { color: #007c74; transform: translateY(-2px); }
+.lux-market-metric:is(:hover, :focus, :focus-visible) > .lux-lucide { opacity: 1; transform: translateY(-2px); }
+.lux-market-metric:is(:hover, :focus, :focus-visible) .lux-market-metric-popover { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+.lux-market-metric:focus-visible { outline: 1px solid #007c74; outline-offset: 6px; }
+.lux-market-insights-page #italy-china-trade .lux-ms-stat::after {
+  content: "";
+  position: absolute;
+  right: 18%;
+  bottom: 0;
+  left: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #a57c17, transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+}
+.lux-market-data-panel.is-reading .lux-market-data-period { animation: lux-market-read-in .65s cubic-bezier(.2, .7, .25, 1) both; }
+.lux-market-data-panel.is-reading .lux-market-data-period:nth-child(2) { animation-delay: .14s; }
+.lux-market-data-panel.is-reading .lux-ms-stat::after { animation: lux-market-data-line .8s .18s ease-out both; }
+.lux-market-insights-page #italy-china-trade .lux-ms-notice { margin-top: 36px; }
+.lux-market-data-panel > .lux-ms-notice,
+.lux-market-data-panel > .lux-ms-source,
+.lux-market-data-panel > .lux-ms-prose { opacity: 0; transform: translateY(14px); }
+.lux-market-data-panel.is-reading > .lux-ms-notice,
+.lux-market-data-panel.is-reading > .lux-ms-source,
+.lux-market-data-panel.is-reading > .lux-ms-prose { animation: lux-market-read-in .6s .28s ease-out both; }
+.lux-market-insights-page #italian-food-beverage .lux-ms-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(34px, 7vw, 90px);
+  max-width: 760px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.lux-market-insights-page #italian-food-beverage .lux-ms-stat {
+  min-height: 0;
+  display: grid;
+  justify-items: center;
+  padding: 24px 10px;
+  background: transparent;
+  text-align: center;
+  box-shadow: none;
+}
+@keyframes lux-market-read-in { to { opacity: 1; transform: translateY(0); } }
+@keyframes lux-market-data-line { to { transform: scaleX(1); } }
+.lux-market-insights-page #italian-wine {
+  background: #ebe7df;
+  color: #292621;
+}
+.lux-market-insights-page #italian-wine .lux-ms-heading h2,
+.lux-market-insights-page #italian-wine .lux-ms-heading .lux-ms-lead { color: #292621; }
+.lux-market-insights-page #italian-wine .lux-ms-stat {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  box-shadow: none;
+}
+.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(1) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/contact-partnership-dining.webp"); }
+.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/gifting-wholesale-truffle-salt.webp"); }
+.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/home-partnership-tasting.webp"); }
+.lux-market-insights-page #italian-wine .lux-ms-stat :is(strong, span) { transition: color .28s ease; }
+.lux-market-insights-page #italian-wine .lux-ms-stat strong { color: #e9c349; }
+.lux-market-insights-page #italian-wine .lux-ms-stat span { color: rgba(255,255,255,.88); }
+.lux-market-insights-page #italian-wine .lux-ms-stat:hover strong { color: #f0d46f; }
+.lux-market-insights-page #italian-wine .lux-ms-notice p { color: #625c54; }
+.lux-market-insights-page #market-judgement { background: #f5f3ee; }
+.lux-market-insights-page #market-judgement .lux-ms-card-grid {
+  position: relative;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 34px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 48px;
+  counter-reset: market-step;
+}
+.lux-market-insights-page #market-judgement .lux-ms-card-grid::before {
+  content: "";
+  position: absolute;
+  top: 68px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: #aaa39a;
+}
+.lux-market-insights-page #market-judgement .lux-ms-card {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  border: 0;
+  text-align: center;
+  counter-increment: market-step;
+}
+.lux-market-insights-page #market-judgement .lux-ms-card::before {
+  content: counter(market-step, decimal-leading-zero);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 24px;
+  border: 1px solid #9c7415;
+  border-radius: 50%;
+  color: #9c7415;
+  background: #f5f3ee;
+  font: 400 12px/1 "LuxurEat ZhiSong Site";
+}
+html[lang^="en"] .lux-market-insights-page #market-judgement .lux-ms-card::before { font-family: var(--lux-en-body); }
+.lux-market-insights-page #market-judgement .lux-ms-card::before,
+.lux-market-insights-page #market-judgement .lux-ms-card h3 { transition: color .28s ease, background-color .28s ease, border-color .28s ease; }
+.lux-market-insights-page #market-judgement .lux-ms-card h3 { color: #27231f; }
+.lux-market-insights-page #market-judgement .lux-ms-card:hover h3 { color: #76540c; }
+.lux-market-insights-page #market-judgement .lux-ms-card:hover::before {
+  border-color: #76540c;
+  color: #fff;
+  background: #76540c;
+}
+.lux-market-insights-page #market-judgement .lux-ms-card p { color: #69635b; }
+.lux-market-insights-page #market-judgement .lux-ms-card {
+  min-height: 230px;
+  outline: none;
+}
+.lux-market-insights-page #market-judgement .lux-ms-card p { transition: opacity .28s ease, transform .32s cubic-bezier(.2,.7,.2,1); }
+.lux-market-insights-page #market-judgement .lux-ms-card[data-market-card-explanation]::after {
+  content: attr(data-market-card-explanation);
+  position: absolute;
+  top: 112px;
+  right: 4px;
+  left: 4px;
+  color: #69635b;
+  font: 400 15px/1.65 var(--lux-zh-body, var(--lux-page-heading));
+  opacity: 0;
+  transform: translateY(9px);
+  transition: opacity .28s ease, transform .32s cubic-bezier(.2,.7,.2,1);
+  pointer-events: none;
+}
+html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card[data-market-card-explanation]::after { font-family: var(--lux-en-body); }
+
+@media (hover: hover) {
+  .lux-market-insights-page #market-overview .lux-ms-stat:is(:hover, :focus-visible) > :is(strong, span),
+  .lux-market-insights-page #market-judgement .lux-ms-card:is(:hover, :focus-visible) p { opacity: 0; transform: translateY(-10px); }
+  .lux-market-insights-page #market-overview .lux-ms-stat:is(:hover, :focus-visible)::after,
+  .lux-market-insights-page #market-judgement .lux-ms-card:is(:hover, :focus-visible)::after { opacity: 1; transform: none; }
+  .lux-market-insights-page #cities .lux-ms-card:is(:hover, :focus-visible) h3 { opacity: 0; transform: translateY(-10px); }
+  .lux-market-insights-page #cities .lux-ms-card:is(:hover, :focus-visible) p { opacity: 1; transform: none; }
+}
+.lux-market-insights-page #market-overview .lux-ms-stat:focus > :is(strong, span),
+.lux-market-insights-page #market-judgement .lux-ms-card:focus p { opacity: 0; transform: translateY(-10px); }
+.lux-market-insights-page #market-overview .lux-ms-stat:focus::after,
+.lux-market-insights-page #market-judgement .lux-ms-card:focus::after { opacity: 1; transform: none; }
+.lux-market-insights-page #cities .lux-ms-card:focus h3 { opacity: 0; transform: translateY(-10px); }
+.lux-market-insights-page #cities .lux-ms-card:focus p { opacity: 1; transform: none; }
+.lux-market-insights-page :is(#market-overview .lux-ms-stat, #cities .lux-ms-card, #market-judgement .lux-ms-card):focus-visible,
+.lux-market-growth .lux-ms-stat:focus-visible,
+.lux-market-insights-page #italian-wine .lux-ms-stat:focus-visible { outline: 2px solid #007c74; outline-offset: 4px; }
+.lux-market-insights-page .lux-ms-cta {
+  padding: clamp(78px, 8vw, 112px) 0;
+  background:
+    linear-gradient(rgba(7, 9, 8, .84), rgba(7, 9, 8, .88)),
+    url("../media/brand/contact-hero-consulting.webp") center / cover no-repeat;
+}
+.lux-market-insights-page .lux-ms-cta h2 { color: #f3efe8; }
+
+.lux-market-section-bridge,
+.lux-service-section-bridge {
+  position: relative;
+  margin: 0;
+  padding: clamp(14px, 2vw, 24px) max(24px, calc((100vw - 1280px) / 2));
+}
+.lux-market-section-bridge {
+  height: clamp(360px, 42vw, 580px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  background: linear-gradient(#e9e6df 0 50%, #ebe7df 50%);
+}
+.lux-market-section-bridge span,
+.lux-service-section-bridge span { min-width: 0; min-height: 0; overflow: hidden; }
+.lux-market-section-bridge span:nth-child(-n+3) { grid-row: 1; }
+.lux-market-section-bridge span:nth-child(4) { grid-column: 1; grid-row: 2; }
+.lux-market-section-bridge span:nth-child(5) { grid-column: 1; grid-row: 3; }
+.lux-market-section-bridge span:nth-child(6) { grid-column: 2 / 4; grid-row: 2 / 4; }
+.lux-market-section-bridge img,
+.lux-service-section-bridge img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1), filter .4s ease; }
+.lux-market-section-bridge span:hover img,
+.lux-service-section-bridge span:hover img { transform: scale(1.035); filter: saturate(1.08); }
+
+/* Shared transition media between related long-form sections. */
+.lux-section-flip-zone {
+  position: relative;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(24px, 3vw, 42px) max(24px, calc((100vw - 1280px) / 2));
+}
+.lux-section-flip-zone.is-service {
+  min-height: clamp(180px, 18vw, 230px);
+  padding-block: clamp(14px, 2vw, 24px);
+  background: linear-gradient(#e9e6df 0 50%, #f7f5f0 50%);
+}
+.lux-market-thin-bridge {
+  height: clamp(120px, 12vw, 164px);
+  margin: 0;
+  padding: 12px max(24px, calc((100vw - 1280px) / 2));
+  background: linear-gradient(#ebe7df 0 50%, #f5f3ee 50%);
+}
+.lux-market-thin-bridge img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 46%; }
+.lux-section-flip {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.lux-section-flip.is-round { width: clamp(156px, 16vw, 210px); aspect-ratio: 1; border-radius: 50%; }
+.lux-section-flip-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .72s cubic-bezier(.2, .75, .2, 1);
+}
+.lux-section-flip:is(.is-flipped, .is-auto-flipped) .lux-section-flip-inner { transform: rotateY(180deg); }
+@media (hover: hover) and (pointer: fine) {
+  .lux-section-flip:hover .lux-section-flip-inner { transform: rotateY(180deg); }
+}
+.lux-section-flip-front,
+.lux-section-flip-back {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.lux-section-flip-front img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.lux-section-flip-back {
+  place-content: center;
+  gap: 8px;
+  padding: 18px;
+  color: #f4f1eb;
+  text-align: center;
+  background: #111514;
+  transform: rotateY(180deg);
+}
+.lux-section-flip-back .lux-lucide {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  fill: none;
+  stroke: #9df5ec;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lux-section-flip-back strong { font: 500 clamp(17px, 1.7vw, 24px)/1.15 var(--lux-zh-body, var(--lux-page-heading)); }
+.lux-section-flip-back small { max-width: 620px; font: 400 clamp(12px, 1vw, 15px)/1.5 var(--lux-zh-body, var(--lux-page-heading)); color: #c6cfcc; }
+.lux-section-flip-zone.is-service .lux-section-flip-back small { font-size: clamp(15px, 1.2vw, 18px) !important; }
+html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--lux-en-body); }
+.lux-section-flip.is-round :is(.lux-section-flip-front, .lux-section-flip-back) { border-radius: 50%; }
+.lux-section-flip:focus-visible { outline: 2px solid #007c74; outline-offset: 5px; }
+
+@media (max-width: 1050px) {
+  .lux-market-insights-page #cities .lux-ms-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lux-market-growth .lux-ms-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .lux-market-insights-page .lux-ms-section { padding: 64px 0; }
+  .lux-market-insights-page .lux-ms-stats,
+  .lux-market-insights-page #cities .lux-ms-card-grid,
+  .lux-market-growth .lux-ms-stats,
+  .lux-market-insights-page #market-judgement .lux-ms-card-grid { grid-template-columns: 1fr; }
+  .lux-market-insights-page #cities .lux-ms-card-grid { gap: 76px; }
+  .lux-market-insights-page #cities .lux-ms-card { min-height: 290px; }
+  html[lang="en"] .lux-market-insights-page #cities .lux-ms-card { min-height: 350px; }
+  .lux-market-insights-page #cities .lux-ms-card:nth-child(even) { transform: none; }
+  .lux-market-insights-page #market-judgement .lux-ms-card-grid { gap: 40px; padding-top: 20px; }
+  .lux-market-insights-page #market-judgement .lux-ms-card-grid::before { display: none; }
+  .lux-market-insights-page #market-judgement .lux-ms-card::before { margin-bottom: 16px; }
+  .lux-market-banner { height: 230px; }
+  .lux-market-data-tabs { width: 100%; }
+  .lux-market-data-tabs button { flex: 1 1 0; padding-inline: 12px; font-size: 11px; letter-spacing: .03em; }
+  .lux-market-insights-page #italian-food-beverage .lux-ms-stats { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-market-data-period,
+  .lux-market-data-panel > .lux-ms-notice,
+  .lux-market-data-panel > .lux-ms-source,
+  .lux-market-data-panel > .lux-ms-prose { opacity: 1; transform: none; }
+  .lux-market-data-panel.is-reading :is(.lux-market-data-period, .lux-ms-notice, .lux-ms-source, .lux-ms-prose),
+  .lux-market-data-panel.is-reading .lux-ms-stat::after { animation: none; }
+  .lux-market-insights-page #italy-china-trade .lux-ms-stat::after { transform: scaleX(1); }
+  .lux-market-metric-popover { transition: none; }
+}
+
+/* China Services: prototype-led editorial and bento layout. */
+.lux-import-export-page {
+  background: #f4f1eb;
+  color: #292621;
+}
+.lux-import-export-page .lux-ms-section,
+.lux-import-export-page .lux-ms-section.is-muted,
+.lux-import-export-page .lux-ms-section.is-light {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(76px, 8vw, 116px) 0;
+  border: 0;
+  background: #f7f5f0;
+  color: #292621;
+}
+.lux-import-export-page .lux-ms-section.is-muted { background: #e9e6df; }
+.lux-import-export-page :is(.lux-ms-heading h2, .lux-ms-card h3, .lux-ms-card h4, .lux-ms-process h3) { color: #292621; }
+.lux-import-export-page .lux-ms-heading > div:last-child > h3 { color: #292621 !important; }
+.lux-import-export-page :is(.lux-ms-lead, .lux-ms-card p, .lux-ms-card li, .lux-ms-notice p, .lux-ms-process p, .lux-ms-faq p) { color: #625c54; }
+.lux-import-export-page .lux-ms-eyebrow,
+.lux-import-export-page .lux-ms-card-label { color: #9c7415; }
+.lux-import-export-page .lux-ms-heading h2 em { color: #9c7415; }
+.lux-import-export-page .lux-ms-card li::before { background: #0c847d; }
+.lux-import-export-page .lux-ms-card,
+.lux-import-export-page .lux-ms-process article { border-top-color: rgba(41, 38, 33, .2); }
+
+.lux-service-overview header {
+  max-width: 760px;
+  margin: 0 auto clamp(38px, 5vw, 62px);
+  text-align: center;
+}
+.lux-service-overview header .lux-ms-eyebrow { margin-bottom: 12px; }
+.lux-service-overview header h2 {
+  margin: 0;
+  color: #292621;
+  font: 400 clamp(42px, 5.5vw, 70px)/1 var(--lux-page-heading);
+}
+.lux-service-overview header h2 em { color: #9c7415; font-style: normal; }
+.lux-service-bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(250px, 18vw, 330px);
+  gap: 12px;
+}
+.lux-service-bento a {
+  position: relative;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(26px, 3vw, 42px);
+  color: #f7f5f0;
+  text-decoration: none;
+  background-position: center;
+  background-size: cover;
+  isolation: isolate;
+  overflow: hidden;
+  transition: filter .35s ease;
+}
+.lux-service-bento a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(5, 7, 7, .24), rgba(5, 7, 7, .84));
+  transition: background .35s ease;
+}
+.lux-service-bento a:nth-child(1) { grid-column: span 7; background-image: url("../media/brand/gifting-importer-partnership.webp"); }
+.lux-service-bento a:nth-child(2) { grid-column: span 5; background-image: url("../media/brand/home-partnership-process.webp"); }
+.lux-service-bento a:nth-child(3) { grid-column: span 4; background-image: url("../media/brand/contact-global-network.webp"); }
+.lux-service-bento a:nth-child(4) { grid-column: span 8; background-image: url("../media/brand/contact-partnership-market.webp"); }
+.lux-service-bento a span {
+  color: #e9c349;
+  font: 600 11px/1.4 var(--lux-page-heading);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: opacity .28s ease, transform .35s ease;
+}
+.lux-service-bento a strong {
+  max-width: 600px;
+  margin-top: 10px;
+  font: 400 clamp(25px, 3vw, 42px)/1.12 var(--lux-page-heading);
+  transition: opacity .3s ease, transform .35s ease;
+}
+.lux-service-bento a small {
+  position: absolute;
+  right: clamp(26px, 3vw, 42px);
+  bottom: clamp(26px, 3vw, 42px);
+  left: clamp(26px, 3vw, 42px);
+  max-width: 680px;
+  color: rgba(247, 245, 240, .82);
+  opacity: 0;
+  transform: translateY(10px);
+  font: 400 clamp(16px, 1.25vw, 20px)/1.55 var(--lux-zh-body);
+  font-size: clamp(16px, 1.25vw, 20px) !important;
+  transition: opacity .28s ease, transform .4s ease;
+}
+html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
+.lux-service-bento .lux-lucide {
+  position: absolute;
+  right: 28px;
+  top: 28px;
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .3s ease;
+}
+.lux-service-bento a:hover::before,
+.lux-service-bento a:focus-visible::before,
+.lux-service-bento a.is-tapped::before { background: linear-gradient(180deg, rgba(5, 7, 7, .12), rgba(5, 7, 7, .9)); }
+.lux-service-bento a:hover strong,
+.lux-service-bento a:focus-visible strong,
+.lux-service-bento a.is-tapped strong { opacity: 0; transform: translateY(-10px); }
+.lux-service-bento a:hover span,
+.lux-service-bento a:focus-visible span,
+.lux-service-bento a.is-tapped span { opacity: 0; transform: translateY(-8px); }
+.lux-service-bento a:hover small,
+.lux-service-bento a:focus-visible small,
+.lux-service-bento a.is-tapped small {
+  opacity: 1;
+  transform: none;
+}
+.lux-service-bento a:is(:hover, :focus-visible, .is-tapped) .lux-lucide { transform: translateX(6px); }
+.lux-service-bento a:focus-visible { outline: 2px solid #0c847d; outline-offset: 3px; }
+
+.lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) > .lux-ms-shell {
+  display: grid;
+  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
+  gap: clamp(30px, 5vw, 76px);
+  align-items: stretch;
+}
+.lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) .lux-ms-heading { grid-column: 1 / -1; }
+.lux-import-export-page :is(#import-into-china, #brand-digital) .lux-ms-heading { align-items: end; }
+.lux-service-media {
+  min-height: 430px;
+  margin: 0;
+  overflow: hidden;
+  background: #d9d5cd;
+}
+.lux-service-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.lux-service-media:is(:hover, :focus, .is-tapped) img { transform: scale(1.025); }
+.lux-import-export-page :is(#import-into-china, #market-entry) > .lux-ms-shell > .lux-ms-card {
+  align-self: center;
+  padding: clamp(30px, 4vw, 58px);
+  border: 0;
+  background: #fff;
+}
+.lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-service-media { grid-column: 2; grid-row: 2; }
+.lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-ms-card-grid {
+  grid-column: 1;
+  grid-row: 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card {
+  padding: 24px;
+  border: 0;
+  background: rgba(255,255,255,.68);
+}
+.lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry) .lux-ms-notice,
+.lux-import-export-page #import-into-china .lux-service-process {
+  grid-column: 1 / -1;
+  max-width: none;
+}
+.lux-import-export-page #import-into-china .lux-ms-process { gap: 0; counter-reset: service-step; }
+.lux-import-export-page #import-into-china .lux-ms-process article {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  padding: 58px 22px 20px;
+  border-top: 1px solid rgba(41,38,33,.22);
+  counter-increment: service-step;
+  text-align: left;
+  transition: color .3s ease, background-color .3s ease, transform .35s ease;
+}
+.lux-import-export-page #import-into-china .lux-ms-process article::after {
+  content: "";
+  width: 78px;
+  height: 78px;
+  display: block;
+  margin-top: auto;
+  border: 1px solid rgba(156,116,21,.45);
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1), border-color .3s ease;
+}
+.lux-import-export-page #import-into-china .lux-ms-process article:is(:hover, :focus, .is-tapped) {
+  z-index: 1;
+  background: rgba(255,255,255,.72);
+  transform: translateY(-6px);
+}
+.lux-import-export-page #import-into-china .lux-ms-process article:is(:hover, :focus, .is-tapped) h3 { color: #006f68; }
+.lux-import-export-page #import-into-china .lux-ms-process article:is(:hover, :focus, .is-tapped)::after { border-color: #9c7415; transform: scale(1.1) rotate(3deg); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(1)::after { background-image: url("../media/brand/gifting-importer-partnership.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(2)::after { background-image: url("../media/brand/cert-laboratory-control.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(3)::after { background-image: url("../media/brand/contact-partnership-market.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(4)::after { background-image: url("../media/brand/home-partnership-process.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(5)::after { background-image: url("../media/brand/home-partnership-fair.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article::before {
+  content: counter(service-step, decimal-leading-zero);
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  color: #9c7415;
+  font: 400 12px/1 var(--lux-page-heading);
+}
+.lux-import-export-page .lux-ms-notice {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.lux-import-export-page :is(#sourcing-export, #market-entry),
+.lux-import-export-page #sourcing-export.is-muted {
+  background: #111514;
+}
+.lux-import-export-page :is(#sourcing-export, #market-entry) .lux-ms-heading {
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+}
+.lux-import-export-page :is(#sourcing-export, #market-entry) :is(.lux-ms-heading h2, .lux-ms-heading > div:last-child > h3, .lux-ms-card h3) {
+  color: #f4f1eb !important;
+}
+.lux-import-export-page :is(#sourcing-export, #market-entry) :is(.lux-ms-lead, .lux-ms-card p, .lux-ms-card li, .lux-ms-notice p) { color: #bdc6c2; }
+.lux-import-export-page #sourcing-export .lux-ms-card,
+.lux-import-export-page #market-entry > .lux-ms-shell > .lux-ms-card {
+  border: 1px solid rgba(244,241,235,.12);
+  background: rgba(255,255,255,.045);
+}
+.lux-import-export-page #sourcing-export .lux-ms-card { border: 0; background: transparent; }
+.lux-import-export-page #sourcing-export .lux-ms-shell .lux-ms-card-grid .lux-ms-card h3 { color: #e9c349 !important; }
+.lux-import-export-page #market-entry > .lux-ms-shell > .lux-ms-card {
+  position: relative;
+  min-height: 430px;
+  padding: 0;
+  padding-right: 170px;
+  border: 0;
+  background: transparent;
+}
+.lux-market-entry-orbits {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  display: grid;
+  gap: 20px;
+  transform: translateY(-50%);
+}
+.lux-flip-orbit {
+  width: 104px;
+  height: 104px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #f4f1eb;
+  background: transparent;
+  cursor: pointer;
+  perspective: 700px;
+}
+.lux-flip-orbit-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.lux-flip-orbit:is(:hover, :focus-visible, .is-flipped, .is-auto-flipped) .lux-flip-orbit-inner { transform: rotateY(180deg); }
+.lux-flip-orbit-front,
+.lux-flip-orbit-back {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(233,195,73,.5);
+  border-radius: 50%;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+.lux-flip-orbit-front { background-position: center; background-size: cover; }
+.lux-flip-orbit-front.is-company { background-image: url("../media/brand/contact-global-network.webp"); }
+.lux-flip-orbit-front.is-services { background-image: url("../media/brand/gifting-global-partnership.webp"); }
+.lux-flip-orbit-front.is-operations { background-image: url("../media/brand/home-partnership-fair.webp"); }
+.lux-flip-orbit-back {
+  align-content: center;
+  gap: 7px;
+  padding: 16px;
+  color: #9df5ec;
+  background: #202624;
+  transform: rotateY(180deg);
+}
+.lux-flip-orbit-back .lux-lucide { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.lux-flip-orbit-back small { color: #f4f1eb; font: 400 11px/1.25 var(--lux-page-heading); text-align: center; }
+.lux-flip-orbit:focus-visible { outline: 2px solid #9df5ec; outline-offset: 4px; }
+.lux-market-entry-disclaimer {
+  margin-top: clamp(26px, 3vw, 40px) !important;
+  padding-top: 22px;
+  border-top: 1px solid rgba(244,241,235,.18);
+}
+.lux-import-export-page :is(#sourcing-export, #market-entry) .lux-ms-card li::before { background: #9df5ec; }
+
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.lux-service-card-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin-bottom: 18px;
+  fill: none;
+  stroke: #9df5ec;
+  stroke-width: 1.55;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .3s ease, color .3s ease;
+}
+.lux-import-export-page #brand-digital .lux-service-card-icon { stroke: #0c847d; }
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card:is(:hover, :focus, .is-tapped) .lux-service-card-icon { transform: translateY(-3px) rotate(-4deg); }
+.lux-import-export-page #sourcing-export .lux-ms-card h3 { color: #e9c349 !important; }
+.lux-import-export-page #brand-digital .lux-ms-card h3 { color: #9c7415 !important; }
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-position: center;
+  background-size: cover;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path .72s cubic-bezier(.22,.68,.24,1);
+  pointer-events: none;
+}
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card:is(:hover, :focus, .is-auto-revealed, .is-tapped)::after { clip-path: inset(0); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(1)::after { background-image: url("../media/brand/home-partnership-process.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(2)::after { background-image: url("../media/brand/cert-laboratory-control.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(3)::after { background-image: url("../media/brand/gifting-global-partnership.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(4)::after { background-image: url("../media/brand/gifting-wholesale-truffle-salt.webp"); }
+.lux-import-export-page #brand-digital .lux-ms-card:nth-child(1)::after { background-image: url("../media/brand/contact-partnership-market.webp"); }
+.lux-import-export-page #brand-digital .lux-ms-card:nth-child(2)::after { background-image: url("../media/brand/contact-global-network.webp"); }
+.lux-import-export-page #brand-digital .lux-ms-card:nth-child(3)::after { background-image: url("../media/brand/home-partnership-fair.webp"); }
+.lux-import-export-page #brand-digital .lux-ms-card:nth-child(4)::after { background-image: url("../media/brand/gifting-importer-partnership.webp"); }
+
+.lux-import-export-page #business-development .lux-ms-heading,
+.lux-import-export-page #why-luxureat-china .lux-ms-heading { max-width: 930px; margin-inline: auto; text-align: center; grid-template-columns: 1fr; }
+.lux-import-export-page #business-development .lux-ms-heading > div:last-child { max-width: 740px; margin-inline: auto; }
+.lux-import-export-page #business-development .lux-ms-card-grid { gap: 18px; }
+.lux-import-export-page #business-development .lux-ms-card {
+  padding: 0 24px 30px;
+  border: 0;
+  overflow: hidden;
+  text-align: center;
+  background: transparent;
+}
+.lux-import-export-page #business-development .lux-ms-card::before {
+  content: "";
+  height: 190px;
+  display: block;
+  margin: 0 -24px 26px;
+  background-position: center;
+  background-size: cover;
+  transition: transform .55s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+}
+.lux-import-export-page #business-development .lux-ms-card:nth-child(1)::before { background-image: linear-gradient(rgba(8,10,9,.18),rgba(8,10,9,.18)), url("../media/brand/gifting-global-partnership.webp"); }
+.lux-import-export-page #business-development .lux-ms-card:nth-child(2)::before { background-image: linear-gradient(rgba(8,10,9,.18),rgba(8,10,9,.18)), url("../media/brand/home-partnership-fair.webp"); }
+.lux-import-export-page #business-development .lux-ms-card:nth-child(3)::before { background-image: linear-gradient(rgba(8,10,9,.18),rgba(8,10,9,.18)), url("../media/brand/contact-global-network.webp"); }
+.lux-import-export-page #business-development .lux-ms-card:is(:hover, :focus, .is-tapped)::before { transform: scale(1.045); filter: brightness(.72) saturate(1.08); }
+.lux-import-export-page #business-development .lux-service-card-icon {
+  margin: 0 auto 14px;
+  stroke: #006f68;
+}
+.lux-import-export-page #business-development .lux-ms-card:is(:hover, :focus, .is-tapped) .lux-service-card-icon { transform: translateY(-3px) rotate(-4deg); }
+.lux-import-export-page #business-development .lux-ms-card h3 { color: #005a54 !important; }
+.lux-import-export-page #business-development .lux-ms-card p { max-width: 32em; margin-inline: auto; }
+.lux-import-export-page #business-development .lux-ms-card ul {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.lux-import-export-page #why-luxureat-china {
+  padding-top: clamp(34px, 4vw, 56px);
+  background: #111514;
+}
+.lux-why-image-strip {
+  height: clamp(92px, 10vw, 132px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  overflow: hidden;
+  background: #111514;
+}
+.lux-why-image-strip > span { position: relative; overflow: hidden; }
+.lux-why-image-strip img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 48%;
+  filter: brightness(.5) saturate(.8);
+  transition: transform .55s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+}
+.lux-why-image-strip .lux-lucide {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 8px;
+  box-sizing: content-box;
+  border: 1px solid rgba(255,255,255,.62);
+  border-radius: 50%;
+  color: #fff;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translate(-50%, -50%);
+  transition: color .3s ease, border-color .3s ease, transform .45s ease;
+}
+.lux-why-image-strip > span:hover img { transform: scale(1.07); filter: brightness(.7) saturate(1); }
+.lux-why-image-strip > span:hover .lux-lucide {
+  color: #e9c349;
+  border-color: #e9c349;
+  transform: translate(-50%, -50%) rotate(8deg) scale(1.08);
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-heading { margin-bottom: clamp(26px, 3vw, 40px); }
+.lux-import-export-page #why-luxureat-china .lux-ms-heading h2 { color: #f4f1eb; }
+.lux-import-export-page #why-luxureat-china .lux-ms-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  counter-reset: why-card;
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card {
+  position: relative;
+  min-height: 260px;
+  padding: 82px 24px 28px;
+  border: 0;
+  text-align: left;
+  background: transparent;
+  counter-increment: why-card;
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  width: 36px;
+  height: 36px;
+  background: #0c847d;
+  -webkit-mask: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M6 21V7l6-4 6 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h6'/%3E%3C/svg%3E");
+  mask: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21h18M6 21V7l6-4 6 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h6'/%3E%3C/svg%3E");
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card::after {
+  content: "0" counter(why-card);
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(233,195,73,.5);
+  color: #e9c349;
+  font: 400 11px/1 var(--lux-page-heading);
+  letter-spacing: .12em;
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card:nth-child(2)::before { transform: rotate(90deg); }
+.lux-import-export-page #why-luxureat-china .lux-ms-card:nth-child(3)::before { transform: rotate(180deg); }
+.lux-import-export-page #why-luxureat-china .lux-ms-card:nth-child(4)::before { transform: rotate(270deg); }
+.lux-import-export-page #why-luxureat-china .lux-ms-card h3 { color: #f4f1eb; font-size: clamp(21px, 2vw, 29px); }
+.lux-import-export-page #why-luxureat-china .lux-ms-card p { color: #bdc6c2; }
+.lux-import-export-page #why-luxureat-china .lux-ms-card {
+  transition: transform .3s ease, background-color .3s ease;
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card:is(:hover, :focus, .is-tapped) {
+  transform: translateY(-6px);
+  background: rgba(255,255,255,.035);
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card h3::after {
+  content: "";
+  width: 34px;
+  height: 1px;
+  display: block;
+  margin-top: 14px;
+  background: rgba(233,195,73,.64);
+  transition: width .3s ease;
+}
+.lux-import-export-page #why-luxureat-china .lux-ms-card:is(:hover, :focus, .is-tapped) h3::after { width: 62px; }
+
+.lux-service-section-bridge {
+  height: clamp(300px, 34vw, 470px);
+  display: grid;
+  grid-template-columns: minmax(0, .38fr) minmax(0, .62fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  background: linear-gradient(#111514 0 50%, #ebe7df 50%);
+}
+.lux-service-section-bridge span:nth-child(1) { grid-row: 1 / 3; }
+.lux-service-section-bridge span:nth-child(4) {
+  position: absolute;
+  left: 38%;
+  bottom: clamp(24px, 4vw, 58px);
+  width: clamp(92px, 11vw, 150px);
+  aspect-ratio: 1;
+  border: 8px solid #ebe7df;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.lux-import-export-page #faq > .lux-ms-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, .42fr) minmax(0, 1fr);
+  gap: clamp(36px, 6vw, 90px);
+  align-items: start;
+}
+.lux-import-export-page #faq { overflow: visible; }
+.lux-faq-rail {
+  position: sticky;
+  top: 118px;
+}
+.lux-import-export-page #faq .lux-ms-heading { display: block; margin: 0 0 24px; }
+.lux-faq-scroll-visual {
+  height: min(52vh, 560px);
+  min-height: 360px;
+  margin: 0;
+  overflow: hidden;
+  background: #d8d3ca;
+}
+.lux-faq-scroll-visual img {
+  width: 100%;
+  height: 165%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: translateY(var(--faq-image-shift, 0%));
+  will-change: transform;
+}
+.lux-faq-content { min-width: 0; }
+.lux-faq-tools {
+  position: sticky;
+  top: 104px;
+  z-index: 5;
+  margin-bottom: 28px;
+  padding: 8px 0 18px;
+  background: #f7f5f0;
+  box-shadow: 0 18px 18px #f7f5f0;
+}
+.lux-faq-tools::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: 104px;
+  background: #f7f5f0;
+  pointer-events: none;
+}
+.lux-faq-search {
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(41,38,33,.28);
+  background: rgba(255,255,255,.62);
+}
+.lux-faq-search > .lux-lucide,
+.lux-faq-popular .lux-lucide,
+.lux-faq-suggestion .lux-lucide {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #0c847d;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lux-faq-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: #292621;
+  background: transparent;
+  font: 400 16px/1.4 var(--lux-zh-body, var(--lux-page-heading));
+}
+html[lang="en"] .lux-faq-search input { font-family: var(--lux-en-body); }
+.lux-faq-search input::placeholder { color: #7c756c; opacity: 1; }
+.lux-faq-search button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  color: #625c54;
+  background: transparent;
+  cursor: pointer;
+}
+.lux-faq-search button[hidden] { display: none; }
+.lux-faq-search button .lux-lucide { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.lux-faq-popular { margin-top: 18px; }
+.lux-faq-popular > span { display: inline-flex; align-items: center; gap: 8px; color: #9c7415; font: 600 11px/1.4 var(--lux-page-heading); letter-spacing: .12em; text-transform: uppercase; }
+.lux-faq-popular > div { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.lux-faq-popular button,
+.lux-faq-suggestion button {
+  padding: 8px 12px;
+  border: 1px solid rgba(41,38,33,.18);
+  color: #4d4841;
+  background: transparent;
+  font: 400 13px/1.4 var(--lux-zh-body, var(--lux-page-heading));
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-family: var(--lux-en-body); }
+.lux-faq-popular button:hover,
+.lux-faq-suggestion button:hover { border-color: #0c847d; color: #006f68; background: rgba(12,132,125,.06); }
+.lux-faq-suggestion { display: flex; align-items: center; gap: 8px; margin: 18px 0 0; color: #625c54; font: 400 14px/1.5 var(--lux-zh-body, var(--lux-page-heading)); }
+.lux-faq-suggestion[hidden] { display: none; }
+.lux-faq-suggestion button { padding: 0 0 2px; border-width: 0 0 1px; border-color: #9c7415; color: #9c7415; }
+.lux-import-export-page #faq .lux-ms-faq { border-top-color: rgba(41,38,33,.24); }
+.lux-import-export-page #faq .lux-ms-faq details { border-bottom-color: rgba(41,38,33,.18); background: rgba(255,255,255,.4); }
+.lux-import-export-page #faq .lux-ms-faq details + details { margin-top: 6px; }
+.lux-import-export-page #faq .lux-ms-faq summary { padding-inline: 20px; color: #292621; font-size: clamp(18px, 1.5vw, 22px); }
+.lux-import-export-page #faq .lux-ms-faq summary::after { color: #9c7415; }
+.lux-import-export-page #faq .lux-ms-faq details > div { padding: 0 54px 22px 20px; }
+.lux-import-export-page .lux-ms-cta {
+  background: linear-gradient(rgba(8,10,9,.82),rgba(8,10,9,.9)), url("../media/brand/gifting-global-partnership.webp") center / cover no-repeat;
+}
+
+@media (max-width: 900px) {
+  .lux-import-export-page :is(#import-into-china, #brand-digital) .lux-ms-heading { align-items: start; }
+  .lux-import-export-page :is(#sourcing-export, #market-entry) .lux-ms-heading { grid-template-columns: 1fr; }
+  .lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) > .lux-ms-shell,
+  .lux-import-export-page #faq > .lux-ms-shell { grid-template-columns: 1fr; }
+  .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > :is(.lux-service-media, .lux-ms-card-grid) { grid-column: 1; grid-row: auto; }
+  .lux-import-export-page #why-luxureat-china .lux-ms-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-faq-rail { position: static; }
+  .lux-faq-tools {
+    position: sticky;
+    top: 72px;
+    z-index: 10;
+    box-shadow: 0 14px 18px #f7f5f0;
+  }
+  .lux-faq-tools::before { height: 72px; }
+  .lux-faq-scroll-visual { height: 320px; min-height: 0; }
+  .lux-import-export-page #market-entry > .lux-ms-shell > .lux-ms-card { min-height: 0; padding-right: 0; }
+  .lux-market-entry-orbits { position: static; display: flex; justify-content: center; margin-top: 30px; transform: none; }
+}
+@media (max-width: 640px) {
+  .lux-import-export-page .lux-ms-section,
+  .lux-import-export-page .lux-ms-section.is-muted,
+  .lux-import-export-page .lux-ms-section.is-light { padding: 64px 0; }
+  .lux-service-bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .lux-service-bento a:nth-child(n) { grid-column: 1; min-height: 250px; height: auto; }
+  .lux-service-bento a strong { font-size: 26px; }
+  .lux-service-bento a small { bottom: 26px; font-size: 16px !important; line-height: 1.5 !important; }
+  .lux-service-bento a:not(.is-tapped) strong { opacity: 1; transform: none; }
+  .lux-service-bento a:not(.is-tapped) small { opacity: 0; transform: translateY(10px); }
+  .lux-service-media { min-height: 270px; }
+  .lux-import-export-page #import-into-china .lux-ms-process article { min-height: 250px; align-items: center; padding: 58px 20px 24px; text-align: center; }
+  .lux-import-export-page #import-into-china .lux-ms-process article::before { left: 50%; transform: translateX(-50%); }
+  .lux-market-section-bridge { height: 490px; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); padding: 10px 20px; }
+  .lux-market-section-bridge span:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .lux-market-section-bridge span:nth-child(2) { grid-column: 2; grid-row: 1; }
+  .lux-market-section-bridge span:nth-child(3) { grid-column: 1; grid-row: 2; }
+  .lux-market-section-bridge span:nth-child(4) { grid-column: 2; grid-row: 2; }
+  .lux-market-section-bridge span:nth-child(5) { grid-column: 1; grid-row: 3 / 5; }
+  .lux-market-section-bridge span:nth-child(6) { grid-column: 2; grid-row: 3 / 5; }
+  .lux-service-section-bridge { height: 360px; grid-template-columns: 1fr 1fr; padding-inline: 20px; }
+  .lux-service-section-bridge span:nth-child(4) { left: 50%; bottom: 22px; }
+  .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-ms-card-grid,
+  .lux-import-export-page #why-luxureat-china .lux-ms-card-grid { grid-template-columns: 1fr; }
+  .lux-import-export-page #business-development .lux-ms-card-grid { grid-template-columns: 1fr; }
+  .lux-import-export-page #faq .lux-ms-faq summary { padding-inline: 14px; }
+  .lux-import-export-page #faq .lux-ms-faq details > div { padding-inline: 14px; }
+  .lux-why-image-strip { height: 112px; }
+  .lux-flip-orbit { width: 104px; height: 104px; }
+  .lux-faq-search { padding-inline: 14px; }
+  .lux-section-flip-zone { padding-inline: 20px; }
+  .lux-section-flip-zone.is-service { min-height: 184px; gap: 18px; padding-block: 14px; }
+  .lux-section-flip.is-round { width: min(38vw, 148px); }
+  .lux-section-flip-back { gap: 5px; padding: 14px; }
+  .lux-section-flip-back .lux-lucide { width: 24px; height: 24px; }
+  .lux-section-flip.is-round .lux-section-flip-back strong { font-size: 15px; }
+  .lux-section-flip.is-round .lux-section-flip-back small { display: block; font-size: 14px !important; line-height: 1.35; }
+  .lux-market-thin-bridge { height: 112px; padding: 8px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-service-bento a,
+  .lux-service-bento a::before,
+  .lux-service-bento a strong,
+  .lux-service-bento a small,
+  .lux-service-bento .lux-lucide,
+  .lux-service-media img { transition: none; }
+  .lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card::after { transition: none; }
+  .lux-import-export-page #business-development .lux-ms-card::before,
+  .lux-import-export-page #business-development .lux-service-card-icon { transition: none; }
+  .lux-flip-orbit-inner { transition: none; }
+  .lux-section-flip-inner { transition: none; }
+}

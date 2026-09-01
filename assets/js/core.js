@@ -588,6 +588,8 @@ const luxNavigation = {
     ["brand.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
     ["blog.html", "知识博客", [["探索意大利", "culture-academy"], ["鱼子酱学院", "caviar-academy"], ["橄榄油学院", "olive-academy"], ["披萨学院", "pizza-academy"], ["松露学院", "truffle-academy"], ["意式手工冰淇淋", "gelato-academy"], ["营养与配料指南", "nutrition-guide"], ["意大利美食词典", "italian-food-dictionary"], ["生产者、大师与产地故事", "producers-stories"]]],
     ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["品牌与行业合作", "award-proofs"], ["品质与认证", "certification-glossary"], ["合作图集", "partnership-gallery"]]],
+    ["china-market-insights.html", "中国市场", [["市场概况", "market-overview"], ["城市与经济中心", "cities"], ["意中贸易", "italy-china-trade"], ["食品与饮料", "italian-food-beverage"], ["意大利葡萄酒", "italian-wine"], ["市场判断", "market-judgement"]]],
+    ["import-export-services.html", "中国服务", [["进口中国", "import-into-china"], ["中国采购与出口", "sourcing-export"], ["中国市场落地", "market-entry"], ["品牌与数字化", "brand-digital"], ["商务拓展", "business-development"], ["为什么选择我们", "why-luxureat-china"], ["常见问题", "faq"]]],
     ["cooperation.html", "商务合作", [["国际市场定制", "private-label"], ["合作案例", "partnership-cases"], ["企业合作方案", "business-partnership"], ["中国经销合作", "china-partnership"], ["开启专业合作", "inquiry"]]],
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
@@ -600,6 +602,8 @@ const luxNavigation = {
     ["brand.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
     ["blog.html", "Blog", [["Explore Italy", "culture-academy"], ["Caviar Academy", "caviar-academy"], ["Olive Oil Academy", "olive-academy"], ["Pizza Academy", "pizza-academy"], ["Truffle Academy", "truffle-academy"], ["Italian Gelato", "gelato-academy"], ["Nutrition & Ingredients", "nutrition-guide"], ["Italian Food Dictionary", "italian-food-dictionary"], ["Producers, Masters & Stories of Place", "producers-stories"]]],
     ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Brand & Industry Partnerships", "award-proofs"], ["Quality & Certification", "certification-glossary"], ["Partnership Gallery", "partnership-gallery"]]],
+    ["china-market-insights.html", "China Market", [["Market Overview", "market-overview"], ["Cities & Economic Centres", "cities"], ["Italy–China Trade", "italy-china-trade"], ["Food & Beverages", "italian-food-beverage"], ["Italian Wine", "italian-wine"], ["Market Assessment", "market-judgement"]]],
+    ["import-export-services.html", "China Services", [["Import into China", "import-into-china"], ["Sourcing & Export", "sourcing-export"], ["China Market Entry", "market-entry"], ["Brand & Digital", "brand-digital"], ["Business Development", "business-development"], ["Why LuxurEat China", "why-luxureat-china"], ["FAQ", "faq"]]],
     ["cooperation.html", "Cooperation", [["International Market Solutions", "private-label"], ["Partnership Cases", "partnership-cases"], ["Business Partnership Solutions", "business-partnership"], ["Distribution Partners", "china-partnership"], ["Start a Professional Partnership", "inquiry"]]],
     ["contact.html", "Contact", [["Brand Consultation", "brand-consultation"], ["Global Presence", "global-footprint"]]],
   ],
@@ -608,19 +612,19 @@ const luxNavigation = {
 const luxHeader = document.querySelector(".lux-header");
 if (luxHeader) {
   luxHeader.classList.toggle("is-light-surface", Boolean(document.querySelector(".lux-article-page")));
+  const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
   if ("IntersectionObserver" in window) {
     const headerSentinel = document.createElement("span");
     headerSentinel.setAttribute("aria-hidden", "true");
     headerSentinel.style.cssText = "position:absolute;top:1px;width:1px;height:1px;pointer-events:none;opacity:0";
     document.body.prepend(headerSentinel);
     new IntersectionObserver(([entry]) => {
-      luxHeader.classList.toggle("is-scrolled", !entry.isIntersecting && entry.boundingClientRect.top < 0);
+      luxHeader.classList.toggle("is-scrolled", !entry.isIntersecting || window.scrollY > 1);
     }).observe(headerSentinel);
-  } else {
-    const syncHeaderSurface = () => luxHeader.classList.toggle("is-scrolled", window.scrollY > 1);
-    window.addEventListener("scroll", syncHeaderSurface, { passive: true });
-    syncHeaderSurface();
   }
+  window.addEventListener("scroll", syncHeaderSurface, { passive: true });
+  window.addEventListener("pageshow", syncHeaderSurface);
+  syncHeaderSurface();
 }
 
 if (luxNav && luxMenu) {
@@ -878,7 +882,19 @@ if (luxNav && luxMenu) {
 })();
 
 function initLuxInfoPopovers() {
-  const buttons = document.querySelectorAll("[data-info-popover]");
+  const buttons = [...document.querySelectorAll("[data-info-popover]")];
+  document.querySelectorAll("[data-gift-grid] > .group").forEach((card) => {
+    const details = card.querySelector("[data-info-popover]");
+    const media = card.querySelector(":scope > div:first-child");
+    if (!details || !media) return;
+    media.dataset.infoTitle = details.dataset.infoTitle || "";
+    media.dataset.infoText = details.dataset.infoText || "";
+    media.classList.add("lux-gift-media-trigger");
+    media.setAttribute("role", "button");
+    media.setAttribute("tabindex", "0");
+    media.setAttribute("aria-label", details.getAttribute("aria-label") || "");
+    buttons.push(media);
+  });
   if (!buttons.length) return;
 
   const popover = document.createElement("div");
@@ -928,11 +944,12 @@ function initLuxInfoPopovers() {
   };
 
   buttons.forEach((button) => {
-    button.type = "button";
+    if (button instanceof HTMLButtonElement) button.type = "button";
     button.setAttribute("aria-haspopup", "dialog");
     button.setAttribute("aria-expanded", "false");
     button.addEventListener("mouseenter", () => open(button));
     button.addEventListener("focus", () => open(button));
+    button.addEventListener("click", () => open(button));
     button.addEventListener("mouseleave", scheduleClose);
     button.addEventListener("blur", scheduleClose);
   });
@@ -1118,6 +1135,39 @@ function initLuxAwardLightbox() {
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
 }
 
+function initLuxSectionFlips() {
+  const groups = [...document.querySelectorAll("[data-section-flips]")];
+  if (!groups.length) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  groups.forEach((group) => {
+    const buttons = [...group.querySelectorAll(".lux-section-flip")];
+    buttons.forEach((button) => {
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => {
+        const flipped = button.classList.toggle("is-flipped");
+        button.setAttribute("aria-pressed", String(flipped));
+      });
+    });
+
+    if (reducedMotion || !("IntersectionObserver" in window)) return;
+    let timers = [];
+    const resetAutoFlip = () => {
+      timers.forEach(window.clearTimeout);
+      timers = [];
+      buttons.forEach((button) => button.classList.remove("is-auto-flipped"));
+    };
+    new IntersectionObserver(([entry]) => {
+      resetAutoFlip();
+      if (!entry.isIntersecting) return;
+      buttons.forEach((button, index) => {
+        timers.push(window.setTimeout(() => button.classList.add("is-auto-flipped"), 120 + index * 180));
+        timers.push(window.setTimeout(() => button.classList.remove("is-auto-flipped"), 1050 + index * 180));
+      });
+    }, { threshold: .45 }).observe(group);
+  });
+}
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1128,4 +1178,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initLuxRecipePanels();
   initLuxRecipeCtas();
   initLuxAwardLightbox();
+  initLuxSectionFlips();
 });

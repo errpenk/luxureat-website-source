@@ -918,18 +918,15 @@ function initLuxReader() {
     render(id, false);
   };
   const close = () => {
-    if (archiveOrigin && currentId !== "__archive") {
-      stack.length = 0;
-      archiveOrigin = false;
-      renderArchive(false);
-      return;
-    }
     window.LuxureatCloseInternalLink?.();
     reader.hidden = true;
     document.body.classList.remove("lux-reader-open");
+    body.innerHTML = "";
+    body.scrollTop = 0;
     stack.length = 0;
     archiveOrigin = false;
     currentId = "";
+    backButton.hidden = true;
     if (location.hash.startsWith("#event-") || location.hash.startsWith("#reader-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
   };
 
