@@ -376,7 +376,7 @@ html[lang="en"] .lux-market-insights-page #market-overview .lux-ms-stat[data-mar
 .lux-market-insights-page #cities .lux-ms-card:nth-child(2)::before { background-image: url("../media/market-cities/beijing.svg"); }
 .lux-market-insights-page #cities .lux-ms-card:nth-child(3)::before { background-image: url("../media/market-cities/guangzhou.svg"); }
 .lux-market-insights-page #cities .lux-ms-card:nth-child(4)::before { background-image: url("../media/market-cities/shenzhen.svg"); }
-.lux-market-insights-page #cities .lux-ms-card:nth-child(5)::before { background-image: url("../media/market-cities/chengdu-chongqing.svg"); }
+.lux-market-insights-page #cities .lux-ms-card:nth-child(5)::before { background-image: url("../media/market-cities/chengdu-chongqing.svg?v=20260902-2"); }
 .lux-market-insights-page #cities .lux-ms-card:nth-child(even) { transform: translateY(24px); }
 .lux-market-insights-page #cities .lux-ms-card:nth-child(odd):hover { transform: translateY(-8px); }
 .lux-market-insights-page #cities .lux-ms-card:nth-child(even):hover { transform: translateY(16px); }

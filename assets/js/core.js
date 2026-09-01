@@ -238,6 +238,18 @@ if ("IntersectionObserver" in window) {
   luxLazyImages.forEach(loadLuxImage);
 }
 
+// Start native lazy images before they enter the viewport so fast scrolling never outruns the network.
+const luxNativeLazyImages = document.querySelectorAll('img[loading="lazy"]:not([data-lux-src])');
+if ("IntersectionObserver" in window) {
+  const nativeImageObserver = new IntersectionObserver((entries, observer) => {
+    entries.filter(({ isIntersecting }) => isIntersecting).forEach(({ target }) => {
+      target.loading = "eager";
+      observer.unobserve(target);
+    });
+  }, { rootMargin: luxIsMobile ? "1800px 0px" : "2800px 0px" });
+  luxNativeLazyImages.forEach((image) => nativeImageObserver.observe(image));
+}
+
 const luxDeferredScripts = document.querySelector("[data-lux-deferred-scripts]");
 if (luxDeferredScripts) {
   const coreUrl = new URL(document.currentScript.src);

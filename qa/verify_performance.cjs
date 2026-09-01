@@ -33,6 +33,12 @@ assert.ok(size("assets/fonts/KingHwaOldSong-market-hero-critical.woff2") <= 6 * 
 assert.ok(size("assets/fonts/LuxurEatZhiSong-market-critical.woff2") <= 76 * 1024, "Chinese market first-view body font exceeds 76 KB");
 assert.ok(size("assets/fonts/NyghtSerif-Regular-market.woff2") + size("assets/fonts/Spectral-Regular-market.woff2") <= 32 * 1024, "English market first-view fonts exceed 32 KB");
 assert.ok(size("assets/media/brand/contact-hero-consulting-mobile.webp") <= 16 * 1024, "mobile China Market hero exceeds 16 KB");
+const coreRuntime = read("assets/js/core.js").toString();
+assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('"2800px 0px"'), "native lazy images are not promoted ahead of the viewport");
+for (const locale of ["zh", "en"]) {
+  const about = read(`${locale}/about-us.html`).toString();
+  assert.ok((about.match(/class="lux-brand-promise-card"><img[^>]+loading="eager"[^>]+fetchpriority="low"/g) || []).length === 4, `${locale} brand-promise images are not preloaded at low priority`);
+}
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/LuxurEatZhiSongWeb-subset.woff2")), "retired full ZhiSong font remains bundled");
 assert.ok(size("assets/media/brand/home-hero-truffle-mobile.m4v") <= 320 * 1024, "mobile hero video exceeds 320 KB");

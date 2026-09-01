@@ -258,7 +258,10 @@ function fontPreloads(page) {
     ...(["home", "market-insights"].includes(page.key) ? [] : [`<link rel="preload" href="../assets/fonts/MaterialSymbolsOutlined-subset.ttf?v=${assetVersion}" as="font" type="font/ttf" crossorigin>`]),
   ].join("\n");
   const fontDisplay = page.key === "market-insights" ? "block" : "swap";
-  const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${versionFor(font)}") format("woff2");font-weight:${weight};font-style:${style};font-display:${fontDisplay}}`).join("");
+  const faces = fonts.map(([font, family, weight, style = "normal"]) => {
+    const display = page.lang === "zh" && family.startsWith("KingHwa") ? "block" : fontDisplay;
+    return `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${versionFor(font)}") format("woff2");font-weight:${weight};font-style:${style};font-display:${display}}`;
+  }).join("");
   const headlineFonts = page.key === "products"
     ? '"KingHwa Page Critical","KingHwa Labels Critical","KingHwa Old Song Site"'
     : '"KingHwa Page Critical","KingHwa Old Song Site"';

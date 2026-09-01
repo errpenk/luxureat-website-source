@@ -123,6 +123,7 @@ for (const cityAsset of ["shanghai", "beijing", "guangzhou", "shenzhen", "chengd
   assert(fs.existsSync(path.join(root, `assets/media/market-cities/${cityAsset}.svg`)), `missing city SVG: ${cityAsset}`);
   assert(marketServicesCss.includes(`../media/market-cities/${cityAsset}.svg`), `city SVG is not used: ${cityAsset}`);
 }
+assert(marketServicesCss.includes('chengdu-chongqing.svg?v=20260902-2'), "Chengdu-Chongqing SVG is not cache-busted");
 for (const locale of ["zh", "en"]) {
   const home = read(`${locale}/index.html`);
   for (const href of ["china-market-insights.html", "import-export-services.html", "cooperation.html"]) {
@@ -254,6 +255,10 @@ assert(integrationStyles.includes("min-height: 410px;") && integrationStyles.inc
 assert(!read("assets/data/events.js").includes("TinCaviar") && !read("assets/cifie-changsha-2026.ics").includes("TinCaviar") && !read("assets/marca-china-2026.ics").includes("TinCaviar"), "event content still references TinCaviar");
 assert(integrationStyles.includes('--lux-zh-body: "LuxurEat ZhiSong Site"') && read("zh/contact.html").includes('LuxurEatZhiSong-site.woff2'), "Chinese body copy does not use the complete ZhiSong subset");
 assert(integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols-outlined)::before') && integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols-outlined)::after') && integrationStyles.includes('font-family: inherit !important'), "Chinese generated content does not inherit the current typography");
+for (const file of require("node:fs").readdirSync("zh").filter((name) => name.endsWith(".html"))) {
+  const page = read(`zh/${file}`);
+  assert(!/@font-face\{font-family:"KingHwa[^}]+font-display:swap/.test(page) && /@font-face\{font-family:"KingHwa[^}]+font-display:block/.test(page), `${file} can flash a fallback before KingHwa loads`);
+}
 const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
 assert(registeredTextFonts.length === 0, "shared CSS still registers stale text fonts");
 assert(integrationStyles.includes('MaterialSymbolsOutlined-subset.ttf'), "local Material Symbols subset is missing");
