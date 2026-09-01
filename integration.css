@@ -1270,7 +1270,7 @@ header:has(.lux-hero-fade-both) {
   position: fixed;
   right: clamp(18px, 3vw, 40px);
   bottom: clamp(18px, 3vw, 40px);
-  z-index: 9998;
+  z-index: 2147483000;
   width: 56px;
   height: 56px;
   border-radius: 50%;

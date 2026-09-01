@@ -99,6 +99,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand/cert-thailand-leadership-lexus.webp": "media/brand/cert-thailand-leadership-lexus-720.webp",
   "media/brand/cert-thailand-leadership-service.webp": "media/brand/cert-thailand-leadership-service-720.webp",
   "media/brand/cert-thailand-leadership-tasting.webp": "media/brand/cert-thailand-leadership-tasting-720.webp",
+  "media/brand/contact-hero-consulting.webp": "media/brand/contact-hero-consulting-mobile.webp",
   "media/brand/contact-partnership-fresh-truffles.webp": "media/brand/contact-partnership-fresh-truffles-mobile.webp",
   "media/brand/contact-partnership-market.webp": "media/brand/contact-partnership-market-mobile.webp",
   "media/brand/contact-partnership-selection.webp": "media/brand/contact-partnership-selection-mobile.webp",

@@ -1,7 +1,7 @@
-html[lang^="zh"] .lux-market-services-page [lang="en"] {
-  font-family: var(--lux-zh-body) !important;
-  font-weight: 400 !important;
-  -webkit-text-stroke: 0;
+html[lang="en"] .lux-market-services-page {
+  --lux-page-heading: "Nyght Serif";
+  --lux-en-display: "Nyght Serif";
+  --lux-en-body: "Spectral";
 }
 .lux-market-services-page {
   background: #131313;
@@ -17,7 +17,7 @@ html[lang^="zh"] .lux-market-services-page [lang="en"] {
   opacity: .62;
   transform: scale(1.01);
 }
-.lux-ms-hero-market .lux-ms-hero-media { background-image: url("../media/brand/contact-hero-consulting.webp"); }
+.lux-ms-hero-market .lux-ms-hero-media { background-image: url("../media/brand/contact-hero-consulting.webp?v=20260901-market-services-34"); }
 .lux-ms-hero-services .lux-ms-hero-media { background-image: url("../media/brand/gifting-hero-cooperation.webp"); }
 .lux-ms-hero .lux-page-hero-content { width: min(100%, 1040px); }
 .lux-ms-hero .lux-hero-support { max-width: 780px; margin-inline: auto; }
@@ -57,30 +57,6 @@ html[lang^="zh"] .lux-market-services-page [lang="en"] {
   letter-spacing: .22em;
   text-transform: uppercase;
 }
-.lux-ms-heading .lux-ms-eyebrow,
-.lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-}
-.lux-ms-heading .lux-ms-eyebrow::before,
-.lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow::before {
-  content: "";
-  width: 15px;
-  height: 15px;
-  flex: 0 0 15px;
-  background: currentColor;
-  -webkit-mask: center / contain no-repeat;
-  mask: center / contain no-repeat;
-}
-.lux-market-insights-page :is(.lux-ms-heading .lux-ms-eyebrow, .lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow)::before {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m7 16 4-4 4 4 6-6'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m7 16 4-4 4 4 6-6'/%3E%3C/svg%3E");
-}
-.lux-import-export-page :is(.lux-ms-heading .lux-ms-eyebrow, .lux-ms-cta > .lux-ms-shell > .lux-ms-eyebrow)::before {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='14' x='2' y='6' rx='2'/%3E%3Cpath d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 12h.01M2 13a18.15 18.15 0 0 0 20 0'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='14' x='2' y='6' rx='2'/%3E%3Cpath d='M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M12 12h.01M2 13a18.15 18.15 0 0 0 20 0'/%3E%3C/svg%3E");
-}
 .lux-ms-heading h2,
 .lux-ms-cta h2 {
   margin: 0;
@@ -117,7 +93,7 @@ html[lang="en"] :is(.lux-ms-lead, .lux-ms-prose p, .lux-ms-note) { font-family: 
 .lux-ms-stat strong {
   display: block;
   color: #e9c349;
-  font: 400 clamp(30px, 4vw, 54px)/1 Georgia, "Times New Roman", serif;
+  font: 400 clamp(30px, 4vw, 54px)/1 var(--lux-page-heading);
   font-variant-numeric: lining-nums tabular-nums;
   font-feature-settings: "lnum" 1, "tnum" 1;
 }
@@ -273,11 +249,6 @@ html[lang="en"] .lux-ms-cta p { font-family: var(--lux-en-body); }
   justify-content: center;
   margin-bottom: 16px;
   color: #9b7518;
-}
-.lux-market-insights-page .lux-ms-heading .lux-ms-eyebrow::before {
-  width: 22px;
-  height: 22px;
-  flex-basis: 22px;
 }
 .lux-market-insights-page .lux-ms-heading h2 {
   color: #27231f;
@@ -685,9 +656,12 @@ html[lang="en"] .lux-market-metric-popover { font-family: var(--lux-en-body) !im
 .lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/gifting-wholesale-truffle-salt.webp"); }
 .lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/home-partnership-tasting.webp"); }
 .lux-market-insights-page #italian-wine .lux-ms-stat :is(strong, span) { transition: color .28s ease; }
-.lux-market-insights-page #italian-wine .lux-ms-stat strong { color: #e9c349; }
-.lux-market-insights-page #italian-wine .lux-ms-stat span { color: rgba(255,255,255,.88); }
-.lux-market-insights-page #italian-wine .lux-ms-stat:hover strong { color: #f0d46f; }
+.lux-market-insights-page #italian-wine .lux-ms-stat :is(strong, span) { color: #f0d46f; }
+.lux-market-insights-page #italian-wine .lux-ms-stat:is(:hover, :focus-visible, .is-scroll-active) {
+  filter: brightness(1.12) saturate(1.06);
+  transform: translateY(-5px);
+}
+.lux-market-insights-page #italian-wine .lux-ms-stat:is(:hover, :focus-visible, .is-scroll-active) :is(strong, span) { color: #9df5ec; }
 .lux-market-insights-page #italian-wine .lux-ms-notice p { color: #625c54; }
 .lux-market-insights-page #market-judgement { background: #f5f3ee; }
 .lux-market-insights-page #market-judgement .lux-ms-card-grid {
@@ -759,6 +733,14 @@ html[lang^="en"] .lux-market-insights-page #market-judgement .lux-ms-card::befor
   pointer-events: none;
 }
 html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card[data-market-card-explanation]::after { font-family: var(--lux-en-body); }
+html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card h3 {
+  display: flex;
+  min-height: 2.3em;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1.05;
+}
+html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card[data-market-card-explanation]::after { top: 150px; }
 
 @media (hover: hover) {
   .lux-market-insights-page #market-overview .lux-ms-stat:is(:hover, :focus-visible) > :is(strong, span),
@@ -768,6 +750,12 @@ html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card[data-ma
   .lux-market-insights-page #cities .lux-ms-card:is(:hover, :focus-visible) h3 { opacity: 0; transform: translateY(-10px); }
   .lux-market-insights-page #cities .lux-ms-card:is(:hover, :focus-visible) p { opacity: 1; transform: none; }
 }
+.lux-market-insights-page #market-overview .lux-ms-stat.is-scroll-active > :is(strong, span),
+.lux-market-insights-page #market-judgement .lux-ms-card.is-scroll-active p { opacity: 0; transform: translateY(-10px); }
+.lux-market-insights-page #market-overview .lux-ms-stat.is-scroll-active::after,
+.lux-market-insights-page #market-judgement .lux-ms-card.is-scroll-active::after { opacity: 1; transform: none; }
+.lux-market-insights-page #cities .lux-ms-card.is-scroll-active h3 { opacity: 0; transform: translateY(-10px); }
+.lux-market-insights-page #cities .lux-ms-card.is-scroll-active p { opacity: 1; transform: none; }
 .lux-market-insights-page #market-overview .lux-ms-stat:focus > :is(strong, span),
 .lux-market-insights-page #market-judgement .lux-ms-card:focus p { opacity: 0; transform: translateY(-10px); }
 .lux-market-insights-page #market-overview .lux-ms-stat:focus::after,
@@ -906,6 +894,8 @@ html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--l
   .lux-market-insights-page #market-judgement .lux-ms-card-grid { gap: 40px; padding-top: 20px; }
   .lux-market-insights-page #market-judgement .lux-ms-card-grid::before { display: none; }
   .lux-market-insights-page #market-judgement .lux-ms-card::before { margin-bottom: 16px; }
+  html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card h3 { min-height: 0; }
+  html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card[data-market-card-explanation]::after { top: 104px; }
   .lux-market-banner { height: 230px; }
   .lux-market-data-tabs { width: 100%; }
   .lux-market-data-tabs button { flex: 1 1 0; padding-inline: 12px; font-size: 11px; letter-spacing: .03em; }
@@ -1252,8 +1242,8 @@ html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
   transition: transform .3s ease, color .3s ease;
 }
 .lux-import-export-page #brand-digital .lux-service-card-icon { stroke: #0c847d; }
-.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card:is(:hover, :focus, .is-tapped) .lux-service-card-icon { transform: translateY(-3px) rotate(-4deg); }
-.lux-import-export-page #sourcing-export .lux-ms-card h3 { color: #e9c349 !important; }
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card.is-auto-revealed .lux-service-card-icon { transform: translateY(-3px) rotate(-4deg); }
+.lux-import-export-page #sourcing-export .lux-ms-card h3 { color: #f0d46f !important; }
 .lux-import-export-page #brand-digital .lux-ms-card h3 { color: #9c7415 !important; }
 .lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card::after {
   content: "";
@@ -1266,7 +1256,7 @@ html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
   transition: clip-path .72s cubic-bezier(.22,.68,.24,1);
   pointer-events: none;
 }
-.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card:is(:hover, :focus, .is-auto-revealed, .is-tapped)::after { clip-path: inset(0); }
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card.is-auto-revealed::after { clip-path: inset(0); }
 .lux-import-export-page #sourcing-export .lux-ms-card:nth-child(1)::after { background-image: url("../media/brand/home-partnership-process.webp"); }
 .lux-import-export-page #sourcing-export .lux-ms-card:nth-child(2)::after { background-image: url("../media/brand/cert-laboratory-control.webp"); }
 .lux-import-export-page #sourcing-export .lux-ms-card:nth-child(3)::after { background-image: url("../media/brand/gifting-global-partnership.webp"); }
@@ -1635,4 +1625,58 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
   .lux-import-export-page #business-development .lux-service-card-icon { transition: none; }
   .lux-flip-orbit-inner { transition: none; }
   .lux-section-flip-inner { transition: none; }
+}
+
+/* One exact family per text run: no fallback stacks and no mixed glyph sources. */
+html[lang^="zh"] .lux-market-services-page,
+html[lang^="zh"] .lux-market-services-page :is(p, li, a, button, span, small, summary, input, label) {
+  font-family: var(--lux-zh-body);
+}
+html[lang="en"] .lux-market-services-page,
+html[lang="en"] .lux-market-services-page :is(p, li, a, button, span, small, summary, input, label) {
+  font-family: var(--lux-en-body);
+}
+html[lang^="zh"] .lux-market-services-page :is(h1, h2, h3, h4, .lux-ms-eyebrow, .lux-ms-stat > strong),
+html[lang="en"] .lux-market-services-page :is(h1, h2, h3, h4, .lux-ms-eyebrow, .lux-ms-stat > strong) {
+  font-family: var(--lux-page-heading) !important;
+}
+.lux-market-services-page :is(p, li, a, button, span, small, summary, input, label) strong {
+  font-family: inherit !important;
+}
+.lux-market-insights-page main > :not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 760px;
+}
+.lux-market-insights-page #market-overview .lux-ms-stat strong { color: #f0d46f; }
+.lux-import-export-page :is(#sourcing-export, #market-entry, #why-luxureat-china) .lux-ms-eyebrow,
+.lux-import-export-page :is(#sourcing-export, #market-entry, #why-luxureat-china) .lux-service-card-icon,
+.lux-import-export-page #why-luxureat-china .lux-ms-card::before { color: #9df5ec; stroke: #9df5ec; background-color: #9df5ec; }
+.lux-import-export-page :is(#sourcing-export, #market-entry, #why-luxureat-china) .lux-ms-heading h2 em,
+.lux-import-export-page #why-luxureat-china .lux-ms-card::after { color: #f0d46f; }
+.lux-import-export-page #faq .lux-ms-inline-link:hover,
+.lux-import-export-page #faq .lux-ms-inline-link:focus-visible { color: #005a54; }
+
+/* These service grids animate only when their section re-enters the viewport. */
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card:is(:hover, :focus, .is-tapped)::after {
+  clip-path: inset(0 0 100% 0);
+}
+.lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card.is-auto-revealed::after {
+  clip-path: inset(0);
+}
+
+@media (min-width: 641px) {
+  .lux-section-flip-zone.is-service .lux-section-flip.is-round { width: clamp(184px, 17vw, 224px); }
+}
+
+@media (max-width: 640px) {
+  .lux-ms-hero-market .lux-ms-hero-media {
+    background-image: url("../media/brand/contact-hero-consulting-mobile.webp?v=20260901-market-services-34");
+  }
+  .lux-market-insights-page #market-overview .lux-ms-stat.is-scroll-active {
+    transform: translateY(-5px) scale(1.01);
+  }
+  .lux-import-export-page .lux-service-bento a.is-tapped small {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

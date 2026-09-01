@@ -29,6 +29,10 @@ assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "Eng
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-hero-critical.woff2") <= 64 * 1024, "Chinese home hero font exceeds 64 KB");
 assert.ok(size("assets/fonts/KingHwaOldSong-hero-critical.woff2") <= 16 * 1024, "Chinese home hero headline font exceeds 16 KB");
+assert.ok(size("assets/fonts/KingHwaOldSong-market-hero-critical.woff2") <= 6 * 1024, "Chinese market hero headline font exceeds 6 KB");
+assert.ok(size("assets/fonts/LuxurEatZhiSong-market-critical.woff2") <= 76 * 1024, "Chinese market first-view body font exceeds 76 KB");
+assert.ok(size("assets/fonts/NyghtSerif-Regular-market.woff2") + size("assets/fonts/Spectral-Regular-market.woff2") <= 32 * 1024, "English market first-view fonts exceed 32 KB");
+assert.ok(size("assets/media/brand/contact-hero-consulting-mobile.webp") <= 16 * 1024, "mobile China Market hero exceeds 16 KB");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/KingHwaOldSong-subset.woff2")), "retired full KingHwa font remains bundled");
 assert.ok(!fs.existsSync(path.join(root, "assets/fonts/LuxurEatZhiSongWeb-subset.woff2")), "retired full ZhiSong font remains bundled");
 assert.ok(size("assets/media/brand/home-hero-truffle-mobile.m4v") <= 320 * 1024, "mobile hero video exceeds 320 KB");
@@ -120,6 +124,12 @@ for (const slug of ["about-us", "product", "recipe", "brand", "blog", "certifica
   assert.match(page, /rel="preload"[^>]+KingHwaOldSong-[^"']+(?:critical|subset)\.woff2/);
   assert.match(page, /rel="preload"[^>]+LuxurEatZhiSong-[^"']+(?:critical|subset)\.woff2/);
   assert.doesNotMatch(page, /rel="preload"[^>]+(?:KingHwaOldSong-site|LuxurEatZhiSong-site)\.woff2/);
+}
+for (const lang of ["zh", "en"]) {
+  const market = read(`${lang}/china-market-insights.html`).toString();
+  assert.match(market, /rel="preload"[^>]+contact-hero-consulting-mobile\.webp[^>]+media="\(max-width: 640px\)"[^>]+fetchpriority="high"/);
+  assert.doesNotMatch(market, /rel="preload"[^>]+MaterialSymbolsOutlined-subset\.ttf/);
+  assert.match(market, /lux-newsletter-icon" loading="lazy"/);
 }
 
 const videoMarkup = ["en", "zh"].flatMap((lang) => fs.readdirSync(path.join(root, lang)).filter((name) => name.endsWith(".html")).map((name) => read(`${lang}/${name}`).toString())).join("\n") + read("assets/js/events.js").toString();

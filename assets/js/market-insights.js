@@ -84,4 +84,30 @@ document.querySelectorAll("[data-market-copy-group]").forEach((group) => {
     item.addEventListener("focus", () => swap(item.dataset.marketExplanation));
     item.addEventListener("blur", () => swap(original));
   });
+
+  if (matchMedia("(hover: none), (pointer: coarse)").matches && "IntersectionObserver" in window) {
+    const visibleItems = new Map();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.isIntersecting
+        ? visibleItems.set(entry.target, entry.intersectionRatio)
+        : visibleItems.delete(entry.target));
+      const activeItem = [...visibleItems].sort((a, b) => b[1] - a[1])[0]?.[0];
+      items.forEach((item) => item.classList.toggle("is-scroll-active", item === activeItem));
+      swap(activeItem?.dataset.marketExplanation || original);
+    }, { threshold: [.45, .7], rootMargin: "-15% 0px -15%" });
+    items.forEach((item) => observer.observe(item));
+  }
 });
+
+if (matchMedia("(hover: none), (pointer: coarse)").matches && "IntersectionObserver" in window) {
+  const cards = [...document.querySelectorAll(".lux-market-insights-page :is(#market-overview .lux-ms-stat, #cities .lux-ms-card, #market-judgement .lux-ms-card)")];
+  const visibleCards = new Map();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.isIntersecting
+      ? visibleCards.set(entry.target, entry.intersectionRatio)
+      : visibleCards.delete(entry.target));
+    const activeCard = [...visibleCards].sort((a, b) => b[1] - a[1])[0]?.[0];
+    cards.forEach((card) => card.classList.toggle("is-scroll-active", card === activeCard));
+  }, { threshold: [.48, .72], rootMargin: "-12% 0px -12%" });
+  cards.forEach((card) => observer.observe(card));
+}

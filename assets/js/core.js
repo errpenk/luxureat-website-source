@@ -867,15 +867,15 @@ if (luxNav && luxMenu) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       sessionStorage.setItem(`luxureatScroll:${location.pathname}`, "0");
     });
+    const update = () => button.classList.toggle("visible", window.scrollY > 360);
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([entry]) => {
-        button.classList.toggle("visible", !entry.isIntersecting && entry.boundingClientRect.top < 0);
+        button.classList.toggle("visible", window.scrollY > 360 || (!entry.isIntersecting && entry.boundingClientRect.top < 0));
       }).observe(sentinel);
-    } else {
-      const update = () => button.classList.toggle("visible", window.scrollY > 360);
-      window.addEventListener("scroll", update, { passive: true });
-      update();
     }
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("pageshow", update);
+    update();
   };
 
   document.addEventListener("DOMContentLoaded", init);

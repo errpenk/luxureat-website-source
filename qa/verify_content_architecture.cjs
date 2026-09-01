@@ -109,7 +109,15 @@ const unapprovedFontFamilies = [...typographyCss.matchAll(/font-family\s*:\s*([^
   .filter((family) => !family.startsWith("var(") && !allowedFontFamilies.has(family));
 assert(!unapprovedFontFamilies.length, `unapproved text font declaration(s): ${[...new Set(unapprovedFontFamilies)].join(", ")}`);
 const marketServicesCss = read("assets/css/market-services.css");
-assert(marketServicesCss.includes('html[lang^="zh"] .lux-market-services-page [lang="en"] {\n  font-family: var(--lux-zh-body) !important;'), "Chinese market and service pages do not use one complete ZhiSong stack for English text");
+const zhNewsPage = read("zh/brand.html");
+const zhMarketPage = read("zh/china-market-insights.html");
+const zhServicesPage = read("zh/import-export-services.html");
+assert(!marketServicesCss.includes('--lux-zh-headline:')
+  && [zhNewsPage, zhMarketPage, zhServicesPage].every((page) => page.includes('@font-face{font-family:"Nyght Serif"') && page.includes('--lux-zh-body:"Nyght Serif",'))
+  && zhMarketPage.includes('--lux-page-heading:"Nyght Serif","KingHwa Market Hero Critical","KingHwa Market Critical"!important')
+  && zhServicesPage.includes('--lux-zh-body:"Nyght Serif","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important'), "Chinese news, market and service pages do not use Nyght for Latin text with their page-specific KingHwa/ZhiSong fallbacks");
+assert(marketServicesCss.includes('--lux-en-display: "Nyght Serif";') && marketServicesCss.includes('--lux-en-body: "Spectral";'), "English market and service pages do not keep the Nyght/Spectral pairing");
+assert(!/Georgia|Times New Roman|Arial|sans-serif/.test(marketServicesCss), "China pages contain an unapproved fallback font");
 assert(!marketServicesCss.includes('[style*="margin-top:clamp"]'), "market-services.css still depends on inline-style string matching");
 for (const cityAsset of ["shanghai", "beijing", "guangzhou", "shenzhen", "chengdu-chongqing"]) {
   assert(fs.existsSync(path.join(root, `assets/media/market-cities/${cityAsset}.svg`)), `missing city SVG: ${cityAsset}`);

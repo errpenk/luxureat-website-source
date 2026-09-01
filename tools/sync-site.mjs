@@ -54,11 +54,14 @@ function footerFor(page) {
     : '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a>';
   const legal = copy.legal.map(([id, label]) => `<button type="button" data-footer-modal="${id}">${label}</button>`).join("");
   const newsletter = copy.newsletter;
+  const strictEnglishFonts = page.key === "market-insights" && lang === "en";
+  const newsletterHeading = strictEnglishFonts ? newsletter.heading.replace(/\s*\(露意膳\)/g, "") : newsletter.heading;
+  const footerDescription = strictEnglishFonts ? copy.description.replace(/\s*\(露意膳\)/g, "") : copy.description;
 
-  return `<!-- lux:footer:start -->
+  const markup = `<!-- lux:footer:start -->
 <section class="lux-newsletter" aria-labelledby="lux-newsletter-title-${lang}">
   <div class="lux-newsletter-inner">
-    <div class="lux-newsletter-intro"><img class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/newsletter-envelope.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-${lang}">${newsletter.heading}</h2><p>${newsletter.body}</p></div></div>
+    <div class="lux-newsletter-intro"><img class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/newsletter-envelope.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-${lang}">${newsletterHeading}</h2><p>${newsletter.body}</p></div></div>
     <form class="lux-newsletter-form" data-newsletter-form novalidate>
       <label class="lux-visually-hidden" for="lux-newsletter-email-${lang}">${newsletter.placeholder}</label>
       <div><input id="lux-newsletter-email-${lang}" name="email" type="email" autocomplete="email" maxlength="120" placeholder="${newsletter.placeholder}"><button type="submit">${newsletter.button}</button></div>
@@ -69,7 +72,7 @@ function footerFor(page) {
 </section>
 <footer class="lux-footer">
   <div class="lux-footer-grid">
-    <div class="lux-footer-brand"><div class="lux-footer-brand-main"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>${copy.description}</p></div><div class="lux-footer-legal">${legal}</div></div>
+    <div class="lux-footer-brand"><div class="lux-footer-brand-main"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/luxureat-logo.png" alt="LuxurEat"><p>${footerDescription}</p></div><div class="lux-footer-legal">${legal}</div></div>
     <nav>${nav}</nav>
     <div class="lux-footer-social">${social}</div>
     <div><a href="mailto:${contact.email}">${contact.email}</a><a href="mailto:${contact.secondaryEmail}">${contact.secondaryEmail}</a><a href="tel:${contact.phoneHref}">${contact.phone}</a></div>
@@ -77,6 +80,9 @@ function footerFor(page) {
   <div class="lux-footer-bottom">${copy.copyright}</div>
 </footer>
 <!-- lux:footer:end -->`;
+  return page.key === "market-insights"
+    ? markup.replaceAll('loading="eager" fetchpriority="low"', 'loading="lazy" fetchpriority="low"')
+    : markup;
 }
 
 function scriptsFor(page) {
@@ -180,6 +186,7 @@ function deferHeroVideos(html) {
 }
 
 function fontPreloads(page) {
+  const useNyghtOnChinesePage = page.lang === "zh" && ["news", "market-insights", "import-export"].includes(page.key);
   const zhCritical = {
     home: ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-home-subset.woff2"],
     journal: ["KingHwaOldSong-journal-critical.woff2", "LuxurEatZhiSong-journal-critical.woff2"],
@@ -196,7 +203,20 @@ function fontPreloads(page) {
     bag: ["KingHwaOldSong-bag-critical.woff2", "LuxurEatZhiSong-bag-critical.woff2"],
   };
   const critical = zhCritical[page.key] || zhCritical.home;
-  const fonts = page.lang === "zh"
+  const marketFonts = page.lang === "zh"
+    ? [
+      ["KingHwaOldSong-market-hero-critical.woff2", "KingHwa Market Hero Critical", 700],
+      ["KingHwaOldSong-market-critical.woff2", "KingHwa Market Critical", 700, "normal", false],
+      ["LuxurEatZhiSong-market-critical.woff2", "LuxurEat ZhiSong Site", 400],
+    ]
+    : [
+      ["NyghtSerif-Regular-market.woff2", "Nyght Serif", 400],
+      ["Spectral-Regular-market.woff2", "Spectral", 400],
+      ["NyghtSerif-Bold-market.woff2", "Nyght Serif", 700, "normal", false],
+      ["Spectral-Light-market.woff2", "Spectral", 300, "normal", false],
+      ["Spectral-SemiBold-market.woff2", "Spectral", 600, "normal", false],
+    ];
+  const fonts = page.key === "market-insights" ? marketFonts : page.lang === "zh"
     ? [
       ...(page.key === "home" ? [["KingHwaOldSong-hero-critical.woff2", "KingHwa Hero Critical", 700]] : []),
       [critical[0], "KingHwa Page Critical", 700, "normal", page.key !== "home"],
@@ -217,20 +237,35 @@ function fontPreloads(page) {
         ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
         ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
       ];
+  if (useNyghtOnChinesePage) {
+    fonts.unshift(
+      ["NyghtSerif-Regular.woff2", "Nyght Serif", 400],
+      ["NyghtSerif-RegularItalic.woff2", "Nyght Serif", 400, "italic", false],
+      ["NyghtSerif-Bold.woff2", "Nyght Serif", 700, "normal", false],
+    );
+  }
   if (page.lang === "en" && ["home", "products", "bag"].includes(page.key)) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
   }
   const versionFor = (font) => ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
+    ...(page.key === "market-insights" ? [
+      `<link rel="preload" href="../assets/media/brand/contact-hero-consulting-mobile.webp?v=${assetVersion}" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
+      `<link rel="preload" href="../assets/media/brand/contact-hero-consulting.webp?v=${assetVersion}" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
+    ] : []),
     ...preloadFonts.map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${versionFor(font)}" as="font" type="font/woff2" crossorigin>`),
-    ...(page.key === "home" ? [] : [`<link rel="preload" href="../assets/fonts/MaterialSymbolsOutlined-subset.ttf?v=${assetVersion}" as="font" type="font/ttf" crossorigin>`]),
+    ...(["home", "market-insights"].includes(page.key) ? [] : [`<link rel="preload" href="../assets/fonts/MaterialSymbolsOutlined-subset.ttf?v=${assetVersion}" as="font" type="font/ttf" crossorigin>`]),
   ].join("\n");
-  const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${versionFor(font)}") format("woff2");font-weight:${weight};font-style:${style};font-display:swap}`).join("");
+  const fontDisplay = page.key === "market-insights" ? "block" : "swap";
+  const faces = fonts.map(([font, family, weight, style = "normal"]) => `@font-face{font-family:"${family}";src:url("../assets/fonts/${font}?v=${versionFor(font)}") format("woff2");font-weight:${weight};font-style:${style};font-display:${fontDisplay}}`).join("");
   const headlineFonts = page.key === "products"
     ? '"KingHwa Page Critical","KingHwa Labels Critical","KingHwa Old Song Site"'
     : '"KingHwa Page Critical","KingHwa Old Song Site"';
-  const localeFonts = page.lang === "zh" ? `html[lang^="zh"]{--lux-page-heading:${headlineFonts}!important;--lux-zh-headline:${headlineFonts}!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}${page.key === "home" ? 'html[lang^="zh"] .lux-home-hero{--lux-zh-headline:"KingHwa Hero Critical","KingHwa Page Critical","KingHwa Old Song Site"}html[lang^="zh"] body :is(.lux-header,.lux-home-hero,.lux-cookie-banner) :is(p,a,span,button){font-family:"ZhiSong Hero Critical","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : ""}` : "";
+  const latinPrefix = useNyghtOnChinesePage ? '"Nyght Serif",' : "";
+  const localeFonts = page.lang === "zh" ? page.key === "market-insights"
+    ? `html[lang^="zh"]{--lux-page-heading:${latinPrefix}"KingHwa Market Hero Critical","KingHwa Market Critical"!important;--lux-zh-headline:${latinPrefix}"KingHwa Market Hero Critical","KingHwa Market Critical"!important;--lux-zh-body:${latinPrefix}"LuxurEat ZhiSong Site"!important}`
+    : `html[lang^="zh"]{--lux-page-heading:${latinPrefix}${headlineFonts}!important;--lux-zh-headline:${latinPrefix}${headlineFonts}!important;--lux-zh-body:${latinPrefix}"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}${page.key === "home" ? 'html[lang^="zh"] .lux-home-hero{--lux-zh-headline:"KingHwa Hero Critical","KingHwa Page Critical","KingHwa Old Song Site"}html[lang^="zh"] body :is(.lux-header,.lux-home-hero,.lux-cookie-banner) :is(p,a,span,button){font-family:"ZhiSong Hero Critical","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : ""}` : "";
   return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}${localeFonts}</style>\n<!-- lux:fonts:end -->`;
 }
 

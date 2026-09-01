@@ -1,7 +1,8 @@
 (() => {
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const touchMode = matchMedia("(hover: none), (pointer: coarse)");
-  const tapCards = [...document.querySelectorAll(".lux-import-export-page .lux-ms-card, #import-into-china .lux-ms-process article")];
+  const tapCards = [...document.querySelectorAll(".lux-import-export-page .lux-ms-card, #import-into-china .lux-ms-process article")]
+    .filter((card) => !card.closest("#sourcing-export, #brand-digital"));
   tapCards.forEach((card) => {
     card.tabIndex = 0;
     card.addEventListener("click", () => {
