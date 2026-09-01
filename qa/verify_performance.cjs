@@ -112,7 +112,7 @@ for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter(
   assert.ok(size(`assets/media/brand/${file}`) <= 120 * 1024, `${file} exceeds the 120 KB mobile image budget`);
 }
 
-for (const slug of ["about-us", "product", "recipe", "brand", "blog", "certification", "cooperation", "contact", "bag"]) {
+for (const slug of ["about-us", "product", "recipe", "brand", "blog", "certification", "cooperation", "china-market-insights", "import-export-services", "contact", "bag"]) {
   const page = read(`zh/${slug}.html`).toString();
   const headline = "assets/fonts/KingHwaOldSong-site.woff2";
   const body = "assets/fonts/LuxurEatZhiSong-site.woff2";

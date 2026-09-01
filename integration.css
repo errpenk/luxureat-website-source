@@ -1392,6 +1392,14 @@ body.lux-reader-open {
   display: inline-grid;
   place-items: center;
 }
+.lux-gift-media-trigger {
+  min-width: 0;
+  min-height: 0;
+  display: block;
+  place-items: initial;
+  cursor: help;
+}
+.lux-gift-media-trigger:focus-visible { outline: 2px solid #9df5ec; outline-offset: 3px; }
 .lux-view-icon {
   width: 32px;
   height: 32px;
@@ -2289,7 +2297,7 @@ html.dark body {
 }
 body { padding-top: 0 !important; }
 body:has(.lux-nav.open) { overflow-x: hidden; }
-@media (max-width: 1080px) {
+@media (max-width: 1439px) {
   .lux-header { position: fixed; grid-template-columns: auto 1fr; }
   .lux-actions { gap: 12px; }
   .lux-nav {
@@ -6626,7 +6634,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   stroke-linejoin: round;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1439px) {
   .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
     position: fixed;
@@ -12814,7 +12822,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
     border-bottom-color: currentColor;
   }
 }
-@media (max-width: 1080px) {
+@media (max-width: 1439px) {
   .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
     background: rgba(7, 7, 7, .97);
@@ -13101,6 +13109,26 @@ html[lang^="zh"] .lux-cert-awards h2 {
   overflow: hidden;
   transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease, background-color .28s ease;
 }
+.lux-home-process-card-link {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+}
+.lux-home-process-card-link:focus-visible { outline: 2px solid #9df5ec; outline-offset: -5px; }
+.lux-home-process-card-link::after {
+  content: "View Details  →";
+  position: absolute;
+  right: 30px;
+  bottom: 22px;
+  color: var(--lux-partnership-gold);
+  font: 700 13px/1.4 var(--lux-page-heading);
+  letter-spacing: .1em;
+  transition: color .25s ease, transform .25s ease;
+}
+html[lang^="zh"] .lux-home-process-card-link::after { content: "查看详情  →"; }
+.lux-home-process-card-link:hover::after,
+.lux-home-process-card-link:focus-visible::after { color: #9df5ec; transform: translateX(5px); }
+html[lang^="en"] .lux-home-partnership-process details > div { padding-bottom: 54px; }
 .lux-home-partnership-process li:hover,
 .lux-home-partnership-process li:focus-within {
   z-index: 2;
@@ -13725,4 +13753,23 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
 .lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) .lux-lang > a.active {
   color: #005b55;
   border-bottom-color: currentColor;
+}
+
+/* Keep the complete twelve-item navigation readable on laptop-width desktops. */
+@media (min-width: 1081px) and (max-width: 1550px) {
+  .lux-header { padding-inline: clamp(16px, 1.8vw, 28px); gap: clamp(10px, 1vw, 16px); }
+  .lux-brand { width: 58px; flex-basis: 58px; }
+  html[lang] body .lux-nav,
+  html[lang] body .lux-actions { gap: clamp(5px, .5vw, 8px); }
+  html[lang] body .lux-nav > a,
+  html[lang] body .lux-nav-item > a,
+  html[lang] body .lux-lang { font-size: 10px; letter-spacing: .06em; }
+}
+
+@media (min-width: 1440px) {
+  html[lang^="en"] body .lux-nav { gap: clamp(6px, .55vw, 10px); }
+  html[lang^="en"] body .lux-nav-item > a {
+    font-size: 10px !important;
+    letter-spacing: .075em !important;
+  }
 }

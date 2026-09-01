@@ -190,6 +190,8 @@ function fontPreloads(page) {
     blog: ["KingHwaOldSong-blog-critical.woff2", "LuxurEatZhiSong-blog-critical.woff2"],
     certification: ["KingHwaOldSong-certification-critical.woff2", "LuxurEatZhiSong-certification-critical.woff2"],
     gifting: ["KingHwaOldSong-gifting-critical.woff2", "LuxurEatZhiSong-gifting-critical.woff2"],
+    "market-insights": ["KingHwaOldSong-certification-critical.woff2", "LuxurEatZhiSong-certification-critical.woff2"],
+    "import-export": ["KingHwaOldSong-gifting-critical.woff2", "LuxurEatZhiSong-gifting-critical.woff2"],
     contact: ["KingHwaOldSong-contact-critical.woff2", "LuxurEatZhiSong-contact-critical.woff2"],
     bag: ["KingHwaOldSong-bag-critical.woff2", "LuxurEatZhiSong-bag-critical.woff2"],
   };

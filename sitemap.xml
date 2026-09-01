@@ -55,6 +55,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://luxureat.cn/cooperation/" />
   </url>
   <url>
+    <loc>https://luxureat.cn/china-market-insights/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://luxureat.cn/china-market-insights/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://luxureat.cn/en/china-market-insights/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://luxureat.cn/china-market-insights/" />
+  </url>
+  <url>
+    <loc>https://luxureat.cn/import-export-services/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://luxureat.cn/import-export-services/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://luxureat.cn/en/import-export-services/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://luxureat.cn/import-export-services/" />
+  </url>
+  <url>
     <loc>https://luxureat.cn/contact/</loc>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://luxureat.cn/contact/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://luxureat.cn/en/contact/" />
@@ -113,6 +125,18 @@
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://luxureat.cn/cooperation/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://luxureat.cn/en/cooperation/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://luxureat.cn/cooperation/" />
+  </url>
+  <url>
+    <loc>https://luxureat.cn/en/china-market-insights/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://luxureat.cn/china-market-insights/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://luxureat.cn/en/china-market-insights/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://luxureat.cn/china-market-insights/" />
+  </url>
+  <url>
+    <loc>https://luxureat.cn/en/import-export-services/</loc>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://luxureat.cn/import-export-services/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://luxureat.cn/en/import-export-services/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://luxureat.cn/import-export-services/" />
   </url>
   <url>
     <loc>https://luxureat.cn/en/contact/</loc>
