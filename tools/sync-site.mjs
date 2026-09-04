@@ -251,8 +251,8 @@ function fontPreloads(page) {
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
     ...(page.key === "market-insights" ? [
-      `<link rel="preload" href="../assets/media/brand/contact-hero-consulting-mobile.webp?v=${assetVersion}" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
-      `<link rel="preload" href="../assets/media/brand/contact-hero-consulting.webp?v=${assetVersion}" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
+      `<link rel="preload" href="../assets/media/market-services/china-market-hero-mobile.webp?v=${assetVersion}" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
+      `<link rel="preload" href="../assets/media/market-services/china-market-hero.webp?v=${assetVersion}" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
     ] : []),
     ...preloadFonts.map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${versionFor(font)}" as="font" type="font/woff2" crossorigin>`),
     ...(["home", "market-insights"].includes(page.key) ? [] : [`<link rel="preload" href="../assets/fonts/MaterialSymbolsOutlined-subset.ttf?v=${assetVersion}" as="font" type="font/ttf" crossorigin>`]),

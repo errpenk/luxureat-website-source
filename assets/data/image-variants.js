@@ -188,6 +188,8 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/journal/recipe-truffle-eggs.webp": "media/journal/recipe-truffle-eggs-720.webp",
   "media/journal/recipe-truffle-lamb.webp": "media/journal/recipe-truffle-lamb-720.webp",
   "media/journal/recipe-truffle-summer-crostini.webp": "media/journal/recipe-truffle-summer-crostini-720.webp",
+  "media/market-services/china-market-hero.webp": "media/market-services/china-market-hero-mobile.webp",
+  "media/market-services/china-services-hero.webp": "media/market-services/china-services-hero-mobile.webp",
   "media/new-arrivals/brand-purpose-01.jpg": "media/new-arrivals/brand-purpose-01-720.webp",
   "media/new-arrivals/brand-purpose-02.jpg": "media/new-arrivals/brand-purpose-02-720.webp",
   "media/new-arrivals/brand-purpose-03.webp": "media/new-arrivals/brand-purpose-03-720.webp",

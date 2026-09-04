@@ -17,8 +17,8 @@ html[lang="en"] .lux-market-services-page {
   opacity: .62;
   transform: scale(1.01);
 }
-.lux-ms-hero-market .lux-ms-hero-media { background-image: url("../media/brand/contact-hero-consulting.webp?v=20260901-market-services-34"); }
-.lux-ms-hero-services .lux-ms-hero-media { background-image: url("../media/brand/gifting-hero-cooperation.webp"); }
+.lux-ms-hero-market .lux-ms-hero-media { background-image: url("../media/market-services/china-market-hero.webp"); }
+.lux-ms-hero-services .lux-ms-hero-media { background-image: url("../media/market-services/china-services-hero.webp"); }
 .lux-ms-hero .lux-page-hero-content { width: min(100%, 1040px); }
 .lux-ms-hero .lux-hero-support { max-width: 780px; margin-inline: auto; }
 .lux-ms-cta a:focus-visible,
@@ -322,12 +322,12 @@ html[lang="en"] .lux-market-insights-page #market-overview .lux-ms-stat[data-mar
   filter: saturate(1.08) brightness(1.06);
   box-shadow: 0 22px 48px rgba(20, 17, 12, .28);
 }
-.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(1) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/contact-global-footprint-poster.webp"); }
-.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/cert-network-shanghai-expo.webp"); }
-.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/home-partnership-fair.webp"); }
-.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(4) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/contact-global-network.webp"); }
-.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(5) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/gifting-global-partnership.webp"); }
-.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(6) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/brand/contact-partnership-dining.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(1) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/market-services/market-stat-gdp.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/market-services/market-stat-growth.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/market-services/market-stat-manufacturing.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(4) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/market-services/market-stat-services.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(5) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/market-services/market-stat-digital.webp"); }
+.lux-market-insights-page #market-overview .lux-ms-stat:nth-child(6) { background-image: linear-gradient(rgba(8, 9, 8, .72), rgba(8, 9, 8, .72)), url("../media/market-services/market-stat-hospitality.webp"); }
 .lux-market-insights-page #market-overview .lux-ms-stat span { color: rgba(255, 255, 255, .86); }
 .lux-market-insights-page #cities .lux-ms-card-grid {
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1670,8 +1670,10 @@ html[lang="en"] .lux-market-services-page :is(h1, h2, h3, h4, .lux-ms-eyebrow, .
 
 @media (max-width: 640px) {
   .lux-ms-hero-market .lux-ms-hero-media {
-    background-image: url("../media/brand/contact-hero-consulting-mobile.webp?v=20260901-market-services-34");
+    background-image: url("../media/market-services/china-market-hero-mobile.webp");
+    background-position: center;
   }
+  .lux-ms-hero-services .lux-ms-hero-media { background-image: url("../media/market-services/china-services-hero-mobile.webp"); }
   .lux-market-insights-page #market-overview .lux-ms-stat.is-scroll-active {
     transform: translateY(-5px) scale(1.01);
   }

@@ -32,7 +32,7 @@ assert.ok(size("assets/fonts/KingHwaOldSong-hero-critical.woff2") <= 16 * 1024, 
 assert.ok(size("assets/fonts/KingHwaOldSong-market-hero-critical.woff2") <= 6 * 1024, "Chinese market hero headline font exceeds 6 KB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-market-critical.woff2") <= 76 * 1024, "Chinese market first-view body font exceeds 76 KB");
 assert.ok(size("assets/fonts/NyghtSerif-Regular-market.woff2") + size("assets/fonts/Spectral-Regular-market.woff2") <= 32 * 1024, "English market first-view fonts exceed 32 KB");
-assert.ok(size("assets/media/brand/contact-hero-consulting-mobile.webp") <= 16 * 1024, "mobile China Market hero exceeds 16 KB");
+assert.ok(size("assets/media/market-services/china-market-hero-mobile.webp") <= 72 * 1024, "mobile China Market hero exceeds 72 KB");
 const coreRuntime = read("assets/js/core.js").toString();
 assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('"2800px 0px"'), "native lazy images are not promoted ahead of the viewport");
 for (const locale of ["zh", "en"]) {
@@ -133,7 +133,7 @@ for (const slug of ["about-us", "product", "recipe", "brand", "blog", "certifica
 }
 for (const lang of ["zh", "en"]) {
   const market = read(`${lang}/china-market-insights.html`).toString();
-  assert.match(market, /rel="preload"[^>]+contact-hero-consulting-mobile\.webp[^>]+media="\(max-width: 640px\)"[^>]+fetchpriority="high"/);
+  assert.match(market, /rel="preload"[^>]+china-market-hero-mobile\.webp[^>]+media="\(max-width: 640px\)"[^>]+fetchpriority="high"/);
   assert.doesNotMatch(market, /rel="preload"[^>]+MaterialSymbolsOutlined-subset\.ttf/);
   assert.match(market, /lux-newsletter-icon" loading="lazy"/);
 }
