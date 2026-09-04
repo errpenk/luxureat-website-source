@@ -1,9 +1,14 @@
-.lux-catalogue-section .lux-ms-shell { max-width: 1280px; }
+.lux-import-export-page .lux-ms-section.lux-catalogue-section > .lux-ms-shell {
+  width: 100%;
+  max-width: none;
+}
 
 .lux-catalogue-title {
   margin-bottom: clamp(34px, 5vw, 64px);
   text-align: center;
 }
+
+.lux-catalogue-title .lux-ms-eyebrow { margin-bottom: 12px; }
 
 .lux-catalogue-title h2 {
   margin: 0;
@@ -86,7 +91,6 @@
 }
 
 @media (max-width: 640px) {
-  .lux-catalogue-section .lux-ms-shell { width: 100%; }
   .lux-catalogue-copy { min-height: 390px; padding: 46px 24px; }
   .lux-catalogue-logo.is-tin { width: min(100%, 290px); }
   .lux-catalogue-logo.is-luxureat { width: 96px; height: 96px; }
