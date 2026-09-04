@@ -1257,10 +1257,10 @@ html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
   pointer-events: none;
 }
 .lux-import-export-page :is(#sourcing-export, #brand-digital) .lux-ms-card.is-auto-revealed::after { clip-path: inset(0); }
-.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(1)::after { background-image: url("../media/brand/home-partnership-process.webp"); }
-.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(2)::after { background-image: url("../media/brand/cert-laboratory-control.webp"); }
-.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(3)::after { background-image: url("../media/brand/gifting-global-partnership.webp"); }
-.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(4)::after { background-image: url("../media/brand/gifting-wholesale-truffle-salt.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(1)::after { background-image: url("../media/market-services/sourcing-suppliers-warehouse.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(2)::after { background-image: url("../media/market-services/sourcing-quality-truffles.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(3)::after { background-image: url("../media/market-services/sourcing-contracts-export.webp"); }
+.lux-import-export-page #sourcing-export .lux-ms-card:nth-child(4)::after { background-image: url("../media/market-services/sourcing-product-experience.webp"); }
 .lux-import-export-page #brand-digital .lux-ms-card:nth-child(1)::after { background-image: url("../media/brand/contact-partnership-market.webp"); }
 .lux-import-export-page #brand-digital .lux-ms-card:nth-child(2)::after { background-image: url("../media/brand/contact-global-network.webp"); }
 .lux-import-export-page #brand-digital .lux-ms-card:nth-child(3)::after { background-image: url("../media/brand/home-partnership-fair.webp"); }
