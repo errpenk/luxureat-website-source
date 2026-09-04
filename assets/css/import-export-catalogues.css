@@ -6,7 +6,7 @@
 .lux-import-export-page .lux-ms-section.lux-catalogue-section { padding-bottom: 0; }
 
 .lux-catalogue-title {
-  margin-bottom: clamp(34px, 5vw, 64px);
+  margin-bottom: clamp(26px, 4vw, 48px);
   text-align: center;
 }
 
@@ -24,12 +24,13 @@
   min-width: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  min-height: 620px;
+  min-height: 480px;
 }
 
 .lux-catalogue-reader {
+  position: relative;
   min-width: 0;
-  min-height: 620px;
+  min-height: 480px;
   display: flex;
   background: #d8d8d8;
 }
@@ -37,19 +38,55 @@
 .lux-catalogue-reader iframe {
   width: 100%;
   height: 100%;
-  min-height: 620px;
+  min-height: 480px;
   display: block;
   border: 0;
   background: #d8d8d8;
   pointer-events: none;
 }
 
+.lux-catalogue-reader.is-active iframe { pointer-events: auto; }
+
+.lux-catalogue-toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  border: 0;
+  color: #fff;
+  background: rgb(22 26 25 / 18%);
+  cursor: pointer;
+}
+
+.lux-catalogue-toggle span {
+  padding: 11px 16px;
+  border: 1px solid rgb(255 255 255 / 72%);
+  background: rgb(0 90 84 / 92%);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 16%);
+  font-weight: 650;
+}
+
+.lux-catalogue-reader.is-active { box-shadow: inset 0 0 0 2px #0c847d; }
+
+.lux-catalogue-reader.is-active .lux-catalogue-toggle {
+  inset: 12px 12px auto auto;
+  display: block;
+  padding: 0;
+  background: transparent;
+}
+
+.lux-catalogue-toggle:hover span,
+.lux-catalogue-toggle:focus-visible span { color: #292621; border-color: #9c7415; background: #e9c349; }
+.lux-catalogue-toggle:focus-visible { outline: 2px solid #9c7415; outline-offset: -4px; }
+
 .lux-catalogue-copy {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(42px, 6vw, 86px);
+  padding: clamp(30px, 4vw, 54px);
   background: #fff;
   text-align: center;
 }
@@ -59,18 +96,18 @@
 .lux-catalogue-logo-link:hover .lux-catalogue-logo,
 .lux-catalogue-logo-link:focus-visible .lux-catalogue-logo { transform: scale(1.035); }
 .lux-catalogue-logo-link:focus-visible { outline: 1px solid #9c7415; outline-offset: 8px; }
-.lux-catalogue-logo.is-tin { width: min(100%, 340px); height: auto; }
-.lux-catalogue-logo.is-luxureat { width: 112px; height: 112px; }
-.lux-catalogue-copy h3 { margin: 28px 0 0; color: #292621; font: 400 clamp(28px, 3vw, 42px)/1.12 var(--lux-page-heading); }
-.lux-catalogue-copy p { max-width: 440px; margin: 18px auto 0; color: #625c54; font-size: 17px; line-height: 1.7; }
-.lux-catalogue-pages { margin-top: 14px; color: #777168; font-size: 13px; }
+.lux-catalogue-logo.is-tin { width: min(100%, 300px); height: auto; }
+.lux-catalogue-logo.is-luxureat { width: 92px; height: 92px; }
+.lux-catalogue-copy h3 { margin: 20px 0 0; color: #292621; font: 400 clamp(27px, 3vw, 38px)/1.12 var(--lux-page-heading); }
+.lux-catalogue-copy p { max-width: 440px; margin: 14px auto 0; color: #625c54; font-size: 16px; line-height: 1.65; }
+.lux-catalogue-pages { margin-top: 10px; color: #777168; font-size: 13px; }
 
 .lux-catalogue-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .lux-catalogue-actions a {
@@ -92,20 +129,22 @@
   .lux-catalogue-row { grid-template-columns: 1fr; }
   .lux-catalogue-row .lux-catalogue-copy { grid-row: 1; }
   .lux-catalogue-row .lux-catalogue-reader { grid-row: 2; }
-  .lux-catalogue-copy { min-height: 420px; }
+  .lux-catalogue-copy { min-height: 350px; }
   .lux-catalogue-reader,
-  .lux-catalogue-reader iframe { min-height: 68vh; }
+  .lux-catalogue-reader iframe { min-height: min(52vh, 440px); }
 }
 
 @media (max-width: 640px) {
-  .lux-catalogue-copy { min-height: 390px; padding: 46px 24px; }
-  .lux-catalogue-logo.is-tin { width: min(100%, 290px); }
-  .lux-catalogue-logo.is-luxureat { width: 96px; height: 96px; }
-  .lux-catalogue-copy p { font-size: 16px; }
+  .lux-catalogue-copy { min-height: 300px; padding: 24px 18px; }
+  .lux-catalogue-logo.is-tin { width: min(100%, 220px); }
+  .lux-catalogue-logo.is-luxureat { width: 72px; height: 72px; }
+  .lux-catalogue-copy h3 { margin-top: 14px; font-size: 25px; }
+  .lux-catalogue-copy p { margin-top: 10px; font-size: 15px; line-height: 1.55; }
+  .lux-catalogue-pages { margin-top: 8px; }
   .lux-catalogue-reader,
-  .lux-catalogue-reader iframe { min-height: 62vh; }
-  .lux-catalogue-actions { width: 100%; }
-  .lux-catalogue-actions a { flex: 1 1 130px; }
+  .lux-catalogue-reader iframe { min-height: min(42vh, 350px); }
+  .lux-catalogue-actions { width: 100%; margin-top: 12px; }
+  .lux-catalogue-actions a { flex: 1 1 130px; padding-block: 9px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
