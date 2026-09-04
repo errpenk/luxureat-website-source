@@ -61,26 +61,16 @@
   });
 
   const catalogueReaders = [...document.querySelectorAll(".lux-catalogue-reader")];
-  const setCatalogueReaderActive = (reader, active) => {
+  const activateCatalogueReader = (reader) => {
     const toggle = reader.querySelector("[data-catalogue-toggle]");
-    const label = toggle?.querySelector("span");
     const frame = reader.querySelector("iframe");
-    reader.classList.toggle("is-active", active);
-    if (frame) frame.tabIndex = active ? 0 : -1;
-    if (!toggle || !label) return;
-    toggle.setAttribute("aria-pressed", String(active));
-    label.textContent = active ? toggle.dataset.deactivate : toggle.dataset.activate;
+    reader.classList.add("is-active");
+    if (frame) frame.tabIndex = 0;
+    toggle?.setAttribute("aria-pressed", "true");
   };
   catalogueReaders.forEach((reader) => {
     const toggle = reader.querySelector("[data-catalogue-toggle]");
-    toggle?.addEventListener("click", () => {
-      const activate = !reader.classList.contains("is-active");
-      catalogueReaders.forEach((item) => setCatalogueReaderActive(item, false));
-      if (activate) setCatalogueReaderActive(reader, true);
-    });
-  });
-  addEventListener("keydown", (event) => {
-    if (event.key === "Escape") catalogueReaders.forEach((reader) => setCatalogueReaderActive(reader, false));
+    toggle?.addEventListener("click", () => activateCatalogueReader(reader), { once: true });
   });
 
   const orbitGroup = document.querySelector(".lux-market-entry-orbits");
