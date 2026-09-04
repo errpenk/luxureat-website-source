@@ -652,9 +652,9 @@ html[lang="en"] .lux-market-metric-popover { font-family: var(--lux-en-body) !im
   background-size: cover;
   box-shadow: none;
 }
-.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(1) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/contact-partnership-dining.webp"); }
-.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/gifting-wholesale-truffle-salt.webp"); }
-.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/brand/home-partnership-tasting.webp"); }
+.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(1) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/market-services/wine-stat-volume.webp"); }
+.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(2) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/market-services/wine-stat-value.webp"); }
+.lux-market-insights-page #italian-wine .lux-ms-stat:nth-child(3) { background-image: linear-gradient(rgba(4,6,5,.7), rgba(4,6,5,.78)), url("../media/market-services/wine-stat-sparkling.webp"); }
 .lux-market-insights-page #italian-wine .lux-ms-stat :is(strong, span) { transition: color .28s ease; }
 .lux-market-insights-page #italian-wine .lux-ms-stat :is(strong, span) { color: #f0d46f; }
 .lux-market-insights-page #italian-wine .lux-ms-stat:is(:hover, :focus-visible, .is-scroll-active) {

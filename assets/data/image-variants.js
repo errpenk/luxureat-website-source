@@ -190,6 +190,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/journal/recipe-truffle-summer-crostini.webp": "media/journal/recipe-truffle-summer-crostini-720.webp",
   "media/market-services/china-market-hero.webp": "media/market-services/china-market-hero-mobile.webp",
   "media/market-services/china-services-hero.webp": "media/market-services/china-services-hero-mobile.webp",
+  "media/market-services/market-shanghai-night.webp": "media/market-services/market-shanghai-night-mobile.webp",
   "media/new-arrivals/brand-purpose-01.jpg": "media/new-arrivals/brand-purpose-01-720.webp",
   "media/new-arrivals/brand-purpose-02.jpg": "media/new-arrivals/brand-purpose-02-720.webp",
   "media/new-arrivals/brand-purpose-03.webp": "media/new-arrivals/brand-purpose-03-720.webp",
