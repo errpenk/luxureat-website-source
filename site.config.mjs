@@ -17,7 +17,7 @@ export const navigation = [
   { key: "blog", zh: "知识博客", en: "Blog", zhSlug: "blog", enSlug: "blog" },
   { key: "certification", zh: "品质认证", en: "Certification", zhSlug: "certification", enSlug: "certification" },
   { key: "market-insights", zh: "中国市场", en: "China Market", zhSlug: "china-market-insights", enSlug: "china-market-insights" },
-  { key: "import-export", zh: "中国服务", en: "China Services", zhSlug: "import-export-services", enSlug: "import-export-services" },
+  { key: "import-export", zh: "Import Export", en: "Import Export", zhSlug: "import-export-services", enSlug: "import-export-services" },
   { key: "gifting", zh: "商务合作", en: "Cooperation", zhSlug: "cooperation", enSlug: "cooperation" },
   { key: "contact", zh: "联系我们", en: "Contact", zhSlug: "contact", enSlug: "contact" },
 ];

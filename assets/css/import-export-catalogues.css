@@ -1,0 +1,76 @@
+.lux-catalogue-section .lux-ms-heading {
+  align-items: end;
+  margin-bottom: clamp(34px, 5vw, 64px);
+}
+
+.lux-catalogue-partner-link {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 22px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #9c7415;
+  color: #73550e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.lux-catalogue-partner-link:hover,
+.lux-catalogue-partner-link:focus-visible { color: #006f68; border-color: #006f68; }
+
+.lux-catalogue-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+}
+
+.lux-catalogue-card {
+  min-width: 0;
+  padding: clamp(18px, 2.5vw, 30px);
+  border: 1px solid rgba(41, 38, 33, .18);
+  background: #f7f5f0;
+}
+
+.lux-catalogue-card > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.lux-catalogue-card h3 { margin: 4px 0 0; font: 400 clamp(25px, 2.5vw, 34px)/1.12 var(--lux-page-heading); }
+.lux-catalogue-card > header > span { flex: none; color: #777168; font-size: 13px; }
+.lux-catalogue-card iframe {
+  width: 100%;
+  height: min(66vh, 620px);
+  min-height: 480px;
+  display: block;
+  border: 0;
+  background: #d9d5cd;
+}
+.lux-catalogue-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.lux-catalogue-actions a {
+  display: inline-flex;
+  justify-content: center;
+  padding: 11px 16px;
+  border: 1px solid #0c847d;
+  color: #005a54;
+  text-decoration: none;
+  font-weight: 600;
+}
+.lux-catalogue-actions a:first-child { color: #f7f5f0; background: #006f68; }
+.lux-catalogue-actions a:hover,
+.lux-catalogue-actions a:focus-visible { color: #292621; border-color: #9c7415; background: #e9c349; }
+
+@media (max-width: 900px) {
+  .lux-catalogue-section .lux-ms-heading,
+  .lux-catalogue-grid { grid-template-columns: 1fr; }
+  .lux-catalogue-card iframe { height: 68vh; }
+}
+
+@media (max-width: 640px) {
+  .lux-catalogue-card { padding: 14px; }
+  .lux-catalogue-card iframe { height: 62vh; min-height: 420px; }
+  .lux-catalogue-actions a { flex: 1 1 130px; }
+}

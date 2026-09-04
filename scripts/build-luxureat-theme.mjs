@@ -707,6 +707,8 @@ function luxureat_static_search_metadata_endpoint() {
         '/robots.txt' => array('robots.txt', 'text/plain; charset=UTF-8'),
         '/llms.txt' => array('llms.txt', 'text/plain; charset=UTF-8'),
         '/sitemap.xml' => array('sitemap.xml', 'application/xml; charset=UTF-8'),
+        '/catalogues/tin-caviar-academy.pdf' => array('assets/documents/tin-caviar-academy.pdf', 'application/pdf'),
+        '/catalogues/luxureat-brochure.pdf' => array('assets/documents/luxureat-brochure.pdf', 'application/pdf'),
     );
 
     if (!isset($files[$request_path])) {

@@ -95,6 +95,8 @@ for (const file of [
   'assets/data/events.js',
   'assets/data/journal.js',
   'assets/data/brand.js',
+  'assets/documents/tin-caviar-academy.pdf',
+  'assets/documents/luxureat-brochure.pdf',
   'screenshot.png',
   'README.md',
   'robots.txt',
@@ -129,6 +131,7 @@ assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && 
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
 assert(functionsPhp.includes('luxureat_static_utility_noindex_header') && functionsPhp.includes("header('X-Robots-Tag: noindex, follow'"), 'bag, cart, checkout and account pages are crawlable but explicitly non-indexable');
 assert(functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes('luxureat_baidu_site_verification'), 'fast search metadata and verification endpoints ship in the generated theme');
+assert(functionsPhp.includes("'/catalogues/tin-caviar-academy.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
