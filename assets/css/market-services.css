@@ -769,7 +769,7 @@ html[lang="en"] .lux-market-insights-page #market-judgement .lux-ms-card[data-ma
   padding: clamp(78px, 8vw, 112px) 0;
   background:
     linear-gradient(rgba(7, 9, 8, .84), rgba(7, 9, 8, .88)),
-    url("../media/brand/contact-hero-consulting.webp") center / cover no-repeat;
+    url("../media/market-services/market-cta-handshake.webp") center / cover no-repeat;
 }
 .lux-market-insights-page .lux-ms-cta h2 { color: #f3efe8; }
 
@@ -1117,11 +1117,11 @@ html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
 }
 .lux-import-export-page #import-into-china .lux-ms-process article:is(:hover, :focus, .is-tapped) h3 { color: #006f68; }
 .lux-import-export-page #import-into-china .lux-ms-process article:is(:hover, :focus, .is-tapped)::after { border-color: #9c7415; transform: scale(1.1) rotate(3deg); }
-.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(1)::after { background-image: url("../media/brand/gifting-importer-partnership.webp"); }
-.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(2)::after { background-image: url("../media/brand/cert-laboratory-control.webp"); }
-.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(3)::after { background-image: url("../media/brand/contact-partnership-market.webp"); }
-.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(4)::after { background-image: url("../media/brand/home-partnership-process.webp"); }
-.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(5)::after { background-image: url("../media/brand/home-partnership-fair.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(1)::after { background-image: url("../media/market-services/service-process-assess.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(2)::after { background-image: url("../media/market-services/service-process-verify.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(3)::after { background-image: url("../media/market-services/service-process-prepare.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(4)::after { background-image: url("../media/market-services/service-process-import.webp"); }
+.lux-import-export-page #import-into-china .lux-ms-process article:nth-child(5)::after { background-image: url("../media/market-services/service-process-market.webp"); }
 .lux-import-export-page #import-into-china .lux-ms-process article::before {
   content: counter(service-step, decimal-leading-zero);
   position: absolute;
