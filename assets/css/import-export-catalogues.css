@@ -3,6 +3,8 @@
   max-width: none;
 }
 
+.lux-import-export-page .lux-ms-section.lux-catalogue-section { padding-bottom: 0; }
+
 .lux-catalogue-title {
   margin-bottom: clamp(34px, 5vw, 64px);
   text-align: center;
@@ -39,6 +41,7 @@
   display: block;
   border: 0;
   background: #d8d8d8;
+  pointer-events: none;
 }
 
 .lux-catalogue-copy {
@@ -51,7 +54,11 @@
   text-align: center;
 }
 
-.lux-catalogue-logo { display: block; object-fit: contain; }
+.lux-catalogue-logo-link { display: inline-flex; align-items: center; justify-content: center; }
+.lux-catalogue-logo { display: block; object-fit: contain; transition: transform .3s ease; }
+.lux-catalogue-logo-link:hover .lux-catalogue-logo,
+.lux-catalogue-logo-link:focus-visible .lux-catalogue-logo { transform: scale(1.035); }
+.lux-catalogue-logo-link:focus-visible { outline: 1px solid #9c7415; outline-offset: 8px; }
 .lux-catalogue-logo.is-tin { width: min(100%, 340px); height: auto; }
 .lux-catalogue-logo.is-luxureat { width: 112px; height: 112px; }
 .lux-catalogue-copy h3 { margin: 28px 0 0; color: #292621; font: 400 clamp(28px, 3vw, 42px)/1.12 var(--lux-page-heading); }
@@ -99,4 +106,8 @@
   .lux-catalogue-reader iframe { min-height: 62vh; }
   .lux-catalogue-actions { width: 100%; }
   .lux-catalogue-actions a { flex: 1 1 130px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-catalogue-logo { transition: none; }
 }
