@@ -13128,7 +13128,6 @@ html[lang^="zh"] .lux-cert-awards h2 {
 html[lang^="zh"] .lux-home-process-card-link::after { content: "查看详情  →"; }
 .lux-home-process-card-link:hover::after,
 .lux-home-process-card-link:focus-visible::after { color: #9df5ec; transform: translateX(5px); }
-html[lang^="en"] .lux-home-partnership-process details > div { padding-bottom: 54px; }
 .lux-home-partnership-process li:hover,
 .lux-home-partnership-process li:focus-within {
   z-index: 2;
@@ -13187,7 +13186,7 @@ html[lang^="en"] .lux-home-partnership-process details > div { padding-bottom: 5
 .lux-home-partnership-process details[open] summary em::after { content: " －"; }
 .lux-home-partnership-process details > div {
   margin: 24px 0 0 68px;
-  padding-top: 20px;
+  padding: 20px 0 54px;
   border-top: 1px solid rgba(210, 173, 52, .28);
 }
 .lux-home-partnership-process summary:hover h3,

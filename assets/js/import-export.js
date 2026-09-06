@@ -1,6 +1,27 @@
 (() => {
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const touchMode = matchMedia("(hover: none), (pointer: coarse)");
+  const deferredBackgrounds = document.querySelectorAll([
+    ".lux-service-bento a",
+    "#import-into-china .lux-ms-process article",
+    ".lux-flip-orbit-front",
+    "#sourcing-export .lux-ms-card",
+    "#brand-digital .lux-ms-card",
+    "#business-development .lux-ms-card",
+  ].join(","));
+  const revealBackground = (element) => element.classList.add("is-media-ready");
+  if ("IntersectionObserver" in window) {
+    const backgroundObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        revealBackground(entry.target);
+        backgroundObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: "420px 0px" });
+    deferredBackgrounds.forEach((element) => backgroundObserver.observe(element));
+  } else {
+    deferredBackgrounds.forEach(revealBackground);
+  }
   const tapCards = [...document.querySelectorAll(".lux-import-export-page .lux-ms-card, #import-into-china .lux-ms-process article")]
     .filter((card) => !card.closest("#sourcing-export, #brand-digital"));
   tapCards.forEach((card) => {
@@ -64,6 +85,10 @@
   const activateCatalogueReader = (reader) => {
     const toggle = reader.querySelector("[data-catalogue-toggle]");
     const frame = reader.querySelector("iframe");
+    if (frame?.dataset.src && !frame.hasAttribute("src")) {
+      frame.src = frame.dataset.src;
+      delete frame.dataset.src;
+    }
     reader.classList.add("is-active");
     if (frame) frame.tabIndex = 0;
     toggle?.setAttribute("aria-pressed", "true");
