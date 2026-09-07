@@ -85,6 +85,11 @@
   const activateCatalogueReader = (reader) => {
     const toggle = reader.querySelector("[data-catalogue-toggle]");
     const frame = reader.querySelector("iframe");
+    const pdfUrl = frame?.dataset.src || frame?.src;
+    if (touchMode.matches && pdfUrl) {
+      window.open(pdfUrl, "_blank", "noopener");
+      return;
+    }
     if (frame?.dataset.src && !frame.hasAttribute("src")) {
       frame.src = frame.dataset.src;
       delete frame.dataset.src;
@@ -95,8 +100,14 @@
   };
   catalogueReaders.forEach((reader) => {
     const toggle = reader.querySelector("[data-catalogue-toggle]");
-    toggle?.addEventListener("click", () => activateCatalogueReader(reader), { once: true });
+    toggle?.addEventListener("click", () => activateCatalogueReader(reader));
   });
+  if (touchMode.matches && "IntersectionObserver" in window) {
+    const catalogueObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle("is-prompt-visible", entry.isIntersecting));
+    }, { threshold: .4, rootMargin: "-12% 0px" });
+    catalogueReaders.forEach((reader) => catalogueObserver.observe(reader));
+  }
 
   const orbitGroup = document.querySelector(".lux-market-entry-orbits");
   if (orbitGroup && ("IntersectionObserver" in window) && !reducedMotion) {

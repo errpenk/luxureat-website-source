@@ -72,6 +72,41 @@
   cursor: pointer;
 }
 
+.lux-catalogue-toggle::before,
+.lux-catalogue-toggle::after {
+  position: absolute;
+  opacity: 0;
+  transition: opacity .55s ease;
+}
+
+.lux-catalogue-toggle::before {
+  content: "";
+  inset: 0;
+  background: rgba(0, 0, 0, .58);
+}
+
+.lux-catalogue-toggle::after {
+  content: "Click to browse online";
+  inset: 50% auto auto 50%;
+  width: min(82%, 360px);
+  color: #fff;
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 600;
+  letter-spacing: .08em;
+  line-height: 1.4;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .45);
+  transform: translate(-50%, -50%);
+}
+
+html[lang^="zh"] .lux-catalogue-toggle::after { content: "单击即可在线浏览"; }
+.lux-catalogue-reader:hover .lux-catalogue-toggle::before,
+.lux-catalogue-reader:hover .lux-catalogue-toggle::after,
+.lux-catalogue-reader.is-prompt-visible .lux-catalogue-toggle::before,
+.lux-catalogue-reader.is-prompt-visible .lux-catalogue-toggle::after,
+.lux-catalogue-toggle:focus-visible::before,
+.lux-catalogue-toggle:focus-visible::after { opacity: 1; }
+
 .lux-catalogue-reader.is-active .lux-catalogue-toggle { display: none; }
 .lux-catalogue-toggle:focus-visible { outline: 2px solid #9c7415; outline-offset: -4px; }
 
@@ -142,5 +177,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lux-catalogue-logo { transition: none; }
+  .lux-catalogue-logo,
+  .lux-catalogue-toggle::before,
+  .lux-catalogue-toggle::after { transition: none; }
 }
