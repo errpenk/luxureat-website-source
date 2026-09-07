@@ -1,4 +1,4 @@
-export const assetVersion = "20260907-catalogue-reader-53";
+export const assetVersion = "20260907-cookie-consent-54";
 
 export const contact = {
   email: "china@luxureat.com",

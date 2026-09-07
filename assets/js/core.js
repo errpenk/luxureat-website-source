@@ -86,11 +86,16 @@ window.luxResponsiveData = (value) => {
 
 const luxDelayedAnalytics = document.querySelector("script[data-lux-analytics-src]");
 const luxCookieConsentKey = "luxureat_cookie_consent";
+const luxValidCookieConsents = new Set(["analytics", "necessary"]);
 const luxGetCookieConsent = () => {
-  try { return localStorage.getItem(luxCookieConsentKey); } catch { return null; }
+  let value = null;
+  try { value = localStorage.getItem(luxCookieConsentKey); } catch { /* Storage may be disabled. */ }
+  if (!value) value = document.cookie.split("; ").find((item) => item.startsWith(`${luxCookieConsentKey}=`))?.split("=")[1] || null;
+  return luxValidCookieConsents.has(value) ? value : null;
 };
 const luxSetCookieConsent = (value) => {
   try { localStorage.setItem(luxCookieConsentKey, value); } catch { /* Storage may be disabled. */ }
+  document.cookie = `${luxCookieConsentKey}=${value}; Max-Age=31536000; Path=/; SameSite=Lax${location.protocol === "https:" ? "; Secure" : ""}`;
   document.documentElement.dataset.luxCookieConsent = value;
 };
 document.documentElement.dataset.luxCookieConsent = luxGetCookieConsent() || "unset";
