@@ -19,7 +19,7 @@
     success: "信息已发送，我们会尽快与您联系。",
     failed: "暂时无法发送，请稍后再试。",
     opening: "正在打开您的邮件应用…",
-    labels: ["Nome", "Telefono", "E-mail", "Messaggio"],
+    labels: ["Nome", "Azienda", "Prodotto / Settore", "Telefono / WeChat", "E-mail", "Messaggio"],
     notProvided: "Non fornito",
   } : {
     required: "Please complete all required fields.",
@@ -29,7 +29,7 @@
     success: "Your message has been sent. We will be in touch soon.",
     failed: "Your message could not be sent. Please try again later.",
     opening: "Opening your email app…",
-    labels: ["Nome", "Telefono", "E-mail", "Messaggio"],
+    labels: ["Nome", "Azienda", "Prodotto / Settore", "Telefono / WeChat", "E-mail", "Messaggio"],
     notProvided: "Non fornito",
   };
   const feedback = form.querySelector("[data-contact-feedback]");
@@ -119,10 +119,12 @@
     const subject = `${data.get("name")} + ${inquiryLabels[data.get("inquiry_type")]}`;
     const body = [
       `${text.labels[0]}：${data.get("name")}`,
-      `${text.labels[1]}：${data.get("phone") || text.notProvided}`,
-      `${text.labels[2]}：${data.get("email")}`,
+      `${text.labels[1]}：${data.get("company") || text.notProvided}`,
+      `${text.labels[2]}：${data.get("product_industry") || text.notProvided}`,
+      `${text.labels[3]}：${data.get("phone") || text.notProvided}`,
+      `${text.labels[4]}：${data.get("email")}`,
       "",
-      `${text.labels[3]}：`,
+      `${text.labels[5]}：`,
       data.get("message"),
     ].join("\n");
     const config = window.LuxureatContact;

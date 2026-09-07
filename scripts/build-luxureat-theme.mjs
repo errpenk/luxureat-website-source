@@ -1401,11 +1401,13 @@ function luxureat_static_contact_ajax() {
     if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_contact')) {
         wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
     }
-    if (!empty($_POST['company'])) {
+    if (!empty($_POST['website'])) {
         wp_send_json_error(array('message' => $message('安全验证失败，请刷新页面后重试。', 'Security verification failed. Please refresh the page and try again.')), 403);
     }
 
     $name = isset($_POST['name']) ? trim(sanitize_text_field(wp_unslash($_POST['name']))) : '';
+    $company = isset($_POST['company']) ? trim(sanitize_text_field(wp_unslash($_POST['company']))) : '';
+    $product_industry = isset($_POST['product_industry']) ? trim(sanitize_text_field(wp_unslash($_POST['product_industry']))) : '';
     $phone = isset($_POST['phone']) ? trim(sanitize_text_field(wp_unslash($_POST['phone']))) : '';
     $raw_email = isset($_POST['email']) ? trim((string) wp_unslash($_POST['email'])) : '';
     $email = sanitize_email($raw_email);
@@ -1430,7 +1432,7 @@ function luxureat_static_contact_ajax() {
     if ($name === '' || $raw_email === '' || $content === '' || !isset($inquiry_labels[$inquiry_type])) {
         wp_send_json_error(array('message' => $message('请填写所有必填信息。', 'Please complete all required fields.')), 400);
     }
-    if (strlen($name) > 240 || strlen($phone) > 120 || strlen($content) > 12000 || !is_email($email)) {
+    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($phone) > 120 || strlen($content) > 12000 || !is_email($email)) {
         wp_send_json_error(array('message' => $message('请检查所填信息后重试。', 'Please check the information and try again.')), 400);
     }
 
@@ -1442,7 +1444,9 @@ function luxureat_static_contact_ajax() {
 
     $subject = $name . ' + ' . $inquiry_labels[$inquiry_type];
     $body = "Nome: " . $name . "\n"
-        . "Telefono: " . ($phone ?: 'Non fornito') . "\n"
+        . "Azienda: " . ($company ?: 'Non fornito') . "\n"
+        . "Prodotto / Settore: " . ($product_industry ?: 'Non fornito') . "\n"
+        . "Telefono / WeChat: " . ($phone ?: 'Non fornito') . "\n"
         . "E-mail: " . $email . "\n\n"
         . "Messaggio:\n" . $content;
     $headers = array('Reply-To: ' . $name . ' <' . $email . '>');
