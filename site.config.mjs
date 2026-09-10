@@ -24,7 +24,7 @@ export const navigation = [
 
 export const seo = {
   zh: {
-    home: ["LuxurEat（露意膳）Group | 意大利高端美食与品牌合作", "LuxurEat（露意膳）Group 专注意大利高端美食、地道风味与中国市场合作，提供产品、食谱、品牌内容与专业服务。"],
+    home: ["LuxurEat（露意膳） | 意大利高端美食与品牌合作", "LuxurEat（露意膳）Group 专注意大利高端美食、地道风味与中国市场合作，提供产品、食谱、品牌内容与专业服务。"],
     journal: ["关于我们 | LuxurEat（露意膳）", "了解 LuxurEat（露意膳）的品牌传承、产地故事、品质承诺与时令观察。"],
     new: ["热门新品 | LuxurEat（露意膳）", "发现 LuxurEat（露意膳）的意大利橄榄油、披萨与意式手工冰淇淋等热门新品。"],
     products: ["系列产品 | LuxurEat（露意膳）", "浏览 LuxurEat（露意膳）精选意大利高端美食与松露、鱼子酱等系列产品。"],

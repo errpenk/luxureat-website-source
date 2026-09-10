@@ -50,7 +50,7 @@ try {
       assert.doesNotMatch(visibleText, /\bmaison\b/i, `${language}/${name} still exposes Maison to visitors or search engines`);
     }
   }
-  assert.match(read("zh/index.html"), /<title>LuxurEat（露意膳）Group/);
+  assert.match(read("zh/index.html"), /<title>LuxurEat（露意膳） \| 意大利高端美食与品牌合作<\/title>/);
   assert.match(read("en/index.html"), /<title>LuxurEat Group/);
   assert.ok(!fs.existsSync(path.join(root, "tools/generate-static-seo.mjs")), "obsolete duplicate SEO generator remains");
   assert.ok(!fs.existsSync(path.join(root, ".github/workflows/preserve-static-seo.yml")), "obsolete duplicate SEO workflow remains");
