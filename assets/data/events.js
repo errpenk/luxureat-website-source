@@ -6,7 +6,7 @@
     events: [
       {
         id: "fhc-shanghai-2026",
-        status: "latest",
+        type: "exhibition",
         image: asset("media/events/fhc-shanghai-2026.webp"),
         cardImage: asset("media/events/fhc-shanghai-2026-banner.webp"),
         previewImage: asset("media/events/fhc-shanghai-2026-banner.webp"),
@@ -18,6 +18,7 @@
         calendar: asset("fhc-shanghai-2026.ics"),
         mapQuery: "上海新国际博览中心, 上海市浦东新区龙阳路2345号",
         coordinates: [121.56364, 31.21158],
+        startDate: "2026-11-10",
         endDate: "2026-11-12",
         zh: {
           posterAlt: "LuxurEat（露意膳）亮相第二十九届FHC上海环球食品展海报",
@@ -76,7 +77,7 @@
       },
       {
         id: "cifie-changsha-2026",
-        status: "latest",
+        type: "exhibition",
         image: asset("media/events/cifie-changsha-2026-poster.webp"),
         cardImage: asset("media/events/cifie-changsha-2026-banner.webp"),
         previewImage: asset("media/events/cifie-changsha-2026-banner.webp"),
@@ -89,6 +90,7 @@
         mapQuery: "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133",
         mapHref: "https://www.google.com/maps/place//data=!4m2!3m1!1s0x342734ba371bc581:0xaa8729018b86a918?sa=X&ved=1t:8290&ictx=111",
         coordinates: [113.12474, 28.15197],
+        startDate: "2026-09-18",
         endDate: "2026-09-20",
         zh: {
           posterAlt: "LuxurEat（露意膳） 亮相第十一届中国国际食品餐饮博览会海报",
@@ -157,7 +159,7 @@
       },
       {
         id: "marca-china-2026",
-        status: "latest",
+        type: "exhibition",
         image: asset("media/events/marca-china-2026.png"),
         poster: asset("media/events/marca-china-2026-poster.webp"),
         displayPoster: asset("media/events/marca-china-2026-poster-520.webp"),
@@ -167,6 +169,7 @@
         calendar: asset("marca-china-2026.ics"),
         mapQuery: "广州市海珠区琶洲街道新港东路1000号保利世界贸易中心",
         coordinates: [113.37055, 23.09831],
+        startDate: "2026-09-08",
         endDate: "2026-09-09",
         zh: {
           posterAlt: "Marca China 2026 广州国际自有品牌展海报",
@@ -227,7 +230,7 @@
       },
       {
         id: "sial-guangzhou-2026",
-        status: "latest",
+        type: "exhibition",
         image: asset("media/events/sial-guangzhou-2026.webp"),
         cardImage: asset("media/events/sial-guangzhou-2026-banner.webp"),
         previewImage: asset("media/events/sial-guangzhou-2026-banner.webp"),
@@ -239,6 +242,7 @@
         calendar: asset("sial-guangzhou-2026.ics"),
         mapQuery: "广州保利世贸博览馆, 广州市海珠区新港东路1000号",
         coordinates: [113.37055, 23.09831],
+        startDate: "2026-09-03",
         endDate: "2026-09-05",
         zh: {
           posterAlt: "LuxurEat（露意膳）广州参加2026 SIAL西雅展海报",
@@ -301,4 +305,31 @@
       }
     ]
   };
+
+  const beijingDate = new Intl.DateTimeFormat("en", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const getBeijingToday = (now = new Date()) => {
+    const parts = Object.fromEntries(beijingDate.formatToParts(now).map(({ type, value }) => [type, value]));
+    return `${parts.year}-${parts.month}-${parts.day}`;
+  };
+  const getEventStatus = (event, today = getBeijingToday()) => (
+    today < event.startDate ? "upcoming" : today <= event.endDate ? "current" : "past"
+  );
+  const getHomeEvents = (events, today = getBeijingToday()) => events
+    .filter((event) => getEventStatus(event, today) !== "past")
+    .sort((a, b) => a.startDate.localeCompare(b.startDate) || a.endDate.localeCompare(b.endDate) || a.id.localeCompare(b.id));
+  const groupBrandEvents = (events, today = getBeijingToday()) => ({
+    active: events
+      .filter((event) => getEventStatus(event, today) !== "past")
+      .sort((a, b) => b.startDate.localeCompare(a.startDate) || b.endDate.localeCompare(a.endDate) || a.id.localeCompare(b.id)),
+    past: events
+      .filter((event) => getEventStatus(event, today) === "past")
+      .sort((a, b) => b.endDate.localeCompare(a.endDate) || b.startDate.localeCompare(a.startDate) || a.id.localeCompare(b.id)),
+  });
+
+  window.LUXUREAT_EVENT_UTILS = { getBeijingToday, getEventStatus, getHomeEvents, groupBrandEvents };
 })();

@@ -20,21 +20,40 @@ const context = {
 vm.runInNewContext(read("assets/data/events.js"), context);
 
 const events = context.window.LUXUREAT_EVENT_DATA?.events;
+const eventUtils = context.window.LUXUREAT_EVENT_UTILS;
 const fhcEvent = events?.find((item) => item.id === "fhc-shanghai-2026");
 const event = events?.find((item) => item.id === "cifie-changsha-2026");
 const secondEvent = events?.find((item) => item.id === "marca-china-2026");
 const sialEvent = events?.find((item) => item.id === "sial-guangzhou-2026");
 assert(fhcEvent, "FHC Shanghai 2026 event data is missing");
 assert(event, "Changsha 2026 event data is missing");
-assert(event.status === "latest", "Changsha 2026 must be the latest event");
-assert(secondEvent?.status === "latest", "Marca China 2026 must also be a latest event");
-assert(sialEvent?.status === "latest", "SIAL Guangzhou 2026 must also be a latest event");
+assert(eventUtils, "shared Beijing event utilities are missing");
+for (const item of events) {
+  assert(!Object.hasOwn(item, "status"), `${item.id} still requires a manually maintained status`);
+  assert(item.type === "exhibition", `${item.id} event type is missing`);
+  assert(/^\d{4}-\d{2}-\d{2}$/.test(item.startDate), `${item.id} startDate is missing or invalid`);
+  assert(/^\d{4}-\d{2}-\d{2}$/.test(item.endDate), `${item.id} endDate is missing or invalid`);
+  assert(item.startDate <= item.endDate, `${item.id} date range is invalid`);
+}
 assert(fhcEvent.displayWidth === 520 && fhcEvent.displayHeight === 529, "FHC delivery image dimensions are missing");
 for (const item of [event, secondEvent, sialEvent]) {
   assert(item.displayWidth === 520 && item.displayHeight === 528, `${item.id} delivery image dimensions are missing`);
 }
 assert(secondEvent?.zh?.articleTitle === "LuxurEat（露意膳）亮相广州国际自有品牌展。", "Marca China Chinese title is wrong");
-assert(events.filter((item) => item.status === "latest").length === 4, "All four current events must render as latest");
+assert(eventUtils.getBeijingToday(new Date("2026-09-11T15:59:59Z")) === "2026-09-11", "Beijing date changes too early");
+assert(eventUtils.getBeijingToday(new Date("2026-09-11T16:00:00Z")) === "2026-09-12", "Beijing date does not change at midnight UTC+8");
+const dateCases = [
+  { id: "a", startDate: "2026-09-09", endDate: "2026-09-11" },
+  { id: "b", startDate: "2026-11-10", endDate: "2026-11-12" },
+  { id: "c", startDate: "2026-12-05", endDate: "2026-12-08" },
+];
+assert(eventUtils.getEventStatus(dateCases[0], "2026-09-08") === "upcoming", "event is not upcoming before its start date");
+assert(eventUtils.getEventStatus(dateCases[0], "2026-09-11") === "current", "event must remain current through its end date");
+assert(eventUtils.getEventStatus(dateCases[0], "2026-09-12") === "past", "event must become past the day after its end date");
+assert(eventUtils.getHomeEvents(dateCases, "2026-09-12").map(({ id }) => id).join() === "b,c", "home events must exclude past events and sort by startDate ASC");
+const groupedEvents = eventUtils.groupBrandEvents(dateCases, "2026-09-12");
+assert(groupedEvents.active.map(({ id }) => id).join() === "c,b", "Brand News active events must sort by startDate DESC");
+assert(groupedEvents.past.map(({ id }) => id).join() === "a", "Brand News must retain past events");
 assert(event.mapQuery === "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133", "Changsha map address is wrong");
 assert(event.mapHref?.includes("0xaa8729018b86a918"), "Changsha Google Maps link is wrong");
 assert(
@@ -84,8 +103,10 @@ assert(enNews.includes("data-recent-events"), "English brand-news event mount is
 assert(zhNews.includes('class="active" href="brand.html">品牌新闻'), "Chinese brand-news navigation is not active");
 assert(enNews.includes('class="active" href="brand.html">Brand News'), "English brand-news navigation is not active");
 assert(latestEvent.includes("LUXUREAT_EVENT_DATA"), "home latest event does not use shared event data");
-assert(latestEvent.includes("a.endDate.localeCompare(b.endDate)"), "home events are not ordered from nearest to latest");
-assert(journal.includes("a.endDate.localeCompare(b.endDate)"), "Brand News upcoming events are not ordered from nearest to latest");
+assert(latestEvent.includes("LUXUREAT_EVENT_UTILS?.getHomeEvents"), "home events do not use shared Beijing filtering and start-date sorting");
+assert(latestEvent.includes("section.hidden = true"), "home event section is not hidden when no active events remain");
+assert(journal.includes("LUXUREAT_EVENT_UTILS.groupBrandEvents"), "Brand News events do not use shared Beijing grouping and sorting");
+assert(!journal.includes("new Date(`${event.endDate}"), "Brand News still parses calendar dates as local timestamps");
 assert(latestEvent.includes("setInterval(() => show(index + 1), 2500)"), "home event autoplay is not set to 2.5 seconds");
 assert(latestEvent.includes('!matchMedia("(max-width: 767px)").matches'), "home event autoplay is not paused on mobile");
 assert(journal.includes('(prefers-reduced-motion: reduce), (max-width: 767px)'), "About Us carousel autoplay is not paused on mobile");

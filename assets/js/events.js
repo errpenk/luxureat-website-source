@@ -3,9 +3,12 @@
   const assetBase = new URL("../", document.currentScript?.src || location.href);
   const asset = (path) => new URL(path, assetBase).href;
   const section = document.querySelector("[data-latest-event]");
-  const events = (window.LUXUREAT_EVENT_DATA?.events?.filter((item) => item.status === "latest") || [])
-    .sort((a, b) => a.endDate.localeCompare(b.endDate));
-  if (!section || !events.length) return;
+  const events = window.LUXUREAT_EVENT_UTILS?.getHomeEvents(window.LUXUREAT_EVENT_DATA?.events || []) || [];
+  if (!section) return;
+  if (!events.length) {
+    section.hidden = true;
+    return;
+  }
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const newsIndexHref = location.protocol === "file:" || location.pathname.endsWith(".html")
@@ -32,7 +35,7 @@
     const city = event[lang].city;
     const current = stats.get(city) || { count: 0, months: new Set() };
     current.count += 1;
-    current.months.add(new Date(`${event.endDate}T00:00:00`).getMonth());
+    current.months.add(Number(event.startDate.slice(5, 7)) - 1);
     stats.set(city, current);
     return stats;
   }, new Map())]

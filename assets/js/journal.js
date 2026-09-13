@@ -279,8 +279,7 @@ function initLuxReader() {
 
   const renderRecentEvents = () => {
     if (!eventMount) return;
-    const latest = events.filter((event) => event.status === "latest").sort((a, b) => a.endDate.localeCompare(b.endDate));
-    const past = events.filter((event) => event.status === "past").sort((a, b) => b.endDate.localeCompare(a.endDate));
+    const { active: latest, past } = window.LUXUREAT_EVENT_UTILS.groupBrandEvents(events);
     eventMount.innerHTML = `
       <div class="lux-recent-events-inner">
         <header class="lux-recent-events-head">
@@ -317,10 +316,9 @@ function initLuxReader() {
     const mapLabels = lang === "zh"
       ? { kicker: "展会图谱", title: "展会地图", intro: "查看 LuxurEat（露意膳）即将参与及已经结束的展会。将鼠标移至地点标记可预览，点击可打开对应活动详情。", upcoming: "即将开始", ended: "已结束", detail: "查看详情", reset: "返回中国地图视角", unavailable: "地图暂时无法加载，请稍后重试。" }
       : { kicker: "Exhibition Atlas", title: "Exhibition Map", intro: "Explore upcoming and completed LuxurEat (露意膳) exhibitions. Hover over a location to preview it, then select the marker to open the event article.", upcoming: "Upcoming", ended: "Ended", detail: "View details", reset: "Reset to China view", unavailable: "The map is temporarily unavailable. Please try again shortly." };
-    const today = new Date();
     const mappedEvents = events.filter((event) => Array.isArray(event.coordinates)).map((event) => ({
       ...event,
-      isEnded: event.status === "past" || (event.endDate && new Date(`${event.endDate}T23:59:59`) < today),
+      isEnded: window.LUXUREAT_EVENT_UTILS.getEventStatus(event) === "past",
     }));
     const groups = [...mappedEvents.reduce((result, event) => {
       const key = event.coordinates.join(",");
