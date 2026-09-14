@@ -1,4 +1,4 @@
-export const assetVersion = "20260914-font-stability-59";
+export const assetVersion = "20260914-mobile-fonts-60";
 
 export const contact = {
   email: "china@luxureat.com",
