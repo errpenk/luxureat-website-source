@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "leaflet": "1.9.4",
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.4"
   }
 }

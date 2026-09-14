@@ -65,6 +65,7 @@ const directRecipeSlugs = [...linkedRuntimes.matchAll(/recipe\.html\?recipe=([a-
 const helperRecipeSlugs = [...linkedRuntimes.matchAll(/recipeLink\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
 const productRecipeSlugs = [...productRuntime.matchAll(/recipeRef\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
 const productGuideSlugs = [...productRuntime.matchAll(/guideRef\("([a-z0-9-]+)"/g)].map(([, slug]) => slug);
+assert(productRuntime.includes('guideRef("caviar-after-opening"') && productRuntime.includes('product.categories?.includes("caviar")'), "caviar products do not link to the opened-caviar storage article");
 const recipeLinkSlugs = [...directRecipeSlugs, ...helperRecipeSlugs, ...productRecipeSlugs];
 for (const slug of recipeLinkSlugs) {
   for (const lang of ["zh", "en"]) assert(journalData.includes(`"${lang}-recipe-${slug}":`) || journalData.includes(`addDocumentedRecipe("${slug}"`), `mapped ${lang} recipe is missing: ${slug}`);

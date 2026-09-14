@@ -4354,7 +4354,7 @@ html[lang^="zh"] .lux-event-card-copy strong {
 .lux-event-reader {
   width: min(1240px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 44px 0 72px;
+  padding: 72px 0;
   color: #111;
   font-family: var(--lux-page-heading);
 }
@@ -8649,7 +8649,7 @@ body {
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
     overflow-x: auto;
     scrollbar-width: none;
   }

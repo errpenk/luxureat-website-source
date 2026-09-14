@@ -23,6 +23,9 @@ for (const event of ["fhc-shanghai-2026", "cifie-changsha-2026-poster", "marca-c
   assert.ok(size(`assets/media/events/${event}-520.webp`) <= 38 * 1024, `${event} delivery image exceeds 38 KB`);
   assert.ok(size(`assets/media/events/${event}-160.webp`) <= 7 * 1024, `${event} thumbnail exceeds 7 KB`);
 }
+for (const image of ["cover", "cold", "spoon", "care"]) {
+  assert.ok(size(`assets/media/academy/caviar-after-opening-${image}.webp`) <= 110 * 1024, `${image} caviar article image exceeds 110 KB`);
+}
 assert.ok(size("assets/fonts/KingHwaOldSong-site.woff2") <= 1400 * 1024, "complete KingHwa site font exceeds 1.4 MB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-site.woff2") <= 360 * 1024, "complete ZhiSong site font exceeds 360 KB");
 assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "English home headline subset exceeds 16 KB");

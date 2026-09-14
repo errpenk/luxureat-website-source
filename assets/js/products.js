@@ -376,6 +376,7 @@ function initLuxProductDetails() {
     [/white-truffle-(?:oil|evoo)-/, related([recipeRef("truffle-eggs", "用白松露油调味炒蛋", "Season Eggs with White Truffle Oil"), recipeRef("truffle-tagliolini", "在细面出锅后加入白松露油", "Finish Tagliolini with White Truffle Oil"), guideRef("truffle-truffle-aroma-pairing", "白松露油与鸡蛋、意面的搭配逻辑", "Why White Truffle Oil Suits Eggs and Pasta")])],
     [/truffle-fettuccine/, related([recipeRef("truffle-tagliolini", "用松露宽面实践经典松露意面", "Make a Classic Truffle Pasta with Truffle Fettuccine"), guideRef("truffle-truffle-aroma-pairing", "掌握松露意面的温度与风味平衡", "Balance Temperature and Aroma in Truffle Pasta"), guideRef("pasta-academy", "根据面型、酱汁与火候完成意面", "Match Pasta Shape, Sauce and Cooking Time")])],
   ];
+  const caviarContent = related([guideRef("caviar-after-opening", "鱼子酱开封后的保存方法", "How to Keep Your Caviar at Its Best After Opening")]);
   const oliveContent = related([recipeRef("olive-pasta", "用特级初榨橄榄油制作蒜香意面", "Make Garlic Pasta with Extra Virgin Olive Oil"), recipeRef("olive-bruschetta", "用烤面包品鉴橄榄油", "Taste Olive Oil with Bruschetta"), guideRef("choose-use-store-evo", "特级初榨橄榄油的选择、使用与保存", "Choosing, Using and Storing Extra Virgin Olive Oil")]);
   const pastaContent = related([recipeRef("olive-pasta", "用意面实践酱汁乳化与出锅收汁", "Practise Sauce Emulsification and Finishing with Pasta"), guideRef("pasta-academy", "根据意面形状、酱汁与火候做选择", "Choose by Pasta Shape, Sauce and Cooking Time"), guideRef("dictionary-pasta-risotto", "认识长面、宽面与管状意面的区别", "Understand Long, Ribbon and Tubular Pasta Shapes"), guideRef("cooking-techniques", "掌握面水、火候与乳化的基础技巧", "Master Pasta Water, Timing and Emulsification")]);
 
@@ -492,6 +493,7 @@ function initLuxProductDetails() {
     currentProductId = id;
     const labels = copy();
     const content = productContentRules.find(([pattern]) => pattern.test(product.id))?.[1]
+      || (product.categories?.includes("caviar") || /(?:beluga|oscetra|caviar)/.test(product.id) ? caviarContent : null)
       || (product.categories?.includes("olive-oil") ? oliveContent : null)
       || (product.categories?.includes("pasta") ? pastaContent : null);
     const galleryImages = Array.from(new Set(galleryFor(product).filter(Boolean)));
