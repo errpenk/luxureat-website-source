@@ -88,7 +88,7 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
-  assert.match(home, /font-display:swap/);
+  assert.match(home, lang === "zh" ? /font-display:block/ : /font-display:swap/);
   assert.doesNotMatch(home, /rel="preload"[^>]+MaterialSymbolsOutlined-subset\.ttf/);
   const footer = home.match(/<footer class="lux-footer">[\s\S]*?<\/footer>/)?.[0] || "";
   assert.doesNotMatch(footer, /loading="lazy"/, "footer still delays its small local graphics");

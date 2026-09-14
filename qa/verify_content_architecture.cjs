@@ -261,7 +261,7 @@ assert(integrationStyles.includes('--lux-zh-body: "LuxurEat ZhiSong Site"') && r
 assert(integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols-outlined)::before') && integrationStyles.includes('html[lang^="zh"] body *:not(.material-symbols-outlined)::after') && integrationStyles.includes('font-family: inherit !important'), "Chinese generated content does not inherit the current typography");
 for (const file of require("node:fs").readdirSync("zh").filter((name) => name.endsWith(".html"))) {
   const page = read(`zh/${file}`);
-  assert(!/@font-face\{font-family:"KingHwa[^}]+font-display:swap/.test(page) && /@font-face\{font-family:"KingHwa[^}]+font-display:block/.test(page), `${file} can flash a fallback before KingHwa loads`);
+  assert(!/@font-face\{font-family:"(?:KingHwa|ZhiSong|LuxurEat ZhiSong)[^}]+font-display:swap/.test(page) && /@font-face\{font-family:"KingHwa[^}]+font-display:block/.test(page), `${file} can flash a fallback before Chinese fonts load`);
 }
 const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
 assert(registeredTextFonts.length === 0, "shared CSS still registers stale text fonts");
