@@ -3,6 +3,34 @@
   const academyImage = (file) => new URL(`media/academy/${file}`, assetBase).href;
   const baseArticles = [
     {
+      slug: "caviar-after-opening",
+      lang: "en",
+      eyebrow: "Caviar Academy",
+      title: "How to Keep Your Caviar at Its Best After Opening",
+      meta: "CAVIAR ACADEMY · 2026",
+      image: academyImage("caviar-after-opening-cover.webp"),
+      intro: "Opened your caviar but can’t finish it? Here’s how to keep it at its best.",
+      opening: [
+        "Caviar is exceptionally delicate. Once opened, exposure to air and changes in temperature can quickly affect its flavour, texture and freshness.",
+        "A few simple rules will help preserve its quality:",
+      ],
+      sections: [
+        ["Keep it very cold", ["Store caviar in the coldest part of your refrigerator, ideally between -2°C and +2°C. Never freeze it."]],
+        ["Use the right spoon", ["Choose a mother-of-pearl, horn, glass or suitable non-metallic spoon to enjoy the caviar without interfering with its delicate flavour."]],
+        ["Limit contact with air", ["After serving, gently place a piece of food-safe cling film directly over the surface of the remaining caviar, removing as much trapped air as possible. Then close the tin securely and return it immediately to the refrigerator."]],
+        ["Enjoy it quickly", ["Once opened, caviar is best consumed as soon as possible and generally within 2–3 days, provided it has been continuously and correctly refrigerated."]],
+        ["The golden rule", ["Cold temperature, minimal air exposure and careful handling.", "Because great caviar deserves to taste exactly as it should — until the very last spoonful."]],
+      ],
+      sectionMedia: [
+        [{ src: academyImage("caviar-after-opening-cold.webp"), alt: "Caviar served over ice to keep it cold" }],
+        [{ src: academyImage("caviar-after-opening-spoon.webp"), alt: "Non-metallic spoons beside a tin of caviar" }],
+        [{ src: academyImage("caviar-after-opening-care.webp"), alt: "Caviar prepared for careful serving" }],
+        [],
+        [],
+      ],
+      relatedSlugs: ["caviar-processing", "main-types-of-caviar", "baerii-caviar"],
+    },
+    {
       "slug": "baerii-caviar",
       "lang": "en",
       "eyebrow": "Caviar Academy",
@@ -651,6 +679,7 @@
     }
   ];
   const enSummaries = {
+    "caviar-after-opening": "A practical guide to keeping opened caviar cold, limiting air exposure, choosing suitable serving utensils and enjoying it within 2–3 days.",
     "baerii-caviar": "A practical introduction to Baerii caviar, from its fast maturation and accessible price to its compact grey-brown eggs and delicate briny character.",
     "beluga-caviar": "An overview of pure and hybrid Beluga, explaining its rarity, sensory profile, identification, history of luxury, and classic pairings.",
     "kaluga-amur-caviar": "A guide to Kaluga and Amur caviar, comparing their origins, maturity, egg size, golden-brown colour, and value as Beluga alternatives.",
@@ -663,6 +692,7 @@
   };
   const archives = {
     en: {
+      "caviar-after-opening": "Storage",
       "baerii-caviar": "Baerii",
       "beluga-caviar": "Beluga",
       "kaluga-amur-caviar": "Kaluga",
@@ -674,6 +704,7 @@
       "caviar-processing": "Processing",
     },
     zh: {
+      "caviar-after-opening": "开封保存",
       "baerii-caviar": "贝氏鲟",
       "beluga-caviar": "欧鳇",
       "kaluga-amur-caviar": "卡露伽",
@@ -686,6 +717,24 @@
     },
   };
   const zhArticles = {
+    "caviar-after-opening": {
+      eyebrow: "鱼子酱知识科普",
+      title: "鱼子酱开封后的保存方法",
+      meta: "鱼子酱知识科普 · 2026",
+      intro: "鱼子酱已经开封，但一次吃不完？以下是保持其最佳品质的方法。",
+      opening: [
+        "鱼子酱非常娇贵。一旦开封，接触空气以及温度变化都会很快影响它的风味、口感和新鲜度。",
+        "遵循以下几个简单的原则，可以帮助保持其品质：",
+      ],
+      sections: [
+        ["保持低温", ["将鱼子酱存放在冰箱中温度最低的位置，理想保存温度为 -2°C 至 +2°C。切勿冷冻。"]],
+        ["使用合适的勺子", ["选择珍珠母贝、牛角、玻璃或其他合适的非金属材质勺子，以免影响鱼子酱细腻的风味。"]],
+        ["尽量减少与空气接触", ["取用后，将一小片食品级保鲜膜轻轻直接覆盖在剩余鱼子酱的表面，并尽可能排出其中的空气。随后将罐子密封好，并立即放回冰箱冷藏。"]],
+        ["尽快食用", ["鱼子酱开封后最好尽快食用。在全程保持正确冷藏的情况下，一般建议在 2–3天内食用完毕。"]],
+        ["黄金法则", ["保持低温、尽量减少与空气接触，并小心保存。", "因为优质的鱼子酱，值得从第一勺到最后一勺，都保持它应有的美味。"]],
+      ],
+      asideSummary: "掌握开封鱼子酱的低温保存、减少空气接触、合适取用工具与 2–3 天食用期限。",
+    },
     "baerii-caviar": {
       eyebrow: "鱼子酱知识科普",
       title: "贝氏鲟鱼子酱",

@@ -82,6 +82,7 @@ function initLuxReader() {
     "allergens-guide": [recipeLink("family-zucchini-frittata", "通过西葫芦烘蛋识别鸡蛋与乳制品过敏原", "Identify Egg and Dairy Allergens in a Courgette Frittata"), productLink("product.html?product=white-truffle-sauce-80g", "查看白松露酱的配料与过敏原信息", "Review Ingredients and Allergens for White Truffle Sauce")],
     "baerii-caviar": [recipeLink("sweet-bread-butter-caviar", "用贝氏鲟鱼子酱完成黄油甜面包", "Finish Buttered Sweet Bread with Baerii Caviar")],
     "beluga-caviar": [recipeLink("sweet-bread-butter-caviar", "参考黄油与鱼子酱的经典呈现方式", "See a Classic Butter-and-Caviar Presentation")],
+    "caviar-after-opening": [recipeLink("sweet-bread-butter-caviar", "用黄油甜面包尽快享用开封后的鱼子酱", "Enjoy Opened Caviar Promptly with Buttered Sweet Bread")],
     "caviar-processing": [recipeLink("sweet-bread-butter-caviar", "观察轻盐鱼子酱在温热食谱中的使用", "Use Malossol Caviar in a Warm Recipe")],
     "china-italian-evo": [recipeLink("olive-pasta", "用蒜香意面理解橄榄油在中国家庭厨房的应用", "Use Garlic Pasta to Explore EVOO in Chinese Home Kitchens"), productLink("new.html#olive-oil", "查看即将推出的意大利橄榄油系列", "Explore the Upcoming Italian Olive Oil Range")],
     "china-italian-gelato": [recipeLink("gelato-classic", "在家制作基础意式手工冰淇淋", "Make a Classic Gelato Base at Home"), productLink("new.html#gelato", "查看意式手工冰淇淋新品计划", "Explore the Upcoming Gelato Range")],
