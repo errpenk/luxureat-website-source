@@ -4523,7 +4523,6 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   }
   .lux-event-reader {
     width: min(100% - 28px, 680px);
-    padding-top: 24px;
   }
   .lux-event-reader-index {
     position: static;

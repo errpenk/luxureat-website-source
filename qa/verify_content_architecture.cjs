@@ -119,7 +119,7 @@ assert(!marketServicesCss.includes('--lux-zh-headline:')
 assert(marketServicesCss.includes('--lux-en-display: "Nyght Serif";') && marketServicesCss.includes('--lux-en-body: "Spectral";'), "English market and service pages do not keep the Nyght/Spectral pairing");
 assert(!/Georgia|Times New Roman|Arial|sans-serif/.test(marketServicesCss), "China pages contain an unapproved fallback font");
 assert(!marketServicesCss.includes('[style*="margin-top:clamp"]'), "market-services.css still depends on inline-style string matching");
-assert(marketServicesCss.includes('market-shanghai-night.webp\") center 46% / cover fixed no-repeat') && !zhMarketPage.includes('market-shanghai-night.webp'), "Shanghai skyline does not remain fixed behind the market page");
+assert(marketServicesCss.includes('market-shanghai-night.webp\") center 46% / cover fixed no-repeat') && marketServicesCss.includes('background-image: url(\"../media/market-services/market-shanghai-night-mobile.webp\")') && marketServicesCss.includes('background-attachment: scroll') && marketServicesCss.includes('background-size: 100% auto') && !zhMarketPage.includes('market-shanghai-night.webp'), "Shanghai skyline is not fixed on desktop and reliably positioned on mobile");
 for (const cityAsset of ["shanghai", "beijing", "guangzhou", "shenzhen", "chengdu-chongqing"]) {
   assert(fs.existsSync(path.join(root, `assets/media/market-cities/${cityAsset}.svg`)), `missing city SVG: ${cityAsset}`);
   assert(marketServicesCss.includes(`../media/market-cities/${cityAsset}.svg`), `city SVG is not used: ${cityAsset}`);

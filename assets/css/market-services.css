@@ -451,6 +451,14 @@ html[lang="en"] .lux-market-growth .lux-ms-stat strong {
   inset: 0;
   background: linear-gradient(90deg, rgba(0, 0, 0, .58), rgba(0, 0, 0, .08) 50%, rgba(0, 0, 0, .5));
 }
+@media (max-width: 960px) {
+  .lux-market-banner {
+    background-image: url("../media/market-services/market-shanghai-night-mobile.webp");
+    background-attachment: scroll;
+    background-position: center;
+    background-size: 100% auto;
+  }
+}
 .lux-market-insights-page #italy-china-trade { background: #e9e6df; }
 .lux-market-insights-page #italian-wine > .lux-ms-shell > .lux-ms-eyebrow {
   display: block;

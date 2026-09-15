@@ -123,6 +123,7 @@ assert(css.includes(".lux-narrative-link"), "shared narrative link styling is mi
 assert(css.includes(".lux-recent-events"), "recent-events styling is missing");
 assert(css.includes(".lux-event-reader"), "event reader styling is missing");
 assert(/\.lux-event-reader \{[\s\S]*?padding: 72px 0;/.test(css), "event reader divider is not below the close control");
+assert(!/\.lux-event-reader \{[\s\S]{0,160}?padding-top: 24px;/.test(css), "mobile event reader pulls its divider into the close control");
 assert(/@media \(max-width: 640px\) \{[\s\S]*?\.lux-event-thumbnails \{[\s\S]*?justify-content: center;/.test(css), "mobile event thumbnails are not centred");
 assert(read("scripts/build-luxureat-theme.mjs").includes("luxureat_static_url('${route}')") && read("assets/js/core.js").includes('pageItems.some(([href]) => href === pairedPage)'), "detail-page language links are not preserved");
 assert(css.includes('.lux-lang > a.active') && css.includes("color: #005b55") && css.includes("filter: none"), "light-surface navigation does not keep black controls with only the current language green");
