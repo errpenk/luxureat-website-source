@@ -7,12 +7,14 @@ function initLuxReader() {
   window.luxResponsiveData?.(window.LUXUREAT_EVENT_DATA);
   const articles = articleData.articles || {};
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
+  const brandNews = window.LUXUREAT_BRAND_NEWS || [];
   const eventMount = document.querySelector("[data-recent-events]");
   const mapMount = document.querySelector("[data-exhibition-map]");
   const newsMount = document.querySelector("[data-news-center]");
   const aboutMount = document.querySelector("[data-about-story]");
   const recipeLibraryMount = document.querySelector("[data-recipe-library-app]");
   const eventHash = decodeURIComponent(location.hash).replace(/^#event-/, "");
+  const newsHash = decodeURIComponent(location.hash).replace(/^#news-/, "");
   const readerHash = decodeURIComponent(location.hash).replace(/^#reader-/, "");
   const triggers = document.querySelectorAll("[data-reader-open], [data-reader-archive], [data-event-open]");
   if (!triggers.length && !eventMount && !mapMount && !newsMount && !aboutMount && !recipeLibraryMount && !events.some((event) => event.id === eventHash)) return;
@@ -21,6 +23,9 @@ function initLuxReader() {
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
+  const formatTitle = (value) => lang === "en"
+    ? escapeHtml(value).replace(/([\u3400-\u9fff]+)/g, '<span lang="zh-CN">$1</span>')
+    : escapeHtml(value);
   const labels = () => document.documentElement.lang?.startsWith("zh")
     ? { back: "返回", close: "关闭", related: "延伸阅读", read: "阅读详情", archive: "往期随笔", note: "品鉴笔记", noteText: "温度、器具与节奏共同决定入口的第一层印象；真正的奢华来自克制而准确的服务。" }
     : { back: "Back", close: "Close", related: "Further Reading", read: "View Details", archive: "Archive", note: "Tasting Notes", noteText: "Temperature, service ware, and pacing shape the first impression; luxury is restraint made precise." };
@@ -247,8 +252,8 @@ function initLuxReader() {
     ? { kicker: "发布 LuxurEat（露意膳）参与的国际食品展会、行业活动与品牌展示信息，包括活动预告、展位安排、现场动态及展后回顾。", title: "展览活动", past: "过往活动", empty: "暂无过往活动", read: "查看详情" }
     : { kicker: "Updates on LuxurEat (露意膳) at international food fairs, industry events and brand showcases, including previews, stand information, live coverage and post-event reviews.", title: "Exhibitions & Events", past: "Past Events", empty: "No past events yet", read: "View details" };
   const newsLabels = lang === "zh"
-    ? { kicker: "聚焦 LuxurEat（露意膳）的品牌动态、新品发布、战略合作、市场拓展与企业发展，及时分享公司在高端食品领域的创新成果、业务进展及重要资讯。", title: "新闻中心", search: "搜索新闻", read: "阅读详情", empty: "没有找到相关内容" }
-    : { kicker: "Follow LuxurEat (露意膳) brand updates, product launches, strategic partnerships, market expansion and company development, with timely news on innovation and business progress in premium food.", title: "News Centre", search: "Search news", read: "Read more", empty: "No matching stories found" };
+    ? { kicker: "聚焦 LuxurEat（露意膳）的品牌动态、新品发布、战略合作、市场拓展与企业发展，及时分享公司在高端食品领域的创新成果、业务进展及重要资讯。", title: "新闻中心", read: "阅读详情" }
+    : { kicker: "Follow LuxurEat (露意膳) brand updates, product launches, strategic partnerships, market expansion and company development, with timely news on innovation and business progress in premium food.", title: "News Centre", read: "Read more" };
   const aboutArticle = articles[`${lang}-about`];
   const aboutLabels = lang === "zh"
     ? { title: "关于我们", journal: "品牌调查", story: "品牌故事", madeIn: "意大利制造", view: "查看大图", previous: "查看上一张图片", next: "查看下一张图片", slide: "左右滑动查看", close: "关闭", portrait: "Roberto Ugolini 肖像" }
@@ -294,7 +299,7 @@ function initLuxReader() {
               <img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}">
               <span class="lux-event-card-copy">
                 <small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small>
-                <strong>${escapeHtml(copy.articleTitle)}</strong>
+                <strong>${formatTitle(copy.articleTitle)}</strong>
                 <span>${escapeHtml(copy.intro)}</span>
                 <span class="lux-narrative-link">${eventLabels.read}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
               </span>
@@ -305,7 +310,7 @@ function initLuxReader() {
           <h3>${eventLabels.past}</h3>
           <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
-            return `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${escapeHtml(copy.articleTitle)}</strong></span></button>`;
+            return `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.articleTitle)}</strong></span></button>`;
           }).join("")}</div>
         </div>` : ""}
       </div>`;
@@ -403,58 +408,25 @@ function initLuxReader() {
 
   const renderNewsCenter = () => {
     if (!newsMount) return;
-    const story = lang === "zh" ? {
-      title: "CaviareEat Baerii 的产地与真实品质",
-      date: "2025年9月4日",
-      intro: "CaviareEat Baerii（西伯利亚鲟，Acipenser baerii）来自意大利、法国、德国与中国的精选养殖场，并以动物福利、可追溯性和环境可持续标准为基础。每一批产品均配有 CITES 文件并接受严格质量控制。",
-      sections: [
-        ["品鉴特征", "颜色从炭灰至深棕，并带有珍珠光泽；颗粒直径约 2.5–3.0 毫米。质地丝滑、奶油感细腻且富有弹性，风味优雅而持久，带有榛子、新鲜黄油与淡水气息。"],
-        ["适用渠道", "适合追求优雅与多用途鱼子酱的厨师及高端餐厅，也适用于甜咸创作、精品鸡尾酒、高端零售与私人品牌；Halal、Kosher 及有机市场可按需求提供相应方案。"],
-        ["享用方式", "经典搭配包括布里尼薄饼、酸奶油与水煮蛋；现代搭配可选择鞑靼、卡帕乔、生蚝或寿司；也可用于风味黄油、甜咸小食、白巧克力甜点，以及伏特加、金酒和柑橘浸泡酒等鸡尾酒。"],
-        ["规格与质量控制", "提供 1 千克原装罐，以及 10 克、30 克、50 克、125 克、250 克、500 克与 1 千克认证包装，可采用 CaviareEat 品牌或私人标签，全程冷链运输。所有批次遵循 HACCP、IFS 与 BRC 体系，并可按需求提供 Halal 与 Kosher 认证。"],
-      ],
-      closing: "CaviareEat Baerii 让鱼子酱在保持奢华感与可持续价值的同时更易融入专业餐饮与创意厨房。",
-      alt: "CaviareEat Royal Baerii 鱼子酱罐",
-    } : {
-      title: "Origin and Authenticity of CaviareEat Baerii",
-      date: "September 4, 2025",
-      intro: "Our Baerii caviar (Acipenser baerii) comes from selected farms in Italy, France, Germany, and China, all operating under exacting standards of animal welfare, traceability, and environmental sustainability. Every package is supported by CITES documentation and strict quality controls.",
-      sections: [
-        ["Tasting profile", "Its colour ranges from anthracite grey to deep brown with pearly reflections. The 2.5–3.0 mm eggs are silky, creamy and firm, with a delicate yet persistent flavour recalling hazelnut, fresh butter and freshwater notes."],
-        ["Who it is for", "CaviareEat Baerii suits chefs and gourmet restaurants seeking elegant versatility, pastry chefs and mixologists creating sweet-savoury dishes or premium cocktails, private-label and high-end retail programmes, and Halal, Kosher or organic markets on request."],
-        ["How to serve it", "Serve it traditionally on blinis with sour cream or hard-boiled egg; pair it with tartare, carpaccio, oysters or sushi; or use it in flavoured butter, sweet-savoury finger food, white-chocolate desserts, vodka, gin, citrus infusions and artisanal bitters."],
-        ["Formats and quality control", "Formats include an original 1 kg tin and certified 10 g, 30 g, 50 g, 125 g, 250 g, 500 g and 1 kg packs, under the CaviareEat label or private label, delivered through a complete cold chain. Every batch follows HACCP, IFS and BRC protocols, with Halal and Kosher certification available on request."],
-      ],
-      closing: "CaviareEat Baerii makes caviar more accessible and versatile without compromising luxury, safety or sustainability.",
-      alt: "CaviareEat Royal Baerii caviar tin",
-    };
-    const storyId = `${lang}-caviareat-baerii-news`;
-    articles[storyId] = {
-      lang,
-      eyebrow: newsLabels.title,
-      title: story.title,
-      meta: `CaviareEat · ${story.date}`,
-      image: luxJournalAsset("media/events/caviareat-baerii-news.png"),
-      intro: story.intro,
-      sections: story.sections,
-      quote: story.closing,
-      column: newsLabels.title,
-      archive: "CaviareEat",
-      related: [],
-    };
+    const stories = brandNews
+      .filter((item) => item[lang])
+      .sort((a, b) => b.date.localeCompare(a.date));
     newsMount.innerHTML = `
       <div class="lux-recent-events-inner">
         <header class="lux-recent-events-head"><span>${newsLabels.kicker}</span><h2>${newsLabels.title}</h2></header>
-        <div class="lux-recent-events-latest">
-          <button type="button" class="lux-event-card lux-news-feature" data-reader-open="${storyId}">
-            <img loading="lazy" decoding="async" src="${escapeHtml(luxJournalAsset("media/events/caviareat-baerii-news.png"))}" alt="${escapeHtml(story.alt)}">
+        <div class="lux-news-grid">
+          ${stories.map((item, index) => {
+            const story = item[lang];
+            return `<button type="button" class="lux-event-card lux-news-card${index === 0 ? " lux-news-feature" : ""}" data-news-open="${escapeHtml(item.id)}">
+            <img loading="lazy" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(story.title)}">
             <span class="lux-event-card-copy">
-              <small>${escapeHtml(story.date)} · CaviareEat</small>
+              <small>${escapeHtml(story.date)} · ${escapeHtml(story.category)}</small>
               <strong>${escapeHtml(story.title)}</strong>
               <span>${escapeHtml(story.intro)}</span>
               <span class="lux-narrative-link">${escapeHtml(newsLabels.read)}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
             </span>
-          </button>
+          </button>`;
+          }).join("")}
         </div>
       </div>`;
   };
@@ -868,21 +840,23 @@ function initLuxReader() {
     showReader(copy);
   };
 
-  const renderEvent = (id) => {
+  const renderEvent = (id, push = false, preserveStack = false) => {
     const event = events.find((item) => item.id === id);
     const article = event?.[lang];
     if (!event || !article) return;
-    stack.length = 0;
+    if (push && currentId) stack.push(currentId);
+    else if (!preserveStack) stack.length = 0;
     archiveOrigin = false;
     currentId = `event:${id}`;
     const copy = labels();
+    const relatedNews = brandNews.filter((story) => story.eventId === id && story[lang]);
     const allEvents = events.map((item) => ({ item, copy: item[lang] })).filter(({ copy: itemCopy }) => itemCopy);
     body.innerHTML = `
       <article class="lux-event-reader">
         <header class="lux-event-reader-intro">
           <div>
             <p>${escapeHtml(article.eyebrow)} / ${escapeHtml(article.category)}</p>
-            <h2 id="lux-reader-title">${escapeHtml(article.articleTitle)}</h2>
+            <h2 id="lux-reader-title">${formatTitle(article.articleTitle)}</h2>
           </div>
           <p>${escapeHtml(article.intro)}</p>
         </header>
@@ -898,15 +872,57 @@ function initLuxReader() {
               <div>
                 ${article.sections.map(([heading, text]) => `<section><h3>${escapeHtml(heading)}</h3><p>${escapeHtml(text)}</p></section>`).join("")}
                 <blockquote>${escapeHtml(article.quote)}</blockquote>
+                ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<button type="button" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></button>`).join("")}</nav>` : ""}
               </div>
             </div>
           </section>
           <aside class="lux-event-reader-index">
             <div><h3>${lang === "zh" ? "所有活动" : "All Events"}</h3><span>${String(allEvents.length).padStart(2, "0")}</span></div>
-            ${allEvents.map(({ item, copy: itemCopy }, index) => `<button type="button" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${escapeHtml(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span><small>${String(index + 1).padStart(2, "0")}</small></button>`).join("")}
+            ${allEvents.map(({ item, copy: itemCopy }, index) => `<button type="button" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${formatTitle(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span><small>${String(index + 1).padStart(2, "0")}</small></button>`).join("")}
           </aside>
         </div>
       </article>`;
+    history.replaceState(null, "", `#event-${encodeURIComponent(id)}`);
+    showReader(copy);
+  };
+
+  const renderBrandNews = (id, push = false, preserveStack = false) => {
+    const item = brandNews.find((story) => story.id === id);
+    const article = item?.[lang];
+    if (!item || !article) return;
+    if (push && currentId) stack.push(currentId);
+    else if (!preserveStack) stack.length = 0;
+    archiveOrigin = false;
+    currentId = `news:${id}`;
+    const copy = labels();
+    const linkedEvent = events.find((event) => event.id === item.eventId);
+    const renderMedia = (entry) => {
+      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${escapeHtml(lang === "zh" ? "视频来源：arsial.lazio" : "Video source: arsial.lazio")}</figcaption></figure>`;
+      const alt = entry.alt?.[lang] || article.title;
+      return `<figure class="lux-brand-news-media"><button type="button" data-reader-image="${escapeHtml(entry.src)}" aria-label="${escapeHtml(lang === "zh" ? `放大查看：${alt}` : `View full size: ${alt}`)}"><img loading="lazy" decoding="async" src="${escapeHtml(entry.src)}" alt="${escapeHtml(alt)}"></button></figure>`;
+    };
+    body.innerHTML = `
+      <article class="lux-brand-news-reader">
+        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}"></figure>
+        <div class="lux-brand-news-sheet">
+          <header>
+            <p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p>
+            <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
+            <p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>
+            ${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)} ↗</a>` : ""}
+          </header>
+          <div class="lux-brand-news-copy">
+            ${article.opening.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+            ${article.sections.map(([heading, paragraphs, sectionMedia = []]) => `<section>
+              <h3>${escapeHtml(heading)}</h3>
+              ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+              ${sectionMedia.map(renderMedia).join("")}
+            </section>`).join("")}
+            ${linkedEvent ? `<button type="button" class="lux-brand-news-event-link" data-event-open="${escapeHtml(linkedEvent.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${formatTitle(linkedEvent[lang].articleTitle)}</strong></span><span aria-hidden="true">→</span></button>` : ""}
+          </div>
+        </div>
+      </article>`;
+    history.replaceState(null, "", `#news-${encodeURIComponent(id)}`);
     showReader(copy);
   };
 
@@ -926,7 +942,7 @@ function initLuxReader() {
     archiveOrigin = false;
     currentId = "";
     backButton.hidden = true;
-    if (location.hash.startsWith("#event-") || location.hash.startsWith("#reader-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
+    if (location.hash.startsWith("#event-") || location.hash.startsWith("#news-") || location.hash.startsWith("#reader-")) history.replaceState(null, "", `${location.pathname}${location.search}`);
   };
 
   const imageLightbox = document.createElement("dialog");
@@ -935,10 +951,16 @@ function initLuxReader() {
   document.body.appendChild(imageLightbox);
 
   document.addEventListener("click", (event) => {
+    const newsTrigger = event.target.closest("[data-news-open]");
+    if (newsTrigger) {
+      event.preventDefault();
+      renderBrandNews(newsTrigger.dataset.newsOpen, !reader.hidden && reader.contains(newsTrigger));
+      return;
+    }
     const eventTrigger = event.target.closest("[data-event-open]");
     if (eventTrigger) {
       event.preventDefault();
-      renderEvent(eventTrigger.dataset.eventOpen);
+      renderEvent(eventTrigger.dataset.eventOpen, !reader.hidden && reader.contains(eventTrigger));
       return;
     }
     const archive = event.target.closest("[data-reader-archive]");
@@ -1003,6 +1025,8 @@ function initLuxReader() {
   backButton.addEventListener("click", () => {
     const previous = stack.pop();
     if (previous === "__archive") renderArchive(false);
+    else if (previous?.startsWith("event:")) renderEvent(previous.slice(6), false, true);
+    else if (previous?.startsWith("news:")) renderBrandNews(previous.slice(5), false, true);
     else if (previous) render(previous, false);
     else window.LuxureatBackInternalLink?.();
   });
@@ -1012,6 +1036,7 @@ function initLuxReader() {
   });
   if (location.hash === "#archive") renderArchive(false);
   else if (events.some((event) => event.id === eventHash)) renderEvent(eventHash);
+  else if (brandNews.some((story) => story.id === newsHash)) renderBrandNews(newsHash);
   else if (articles[readerHash]) open(readerHash);
   else if (requestedRecipe && articles[`${lang}-recipe-${requestedRecipe}`]) open(`${lang}-recipe-${requestedRecipe}`);
 }

@@ -59,6 +59,13 @@ const productRuntime = fs.readFileSync(path.join(root, "assets/js/products.js"),
 const coreRuntime = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 const integrationCss = fs.readFileSync(path.join(root, "integration.css"), "utf8");
 assert(integrationCss.includes("html:has(body.lux-reader-open)") && integrationCss.includes("overscroll-behavior: contain"), "article reader does not isolate scrolling from the background page");
+assert(
+  integrationCss.includes("Navigation interaction contract: state changes color only")
+    && integrationCss.includes("color: #fff !important;")
+    && integrationCss.includes("color: #9df5ec !important;")
+    && integrationCss.includes("transition: color .18s ease !important;"),
+  "shared navigation does not lock interaction feedback to white/Tiffany color only",
+);
 const academyIndex = fs.readFileSync(path.join(root, "assets/data/academy-index.js"), "utf8");
 const linkedRuntimes = `${journalRuntime}\n${productRuntime}`;
 const directRecipeSlugs = [...linkedRuntimes.matchAll(/recipe\.html\?recipe=([a-z0-9-]+)/g)].map(([, slug]) => slug);

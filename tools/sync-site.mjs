@@ -186,7 +186,6 @@ function deferHeroVideos(html) {
 }
 
 function fontPreloads(page) {
-  const useNyghtOnChinesePage = page.lang === "zh" && ["news", "market-insights", "import-export"].includes(page.key);
   const zhCritical = {
     home: ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-home-subset.woff2"],
     journal: ["KingHwaOldSong-journal-critical.woff2", "LuxurEatZhiSong-journal-critical.woff2"],
@@ -227,7 +226,11 @@ function fontPreloads(page) {
       ["LuxurEatZhiSong-site.woff2", "LuxurEat ZhiSong Site", 400, "normal", false],
     ]
     : page.key === "home"
-      ? [["NyghtSerif-home-critical.woff2", "Nyght Serif", 400], ["Spectral-home-critical.woff2", "Spectral", 400]]
+      ? [
+        ["NyghtSerif-home-critical.woff2", "Nyght Serif", 400],
+        ["Spectral-home-critical.woff2", "Spectral", 400],
+        ["Spectral-SemiBold-market.woff2", "Spectral", 600],
+      ]
       : [
         ["NyghtSerif-Regular.woff2", "Nyght Serif", 400],
         ["Spectral-Regular.woff2", "Spectral", 400],
@@ -237,13 +240,6 @@ function fontPreloads(page) {
         ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
         ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
       ];
-  if (useNyghtOnChinesePage) {
-    fonts.unshift(
-      ["NyghtSerif-Regular.woff2", "Nyght Serif", 400],
-      ["NyghtSerif-RegularItalic.woff2", "Nyght Serif", 400, "italic", false],
-      ["NyghtSerif-Bold.woff2", "Nyght Serif", 700, "normal", false],
-    );
-  }
   if (page.lang === "en" && ["home", "products", "bag"].includes(page.key)) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
   }
@@ -251,8 +247,12 @@ function fontPreloads(page) {
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
     ...(page.key === "market-insights" ? [
-      `<link rel="preload" href="../assets/media/market-services/china-market-hero-mobile.webp?v=${assetVersion}" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
-      `<link rel="preload" href="../assets/media/market-services/china-market-hero.webp?v=${assetVersion}" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
+      `<link rel="preload" href="../assets/media/market-services/china-market-hero-mobile.webp" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
+      `<link rel="preload" href="../assets/media/market-services/china-market-hero.webp" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
+    ] : []),
+    ...(page.key === "import-export" ? [
+      `<link rel="preload" href="../assets/media/market-services/china-services-hero-mobile.webp" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
+      `<link rel="preload" href="../assets/media/market-services/china-services-hero.webp" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
     ] : []),
     ...preloadFonts.map(([font]) => `<link rel="preload" href="../assets/fonts/${font}?v=${versionFor(font)}" as="font" type="font/woff2" crossorigin>`),
     ...(["home", "market-insights"].includes(page.key) ? [] : [`<link rel="preload" href="../assets/fonts/MaterialSymbolsOutlined-subset.ttf?v=${assetVersion}" as="font" type="font/ttf" crossorigin>`]),
@@ -265,10 +265,9 @@ function fontPreloads(page) {
   const headlineFonts = page.key === "products"
     ? '"KingHwa Page Critical","KingHwa Labels Critical","KingHwa Old Song Site"'
     : '"KingHwa Page Critical","KingHwa Old Song Site"';
-  const latinPrefix = useNyghtOnChinesePage ? '"Nyght Serif",' : "";
   const localeFonts = page.lang === "zh" ? page.key === "market-insights"
-    ? `html[lang^="zh"]{--lux-page-heading:${latinPrefix}"KingHwa Market Hero Critical","KingHwa Market Critical"!important;--lux-zh-headline:${latinPrefix}"KingHwa Market Hero Critical","KingHwa Market Critical"!important;--lux-zh-body:${latinPrefix}"LuxurEat ZhiSong Site"!important}`
-    : `html[lang^="zh"]{--lux-page-heading:${latinPrefix}${headlineFonts}!important;--lux-zh-headline:${latinPrefix}${headlineFonts}!important;--lux-zh-body:${latinPrefix}"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}${page.key === "home" ? 'html[lang^="zh"] .lux-home-hero{--lux-zh-headline:"KingHwa Hero Critical","KingHwa Page Critical","KingHwa Old Song Site"}html[lang^="zh"] body :is(.lux-header,.lux-home-hero,.lux-cookie-banner) :is(p,a,span,button){font-family:"ZhiSong Hero Critical","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : ""}` : "";
+    ? `html[lang^="zh"]{--lux-page-heading:"KingHwa Market Hero Critical","KingHwa Market Critical"!important;--lux-zh-headline:"KingHwa Market Hero Critical","KingHwa Market Critical"!important;--lux-zh-body:"LuxurEat ZhiSong Site"!important}`
+    : `html[lang^="zh"]{--lux-page-heading:${headlineFonts}!important;--lux-zh-headline:${headlineFonts}!important;--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}${page.key === "home" ? 'html[lang^="zh"] .lux-home-hero{--lux-zh-headline:"KingHwa Hero Critical","KingHwa Page Critical","KingHwa Old Song Site"}html[lang^="zh"] body :is(.lux-header,.lux-home-hero,.lux-cookie-banner) :is(p,a,span,button){font-family:"ZhiSong Hero Critical","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important}' : ""}` : "";
   return `<!-- lux:fonts:start -->\n${links}\n<style data-lux-critical-fonts>${faces}${localeFonts}</style>\n<!-- lux:fonts:end -->`;
 }
 

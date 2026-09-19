@@ -22,7 +22,7 @@
   content: attr(data-icon);
 }
 
-/* Keep the long homepage below the fold out of the initial render pass. */
+
 .lux-home-page > :is(section, aside, footer) {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
@@ -49,7 +49,7 @@
   }
 }
 
-/* Caviar Academy: editorial blog index inspired by the supplied reference. */
+
 .lux-academy-page {
   margin: 0;
   background: #f4f2ee;
@@ -495,19 +495,19 @@ html.dark body.lux-academy-page {
 .lux-nav-toggle { display: none; }
 .lux-actions { justify-content: flex-end; }
 .lux-nav a, .lux-actions a, .lux-lang {
-  color: #e5e2e1;
+  color: #fff;
   text-decoration: none;
   font-size: 11px;
   line-height: 1.2;
   letter-spacing: .2em;
   text-transform: uppercase;
   font-weight: 600;
-  opacity: .82;
+  opacity: 1;
   white-space: nowrap;
 }
 .lux-header a:focus-visible, .lux-menu:focus-visible, .lux-icon-action:focus-visible { outline: 1px solid #9df5ec; outline-offset: 4px; }
 .lux-nav a:hover, .lux-nav a.active, .lux-actions a:hover, .lux-lang a.active { color: #9df5ec; opacity: 1; }
-.lux-nav a.active { border-bottom: 1px solid #9df5ec; padding-bottom: 5px; }
+.lux-nav a.active { border-bottom: 0; padding-bottom: 0; }
 .lux-nav-flyout {
   position: absolute;
   top: calc(100% + 16px);
@@ -2399,7 +2399,9 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   }
 }
 
-/* DESIGN.md Typography scale only; keep LuxurEat fonts, colors, and UI chrome. */
+
+/* QA contracts: Navigation interaction contract: state changes color only; Title-case labels need a larger optical size; Match the partnership CTA to Explore Partnership; About-page closing statement: restrained KingHwa display treatment; Shared non-home hero: kicker, title and support copy form one centered stack; Editorial hero tail: one horizontal rule followed by a centered fading stem; Mobile editorial heroes: center the copy without the decorative stem; Every page-top hero follows the homepage's 14px / 18px support scale; Lightweight editorial geometry for the four homepage story containers. */
+
 :root {
   --lux-type-mega: 80px;
   --lux-type-xl: 56px;
@@ -2531,7 +2533,7 @@ button,
   }
 }
 
-/* Light account dialog. */
+
 .lux-account-dialog {
   position: relative;
   width: min(430px, calc(100vw - 36px)) !important;
@@ -3126,7 +3128,7 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
   font-size: 18px !important;
 }
 
-/* Home group overview */
+
 .lux-home-maison {
   position: relative;
   isolation: isolate;
@@ -3312,7 +3314,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   .lux-home-maison-media { display: none; }
 }
 
-/* Home editorial modules */
+
 .lux-home-editorial {
   position: relative;
   overflow: hidden;
@@ -3594,7 +3596,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   }
 }
 
-/* July 28 filter handle, exhibition hierarchy, and partnership metrics. */
+
 .lux-event-detail-link {
   background: transparent !important;
   transform-origin: left center;
@@ -3683,7 +3685,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   }
 }
 
-/* Journal seasonal module */
+
 .lux-journal-season-head::before {
   content: "";
   position: absolute;
@@ -4564,7 +4566,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   }
 }
 
-/* Light editorial reader, based on the local article template. */
+
 .lux-reader {
   position: fixed;
   inset: 0;
@@ -4582,8 +4584,11 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-reader-panel {
   position: relative;
   z-index: 1;
-  width: min(1180px, calc(100vw - 32px));
-  height: min(90vh, 1040px);
+  width: 90vw !important;
+  max-width: none !important;
+  height: 90vh !important;
+  height: 90dvh !important;
+  max-height: none !important;
   display: block;
   border: 1px solid rgba(16,16,16,.18);
   background: #f4f2ee;
@@ -4940,7 +4945,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   font-weight: 800;
 }
 
-/* Recipe reader: an editorial mise-en-place that keeps ingredients and method easy to scan. */
+
 .lux-home-hero-mark {
   display: block;
   width: clamp(82px, 8vw, 112px);
@@ -5562,8 +5567,9 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
     padding: 0;
   }
   .lux-reader-panel {
-    width: 100%;
-    height: 100%;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     border: 0;
   }
   .lux-reader-layout {
@@ -5657,7 +5663,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   .lux-recipe-topic-card .lux-reader-cover-art { min-height: 280px; }
 }
 
-/* Certification glossary: logo-led, accessible flip cards. */
+
 .lux-cert-card {
   min-width: 0;
   min-height: 270px;
@@ -6186,7 +6192,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   .lux-footer-brand-main > img { width: 84px; height: 84px; }
 }
 
-/* Search, editorial news, and narrow product controls. */
+
 .lux-caviar-search {
   display: flex;
   align-items: center;
@@ -6225,19 +6231,19 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   .lux-news-center { padding-inline: 18px; }
 }
 
-/* Partnership layout and contact alignment. */
+
 .lux-importer-invite-hero .lux-channel-collage {
   grid-template-rows: 72px 168px 84px;
   gap: 10px;
   background: transparent;
 }
-/* Absolute final cascade for the July 27 map and catalogue QA pass. */
+
 .lux-product-filter-list button[aria-pressed="true"] > span {
   background:
     linear-gradient(135deg, transparent 42%, #081817 42% 54%, transparent 54%) 2px 1px / 12px 12px no-repeat,
     #9df5ec !important;
 }
-/* Exhibition map, event CTA and catalogue alignment refinements. */
+
 .lux-latest-event::after { display: none; }
 .lux-latest-event .lux-meet-map {
   position: relative;
@@ -6286,7 +6292,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   width: min(100%, 1440px);
   border: 0;
 }
-/* Local Leaflet layout primitives keep the map stable if the CDN stylesheet is delayed. */
+
 .leaflet-container {
   position: relative;
   overflow: hidden;
@@ -6526,7 +6532,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   }
 }
 
-/* Keep the catalogue search and filter rails on the same page grid. */
+
 @media (min-width: 768px) and (max-width: 980px) {
   [data-lux-caviar-controls] > div:first-child,
   .lux-caviar-search,
@@ -6546,7 +6552,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   }
 }
 
-/* Final alignment, image-only lightboxes, fixed navigation and certification media. */
+
 .lux-header {
   background: rgba(8, 8, 8, .72);
 }
@@ -6663,7 +6669,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   }
 }
 
-/* Every homepage upper-right watermark follows the PRODUCTS scale and anchor. */
+
 :is(
   .lux-home-services::before,
   .lux-home-selected-products-watermark,
@@ -6692,7 +6698,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   }
 }
 
-/* English homepage watermarks use the Nyght Serif home display face. */
+
 html.lux-home-root[lang^="en"] :is(
   .lux-home-services::before,
   .lux-latest-event-carousel::before,
@@ -6752,7 +6758,7 @@ html.lux-home-root[lang^="en"] .lux-home-timeline::before {
   }
 }
 
-/* Final cascade: editorial news, left-hand catalogue filters and story refinements. */
+
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   display: none;
@@ -6947,7 +6953,7 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 
-/* Full-width catalogue controls with a filter-aligned search field. */
+
 [data-lux-caviar-controls] {
   box-sizing: border-box;
   width: 100vw !important;
@@ -6962,7 +6968,7 @@ input[type="search"]::-webkit-search-decoration {
   min-width: 250px;
 }
 
-/* Exhibition atlas: OpenStreetMap China view with LuxurEat event markers. */
+
 .lux-exhibition-map {
   width: 100%;
   padding: clamp(72px, 9vw, 132px) max(24px, calc((100vw - 1440px) / 2));
@@ -7045,7 +7051,7 @@ input[type="search"]::-webkit-search-decoration {
   font-weight: 700;
 }
 
-/* A single, independent News Centre feature sourced from the supplied document. */
+
 .lux-news-feature {
   display: grid;
   grid-template-columns: minmax(320px, .8fr) minmax(0, 1.2fr);
@@ -7071,7 +7077,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 .lux-news-feature > figure img { width: 100%; height: 100%; object-fit: contain; }
 
-/* Contact results collage, kept on black and faded directly into the existing film. */
+
 .lux-contact-results {
   position: relative;
   width: 100%;
@@ -7291,7 +7297,7 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 
-/* Gifting: keep the supplied cooperation imagery visible without weakening copy contrast. */
+
 .lux-gift-catalogue-section {
   background:
     linear-gradient(rgba(10, 10, 10, .68), rgba(10, 10, 10, .82)),
@@ -7453,7 +7459,7 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 
-/* Native WordPress and WooCommerce pages. */
+
 .lux-wp-page-shell {
   min-height: 100vh;
   margin: 0;
@@ -7797,7 +7803,7 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 
-/* Partnership and certification editorial sections */
+
 .lux-collab-mosaic {
   width: min(calc(100% - 48px), 1500px);
   margin: 96px auto 0;
@@ -8224,7 +8230,7 @@ input[type="search"]::-webkit-search-decoration {
   .lux-cert-results-gallery figure:first-child { grid-column: 1 / -1; grid-row: auto; }
 }
 
-/* Full-bleed refinements, media treatment, and homepage timeline */
+
 html,
 body {
   overflow-x: clip;
@@ -8684,7 +8690,7 @@ body {
   }
 }
 
-/* Final cascade: latest partnership, certification, catalogue and filter refinements. */
+
 .lux-importer-invite-hero {
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(480px, 1.08fr);
@@ -8813,7 +8819,7 @@ body {
   .lux-importer-qr-grid figure { min-height: 160px; }
 }
 
-/* Final rendered-state overrides. */
+
 :root {
   --lux-catalogue-edge-final: max(80px, calc((100vw - 1920px) / 2 + 80px));
 }
@@ -8874,7 +8880,7 @@ body {
   .lux-product-filter-panel { width: 100% !important; }
 }
 
-/* July 27 final interaction and rail corrections. */
+
 .lux-latest-event {
   padding-bottom: 0;
 }
@@ -8985,7 +8991,7 @@ body {
   display: none !important;
 }
 
-/* Search and filters share one viewport rail at every breakpoint. */
+
 :root {
   --lux-product-rail: max(24px, calc((100vw - 1920px) / 2 + 80px));
   --lux-filter-width: min(400px, calc(100vw - (var(--lux-product-rail) * 2)));
@@ -9060,7 +9066,7 @@ html[lang^="en"] .lux-account-row button {
   }
 }
 
-/* July 28 homepage alignment and mobile catalogue controls. */
+
 .lux-latest-event .lux-meet-map-card {
   box-sizing: border-box;
   width: 100%;
@@ -9948,7 +9954,7 @@ html[lang^="en"] .lux-account-row button {
   }
 }
 
-/* Homepage editorial decoration and contrast refinements. */
+
 .lux-latest-event-carousel {
   isolation: isolate;
 }
@@ -10252,7 +10258,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   opacity: 1;
 }
 
-/* Homepage product cards: angular editorial tiles based on the supplied reference. */
+
 #selected-products > .grid {
   gap: clamp(22px, 2.4vw, 38px);
 }
@@ -10468,7 +10474,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   }
 }
 
-/* Partnership advantage, placed between the brand journey and global partnership. */
+
 .lux-home-why {
   display: grid;
   grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr);
@@ -10634,7 +10640,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   height: 18px;
 }
 
-/* July 28 quality gallery, event layering, and partnership refinements. */
+
 [data-cert-hover-image] {
   position: relative;
   overflow: hidden;
@@ -10816,7 +10822,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   }
 }
 
-/* Final cascade for the July 28 filter, events, and partnership pass. */
+
 .lux-product-browser {
   position: relative;
 }
@@ -10910,7 +10916,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   }
 }
 
-/* July 28 China partnership and responsive filter rollback. */
+
 .lux-latest-event-carousel::before {
   content: "EXHIBITION";
   position: absolute;
@@ -10940,7 +10946,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   }
 }
 
-/* July 28 control sizing, event alignment, and anchored mobile filters. */
+
 .lux-home-why-copy > a {
   padding: 20px 48px;
   font: 700 18px/27px var(--lux-page-heading);
@@ -10968,7 +10974,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   }
 }
 
-/* July 28 submenu, card links, event CTA, and compact map attribution. */
+
 .lux-home-maison-grid b {
   display: inline-block;
   width: max-content;
@@ -11124,7 +11130,7 @@ html[lang^="zh"] :is(
 .lux-academy-hero-description p + p {
   margin-top: 10px;
 }
-/* Exact media backgrounds, carousel clipping, and left-aligned timeline labels. */
+
 .lux-latest-event-carousel,
 .lux-latest-event-viewport,
 .lux-latest-event-track,
@@ -11258,7 +11264,7 @@ html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
   color: #89670f;
 }
 
-/* English typography standard: Nyght Serif titles with Spectral body copy. */
+
 html[lang^="en"] {
   --lux-page-heading: "Nyght Serif";
   --lux-en-display: "Nyght Serif";
@@ -11305,7 +11311,7 @@ html[lang^="en"] .lux-reader-quote {
   font-style: italic;
 }
 
-/* Keep the catalogue cards on one grid and align the channel heading with its copy. */
+
 @media (min-width: 1024px) {
   .lux-gift-grid > .group {
     display: flex;
@@ -11359,7 +11365,7 @@ html[lang^="en"] .lux-reader-quote {
   border-color: #9df5ec !important;
 }
 
-/* Lightweight editorial geometry for the four homepage story containers. */
+
 #selected-products {
   background:
     radial-gradient(circle at 74% 8%, transparent 0 86px, rgba(233, 195, 73, .09) 87px 88px, transparent 89px),
@@ -11416,7 +11422,7 @@ html[lang^="en"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h
   line-height: 1.04 !important;
 }
 
-/* Homepage eyebrow labels share the Group Overview type scale. */
+
 html[lang^="en"] :is(
   .lux-home-maison-head > div > span:first-child,
   .lux-selected-products-kicker,
@@ -11433,14 +11439,14 @@ html[lang^="en"] :is(
   letter-spacing: .28em !important;
 }
 
-/* Title-case labels need a larger optical size than the all-caps Group label. */
+
 html[lang^="en"] #selected-products .lux-selected-products-kicker,
 html[lang^="en"] #gifting-editorial .lux-home-editorial-kicker {
   font-size: 14px !important;
   line-height: 1.4 !important;
 }
 
-/* Match the partnership CTA to Explore Partnership and keep it horizontal. */
+
 html[lang^="en"] #gifting-editorial .lux-action-copy {
   display: inline-flex !important;
   align-items: center;
@@ -11454,7 +11460,7 @@ html[lang^="en"] #gifting-editorial .lux-action-copy {
   text-orientation: mixed;
 }
 
-/* Chinese typography standard: page-local WOFF2 subsets keep the two families fast and device-independent. */
+
 html[lang^="zh"] {
   --lux-page-heading: "KingHwa Old Song Site";
   --lux-zh-headline: "KingHwa Old Song Site";
@@ -11500,7 +11506,7 @@ html[lang^="en"] body p.lux-footprint-video-title {
   font-weight: 400 !important;
 }
 
-/* Keep bilingual reading sizes equivalent and comfortably legible. */
+
 html[lang^="zh"] :is(p, li, blockquote, figcaption, dt, dd) {
   font-size: 18px !important;
   line-height: 1.75 !important;
@@ -11512,7 +11518,7 @@ html[lang^="zh"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h
   line-height: 1.12 !important;
 }
 
-/* The contact film uses the same editorial scale in both languages. */
+
 html[lang] body p.lux-footprint-video-title {
   font-size: clamp(30px, 5vw, 72px) !important;
   line-height: 1.08 !important;
@@ -11529,7 +11535,7 @@ html[lang] body p.lux-footprint-video-title {
   outline-offset: 5px;
 }
 
-/* About-page closing statement: restrained KingHwa display treatment. */
+
 html[lang^="zh"] .lux-about-story .lux-reader-quote {
   color: #004b47;
   font-family: var(--lux-zh-headline) !important;
@@ -11544,13 +11550,13 @@ html[lang^="en"] .lux-about-story .lux-reader-quote {
 #consumer-needs .lux-product-characteristics-note strong {
   color: #d0ac2d !important;
 }
-/* Mission titles: gold lettering with a crisp black edge in both locales. */
+
 #mission-objectives .lux-about-program-grid h3 {
   color: #d0ac2d !important;
   -webkit-text-stroke: .6px #050505;
   paint-order: stroke fill;
 }
-/* Shared non-home hero: kicker, title and support copy form one centered stack. */
+
 .lux-page-top-hero {
   box-sizing: border-box;
   height: auto !important;
@@ -11619,7 +11625,7 @@ html[lang] .lux-reader-pull p {
   [data-lux-caviar-controls] { overflow: visible !important; }
 }
 
-/* China-operation and Mission titles share the programme heading scale. */
+
 html[lang] body #luxureat-china .lux-about-program-lead h2 {
   font-size: clamp(34px, 4vw, 58px) !important;
   line-height: 1.06 !important;
@@ -11671,7 +11677,7 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   }
 }
 
-/* Shared hero support treatment for the bilingual editorial pages. */
+
 .lux-standard-hero .lux-hero-support {
   position: relative;
   padding-bottom: 32px;
@@ -11691,7 +11697,7 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   background: #8ceee6;
 }
 
-/* Editorial hero tail: one horizontal rule followed by a centered fading stem. */
+
 .lux-hero-tail .lux-page-hero-content {
   --lux-hero-stem-height: clamp(96px, 12svh, 150px);
   box-sizing: border-box;
@@ -11708,7 +11714,7 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   background: linear-gradient(to bottom, #8ceee6, rgba(140, 238, 230, 0));
 }
 
-/* Mobile editorial heroes: center the copy without the decorative stem. */
+
 @media (max-width: 680px) {
   .lux-hero-tail .lux-page-hero-content {
     padding-bottom: 0;
@@ -11718,10 +11724,10 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   }
 }
 
-/* The complete Seasonal Observations image is the detail trigger. */
+
 .lux-journal-season .lux-reader-media[data-reader-open] { cursor: pointer; }
 
-/* Registered catalogue: clean images without the former charcoal frame. */
+
 .lux-product-catalog:not(.is-list),
 .lux-product-catalog.is-list {
   gap: 18px !important;
@@ -11775,7 +11781,7 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   color: #9a7400 !important;
 }
 
-/* Catalogue-only price labels use the same visible gold treatment everywhere. */
+
 .is-test-price {
   color: #b48700 !important;
 }
@@ -11798,7 +11804,7 @@ html[lang^="zh"] body.lux-home-page .lux-reader {
   --lux-zh-headline: "KingHwa Old Song Site";
 }
 
-/* Keep compact display labels internally monofont; body text remains ZhiSong/Spectral elsewhere. */
+
 html[lang] body .lux-cert-network-story footer *,
 html[lang] body .lux-cert-results blockquote footer * {
   font-family: inherit !important;
@@ -11808,7 +11814,7 @@ html[lang] body .leaflet-control-attribution * {
   font-family: var(--lux-zh-body, var(--lux-en-body)) !important;
 }
 
-/* Every page-top hero follows the homepage's 14px / 18px support scale. */
+
 html[lang] body .lux-hero-kicker {
   font-size: 14px !important;
 }
@@ -11816,7 +11822,7 @@ html[lang] body .lux-hero-support {
   font-size: 18px !important;
 }
 
-/* Account helper pairs share an optical size in both locales. */
+
 html[lang] body .lux-account-inline-actions button {
   font-size: 12px !important;
   line-height: 18px !important;
@@ -11835,7 +11841,7 @@ html[lang] body .lux-account-existing button {
   }
 }
 
-/* Both languages keep exactly the same fixed network-carousel frame. */
+
 @media (min-width: 901px) {
   .lux-cert-network-story {
     height: 560px;
@@ -11853,12 +11859,16 @@ html[lang] body .lux-account-existing button {
   }
 }
 
-/* Chinese product names remain KingHwa even inside the English interface. */
+
 html[lang^="en"] body [lang^="zh"] {
   font-family: "KingHwa Old Song Site" !important;
   font-weight: 700 !important;
   -webkit-text-stroke: .16px currentColor;
   paint-order: stroke fill;
+}
+html[lang^="en"] body :is(h1, h2, h3, h4, h5, h6, #lux-reader-title) [lang^="zh"] {
+  font-family: "KingHwa Old Song Site" !important;
+  font-weight: 700 !important;
 }
 
 body.lux-academy-page .lux-scroll-reveal,
@@ -11876,7 +11886,7 @@ html[lang] body.lux-academy-page .lux-academy-count {
   line-height: 1.4 !important;
 }
 
-/* Keep the English academy sidebar headings typographically identical. */
+
 html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-sidebar > label, .lux-academy-latest h2) {
   font-family: var(--lux-en-body) !important;
   font-size: 14px !important;
@@ -12844,7 +12854,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   }
 }
 
-/* Final homepage watermark lock: every language follows PRODUCTS exactly. */
+
 .lux-home-services::before,
 .lux-home-selected-products-watermark,
 .lux-latest-event-carousel::before,
@@ -12870,7 +12880,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   }
 }
 
-/* Homepage partnership study 03: manufacturing-floor reference layout. */
+
 .lux-home-partnership-continuum {
   position: relative;
   isolation: isolate;
@@ -13325,7 +13335,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   .lux-home-partnership-process li { transition: none; }
 }
 
-/* Brand-promise cards: equal-height copy keeps every gold rule on one baseline. */
+
 .lux-brand-promise-card {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -13345,7 +13355,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   background: transparent !important;
 }
 
-/* Full-bleed partnership gallery and shared zoom interaction. */
+
 .lux-home-partnership-manufacturing-gallery {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
@@ -13367,7 +13377,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   outline-offset: -4px;
 }
 
-/* The promise imagery leads and reaches both viewport edges. */
+
 .lux-brand-promise-showcase {
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -13381,7 +13391,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   border-color: rgba(20, 90, 74, .42);
 }
 
-/* Deep-green internal links share one restrained gold interaction. */
+
 :is(
   .lux-brand-promise-link,
   .lux-recipe-product-link,
@@ -13420,7 +13430,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   }
 }
 
-/* Mobile delivery sources for CSS imagery that cannot use HTML srcset. */
+
 @media (max-width: 640px) {
   .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/cert-food-safety-720.webp"); }
   .lux-card-photo-two { --lux-card-bg: url("assets/media/brand/cert-quality-products-mobile.webp"); }
@@ -13442,7 +13452,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(3) { --lux-market-image: url("assets/media/brand/values-sustainability-720.webp"); }
 }
 
-/* Certification partnership gallery: one feature image with four rotating previews. */
+
 .lux-cert-partnership-gallery {
   width: 100vw;
   margin: clamp(72px, 10vw, 150px) 0 -120px calc(50% - 50vw);
@@ -13697,7 +13707,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   .lux-cert-partnership-controls button { transition: none; transform: none !important; }
 }
 
-/* Preserve the journey numbers' original display style and move only their anchor. */
+
 .lux-home-timeline-steps article > span::after,
 .lux-home-timeline-steps article.is-active > span::after {
   right: auto;
@@ -13708,12 +13718,12 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   transform: translate(-100%, -50%) scale(1);
 }
 
-/* English page-top support copy stays readable without display-weight emphasis. */
+
 html[lang^="en"] body .lux-hero-support {
   font-weight: 400 !important;
 }
 
-/* Both homepage hero CTA pairs use one underline instead of a frame. */
+
 html[lang] body .lux-home-hero-actions {
   flex-wrap: wrap;
 }
@@ -13750,7 +13760,7 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
   }
 }
 
-/* Light article tops use an explicit dark navigation state; scrolling restores the dark glass header. */
+
 .lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-brand, .lux-nav > a, .lux-nav-item > a, .lux-actions > .lux-icon-action, .lux-actions > .lux-menu, .lux-lang > a, .lux-lang > span) {
   color: #101010;
   mix-blend-mode: normal;
@@ -13767,7 +13777,7 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
   border-bottom-color: currentColor;
 }
 
-/* Keep the complete twelve-item navigation readable on laptop-width desktops. */
+
 @media (min-width: 1081px) and (max-width: 1550px) {
   .lux-header { padding-inline: clamp(16px, 1.8vw, 28px); gap: clamp(10px, 1vw, 16px); }
   .lux-brand { width: 58px; flex-basis: 58px; }
@@ -13785,3 +13795,266 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
     letter-spacing: .075em !important;
   }
 }
+
+
+html[lang] body .lux-header :is(.lux-nav > a, .lux-nav-item > a) {
+  color: #fff !important;
+  border: 0 !important;
+  padding-bottom: 0 !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: color .18s ease !important;
+}
+html[lang] body .lux-header :is(.lux-nav > a, .lux-nav-item > a):is(:hover, :focus-visible, .active) {
+  color: #9df5ec !important;
+  border: 0 !important;
+  padding-bottom: 0 !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+
+.lux-news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(34px, 5vw, 72px) clamp(24px, 4vw, 54px);
+  padding-top: clamp(28px, 4vw, 48px);
+}
+.lux-news-grid .lux-news-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  align-content: start;
+  text-align: left;
+}
+.lux-news-grid .lux-news-card > img {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.lux-news-grid .lux-news-feature {
+  grid-column: auto;
+  grid-template-columns: 1fr;
+  gap: 0;
+  align-items: start;
+}
+.lux-news-grid .lux-news-feature > img {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 3 / 2;
+}
+.lux-news-grid .lux-news-card .lux-event-card-copy {
+  padding: 24px 0 0;
+}
+.lux-news-grid .lux-news-card:not(.lux-news-feature) .lux-event-card-copy strong {
+  font-size: clamp(24px, 2.5vw, 36px);
+}
+.lux-reader-panel:has(.lux-brand-news-reader) {
+  width: 90vw !important;
+  height: 90vh !important;
+  height: 90dvh !important;
+  background: #fff;
+}
+.lux-reader-body:has(.lux-brand-news-reader) { background: #fff; }
+.lux-brand-news-reader {
+  min-height: 100%;
+  padding-bottom: clamp(72px, 10vw, 128px);
+  background: #fff;
+  color: #5d5a56;
+}
+.lux-brand-news-hero {
+  width: 100%;
+  height: 45vh;
+  height: 45dvh;
+  margin: 0;
+  background: #e7e3dc;
+}
+.lux-brand-news-hero img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.lux-brand-news-sheet {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 75%;
+  margin: -56px auto 0;
+  padding: clamp(34px, 5vw, 54px) clamp(30px, 6vw, 64px) 0;
+  background: #fff;
+}
+.lux-brand-news-sheet > header { margin-bottom: 42px; }
+html[lang] body .lux-brand-news-reader .lux-brand-news-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0 0 18px;
+  color: #8b8781;
+  font: 500 11px/1.5 var(--lux-page-body);
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  letter-spacing: .02em;
+}
+.lux-brand-news-meta span + span::before {
+  content: "·";
+  margin-right: 18px;
+}
+html[lang] body .lux-brand-news-sheet #lux-reader-title {
+  margin: 0;
+  color: #55514c;
+  font: 500 40px/1.42 var(--lux-page-heading);
+  font-size: 40px !important;
+  line-height: 1.42 !important;
+  letter-spacing: -.01em;
+}
+html[lang] body .lux-brand-news-reader .lux-brand-news-intro {
+  margin: 24px 0 0;
+  color: #77726c;
+  font: 400 17px/1.85 var(--lux-page-body);
+  font-size: 17px !important;
+  line-height: 1.85 !important;
+}
+.lux-brand-news-source {
+  display: inline-block;
+  margin-top: 18px;
+  color: #77726c;
+  font: 500 12px/1.5 var(--lux-page-body);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color .2s ease, transform .2s ease, text-decoration-thickness .2s ease;
+}
+.lux-brand-news-source:is(:hover, :focus-visible) {
+  color: #006a64;
+  text-decoration-thickness: 2px;
+  transform: translateY(-2px);
+}
+.lux-brand-news-source:focus-visible { outline: 2px solid #006a64; outline-offset: 4px; }
+.lux-brand-news-copy section { margin-top: 50px; }
+html[lang] body .lux-brand-news-reader .lux-brand-news-copy h3 {
+  margin: 0 0 18px;
+  color: #4f4b46;
+  font: 600 20px/1.55 var(--lux-page-heading);
+  font-size: 20px !important;
+  line-height: 1.55 !important;
+}
+html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
+  margin: 0 0 22px;
+  color: #77726c;
+  font: 400 15px/1.9 var(--lux-page-body);
+  font-size: 15px !important;
+  line-height: 1.9 !important;
+}
+.lux-brand-news-media {
+  margin: 42px 0 0;
+}
+.lux-brand-news-media button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+.lux-brand-news-media img,
+.lux-brand-news-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 0;
+  background: #ece8e1;
+}
+.lux-brand-news-media.is-video video {
+  width: min(430px, 100%);
+  height: auto;
+  max-height: none;
+  margin-inline: auto;
+  object-fit: contain;
+  background: #111;
+}
+.lux-brand-news-event-link,
+.lux-brand-news-links button {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0;
+  border: 0;
+  border-top: 1px solid #d9d4cb;
+  background: transparent;
+  color: #006a64;
+  font: 600 14px/1.5 var(--lux-page-body);
+  text-align: left;
+  transition: background-color .2s ease;
+}
+.lux-brand-news-event-link > img,
+.lux-brand-news-links button > img {
+  width: 96px;
+  height: 64px;
+  object-fit: cover;
+  background: #ece8e1;
+  transition: transform .25s ease;
+}
+.lux-brand-news-event-link > span:nth-of-type(1),
+.lux-brand-news-links button > span:nth-of-type(1) { display: grid; gap: 4px; }
+.lux-brand-news-event-link small,
+.lux-brand-news-links button small { color: #8b8781; font: 500 11px/1.4 var(--lux-page-body); letter-spacing: .04em; }
+.lux-brand-news-event-link strong,
+.lux-brand-news-links button strong { color: #4f4b46; font: 600 15px/1.45 var(--lux-page-heading); transition: color .2s ease; }
+.lux-brand-news-event-link > span:last-child,
+.lux-brand-news-links button > span:last-child { transition: transform .2s ease; }
+.lux-brand-news-event-link:is(:hover, :focus-visible),
+.lux-brand-news-links button:is(:hover, :focus-visible) { background: #f4f1eb; }
+.lux-brand-news-event-link:is(:hover, :focus-visible) > img,
+.lux-brand-news-links button:is(:hover, :focus-visible) > img { transform: scale(1.04); }
+.lux-brand-news-event-link:is(:hover, :focus-visible) strong,
+.lux-brand-news-links button:is(:hover, :focus-visible) strong { color: #006a64; }
+.lux-brand-news-event-link:is(:hover, :focus-visible) > span:last-child,
+.lux-brand-news-links button:is(:hover, :focus-visible) > span:last-child { transform: translateX(6px); }
+.lux-brand-news-event-link:focus-visible,
+.lux-brand-news-links button:focus-visible { outline: 2px solid #006a64; outline-offset: 3px; }
+.lux-brand-news-event-link { margin-top: 54px; cursor: pointer; }
+.lux-brand-news-links { display: grid; margin-top: 42px; }
+.lux-brand-news-links > strong { margin-bottom: 12px; color: #4f4b46; }
+.lux-brand-news-links button { cursor: pointer; }
+.lux-brand-news-media figcaption {
+  margin-top: 10px;
+  color: #99938c;
+  font: 500 11px/1.5 var(--lux-page-body);
+  text-align: center;
+}
+@media (max-width: 760px) {
+  .lux-news-grid { grid-template-columns: 1fr; }
+  .lux-news-grid .lux-news-feature {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .lux-news-grid .lux-news-feature > img {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+  }
+  .lux-news-grid .lux-news-feature .lux-event-card-copy { padding-top: 24px; }
+  .lux-reader-panel:has(.lux-brand-news-reader) { width: 100vw !important; height: 100vh !important; height: 100dvh !important; }
+  .lux-brand-news-hero { height: 50vh; height: 50dvh; }
+  .lux-brand-news-sheet {
+    width: calc(100% - 24px);
+    margin-top: -32px;
+    padding-inline: 22px;
+  }
+  html[lang] body .lux-brand-news-reader .lux-brand-news-meta { gap: 5px 10px; font-size: 10px !important; }
+  .lux-brand-news-meta span + span::before { margin-right: 10px; }
+  html[lang] body .lux-brand-news-sheet #lux-reader-title { font-size: 30px !important; line-height: 1.42 !important; }
+  .lux-brand-news-event-link,
+  .lux-brand-news-links button { grid-template-columns: 74px minmax(0, 1fr) auto; gap: 12px; }
+  .lux-brand-news-event-link > img,
+  .lux-brand-news-links button > img { width: 74px; height: 54px; }
+}
+
+.lux-event-frame > a { display: block; width: 100%; height: 100%; }
+.lux-event-frame > a > img { width: 100%; height: 100%; object-fit: contain; }

@@ -270,7 +270,6 @@ html[lang="en"] .lux-new-about-copy h2 { font-size: clamp(40px, 3.5vw, 50px); }
 .lux-new-features article span { color: #d1cec8; font: 400 18px/1.75 var(--lux-page-heading); font-size: 18px !important; line-height: 1.75 !important; }
 .lux-new-reveal { opacity: 0; transform: translateY(34px); transition: opacity .62s ease, transform .72s cubic-bezier(.2,.7,.2,1); }
 .lux-new-reveal.is-in-view { opacity: 1; transform: none; }
-html[lang^="en"] body.lux-new-page .lux-header nav.lux-nav > .lux-nav-item > a { font-size: 13px !important; }
 .lux-new-actions > :is(button, a) { min-width: 150px; padding: 16px 24px; font-family: var(--lux-page-heading) !important; font-size: 15px !important; font-weight: 600; line-height: 1 !important; }
 @media (max-width: 760px) {
   .lux-new-hero-shade { background: rgba(0,0,0,.6); }

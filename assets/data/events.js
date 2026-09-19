@@ -5,6 +5,71 @@
   window.LUXUREAT_EVENT_DATA = {
     events: [
       {
+        id: "roma-bar-show-2026",
+        type: "exhibition",
+        image: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
+        cardImage: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
+        previewImage: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
+        poster: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
+        displayPoster: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
+        displayWidth: 820,
+        displayHeight: 547,
+        thumbnail: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
+        calendar: asset("roma-bar-show-2026.ics"),
+        mapQuery: "Roma Convention Center La Nuvola, Rome, Italy",
+        coordinates: [12.4686, 41.8319],
+        startDate: "2026-09-14",
+        endDate: "2026-09-15",
+        zh: {
+          posterAlt: "Roma Bar Show 2026，罗马 La Nuvola",
+          title: "LuxurEat亮相Roma Bar Show。",
+          articleTitle: "LuxurEat亮相Roma Bar Show。",
+          eyebrow: "活动回顾",
+          date: "2026年9月14日至15日",
+          dateIso: "2026.09.14–15",
+          location: "La Nuvola，罗马，意大利",
+          city: "罗马",
+          category: "国际展会",
+          paragraphs: ["LuxurEat携旗下TRUFFLEAT与CAVIAREAT亮相Roma Bar Show，与饮品、调酒及餐饮行业的专业人士共同探索高品质食材在现代Mixology与国际餐饮场景中的更多可能。"],
+          intro: "Roma Bar Show汇聚饮品、调酒与餐饮行业的企业、专业人士和创新趋势。LuxurEat在ARSIAL与Regione Lazio支持的拉齐奥联合展团中展示TRUFFLEAT与CAVIAREAT。",
+          sections: [
+            ["Roma Bar Show", "作为饮品与Mixology领域的重要国际活动，Roma Bar Show为意大利食品企业与国际餐饮、酒吧及饮品市场建立了直接交流的平台。"],
+            ["TRUFFLEAT与CAVIAREAT", "LuxurEat以松露、鱼子酱及相关高端食材产品，展示其在餐饮、酒吧与Mixology场景中的多元应用。"],
+            ["品质与食品包容性", "联合展团也关注无麸质产品、食品安全与更具包容性的消费体验，让品质、风味和安全在专业场景中得到共同呈现。"]
+          ],
+          quote: "连接意大利优质食品产业与国际饮品、餐饮及酒店市场。",
+          tagline: "The Luxury of Taste, Made in Italy.",
+          closing: "查看对应品牌新闻与现场视频。",
+          detail: "查看详情",
+          mapTitle: "打开地图导航",
+          calendarTitle: "添加到日历"
+        },
+        en: {
+          posterAlt: "Roma Bar Show 2026 at La Nuvola in Rome",
+          title: "LuxurEat(露意膳) at Roma Bar Show",
+          articleTitle: "LuxurEat(露意膳) at Roma Bar Show",
+          eyebrow: "Event Review",
+          date: "September 14–15, 2026",
+          dateIso: "14–15.09.2026",
+          location: "La Nuvola, Rome, Italy",
+          city: "Rome",
+          category: "International Exhibition",
+          paragraphs: ["LuxurEat presented TRUFFLEAT and CAVIAREAT at Roma Bar Show, exploring new possibilities for premium ingredients across contemporary mixology and international hospitality."],
+          intro: "Roma Bar Show brings together companies, professionals and innovation from the beverage, mixology and hospitality industries. With the support of ARSIAL and Regione Lazio, LuxurEat joined the Lazio collective pavilion with TRUFFLEAT and CAVIAREAT.",
+          sections: [
+            ["Roma Bar Show", "A major international event for beverages and mixology, Roma Bar Show creates direct connections between Italian food businesses and international hospitality, bar and beverage markets."],
+            ["TRUFFLEAT and CAVIAREAT", "LuxurEat presented truffle, caviar and related gourmet products while demonstrating their applications across restaurants, bars and modern mixology."],
+            ["Quality and food inclusivity", "The collective pavilion also highlighted gluten-free production, food safety and more inclusive experiences, bringing quality, flavour and safety together in a professional setting."]
+          ],
+          quote: "Connecting Italian food excellence with international beverage, hospitality and foodservice markets.",
+          tagline: "The Luxury of Taste, Made in Italy.",
+          closing: "View the related Brand News article and event video.",
+          detail: "View details",
+          mapTitle: "Open map directions",
+          calendarTitle: "Add to calendar"
+        }
+      },
+      {
         id: "fhc-shanghai-2026",
         type: "exhibition",
         image: asset("media/events/fhc-shanghai-2026.webp"),
@@ -126,8 +191,8 @@
         },
         en: {
           posterAlt: "LuxurEat (露意膳) at the 11th China International Food & Catering Expo",
-          title: "Italian flavor meets Changsha.",
-          articleTitle: "Italian flavor meets Changsha.",
+          title: "Italian flavor meets Changsha",
+          articleTitle: "Italian flavor meets Changsha",
           eyebrow: "Recent Event",
           date: "September 18–20, 2026",
           dateIso: "18–20.09.2026",

@@ -1,4 +1,4 @@
-export const assetVersion = "20260915-past-events-62";
+export const assetVersion = "20260919-brand-news-63";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -72,7 +72,7 @@ export const pages = [
   page("zh", "product", "products", ["product-data", "products"]),
   page("zh", "new", "new", ["journal-data", "journal", "new-arrivals"]),
   page("zh", "recipe", "rituals", ["journal-data", "journal"]),
-  page("zh", "brand", "news", ["event-data", "journal-data", "journal"]),
+  page("zh", "brand", "news", ["event-data", "brand-news-data", "journal-data", "journal"]),
   page("zh", "blog", "blog", ["academy-index", "academy"]),
   page("zh", "certification", "certification", ["certification-ui"]),
   page("zh", "cooperation", "gifting", ["brand-data", "brand"]),
@@ -85,7 +85,7 @@ export const pages = [
   page("en", "product", "products", ["product-data", "products"]),
   page("en", "new", "new", ["journal-data", "journal", "new-arrivals"]),
   page("en", "recipe", "rituals", ["journal-data", "journal"]),
-  page("en", "brand", "news", ["event-data", "journal-data", "journal"]),
+  page("en", "brand", "news", ["event-data", "brand-news-data", "journal-data", "journal"]),
   page("en", "blog", "blog", ["academy-index", "academy"]),
   page("en", "certification", "certification", ["certification-ui"]),
   page("en", "cooperation", "gifting", ["brand-data", "brand"]),
@@ -102,6 +102,7 @@ export const scripts = {
   "import-export-ui": { src: "assets/js/import-export.js", dependencies: [] },
   "product-data": { src: "assets/data/products.js", dependencies: [] },
   "event-data": { src: "assets/data/events.js", dependencies: [] },
+  "brand-news-data": { src: "assets/data/brand-news.js", dependencies: [] },
   "journal-data": { src: "assets/data/journal.js", dependencies: [] },
   "academy-index": { src: "assets/data/academy-index.js", dependencies: [] },
   "brand-data": { src: "assets/data/brand.js", dependencies: [] },

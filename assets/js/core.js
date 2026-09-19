@@ -494,14 +494,27 @@ document.querySelectorAll("[data-cert-media-carousel]").forEach((carousel) => {
   if (slides.length < 2) return;
   let index = 0;
   let timer;
+  let visible = false;
+  const syncVideo = () => slides.forEach((slide, slideIndex) => {
+    if (!(slide instanceof HTMLVideoElement)) return;
+    if (visible && !document.hidden && slideIndex === index) {
+      slide.preload = "auto";
+      slide.play().catch(() => {});
+    } else slide.pause();
+  });
   const show = (next) => {
     index = (next + slides.length) % slides.length;
-    slides.forEach((slide, slideIndex) => slide.classList.toggle("is-active", slideIndex === index));
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === index;
+      slide.classList.toggle("is-active", active);
+      slide.setAttribute("aria-hidden", String(!active));
+    });
+    syncVideo();
   };
   const stop = () => window.clearInterval(timer);
   const start = () => {
     stop();
-    if (!matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches) timer = window.setInterval(() => show(index + 1), 4000);
+    if (visible && !(slides[index] instanceof HTMLVideoElement) && !matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)").matches) timer = window.setInterval(() => show(index + 1), 4000);
   };
   carousel.querySelector("[data-cert-media-prev]")?.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -519,7 +532,23 @@ document.querySelectorAll("[data-cert-media-carousel]").forEach((carousel) => {
   carousel.addEventListener("focusout", (event) => {
     if (!carousel.contains(event.relatedTarget)) start();
   });
-  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+  slides.filter((slide) => slide instanceof HTMLVideoElement).forEach((video) => video.addEventListener("ended", () => {
+    if (video !== slides[index]) return;
+    show(index + 1);
+    start();
+  }));
+  if ("IntersectionObserver" in window) new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    syncVideo();
+    if (visible) start();
+    else stop();
+  }, { threshold: .15 }).observe(carousel);
+  else visible = true;
+  document.addEventListener("visibilitychange", () => {
+    syncVideo();
+    if (document.hidden) stop();
+    else start();
+  });
   show(0);
   start();
 });
@@ -1080,7 +1109,7 @@ function initLuxPartnershipLightbox() {
       const currentImage = trigger.matches("img")
         ? trigger
         : trigger.querySelector("[data-cert-media-slide].is-active") || trigger.querySelector("img");
-      if (!currentImage) return;
+      if (!currentImage || currentImage instanceof HTMLVideoElement) return;
       lightboxImage.src = currentImage.currentSrc || currentImage.src;
       lightboxImage.alt = currentImage.alt;
       dialog.showModal();

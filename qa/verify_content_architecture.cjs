@@ -24,6 +24,7 @@ const localMedia = (value) => String(value || "")
 for (const file of [
   "assets/data/products.js",
   "assets/data/events.js",
+  "assets/data/brand-news.js",
   "assets/data/journal.js",
   "assets/data/academy-index.js",
   "assets/data/brand.js",
@@ -37,6 +38,7 @@ for (const file of [
 
 const products = load("assets/data/products.js", "LUXUREAT_PRODUCT_DATA");
 const events = load("assets/data/events.js", "LUXUREAT_EVENT_DATA");
+const brandNews = load("assets/data/brand-news.js", "LUXUREAT_BRAND_NEWS");
 const journal = load("assets/data/journal.js", "LUXUREAT_ARTICLE_DATA");
 const recipeProductCategories = new Set(["caviar", "truffle", "olive-oil", "pizza", "gelato"]);
 const recipeLinkedProductCategories = new Set([...recipeProductCategories, "pasta"]);
@@ -113,9 +115,9 @@ const zhNewsPage = read("zh/brand.html");
 const zhMarketPage = read("zh/china-market-insights.html");
 const zhServicesPage = read("zh/import-export-services.html");
 assert(!marketServicesCss.includes('--lux-zh-headline:')
-  && [zhNewsPage, zhMarketPage, zhServicesPage].every((page) => page.includes('@font-face{font-family:"Nyght Serif"') && page.includes('--lux-zh-body:"Nyght Serif",'))
-  && zhMarketPage.includes('--lux-page-heading:"Nyght Serif","KingHwa Market Hero Critical","KingHwa Market Critical"!important')
-  && zhServicesPage.includes('--lux-zh-body:"Nyght Serif","ZhiSong Page Critical","LuxurEat ZhiSong Site"!important'), "Chinese news, market and service pages do not use Nyght for Latin text with their page-specific KingHwa/ZhiSong fallbacks");
+  && [zhNewsPage, zhMarketPage, zhServicesPage].every((page) => !page.includes('@font-face{font-family:"Nyght Serif"') && !page.includes('--lux-zh-body:"Nyght Serif",'))
+  && zhMarketPage.includes('--lux-page-heading:"KingHwa Market Hero Critical","KingHwa Market Critical"!important')
+  && zhServicesPage.includes('--lux-zh-body:"ZhiSong Page Critical","LuxurEat ZhiSong Site"!important'), "Chinese news, market and service pages do not keep their page-specific KingHwa/ZhiSong families free of Nyght mixing");
 assert(marketServicesCss.includes('--lux-en-display: "Nyght Serif";') && marketServicesCss.includes('--lux-en-body: "Spectral";'), "English market and service pages do not keep the Nyght/Spectral pairing");
 assert(!/Georgia|Times New Roman|Arial|sans-serif/.test(marketServicesCss), "China pages contain an unapproved fallback font");
 assert(!marketServicesCss.includes('[style*="margin-top:clamp"]'), "market-services.css still depends on inline-style string matching");
@@ -187,8 +189,15 @@ assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM C
 assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
 assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
 assert(!/https:\/\/webapi\.amap\.com\//.test(journalRuntime), "legacy AMap loader is still present");
-assert(journalRuntime.includes("caviareat-baerii-news.png"), "independent News Centre article is missing");
-assert(journalRuntime.includes('data-reader-open="${storyId}"') && !journalRuntime.includes("story.sections.map"), "News Centre preview does not open a separate article");
+assert(brandNews.length === 7 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
+const romaNews = brandNews.find((item) => item.id === "roma-bar-show-2026");
+assert(romaNews?.video.endsWith("roma-bar-show-2026.mp4") && romaNews.cardImage.endsWith("roma-bar-show-2026-cover.webp"), "Roma Bar Show article does not use the supplied video and cover");
+assert(romaNews?.videoPoster.endsWith("roma-bar-show-2026-video-poster.jpg") && romaNews.videoWidth === 1080 && romaNews.videoHeight === 1920, "Roma Bar Show video poster or native dimensions are incomplete");
+assert(brandNews.filter((item) => item.eventId).length === 6 && journalRuntime.includes("lux-brand-news-event-link") && journalRuntime.includes("lux-brand-news-links"), "Brand News and Exhibitions & Events are not cross-linked");
+assert(brandNews.filter((item) => item.eventId).every((item) => events.events.some((event) => event.id === item.eventId)), "a Brand News event link has no matching shared event record");
+assert(journalRuntime.includes('data-news-open="${escapeHtml(item.id)}"') && journalRuntime.includes("renderBrandNews"), "News Centre previews do not open separate articles");
+assert(!journalRuntime.includes("data-news-search-form") && !journalRuntime.includes("data-news-search-text"), "removed Brand News search UI is still present");
+assert(journalRuntime.includes("preserveStack") && journalRuntime.includes('previous?.startsWith("event:")') && journalRuntime.includes('previous?.startsWith("news:")'), "Brand News and event links do not preserve modal back navigation");
 assert(journalRuntime.includes("archiveOrigin") && journalRuntime.includes("render(archived.dataset.readerArchiveItem, false)"), "archive close/back navigation state is missing");
 assert(journalRuntime.includes("data-reader-image") && journalRuntime.includes("imageLightbox.showModal()"), "article inline-image lightbox is missing");
 assert(journalRuntime.includes('"品牌调查"'), "Chinese journal label is not localized");
@@ -222,6 +231,8 @@ assert(engagementRuntime.includes('panel.classList.toggle("is-legal", isLegal)')
 assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
+assert(integrationStyles.includes("width: 90vw !important;") && integrationStyles.includes("height: 90dvh !important;") && integrationStyles.includes("width: 100vw !important;") && integrationStyles.includes("height: 100dvh !important;"), "article dialogs do not use one enforced desktop size and full-screen mobile sizing");
+assert(integrationStyles.includes("height: 45dvh;") && integrationStyles.includes("object-fit: contain;") && integrationStyles.includes("width: 75%;"), "Brand News hero or article-sheet proportions are incomplete");
 assert(integrationStyles.includes(".lux-home-process-card-link::after") && integrationStyles.includes('content: "查看详情  →"') && integrationStyles.includes('content: "View Details  →"'), "homepage process cards are missing their visible bilingual detail affordance");
 assert(/\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close\s*\{[^}]*top:\s*12px;[^}]*right:\s*14px;[^}]*border-color:\s*#101010;[^}]*border-width:\s*\.5px;/s.test(integrationStyles), "legal dialog close position or border does not match the blog reader close control");
 assert(/\.lux-reader-close:active,[\s\S]*?\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close:hover,[\s\S]*?background:\s*#9df5ec;[\s\S]*?box-shadow:\s*inset 0 0 0 1px #101010;[\s\S]*?transform:\s*none;/s.test(integrationStyles), "legal dialog close interaction does not reuse the blog reader close interaction");
@@ -367,6 +378,7 @@ assert((zhLeadership.match(/<figure data-cert-hover-image data-partnership-image
 assert(zhCertification.indexOf('id="cert-leadership-title-zh"') < zhCertification.indexOf('id="certification-glossary"'), "industry leadership must appear above Quality & Certification");
 assert(zhCertification.includes("px-margin-mobile md:px-margin-desktop") && enCertification.includes("px-margin-mobile md:px-margin-desktop"), "certification main container still uses desktop padding on mobile");
 assert((zhCertification.match(/data-cert-media-carousel/g) || []).length >= 2, "certification image carousels are incomplete");
+assert(zhCertification.includes("quality-production-mobile.m4v") && enCertification.includes("quality-production-mobile.m4v") && read("assets/js/core.js").includes("const syncVideo"), "certification carousel video or viewport playback control is missing");
 assert(zhCertification.includes("data-cert-quote-prev") && zhCertification.includes("data-cert-quote-next"), "certification quote controls are missing");
 assert(!zhCertification.includes('aria-label="全球合作图片导航"') && !enCertification.includes('aria-label="Global partnership image navigation"'), "duplicate image-side quote controls remain");
 assert(read("assets/js/certification-ui.js").includes('main.removeAttribute("srcset")') && read("assets/js/certification-ui.js").includes("main.srcset = preview.srcset"), "partnership gallery does not replace the responsive main-image source");

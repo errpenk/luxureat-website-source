@@ -89,5 +89,5 @@ assert(pageStyles.includes("width: min(1280px, calc(100% - 48px))") && pageStyle
 assert(pageStyles.includes("width: 100%; height: 100%; object-fit: cover; object-position: center"), "production-line images do not fully cover their media frames");
 assert(pageStyles.includes(".lux-new-features article::after") && pageStyles.includes("inset: -1px") && pageStyles.includes("linear-gradient(to top, #0f0f10 0 18%") && pageStyles.includes(".lux-new-features article img { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover"), "feature-card images, masks or black lower edge are incomplete");
 assert(pageStyles.includes("font-size: 15px !important") && pageStyles.includes("min-width: 150px"), "new-arrivals actions are not uniformly enlarged");
-assert(pageStyles.includes("html[lang^=\"en\"] body.lux-new-page .lux-header nav.lux-nav > .lux-nav-item > a { font-size: 13px !important; }"), "English header navigation does not match the locale size");
+assert(!pageStyles.includes("body.lux-new-page .lux-header nav.lux-nav"), "New Arrivals must not override the shared header navigation typography");
 console.log("new arrivals verification passed");
