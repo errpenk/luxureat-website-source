@@ -757,6 +757,23 @@ function luxureat_static_reject_noncanonical_requests() {
 }
 add_action('template_redirect', 'luxureat_static_reject_noncanonical_requests', -200);
 
+function luxureat_static_redirect_legacy_aliases() {
+    if (is_admin() || (function_exists('wp_doing_ajax') && wp_doing_ajax())) {
+        return;
+    }
+
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '/';
+    $request_path = parse_url($request_uri, PHP_URL_PATH);
+    $request_path = luxureat_static_normalize_path(is_string($request_path) ? $request_path : '');
+    $aliases = luxureat_static_aliases();
+
+    if (isset($aliases[$request_path])) {
+        wp_safe_redirect(luxureat_static_url($aliases[$request_path]), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'luxureat_static_redirect_legacy_aliases', -150);
+
 function luxureat_static_is_utility_page() {
     $path = luxureat_static_current_path();
     $aliases = luxureat_static_aliases();
