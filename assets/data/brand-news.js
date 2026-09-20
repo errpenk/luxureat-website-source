@@ -65,7 +65,7 @@
       eventId: "roma-bar-show-2026",
       date: "2026-09-16",
       cardImage: asset("media/brand-news/roma-bar-show-2026-cover.webp"),
-      video: asset("media/brand-news/roma-bar-show-2026.mp4"),
+      video: asset("media/brand-news/roma-bar-show-2026.mp4?v=h264"),
       videoPoster: asset("media/brand-news/roma-bar-show-2026-video-poster.jpg"),
       videoWidth: 1080,
       videoHeight: 1920,
