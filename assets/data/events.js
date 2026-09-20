@@ -151,6 +151,14 @@
         displayWidth: 520,
         displayHeight: 528,
         thumbnail: asset("media/events/cifie-changsha-2026-poster-160.webp"),
+        video: asset("media/events/cifie-changsha-2026-video.mp4?v=wechat-channels"),
+        videoPoster: asset("media/events/cifie-changsha-2026-video-poster.webp"),
+        videoWidth: 720,
+        videoHeight: 768,
+        videoSource: {
+          zh: "视频来源：CIFCE中国国际食品餐饮博览会微信视频号",
+          en: "Video source: CIFCE China International Food & Catering Expo WeChat Channels"
+        },
         calendar: asset("cifie-changsha-2026.ics"),
         mapQuery: "43QH+WWQ, Changsha County, Changsha, Hunan, China, 410133",
         mapHref: "https://www.google.com/maps/place//data=!4m2!3m1!1s0x342734ba371bc581:0xaa8729018b86a918?sa=X&ved=1t:8290&ictx=111",

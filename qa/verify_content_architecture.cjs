@@ -191,8 +191,10 @@ assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previ
 assert(!/https:\/\/webapi\.amap\.com\//.test(journalRuntime), "legacy AMap loader is still present");
 assert(brandNews.length === 7 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
 const romaNews = brandNews.find((item) => item.id === "roma-bar-show-2026");
-assert(romaNews?.video.endsWith("roma-bar-show-2026.mp4") && romaNews.cardImage.endsWith("roma-bar-show-2026-cover.webp"), "Roma Bar Show article does not use the supplied video and cover");
+assert(romaNews?.video.includes("roma-bar-show-2026.mp4") && romaNews.cardImage.endsWith("roma-bar-show-2026-cover.webp"), "Roma Bar Show article does not use the supplied video and cover");
 assert(romaNews?.videoPoster.endsWith("roma-bar-show-2026-video-poster.jpg") && romaNews.videoWidth === 1080 && romaNews.videoHeight === 1920, "Roma Bar Show video poster or native dimensions are incomplete");
+const changshaEvent = events.events.find((item) => item.id === "cifie-changsha-2026");
+assert(changshaEvent?.video.includes("cifie-changsha-2026-video.mp4") && changshaEvent.videoSource?.en.includes("WeChat Channels"), "Changsha event video or source is incomplete");
 assert(brandNews.filter((item) => item.eventId).length === 6 && journalRuntime.includes("lux-brand-news-event-link") && journalRuntime.includes("lux-brand-news-links"), "Brand News and Exhibitions & Events are not cross-linked");
 assert(brandNews.filter((item) => item.eventId).every((item) => events.events.some((event) => event.id === item.eventId)), "a Brand News event link has no matching shared event record");
 assert(journalRuntime.includes('data-news-open="${escapeHtml(item.id)}"') && journalRuntime.includes("renderBrandNews"), "News Centre previews do not open separate articles");
