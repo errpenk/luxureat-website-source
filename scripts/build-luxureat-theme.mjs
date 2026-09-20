@@ -768,7 +768,15 @@ function luxureat_static_redirect_legacy_aliases() {
     $aliases = luxureat_static_aliases();
 
     if (isset($aliases[$request_path])) {
-        wp_safe_redirect(luxureat_static_url($aliases[$request_path]), 301);
+        $target_path = $aliases[$request_path];
+        $pretty_paths = luxureat_static_pretty_paths();
+        $canonical_request_path = isset($pretty_paths[$target_path])
+            ? trim($pretty_paths[$target_path], '/')
+            : '';
+        if ($canonical_request_path === $request_path) {
+            return;
+        }
+        wp_safe_redirect(luxureat_static_url($target_path), 301);
         exit;
     }
 }
