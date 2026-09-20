@@ -59,6 +59,8 @@ function initLuxReader() {
   const topicFor = (id, article) => article.topic && contentLinks[article.topic] ? article.topic : Object.entries(topicPatterns).find(([, pattern]) => pattern.test(`${id} ${article.title || ""} ${(article.recipe?.ingredients || []).join(" ")}`))?.[0];
   const localized = (zh, en) => lang === "zh" ? zh : en;
   const pageHref = (page) => document.querySelector(`.lux-nav a[href$="${page}.html"], .lux-nav a[href$="/${page}/"]`)?.href || `${page}.html`;
+  const eventHref = (id) => location.pathname.endsWith(".html") ? `${pageHref("brand")}#event-${encodeURIComponent(id)}` : `${lang === "zh" ? "/" : "/en/"}events/${encodeURIComponent(id)}/`;
+  const newsHref = (id) => location.pathname.endsWith(".html") ? `${pageHref("brand")}#news-${encodeURIComponent(id)}` : `${lang === "zh" ? "/" : "/en/"}news/${encodeURIComponent(id)}/`;
   const detailHref = (page, hash) => `${pageHref(page)}#${hash}`;
   const safeDetailHref = (href) => href
     .replace(/^blog\.html\?article=([^&#]+).*$/, (_, slug) => detailHref("blog", `reader-${lang}-academy-${slug}`))
@@ -295,7 +297,7 @@ function initLuxReader() {
         <div class="lux-recent-events-latest">
           ${latest.map((event) => {
             const copy = event[lang];
-            return copy ? `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}">
+            return copy ? `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}">
               <img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}">
               <span class="lux-event-card-copy">
                 <small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small>
@@ -303,14 +305,14 @@ function initLuxReader() {
                 <span>${escapeHtml(copy.intro)}</span>
                 <span class="lux-narrative-link">${eventLabels.read}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
               </span>
-            </button>` : "";
+            </a>` : "";
           }).join("")}
         </div>
         ${past.length ? `<div class="lux-past-events">
           <h3>${eventLabels.past}</h3>
           <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
-            return `<button type="button" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.articleTitle)}</strong></span></button>`;
+            return `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.articleTitle)}</strong></span></a>`;
           }).join("")}</div>
         </div>` : ""}
       </div>`;
@@ -417,7 +419,7 @@ function initLuxReader() {
         <div class="lux-news-grid">
           ${stories.map((item, index) => {
             const story = item[lang];
-            return `<button type="button" class="lux-event-card lux-news-card${index === 0 ? " lux-news-feature" : ""}" data-news-open="${escapeHtml(item.id)}">
+            return `<a href="${newsHref(item.id)}" class="lux-event-card lux-news-card${index === 0 ? " lux-news-feature" : ""}" data-news-open="${escapeHtml(item.id)}">
             <img loading="lazy" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(story.title)}">
             <span class="lux-event-card-copy">
               <small>${escapeHtml(story.date)} · ${escapeHtml(story.category)}</small>
@@ -425,7 +427,7 @@ function initLuxReader() {
               <span>${escapeHtml(story.intro)}</span>
               <span class="lux-narrative-link">${escapeHtml(newsLabels.read)}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
             </span>
-          </button>`;
+          </a>`;
           }).join("")}
         </div>
       </div>`;
@@ -872,13 +874,13 @@ function initLuxReader() {
               <div>
                 ${article.sections.map(([heading, text]) => `<section><h3>${escapeHtml(heading)}</h3><p>${escapeHtml(text)}</p></section>`).join("")}
                 <blockquote>${escapeHtml(article.quote)}</blockquote>
-                ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<button type="button" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></button>`).join("")}</nav>` : ""}
+                ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}</nav>` : ""}
               </div>
             </div>
           </section>
           <aside class="lux-event-reader-index">
             <div><h3>${lang === "zh" ? "所有活动" : "All Events"}</h3><span>${String(allEvents.length).padStart(2, "0")}</span></div>
-            ${allEvents.map(({ item, copy: itemCopy }, index) => `<button type="button" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${formatTitle(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span><small>${String(index + 1).padStart(2, "0")}</small></button>`).join("")}
+            ${allEvents.map(({ item, copy: itemCopy }, index) => `<a href="${eventHref(item.id)}" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${formatTitle(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span><small>${String(index + 1).padStart(2, "0")}</small></a>`).join("")}
           </aside>
         </div>
       </article>`;
@@ -918,7 +920,7 @@ function initLuxReader() {
               ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
               ${sectionMedia.map(renderMedia).join("")}
             </section>`).join("")}
-            ${linkedEvent ? `<button type="button" class="lux-brand-news-event-link" data-event-open="${escapeHtml(linkedEvent.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${formatTitle(linkedEvent[lang].articleTitle)}</strong></span><span aria-hidden="true">→</span></button>` : ""}
+            ${linkedEvent ? `<a href="${eventHref(linkedEvent.id)}" class="lux-brand-news-event-link" data-event-open="${escapeHtml(linkedEvent.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${formatTitle(linkedEvent[lang].articleTitle)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
           </div>
         </div>
       </article>`;

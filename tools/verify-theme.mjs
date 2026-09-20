@@ -135,10 +135,13 @@ assert(functionsPhp.includes("'/catalogues/tin-caviar-academy.pdf' =>") && funct
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
-assert(functionsPhp.includes("'type' => 'Product'") && functionsPhp.includes("'type' => 'Event'") && functionsPhp.includes("'type' => 'Recipe'") && functionsPhp.includes("'@type' => 'BreadcrumbList'"), 'theme exposes Product, Event, Recipe and breadcrumb structured data');
+assert(functionsPhp.includes("'type' => 'WebPage', 'contentType' => 'Product'") && functionsPhp.includes("'type' => 'Event'") && functionsPhp.includes("'type' => 'Recipe'") && functionsPhp.includes("'type' => 'NewsArticle'") && functionsPhp.includes("'@type' => 'BreadcrumbList'"), 'theme exposes catalog, Event, Recipe, NewsArticle and breadcrumb structured data');
 const zhRecipePages = fs.readdirSync(path.join(themeDir, 'pages/zh/recipe')).filter((file) => file.endsWith('.php'));
 const enRecipePages = fs.readdirSync(path.join(themeDir, 'pages/en/recipe')).filter((file) => file.endsWith('.php'));
 assert(zhRecipePages.length === 25 && enRecipePages.length === 25, 'theme contains all 25 bilingual recipe detail pairs');
+const zhNewsPages = fs.readdirSync(path.join(themeDir, 'pages/zh/news')).filter((file) => file.endsWith('.php'));
+const enNewsPages = fs.readdirSync(path.join(themeDir, 'pages/en/news')).filter((file) => file.endsWith('.php'));
+assert(zhNewsPages.length === 7 && enNewsPages.length === 7, 'theme contains all seven bilingual Brand News detail pairs');
 const recipeDetail = read(path.join(themeDir, 'pages/zh/recipe/truffle-eggs.php'));
 assert(recipeDetail.includes('class="lux-breadcrumb"') && recipeDetail.includes('<h1 id="lux-reader-title">松露鸡蛋</h1>'), 'recipe details expose a visible breadcrumb and one primary heading');
 assert(functionsPhp.includes("get_option('home')"), 'route URLs use the unfiltered WordPress home option');
@@ -150,6 +153,7 @@ assert(functionsPhp.includes("'zh/brand' => '/brand/'"), 'functions.php maps the
 assert(functionsPhp.includes("'en/product' => '/en/product/'"), 'functions.php maps the English products route to /en/product/');
 assert(functionsPhp.includes("'en/new' => '/en/new/'"), 'functions.php maps the English new-arrivals route to /en/new/');
 assert(functionsPhp.includes("'en/brand' => '/en/brand/'"), 'functions.php maps the English news route');
+assert(functionsPhp.includes("'zh/brand.html' => 'zh/brand'") && functionsPhp.includes("'en/brand.html' => 'en/brand'"), 'legacy bilingual HTML routes redirect to canonical URLs');
 assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'functions.php maps the English certification route');
 assert(functionsPhp.includes("'en/caviar' => 'en/product'"), 'legacy English caviar route redirects to product');
 assert(functionsPhp.includes("'en/private' => 'en/cooperation'"), 'legacy English private route redirects to cooperation');
