@@ -135,7 +135,9 @@ assert(functionsPhp.includes("'/catalogues/tin-caviar-academy.pdf' =>") && funct
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
-assert(functionsPhp.includes("'type' => 'WebPage', 'contentType' => 'Product'") && functionsPhp.includes("'type' => 'Event'") && functionsPhp.includes("'type' => 'Recipe'") && functionsPhp.includes("'type' => 'NewsArticle'") && functionsPhp.includes("'@type' => 'BreadcrumbList'"), 'theme exposes catalog, Event, Recipe, NewsArticle and breadcrumb structured data');
+assert(functionsPhp.includes("'type' => 'WebPage', 'contentType' => 'Product'") && functionsPhp.includes("'type' => 'Recipe'") && functionsPhp.includes("'type' => 'NewsArticle'") && functionsPhp.includes("'@type' => 'BreadcrumbList'"), 'theme exposes catalog, Recipe, NewsArticle and breadcrumb structured data');
+assert(!fs.existsSync(path.join(themeDir, 'pages/zh/events')) && !fs.existsSync(path.join(themeDir, 'pages/en/events')), 'removed standalone event layouts are not generated');
+assert(functionsPhp.includes("wp_safe_redirect(luxureat_static_url($brand_route, '#event-' . rawurlencode($matches[2])), 301)"), 'legacy standalone event URLs redirect to the Brand News reader');
 const zhRecipePages = fs.readdirSync(path.join(themeDir, 'pages/zh/recipe')).filter((file) => file.endsWith('.php'));
 const enRecipePages = fs.readdirSync(path.join(themeDir, 'pages/en/recipe')).filter((file) => file.endsWith('.php'));
 assert(zhRecipePages.length === 25 && enRecipePages.length === 25, 'theme contains all 25 bilingual recipe detail pairs');
@@ -316,7 +318,7 @@ assert(runtimeJs.includes('${icons.eyeOff}</button>') && runtimeJs.includes('rev
 assert(!runtimeJs.includes('event.target === modal()'), 'the account dialog closes only through its explicit close control');
 assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
 assert(runtimeJs.includes('event.thumbnail || event.displayPoster || event.poster'), 'event thumbnails use delivery-sized poster assets');
-assert(runtimeJs.includes('"/en/brand/"') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`${newsIndexHref}#event-${event.id}`') && runtimeJs.includes('href="${newsIndexHref}#exhibition-map"'), 'event details use static links locally and pretty bilingual routes in WordPress');
+assert(runtimeJs.includes('"/en/brand/"') && runtimeJs.includes('`${newsIndexHref}#event-${encodeURIComponent(event.id)}`') && runtimeJs.includes('data-event-open="${escapeHtml(event.id)}"') && runtimeJs.includes('href="${newsIndexHref}#exhibition-map"'), 'home event details open the shared reader with a Brand News hash fallback');
 assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
 assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
 assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');

@@ -49,13 +49,11 @@
     const copy = event[lang];
     const displayPoster = event.displayPoster || event.poster;
     const mapHref = event.mapHref || `https://maps.apple.com/?q=${encodeURIComponent(event.mapQuery)}`;
-    const newsHref = location.protocol === "file:" || location.pathname.endsWith(".html")
-      ? `${newsIndexHref}#event-${event.id}`
-      : `${lang === "zh" ? "" : "/en"}/events/${encodeURIComponent(event.id)}/`;
+    const newsHref = `${newsIndexHref}#event-${encodeURIComponent(event.id)}`;
     return `<article class="lux-latest-event-slide" aria-roledescription="slide" aria-label="${index + 1} / ${events.length}">
       <div class="lux-latest-event-inner">
         <figure class="lux-event-frame">
-          <a href="${escapeHtml(newsHref)}" aria-label="${escapeHtml(`${copy.detail}: ${copy.title}`)}"><img width="${event.displayWidth}" height="${event.displayHeight}" loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(displayPoster)}"></a>
+          <a href="${escapeHtml(newsHref)}" data-event-open="${escapeHtml(event.id)}" aria-label="${escapeHtml(`${copy.detail}: ${copy.title}`)}"><img width="${event.displayWidth}" height="${event.displayHeight}" loading="lazy" decoding="async" alt="${escapeHtml(copy.posterAlt)}" src="${escapeHtml(displayPoster)}"></a>
         </figure>
         <div class="lux-event-copy">
           <h2>${escapeHtml(copy.title)}</h2>
@@ -64,7 +62,7 @@
           <a class="lux-event-meta" href="${escapeHtml(event.calendar)}" title="${escapeHtml(copy.calendarTitle)}">${icons.calendar}${escapeHtml(copy.date)}</a>
           <p><strong>${escapeHtml(copy.tagline)}</strong></p>
           <p>${escapeHtml(copy.closing)}</p>
-          <a class="lux-narrative-link lux-event-detail-link" href="${escapeHtml(newsHref)}">${escapeHtml(copy.detail)}${icons.arrow}</a>
+          <a class="lux-narrative-link lux-event-detail-link" href="${escapeHtml(newsHref)}" data-event-open="${escapeHtml(event.id)}">${escapeHtml(copy.detail)}${icons.arrow}</a>
         </div>
       </div>
     </article>`;

@@ -116,12 +116,15 @@ assert(read("assets/js/core.js").includes('(prefers-reduced-motion: reduce), (ma
 assert(latestEvent.includes("data-event-carousel-step"), "home event carousel controls are missing");
 assert(latestEvent.includes('width="${event.displayWidth}" height="${event.displayHeight}"'), "home event posters do not expose intrinsic dimensions");
 assert(latestEvent.includes('<a href="${escapeHtml(newsHref)}"') && latestEvent.includes('lux-event-frame'), "home event posters do not link to the News Centre event detail");
-assert(latestEvent.includes("#event-${event.id}"), "home latest event detail hash is missing");
-assert(latestEvent.includes("const newsIndexHref = location.protocol") && latestEvent.includes("`${newsIndexHref}#event-${event.id}`"), "home latest event does not resolve Brand News for static and WordPress routes");
+assert((latestEvent.match(/data-event-open=/g) || []).length === 2, "home event poster and detail link must open the shared event reader");
+assert(latestEvent.includes("#event-${encodeURIComponent(event.id)}"), "home latest event detail hash is missing");
+assert(latestEvent.includes("const newsIndexHref = location.protocol") && latestEvent.includes("`${newsIndexHref}#event-${encodeURIComponent(event.id)}`"), "home latest event does not resolve the Brand News modal for static and WordPress routes");
+assert(!latestEvent.includes("/events/${encodeURIComponent(event.id)}/"), "home latest event still links to the removed standalone event layout");
 assert(latestEvent.includes('href="${newsIndexHref}#exhibition-map"'), "home exhibition map does not resolve Brand News for static and WordPress routes");
 assert(!latestEvent.includes("about-us.html#event-${event.id}"), "home latest event still points to About Us");
 assert(journal.includes("data-event-open"), "delegated event article opening is missing");
 assert(journal.includes("#event-"), "event hash opening is missing");
+assert(journal.includes('const eventHref = (id) => `${pageHref("brand")}#event-${encodeURIComponent(id)}`'), "event links do not fall back to the Brand News modal URL");
 assert(romaEvent.zh.articleTitle === "LuxurEat亮相Roma Bar Show。" && romaEvent.en.articleTitle === "LuxurEat(露意膳) at Roma Bar Show", "Roma Bar Show past-event titles are incorrect");
 assert(event.en.articleTitle === "Italian flavor meets Changsha", "Changsha English event title has an unwanted period");
 assert(css.includes(".lux-narrative-link"), "shared narrative link styling is missing");

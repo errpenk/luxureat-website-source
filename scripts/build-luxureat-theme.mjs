@@ -62,7 +62,6 @@ const brandNewsInputs = loadData('assets/data/brand-news.js', 'LUXUREAT_BRAND_NE
   article: item[lang],
 })));
 const productRoute = (product) => `${product.lang === 'zh' ? '' : 'en/'}product/${product.id}`;
-const eventRoute = (event) => `${event.lang === 'zh' ? '' : 'en/'}events/${event.id}`;
 const recipeRoute = (recipe) => `${recipe.lang === 'zh' ? '' : 'en/'}recipe/${recipe.slug}`;
 const brandNewsRoute = (item) => `${item.lang === 'zh' ? '' : 'en/'}news/${item.id}`;
 
@@ -352,23 +351,6 @@ function productPageHtml(product, imageDimensions) {
   return detailPageHtml({ lang: product.lang, pageKey: 'products', title: product.title, description: product.cardDesc || product.desc, route: productRoute(product), alternateRoute: productRoute(alternate || product), body });
 }
 
-function eventStartDate(event) {
-  const match = event.zh.date.match(/(\d{4})年(\d{1,2})月(\d{1,2})/);
-  return match ? `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}` : event.endDate;
-}
-
-function eventPageHtml(event, imageDimensions) {
-  const alternate = eventInputs.find((candidate) => candidate.lang !== event.lang && candidate.id === event.id);
-  const image = articleAsset(event.previewImage || event.image);
-  const labels = event.lang === 'zh' ? { back: '返回品牌新闻' } : { back: 'Back to Brand News' };
-  const sections = (event.copy.sections || []).map(([heading, copy]) => `<section class="lux-reader-section"><h2>${escapeHtml(heading)}</h2><p>${escapeHtml(copy)}</p></section>`).join('');
-  const video = event.video ? articleAsset(event.video) : '';
-  const poster = event.video ? articleAsset(event.videoPoster || event.previewImage || event.image) : '';
-  const videoHtml = event.video ? `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${event.videoWidth || 720}" height="${event.videoHeight || 768}" poster="${escapeHtml(poster)}"><source src="${escapeHtml(video)}" type="video/mp4"></video><figcaption>${escapeHtml(event.videoSource?.[event.lang] || '')}</figcaption></figure>` : '';
-  const body = `<main class="lux-article-page">${breadcrumbHtml(event.lang, 'brand.html', event.lang === 'zh' ? '品牌新闻' : 'Brand News', event.copy.articleTitle)}<article class="lux-reader-layout lux-event-seo-page"><div class="lux-reader-rule"></div><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(event.copy.category)}</span><span>${escapeHtml(event.copy.date)}</span><span>${escapeHtml(event.copy.city)}</span></div><h1 id="lux-reader-title">${escapeHtml(event.copy.articleTitle)}</h1><p class="lux-reader-summary">${escapeHtml(event.copy.intro)}</p></div><figure class="lux-reader-cover"><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(event.copy.posterAlt || event.copy.articleTitle)}"></figure></section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="brand.html">${labels.back}</a><span>${escapeHtml(event.copy.location)}</span></aside><div class="lux-reader-copy">${sections}${videoHtml}${event.copy.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(event.copy.quote)}</blockquote>` : ''}</div></section></article></main>`;
-  return detailPageHtml({ lang: event.lang, pageKey: 'news', title: event.copy.articleTitle, description: event.copy.intro, route: eventRoute(event), alternateRoute: eventRoute(alternate || event), body });
-}
-
 function brandNewsPageHtml(item, imageDimensions) {
   const alternate = brandNewsInputs.find((candidate) => candidate.lang !== item.lang && candidate.id === item.id);
   const article = item.article;
@@ -387,7 +369,7 @@ function brandNewsPageHtml(item, imageDimensions) {
   const sections = (article.sections || []).map(([heading, paragraphs, media = []]) => `<section class="lux-reader-section"><h2>${escapeHtml(heading)}</h2>${renderArticleContent(paragraphs)}${media.map(renderMedia).join('')}</section>`).join('');
   const linkedEventImage = linkedEvent ? articleAsset(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image) : '';
   const linkedEventHtml = linkedEvent
-    ? `<a class="lux-brand-news-event-link" href="<?php echo esc_url(luxureat_static_url('${eventRoute(linkedEvent)}')); ?>"><img${imageDimensions.get(linkedEventImage) || ''} loading="lazy" decoding="async" src="${escapeHtml(linkedEventImage)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${escapeHtml(linkedEvent.copy.articleTitle)}</strong></span><span aria-hidden="true">→</span></a>`
+    ? `<a class="lux-brand-news-event-link" href="<?php echo esc_url(luxureat_static_url('${linkedEvent.lang}/brand', '#event-${linkedEvent.id}')); ?>"><img${imageDimensions.get(linkedEventImage) || ''} loading="lazy" decoding="async" src="${escapeHtml(linkedEventImage)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${escapeHtml(linkedEvent.copy.articleTitle)}</strong></span><span aria-hidden="true">→</span></a>`
     : '';
   const body = `<main class="lux-article-page">${breadcrumbHtml(item.lang, 'brand.html', item.lang === 'zh' ? '品牌新闻' : 'Brand News', article.title)}<article class="lux-brand-news-reader lux-brand-news-seo-page">
     <figure class="lux-brand-news-hero"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>
@@ -425,9 +407,6 @@ function buildRoutesPhp() {
   for (const product of productInputs) {
     lines.push(`    '${productRoute(product)}' => 'pages/${product.lang}/product/${product.id}.php',`);
   }
-  for (const event of eventInputs) {
-    lines.push(`    '${eventRoute(event)}' => 'pages/${event.lang}/events/${event.id}.php',`);
-  }
   for (const recipe of recipeInputs) {
     lines.push(`    '${recipeRoute(recipe)}' => 'pages/${recipe.lang}/recipe/${recipe.slug}.php',`);
   }
@@ -461,7 +440,7 @@ function buildAssetCatalogPhp() {
   }).join('\n');
   const byPath = [...pages.map((page) => {
     return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core'] : page.scripts)},`;
-  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('core'),`), ...eventInputs.map((event) => `        '${eventRoute(event)}' => array('core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('core'),`)].join('\n');
+  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('core'),`)].join('\n');
   return { catalog, byPath };
 }
 
@@ -480,12 +459,6 @@ function buildSeoCatalogPhp() {
     const image = String(product.image || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
     return `        '${productRoute(product)}' => array('title' => '${escapePhpString(product.title)} | LuxurEat', 'description' => '${escapePhpString(product.cardDesc || product.desc)}', 'lang' => '${product.lang}', 'alternate' => '${productRoute(alternate || product)}', 'indexable' => true, 'type' => 'WebPage', 'contentType' => 'Product', 'image' => '${escapePhpString(image)}', 'sku' => '${escapePhpString(product.sku)}', 'category' => '${escapePhpString(product.eyebrow)}'),`;
   });
-  const eventRows = eventInputs.map((event) => {
-    const alternate = eventInputs.find((candidate) => candidate.lang !== event.lang && candidate.id === event.id);
-    const image = String(event.previewImage || event.image || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
-    const country = event.id === 'roma-bar-show-2026' ? 'IT' : 'CN';
-    return `        '${eventRoute(event)}' => array('title' => '${escapePhpString(event.copy.articleTitle)} | LuxurEat', 'description' => '${escapePhpString(event.copy.intro)}', 'lang' => '${event.lang}', 'alternate' => '${eventRoute(alternate || event)}', 'indexable' => true, 'type' => 'Event', 'image' => '${escapePhpString(image)}', 'startDate' => '${eventStartDate(event)}', 'endDate' => '${escapePhpString(event.endDate)}', 'location' => '${escapePhpString(event.copy.location)}', 'city' => '${escapePhpString(event.copy.city)}', 'country' => '${country}'),`;
-  });
   const recipeRows = recipeInputs.map((article) => {
     const alternate = recipeInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
     const image = String(article.image || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
@@ -498,12 +471,13 @@ function buildSeoCatalogPhp() {
     const image = String(item.cardImage || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
     return `        '${brandNewsRoute(item)}' => array('title' => '${escapePhpString(item.article.title)} | LuxurEat', 'description' => '${escapePhpString(item.article.intro)}', 'lang' => '${item.lang}', 'alternate' => '${brandNewsRoute(alternate || item)}', 'indexable' => true, 'type' => 'NewsArticle', 'image' => '${escapePhpString(image)}', 'datePublished' => '${escapePhpString(item.date)}', 'author' => '${escapePhpString(item.article.author || 'LuxurEat')}'),`;
   });
-  return [...pageRows, ...articleRows, ...productRows, ...eventRows, ...recipeRows, ...brandNewsRows].join('\n');
+  return [...pageRows, ...articleRows, ...productRows, ...recipeRows, ...brandNewsRows].join('\n');
 }
 
 function functionsPhp() {
   const { catalog, byPath } = buildAssetCatalogPhp();
   const seoCatalog = buildSeoCatalogPhp();
+  const eventIds = [...new Set(eventInputs.map((event) => event.id))];
   return `<?php
 if (!defined('ABSPATH')) {
     exit;
@@ -768,6 +742,11 @@ function luxureat_static_redirect_legacy_aliases() {
     $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '/';
     $request_path = parse_url($request_uri, PHP_URL_PATH);
     $request_path = luxureat_static_normalize_path(is_string($request_path) ? $request_path : '');
+    if (preg_match('#^(en/)?events/([a-z0-9-]+)$#', $request_path, $matches) && in_array($matches[2], ${phpList(eventIds)}, true)) {
+        $brand_route = empty($matches[1]) ? 'zh/brand' : 'en/brand';
+        wp_safe_redirect(luxureat_static_url($brand_route, '#event-' . rawurlencode($matches[2])), 301);
+        exit;
+    }
     $aliases = luxureat_static_aliases();
 
     if (isset($aliases[$request_path])) {
@@ -2176,9 +2155,6 @@ async function build() {
   }
   for (const product of productInputs) {
     write(path.join(themeDir, 'pages', product.lang, 'product', `${product.id}.php`), productPageHtml(product, articleImageDimensions));
-  }
-  for (const event of eventInputs) {
-    write(path.join(themeDir, 'pages', event.lang, 'events', `${event.id}.php`), eventPageHtml(event, articleImageDimensions));
   }
   for (const recipe of recipeInputs) {
     write(path.join(themeDir, 'pages', recipe.lang, 'recipe', `${recipe.slug}.php`), recipePageHtml(recipe, articleImageDimensions));

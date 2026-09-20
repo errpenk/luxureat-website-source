@@ -59,7 +59,7 @@ function initLuxReader() {
   const topicFor = (id, article) => article.topic && contentLinks[article.topic] ? article.topic : Object.entries(topicPatterns).find(([, pattern]) => pattern.test(`${id} ${article.title || ""} ${(article.recipe?.ingredients || []).join(" ")}`))?.[0];
   const localized = (zh, en) => lang === "zh" ? zh : en;
   const pageHref = (page) => document.querySelector(`.lux-nav a[href$="${page}.html"], .lux-nav a[href$="/${page}/"]`)?.href || `${page}.html`;
-  const eventHref = (id) => location.pathname.endsWith(".html") ? `${pageHref("brand")}#event-${encodeURIComponent(id)}` : `${lang === "zh" ? "/" : "/en/"}events/${encodeURIComponent(id)}/`;
+  const eventHref = (id) => `${pageHref("brand")}#event-${encodeURIComponent(id)}`;
   const newsHref = (id) => location.pathname.endsWith(".html") ? `${pageHref("brand")}#news-${encodeURIComponent(id)}` : `${lang === "zh" ? "/" : "/en/"}news/${encodeURIComponent(id)}/`;
   const detailHref = (page, hash) => `${pageHref(page)}#${hash}`;
   const safeDetailHref = (href) => href

@@ -71,10 +71,6 @@ const products = Object.entries(loadData('assets/data/products.js', 'LUXUREAT_PR
   .map(([key, item]) => ({ ...item, lang: key.startsWith('zh-') ? 'zh' : 'en' }));
 addBilingualRoutes(products, (item) => routeUrl(item.lang, `product/${item.id}`), (item) => item.id);
 
-const events = loadData('assets/data/events.js', 'LUXUREAT_EVENT_DATA').events
-  .flatMap((item) => ['zh', 'en'].map((lang) => ({ ...item, lang })));
-addBilingualRoutes(events, (item) => routeUrl(item.lang, `events/${item.id}`), (item) => item.id);
-
 const recipes = Object.entries(loadData('assets/data/journal.js', 'LUXUREAT_ARTICLE_DATA').articles)
   .filter(([, item]) => item.type === 'recipe' && item.recipe)
   .map(([id, item]) => ({ ...item, id, slug: id.replace(/^(?:zh|en)-recipe-/, '') }));
