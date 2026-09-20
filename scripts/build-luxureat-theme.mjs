@@ -375,7 +375,7 @@ function brandNewsPageHtml(item, imageDimensions) {
     if (entry.type === 'video') {
       const video = articleAsset(item.video);
       const poster = articleAsset(item.videoPoster || item.cardImage);
-      return `<figure class="lux-brand-news-media is-video"><video controls playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(poster)}"><source src="${escapeHtml(video)}" type="video/mp4"></video></figure>`;
+      return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(poster)}"><source src="${escapeHtml(video)}" type="video/mp4"></video></figure>`;
     }
     const source = articleAsset(entry.src);
     const alt = entry.alt?.[item.lang] || article.title;

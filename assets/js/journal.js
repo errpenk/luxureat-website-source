@@ -899,7 +899,7 @@ function initLuxReader() {
     const copy = labels();
     const linkedEvent = events.find((event) => event.id === item.eventId);
     const renderMedia = (entry) => {
-      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${escapeHtml(lang === "zh" ? "视频来源：arsial.lazio" : "Video source: arsial.lazio")}</figcaption></figure>`;
+      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${escapeHtml(lang === "zh" ? "视频来源：arsial.lazio" : "Video source: arsial.lazio")}</figcaption></figure>`;
       const alt = entry.alt?.[lang] || article.title;
       return `<figure class="lux-brand-news-media"><button type="button" data-reader-image="${escapeHtml(entry.src)}" aria-label="${escapeHtml(lang === "zh" ? `放大查看：${alt}` : `View full size: ${alt}`)}"><img loading="lazy" decoding="async" src="${escapeHtml(entry.src)}" alt="${escapeHtml(alt)}"></button></figure>`;
     };
