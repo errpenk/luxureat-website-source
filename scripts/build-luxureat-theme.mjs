@@ -66,7 +66,7 @@ const recipeRoute = (recipe) => `${recipe.lang === 'zh' ? '' : 'en/'}recipe/${re
 const brandNewsRoute = (item) => `${item.lang === 'zh' ? '' : 'en/'}news/${item.id}`;
 
 function ensureSource() {
-  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'llms.txt', 'google053137c136af2773.html', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
+  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'llms.txt', 'google053137c136af2773.html', 'sogousiteverification.txt', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
   for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
@@ -857,6 +857,25 @@ function luxureat_static_search_metadata_endpoint() {
     exit;
 }
 add_action('init', 'luxureat_static_search_metadata_endpoint', -100);
+
+function luxureat_sogou_site_verification() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+    if (parse_url($request_uri, PHP_URL_PATH) !== '/sogousiteverification.txt') {
+        return;
+    }
+
+    $file = get_template_directory() . '/sogousiteverification.txt';
+    if (!is_file($file) || !is_readable($file)) {
+        return;
+    }
+
+    status_header(200);
+    nocache_headers();
+    header('Content-Type: text/plain; charset=UTF-8');
+    readfile($file);
+    exit;
+}
+add_action('template_redirect', 'luxureat_sogou_site_verification', -100);
 
 function luxureat_baidu_site_verification() {
     $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
@@ -2123,6 +2142,7 @@ async function build() {
   fs.copyFileSync(path.join(sourceDir, 'robots.txt'), path.join(themeDir, 'robots.txt'));
   fs.copyFileSync(path.join(sourceDir, 'llms.txt'), path.join(themeDir, 'llms.txt'));
   fs.copyFileSync(path.join(sourceDir, 'google053137c136af2773.html'), path.join(themeDir, 'google053137c136af2773.html'));
+  fs.copyFileSync(path.join(sourceDir, 'sogousiteverification.txt'), path.join(themeDir, 'sogousiteverification.txt'));
   execFileSync(process.execPath, [path.join(sourceDir, 'tools/generate-sitemap.mjs'), path.join(themeDir, 'sitemap.xml')]);
   copyDir(path.join(sourceDir, 'assets'), path.join(themeDir, 'assets'));
   const leafletTargetDir = path.join(themeDir, 'assets', 'vendor', 'leaflet');
