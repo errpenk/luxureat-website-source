@@ -10714,7 +10714,7 @@ html[lang^="en"] .lux-reader-quote {
   overflow: hidden;
   background:
     linear-gradient(rgba(5, 13, 13, .76), rgba(5, 13, 13, .84)),
-    url("assets/media/brand/home-values-background.jpg") center / cover no-repeat;
+    url("assets/media/brand/home-values-background.webp") center / cover no-repeat;
   color: #f7f3ea;
 }
 .lux-home-market-system > header {
@@ -13428,12 +13428,12 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-home-timeline {
   background:
     linear-gradient(rgba(5, 7, 7, .76), rgba(5, 7, 7, .86)),
-    url("assets/media/brand/home-brand-journey-background.jpg") center / cover no-repeat;
+    url("assets/media/brand/home-brand-journey-background.webp") center / cover no-repeat;
 }
 #selected-products {
   background:
     linear-gradient(rgba(4, 6, 6, .72), rgba(4, 6, 6, .84)),
-    url("assets/media/brand/home-selected-products-background.jpg") center / cover no-repeat;
+    url("assets/media/brand/home-selected-products-background.webp") center / cover no-repeat;
 }
 .lux-home-partnership-process {
   background:
