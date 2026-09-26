@@ -11223,7 +11223,7 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
 .lux-home-topic-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
 }
 .lux-home-topic-grid::before {
@@ -11236,7 +11236,6 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
   pointer-events: none;
 }
 .lux-topic-preview-card {
-  grid-column: span 5;
   display: grid;
   grid-template-rows: clamp(220px, 24vw, 330px) auto;
   min-height: 0;
@@ -11246,12 +11245,8 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
   isolation: auto;
   border: 1px solid transparent;
   transition: border-color .25s ease, border-radius .25s ease;
-  border-radius: 22px;
+  border-radius: 0;
   overflow: hidden;
-}
-.lux-topic-preview-card:nth-child(4n + 2),
-.lux-topic-preview-card:nth-child(4n + 3) {
-  grid-column: span 7;
 }
 .lux-topic-preview-card::before {
   display: none;
@@ -11320,7 +11315,7 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
 .lux-topic-preview-card:focus-visible {
   transform: none;
   border-color: #89670f;
-  border-radius: 0;
+  border-radius: 22px;
   box-shadow: none;
 }
 .lux-topic-preview-card:hover figure img,
@@ -11955,9 +11950,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
   .lux-home-topic-grid {
     grid-template-columns: 1fr;
   }
-  .lux-topic-preview-card,
-  .lux-topic-preview-card:nth-child(4n + 2),
-  .lux-topic-preview-card:nth-child(4n + 3) {
+  .lux-topic-preview-card {
     grid-column: 1;
   }
   .lux-olive-recipe-stories article,
