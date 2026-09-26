@@ -8,8 +8,6 @@ import { assetVersion, contact, footer, navigation, pages, scripts } from "../si
 const rootArg = process.argv.slice(2).find((argument) => !argument.startsWith("--"));
 const root = path.resolve(rootArg || process.cwd());
 const check = process.argv.includes("--check");
-const bagIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>';
-const accountIcon = '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
 
 const esc = (value) => String(value).replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
 const slugFor = (item, lang) => item[`${lang}Slug`];
@@ -26,8 +24,8 @@ function headerFor(page) {
   const counterpart = pages.find((item) => item.lang === otherLang && item.key === key) || pages.find((item) => item.lang === otherLang && item.key === "home");
   const nav = navigation.map((item) => `<a${item.key === key ? ' class="active"' : ""} href="${link(slugFor(item, lang))}">${esc(item[lang])}</a>`).join("");
   const labels = lang === "zh"
-    ? { nav: "navigation", bag: "购物袋", account: "个人登录", open: "关闭", closed: "菜单", menu: "菜单" }
-    : { nav: "navigation", bag: "Shopping bag", account: "Account sign in", open: "Close", closed: "Menu", menu: "Menu" };
+    ? { nav: "navigation", open: "关闭", closed: "菜单", menu: "菜单" }
+    : { nav: "navigation", open: "Close", closed: "Menu", menu: "Menu" };
   const zhLink = lang === "zh" ? "#" : `../zh/${counterpart.slug}.html`;
   const enLink = lang === "en" ? "#" : `../en/${counterpart.slug}.html`;
 
@@ -36,8 +34,6 @@ function headerFor(page) {
   <a class="lux-brand" href="index.html"><img width="64" height="64" loading="eager" fetchpriority="high" decoding="async" src="../assets/media/brand/luxureat-logo-64.webp" srcset="../assets/media/brand/luxureat-logo-64.webp 64w, ../assets/media/brand/luxureat-logo-96.webp 96w" sizes="(max-width: 1080px) 96px, 64px" alt="LuxurEat"></a>
   <nav class="lux-nav" aria-label="${labels.nav}">${nav}</nav>
   <div class="lux-actions">
-    <a class="lux-icon-action lux-bag-link" href="bag.html" aria-label="${labels.bag}">${bagIcon}<span class="lux-bag-count" data-bag-count hidden></span></a>
-    <button class="lux-icon-action lux-account-link" type="button" data-account-open aria-label="${labels.account}">${accountIcon}</button>
     <span class="lux-lang"><a${lang === "zh" ? ' class="active"' : ""} href="${zhLink}">ZH</a><span>/</span><a${lang === "en" ? ' class="active"' : ""} href="${enLink}">EN</a></span>
     <button class="lux-menu" type="button" data-open="${labels.open}" data-closed="${labels.closed}" aria-expanded="false">${labels.menu}</button>
   </div>
@@ -199,7 +195,6 @@ function fontPreloads(page) {
     "market-insights": ["KingHwaOldSong-certification-critical.woff2", "LuxurEatZhiSong-certification-critical.woff2"],
     "import-export": ["KingHwaOldSong-gifting-critical.woff2", "LuxurEatZhiSong-gifting-critical.woff2"],
     contact: ["KingHwaOldSong-contact-critical.woff2", "LuxurEatZhiSong-contact-critical.woff2"],
-    bag: ["KingHwaOldSong-bag-critical.woff2", "LuxurEatZhiSong-bag-critical.woff2"],
   };
   const critical = zhCritical[page.key] || zhCritical.home;
   const marketFonts = page.lang === "zh"
@@ -240,7 +235,7 @@ function fontPreloads(page) {
         ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
         ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
       ];
-  if (page.lang === "en" && ["home", "products", "bag"].includes(page.key)) {
+  if (page.lang === "en" && ["home", "products"].includes(page.key)) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
   }
   const versionFor = (font) => ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
@@ -367,7 +362,7 @@ function performanceIssues(file, html) {
       issues.push(`${file}: image has no explicit loading policy ${match[0]}`);
     }
   }
-  const legacyRootRoutes = /^(?:\.\.\/)+(?:index|bag|caviar|contact|gifting|journal|news|products|product-imperial-beluga|rituals)\.html(?:[?#].*)?$/i;
+  const legacyRootRoutes = /^(?:\.\.\/)+(?:index|caviar|contact|gifting|journal|news|products|product-imperial-beluga|rituals)\.html(?:[?#].*)?$/i;
   for (const match of html.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)) {
     if (legacyRootRoutes.test(match[1])) {
       issues.push(`${file}: internal link uses a legacy redirect ${match[1]}`);

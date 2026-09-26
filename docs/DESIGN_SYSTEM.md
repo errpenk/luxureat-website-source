@@ -368,7 +368,7 @@ Use 11–14px for dates, categories, indexes, counts, and similar metadata. Thes
 
 ### 7.3 Form fields
 
-Inputs and form helper copy should prioritize legibility over editorial display styling. Use the body/UI family and keep field labels consistent across account, checkout, contact, and search components.
+Inputs and form helper copy should prioritize legibility over editorial display styling. Use the body/UI family and keep field labels consistent across contact, newsletter, and search components.
 
 ---
 

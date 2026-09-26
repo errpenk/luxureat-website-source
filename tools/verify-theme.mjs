@@ -20,7 +20,6 @@ const expectedRoutes = [
   'zh/china-market-insights',
   'zh/import-export-services',
   'zh/contact',
-  'zh/bag',
   'en',
   'en/new',
   'en/product',
@@ -32,7 +31,6 @@ const expectedRoutes = [
   'en/china-market-insights',
   'en/import-export-services',
   'en/contact',
-  'en/bag',
 ];
 
 const failures = [];
@@ -112,12 +110,13 @@ assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the 
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
 assert(!/srcset="[^"\n]*get_template_directory_uri\(\) \. '\/assets\/[^']+ \d+w/.test(generatedPages), 'generated srcset descriptors remain outside PHP asset paths');
+assert(!generatedPages.includes('data-account-open') && !generatedPages.includes('lux-account-link') && !generatedPages.includes('lux-bag-link') && !generatedPages.includes('data-bag-count'), 'generated bilingual pages contain no consumer account or shopping-bag header entry point');
 assert(fs.statSync(path.join(themeDir, 'screenshot.png')).size <= 100 * 1024, 'theme preview screenshot stays below 100 KB');
 assert(!walk(themeDir).some((file) => path.basename(file) === '.DS_Store'), 'theme package excludes Finder metadata');
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
-assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'product-data', 'products')"), 'functions.php loads responsive images and account state before cart initialization');
+assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'product-data', 'products')"), 'functions.php loads responsive images and product behavior in dependency order');
 assert(functionsPhp.includes("'core' => array('src' => 'assets/js/core.js', 'dependencies' => array('image-variants'))"), 'core runtime does not depend on responsive image mappings');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
@@ -129,7 +128,7 @@ assert(functionsPhp.includes('luxureat_static_refresh_changed_routes') && functi
 assert(functionsPhp.includes("function_exists('wp_cache_clear_cache')") && functionsPhp.includes('wp_cache_clear_cache();'), 'theme deployments clear stale WP Super Cache pages once');
 assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && functionsPhp.includes('status_header(410)') && functionsPhp.includes("header('X-Robots-Tag: noindex, nofollow'"), 'spam and noncanonical public URLs return an explicit non-indexable 410');
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
-assert(functionsPhp.includes('luxureat_static_utility_noindex_header') && functionsPhp.includes("header('X-Robots-Tag: noindex, follow'"), 'bag, cart, checkout and account pages are crawlable but explicitly non-indexable');
+assert(functionsPhp.includes('luxureat_static_disable_consumer_commerce') && functionsPhp.includes("luxureat_static_url($language . '/product')"), 'legacy WooCommerce consumer pages redirect to the product catalogue');
 assert(functionsPhp.includes('luxureat_static_publish_root_robots') && functionsPhp.includes("add_action('after_setup_theme', 'luxureat_static_publish_root_robots', 1)") && functionsPhp.includes("trailingslashit(ABSPATH) . 'robots.txt'") && functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes("header_remove('Set-Cookie')") && functionsPhp.includes("header('Vary: Accept-Encoding', true)") && functionsPhp.includes('luxureat_baidu_site_verification'), 'root robots publishing and cacheable metadata fallbacks ship in the generated theme');
 assert(functionsPhp.includes("'/catalogues/tin-caviar-academy.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
@@ -162,37 +161,24 @@ assert(functionsPhp.includes("'en/private' => 'en/cooperation'"), 'legacy Englis
 assert(functionsPhp.includes('function luxureat_static_seo_head()') && functionsPhp.includes("rel=\"canonical\"") && functionsPhp.includes("hreflang=\"x-default\"") && functionsPhp.includes('application/ld+json'), 'functions.php emits canonical, alternate-language, social and structured SEO metadata');
 assert(functionsPhp.includes('luxureat_static_disable_yoast_output') && functionsPhp.includes("remove_action('wpseo_head'") && functionsPhp.includes('Front_End_Integration::class'), 'static routes use the theme SEO output without duplicate Yoast metadata');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
-assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_account") && functionsPhp.includes('wc_create_new_customer'), 'functions.php exposes WooCommerce-backed account registration');
+assert(!functionsPhp.includes('wp_ajax_nopriv_luxureat_account') && !functionsPhp.includes('wc_create_new_customer') && !functionsPhp.includes('wp_signon('), 'functions.php does not expose consumer account registration or login endpoints');
 assert(functionsPhp.includes("wp_ajax_nopriv_luxureat_contact") && functionsPhp.includes("wp_mail('roberto@ugolinigroup.com'"), 'contact enquiries are emailed to the requested recipient');
 assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_create_nonce('luxureat_contact')"), 'contact pages receive a nonce-protected AJAX endpoint');
 assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"), 'contact email subjects contain only the name and Italian enquiry type');
-assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true"), 'functions.php subscribes opted-in registrations through MailPoet double opt-in');
-assert(functionsPhp.includes('woocommerce_store_api_cart_item_images') && functionsPhp.includes('academy/beluga-caviar-cover-new-page-bg.png'), 'checkout cart items receive branded product images');
-assert(functionsPhp.includes('function luxureat_static_woo_catalog()') && functionsPhp.includes("'LuxureatWooCatalog'") && functionsPhp.includes("'stockQuantity'"), 'product pages receive live WooCommerce price, image, and stock data');
+assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true") && functionsPhp.includes('wp_ajax_nopriv_luxureat_newsletter'), 'functions.php preserves the standalone MailPoet double opt-in newsletter');
+assert(!functionsPhp.includes('woocommerce_store_api_cart_item_images') && !functionsPhp.includes('luxureat_static_woo_catalog') && !functionsPhp.includes('LuxureatWooCatalog'), 'legacy WooCommerce catalogue and checkout image bridges are removed');
 assert(functionsPhp.includes("'zh' => array('image-variants', 'core')") && functionsPhp.includes("'en' => array('image-variants', 'core')"), 'WordPress homepages enqueue responsive mappings before the critical runtime');
 assert(functionsPhp.includes('function luxureat_static_trim_plugin_assets()') && functionsPhp.includes("'jetpack-stats'") && !functionsPhp.includes("'google_gtagjs', 'jquery'"), 'static routes remove duplicate commerce analytics without removing Google Analytics');
 assert(functionsPhp.includes("add_action('wp_print_styles', 'luxureat_static_trim_plugin_assets', PHP_INT_MAX)") && functionsPhp.includes("remove_action('wp_head', 'print_emoji_detection_script', 7)"), 'late WooCommerce styles and emoji detection remain on static routes');
 assert(functionsPhp.includes("add_filter('wp_resource_hints', 'luxureat_static_resource_hints', PHP_INT_MAX, 2)") && functionsPhp.includes("[ic]0\\.wp\\.com"), 'unused WordPress CDN preconnects are not filtered after plugins add their hints');
 assert(functionsPhp.includes("add_filter('style_loader_tag', 'luxureat_static_filter_plugin_style', PHP_INT_MAX, 2)") && functionsPhp.includes("data-lux-analytics-src"), 'late commerce styles or analytics still compete with the mobile critical path');
-assert(functionsPhp.includes("get_transient('luxureat_static_woo_catalog')") && functionsPhp.includes("MINUTE_IN_SECONDS"), 'repeated anonymous page checks reuse the short WooCommerce catalogue cache');
-assert(functionsPhp.includes("html_entity_decode(get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8')"), 'WooCommerce currency symbols render as characters rather than escaped HTML entities');
-assert(functionsPhp.includes("if ($product->get_image_id())") && functionsPhp.includes('return $images;'), 'checkout keeps WooCommerce product images when they exist');
-assert(functionsPhp.includes("$integration_registry->unregister('mailpoet')"), 'checkout removes the duplicate MailPoet opt-in block at registration');
-assert(functionsPhp.includes('luxureat_static_require_account_for_checkout') && functionsPhp.includes("!is_user_logged_in()"), 'checkout requires a signed-in customer on both direct and AJAX entry points');
-assert(functionsPhp.includes('woocommerce_package_rates') && functionsPhp.includes("set_label('免费配送')"), 'Chinese checkout localizes the free-shipping rate');
-assert(functionsPhp.includes('luxureat_static_restrict_test_payment') && functionsPhp.includes("unset($gateways['cheque'])") && functionsPhp.includes("current_user_can('manage_woocommerce')"), 'the temporary no-charge test payment is restricted to shop administrators');
-assert(functionsPhp.includes("$mode === 'forgot'") && functionsPhp.includes('retrieve_password($user->user_login)'), 'functions.php sends native WordPress password reset emails');
-assert(functionsPhp.includes("'remember' => !empty($_POST['remember'])"), 'functions.php passes the remember-me choice to WordPress authentication');
-assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'botChallenge' => luxureat_static_bot_challenge()"), 'account requests require a signed proof-of-work bot challenge');
-assert(functionsPhp.includes('strlen($password) >= 12') && functionsPhp.includes("preg_match('/[A-Za-z]/'") && functionsPhp.includes("preg_match('/[0-9]/'"), 'customer registration requires 12 characters with letters and numbers');
-assert(functionsPhp.includes('luxureat_static_send_verification') && functionsPhp.includes("'_luxureat_email_verified', '0'") && functionsPhp.includes("'requiresVerification' => true"), 'new customer accounts require email verification before login');
-assert(functionsPhp.includes("add_filter('authenticate', 'luxureat_static_require_verified_email'") && !functionsPhp.includes('wp_set_auth_cookie($user_id'), 'unverified customers cannot bypass the verification gate through native login');
-assert(functionsPhp.includes("add_filter('password_hint', 'luxureat_static_password_hint'") && functionsPhp.includes("add_action('validate_password_reset'"), 'password reset uses the same 12-character letters-and-numbers rule');
-assert(functionsPhp.includes("luxureat_static_rate_consume('login'") && functionsPhp.includes("$invalid_login") && !functionsPhp.includes('账号已存在，请登录或使用其他电子邮箱。'), 'account endpoints do not combine rate limits with uniform account-state errors');
-assert(functionsPhp.includes("empty($_POST['consent'])") && functionsPhp.includes('Terms of Service and Privacy Policy'), 'customer registration enforces legal consent on the server');
-assert(functionsPhp.includes("get_user_meta($user_id, 'luxureat_bag'") && functionsPhp.includes("update_user_meta(get_current_user_id(), 'luxureat_bag'") && functionsPhp.includes('woocommerce_payment_complete'), 'signed-in bags persist per user and paid items are removed');
-assert(functionsPhp.includes("$paid_quantity = min($item['quantity'], $purchased[$item['sku']])") && functionsPhp.includes("$purchased[$item['sku']] -= $paid_quantity"), 'paid bags decrement the matching SKU by the purchased quantity');
-assert(functionsPhp.includes("add_filter('wp_send_new_user_notification_to_admin', '__return_false')") && functionsPhp.includes("add_filter('pre_wp_mail', 'luxureat_static_silence_account_admin_mail'"), 'account activity emails to administrators are silenced');
+assert(!functionsPhp.includes('luxureat_checkout') && !functionsPhp.includes('LuxureatCheckout') && !functionsPhp.includes('wc_get_checkout_url'), 'legacy checkout handoff and frontend localization are removed');
+assert(!functionsPhp.includes('woocommerce_package_rates') && !functionsPhp.includes('woocommerce_available_payment_gateways') && !functionsPhp.includes('woocommerce_blocks_checkout_block_registration'), 'consumer checkout, shipping and payment customizations are removed');
+assert(!functionsPhp.includes('retrieve_password(') && !functionsPhp.includes('luxureat_static_send_verification') && !functionsPhp.includes('_luxureat_email_verified'), 'consumer password reset and email-verification flows are removed');
+assert(!functionsPhp.includes("add_filter('authenticate'") && !functionsPhp.includes("add_filter('login_errors'") && !functionsPhp.includes("add_filter('password_hint'") && !functionsPhp.includes("add_action('validate_password_reset'"), 'consumer authentication filters no longer alter WordPress administrator authentication');
+assert(functionsPhp.includes('luxureat_static_verify_bot_challenge') && functionsPhp.includes("'LuxureatNewsletter'") && functionsPhp.includes("wp_create_nonce('luxureat_newsletter')"), 'newsletter requests retain their nonce and proof-of-work bot challenge');
+assert(!functionsPhp.includes('luxureat_bag') && !functionsPhp.includes('woocommerce_payment_complete') && !functionsPhp.includes('_luxureat_bag_reduced'), 'saved bags and paid-order reconciliation are removed');
+assert(!functionsPhp.includes("wp_send_new_user_notification_to_admin") && !functionsPhp.includes('luxureat_static_silence_account_admin_mail'), 'WordPress administrator notification emails are no longer suppressed');
 assert(functionsPhp.includes("$_GET['for'] !== 'jetpack'") && functionsPhp.includes('luxureat_static_remove_xmlrpc_pingbacks') && functionsPhp.includes("'pingback.ping'"), 'XML-RPC permits Jetpack requests only and keeps legacy pingback methods disabled');
 assert(functionsPhp.includes("remove_action('wp_head', 'rsd_link')"), 'pages do not advertise the restricted legacy RSD endpoint');
 assert(functionsPhp.includes("cookie .= '; SameSite=Lax'") && functionsPhp.includes('header_register_callback'), 'authentication cookie headers receive SameSite=Lax immediately before sending');
@@ -208,13 +194,10 @@ assert(indexPhp.includes('$path = $target_path;'), 'index.php can render alias r
 assert(indexPhp.includes('$request_path === $path') && indexPhp.includes('$canonical_request_path !== $request_path'), 'index.php redirects duplicate route addresses to their canonical pretty URLs');
 
 const pagePhp = read(path.join(themeDir, 'page.php'));
-assert(pagePhp.includes('the_content()') && pagePhp.includes("$body_classes[] = 'lux-account-dashboard-page'") && pagePhp.includes("$body_classes[] = 'lux-checkout-page'"), 'page.php renders branded native account and checkout content');
-assert(functionsPhp.includes('woocommerce_account_menu_items') && functionsPhp.includes("'orders' =>") && functionsPhp.includes("'edit-address' =>") && functionsPhp.includes("'edit-account' =>") && functionsPhp.includes("'customer-logout' =>"), 'customer account navigation is limited to the requested WooCommerce sections');
-assert(functionsPhp.includes('luxureat_static_account_language') && pagePhp.includes("add_query_arg('lang', 'zh'") && pagePhp.includes("add_query_arg('lang', 'en'"), 'account page defaults to Chinese and provides a bilingual switch');
-assert(functionsPhp.includes('woocommerce_get_endpoint_url') && functionsPhp.includes("add_query_arg('lang', luxureat_static_account_language()"), 'account endpoint links preserve the selected language');
-assert(pagePhp.includes('luxureat-logo.png'), 'account page uses the LuxurEat logo');
-assert(pagePhp.includes('LuxurEat <i aria-hidden="true">｜</i> <small>露意膳</small>'), 'account and checkout brand names use one size with a separator');
-assert(pagePhp.includes('lux-account-dashboard-page'), 'account dashboard receives a dedicated body class');
+assert(pagePhp.includes('the_content()') && pagePhp.includes("body_class('lux-wp-page-shell')"), 'page.php preserves the generic branded WordPress page shell');
+assert(!functionsPhp.includes('woocommerce_account_menu_items') && !functionsPhp.includes('luxureat_static_account_language') && !functionsPhp.includes('woocommerce_get_endpoint_url'), 'custom WooCommerce customer-account navigation and language handling are removed');
+assert(pagePhp.includes('luxureat-logo.png') && !pagePhp.includes('is_checkout') && !pagePhp.includes('wc_get_checkout_url'), 'page.php preserves branding without consumer checkout behavior');
+assert(!pagePhp.includes('is_account_page') && !pagePhp.includes('My account') && !pagePhp.includes('我的账户'), 'page.php contains no consumer account presentation');
 
 const routesPhp = read(path.join(themeDir, 'routes.php'));
 for (const route of expectedRoutes) {
@@ -296,34 +279,25 @@ assert(runtimeJs.includes('data-reader-archive') && runtimeJs.includes('lux-read
 assert(runtimeJs.includes('data-reader-archive-filter') && runtimeJs.includes('syncReaderTop'), 'runtime scripts filters the journal archive and hides reader glass at the top');
 assert(runtimeJs.includes('initLuxProductDetails'), 'runtime scripts initializes shared product-detail views');
 assert(runtimeJs.includes('data-product-open'), 'runtime scripts listens to product-detail triggers');
-assert(runtimeJs.includes('data-product-quantity'), 'runtime scripts supports product-detail quantity controls');
+assert(runtimeJs.includes('data-purchase-cta') && runtimeJs.includes('加入购物袋') && runtimeJs.includes('Add to Cart'), 'reserved bilingual left product CTAs remain');
 assert(runtimeJs.includes('data-product-gallery'), 'runtime scripts supports product-detail gallery thumbnails');
 assert(runtimeJs.includes('data-product-main-image'), 'runtime scripts switches the product-detail main image');
 assert(runtimeJs.includes('lux-product-recent'), 'runtime scripts renders product-detail recommendations');
 assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product-detail recommendations can open other product details');
-assert(runtimeJs.includes('event.target.closest(".lux-product-recent-media, .lux-bag-recommendation-media")') && runtimeJs.includes('media?.closest(".lux-product-recent-card, [data-bag-card]")'), 'bag and product-detail recommendation images open product details across their full media area');
+assert(runtimeJs.includes('event.target.closest(".lux-product-recent-media")') && runtimeJs.includes('media?.closest(".lux-product-recent-card")'), 'product-detail recommendation images open product details across their full media area');
 assert(runtimeJs.includes('data-product-back'), 'product-detail recommendations expose an in-modal back button');
-assert(!runtimeJs.includes('!triggers.length && !hash.startsWith("#product-")'), 'product detail listener handles dynamically rendered bag buttons');
-assert(runtimeJs.includes('data-product-cart-state'), 'product details show existing cart quantity');
-assert(runtimeJs.includes('data-product-total'), 'product details show multi-quantity totals');
+assert(!runtimeJs.includes('!triggers.length && !hash.startsWith("#product-")'), 'product detail listener handles dynamically rendered catalogue buttons');
 assert(runtimeJs.includes('data-product-recent-scroll') && runtimeJs.includes('scrollBy'), 'product-detail recommendations have horizontal arrow controls');
-assert(runtimeJs.includes('lux-bag-line-total'), 'bag items show multi-quantity totals');
-assert(runtimeJs.includes('${item.quantity}件总价') && runtimeJs.includes('lux-bag-detail'), 'bag items show quantity-specific totals and image detail actions');
-assert(runtimeJs.includes('data-bag-quantity'), 'runtime scripts carries selected product quantities into the bag');
-assert(runtimeJs.includes('data-account-form') && runtimeJs.includes('data-account-newsletter'), 'account modal provides registration and optional newsletter consent');
-assert(runtimeJs.includes('data-account-consent') && runtimeJs.includes('data-footer-modal="privacy"'), 'registration requires the legal consent and opens the privacy text');
-assert(runtimeJs.includes('data-account-password-toggle') && runtimeJs.includes('is-shaking'), 'registration provides password visibility and invalid-password warning');
-assert(runtimeJs.includes('data-account-email-hint') && runtimeJs.includes('icons.eyeOff'), 'account forms provide shaking email validation and Lucide password visibility icons');
-assert(runtimeJs.includes('${icons.eyeOff}</button>') && runtimeJs.includes('revealing ? icons.eye : icons.eyeOff'), 'EyeOff represents hidden passwords and Eye represents visible passwords');
-assert(!runtimeJs.includes('event.target === modal()'), 'the account dialog closes only through its explicit close control');
+assert(!runtimeJs.includes('data-product-quantity') && !runtimeJs.includes('data-product-cart-state') && !runtimeJs.includes('data-product-total'), 'product transaction quantity and cart state are removed');
+assert(!runtimeJs.includes('data-bag-') && !runtimeJs.includes('LuxureatBag') && !runtimeJs.includes('luxureat_guest_bag'), 'shopping-bag runtime and markup hooks are removed');
+assert(!runtimeJs.includes('data-account-form') && !runtimeJs.includes('data-account-consent') && !runtimeJs.includes('data-account-password-toggle') && !runtimeJs.includes('data-account-forgot'), 'runtime scripts contain no consumer account modal, registration, password, or recovery UI');
+assert(!runtimeJs.includes('account=verified') && !runtimeJs.includes('account=verification-failed'), 'runtime scripts contain no consumer account verification query handling');
 assert(runtimeJs.includes('data-event-carousel-index'), 'latest events provide clickable thumbnails');
 assert(runtimeJs.includes('event.thumbnail || event.displayPoster || event.poster'), 'event thumbnails use delivery-sized poster assets');
 assert(runtimeJs.includes('"/en/brand/"') && runtimeJs.includes('`${newsIndexHref}#event-${encodeURIComponent(event.id)}`') && runtimeJs.includes('data-event-open="${escapeHtml(event.id)}"') && runtimeJs.includes('href="${newsIndexHref}#exhibition-map"'), 'home event details open the shared reader with a Brand News hash fallback');
 assert(runtimeJs.includes('Number.isFinite(product.stockQuantity)') && !runtimeJs.includes('product.stockQuantity === null ? labels.inStock'), 'unknown stock quantities are not rendered');
-assert(runtimeJs.includes('data-account-password-hint') && runtimeJs.includes('(?=.*[A-Za-z])(?=.*\\\\d).{12,}'), 'registration validates the password requirements');
-assert(runtimeJs.includes('data-account-forgot') && runtimeJs.includes('data-account-login-options') && runtimeJs.includes('text.resetSent'), 'account modal provides an inline password reset flow');
-assert(runtimeJs.includes('luxureat_account') && runtimeJs.includes('LuxureatAccount'), 'account modal submits to the localized WordPress account endpoint');
-assert(runtimeJs.includes('crypto.subtle.digest') && runtimeJs.includes('bot_challenge') && runtimeJs.includes('bot_nonce') && runtimeJs.includes('bot_proof'), 'account modal solves and submits the bot challenge');
+assert(runtimeJs.includes('LuxureatNewsletter') && runtimeJs.includes('luxureat_newsletter'), 'newsletter uses its dedicated localized WordPress endpoint');
+assert(runtimeJs.includes('crypto.subtle.digest') && runtimeJs.includes('bot_challenge') && runtimeJs.includes('bot_nonce') && runtimeJs.includes('bot_proof'), 'newsletter solves and submits the bot challenge');
 {
   const token = '1700000000.challenge.signature';
   const nonce = '0123456789abcdef0123456789abcdef';
@@ -331,8 +305,6 @@ assert(runtimeJs.includes('crypto.subtle.digest') && runtimeJs.includes('bot_cha
   while (!createHash('sha256').update(`${token}:${nonce}:${proof}`).digest('hex').startsWith('000')) proof += 1;
   assert(proof <= 1_000_000, 'bot proof contract can be solved within the server limit');
 }
-assert(!runtimeJs.includes('lux-account-social') && !runtimeJs.includes('Or Sign In With') && !runtimeJs.includes('或使用以下方式登录'), 'account modal removes Google and WeChat sign-in controls');
-assert(runtimeJs.includes('luxureat_checkout') && runtimeJs.includes('LuxureatCheckout') && runtimeJs.includes('AbortController'), 'bag checkout uses one bounded WordPress request');
 assert(runtimeJs.includes('initLuxFooterActions'), 'runtime scripts initializes footer policy and social popups');
 assert(runtimeJs.includes('data-footer-modal'), 'runtime scripts listens to footer modal buttons');
 assert(runtimeJs.includes('if (isLegal) body.scrollTop = 0') && runtimeJs.includes('body.focus({ preventScroll: true })'), 'legal modals always reopen at the top without focus moving their scroll position');
@@ -348,11 +320,7 @@ assert(runtimeJs.includes('window.LuxureatBackInternalLink') && runtimeJs.includ
 assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.includes('location.hash.startsWith("#product-")'), 'reader and product detail routes remain restorable while Close clears only the current detail hash');
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
-assert(runtimeJs.includes('Please sign in before continuing to checkout.') && runtimeJs.includes('window.LuxureatAccount?.loggedIn'), 'bag checkout prompts guests to sign in before syncing the cart');
-assert(!runtimeJs.includes('localStorage.getItem("luxureatBag")') && runtimeJs.includes('action: "luxureat_bag"'), 'bags no longer use shared browser storage and sync to the signed-in user');
-assert(runtimeJs.includes('type === "reload"') && runtimeJs.includes('sessionStorage.removeItem(guestBagKey)'), 'guest bags clear on refresh while signed-in bags remain account-backed');
-assert(runtimeJs.includes('badge.classList.add("is-updating")'), 'bag badges update synchronously after quantity changes');
-assert(runtimeJs.includes('window.LuxureatBag?.items?.()'), 'shared bag events read the live bag instead of resetting its count');
+assert(!runtimeJs.includes('luxureat_checkout') && !runtimeJs.includes('LuxureatCheckout') && !runtimeJs.includes('add_to_cart'), 'checkout handoff and purchase analytics are removed');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(!runtimeJs.includes('requestIdleCallback') && runtimeJs.includes('const prefetched = new Set()'), 'runtime scripts avoid downloading every linked page during idle time');
 assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('luxIsMobile ? "0px" : "600px 0px"') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts preload background video near the viewport and suppress native media controls');
@@ -378,8 +346,8 @@ assert(integrationCss.includes('.lux-event-thumbnails button.is-active'), 'activ
 assert(integrationCss.includes('repeat(auto-fit, minmax(min(100%, 380px), 1fr))') && integrationCss.includes('contain: paint'), 'product cards stay contained and adjacent carousel slides are clipped');
 assert(integrationCss.includes('align-items: stretch') && integrationCss.includes('.lux-home-hero') && integrationCss.includes('min-height: 90svh'), 'product actions align and mobile home content expands without clipping');
 assert(integrationCss.includes('.lux-event-reader-article > figure img') && integrationCss.includes('object-fit: contain'), 'mobile event articles keep the complete poster centered');
-assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.woocommerce-MyAccount-navigation'), 'account page applies branded logo and WooCommerce account styling');
-assert(integrationCss.includes('.lux-account-dashboard-page .woocommerce-MyAccount-content > p'), 'account dashboard hides the duplicated WooCommerce introduction');
+assert(integrationCss.includes('.lux-wp-page-brand img') && integrationCss.includes('.lux-wp-page-content'), 'generic WordPress pages keep their branded shell and layout');
+assert(!integrationCss.includes('.lux-account-modal') && !integrationCss.includes('.woocommerce-MyAccount-navigation') && !integrationCss.includes('.lux-account-dashboard'), 'consumer account modal and WooCommerce account styles are removed');
 assert(integrationCss.includes('--lux-zh-headline: "KingHwa Old Song Site"') && integrationCss.includes('--lux-zh-body: "LuxurEat ZhiSong Site"') && !integrationCss.includes('KingHwaOldSong-complete.ttf'), 'Chinese typography does not use the site-wide KingHwa and ZhiSong subsets');
 assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css defines the caviar list view layout');
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
@@ -393,12 +361,12 @@ assert(integrationCss.includes('.lux-reader-back { left: 14px; }') && integratio
 assert((integrationCss.match(/border-width: \.5px;/g) || []).length >= 2 && (integrationCss.match(/outline: none;/g) || []).length >= 2 && (integrationCss.match(/box-shadow: inset 0 0 0 1px #101010;/g) || []).length >= 2 && integrationCss.includes('.lux-product-close:active { transform: none; }') && integrationCss.includes('.lux-reader-close:active { transform: none; }'), 'Close controls keep their size while showing a fine outer line and an attached inset interaction stroke');
 assert(integrationCss.includes('.lux-product-detail'), 'integration.css styles the shared product-detail view');
 assert(integrationCss.includes('.lux-product-gallery'), 'integration.css styles product image galleries');
-assert(integrationCss.includes('.lux-checkout-page') && integrationCss.includes('.lux-home-gifting-title'), 'checkout and homepage editorial layers receive branded styling');
-assert(integrationCss.includes('.lux-product-qty'), 'integration.css styles product quantity controls');
+assert(!integrationCss.includes('.lux-checkout-page') && integrationCss.includes('.lux-home-gifting-title'), 'obsolete checkout styling is removed while homepage editorial styling remains');
+assert(!integrationCss.includes('.lux-product-qty'), 'product purchase quantity controls are removed');
 assert(integrationCss.includes('.lux-product-recent-grid'), 'integration.css styles product-detail recommendation grids');
 assert(integrationCss.includes('.lux-product-recent-nav') && integrationCss.includes('scrollbar-width: none'), 'integration.css hides recommendation scrollbars and styles arrow controls');
 assert(integrationCss.includes('inset: 0 -86px auto'), 'recommendation arrows sit on both sides of the carousel');
-assert(integrationCss.includes('.lux-product-cart-state'), 'integration.css styles product-detail cart state');
+assert(!integrationCss.includes('.lux-product-cart-state'), 'product-detail cart state styling is removed');
 assert(integrationCss.includes('.lux-reader-panel::before') && integrationCss.includes('backdrop-filter: blur(16px)') && integrationCss.includes('border-bottom: 0'), 'integration.css gives reader and product headers glass blur without a divider line');
 assert(integrationCss.includes('background: rgba(244,242,238,.82)'), 'reader header uses the light editorial glass layer');
 assert(integrationCss.includes('.lux-reader-panel.is-at-top::before'), 'reader glass layer is hidden while the article is at the top');
@@ -410,12 +378,11 @@ assert(integrationCss.includes('.lux-reader-archive'), 'integration.css styles j
 assert(integrationCss.includes('.lux-reader-layout') && integrationCss.includes('.lux-reader-cover') && integrationCss.includes('.lux-reader-quote'), 'integration.css styles magazine-style long-form reader articles');
 assert(integrationCss.includes('.lux-dark-photo-block .lux-reader-cta'), 'integration.css centers reader detail buttons on dark photo cards');
 assert(integrationCss.includes('.lux-product-panel::before'), 'integration.css gives product details a glass top layer');
-assert(integrationCss.includes('.lux-bag-item') && integrationCss.includes('.lux-bag-detail'), 'integration.css styles light bag item cards and image detail hover actions');
-assert(integrationCss.includes('.lux-bag-summary') && integrationCss.includes('background: #181818'), 'bag order summary uses a softer dark background');
+assert(!integrationCss.includes('.lux-bag-item') && !integrationCss.includes('.lux-bag-summary') && !integrationCss.includes('.lux-bag-count'), 'dedicated bag page and header counter styling are removed');
 assert(!integrationCss.includes('background: rgba(143,47,36,.08)'), 'remove actions do not add a tinted background on hover');
 assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles global footprint cards');
 assert(integrationCss.includes('.lux-footprint-card .lux-with-icon'), 'global footprint contact links receive mail and phone icons');
-assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] [data-bag-add]'), 'integration.css gives product-card add buttons the heavier border');
+assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] [data-purchase-cta]'), 'integration.css preserves the left product-card CTA border');
 assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] button[data-product-open]'), 'integration.css gives product-card detail buttons a matching border');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
 assert(integrationCss.includes('.lux-full-bleed'), 'integration.css supports full-width dark photo sections');
@@ -428,7 +395,6 @@ assert(!integrationCss.includes('.lux-reader-layout .lux-reader-intro:first-lett
 assert(integrationCss.includes('.lux-reader-cta'), 'integration.css styles card reading hover calls to action');
 assert(integrationCss.includes('transform: translate(-50%, -50%)') && integrationCss.includes('place-items: center'), 'reader detail buttons stay centered inside image cards');
 assert(integrationCss.includes('font: 400 32px/1.12 var(--lux-page-heading)'), 'reader quote uses the current editorial display type');
-assert(integrationCss.includes('.lux-bag-recommendations [data-bag-add]:hover') && integrationCss.includes('.lux-bag-recommendations [data-product-open]:active'), 'bag recommendation buttons have hover and active interactions');
 assert(integrationCss.includes('.lux-footprint-stage:has(.lux-footprint-card:hover)') && integrationCss.includes('transform: scale(1.025)'), 'global footprint cards brighten the background and scale gently on hover');
 assert(integrationCss.includes('aspect-ratio: 4 / 3'), 'journal archive images use a 4:3 ratio');
 assert(integrationCss.includes('section:has(.lux-hero-fade-both)') && integrationCss.includes('border-bottom-color: transparent'), 'photo heroes hide divider lines while fading into the page background');
@@ -453,21 +419,10 @@ assert(!brandJs.includes('pointermove') && integrationCss.includes('#private-lab
 assert(zhGifting.includes('lux-inquiry-divider') && enGifting.includes('lux-inquiry-divider'), 'bilingual inquiry sections use the gold divider');
 assert(!zhGifting.includes('>批发采购</strong>') && !zhGifting.includes('>进出口合作</strong>'), 'Chinese inquiry removes the two boxed cooperation options');
 
-const zhBag = read(path.join(themeDir, 'pages/zh/bag.php'));
-const enBag = read(path.join(themeDir, 'pages/en/bag.php'));
-assert(zhBag.includes('浏览全部') && zhBag.includes("luxureat_static_url('zh/product'"), 'Chinese bag browse-all link goes to caviar');
-assert(enBag.includes('Browse All') && enBag.includes("luxureat_static_url('en/product'"), 'English bag browse-all link goes to products');
-assert(zhBag.includes('lux-bag-browse-all') && enBag.includes('lux-bag-browse-all') && zhBag.includes('<path d="M5 12h14"/>') && integrationCss.includes('.lux-bag-browse-all') && integrationCss.includes('font-size: 18px !important;'), 'bilingual bag browse-all links use the compact exhibition-style arrow treatment');
-assert(integrationCss.includes('.lux-bag-browse-all:hover') && integrationCss.includes('color: #9df5ec !important;'), 'bag browse-all links change from gold to Tiffany blue on hover');
+assert(!fs.existsSync(path.join(themeDir, 'pages/zh/bag.php')) && !fs.existsSync(path.join(themeDir, 'pages/en/bag.php')), 'dedicated bilingual bag pages are absent from the theme');
 assert(integrationCss.includes('.lux-product-recent-media:hover > img') && integrationCss.includes('transform: scale(1.035);'), 'product-detail recommendation images enlarge gently on hover');
-assert(zhBag.includes('data-bag-checkout') && enBag.includes('data-bag-checkout'), 'bilingual bag pages expose the WooCommerce checkout action');
-assert(zhBag.includes('lux-bag-logistics-icon') && enBag.includes('lux-bag-logistics-icon') && zhBag.includes('m16 17 2 2 4-4'), 'bilingual bag summaries use the Lucide PackageCheck logistics icon');
-assert(zhBag.includes('lux-bag-action-icon') && enBag.includes('lux-bag-action-icon') && zhBag.includes('<line x1="2" x2="22" y1="10" y2="10"/>'), 'bilingual checkout buttons use the Lucide CreditCard icon');
-assert(integrationCss.includes('.lux-bag-action-icon') && integrationCss.includes('flex: 0 0 24px'), 'checkout and concierge icons share the same 24px size');
-assert(runtimeJs.includes('renderRecommendations') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'bag recommendations render product-detail actions from product data');
-assert(runtimeJs.includes('class="is-test-price"') && runtimeJs.includes('lux-bag-price${item.priceLabel ? " is-test-price" : ""}') && runtimeJs.includes('lux-bag-recommendation-price${product.priceLabel ? " is-test-price" : ""}'), 'catalogue PRICE labels share the same state class across product and bag recommendations');
-assert(integrationCss.includes('.lux-product-recent-card > .is-test-price') && integrationCss.includes('.lux-bag-recommendations .is-test-price') && integrationCss.includes('color: #b48700 !important'), 'catalogue PRICE labels use the enlarged gold treatment');
-assert(integrationCss.includes('html[lang^="zh"] :is(.lux-bag-item, .lux-bag-recommendations)') && integrationCss.includes('font-family: var(--lux-zh-headline) !important'), 'Chinese bag items and recommendations use KingHwa Old Song');
+assert(runtimeJs.includes('data-purchase-cta') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations preserve both purchase and detail CTA controls');
+assert(integrationCss.includes('.lux-product-recent-card > .is-test-price') && integrationCss.includes('color: #b48700 !important'), 'catalogue PRICE labels retain their enlarged gold treatment');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/about-us.php'));
 const enJournal = read(path.join(themeDir, 'pages/en/about-us.php'));

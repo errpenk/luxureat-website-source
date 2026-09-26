@@ -22,7 +22,7 @@ errpenk/luxureat-website-source
 
 ## Content Maintenance
 
-Content shared across pages has one canonical data file. Edit the data file and its matching media directory; page templates and the shopping bag render from those sources.
+Content shared across pages has one canonical data file. Edit the data file and its matching media directory; page templates and catalogue views render from those sources.
 
 | Domain | Text and records | Images | Runtime |
 | --- | --- | --- | --- |

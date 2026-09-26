@@ -36,7 +36,6 @@ export const seo = {
     "market-insights": ["中国市场洞察 | LuxurEat（露意膳）", "了解中国市场规模、城市与经济中心、意中贸易，以及意大利食品、饮料和葡萄酒的市场数据。"],
     "import-export": ["中国进出口与市场服务 | LuxurEat（露意膳）", "了解 LuxurEat China 的进口中国、中国采购与出口、市场落地、品牌数字化与商务拓展服务。"],
     contact: ["联系我们 | LuxurEat（露意膳）", "联系 LuxurEat（露意膳），咨询品牌、产品、渠道与商务合作。"],
-    bag: ["购物袋 | LuxurEat（露意膳）", "查看并管理您在 LuxurEat（露意膳）购物袋中的已选产品。"],
   },
   en: {
     home: ["LuxurEat Group | Premium Italian Food & Brand Partnerships", "Discover premium Italian food, authentic regional flavours, recipes, brand stories and professional market partnerships from LuxurEat Group."],
@@ -51,7 +50,6 @@ export const seo = {
     "market-insights": ["China Market Insights | LuxurEat", "Explore China's market scale, cities and economic centres, Italy–China trade, and market data for Italian food, beverages and wine."],
     "import-export": ["China Import, Export & Market Services | LuxurEat", "Explore LuxurEat China services for importing into China, sourcing and export, market entry, brand digitalisation and business development."],
     contact: ["Contact | LuxurEat", "Contact LuxurEat for brand, product, distribution and business partnership enquiries."],
-    bag: ["Shopping Bag | LuxurEat", "Review and manage the products selected in your LuxurEat shopping bag."],
   },
 };
 
@@ -79,7 +77,6 @@ export const pages = [
   page("zh", "china-market-insights", "market-insights", ["market-insights-ui"]),
   page("zh", "import-export-services", "import-export", ["import-export-ui"]),
   page("zh", "contact", "contact", ["brand-data", "brand"]),
-  page("zh", "bag", "bag", ["product-data", "products"], false),
   page("en", "index", "home", ["product-data", "event-data", "events", "journal-data", "journal", "products"]),
   page("en", "about-us", "journal", ["journal-data", "journal"]),
   page("en", "product", "products", ["product-data", "products"]),
@@ -92,7 +89,6 @@ export const pages = [
   page("en", "china-market-insights", "market-insights", ["market-insights-ui"]),
   page("en", "import-export-services", "import-export", ["import-export-ui"]),
   page("en", "contact", "contact", ["brand-data", "brand"]),
-  page("en", "bag", "bag", ["product-data", "products"], false),
 ];
 
 export const scripts = {

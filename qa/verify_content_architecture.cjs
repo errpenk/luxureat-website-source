@@ -178,7 +178,7 @@ for (const locale of ["zh", "en"]) {
 }
 assert(read("integration.css").includes(".lux-brand-promise-link") && read("integration.css").includes("color: #145a4a"), "brand-promise verification link is not deep green");
 assert(read("integration.css").includes("color: #806018") && read("integration.css").includes("border-color: #806018"), "brand-promise verification link hover is not deep gold");
-for (const selector of [".lux-recipe-product-link", ".lux-breadcrumb a", ".woocommerce-account .woocommerce-MyAccount-content a"]) {
+for (const selector of [".lux-recipe-product-link", ".lux-breadcrumb a"]) {
   assert(read("integration.css").includes(selector), `deep-green internal link interaction is incomplete: ${selector}`);
 }
 
@@ -230,7 +230,7 @@ assert(accountRuntime.includes('luxureat_cookie_consent') && accountRuntime.incl
 assert(accountRuntime.includes('luxGetCookieConsent() !== "analytics"') && accountRuntime.includes('data-footer-modal="cookie"'), "analytics is not gated by consent or Cookie Policy cannot be opened");
 assert(engagementRuntime.includes('cookie: ["Cookie Policy"') && engagementRuntime.includes("termsZh") && engagementRuntime.includes("shippingZh"), "bilingual Cookie, sale or shipping policies are incomplete");
 assert(engagementRuntime.includes('panel.classList.toggle("is-legal", isLegal)'), "legal footer dialogs do not expose their positioning state");
-assert(engagementRuntime.includes('passwordPlaceholder: "请输入您的密码"'), "Chinese password placeholder is outdated");
+assert(!engagementRuntime.includes("data-account-form") && !engagementRuntime.includes("data-account-password"), "consumer account form UI remains in the optional runtime");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
 assert(integrationStyles.includes("width: 90vw !important;") && integrationStyles.includes("height: 90dvh !important;") && integrationStyles.includes("width: 100vw !important;") && integrationStyles.includes("height: 100dvh !important;"), "article dialogs do not use one enforced desktop size and full-screen mobile sizing");
@@ -318,7 +318,7 @@ assert(accountRuntime.includes("data-lux-deferred-scripts"), "mobile-first-load 
 assert(!accountRuntime.includes("luxDeferredScripts.textContent") && accountRuntime.includes('["../data/products.js", "../data/events.js", "../data/journal.js"]'), "deferred script loading is not restricted to the trusted local catalog");
 assert(accountRuntime.includes('event.target.closest?.("[data-reader-open]")') && accountRuntime.includes("trigger.click()"), "the first deferred article click is not replayed after its runtime loads");
 assert(journalRuntime.includes('document.readyState === "loading"') && journalRuntime.includes("initLuxReader()"), "the reader runtime does not cover deferred and post-load initialization");
-assert(productRuntime.includes('document.readyState === "complete"') && productRuntime.includes("initLuxProductDetails()") && productRuntime.includes("renderInitialBag()"), "the product runtime does not cover deferred and post-load initialization");
+assert(productRuntime.includes('document.readyState === "complete"') && productRuntime.includes("initLuxProductDetails()"), "the product runtime does not cover deferred and post-load initialization");
 assert(read("assets/js/academy.js").includes('document.readyState === "loading"'), "the academy runtime can initialize after its reader runtime");
 assert(productRuntime.includes('key: "price-asc"') && productRuntime.includes('key: "price-desc"') && productRuntime.includes("lux-sort-selected-icon"), "bilingual price sorting or its Lucide selection icon is incomplete");
 assert(integrationStyles.includes(".lux-about-story .lux-reader-quote") && integrationStyles.includes(".lux-reader-pull p") && integrationStyles.includes("grid-template-columns: 112px minmax(0, 1fr)"), "requested quote hierarchy or compact mobile product view is incomplete");
@@ -357,7 +357,7 @@ assert(!read("zh/certification.html").includes('<div class="w-24 h-px bg-primary
 assert(!read("zh/product.html").includes("lux-page-top-hero") && read("zh/product.html").includes("items-center justify-end") && !read("en/product.html").includes("lux-page-top-hero") && read("en/product.html").includes("items-center justify-end"), "product heroes are not horizontally centered in their bottom-aligned layout");
 assert(read("zh/product.html").indexOf("lux-product-count") < read("zh/product.html").indexOf("<header><strong>筛选条件") && read("en/product.html").indexOf("lux-product-count") < read("en/product.html").indexOf("<header><strong>Filter by"), "bilingual product counts are not above the filter headings");
 assert(integrationStyles.includes("grid-template-rows: auto 1fr auto") && integrationStyles.includes(".lux-home-maison-head > div:first-child > span:first-child") && integrationStyles.includes("transform: translateY(1.7px)"), "Maison alignment is incomplete");
-assert(integrationStyles.includes("html[lang] body .lux-account-inline-actions button") && integrationStyles.includes("html[lang] body .lux-account-existing button") && integrationStyles.includes("font-size: 12px !important") && integrationStyles.includes("font-size: 14px !important"), "bilingual account helper-link sizing is inconsistent");
+assert(!integrationStyles.includes(".lux-account-modal") && !integrationStyles.includes(".woocommerce-MyAccount-navigation"), "consumer account UI styling remains in the shared stylesheet");
 assert(read("assets/fonts/ChineseTypography-SOURCE.md").includes("京華老宋体v3.0.ttf"), "KingHwa source metadata is not v3.0");
 assert(integrationStyles.includes("Every page-top hero follows the homepage's 14px / 18px support scale") && integrationStyles.includes("html[lang] body .lux-hero-kicker") && integrationStyles.includes("html[lang] body .lux-hero-support"), "bilingual page-top hero copy does not share the homepage scale");
 assert(accountRuntime.includes('document.querySelectorAll("#selected-products > .grid > .group")') && accountRuntime.includes("location.href = productLink.href"), "homepage product cards are not fully clickable");
@@ -391,7 +391,7 @@ assert(integrationStyles.includes('font-family: "Material Symbols Outlined" !imp
 assert(integrationStyles.includes('.material-symbols-outlined::before') && integrationStyles.includes('content: attr(data-icon)'), "material icons do not render from non-translatable attributes");
 assert(!/<span\b[^>]*\bmaterial-symbols-outlined\b[^>]*>\s*[a-z0-9_]+\s*<\/span>/i.test(productRuntime + journalRuntime), "a dynamic material icon still exposes translatable ligature text");
 assert(integrationStyles.includes('font-size: 18px !important') && integrationStyles.includes('line-height: 1.65 !important'), "English body copy does not meet the enlarged reading scale");
-assert(productRuntime.includes('lang === "en" ? \' lang="zh-CN"\'') && integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && integrationStyles.includes('font-family: "KingHwa Old Song Site" !important'), "Chinese product names in the English interface do not use the KingHwa family");
+assert(read("assets/data/products.js").includes("subtitle: chinese") && integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && integrationStyles.includes('font-family: "KingHwa Old Song Site" !important'), "Chinese product-name data or its English-interface KingHwa styling is missing");
 const zhBlog = read("zh/blog.html");
 assert(zhBlog.includes("从松露、鱼子酱与橄榄油，到美食词典、生产者与产地故事"), "Chinese Blog kicker is outdated");
 const academyRuntime = read("assets/js/academy.js");
@@ -403,7 +403,7 @@ assert(read("assets/css/journal.css").includes("scroll-margin-top:96px"), "Brand
 const ritualStyles = read("assets/css/rituals.css");
 assert(ritualStyles.includes("border-color:#fff;color:#fff") && ritualStyles.includes(".lux-reader-cta:hover") && ritualStyles.includes("border-color:#81d8d0;color:#81d8d0"), "recipe-library detail CTA does not change from white to Tiffany on direct hover");
 assert(allPageHtml.includes('class="lux-newsletter"') && ["zh", "en"].every((locale) => read(`${locale}/index.html`).includes("data-newsletter-form")), "bilingual footer newsletter is missing");
-assert(engagementRuntime.includes("createLuxBotProof") && engagementRuntime.includes('action", "luxureat_newsletter"') && engagementRuntime.includes("newsletterNonce"), "newsletter validation or secure submission runtime is incomplete");
+assert(engagementRuntime.includes("createLuxBotProof") && engagementRuntime.includes('action", "luxureat_newsletter"') && engagementRuntime.includes("LuxureatNewsletter") && engagementRuntime.includes("newsletter.nonce"), "newsletter validation or secure submission runtime is incomplete");
 const themeBuilder = read("scripts/build-luxureat-theme.mjs");
 assert(themeBuilder.includes("luxureat_static_newsletter_ajax") && themeBuilder.includes("send_confirmation_email' => true"), "newsletter endpoint does not use verified MailPoet subscription");
 assert(integrationStyles.includes('html[lang^="en"] body .lux-hero-support') && integrationStyles.includes("font-weight: 400 !important"), "English page-top support copy is still bold");

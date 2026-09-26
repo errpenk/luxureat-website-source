@@ -145,12 +145,12 @@ const loadLuxEngagement = () => luxEngagementLoading ||= new Promise((resolve) =
   script.onerror = () => resolve(false);
   document.body.appendChild(script);
 });
-const luxEngagementSelector = "[data-account-open],[data-footer-modal],[data-newsletter-form]";
+const luxEngagementSelector = "[data-footer-modal],[data-newsletter-form]";
 ["pointerover", "focusin"].forEach((type) => document.addEventListener(type, (event) => {
   if (event.target.closest?.(luxEngagementSelector)) loadLuxEngagement();
 }, { passive: true }));
 document.addEventListener("click", (event) => {
-  const trigger = event.target.closest?.("[data-account-open],[data-footer-modal]");
+  const trigger = event.target.closest?.("[data-footer-modal]");
   if (!trigger || window.LuxEngagementReady) return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -163,8 +163,6 @@ document.addEventListener("submit", (event) => {
   const form = event.target;
   loadLuxEngagement().then((ready) => { if (ready) form.requestSubmit(); });
 }, true);
-if (["required", "verified", "verification-failed"].includes(new URLSearchParams(location.search).get("account"))) loadLuxEngagement();
-
 (() => {
   const isEn = document.documentElement.lang.toLowerCase().startsWith("en");
   const copy = isEn ? {
@@ -608,19 +606,6 @@ document.querySelectorAll("[data-count-up]").forEach((counter) => {
   }
 });
 
-const updateLuxBagCount = () => {
-  let count = 0;
-  const items = window.LuxureatBag?.items?.()
-    || (window.LuxureatAccount?.loggedIn ? window.LuxureatAccount.bag : []);
-  if (Array.isArray(items)) count = items.reduce((sum, item) => sum + Math.max(1, Number(item.quantity) || 1), 0);
-  document.querySelectorAll("[data-bag-count]").forEach((badge) => {
-    badge.textContent = count ? String(count) : "";
-    badge.hidden = count === 0;
-  });
-};
-updateLuxBagCount();
-document.addEventListener("lux-bag-change", updateLuxBagCount);
-
 const luxNav = document.querySelector(".lux-nav");
 const luxMenu = document.querySelector(".lux-menu");
 
@@ -748,7 +733,7 @@ if (luxNav && luxMenu) {
 
   const pairedPage = currentPage;
   const languageLinks = document.querySelectorAll(".lux-lang a");
-  if (languageLinks.length === 2 && pairedPage !== "bag.html" && pageItems.some(([href]) => href === pairedPage)) {
+  if (languageLinks.length === 2 && pageItems.some(([href]) => href === pairedPage)) {
     languageLinks[0].href = language === "zh" ? "#" : pageHref(pairedPage, "zh");
     languageLinks[1].href = language === "en" ? "#" : pageHref(pairedPage, "en");
   }

@@ -32,7 +32,7 @@ try {
   assert.equal((robots.match(/^User-agent: \*$/gm) || []).length, 1, "wildcard crawler group must be unique for Baidu compatibility");
   assert.doesNotMatch(robots, /^Allow: \/$/m, "default crawl access does not need a redundant Allow rule");
   assert.match(robots, /Allow: \/wp-admin\/admin-ajax\.php/);
-  assert.doesNotMatch(robots, /Disallow: \/(?:en\/)?(?:bag|cart|checkout|my-account)\//, "Google must crawl utility pages to see their noindex directive");
+  assert.doesNotMatch(robots, /Disallow: \/(?:en\/)?(?:bag|cart|checkout|my-account)\//, "obsolete commerce paths do not need dedicated crawler directives");
   assert.match(robots, /Sitemap: https:\/\/luxureat\.cn\/sitemap\.xml/);
   assert.doesNotMatch(robots, /Disallow: \/assets\//, "search engines need access to render assets");
 
@@ -44,10 +44,8 @@ try {
   assert.match(llms, /\[Products\]\(https:\/\/luxureat\.cn\/en\/product\/\)/);
   assert.doesNotMatch(llms, /^(?!- \[[^\]]+\]\(https:\/\/luxureat\.cn\/)[^\n]*https:\/\/luxureat\.cn\//m, "site links must use llms.txt Markdown list format");
 
-  for (const language of ["zh", "en"]) {
-    const bag = read(`${language}/bag.html`);
-    assert.equal((bag.match(/<meta name="robots" content="noindex,follow">/g) || []).length, 1, `${language} bag needs one noindex directive`);
-  }
+  assert.equal(fs.existsSync(path.join(root, "zh/bag.html")), false, "Chinese bag page remains");
+  assert.equal(fs.existsSync(path.join(root, "en/bag.html")), false, "English bag page remains");
   for (const language of ["zh", "en"]) {
     for (const name of fs.readdirSync(path.join(root, language)).filter((file) => file.endsWith(".html"))) {
       const html = read(`${language}/${name}`);

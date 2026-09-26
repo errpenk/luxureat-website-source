@@ -2,32 +2,6 @@ const luxEscapeProductHtml = (value) => String(value).replace(/[&<>"']/g, (char)
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
 
-function syncLuxWooCatalog() {
-  const products = window.LUXUREAT_PRODUCT_DATA?.products;
-  const liveProducts = window.LuxureatWooCatalog?.products;
-  if (!products || !liveProducts) return;
-
-  const isZh = document.documentElement.lang?.startsWith("zh");
-  Object.values(products).forEach((product) => {
-    const live = liveProducts[product.sku];
-    if (!live) return;
-    product.amount = Number(live.price) || 0;
-    product.currency = live.currency || product.currency;
-    product.available = Boolean(live.available);
-    product.stockStatus = live.stockStatus || "outofstock";
-    const stockQuantity = Number(live.stockQuantity);
-    product.stockQuantity = live.stockQuantity !== null && Number.isFinite(stockQuantity) ? stockQuantity : null;
-    product.maxQuantity = Math.max(0, Number(live.maxQuantity) || 0);
-    if (live.image) {
-      product.image = live.image;
-      product.gallery = [live.image, ...(Array.isArray(live.gallery) ? live.gallery : [])].filter(Boolean);
-    }
-    if (isZh && live.name) product.title = live.name;
-    if (isZh && live.description) product.desc = live.description;
-  });
-}
-
-syncLuxWooCatalog();
 window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
 function renderLuxProductCatalog() {
@@ -72,7 +46,7 @@ function renderLuxProductCatalog() {
         ${product.mainIngredients ? `<small class="lux-product-registration-line font-label-sm text-label-sm"><strong>${luxEscapeProductHtml(product.eyebrow)}</strong><b aria-hidden="true">/</b><span>${luxEscapeProductHtml(product.mainIngredients)}</span></small>` : ""}
         ${stockLabel(product) ? `<small class="font-label-sm text-label-sm uppercase tracking-widest ${product.available === false ? "text-error" : "text-primary"}">${luxEscapeProductHtml(stockLabel(product))}</small>` : ""}
         <div class="mt-4 flex items-center gap-4">
-          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-price-label="${luxEscapeProductHtml(product.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}" type="button"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
+          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto disabled:cursor-not-allowed disabled:opacity-45" data-purchase-cta type="button"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
           <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
         </div>
       </div>
@@ -98,15 +72,6 @@ function syncLuxProductBindings() {
     root.querySelectorAll("[data-product-field]").forEach((node) => {
       const value = fields[node.dataset.productField]?.(product);
       if (value) node.textContent = value;
-    });
-    root.querySelectorAll("[data-bag-add]").forEach((button) => {
-      button.dataset.bagId = product.id;
-      button.dataset.bagSku = product.sku;
-      button.dataset.bagTitle = product.title;
-      button.dataset.bagSubtitle = product.subtitle;
-      button.dataset.bagPrice = product.amount;
-      button.dataset.bagCurrency = product.currency;
-      button.dataset.bagImage = product.image;
     });
   });
 }
@@ -383,18 +348,10 @@ function initLuxProductDetails() {
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
   const catalogUnit = () => document.documentElement.lang?.startsWith("zh") ? "份" : "unit";
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", qty: "数量", remove: "移除", recent: "更多推荐", specs: ["生产企业", "中国注册号", "产品类别 / HS", "有效期至"], story: "产品说明" }
-    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", qty: "Qty", remove: "Remove", recent: "More Recommendations", specs: ["Manufacturer", "China Registration", "Category / HS", "Valid Until"], story: "Product Information" };
-  const totalLabel = (quantity) => document.documentElement.lang?.startsWith("zh") ? `${quantity}件总价` : `${quantity}-item total`;
-  const maxQuantity = () => Math.min(window.LuxureatBag?.maxQuantity || 99, Math.max(1, Number(products[currentProductId]?.maxQuantity) || 99));
-  const clampQuantity = (quantity) => Math.min(maxQuantity(), Math.max(1, Number(quantity) || 1));
+    ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", recent: "更多推荐", specs: ["生产企业", "中国注册号", "产品类别 / HS", "有效期至"], story: "产品说明" }
+    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", recent: "More Recommendations", specs: ["Manufacturer", "China Registration", "Category / HS", "Valid Until"], story: "Product Information" };
   const galleryFor = (product) => {
     if (product.gallery?.length) return product.gallery;
-    if (product.id.includes("beluga")) return galleries.beluga;
-    if (product.id.includes("oscetra")) return galleries.oscetra;
-    if (product.id.includes("spoon")) return galleries.spoon;
-    if (product.id.includes("champagne")) return galleries.champagne;
-    if (product.id.includes("ice-server")) return galleries.ice;
     if (product.id.includes("truffle")) return galleries.truffle;
     return [product.image];
   };
@@ -426,45 +383,6 @@ function initLuxProductDetails() {
   let currentProductId = "";
   const productStack = [];
 
-  const updateSelectedTotal = (quantity) => {
-    const labels = copy();
-    const addButton = detail.querySelector(".lux-product-purchase [data-bag-add]");
-    const total = detail.querySelector("[data-product-total]");
-    const amount = Number(addButton?.dataset.bagPrice || 0);
-    if (!total || !amount || quantity <= 1) {
-      if (total) total.hidden = true;
-      return;
-    }
-    total.hidden = false;
-    total.textContent = `${totalLabel(quantity)}: ${formatMoney(addButton.dataset.bagCurrency || "$", amount * quantity)}`;
-  };
-  const syncSelectedQuantity = (quantity) => {
-    const next = clampQuantity(quantity);
-    const output = detail.querySelector("[data-product-quantity-value]");
-    const addButton = detail.querySelector(".lux-product-purchase [data-bag-add]");
-    const minus = detail.querySelector('[data-product-quantity="-1"]');
-    const plus = detail.querySelector('[data-product-quantity="1"]');
-    if (output) {
-      output.value = String(next);
-      output.textContent = String(next);
-    }
-    if (addButton) addButton.dataset.bagQuantity = String(next);
-    if (minus) minus.disabled = next <= 1;
-    if (plus) plus.disabled = next >= maxQuantity();
-    updateSelectedTotal(next);
-  };
-
-  const updateProductBagState = () => {
-    const product = products[currentProductId];
-    const state = detail.querySelector("[data-product-cart-state]");
-    if (!product || !state) return;
-    const labels = copy();
-    const quantity = window.LuxureatBag?.items().find((item) => item.id === product.id)?.quantity || 0;
-    state.hidden = !quantity;
-    const text = state.querySelector("[data-product-cart-text]");
-    const total = quantity > 1 ? ` · ${totalLabel(quantity)}: ${formatMoney(product.currency, product.amount * quantity)}` : "";
-    if (text) text.textContent = document.documentElement.lang?.startsWith("zh") ? `已加入购物袋：${quantity}${total}` : `In Cart: ${quantity}${total}`;
-  };
   const syncRecentNav = () => {
     const grid = detail.querySelector(".lux-product-recent-grid");
     const buttons = detail.querySelectorAll("[data-product-recent-scroll]");
@@ -524,19 +442,10 @@ function initLuxProductDetails() {
             <span>${luxEscapeProductHtml(product.eyebrow)}</span>
             <h2 id="lux-product-title">${luxEscapeProductHtml(product.title)}</h2>
             <p>${luxEscapeProductHtml(product.desc)}</p>
-            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(product.priceLabel || "PRICE") : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small><em data-product-total hidden></em>`}</strong>
+            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(product.priceLabel || "PRICE") : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small>`}</strong>
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
-              <div class="lux-product-qty" aria-label="${luxEscapeProductHtml(labels.qty)}">
-                <button type="button" data-product-quantity="-1" aria-label="${luxEscapeProductHtml(labels.qty)} -">−</button>
-                <output data-product-quantity-value>1</output>
-                <button type="button" data-product-quantity="1" aria-label="${luxEscapeProductHtml(labels.qty)} +">+</button>
-              </div>
-              <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-price-label="${luxEscapeProductHtml(product.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
-            </div>
-            <div class="lux-product-cart-state" data-product-cart-state hidden>
-              <span data-product-cart-text></span>
-              <button type="button" data-bag-remove="${luxEscapeProductHtml(product.id)}">${luxEscapeProductHtml(labels.remove)}</button>
+              <button type="button" data-purchase-cta${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
             </div>
           </div>
         </section>
@@ -557,7 +466,7 @@ function initLuxProductDetails() {
               <strong>${luxEscapeProductHtml(item.title)}</strong>
               <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "PRICE")} / ${luxEscapeProductHtml(catalogUnit())}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
               <div class="lux-product-recent-actions">
-                <button type="button" data-bag-add data-bag-quantity="1" data-bag-id="${luxEscapeProductHtml(item.id)}" data-bag-sku="${luxEscapeProductHtml(item.sku)}" data-bag-title="${luxEscapeProductHtml(item.title)}" data-bag-subtitle="${luxEscapeProductHtml(item.subtitle)}" data-bag-price="${luxEscapeProductHtml(item.amount)}" data-bag-price-label="${luxEscapeProductHtml(item.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(item.currency)}" data-bag-image="${luxEscapeProductHtml(item.image)}"${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
+                <button type="button" data-purchase-cta${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
               </div>
             </article>`).join("")}
@@ -577,8 +486,6 @@ function initLuxProductDetails() {
     backButton.textContent = labels.back;
     backButton.hidden = !productStack.length && !window.LuxureatHasInternalBack?.();
     closeButton.textContent = labels.close;
-    syncSelectedQuantity(1);
-    updateProductBagState();
     const recentGrid = detail.querySelector(".lux-product-recent-grid");
     if (recentGrid) {
       recentGrid.addEventListener("scroll", syncRecentNav, { passive: true });
@@ -629,11 +536,6 @@ function initLuxProductDetails() {
       if (image) openImageLightbox(image.src, image.alt);
       return;
     }
-    const button = event.target.closest("[data-product-quantity]");
-    if (!button) return;
-    if (button.disabled) return;
-    const output = detail.querySelector("[data-product-quantity-value]");
-    syncSelectedQuantity(Number(output?.value || output?.textContent || 1) + Number(button.dataset.productQuantity));
   });
   const close = () => {
     window.LuxureatCloseInternalLink?.();
@@ -645,13 +547,12 @@ function initLuxProductDetails() {
     productStack.length = 0;
   };
 
-  document.addEventListener("lux-bag-change", updateProductBagState);
   window.addEventListener("resize", syncRecentNav);
 
   document.addEventListener("click", (event) => {
-    const media = event.target.closest(".lux-product-recent-media, .lux-bag-recommendation-media");
+    const media = event.target.closest(".lux-product-recent-media");
     const trigger = event.target.closest("[data-product-open]")
-      || (!event.target.closest("button, a, input, select, textarea") ? media?.closest(".lux-product-recent-card, [data-bag-card]")?.querySelector("[data-product-open]") : null);
+      || (!event.target.closest("button, a, input, select, textarea") ? media?.closest(".lux-product-recent-card")?.querySelector("[data-product-open]") : null);
     if (!trigger) return;
     const productId = trigger.dataset.productOpen;
     if (!products[productId]) return;
@@ -684,338 +585,6 @@ function initLuxProductDetails() {
   if (products[initialId]) render(initialId, false);
 }
 
-(() => {
-  const maxQuantity = 99;
-  const guestBagKey = "luxureat_guest_bag";
-  const accountBag = window.LuxureatAccount;
-  const isReload = globalThis.performance?.getEntriesByType?.("navigation")?.[0]?.type === "reload";
-  if (accountBag?.loggedIn || isReload) sessionStorage.removeItem(guestBagKey);
-  const guestBag = () => {
-    try {
-      const items = JSON.parse(sessionStorage.getItem(guestBagKey) || "[]");
-      return Array.isArray(items) ? items : [];
-    } catch {
-      return [];
-    }
-  };
-  let bagItems = accountBag?.loggedIn && Array.isArray(accountBag.bag)
-    ? accountBag.bag
-    : guestBag();
-  const clampQuantity = (quantity, limit = maxQuantity) => Math.min(Math.max(1, Number(limit) || 1), Math.max(1, Number(quantity) || 1));
-  const locale = () => document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
-  const liveProductEntry = (id, lang = locale()) => {
-    const products = window.LUXUREAT_PRODUCT_DATA?.products || {};
-    const entries = Object.entries(products);
-    return entries.find(([productKey, product]) => productKey.startsWith(`${lang}-`) && product.id === id)
-      || entries.find(([, product]) => product.id === id);
-  };
-  const liveProduct = (id) => liveProductEntry(id)?.[1];
-  const cleanProduct = (product) => ({
-    id: String(product.id || "").trim(),
-    sku: String(product.sku || product.id || "").trim(),
-    title: String(product.title || "").trim(),
-    subtitle: String(product.subtitle || "").trim(),
-    price: Number(product.price ?? product.amount) || 0,
-    priceLabel: String(product.priceLabel || "").trim(),
-    currency: product.currency || "$",
-    image: product.image || "",
-    available: product.available !== false,
-    maxQuantity: Math.min(maxQuantity, Math.max(1, Number(product.maxQuantity) || maxQuantity)),
-    quantity: clampQuantity(product.quantity, product.maxQuantity),
-  });
-  const currentItem = (item) => {
-    const live = liveProduct(item.id);
-    return cleanProduct(live ? { ...live, price: live.amount, quantity: item.quantity } : item);
-  };
-
-  const read = () => {
-    return bagItems.map(currentItem).filter((item) => item.id && item.title);
-  };
-
-  const save = (items) => {
-    bagItems = items;
-    if (window.LuxureatAccount) window.LuxureatAccount.bag = items;
-    const account = window.LuxureatAccount;
-    if (!account?.loggedIn) {
-      sessionStorage.setItem(guestBagKey, JSON.stringify(items.map(({ id, sku, quantity }) => ({ id, sku, quantity }))));
-    }
-    if (account?.loggedIn && account.ajaxUrl && account.bagNonce) {
-      fetch(account.ajaxUrl, {
-        method: "POST",
-        credentials: "same-origin",
-        keepalive: true,
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: new URLSearchParams({
-          action: "luxureat_bag",
-          nonce: account.bagNonce,
-          items: JSON.stringify(items.map(({ id, sku, quantity }) => ({ id, sku, quantity }))),
-        }),
-      }).catch(() => {});
-    }
-    renderBag(items);
-    document.dispatchEvent?.(new CustomEvent("lux-bag-change"));
-    return items;
-  };
-
-  const api = {
-    maxQuantity,
-    items: read,
-    add(product) {
-      const next = cleanProduct(product || {});
-      if (!next.id || !next.title || !next.available) return read();
-
-      const items = read();
-      const existing = items.find((item) => item.id === next.id);
-      if (existing) {
-        existing.quantity = clampQuantity(existing.quantity + next.quantity, existing.maxQuantity);
-      } else {
-        items.push(next);
-      }
-      return save(items);
-    },
-    change(id, delta) {
-      const items = read()
-        .map((item) => item.id === id ? { ...item, quantity: clampQuantity(item.quantity + delta, item.maxQuantity) } : item);
-      return save(items);
-    },
-    remove(id) {
-      return save(read().filter((item) => item.id !== id));
-    },
-    subtotal() {
-      return read().reduce((sum, item) => sum + item.price * item.quantity, 0);
-    },
-    count() {
-      return read().reduce((sum, item) => sum + item.quantity, 0);
-    },
-  };
-
-  window.LuxureatBag = api;
-
-  const money = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
-
-  const productImage = (button) => {
-    const source = button.closest("[data-bag-card], .lux-product-recent-card, [data-caviar-item], .lux-bag-recommendations .group, article")
-      || button.closest("section, main")
-      || document;
-    const img = source.querySelector("img");
-    if (img?.src) return img.src;
-
-    const tile = source.querySelector("[style*='background-image']");
-    const match = tile?.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
-    return match?.[1] || "";
-  };
-
-  const productFromButton = (button) => ({
-    id: button.dataset.bagId,
-    sku: button.dataset.bagSku,
-    title: button.dataset.bagTitle,
-    subtitle: button.dataset.bagSubtitle,
-    price: button.dataset.bagPrice,
-    priceLabel: button.dataset.bagPriceLabel,
-    currency: button.dataset.bagCurrency,
-    image: button.dataset.bagImage || productImage(button),
-    quantity: button.dataset.bagQuantity,
-  });
-
-  const detailProductId = (item, lang) => {
-    return liveProductEntry(item.id, lang)?.[0] || "";
-  };
-
-  const itemHtml = (item, lang) => {
-    const quantity = clampQuantity(item.quantity, item.maxQuantity);
-    const lineTotal = !item.priceLabel && quantity > 1 ? `<small class="lux-bag-line-total">${lang === "zh" ? `${item.quantity}件总价` : `${item.quantity}-item total`} ${money(item.currency, item.price * quantity)}</small>` : "";
-    const detailId = detailProductId(item, lang);
-    const minDisabled = quantity <= 1 ? " disabled aria-disabled=\"true\"" : "";
-    const maxDisabled = quantity >= item.maxQuantity ? " disabled aria-disabled=\"true\"" : "";
-    return `
-    <div class="lux-bag-item flex flex-col md:flex-row gap-6 p-6 border border-outline-variant/30 bg-surface-container-lowest group" data-bag-item="${luxEscapeProductHtml(item.id)}">
-      <div class="lux-bag-image w-full md:w-48 h-48 overflow-hidden bg-surface-container">
-        ${item.image ? `<img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}">` : ""}
-        ${detailId ? `<button class="lux-bag-detail" type="button" data-product-open="${luxEscapeProductHtml(detailId)}">${lang === "zh" ? "查看详情" : "View Details"}</button>` : ""}
-      </div>
-      <div class="flex-1 flex flex-col justify-between">
-        <div class="flex justify-between gap-6 items-start">
-          <div>
-            <h3 class="font-headline-sm text-headline-sm mb-1">${luxEscapeProductHtml(item.title)}</h3>
-            <p${lang === "en" ? ' lang="zh-CN"' : ""} class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-4">${luxEscapeProductHtml(item.subtitle)}</p>
-          </div>
-          <span class="lux-bag-price${item.priceLabel ? " is-test-price" : ""} font-headline-sm text-headline-sm text-primary whitespace-nowrap">${luxEscapeProductHtml(item.priceLabel || money(item.currency, item.price))}${lineTotal}</span>
-        </div>
-        <div class="flex justify-between items-end mt-8">
-          <div class="flex items-center gap-4">
-            <span class="font-label-sm text-label-sm text-on-surface-variant uppercase">${lang === "zh" ? "数量" : "Qty"}</span>
-            <div class="flex items-center border border-outline-variant/30">
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="-1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${minDisabled}><span class="material-symbols-outlined text-sm" data-icon="remove" aria-hidden="true" translate="no"></span></button>
-              <span class="w-12 text-center font-label-lg">${quantity}</span>
-              <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container-high transition-colors" data-bag-change="1" data-bag-id="${luxEscapeProductHtml(item.id)}" type="button"${maxDisabled}><span class="material-symbols-outlined text-sm" data-icon="add" aria-hidden="true" translate="no"></span></button>
-            </div>
-          </div>
-          <button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-2 font-label-sm uppercase tracking-widest" data-bag-remove="${luxEscapeProductHtml(item.id)}" type="button">
-            <span class="material-symbols-outlined text-lg" data-icon="delete" aria-hidden="true" translate="no"></span>
-            <span>${lang === "zh" ? "移除" : "Remove"}</span>
-          </button>
-        </div>
-      </div>
-    </div>`;
-  };
-
-  const updateNavCount = (count) => {
-    document.querySelectorAll(".lux-actions .lux-bag-link").forEach((link) => {
-      const badge = link.querySelector("[data-bag-count]");
-      if (badge) {
-        badge.textContent = count ? String(count) : "";
-        badge.hidden = count === 0;
-        badge.classList.remove("is-updating");
-        if (count) {
-          void badge.offsetWidth;
-          badge.classList.add("is-updating");
-        }
-        return;
-      }
-
-      link.dataset.bagLabel ||= link.textContent.trim().replace(/\s*\(\d+\)$/, "");
-      link.textContent = count ? `${link.dataset.bagLabel} (${count})` : link.dataset.bagLabel;
-    });
-  };
-
-  const renderRecommendations = () => {
-    const grid = document.querySelector(".lux-bag-recommendations .grid");
-    const products = window.LUXUREAT_PRODUCT_DATA?.products || {};
-    if (!grid || !Object.keys(products).length) return;
-
-    const lang = locale();
-    const copy = lang === "zh"
-      ? { add: "加入清单", unavailable: "暂时无货", detail: "查看详情" }
-      : { add: "Add to List", unavailable: "Out of Stock", detail: "View Details" };
-    const entries = Object.entries(products)
-      .filter(([key]) => key.startsWith(`${lang}-`))
-      .sort(() => Math.random() - .5)
-      .slice(0, 3);
-    if (!entries.length) return;
-
-    grid.innerHTML = entries.map(([key, product]) => `
-      <div class="group cursor-pointer" data-bag-card>
-        <div class="lux-bag-recommendation-media aspect-square bg-surface-container overflow-hidden mb-6 ghost-border relative">
-          <img loading="lazy" decoding="async" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${luxEscapeProductHtml(product.image)}" alt="${luxEscapeProductHtml(product.title)}">
-          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center gap-3">
-            <button type="button" class="px-6 py-3 border border-white text-white font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm disabled:cursor-not-allowed disabled:opacity-45" data-bag-add data-bag-id="${luxEscapeProductHtml(product.id)}" data-bag-sku="${luxEscapeProductHtml(product.sku)}" data-bag-title="${luxEscapeProductHtml(product.title)}" data-bag-subtitle="${luxEscapeProductHtml(product.subtitle)}" data-bag-price="${luxEscapeProductHtml(product.amount)}" data-bag-price-label="${luxEscapeProductHtml(product.priceLabel || "")}" data-bag-currency="${luxEscapeProductHtml(product.currency)}" data-bag-image="${luxEscapeProductHtml(product.image)}"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? copy.unavailable : copy.add}</button>
-            <button type="button" class="px-6 py-3 border border-primary text-primary font-label-sm uppercase tracking-widest bg-black/20 backdrop-blur-sm" data-product-open="${luxEscapeProductHtml(key)}">${copy.detail}</button>
-          </div>
-        </div>
-        <h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-1 group-hover:text-primary transition-colors">${luxEscapeProductHtml(product.title)}</h4>
-        <p${lang === "en" ? ' lang="zh-CN"' : ""} class="font-label-sm text-label-sm text-on-surface-variant mb-2">${luxEscapeProductHtml(product.subtitle)}</p>
-        <span class="lux-bag-recommendation-price${product.priceLabel ? " is-test-price" : ""} font-body-md">${luxEscapeProductHtml(product.priceLabel || money(product.currency, Number(product.amount) || 0))}</span>
-      </div>`).join("");
-  };
-
-  const renderBag = (snapshot) => {
-    const items = snapshot || read();
-    updateNavCount(items.reduce((sum, item) => sum + item.quantity, 0));
-    const list = document.querySelector("[data-bag-list]");
-    if (!list) return;
-
-    const lang = list.dataset.bagLocale || locale();
-    const currency = items[0]?.currency || (lang === "zh" ? "¥" : "$");
-    const shipping = items.length ? Number(list.dataset.bagShipping || (lang === "zh" ? 200 : 20)) : 0;
-    const subtotal = api.subtotal();
-
-    list.innerHTML = items.length
-      ? items.map((item) => itemHtml(item, lang)).join("")
-      : `<div class="p-8 border border-outline-variant/30 text-on-surface-variant">${lang === "zh" ? "您的购物袋暂时为空。" : "Your shopping bag is empty."}</div>`;
-
-    const testPricing = items.some((item) => item.priceLabel);
-    document.querySelectorAll("[data-bag-subtotal]").forEach((el) => { el.textContent = testPricing ? "PRICE" : money(currency, subtotal); el.classList.toggle("is-test-price", testPricing); });
-    document.querySelectorAll("[data-bag-shipping-total]").forEach((el) => { el.textContent = testPricing ? "PRICE" : money(currency, shipping); el.classList.toggle("is-test-price", testPricing); });
-    document.querySelectorAll("[data-bag-total]").forEach((el) => { el.textContent = testPricing ? "PRICE" : money(currency, subtotal + shipping); el.classList.toggle("is-test-price", testPricing); });
-  };
-
-  const checkout = async (button) => {
-    const lang = locale();
-    const items = read();
-    const feedback = document.querySelector("[data-bag-checkout-feedback]");
-    const message = (zh, en) => lang === "zh" ? zh : en;
-    const setMessage = (value) => { if (feedback) feedback.textContent = value; };
-    if (!items.length) {
-      setMessage(message("购物袋为空。", "Your shopping bag is empty."));
-      return;
-    }
-    if (!window.LuxureatAccount?.loggedIn) {
-      setMessage(message("请先登录账号，然后继续结算。", "Please sign in before continuing to checkout."));
-      document.querySelector("[data-account-open]")?.click();
-      return;
-    }
-
-    button.disabled = true;
-    setMessage(message("正在连接安全结算…", "Connecting to secure checkout…"));
-    const timeout = new AbortController();
-    const timeoutId = setTimeout(() => timeout.abort(), 15000);
-    try {
-      const config = window.LuxureatCheckout;
-      if (!config?.ajaxUrl || !config?.nonce) throw new Error(message("请刷新页面后重试。", "Please refresh the page and try again."));
-      const body = new URLSearchParams({
-        action: "luxureat_checkout",
-        nonce: config.nonce,
-        lang,
-        items: JSON.stringify(items.map(({ id, sku, quantity }) => ({ id, sku, quantity }))),
-      });
-      const response = await fetch(config.ajaxUrl, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body,
-        signal: timeout.signal,
-      });
-      const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.data?.message || message("购物车同步失败。", "Cart sync failed."));
-      location.href = result.data.checkoutUrl;
-    } catch (error) {
-      setMessage(error.name === "AbortError" ? message("连接超时，请重试。", "The connection timed out. Please try again.") : (error.message || message("暂时无法结算，请稍后再试。", "Checkout is temporarily unavailable.")));
-      button.disabled = false;
-    } finally {
-      clearTimeout(timeoutId);
-    }
-  };
-
-  document.addEventListener("click", (event) => {
-    const addButton = event.target.closest("[data-bag-add]");
-    if (addButton) {
-      const addedProduct = productFromButton(addButton);
-      api.add(addedProduct);
-      window.luxTrack?.("add_to_cart", {
-        currency: addedProduct.currency,
-        value: (Number(addedProduct.price) || 0) * (Number(addedProduct.quantity) || 1),
-        items: [{ item_id: addedProduct.id, item_name: addedProduct.title, quantity: Number(addedProduct.quantity) || 1 }],
-      });
-      addButton.dataset.bagOriginal ||= addButton.textContent.trim();
-      addButton.textContent = locale() === "zh" ? "已加入" : "Added";
-      setTimeout(() => { addButton.textContent = addButton.dataset.bagOriginal; }, 900);
-      return;
-    }
-
-    const changeButton = event.target.closest("[data-bag-change]");
-    if (changeButton) {
-      if (changeButton.disabled) return;
-      api.change(changeButton.dataset.bagId, Number(changeButton.dataset.bagChange));
-      return;
-    }
-
-    const removeButton = event.target.closest("[data-bag-remove]");
-    if (removeButton) {
-      api.remove(removeButton.dataset.bagRemove);
-      return;
-    }
-
-    const checkoutButton = event.target.closest("[data-bag-checkout]");
-    if (checkoutButton) checkout(checkoutButton);
-  });
-
-  const renderInitialBag = () => {
-    renderRecommendations();
-    renderBag();
-  };
-  if (document.readyState === "complete") renderInitialBag();
-  else document.addEventListener("DOMContentLoaded", renderInitialBag, { once: true });
-})();
 
 
 if (document.readyState === "complete") initLuxProductDetails();

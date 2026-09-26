@@ -515,8 +515,6 @@ function luxureat_static_aliases() {
         'zh/import-export-services.html' => 'zh/import-export-services',
         'zh/contact' => 'zh/contact',
         'zh/contact.html' => 'zh/contact',
-        'zh/bag' => 'zh/bag',
-        'zh/bag.html' => 'zh/bag',
         'en/about-us.html' => 'en/about-us',
         'en/product.html' => 'en/product',
         'en/recipe.html' => 'en/recipe',
@@ -525,7 +523,6 @@ function luxureat_static_aliases() {
         'en/cooperation.html' => 'en/cooperation',
         'en/certification.html' => 'en/certification',
         'en/contact.html' => 'en/contact',
-        'en/bag.html' => 'en/bag',
         'about-us' => 'zh/about-us',
         'about-us.html' => 'zh/about-us',
         'journal' => 'zh/about-us',
@@ -558,8 +555,6 @@ function luxureat_static_aliases() {
         'certification.html' => 'zh/certification',
         'contact' => 'zh/contact',
         'contact.html' => 'zh/contact',
-        'bag' => 'zh/bag',
-        'bag.html' => 'zh/bag',
         'en/journal' => 'en/about-us',
         'en/journal.html' => 'en/about-us',
         'en/products' => 'en/product',
@@ -606,7 +601,6 @@ function luxureat_static_pretty_paths() {
         'zh/china-market-insights' => '/china-market-insights/',
         'zh/import-export-services' => '/import-export-services/',
         'zh/contact' => '/contact/',
-        'zh/bag' => '/bag/',
         'en' => '/en/',
         'en/product' => '/en/product/',
         'en/recipe' => '/en/recipe/',
@@ -619,7 +613,6 @@ function luxureat_static_pretty_paths() {
         'en/china-market-insights' => '/en/china-market-insights/',
         'en/import-export-services' => '/en/import-export-services/',
         'en/contact' => '/en/contact/',
-        'en/bag' => '/en/bag/',
     );
 }
 
@@ -662,11 +655,7 @@ function luxureat_static_is_allowed_public_query($key, $route) {
         return true;
     }
 
-    if (in_array($key, array('gclid', 'dclid', 'fbclid', 'msclkid', '_gl', 'wc-ajax', 'add-to-cart', 'quantity', 'variation_id', '_wpnonce'), true)) {
-        return true;
-    }
-
-    if (in_array($route, array('zh', 'en'), true) && in_array($key, array('account', 'luxureat_verify', 'user', 'token'), true)) {
+    if (in_array($key, array('gclid', 'dclid', 'fbclid', 'msclkid', '_gl'), true)) {
         return true;
     }
 
@@ -764,32 +753,22 @@ function luxureat_static_redirect_legacy_aliases() {
 }
 add_action('template_redirect', 'luxureat_static_redirect_legacy_aliases', -150);
 
-function luxureat_static_is_utility_page() {
-    $path = luxureat_static_current_path();
-    $aliases = luxureat_static_aliases();
-    $route = isset($aliases[$path]) ? $aliases[$path] : $path;
-
-    return in_array($route, array('zh/bag', 'en/bag'), true)
-        || (function_exists('is_cart') && is_cart())
+function luxureat_static_disable_consumer_commerce() {
+    if (is_admin() || (function_exists('wp_doing_ajax') && wp_doing_ajax())) {
+        return;
+    }
+    $is_consumer_page = (function_exists('is_cart') && is_cart())
         || (function_exists('is_checkout') && is_checkout())
         || (function_exists('is_account_page') && is_account_page());
-}
-
-function luxureat_static_utility_noindex_header() {
-    if (luxureat_static_is_utility_page()) {
-        header('X-Robots-Tag: noindex, follow', true);
+    if (!$is_consumer_page) {
+        return;
     }
+    $path = luxureat_static_current_path();
+    $language = $path === 'en' || strpos($path, 'en/') === 0 ? 'en' : 'zh';
+    wp_safe_redirect(luxureat_static_url($language . '/product'), 302);
+    exit;
 }
-add_action('template_redirect', 'luxureat_static_utility_noindex_header', -50);
-
-function luxureat_static_utility_robots($robots) {
-    if (luxureat_static_is_utility_page()) {
-        $robots['noindex'] = true;
-        $robots['follow'] = true;
-    }
-    return $robots;
-}
-add_filter('wp_robots', 'luxureat_static_utility_robots', 999);
+add_action('template_redirect', 'luxureat_static_disable_consumer_commerce', -50);
 
 function luxureat_static_publish_root_robots() {
     $source = get_template_directory() . '/robots.txt';
@@ -1004,52 +983,6 @@ function luxureat_static_seo_head() {
 remove_action('wp_head', 'rel_canonical');
 add_action('wp_head', 'luxureat_static_seo_head', 1);
 
-function luxureat_static_woo_catalog() {
-    if (!function_exists('wc_get_product_id_by_sku')) {
-        return array();
-    }
-
-    $cached = get_transient('luxureat_static_woo_catalog');
-    if (is_array($cached)) {
-        return $cached;
-    }
-
-    $catalog = array();
-    foreach (array('imperial-beluga-30g', 'royal-oscetra-30g', 'mother-of-pearl-spoons', 'champagne', 'ice-server') as $sku) {
-        $product_id = wc_get_product_id_by_sku($sku);
-        $product = $product_id ? wc_get_product($product_id) : false;
-        if (!$product) {
-            continue;
-        }
-
-        $image_id = $product->get_image_id();
-        $gallery = array_values(array_filter(array_map(function ($attachment_id) {
-            return wp_get_attachment_image_url($attachment_id, 'full');
-        }, $product->get_gallery_image_ids())));
-        $stock_quantity = $product->managing_stock() ? $product->get_stock_quantity() : null;
-        $max_quantity = $product->is_sold_individually()
-            ? 1
-            : ($stock_quantity !== null && !$product->backorders_allowed() ? max(0, (int) $stock_quantity) : 99);
-
-        $catalog[$sku] = array(
-            'id' => $product->get_id(),
-            'sku' => $sku,
-            'name' => $product->get_name(),
-            'description' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
-            'price' => (float) $product->get_price(),
-            'currency' => html_entity_decode(get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8'),
-            'image' => $image_id ? wp_get_attachment_image_url($image_id, 'full') : '',
-            'gallery' => $gallery,
-            'stockStatus' => $product->get_stock_status(),
-            'stockQuantity' => $stock_quantity,
-            'available' => $product->is_purchasable() && $product->is_in_stock(),
-            'maxQuantity' => $max_quantity,
-        );
-    }
-    set_transient('luxureat_static_woo_catalog', $catalog, MINUTE_IN_SECONDS);
-    return $catalog;
-}
-
 function luxureat_static_assets() {
     $theme_dir = get_template_directory();
     $theme_uri = get_template_directory_uri();
@@ -1092,34 +1025,10 @@ ${byPath}
             true
         );
         if ($handle === 'core') {
-            wp_localize_script('luxureat-core', 'LuxureatAccount', array(
+            wp_localize_script('luxureat-core', 'LuxureatNewsletter', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('luxureat_account'),
-                'newsletterNonce' => wp_create_nonce('luxureat_newsletter'),
+                'nonce' => wp_create_nonce('luxureat_newsletter'),
                 'botChallenge' => luxureat_static_bot_challenge(),
-                'loggedIn' => is_user_logged_in(),
-                'bag' => is_user_logged_in() ? luxureat_static_get_bag(get_current_user_id()) : array(),
-                'bagNonce' => wp_create_nonce('luxureat_bag'),
-                'lostPasswordUrl' => wp_lostpassword_url(home_url('/')),
-                'logoutUrl' => wp_logout_url(home_url('/')),
-            ));
-            if (in_array($path, array('zh', 'en'), true)) {
-                wp_localize_script('luxureat-core', 'LuxureatCheckout', array(
-                    'ajaxUrl' => admin_url('admin-ajax.php'),
-                    'nonce' => wp_create_nonce('luxureat_checkout'),
-                ));
-                wp_localize_script('luxureat-core', 'LuxureatWooCatalog', array(
-                    'products' => luxureat_static_woo_catalog(),
-                ));
-            }
-        }
-        if ($handle === 'products') {
-            wp_localize_script('luxureat-products', 'LuxureatCheckout', array(
-                'ajaxUrl' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('luxureat_checkout'),
-            ));
-            wp_localize_script('luxureat-products', 'LuxureatWooCatalog', array(
-                'products' => luxureat_static_woo_catalog(),
             ));
         }
         if ($handle === 'brand' && in_array($path, array('zh/contact', 'en/contact'), true)) {
@@ -1223,60 +1132,8 @@ function luxureat_static_verify_bot_challenge() {
     return true;
 }
 
-function luxureat_static_strong_password($password, $email) {
-    return strlen($password) >= 12 && preg_match('/[A-Za-z]/', $password) && preg_match('/[0-9]/', $password);
-}
 
-function luxureat_static_sanitize_bag($items) {
-    if (!is_array($items)) {
-        return array();
-    }
-    $bag = array();
-    foreach (array_slice($items, 0, 20) as $item) {
-        $id = isset($item['id']) ? substr(sanitize_text_field($item['id']), 0, 120) : '';
-        $sku = isset($item['sku']) ? substr(sanitize_text_field($item['sku']), 0, 120) : '';
-        $quantity = isset($item['quantity']) ? absint($item['quantity']) : 0;
-        if ($id !== '' && $sku !== '' && $quantity >= 1 && $quantity <= 99) {
-            $bag[] = array('id' => $id, 'sku' => $sku, 'quantity' => $quantity);
-        }
-    }
-    return $bag;
-}
 
-function luxureat_static_get_bag($user_id) {
-    return luxureat_static_sanitize_bag(get_user_meta($user_id, 'luxureat_bag', true));
-}
-
-function luxureat_static_bag_ajax() {
-    if (!is_user_logged_in()) {
-        wp_send_json_error(array('message' => 'Authentication required.'), 401);
-    }
-    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_bag')) {
-        wp_send_json_error(array('message' => 'Invalid request.'), 403);
-    }
-    $items = isset($_POST['items']) ? json_decode(wp_unslash($_POST['items']), true) : null;
-    if (!is_array($items)) {
-        wp_send_json_error(array('message' => 'Invalid bag.'), 400);
-    }
-    update_user_meta(get_current_user_id(), 'luxureat_bag', luxureat_static_sanitize_bag($items));
-    wp_send_json_success();
-}
-add_action('wp_ajax_luxureat_bag', 'luxureat_static_bag_ajax');
-
-function luxureat_static_silence_account_admin_mail($return, $mail) {
-    $to = isset($mail['to']) ? (array) $mail['to'] : array();
-    $admin = strtolower((string) get_option('admin_email'));
-    $is_admin_recipient = array_filter($to, function ($recipient) use ($admin) {
-        return strpos(strtolower((string) $recipient), $admin) !== false;
-    });
-    $subject = isset($mail['subject']) ? wp_strip_all_tags($mail['subject']) : '';
-    if ($is_admin_recipient && preg_match('/new user registration|new subscriber|new subscription|password|(?:user|account|profile|email).*(?:modified|updated|changed|change|attempt)|新用户注册|新订阅者|密码|(?:用户|账户|资料|邮箱).*(?:修改|更新|更改|尝试)/i', $subject)) {
-        return true;
-    }
-    return $return;
-}
-add_filter('wp_send_new_user_notification_to_admin', '__return_false');
-add_filter('pre_wp_mail', 'luxureat_static_silence_account_admin_mail', 10, 2);
 
 function luxureat_static_mailpoet_subscribe($email) {
     if (!class_exists('\\MailPoet\\API\\API')) {
@@ -1342,203 +1199,6 @@ function luxureat_static_newsletter_ajax() {
 add_action('wp_ajax_nopriv_luxureat_newsletter', 'luxureat_static_newsletter_ajax');
 add_action('wp_ajax_luxureat_newsletter', 'luxureat_static_newsletter_ajax');
 
-function luxureat_static_send_verification($user_id, $lang) {
-    $user = get_userdata($user_id);
-    if (!$user) {
-        return false;
-    }
-    $token = wp_generate_password(48, false, false);
-    update_user_meta($user_id, '_luxureat_email_verified', '0');
-    update_user_meta($user_id, '_luxureat_email_token', hash_hmac('sha256', $token, wp_salt('auth')));
-    update_user_meta($user_id, '_luxureat_email_expires', time() + DAY_IN_SECONDS);
-    update_user_meta($user_id, '_luxureat_email_lang', $lang);
-    $url = add_query_arg(array(
-        'luxureat_verify' => '1',
-        'user' => $user_id,
-        'token' => $token,
-    ), home_url('/'));
-    $is_zh = $lang === 'zh';
-    $subject = $is_zh ? '验证您的 LuxurEat（露意膳）账号' : 'Verify your LuxurEat account';
-    $body = $is_zh
-        ? "请点击以下链接验证邮箱并完成账号注册：\n\n" . $url . "\n\n此链接将在24小时后失效。"
-        : "Open the link below to verify your email and finish creating your account:\n\n" . $url . "\n\nThis link expires in 24 hours.";
-    return wp_mail($user->user_email, $subject, $body);
-}
-
-function luxureat_static_verify_email() {
-    if (!isset($_GET['luxureat_verify'], $_GET['user'], $_GET['token'])) {
-        return;
-    }
-    $user_id = absint($_GET['user']);
-    $token = sanitize_text_field(wp_unslash($_GET['token']));
-    $lang = get_user_meta($user_id, '_luxureat_email_lang', true) === 'en' ? 'en' : 'zh';
-    $expected = (string) get_user_meta($user_id, '_luxureat_email_token', true);
-    $expires = (int) get_user_meta($user_id, '_luxureat_email_expires', true);
-    $valid = $expected !== ''
-        && $expires >= time()
-        && hash_equals($expected, hash_hmac('sha256', $token, wp_salt('auth')));
-    if ($valid) {
-        update_user_meta($user_id, '_luxureat_email_verified', '1');
-        delete_user_meta($user_id, '_luxureat_email_token');
-        delete_user_meta($user_id, '_luxureat_email_expires');
-        if (get_user_meta($user_id, '_luxureat_newsletter_pending', true) === '1') {
-            $user = get_userdata($user_id);
-            if ($user) {
-                luxureat_static_mailpoet_subscribe($user->user_email);
-            }
-            delete_user_meta($user_id, '_luxureat_newsletter_pending');
-        }
-    }
-    $home = function_exists('luxureat_static_url') ? luxureat_static_url($lang) : home_url($lang === 'en' ? '/en/' : '/');
-    wp_safe_redirect(add_query_arg('account', $valid ? 'verified' : 'verification-failed', $home));
-    exit;
-}
-add_action('template_redirect', 'luxureat_static_verify_email', -1);
-
-function luxureat_static_require_verified_email($user) {
-    if ($user instanceof WP_User && get_user_meta($user->ID, '_luxureat_email_verified', true) === '0') {
-        $message = determine_locale() === 'zh_CN'
-            ? '请先打开验证邮件完成邮箱验证。'
-            : 'Please verify your email using the link we sent before signing in.';
-        return new WP_Error('luxureat_email_unverified', $message);
-    }
-    return $user;
-}
-add_filter('authenticate', 'luxureat_static_require_verified_email', 30);
-add_filter('login_errors', function () {
-    return determine_locale() === 'zh_CN' ? '登录信息不正确。' : 'The sign-in details are incorrect.';
-});
-
-function luxureat_static_rate_keys($scope, $identifier) {
-    $remote_address = isset($_SERVER['REMOTE_ADDR']) ? sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR'])) : 'unknown';
-    $identifier = strtolower(trim((string) $identifier));
-    $salt = wp_salt('nonce');
-    return array(
-        'ip' => 'lux_rate_' . hash_hmac('sha256', $scope . '|ip|' . $remote_address, $salt),
-        'identifier' => 'lux_rate_' . hash_hmac('sha256', $scope . '|identifier|' . $identifier, $salt),
-    );
-}
-
-function luxureat_static_rate_consume($scope, $identifier, $ip_limit, $identifier_limit, $window) {
-    $keys = luxureat_static_rate_keys($scope, $identifier);
-    $limits = array('ip' => $ip_limit, 'identifier' => $identifier_limit);
-    foreach ($keys as $type => $key) {
-        if ((int) get_transient($key) >= $limits[$type]) {
-            return false;
-        }
-    }
-    foreach ($keys as $key) {
-        set_transient($key, (int) get_transient($key) + 1, $window);
-    }
-    return true;
-}
-
-function luxureat_static_rate_reset($scope, $identifier) {
-    foreach (luxureat_static_rate_keys($scope, $identifier) as $key) {
-        delete_transient($key);
-    }
-}
-
-function luxureat_static_account_ajax() {
-    $is_zh = isset($_POST['lang']) && sanitize_key(wp_unslash($_POST['lang'])) === 'zh';
-    $message = function ($zh, $en) use ($is_zh) { return $is_zh ? $zh : $en; };
-    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_account')) {
-        wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
-    }
-    if (!empty($_POST['company']) || !luxureat_static_verify_bot_challenge()) {
-        wp_send_json_error(array('message' => $message('安全验证失败，请刷新页面后重试。', 'Security verification failed. Please refresh the page and try again.')), 403);
-    }
-    if (is_user_logged_in()) {
-        wp_send_json_success();
-    }
-
-    $mode = isset($_POST['mode']) ? sanitize_key(wp_unslash($_POST['mode'])) : 'login';
-    $raw_email = isset($_POST['email']) ? trim((string) wp_unslash($_POST['email'])) : '';
-    $email = sanitize_email($raw_email);
-    $password = isset($_POST['password']) ? (string) wp_unslash($_POST['password']) : '';
-    if (!is_email($email)) {
-        wp_send_json_error(array('message' => $message('电子邮箱不存在或格式错误。', 'The email address does not exist or is invalid.'), 'field' => 'email'), 400);
-    }
-
-    if ($mode === 'forgot') {
-        if (!luxureat_static_rate_consume('forgot', $email, 5, 3, HOUR_IN_SECONDS)) {
-            wp_send_json_error(array('message' => $message('请求过于频繁，请稍后再试。', 'Too many requests. Please try again later.')), 429);
-        }
-        $user = get_user_by('email', $email);
-        if ($user) {
-            update_user_meta($user->ID, 'locale', $is_zh ? 'zh_CN' : 'en_US');
-            retrieve_password($user->user_login);
-        }
-        wp_send_json_success(array('message' => $message('如果该邮箱已注册，密码重置链接已发送，请检查收件箱和垃圾邮件。', 'If the email is registered, a reset link has been sent. Please check your inbox and spam folder.')));
-    }
-
-    if ($mode === 'register') {
-        if (!function_exists('wc_create_new_customer') || get_option('woocommerce_enable_myaccount_registration') !== 'yes') {
-            wp_send_json_error(array('message' => $message('暂未开放账号注册。', 'Account registration is not available yet.')), 403);
-        }
-        if (empty($_POST['consent'])) {
-            wp_send_json_error(array('message' => $message('请先阅读并同意用户服务协议和隐私政策。', 'Please read and agree to the Terms of Service and Privacy Policy.')), 400);
-        }
-        if (!luxureat_static_strong_password($password, $email)) {
-            wp_send_json_error(array('message' => $message('密码至少 12 位，并须包含字母和数字。', 'Use at least 12 characters with letters and numbers.')), 400);
-        }
-        if (!luxureat_static_rate_consume('register', $email, 8, 4, HOUR_IN_SECONDS)) {
-            wp_send_json_error(array('message' => $message('请求过于频繁，请稍后再试。', 'Too many requests. Please try again later.')), 429);
-        }
-        $existing = get_user_by('email', $email);
-        if ($existing) {
-            $verification_expires = (int) get_user_meta($existing->ID, '_luxureat_email_expires', true);
-            if (get_user_meta($existing->ID, '_luxureat_email_verified', true) === '0' && $verification_expires < time()) {
-                luxureat_static_send_verification($existing->ID, $is_zh ? 'zh' : 'en');
-            }
-            wp_send_json_success(array(
-                'message' => $message('如果该邮箱可以注册，验证邮件将会发送，请检查收件箱和垃圾邮件。', 'If this email can be registered, a verification message will be sent. Please check your inbox and spam folder.'),
-                'requiresVerification' => true,
-            ));
-        }
-        $user_id = wc_create_new_customer($email, '', $password);
-        if (is_wp_error($user_id)) {
-            wp_send_json_error(array('message' => $message('暂时无法创建账号，请稍后再试。', 'The account could not be created. Please try again later.'), 'field' => 'feedback'), 400);
-        }
-        update_user_meta($user_id, 'locale', $is_zh ? 'zh_CN' : 'en_US');
-        if (!empty($_POST['newsletter'])) {
-            update_user_meta($user_id, '_luxureat_newsletter_pending', '1');
-        } else {
-            delete_user_meta($user_id, '_luxureat_newsletter_pending');
-        }
-        if (!luxureat_static_send_verification($user_id, $is_zh ? 'zh' : 'en')) {
-            require_once ABSPATH . 'wp-admin/includes/user.php';
-            wp_delete_user($user_id);
-            wp_send_json_error(array('message' => $message('验证邮件暂时无法发送，请稍后再试。', 'The verification email could not be sent. Please try again later.'), 'field' => 'feedback'), 500);
-        }
-        wp_send_json_success(array(
-            'message' => $message('验证邮件已发送，请打开邮件中的链接完成注册后再登录。', 'A verification email has been sent. Open its link to finish registration before signing in.'),
-            'requiresVerification' => true,
-        ));
-    }
-
-    if (!luxureat_static_rate_consume('login', $email, 10, 20, 15 * MINUTE_IN_SECONDS)) {
-        wp_send_json_error(array('message' => $message('登录尝试过于频繁，请稍后再试。', 'Too many sign-in attempts. Please try again later.'), 'field' => 'feedback'), 429);
-    }
-    $invalid_login = array('message' => $message('邮箱或密码不正确。', 'Incorrect email or password.'), 'field' => 'feedback');
-    $user = get_user_by('email', $email);
-    if (!$user || get_user_meta($user->ID, '_luxureat_email_verified', true) === '0' || $password === '') {
-        wp_send_json_error($invalid_login, 401);
-    }
-    $credentials = array(
-        'user_login' => $user->user_login,
-        'user_password' => $password,
-        'remember' => !empty($_POST['remember']),
-    );
-    $signed_in = wp_signon($credentials, is_ssl());
-    if (is_wp_error($signed_in)) {
-        wp_send_json_error($invalid_login, 401);
-    }
-    luxureat_static_rate_reset('login', $email);
-    wp_send_json_success();
-}
-add_action('wp_ajax_nopriv_luxureat_account', 'luxureat_static_account_ajax');
-add_action('wp_ajax_luxureat_account', 'luxureat_static_account_ajax');
 
 function luxureat_static_contact_ajax() {
     $is_zh = isset($_POST['lang']) && sanitize_key(wp_unslash($_POST['lang'])) === 'zh';
@@ -1604,242 +1264,7 @@ function luxureat_static_contact_ajax() {
 add_action('wp_ajax_nopriv_luxureat_contact', 'luxureat_static_contact_ajax');
 add_action('wp_ajax_luxureat_contact', 'luxureat_static_contact_ajax');
 
-function luxureat_static_password_hint() {
-    return determine_locale() === 'zh_CN'
-        ? '至少 12 位，须包含字母和数字。'
-        : 'Use at least 12 characters with letters and numbers.';
-}
-add_filter('password_hint', 'luxureat_static_password_hint', 999);
-add_filter('woocommerce_min_password_strength', '__return_zero', 999);
-add_action('validate_password_reset', function ($errors, $user) {
-    if (isset($_POST['pass1']) && !luxureat_static_strong_password((string) wp_unslash($_POST['pass1']), $user->user_email)) {
-        $errors->add('password_reset_mismatch', luxureat_static_password_hint());
-    }
-}, 10, 2);
 
-function luxureat_static_checkout_ajax() {
-    $is_zh = isset($_POST['lang']) && sanitize_key(wp_unslash($_POST['lang'])) === 'zh';
-    $message = function ($zh, $en) use ($is_zh) { return $is_zh ? $zh : $en; };
-    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'luxureat_checkout')) {
-        wp_send_json_error(array('message' => $message('请刷新页面后重试。', 'Please refresh the page and try again.')), 403);
-    }
-    if (!is_user_logged_in()) {
-        wp_send_json_error(array('message' => $message('请先登录账号，然后继续结算。', 'Please sign in before continuing to checkout.')), 401);
-    }
-    if (!function_exists('WC') || !function_exists('wc_get_product_id_by_sku')) {
-        wp_send_json_error(array('message' => $message('结算服务暂时不可用。', 'Checkout is temporarily unavailable.')), 503);
-    }
-    if (null === WC()->cart && function_exists('wc_load_cart')) {
-        wc_load_cart();
-    }
-    if (null === WC()->cart) {
-        wp_send_json_error(array('message' => $message('无法建立购物车。', 'Could not start the cart.')), 503);
-    }
-
-    $items = isset($_POST['items']) ? json_decode(wp_unslash($_POST['items']), true) : null;
-    if (!is_array($items) || !$items || count($items) > 20) {
-        wp_send_json_error(array('message' => $message('购物袋数据无效。', 'The bag data is invalid.')), 400);
-    }
-    update_user_meta(get_current_user_id(), 'luxureat_bag', luxureat_static_sanitize_bag($items));
-
-    $desired = array();
-    foreach ($items as $item) {
-        $sku = isset($item['sku']) ? sanitize_text_field($item['sku']) : '';
-        $quantity = isset($item['quantity']) ? absint($item['quantity']) : 0;
-        $product_id = $sku ? wc_get_product_id_by_sku($sku) : 0;
-        $product = $product_id ? wc_get_product($product_id) : false;
-        if (!$product || !$product->is_purchasable() || !$product->is_in_stock() || $quantity < 1 || $quantity > 99 || ($product->is_sold_individually() && $quantity > 1) || !$product->has_enough_stock($quantity)) {
-            wp_send_json_error(array('message' => $message('商品已下架或数量无效。', 'A product is unavailable or its quantity is invalid.')), 400);
-        }
-        $desired[$sku] = array('id' => $product_id, 'quantity' => isset($desired[$sku]) ? $desired[$sku]['quantity'] + $quantity : $quantity);
-        if ($desired[$sku]['quantity'] > 99 || !$product->has_enough_stock($desired[$sku]['quantity'])) {
-            wp_send_json_error(array('message' => $message('商品数量超出库存限制。', 'The requested quantity exceeds available stock.')), 400);
-        }
-    }
-
-    foreach (WC()->cart->get_cart() as $key => $cart_item) {
-        $sku = isset($cart_item['data']) ? $cart_item['data']->get_sku() : '';
-        if (!isset($desired[$sku])) {
-            WC()->cart->remove_cart_item($key);
-            continue;
-        }
-        if ((int) $cart_item['quantity'] !== $desired[$sku]['quantity']) {
-            WC()->cart->set_quantity($key, $desired[$sku]['quantity'], false);
-        }
-        unset($desired[$sku]);
-    }
-    foreach ($desired as $item) {
-        if (!WC()->cart->add_to_cart($item['id'], $item['quantity'])) {
-            wp_send_json_error(array('message' => $message('商品无法加入购物车。', 'A product could not be added to the cart.')), 400);
-        }
-    }
-    WC()->cart->calculate_totals();
-    WC()->cart->set_session();
-    $checkout_url = $is_zh ? wc_get_checkout_url() : add_query_arg('lang', 'en', wc_get_checkout_url());
-    wp_send_json_success(array('checkoutUrl' => $checkout_url));
-}
-add_action('wp_ajax_nopriv_luxureat_checkout', 'luxureat_static_checkout_ajax');
-add_action('wp_ajax_luxureat_checkout', 'luxureat_static_checkout_ajax');
-
-function luxureat_static_reduce_paid_bag($order_id) {
-    $order = function_exists('wc_get_order') ? wc_get_order($order_id) : false;
-    if (!$order || $order->get_meta('_luxureat_bag_reduced')) {
-        return;
-    }
-    $user_id = $order->get_user_id();
-    if (!$user_id) {
-        return;
-    }
-    $purchased = array();
-    foreach ($order->get_items() as $item) {
-        $product = $item->get_product();
-        $sku = $product ? $product->get_sku() : '';
-        if ($sku !== '') {
-            $purchased[$sku] = isset($purchased[$sku]) ? $purchased[$sku] + $item->get_quantity() : $item->get_quantity();
-        }
-    }
-    $bag = array_values(array_filter(array_map(function ($item) use (&$purchased) {
-        if (!isset($purchased[$item['sku']])) {
-            return $item;
-        }
-        $paid_quantity = min($item['quantity'], $purchased[$item['sku']]);
-        $quantity = $item['quantity'] - $paid_quantity;
-        $purchased[$item['sku']] -= $paid_quantity;
-        if ($purchased[$item['sku']] <= 0) {
-            unset($purchased[$item['sku']]);
-        }
-        return $quantity > 0 ? array_merge($item, array('quantity' => $quantity)) : null;
-    }, luxureat_static_get_bag($user_id))));
-    update_user_meta($user_id, 'luxureat_bag', $bag);
-    $order->update_meta_data('_luxureat_bag_reduced', 1);
-    $order->save();
-}
-add_action('woocommerce_payment_complete', 'luxureat_static_reduce_paid_bag');
-add_action('woocommerce_order_status_processing', 'luxureat_static_reduce_paid_bag');
-add_action('woocommerce_order_status_completed', 'luxureat_static_reduce_paid_bag');
-
-function luxureat_static_require_account_for_checkout() {
-    if (function_exists('is_checkout') && is_checkout() && !is_user_logged_in() && !wp_doing_ajax()) {
-        wp_safe_redirect(add_query_arg('account', 'required', home_url('/')));
-        exit;
-    }
-}
-add_action('template_redirect', 'luxureat_static_require_account_for_checkout', 0);
-
-function luxureat_static_translate_shipping_rates($rates) {
-    $language = function_exists('WC') && WC()->session ? WC()->session->get('luxureat_checkout_lang', 'zh') : 'zh';
-    if ($language !== 'zh') {
-        return $rates;
-    }
-    foreach ($rates as $rate) {
-        if (is_object($rate) && method_exists($rate, 'get_method_id') && $rate->get_method_id() === 'free_shipping') {
-            $rate->set_label('免费配送');
-        }
-    }
-    return $rates;
-}
-add_filter('woocommerce_package_rates', 'luxureat_static_translate_shipping_rates', 100);
-
-function luxureat_static_restrict_test_payment($gateways) {
-    if (!current_user_can('manage_woocommerce')) {
-        unset($gateways['cheque']);
-    }
-    return $gateways;
-}
-add_filter('woocommerce_available_payment_gateways', 'luxureat_static_restrict_test_payment', 100);
-
-function luxureat_static_cart_item_images($images, $cart_item) {
-    $product = isset($cart_item['data']) ? $cart_item['data'] : false;
-    if (!$product instanceof WC_Product) {
-        return $images;
-    }
-    if ($product->get_image_id()) {
-        return $images;
-    }
-    $files = array(
-        'imperial-beluga-30g' => 'academy/beluga-caviar-cover-new-page-bg.png',
-        'royal-oscetra-30g' => 'academy/oscetra-caviar-cover.png',
-        'mother-of-pearl-spoons' => 'journal/caviar-etiquette-service.webp',
-        'champagne' => 'brand/home-values-caviar-plating.webp',
-        'ice-server' => 'brand/partnership-solution-caviar-service.jpg',
-    );
-    $sku = $product->get_sku();
-    if (!isset($files[$sku])) {
-        return $images;
-    }
-    $url = get_template_directory_uri() . '/assets/media/' . $files[$sku];
-    return array((object) array(
-        'id' => $product->get_id(),
-        'src' => $url,
-        'thumbnail' => $url,
-        'srcset' => '',
-        'sizes' => '',
-        'name' => $product->get_name(),
-        'alt' => $product->get_name(),
-    ));
-}
-add_filter('woocommerce_store_api_cart_item_images', 'luxureat_static_cart_item_images', 10, 2);
-
-function luxureat_static_remove_checkout_marketing_optin($integration_registry) {
-    if (
-        is_object($integration_registry)
-        && method_exists($integration_registry, 'is_registered')
-        && method_exists($integration_registry, 'unregister')
-        && $integration_registry->is_registered('mailpoet')
-    ) {
-        $integration_registry->unregister('mailpoet');
-    }
-}
-add_action(
-    'woocommerce_blocks_checkout_block_registration',
-    'luxureat_static_remove_checkout_marketing_optin',
-    100
-);
-
-function luxureat_static_account_language() {
-    $language = isset($_GET['lang']) ? sanitize_key(wp_unslash($_GET['lang'])) : 'zh';
-    return $language === 'en' ? 'en' : 'zh';
-}
-
-function luxureat_static_account_menu($items) {
-    if (!is_user_logged_in() || current_user_can('manage_options')) {
-        return $items;
-    }
-
-    $is_zh = luxureat_static_account_language() === 'zh';
-    $labels = array(
-        'orders' => $is_zh ? '订单' : 'Orders',
-        'edit-address' => $is_zh ? '地址' : 'Addresses',
-        'edit-account' => $is_zh ? '账户资料' : 'Account details',
-        'customer-logout' => $is_zh ? '退出登录' : 'Log out',
-    );
-
-    return array_intersect_key($labels, $items);
-}
-add_filter('woocommerce_account_menu_items', 'luxureat_static_account_menu', 999);
-
-function luxureat_static_account_endpoint_url($url) {
-    return add_query_arg('lang', luxureat_static_account_language(), $url);
-}
-add_filter('woocommerce_get_endpoint_url', 'luxureat_static_account_endpoint_url');
-
-function luxureat_static_account_dashboard() {
-    $user = wp_get_current_user();
-    $is_zh = luxureat_static_account_language() === 'zh';
-    ?>
-    <section class="lux-account-dashboard">
-        <p class="lux-account-eyebrow"><?php echo esc_html($is_zh ? '欢迎回来' : 'Welcome back'); ?></p>
-        <h2><?php echo esc_html($user->display_name ?: $user->user_login); ?></h2>
-        <p><?php echo esc_html($is_zh ? '在这里查看订单、管理收货与账单地址，或更新账户资料。' : 'View your orders, manage shipping and billing addresses, or update your account details.'); ?></p>
-    </section>
-    <?php
-}
-
-function luxureat_static_replace_account_dashboard() {
-    remove_action('woocommerce_account_dashboard', 'woocommerce_account_dashboard');
-    add_action('woocommerce_account_dashboard', 'luxureat_static_account_dashboard');
-}
-add_action('wp_loaded', 'luxureat_static_replace_account_dashboard');
 
 function luxureat_static_defer_scripts($tag, $handle) {
     if (strpos($handle, 'luxureat-') !== 0 || strpos($tag, ' defer') !== false) {
@@ -1858,7 +1283,7 @@ function luxureat_static_cache_headers($headers) {
     $headers['Referrer-Policy'] = 'strict-origin-when-cross-origin';
     $headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()';
     $headers['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups';
-    if (!is_admin() && !is_user_logged_in() && !is_account_page() && !is_cart() && !is_checkout()) {
+    if (!is_admin() && !is_user_logged_in()) {
         $headers['Cache-Control'] = 'public, max-age=300, stale-while-revalidate=86400';
     }
 
@@ -1868,7 +1293,7 @@ add_filter('wp_headers', 'luxureat_static_cache_headers');
 
 function luxureat_static_hide_server_version() {
     header_remove('X-Powered-By');
-    if (!is_admin() && !is_user_logged_in() && !is_account_page() && !is_cart() && !is_checkout()) {
+    if (!is_admin() && !is_user_logged_in()) {
         header('Cache-Control: public, max-age=300, s-maxage=1800, stale-while-revalidate=86400', true);
     }
 }
@@ -2047,23 +1472,8 @@ if (!defined('ABSPATH')) {
 }
 
 status_header(200);
-$is_account_page = function_exists('is_account_page') && is_account_page();
-$is_checkout_page = function_exists('is_checkout') && is_checkout();
-$is_customer_page = $is_account_page || $is_checkout_page;
-$page_language = $is_customer_page && function_exists('luxureat_static_account_language') ? luxureat_static_account_language() : 'zh';
+$page_language = determine_locale() === 'en_US' ? 'en' : 'zh';
 $is_zh_page = $page_language === 'zh';
-if ($is_customer_page && function_exists('switch_to_locale')) {
-    switch_to_locale($is_zh_page ? 'zh_CN' : 'en_US');
-}
-if ($is_customer_page && function_exists('WC') && WC()->session) {
-    WC()->session->set('luxureat_checkout_lang', $page_language);
-}
-$account_endpoint = $is_account_page && function_exists('WC') && WC()->query ? WC()->query->get_current_endpoint() : '';
-$is_account_dashboard = $is_account_page && is_user_logged_in() && !$account_endpoint;
-$language_url = $is_checkout_page && function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : (function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : get_permalink());
-$body_classes = array();
-if ($is_account_dashboard) $body_classes[] = 'lux-account-dashboard-page';
-if ($is_checkout_page) $body_classes[] = 'lux-checkout-page';
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -2071,7 +1481,7 @@ if ($is_checkout_page) $body_classes[] = 'lux-checkout-page';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
 </head>
-<body <?php body_class(trim('lux-wp-page-shell ' . implode(' ', $body_classes))); ?>>
+<body <?php body_class('lux-wp-page-shell'); ?>>
 <?php wp_body_open(); ?>
 <header class="lux-wp-page-header">
     <a class="lux-wp-page-brand" href="<?php echo esc_url(home_url('/')); ?>">
@@ -2079,21 +1489,13 @@ if ($is_checkout_page) $body_classes[] = 'lux-checkout-page';
         <span>LuxurEat <i aria-hidden="true">｜</i> <small>露意膳</small></span>
     </a>
     <nav class="lux-wp-page-actions" aria-label="<?php echo esc_attr($is_zh_page ? '页面导航' : 'Page navigation'); ?>">
-        <?php if ($is_customer_page) : ?>
-            <span class="lux-language-switch" aria-label="<?php echo esc_attr($is_zh_page ? '语言' : 'Language'); ?>">
-                <a href="<?php echo esc_url(add_query_arg('lang', 'zh', $language_url)); ?>"<?php echo $is_zh_page ? ' aria-current="page"' : ''; ?>>中文</a>
-                <i aria-hidden="true">/</i>
-                <a href="<?php echo esc_url(add_query_arg('lang', 'en', $language_url)); ?>"<?php echo !$is_zh_page ? ' aria-current="page"' : ''; ?>>EN</a>
-            </span>
-        <?php endif; ?>
         <a class="lux-wp-page-home" href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($is_zh_page ? '返回首页' : 'Return to home'); ?></a>
     </nav>
 </header>
 <main class="lux-wp-page-main">
 <?php while (have_posts()) : the_post(); ?>
     <header class="lux-wp-page-title">
-        <p><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '安全结算' : 'Secure checkout') : ($is_zh_page ? '会员中心' : 'Group Account')); ?></p>
-        <h1><?php echo esc_html($is_checkout_page ? ($is_zh_page ? '确认订单' : 'Checkout') : ($is_account_page ? ($is_zh_page ? '我的账户' : 'My account') : get_the_title())); ?></h1>
+        <h1><?php echo esc_html(get_the_title()); ?></h1>
     </header>
     <div class="lux-wp-page-content"><?php the_content(); ?></div>
 <?php endwhile; ?>
