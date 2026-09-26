@@ -2727,7 +2727,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   .lux-home-maison-reach { grid-template-columns: 1fr; gap: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lux-home-maison-media { display: none; }
+  video.lux-home-maison-media { display: none; }
 }
 
 
@@ -8472,9 +8472,9 @@ body {
 
 .lux-home-market-system {
   scroll-margin-top: 78px;
-  padding: clamp(84px, 9vw, 144px) clamp(28px, 5vw, 84px);
-  background: #131313;
-  color: #f1eee8;
+  padding: clamp(76px, 8vw, 124px) clamp(28px, 5vw, 84px);
+  background: #f4f2ed;
+  color: #171715;
 }
 .lux-home-market-system > header,
 .lux-home-market-system-layout {
@@ -8485,27 +8485,31 @@ body {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
-  gap: 20px clamp(36px, 6vw, 96px);
-  align-items: end;
+  grid-template-columns: minmax(260px, .72fr) minmax(420px, 1.28fr);
+  gap: 14px clamp(36px, 6vw, 96px);
+  align-items: start;
   max-width: none;
-  margin: 0 auto clamp(46px, 6vw, 82px);
+  margin: 0 auto clamp(38px, 5vw, 64px);
+  padding: 18px 0 22px;
+  border-top: 1px solid #cfc9be;
+  border-bottom: 1px solid #cfc9be;
   text-align: left;
 }
 .lux-home-market-system > header > span:first-child {
   display: block;
-  grid-column: 1 / -1;
-  color: #9df5ec;
+  grid-column: 1;
+  color: #087f78;
   font: 700 11px/1.4 var(--lux-page-heading);
-  letter-spacing: .28em;
+  letter-spacing: .22em;
 }
 .lux-home-market-system > header h2 {
   position: relative;
   z-index: 1;
-  max-width: 980px;
+  grid-column: 1;
+  max-width: 620px;
   margin: 0;
-  color: #f1eee8;
-  font: 500 clamp(42px, 5.4vw, 76px)/1.05 var(--lux-page-heading);
+  color: #171715;
+  font: 500 clamp(34px, 3.8vw, 58px)/1.03 var(--lux-page-heading);
 }
 .lux-home-market-system > header h2 em {
   color: #cba51c;
@@ -8514,26 +8518,32 @@ body {
 .lux-home-market-system > header p {
   position: relative;
   z-index: 1;
+  grid-column: 2;
+  grid-row: 1 / 3;
   max-width: 780px;
   margin: 0;
-  color: rgba(248, 246, 240, .88);
-  font: 400 16px/1.8 var(--lux-page-heading);
+  padding-top: 2px;
+  color: #56534d;
+  font: 400 15px/1.78 var(--lux-page-heading);
 }
 .lux-home-market-system-layout {
   display: grid;
-  grid-template-columns: minmax(360px, .9fr) minmax(0, 1.35fr);
-  gap: clamp(28px, 4vw, 62px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(34px, 4vw, 68px);
   align-items: stretch;
 }
 .lux-home-market-collage {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: minmax(300px, 1fr) 150px;
-  gap: 12px;
-  min-height: 650px;
+  grid-template-columns: minmax(180px, .72fr) minmax(0, 1.28fr);
+  grid-template-rows: repeat(2, minmax(220px, 1fr));
+  gap: 18px;
+  min-height: 560px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #cfc9be;
 }
 .lux-home-market-collage > figure,
-.lux-home-market-collage > button {
+.lux-home-market-collage > button,
+.lux-home-market-collage > a {
   position: relative;
   z-index: 1;
   min-width: 0;
@@ -8541,14 +8551,19 @@ body {
   padding: 0;
   overflow: hidden;
   border: 0;
-  background: #171715;
+  background: #e7e3da;
   color: inherit;
 }
 .lux-home-market-collage > button {
   cursor: pointer;
 }
 .lux-home-market-collage-main {
+  grid-column: 2;
   grid-row: 1 / 3;
+}
+.lux-home-market-collage-secondary {
+  grid-column: 1;
+  grid-row: 2;
 }
 .lux-home-market-collage img {
   width: 100%;
@@ -8579,25 +8594,33 @@ body {
   text-transform: uppercase;
 }
 .lux-home-market-collage > .lux-home-market-stat {
-  display: grid;
-  place-content: center;
-  background: #cba51c;
-  color: #fff;
-  text-align: center;
+  display: flex;
+  grid-column: 1;
+  grid-row: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 18px 14px 18px 0;
+  border-top: 1px solid #cfc9be;
+  border-bottom: 1px solid #cfc9be;
+  background: transparent;
+  color: #171715;
+  text-align: left;
+  text-decoration: none;
   transition: background-color .3s ease, color .3s ease;
 }
 .lux-home-market-collage > .lux-home-market-stat:hover,
 .lux-home-market-collage > .lux-home-market-stat:focus-visible {
-  background: #9df5ec;
-  color: #061b19;
+  background: #e9e5dd;
+  color: #087f78;
 }
 .lux-home-market-stat strong {
-  font: 500 clamp(34px, 3vw, 48px)/1 var(--lux-page-heading);
+  font: 500 clamp(30px, 2.6vw, 42px)/1.05 var(--lux-page-heading);
 }
 .lux-home-market-stat span {
-  margin-top: 12px;
-  font: 600 13px/1.4 var(--lux-page-heading);
-  letter-spacing: .08em;
+  margin-top: 14px;
+  color: #68645d;
+  font: 500 12px/1.5 var(--lux-page-heading);
+  letter-spacing: .06em;
 }
 .lux-home-market-stat .lux-home-market-learn {
   display: inline-flex;
@@ -8605,7 +8628,7 @@ body {
   justify-content: center;
   gap: 8px;
   width: max-content;
-  margin: 18px auto 0;
+  margin: auto 0 0;
   padding-bottom: 3px;
   border-bottom: 1px solid currentColor;
   font-size: 10px;
@@ -8630,18 +8653,21 @@ body {
 }
 .lux-home-market-features {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  perspective: 1400px;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid #cfc9be;
 }
 .lux-market-feature {
   --lux-market-image: none;
   position: relative;
-  min-height: 320px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(120px, 11vw, 172px);
+  gap: clamp(20px, 3vw, 44px);
+  min-height: 140px;
+  padding: 18px 0;
   border: 0;
-  background-color: #131313;
-  color: #fff;
-  transform-style: preserve-3d;
-  transition: transform .72s cubic-bezier(.2,.72,.2,1);
+  border-top: 1px solid #cfc9be;
+  background: transparent;
+  color: #171715;
 }
 .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(1) {
   --lux-market-image: url("assets/media/brand/values-italian-heritage.webp");
@@ -8657,38 +8683,36 @@ body {
 }
 .lux-market-feature:hover {
   z-index: 2;
-  transform: rotateY(180deg);
 }
 .lux-market-feature:focus-visible {
   z-index: 2;
-  outline: 2px solid #9df5ec;
-  outline-offset: -3px;
-  transform: rotateY(180deg);
+  outline: 2px solid #087f78;
+  outline-offset: 3px;
 }
 .lux-market-card-front,
 .lux-market-card-back {
-  position: absolute;
-  inset: 0;
+  position: relative;
   overflow: hidden;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 .lux-market-card-front {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: clamp(28px, 3.2vw, 52px);
-  background-image:
-    linear-gradient(rgba(19,19,19,.68), rgba(19,19,19,.68)),
-    var(--lux-market-image);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+  justify-content: flex-start;
+  padding: 0;
+  background: transparent;
 }
 .lux-market-card-back {
   background-image: var(--lux-market-image);
-  transform: rotateY(180deg);
+  min-height: 112px;
+  transition: filter .3s ease, transform .45s cubic-bezier(.2,.7,.2,1);
+}
+.lux-market-feature:hover .lux-market-card-back,
+.lux-market-feature:focus-visible .lux-market-card-back {
+  filter: brightness(1.06);
+  transform: scale(1.025);
 }
 .lux-meet-map-video {
   position: absolute;
@@ -8702,30 +8726,33 @@ body {
 }
 .lux-market-card-front > span {
   display: grid;
-  width: 54px;
-  height: 54px;
-  margin-bottom: 28px;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 14px;
   place-items: center;
-  border-radius: 50%;
-  background: #087f78;
-  color: #fff;
+  border: 1px solid #087f78;
+  border-radius: 0;
+  background: transparent;
+  color: #087f78;
+  font-size: 19px;
 }
 .lux-home-market-features h3 {
-  margin: 0 0 14px;
-  font: 500 24px/1.2 var(--lux-page-heading);
+  margin: 0 0 7px;
+  font: 500 clamp(19px, 1.7vw, 25px)/1.15 var(--lux-page-heading);
 }
 .lux-home-market-features p {
-  max-width: 28ch;
+  max-width: 38ch;
   margin: 0;
-  color: rgba(255,255,255,.82);
-  line-height: 1.65;
+  color: #625e56;
+  font-size: 13px;
+  line-height: 1.55;
 }
 .lux-home-market-features small {
-  margin-top: auto;
-  padding-top: 28px;
-  color: #e9c349;
-  font: 600 11px/1.4 var(--lux-page-heading);
-  letter-spacing: .2em;
+  margin-top: 10px;
+  padding-top: 0;
+  color: #087f78;
+  font: 600 9px/1.4 var(--lux-page-heading);
+  letter-spacing: .16em;
 }
 
 .lux-home-services {
@@ -9050,8 +9077,13 @@ body {
   .lux-home-market-system > header > span:first-child {
     grid-column: auto;
   }
+  .lux-home-market-system > header h2,
+  .lux-home-market-system > header p {
+    grid-column: auto;
+    grid-row: auto;
+  }
   .lux-home-market-collage {
-    min-height: 520px;
+    min-height: 560px;
   }
   .lux-home-services-grid {
     grid-template-columns: 1fr;
@@ -9142,14 +9174,39 @@ body {
     font-size: 40px;
   }
   .lux-home-market-collage {
-    grid-template-rows: 310px 120px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 330px 150px;
+    gap: 12px;
     min-height: 0;
+  }
+  .lux-home-market-collage > .lux-home-market-stat {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-height: 170px;
+    padding: 20px 0;
+  }
+  .lux-home-market-collage-main {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .lux-home-market-collage-secondary {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  .lux-home-market-stat .lux-home-market-learn {
+    margin-top: 24px;
   }
   .lux-home-market-features {
     grid-template-columns: 1fr;
   }
   .lux-market-feature {
-    min-height: 280px;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 18px;
+    min-height: 150px;
+    padding-block: 16px;
+  }
+  .lux-market-card-back {
+    min-height: 116px;
   }
   .lux-home-market-watermark {
     top: 92px;
@@ -10656,10 +10713,59 @@ html[lang^="en"] .lux-reader-quote {
   isolation: isolate;
   overflow: hidden;
   background:
-    radial-gradient(circle at 4% 92%, transparent 0 150px, rgba(157, 245, 236, .08) 151px 152px, transparent 153px),
-    radial-gradient(circle at 96% 10%, rgba(203, 165, 28, .065), transparent 31%),
-    repeating-linear-gradient(120deg, transparent 0 92px, rgba(255,255,255,.018) 93px 94px),
-    #131313;
+    linear-gradient(rgba(5, 13, 13, .76), rgba(5, 13, 13, .84)),
+    url("assets/media/brand/home-values-background.jpg") center / cover no-repeat;
+  color: #f7f3ea;
+}
+.lux-home-market-system > header {
+  border: 0;
+}
+.lux-home-market-system > header > span:first-child,
+.lux-home-market-system > header h2,
+.lux-home-market-system > header p,
+.lux-home-market-collage > .lux-home-market-stat,
+.lux-home-market-stat span,
+.lux-market-feature,
+.lux-home-market-features p {
+  color: #f7f3ea;
+}
+.lux-home-market-system > header p,
+.lux-home-market-stat span,
+.lux-home-market-features p {
+  color: rgba(247, 243, 234, .78);
+}
+.lux-home-market-system > header > span:first-child,
+.lux-home-market-features small {
+  color: #9df5ec;
+}
+.lux-home-market-collage,
+.lux-home-market-collage > .lux-home-market-stat,
+.lux-home-market-features,
+.lux-market-feature {
+  border: 0;
+}
+.lux-home-market-collage > .lux-home-market-stat:hover,
+.lux-home-market-collage > .lux-home-market-stat:focus-visible {
+  background: rgba(255, 255, 255, .1);
+  color: #fff;
+}
+.lux-market-card-front > span {
+  border: 0;
+  background: rgba(157, 245, 236, .14);
+  color: #9df5ec;
+}
+.lux-market-feature:focus-visible {
+  outline-color: #9df5ec;
+}
+.lux-home-services::after,
+.lux-home-services-inner::before,
+.lux-home-services-inner::after,
+#selected-products::before,
+#selected-products::after {
+  display: none;
+}
+#selected-products {
+  background: #070707;
 }
 .lux-home-why {
   background:
@@ -13317,3 +13423,271 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 
 .lux-event-frame > a { display: block; width: 100%; height: 100%; }
 .lux-event-frame > a > img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Homepage photographic section backgrounds and group advantages */
+.lux-home-timeline {
+  background:
+    linear-gradient(rgba(5, 7, 7, .76), rgba(5, 7, 7, .86)),
+    url("assets/media/brand/home-brand-journey-background.jpg") center / cover no-repeat;
+}
+#selected-products {
+  background:
+    linear-gradient(rgba(4, 6, 6, .72), rgba(4, 6, 6, .84)),
+    url("assets/media/brand/home-selected-products-background.jpg") center / cover no-repeat;
+}
+.lux-home-partnership-process {
+  background:
+    linear-gradient(rgba(9, 12, 13, .62), rgba(9, 12, 13, .74)),
+    url("assets/media/brand/home-partnership-process.webp") center 48% / cover no-repeat;
+}
+
+.lux-home-advantages {
+  position: relative;
+  z-index: 2;
+  padding: 22px clamp(24px, 5vw, 80px);
+  background: #f4f1eb;
+  color: #171715;
+}
+.lux-home-advantages-inner {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  width: min(100%, 1600px);
+  margin-inline: auto;
+  align-items: stretch;
+}
+.lux-home-advantages-kicker {
+  display: flex;
+  align-items: center;
+  color: #8c6d50;
+  font: 700 10px/1.5 var(--lux-page-heading);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.lux-home-advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.lux-home-advantages-grid article {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+  padding: 12px clamp(18px, 2.5vw, 38px);
+  align-items: start;
+  border-left: 1px solid #d9d2c8;
+}
+.lux-home-advantages-grid .lux-lucide {
+  width: 30px;
+  height: 30px;
+  color: #9b7559;
+}
+.lux-home-advantages-grid h3 {
+  margin: 0 0 7px;
+  color: #171715;
+  font: 700 13px/1.3 var(--lux-page-heading);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.lux-home-advantages-grid p {
+  margin: 0;
+  color: #6d6861;
+  font: 400 12px/1.55 var(--lux-page-heading);
+}
+
+.lux-home-market-collage > .lux-home-market-stat {
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 28px 22px;
+  border: 1px solid rgba(233, 195, 73, .72);
+  background: rgba(4, 18, 17, .68);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .26), inset 0 0 0 1px rgba(255, 255, 255, .05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-align: center;
+}
+.lux-home-market-collage > .lux-home-market-stat:hover,
+.lux-home-market-collage > .lux-home-market-stat:focus-visible {
+  border-color: #9df5ec;
+  background: rgba(8, 127, 120, .78);
+  box-shadow: 0 22px 56px rgba(0, 0, 0, .36), inset 0 0 0 1px rgba(157, 245, 236, .3);
+  transform: translateY(-4px);
+}
+.lux-home-market-stat strong {
+  max-width: 10ch;
+  font-size: clamp(24px, 2.1vw, 34px);
+  line-height: 1.25;
+  text-align: center;
+}
+.lux-home-market-stat .lux-home-market-learn {
+  margin: 22px auto 0;
+  color: #9df5ec;
+}
+
+@media (max-width: 900px) {
+  .lux-home-advantages-inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .lux-home-advantages-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lux-home-advantages-grid article:nth-child(odd) {
+    border-left: 0;
+  }
+  .lux-home-market-collage > .lux-home-market-stat {
+    min-height: 190px;
+  }
+}
+
+@media (max-width: 720px) {
+  .lux-home-partnership-process {
+    background:
+      linear-gradient(rgba(9, 12, 13, .66), rgba(9, 12, 13, .78)),
+      url("assets/media/brand/home-partnership-process-mobile.webp") center / cover no-repeat;
+  }
+  .lux-home-timeline,
+  #selected-products {
+    background-position: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .lux-home-advantages {
+    padding: 24px 20px;
+  }
+  .lux-home-advantages-grid article {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 12px;
+    padding: 16px 12px;
+    border-top: 1px solid #d9d2c8;
+  }
+  .lux-home-advantages-grid article:nth-child(odd) {
+    padding-left: 0;
+  }
+  .lux-home-advantages-grid .lux-lucide {
+    width: 26px;
+    height: 26px;
+  }
+  .lux-home-advantages-grid p {
+    font-size: 11px;
+  }
+}
+
+/* Homepage interaction and editorial alignment refinements */
+.lux-home-partnership-process {
+  background:
+    linear-gradient(rgba(9, 12, 13, .74), rgba(9, 12, 13, .84)),
+    url("assets/media/brand/home-partnership-process.webp") center 48% / cover no-repeat;
+}
+
+.lux-home-advantages-inner {
+  display: block;
+}
+.lux-home-advantages-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.lux-home-advantages-grid article {
+  min-height: 96px;
+  border-left: 1px solid #d4ccc1;
+  background: transparent;
+  transition: background-color .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.lux-home-advantages-grid article:first-child {
+  border-left: 0;
+}
+.lux-home-advantages-grid article:hover,
+.lux-home-advantages-grid article:focus-within {
+  z-index: 1;
+  background: transparent;
+  box-shadow: none;
+  transform: translateY(-3px);
+}
+.lux-home-advantages-grid h3 {
+  color: #171715;
+}
+.lux-home-advantages-grid p {
+  color: #4e4a44;
+}
+.lux-home-advantages-grid article:hover .lux-lucide,
+.lux-home-advantages-grid article:focus-within .lux-lucide {
+  color: #087f78;
+  transform: scale(1.08);
+}
+.lux-home-advantages-grid .lux-lucide {
+  transition: color .25s ease, transform .25s ease;
+}
+
+.lux-home-market-collage > .lux-home-market-stat {
+  border-color: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, .7);
+  color: #121212;
+}
+.lux-home-market-stat strong {
+  color: #121212;
+}
+.lux-home-market-stat .lux-home-market-learn {
+  color: #121212;
+}
+.lux-home-market-collage > .lux-home-market-stat:hover,
+.lux-home-market-collage > .lux-home-market-stat:focus-visible {
+  border-color: rgba(233, 195, 73, .9);
+  background: rgba(177, 139, 17, .68);
+  color: #fff;
+}
+.lux-home-market-collage > .lux-home-market-stat:hover strong,
+.lux-home-market-collage > .lux-home-market-stat:focus-visible strong {
+  color: #fff;
+}
+.lux-home-market-collage > .lux-home-market-stat:hover .lux-home-market-learn,
+.lux-home-market-collage > .lux-home-market-stat:focus-visible .lux-home-market-learn {
+  color: #9df5ec;
+}
+
+.lux-home-timeline > header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
+  gap: 14px clamp(36px, 5vw, 76px);
+  align-items: end;
+}
+.lux-home-timeline > header > span,
+.lux-home-timeline > header h2 {
+  grid-column: 1;
+}
+.lux-home-timeline > header p {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: start;
+  max-width: 720px;
+  padding: 0;
+}
+.lux-home-timeline > header h2 {
+  font-size: clamp(40px, 4.4vw, 64px);
+}
+
+@media (max-width: 900px) {
+  .lux-home-timeline > header {
+    grid-template-columns: 1fr;
+  }
+  .lux-home-timeline > header > span,
+  .lux-home-timeline > header h2,
+  .lux-home-timeline > header p {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .lux-home-advantages-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lux-home-advantages-grid article:nth-child(odd) {
+    border-left: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .lux-home-partnership-process {
+    background:
+      linear-gradient(rgba(9, 12, 13, .76), rgba(9, 12, 13, .86)),
+      url("assets/media/brand/home-partnership-process-mobile.webp") center / cover no-repeat;
+  }
+}

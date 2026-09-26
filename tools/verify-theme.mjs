@@ -570,10 +570,10 @@ assert(integrationCss.includes('.lux-scroll-reveal {') && integrationCss.include
 assert(runtimeJs.includes('counter.textContent = "0"') && !runtimeJs.includes('observer.disconnect();\\n      animate();'), 'homepage counters reset offscreen and replay whenever they re-enter');
 assert(runtimeJs.includes('grid.scrollTo({ left: 0, behavior: "auto" })') && runtimeJs.includes('grid.scrollTo({ left: limit, behavior: "smooth" })') && runtimeJs.includes('grid.scrollTo({ left: 0, behavior: "smooth" })') && runtimeJs.includes('entry.intersectionRatio >= .25'), 'partnership scroller runs from left to right and returns left on every viewport entry');
 assert(integrationCss.includes('.lux-home-timeline-visual') && integrationCss.includes('position: sticky'), 'homepage timeline keeps its image gallery visible while milestones scroll');
-assert(zhHome.includes('lux-home-maison-media') && enHome.includes('lux-home-maison-media') && zhHome.includes('home-maison-overview.m4v') && enHome.includes('home-maison-overview.m4v'), 'bilingual home overview sections use the isolated background film');
-const maisonVideo = path.join(themeDir, 'assets/media/brand/home-maison-overview.m4v');
-assert(fs.existsSync(maisonVideo) && fs.statSync(maisonVideo).size < 1.5 * 1024 * 1024, 'home overview background film stays below 1.5 MB');
-assert(integrationCss.includes('.lux-home-maison-overlay') && integrationCss.includes('rgba(4, 7, 7, .84)') && integrationCss.includes('.lux-home-maison-inner'), 'home overview film has a black contrast overlay limited to its own section');
+assert(zhHome.includes('lux-home-maison-media') && enHome.includes('lux-home-maison-media') && zhHome.includes('home-maison-sturgeon-background.jpg') && enHome.includes('home-maison-sturgeon-background.jpg'), 'bilingual home overview sections use the isolated sturgeon background image');
+const maisonBackground = path.join(themeDir, 'assets/media/brand/home-maison-sturgeon-background.jpg');
+assert(fs.existsSync(maisonBackground) && fs.statSync(maisonBackground).size < 900 * 1024, 'home overview background image stays below 900 KB');
+assert(integrationCss.includes('.lux-home-maison-overlay') && integrationCss.includes('rgba(4, 7, 7, .84)') && integrationCss.includes('.lux-home-maison-inner'), 'home overview image has a black contrast overlay limited to its own section');
 const latestEventJs = read(path.join(themeDir, 'assets/js/events.js'));
 const eventDataJs = read(path.join(themeDir, 'assets/data/events.js'));
 assert(zhHome.includes('data-latest-event'), 'Chinese home has the latest event mount point');

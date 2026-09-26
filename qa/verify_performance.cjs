@@ -49,7 +49,7 @@ assert.ok(size("assets/media/brand/about-hero-chi-siamo-mobile.m4v") <= 650 * 10
 for (const file of [
   "about-china-operations-mobile.m4v", "about-consumer-needs-mobile.m4v",
   "cert-quality-system-mobile.m4v", "cert-capability-background-mobile.m4v",
-  "contact-global-footprint-mobile.m4v", "home-maison-overview-mobile.m4v",
+  "contact-global-footprint-mobile.m4v",
 ]) assert.ok(size(`assets/media/brand/${file}`) <= 520 * 1024, `${file} exceeds 520 KB`);
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 62 * 1024, "shared CSS exceeds the 62 KB compressed budget");
