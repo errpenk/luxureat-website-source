@@ -557,7 +557,7 @@ assert(!zhGifting.includes('拥有食品进口资质') && !enGifting.includes('f
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
-assert(['OUR SERVICES / 我们的服务', 'CURATED SELECTION / 品质精选', 'OUR VALUES / 品牌根基', 'BRAND JOURNEY / 品牌历程', 'CHINA PARTNERSHIP / 渠道合作', 'REAL PARTNERSHIP / 真实合作现场', 'HOW WE WORK / 合作流程'].every((label) => zhHome.includes(label)), 'Chinese homepage bilingual kickers keep English before Chinese');
+assert(['EXPLORE LUXUREAT / 探索露意膳', 'CURATED SELECTION / 品质精选', 'OUR VALUES / 品牌根基', 'BRAND JOURNEY / 品牌历程', 'CHINA PARTNERSHIP / 渠道合作', 'REAL PARTNERSHIP / 真实合作现场', 'HOW WE WORK / 合作流程'].every((label) => zhHome.includes(label)), 'Chinese homepage bilingual kickers keep English before Chinese');
 assert(enHome.includes('lux-selected-products-kicker">Recommended For You</span>'), 'English homepage uses the requested recommendation kicker');
 assert(integrationCss.includes('#selected-products > .grid > .group::before') && integrationCss.includes('font: 600 14px/1 var(--lux-page-heading);'), 'homepage product-type labels match the rendered shop CTA font size');
 assert(integrationCss.includes('.lux-partnership-cases-grid article {') && integrationCss.includes('flex-direction: column;') && integrationCss.includes('margin-top: auto;') && integrationCss.includes('padding-top: 20px;'), 'partnership case detail links align to the bottom of each card');
