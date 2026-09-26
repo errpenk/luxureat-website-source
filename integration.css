@@ -10713,7 +10713,7 @@ html[lang^="en"] .lux-reader-quote {
   isolation: isolate;
   overflow: hidden;
   background:
-    linear-gradient(rgba(5, 13, 13, .76), rgba(5, 13, 13, .84)),
+    linear-gradient(rgba(5, 13, 13, .81), rgba(5, 13, 13, .89)),
     url("assets/media/brand/home-values-background.webp") center / cover no-repeat;
   color: #f7f3ea;
 }
@@ -13590,7 +13590,7 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 }
 .lux-home-advantages-grid article {
   min-height: 96px;
-  border-left: 1px solid #d4ccc1;
+  border: 0;
   background: transparent;
   transition: background-color .25s ease, color .25s ease, transform .25s ease, box-shadow .25s ease;
 }
