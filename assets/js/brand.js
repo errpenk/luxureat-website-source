@@ -34,7 +34,9 @@
   };
   const feedback = form.querySelector("[data-contact-feedback]");
   const submit = form.querySelector('[type="submit"]');
+  const submitLabel = submit.textContent;
   const field = (name) => form.elements.namedItem(name);
+  const isQuoteForm = form.classList.contains("lux-quote-form");
 
   const shake = (node) => {
     if (!node) return;
@@ -64,7 +66,10 @@
   };
   const validate = () => {
     let firstInvalid = null;
-    ["name", "email", "inquiry_type", "message"].forEach((name) => {
+    const requiredFields = isQuoteForm
+      ? ["name", "company", "email", "product_industry", "estimated_quantity", "delivery_market", "inquiry_type", "message"]
+      : ["name", "email", "inquiry_type", "message"];
+    requiredFields.forEach((name) => {
       clearError(name);
       const control = field(name);
       if (!String(control?.value || "").trim()) {
@@ -117,12 +122,18 @@
       "Other": "Altro",
     };
     const subject = `${data.get("name")} + ${inquiryLabels[data.get("inquiry_type")]}`;
+    const quoteDetails = isQuoteForm ? [
+      `Quantità stimata：${data.get("estimated_quantity")}`,
+      `Mercato di consegna：${data.get("delivery_market")}`,
+      `Data di consegna desiderata：${data.get("target_date") || text.notProvided}`,
+    ] : [];
     const body = [
       `${text.labels[0]}：${data.get("name")}`,
       `${text.labels[1]}：${data.get("company") || text.notProvided}`,
       `${text.labels[2]}：${data.get("product_industry") || text.notProvided}`,
       `${text.labels[3]}：${data.get("phone") || text.notProvided}`,
       `${text.labels[4]}：${data.get("email")}`,
+      ...quoteDetails,
       "",
       `${text.labels[5]}：`,
       data.get("message"),
@@ -154,7 +165,7 @@
       setFeedback(error.message || text.failed);
     } finally {
       submit.disabled = false;
-      submit.textContent = text.send;
+      submit.textContent = submitLabel;
     }
   });
 })();

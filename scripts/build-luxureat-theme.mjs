@@ -1031,7 +1031,7 @@ ${byPath}
                 'botChallenge' => luxureat_static_bot_challenge(),
             ));
         }
-        if ($handle === 'brand' && in_array($path, array('zh/contact', 'en/contact'), true)) {
+        if ($handle === 'brand' && in_array($path, array('zh/contact', 'en/contact', 'zh/cooperation', 'en/cooperation'), true)) {
             wp_localize_script('luxureat-brand', 'LuxureatContact', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('luxureat_contact'),
@@ -1213,6 +1213,10 @@ function luxureat_static_contact_ajax() {
     $name = isset($_POST['name']) ? trim(sanitize_text_field(wp_unslash($_POST['name']))) : '';
     $company = isset($_POST['company']) ? trim(sanitize_text_field(wp_unslash($_POST['company']))) : '';
     $product_industry = isset($_POST['product_industry']) ? trim(sanitize_text_field(wp_unslash($_POST['product_industry']))) : '';
+    $estimated_quantity = isset($_POST['estimated_quantity']) ? trim(sanitize_text_field(wp_unslash($_POST['estimated_quantity']))) : '';
+    $delivery_market = isset($_POST['delivery_market']) ? trim(sanitize_text_field(wp_unslash($_POST['delivery_market']))) : '';
+    $target_date = isset($_POST['target_date']) ? trim(sanitize_text_field(wp_unslash($_POST['target_date']))) : '';
+    $is_b2b_quote = isset($_POST['form_context']) && sanitize_key(wp_unslash($_POST['form_context'])) === 'b2b_quote';
     $phone = isset($_POST['phone']) ? trim(sanitize_text_field(wp_unslash($_POST['phone']))) : '';
     $raw_email = isset($_POST['email']) ? trim((string) wp_unslash($_POST['email'])) : '';
     $email = sanitize_email($raw_email);
@@ -1237,7 +1241,10 @@ function luxureat_static_contact_ajax() {
     if ($name === '' || $raw_email === '' || $content === '' || !isset($inquiry_labels[$inquiry_type])) {
         wp_send_json_error(array('message' => $message('请填写所有必填信息。', 'Please complete all required fields.')), 400);
     }
-    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($phone) > 120 || strlen($content) > 12000 || !is_email($email)) {
+    if ($is_b2b_quote && ($company === '' || $product_industry === '' || $estimated_quantity === '' || $delivery_market === '')) {
+        wp_send_json_error(array('message' => $message('请填写所有必填报价信息。', 'Please complete all required quote details.')), 400);
+    }
+    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($estimated_quantity) > 240 || strlen($delivery_market) > 360 || strlen($target_date) > 120 || strlen($phone) > 120 || strlen($content) > 12000 || !is_email($email)) {
         wp_send_json_error(array('message' => $message('请检查所填信息后重试。', 'Please check the information and try again.')), 400);
     }
 
@@ -1251,6 +1258,9 @@ function luxureat_static_contact_ajax() {
     $body = "Nome: " . $name . "\n"
         . "Azienda: " . ($company ?: 'Non fornito') . "\n"
         . "Prodotto / Settore: " . ($product_industry ?: 'Non fornito') . "\n"
+        . ($is_b2b_quote ? "Quantità stimata: " . $estimated_quantity . "\n"
+            . "Mercato di consegna: " . $delivery_market . "\n"
+            . "Data di consegna desiderata: " . ($target_date ?: 'Non fornito') . "\n" : '')
         . "Telefono / WeChat: " . ($phone ?: 'Non fornito') . "\n"
         . "E-mail: " . $email . "\n\n"
         . "Messaggio:\n" . $content;

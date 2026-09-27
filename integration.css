@@ -3209,7 +3209,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   align-items: center;
   padding-bottom: 32px;
   border-top: 1px solid #111;
-  border-bottom: 1px solid #d4ccc0;
+  border-bottom: 0;
 }
 .lux-recent-events-head > span {
   max-width: 680px;
@@ -3783,7 +3783,7 @@ html[lang^="zh"] .lux-event-card-copy strong {
   align-items: end;
   padding: 28px 0 36px;
   border-top: 1px solid #111;
-  border-bottom: 1px solid #d4ccc0;
+  border-bottom: 0;
 }
 .lux-event-reader-intro p {
   margin: 0;
@@ -3878,7 +3878,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   justify-content: space-between;
   padding: 18px 0;
   border-top: 1px solid #111;
-  border-bottom: 1px solid #d4ccc0;
+  border-bottom: 0;
 }
 .lux-event-reader-index h3 {
   margin: 0;
@@ -4157,7 +4157,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   gap: 40px;
   align-items: end;
   padding-bottom: 34px;
-  border-bottom: 1px solid #d7d2c8;
+  border-bottom: 0;
   background: none !important;
   filter: none;
 }
@@ -5346,6 +5346,10 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-contact-left {
   padding-bottom: 64px;
 }
+.lux-contact-business-card {
+  display: flex;
+  flex-direction: column;
+}
 @media (min-width: 1024px) {
   .lux-contact-services {
     align-self: stretch;
@@ -5378,6 +5382,151 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 #inquiry .lux-partner-card {
   align-self: stretch;
   min-height: 0;
+}
+
+.lux-contact-b2b-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 14px 24px;
+  border: 1px solid #e9c349;
+  color: #e9c349;
+  font: 700 12px/1 var(--lux-page-heading);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.lux-contact-b2b-action {
+  display: grid;
+  flex: 1;
+  min-height: clamp(160px, 19vh, 230px);
+  place-items: center start;
+}
+.lux-contact-b2b-cta:hover,
+.lux-contact-b2b-cta:focus-visible {
+  background: #e9c349;
+  color: #201806;
+  transform: translateY(-2px);
+}
+#inquiry {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(rgba(8, 8, 8, .76), rgba(8, 8, 8, .9)), url("assets/media/brand/b2b-quotation-team.webp") center / cover no-repeat;
+}
+#inquiry > div { position: relative; z-index: 1; }
+.lux-quote-kicker {
+  display: block;
+  margin-bottom: 14px;
+  color: #9df5ec;
+  font: 700 12px/1.4 var(--lux-page-heading);
+  letter-spacing: .2em;
+}
+.lux-quote-form {
+  display: grid;
+  gap: 24px;
+  align-self: start;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(8,8,8,.64);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lux-quote-form label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(229,226,225,.42);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.lux-quote-form .relative:focus-within > label { color: #fff !important; }
+.lux-required-star { color: #d45f56; }
+.lux-quote-form :is(input, select, textarea) {
+  width: 100%;
+  padding: 4px 0 8px;
+  border: 0;
+  background: transparent;
+  color: rgba(229,226,225,.42);
+  font: 400 16px/1.5 var(--lux-page-heading);
+  outline: 0;
+}
+.lux-quote-form :is(input, select, textarea):focus { color: #fff; }
+.lux-quote-form :is(input, textarea)::placeholder { color: rgba(229,226,225,.2); opacity: 1; }
+.lux-quote-form textarea { resize: vertical; }
+.lux-quote-form button[type="submit"] {
+  width: fit-content;
+  padding: 15px 28px;
+  border: 0;
+  background: #9df5ec;
+  color: #003734;
+  font: 700 12px/1 var(--lux-page-heading);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.lux-quote-form button[type="submit"]:hover,
+.lux-quote-form button[type="submit"]:focus-visible {
+  background: #9bf2ea;
+  box-shadow: 0 16px 24px -12px rgba(157,245,236,.58);
+  transform: translateY(-2px);
+}
+.lux-quote-submit {
+  position: relative;
+  display: grid;
+  min-height: clamp(200px, 24vh, 260px);
+  place-content: center start;
+  justify-items: start;
+  gap: 18px;
+  text-align: left;
+  transform: translateY(clamp(8px, 1.5vh, 12px));
+}
+.lux-quote-privacy {
+  max-width: 620px;
+  margin: 0;
+  color: rgba(229,226,225,.52);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.lux-quote-submit .lux-contact-feedback {
+  position: absolute;
+  inset: auto 0 0;
+  margin: 0;
+  text-align: left;
+}
+
+#core-services {
+  background: #000 !important;
+}
+#core-services > .absolute:first-child {
+  opacity: .32;
+  filter: grayscale(1) contrast(2.2) brightness(.55);
+  mix-blend-mode: screen;
+}
+#core-services > .absolute:nth-child(2) {
+  background: rgba(0,0,0,.78) !important;
+}
+
+.lux-academy-intro,
+.lux-journal-season-head,
+.lux-recent-events-head,
+.lux-event-reader-intro,
+.lux-reader-layout .lux-reader-hero,
+.lux-event-reader-index > div {
+  border-bottom: 0;
+}
+@media (min-width: 1024px) {
+  .lux-quote-copy {
+    position: sticky;
+    top: clamp(110px, 16vh, 170px);
+    align-self: flex-start;
+  }
+}
+@media (max-width: 720px) {
+  #inquiry {
+    background-image: linear-gradient(rgba(8, 8, 8, .8), rgba(8, 8, 8, .92)), url("assets/media/brand/b2b-quotation-team-720.webp");
+  }
 }
 
 .lux-partners-card {
@@ -10111,12 +10260,13 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 }
 
 .lux-home-why-copy > a {
-  background: #07564f;
+  background: #e9c349;
+  color: #071313;
 }
 .lux-home-why-copy > a:hover,
 .lux-home-why-copy > a:focus-visible {
-  background: #e9c349;
-  color: #071313;
+  background: #07564f;
+  color: #fff;
   transform: translateY(-2px) scale(1.025);
 }
 

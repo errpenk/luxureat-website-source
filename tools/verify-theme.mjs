@@ -411,8 +411,8 @@ assert(zhGifting.includes('lux-collab-mosaic') && enGifting.includes('lux-collab
 assert(zhGifting.includes('lux-channel-showcase') && enGifting.includes('lux-channel-showcase'), 'bilingual gifting pages include the channel-services showcase');
 assert(!zhGifting.includes('立即获取企业画册') && !zhGifting.includes('咨询专属顾问'), 'Chinese gifting hero removes the requested CTA controls');
 assert(!enGifting.includes('Explore Collections'), 'English gifting hero removes the matching CTA control');
-assert(zhGifting.includes('>参考方案</strong>') && !zhGifting.includes('<span>专业合作</span>') && !zhGifting.includes('开启企业礼赠方案'), 'Chinese gifting partner card uses the requested reference-plan wording');
-assert(enGifting.includes('>Reference Plan</strong>') && !enGifting.includes('<span>Professional Partnership</span>') && !enGifting.includes('Start a Corporate Program'), 'English gifting partner card mirrors the reference-plan wording');
+assert(zhGifting.includes('lux-quote-form') && zhGifting.includes('提交报价需求'), 'Chinese gifting page provides the B2B quote form');
+assert(enGifting.includes('lux-quote-form') && enGifting.includes('Submit Quote Request'), 'English gifting page provides the B2B quote form');
 assert(integrationCss.includes('.lux-gift-grid > .group > div:last-child') && integrationCss.includes('margin-top: auto;'), 'desktop gifting cards align every Best for row on one baseline');
 assert(zhGifting.includes('data-private-copy') && enGifting.includes('data-private-copy'), 'bilingual private-label copy exposes the bounded pointer interaction');
 assert(!brandJs.includes('pointermove') && integrationCss.includes('#private-label [data-private-copy]') && integrationCss.includes('position: sticky'), 'private-label copy follows page scrolling with native bounded sticky positioning');
@@ -584,7 +584,7 @@ assert(['caviar', 'truffle', 'olive-oil'].every((category) => enHome.includes(`l
 assert(enHome.includes("luxureat_static_url('en/product'"), 'English navigation exposes the products page');
 assert(enHome.includes('>Certification</a>') && !enHome.includes('>Quality &amp; Certification</a>'), 'English navigation uses the concise Certification label');
 assert(zhGifting.indexOf("luxureat_static_url('zh/certification'") < zhGifting.indexOf("luxureat_static_url('zh/cooperation'"), 'Chinese nav puts certification before gifting');
-assert(zhGifting.includes('lux-partner-card') && zhGifting.includes("luxureat_static_url('zh/contact'"), 'Chinese gifting inquiry card links to contact');
+assert(zhGifting.includes('data-contact-form') && zhGifting.includes('name="inquiry_type"'), 'Chinese gifting quote form is connected to the contact workflow');
 assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wechat"') && zhHome.includes('微博'), 'Chinese footer exposes localized social actions');
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
 assert(['rednote.svg', 'wechat.svg', 'douyin.svg', 'weibo.svg'].every((icon) => zhHome.includes(`media/social/${icon}`) && enHome.includes(`media/social/${icon}`)), 'bilingual footers use all four supplied social SVG icons');

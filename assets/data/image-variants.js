@@ -74,6 +74,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand-news/marca-recap-visitors.webp": "media/brand-news/marca-recap-visitors-720.webp",
   "media/brand/about-aquaculture-divider.webp": "media/brand/about-aquaculture-divider-720.webp",
   "media/brand/about-mission-rome.webp": "media/brand/about-mission-rome-720.webp",
+  "media/brand/b2b-quotation-team.webp": "media/brand/b2b-quotation-team-720.webp",
   "media/brand/cert-food-safety.webp": "media/brand/cert-food-safety-720.webp",
   "media/brand/cert-gallery-airline-caviar.webp": "media/brand/cert-gallery-airline-caviar-mobile.webp",
   "media/brand/cert-gallery-caviar-production.webp": "media/brand/cert-gallery-caviar-production-mobile.webp",
