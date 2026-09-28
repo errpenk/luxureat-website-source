@@ -321,7 +321,9 @@ assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.incl
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
 assert(runtimeJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'runtime scripts loads the Luxureat Tawk.to widget');
-assert(runtimeJs.includes('calc(${edge} + 68px)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "right bottom'), 'Tawk.to launcher matches and aligns beside the 56px back-to-top control');
+assert(runtimeJs.includes('set("left", edge)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "left bottom'), 'Tawk.to launcher is bottom-left and horizontally aligned with the 56px back-to-top control');
+assert(runtimeJs.includes('button.tawk-button.tawk-button-small.tawk-text-left') && runtimeJs.includes('background: #e5e5e5 !important') && runtimeJs.includes('color: #000 !important'), 'Tawk.to suggested replies use a grey background with black text');
+assert(runtimeJs.includes('.tawk-min-chat-icon-down') && runtimeJs.includes('25.7142857px'), 'Tawk.to collapse glyph visually matches the 24px back-to-top icon after launcher scaling');
 assert(!runtimeJs.includes('luxureat_checkout') && !runtimeJs.includes('LuxureatCheckout') && !runtimeJs.includes('add_to_cart'), 'checkout handoff and purchase analytics are removed');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(!runtimeJs.includes('requestIdleCallback') && runtimeJs.includes('const prefetched = new Set()'), 'runtime scripts avoid downloading every linked page during idle time');

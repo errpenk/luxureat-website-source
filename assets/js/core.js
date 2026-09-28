@@ -914,25 +914,55 @@ if (luxNav && luxMenu) {
 
 (() => {
   const edge = "clamp(18px, 3vw, 40px)";
+  const widgetTheme = `
+    button.tawk-button.tawk-button-small.tawk-text-left {
+      background: #e5e5e5 !important;
+      border-color: #e5e5e5 !important;
+      color: #000 !important;
+    }
+    button.tawk-button.tawk-button-small.tawk-text-left span {
+      color: #000 !important;
+    }
+    .tawk-min-chat-icon-down {
+      width: 25.7142857px !important;
+      height: 25.7142857px !important;
+    }
+  `;
   let frameRequest = 0;
+  const theme = (frame) => {
+    try {
+      const frameDocument = frame.contentDocument;
+      if (!frameDocument?.head) return;
+      let style = frameDocument.getElementById("luxureat-widget-theme");
+      if (!style) {
+        style = frameDocument.createElement("style");
+        style.id = "luxureat-widget-theme";
+        frameDocument.head.appendChild(style);
+      }
+      if (style.textContent !== widgetTheme) style.textContent = widgetTheme;
+    } catch (_) {
+      // Tawk currently uses same-origin about:blank frames; fail safely if that changes.
+    }
+  };
   const position = () => {
     frameRequest = 0;
     for (const frame of document.querySelectorAll("#min-widget > iframe, #max-widget > iframe, #branding-widget > iframe, #message-preview > iframe")) {
+      theme(frame);
       const set = (property, value) => {
         if (frame.style.getPropertyValue(property) !== value || frame.style.getPropertyPriority(property) !== "important") {
           frame.style.setProperty(property, value, "important");
         }
       };
       if (frame.parentElement?.id === "min-widget") {
-        set("left", "auto");
-        set("right", `calc(${edge} + 68px)`);
+        set("left", edge);
+        set("right", "auto");
         set("top", "auto");
         set("bottom", edge);
         set("transform", "scale(.9333333333)");
-        set("transform-origin", "right bottom");
+        set("transform-origin", "left bottom");
       } else if (frame.parentElement?.id === "message-preview") {
-        set("left", "auto");
-        set("right", `calc(${edge} + 68px)`);
+        set("left", edge);
+        set("right", "auto");
         set("bottom", `calc(${edge} + 68px)`);
       } else if (innerWidth <= 767 && frame.parentElement?.id === "max-widget") {
         const width = `${innerWidth}px`;
