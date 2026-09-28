@@ -912,6 +912,61 @@ if (luxNav && luxMenu) {
   document.addEventListener("DOMContentLoaded", init);
 })();
 
+(() => {
+  const edge = "clamp(18px, 3vw, 40px)";
+  let frameRequest = 0;
+  const position = () => {
+    frameRequest = 0;
+    for (const frame of document.querySelectorAll("#min-widget > iframe, #max-widget > iframe, #branding-widget > iframe, #message-preview > iframe")) {
+      const set = (property, value) => {
+        if (frame.style.getPropertyValue(property) !== value || frame.style.getPropertyPriority(property) !== "important") {
+          frame.style.setProperty(property, value, "important");
+        }
+      };
+      if (frame.parentElement?.id === "min-widget") {
+        set("left", "auto");
+        set("right", `calc(${edge} + 68px)`);
+        set("top", "auto");
+        set("bottom", edge);
+        set("transform", "scale(.9333333333)");
+        set("transform-origin", "right bottom");
+      } else if (frame.parentElement?.id === "message-preview") {
+        set("left", "auto");
+        set("right", `calc(${edge} + 68px)`);
+        set("bottom", `calc(${edge} + 68px)`);
+      } else if (innerWidth <= 767 && frame.parentElement?.id === "max-widget") {
+        const width = `${innerWidth}px`;
+        const height = `${innerHeight}px`;
+        set("left", "0px");
+        set("right", "auto");
+        set("bottom", "0px");
+        set("width", width);
+        set("min-width", width);
+        set("max-width", width);
+        set("height", height);
+        set("min-height", height);
+        set("max-height", height);
+        set("transform", "none");
+      }
+    }
+  };
+  const schedule = () => { if (!frameRequest) frameRequest = requestAnimationFrame(position); };
+
+  window.Tawk_API = window.Tawk_API || {};
+  window.Tawk_API.onLoad = schedule;
+
+  const script = document.createElement("script");
+  script.id = "luxureat-tawk";
+  script.async = true;
+  script.src = "https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0";
+  document.head.appendChild(script);
+
+  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
+  addEventListener("resize", schedule, { passive: true });
+  window.visualViewport?.addEventListener("resize", schedule, { passive: true });
+  window.visualViewport?.addEventListener("scroll", schedule, { passive: true });
+})();
+
 function initLuxInfoPopovers() {
   const buttons = [...document.querySelectorAll("[data-info-popover]")];
   document.querySelectorAll("[data-gift-grid] > .group").forEach((card) => {
