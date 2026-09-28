@@ -323,7 +323,9 @@ assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow
 assert(runtimeJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'runtime scripts loads the Luxureat Tawk.to widget');
 assert(runtimeJs.includes('set("left", edge)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "left bottom'), 'Tawk.to launcher is bottom-left and horizontally aligned with the 56px back-to-top control');
 assert(runtimeJs.includes('button.tawk-button.tawk-button-small.tawk-text-left') && runtimeJs.includes('background: #e5e5e5 !important') && runtimeJs.includes('color: #000 !important'), 'Tawk.to suggested replies use a grey background with black text');
-assert(runtimeJs.includes('.tawk-min-chat-icon-down') && runtimeJs.includes('25.7142857px'), 'Tawk.to collapse glyph visually matches the 24px back-to-top icon after launcher scaling');
+assert(runtimeJs.includes('.tawk-message-preview .tawk-suggested-messages-option') && runtimeJs.includes('justify-content: flex-start !important'), 'Tawk.to preview greeting and suggested replies share a left edge');
+assert(runtimeJs.includes('frame.parentElement?.id === "max-widget"') && runtimeJs.includes('set("bottom", `calc(${edge} + 68px)`)'), 'Tawk.to desktop chat window opens above the bottom-left launcher');
+assert(runtimeJs.includes('.tawk-min-chat-icon-down') && runtimeJs.includes('12.8571429px'), 'Tawk.to solid collapse glyph visually matches the narrower back-to-top chevron');
 assert(!runtimeJs.includes('luxureat_checkout') && !runtimeJs.includes('LuxureatCheckout') && !runtimeJs.includes('add_to_cart'), 'checkout handoff and purchase analytics are removed');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(!runtimeJs.includes('requestIdleCallback') && runtimeJs.includes('const prefetched = new Set()'), 'runtime scripts avoid downloading every linked page during idle time');

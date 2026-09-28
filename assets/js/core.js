@@ -923,9 +923,20 @@ if (luxNav && luxMenu) {
     button.tawk-button.tawk-button-small.tawk-text-left span {
       color: #000 !important;
     }
+    .tawk-message-preview .tawk-message-box > .tawk-message,
+    .tawk-message-preview .tawk-suggested-messages {
+      margin-left: 0 !important;
+      margin-right: auto !important;
+    }
+    .tawk-message-preview .tawk-suggested-messages {
+      align-items: flex-start !important;
+    }
+    .tawk-message-preview .tawk-suggested-messages-option {
+      justify-content: flex-start !important;
+    }
     .tawk-min-chat-icon-down {
-      width: 25.7142857px !important;
-      height: 25.7142857px !important;
+      width: 12.8571429px !important;
+      height: 12.8571429px !important;
     }
   `;
   let frameRequest = 0;
@@ -964,19 +975,28 @@ if (luxNav && luxMenu) {
         set("left", edge);
         set("right", "auto");
         set("bottom", `calc(${edge} + 68px)`);
-      } else if (innerWidth <= 767 && frame.parentElement?.id === "max-widget") {
-        const width = `${innerWidth}px`;
-        const height = `${innerHeight}px`;
-        set("left", "0px");
+      } else if (frame.parentElement?.id === "max-widget") {
+        if (innerWidth <= 767) {
+          const width = `${innerWidth}px`;
+          const height = `${innerHeight}px`;
+          set("left", "0px");
+          set("right", "auto");
+          set("bottom", "0px");
+          set("width", width);
+          set("min-width", width);
+          set("max-width", width);
+          set("height", height);
+          set("min-height", height);
+          set("max-height", height);
+          set("transform", "none");
+        } else {
+          set("left", edge);
+          set("right", "auto");
+          set("bottom", `calc(${edge} + 68px)`);
+        }
+      } else if (frame.parentElement?.id === "branding-widget") {
+        set("left", edge);
         set("right", "auto");
-        set("bottom", "0px");
-        set("width", width);
-        set("min-width", width);
-        set("max-width", width);
-        set("height", height);
-        set("min-height", height);
-        set("max-height", height);
-        set("transform", "none");
       }
     }
   };
