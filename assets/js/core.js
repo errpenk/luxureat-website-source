@@ -914,6 +914,13 @@ if (luxNav && luxMenu) {
 
 (() => {
   const edge = "clamp(18px, 3vw, 40px)";
+  const placeholder = document.createElement("button");
+  placeholder.type = "button";
+  placeholder.className = "lux-tawk-placeholder";
+  placeholder.setAttribute("aria-label", document.documentElement.lang?.startsWith("zh") ? "打开客服对话" : "Open customer support chat");
+  placeholder.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v12H8l-4 4V4Z"></path><path d="M8 9h8M8 12h5"></path></svg>';
+  document.body.appendChild(placeholder);
+
   const widgetTheme = `
     button.tawk-button.tawk-button-small.tawk-text-left {
       background: #e5e5e5 !important;
@@ -939,6 +946,7 @@ if (luxNav && luxMenu) {
       height: 12.8571429px !important;
     }
   `;
+  let openWhenReady = false;
   let frameRequest = 0;
   const theme = (frame) => {
     try {
@@ -1003,7 +1011,18 @@ if (luxNav && luxMenu) {
   const schedule = () => { if (!frameRequest) frameRequest = requestAnimationFrame(position); };
 
   window.Tawk_API = window.Tawk_API || {};
-  window.Tawk_API.onLoad = schedule;
+  placeholder.addEventListener("click", () => {
+    if (typeof window.Tawk_API.maximize === "function") window.Tawk_API.maximize();
+    else {
+      openWhenReady = true;
+      placeholder.classList.add("is-connecting");
+    }
+  });
+  window.Tawk_API.onLoad = () => {
+    schedule();
+    placeholder.hidden = true;
+    if (openWhenReady) window.Tawk_API.maximize?.();
+  };
 
   const script = document.createElement("script");
   script.id = "luxureat-tawk";

@@ -321,6 +321,7 @@ assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.incl
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
 assert(runtimeJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'runtime scripts loads the Luxureat Tawk.to widget');
+assert(runtimeJs.includes('lux-tawk-placeholder') && runtimeJs.includes('openWhenReady') && runtimeJs.includes('window.Tawk_API.maximize'), 'an immediate local chat launcher hands queued clicks to Tawk after it loads');
 assert(runtimeJs.includes('set("left", edge)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "left bottom'), 'Tawk.to launcher is bottom-left and horizontally aligned with the 56px back-to-top control');
 assert(runtimeJs.includes('button.tawk-button.tawk-button-small.tawk-text-left') && runtimeJs.includes('background: #e5e5e5 !important') && runtimeJs.includes('color: #000 !important'), 'Tawk.to suggested replies use a grey background with black text');
 assert(runtimeJs.includes('.tawk-message-preview .tawk-suggested-messages-option') && runtimeJs.includes('justify-content: flex-start !important'), 'Tawk.to preview greeting and suggested replies share a left edge');
@@ -359,6 +360,7 @@ assert(integrationCss.includes('[data-caviar-grid].is-list'), 'integration.css d
 assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css hides filtered caviar product cards reliably');
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
 assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
+assert(integrationCss.includes('.lux-tawk-placeholder') && integrationCss.includes('background: #9df5ec') && integrationCss.includes('color: #000'), 'instant chat launcher matches the Tiffany-blue and black Tawk design');
 assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
 assert((integrationCss.match(/width: 72px;/g) || []).length >= 2 && (integrationCss.match(/height: 38px;/g) || []).length >= 2, 'reader and product Back/Close controls keep one bilingual desktop/mobile size');
 assert(integrationCss.includes('@media (max-width: 720px)') && integrationCss.includes('.lux-menu {\n    width: 72px;\n    height: 38px;'), 'mobile Menu uses the same 72 by 38 control size as Back and Close');
@@ -563,6 +565,7 @@ assert(!zhGifting.includes('拥有食品进口资质') && !enGifting.includes('f
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
+assert(zhHome.includes('rel="preconnect" href="https://embed.tawk.to"') && enHome.includes('rel="dns-prefetch" href="//embed.tawk.to"'), 'bilingual pages warm the Tawk connection without blocking page rendering');
 assert(['EXPLORE LUXUREAT / 探索露意膳', 'CURATED SELECTION / 品质精选', 'OUR VALUES / 品牌根基', 'BRAND JOURNEY / 品牌历程', 'CHINA PARTNERSHIP / 渠道合作', 'REAL PARTNERSHIP / 真实合作现场', 'HOW WE WORK / 合作流程'].every((label) => zhHome.includes(label)), 'Chinese homepage bilingual kickers keep English before Chinese');
 assert(enHome.includes('lux-selected-products-kicker">Recommended For You</span>'), 'English homepage uses the requested recommendation kicker');
 assert(integrationCss.includes('#selected-products > .grid > .group::before') && integrationCss.includes('font: 600 14px/1 var(--lux-page-heading);'), 'homepage product-type labels match the rendered shop CTA font size');

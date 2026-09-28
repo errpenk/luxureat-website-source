@@ -1243,6 +1243,30 @@ header:has(.lux-hero-fade-both) {
   width: 24px;
   height: 24px;
 }
+.lux-tawk-placeholder {
+  position: fixed;
+  left: clamp(18px, 3vw, 40px);
+  bottom: clamp(18px, 3vw, 40px);
+  z-index: 1000002;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-radius: 50%;
+  background: #9df5ec;
+  color: #000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .34);
+  cursor: pointer;
+}
+.lux-tawk-placeholder[hidden] { display: none !important; }
+.lux-tawk-placeholder svg { width: 28px; height: 28px; }
+.lux-tawk-placeholder svg path:first-child { fill: currentColor; stroke: none; }
+.lux-tawk-placeholder svg path:last-child { fill: none; stroke: #9df5ec; stroke-width: 1.5; stroke-linecap: round; }
+.lux-tawk-placeholder.is-connecting svg { animation: lux-tawk-pulse .8s ease-in-out infinite alternate; }
+@keyframes lux-tawk-pulse { to { opacity: .55; transform: scale(.92); } }
+@media (prefers-reduced-motion: reduce) { .lux-tawk-placeholder.is-connecting svg { animation: none; } }
 html:has(body.lux-reader-open),
 body.lux-reader-open {
   overflow: hidden;
