@@ -235,7 +235,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "240px 0px" : "1200px" });
+  }, { rootMargin: "1200px 0px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);

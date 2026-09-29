@@ -58,7 +58,7 @@ assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScrip
 assert.ok(gzipSize("assets/js/chat.js") <= 4 * 1024, "deferred chat interface exceeds 4 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
-assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? "240px 0px" : "1200px"/);
+assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px 0px"/);
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
@@ -99,7 +99,8 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
-  assert.match(home, lang === "zh" ? /font-display:block/ : /font-display:swap/);
+  assert.match(home, /font-display:swap/);
+  assert.doesNotMatch(home, /font-display:block/);
   assert.doesNotMatch(home, /\.fade-in-up\s*\{[^}]*opacity:\s*0|@keyframes fadeInUp\s*\{[^}]*opacity:\s*0/, "home hero animation must not hide the LCP text");
   assert.doesNotMatch(home, /rel="preload"[^>]+MaterialSymbolsOutlined-subset\.ttf/);
   const footer = home.match(/<footer class="lux-footer">[\s\S]*?<\/footer>/)?.[0] || "";
