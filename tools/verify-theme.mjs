@@ -321,8 +321,8 @@ assert(runtimeJs.includes('window.LuxureatBackInternalLink') && runtimeJs.includ
 assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.includes('location.hash.startsWith("#product-")'), 'reader and product detail routes remain restorable while Close clears only the current detail hash');
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
-assert(!coreJs.includes('lux-tawk-placeholder') && !coreJs.includes('https://embed.tawk.to/'), 'critical runtime excludes optional chat UI and third-party loading');
-assert(chatJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'on-demand chat script loads the Luxureat Tawk.to widget');
+assert(!coreJs.includes('lux-tawk-placeholder') && !/https:\/\/embed\.tawk\.to\//.test(coreJs), 'critical runtime excludes optional chat UI and third-party loading');
+assert(/script\.src = "https:\/\/embed\.tawk\.to\/6ab9ba439050213448937638\/1k3inv6m0";/.test(chatJs), 'on-demand chat script loads the Luxureat Tawk.to widget');
 assert(chatJs.includes('lux-chat-greeting') && chatJs.includes('data-lux-chat-open') && chatJs.includes('luxureat_chat_greeting_shown'), 'local bilingual greeting appears only on the first page of a browsing session');
 assert(!chatJs.includes('pointerover') && !chatJs.includes('focusin'), 'Tawk only connects after an explicit chat click');
 assert(chatJs.includes('document.referrer') && chatJs.includes('navigationType === "navigate"'), 'a new external or direct visit can show the local greeting again');
