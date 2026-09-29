@@ -913,127 +913,28 @@ if (luxNav && luxMenu) {
 })();
 
 (() => {
-  const edge = "clamp(18px, 3vw, 40px)";
   const placeholder = document.createElement("button");
   placeholder.type = "button";
   placeholder.className = "lux-tawk-placeholder";
   placeholder.setAttribute("aria-label", document.documentElement.lang?.startsWith("zh") ? "打开客服对话" : "Open customer support chat");
   placeholder.innerHTML = '<svg viewBox="0 0 800 800" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z"></path></svg>';
   document.body.appendChild(placeholder);
-
-  const widgetTheme = `
-    button.tawk-button.tawk-button-small.tawk-text-left {
-      background: #e5e5e5 !important;
-      border-color: #e5e5e5 !important;
-      color: #000 !important;
-    }
-    button.tawk-button.tawk-button-small.tawk-text-left span {
-      color: #000 !important;
-    }
-    .tawk-message-preview .tawk-message-box > .tawk-message,
-    .tawk-message-preview .tawk-suggested-messages {
-      margin-left: 0 !important;
-      margin-right: auto !important;
-    }
-    .tawk-message-preview .tawk-suggested-messages {
-      align-items: flex-start !important;
-    }
-    .tawk-message-preview .tawk-suggested-messages-option {
-      justify-content: flex-start !important;
-    }
-    .tawk-min-chat-icon-down {
-      width: 12.8571429px !important;
-      height: 12.8571429px !important;
-    }
-  `;
-  let openWhenReady = false;
-  let frameRequest = 0;
-  const theme = (frame) => {
-    try {
-      const frameDocument = frame.contentDocument;
-      if (!frameDocument?.head) return;
-      let style = frameDocument.getElementById("luxureat-widget-theme");
-      if (!style) {
-        style = frameDocument.createElement("style");
-        style.id = "luxureat-widget-theme";
-        frameDocument.head.appendChild(style);
-      }
-      if (style.textContent !== widgetTheme) style.textContent = widgetTheme;
-    } catch (_) {
-      // Tawk currently uses same-origin about:blank frames; fail safely if that changes.
-    }
-  };
-  const position = () => {
-    frameRequest = 0;
-    for (const frame of document.querySelectorAll("#min-widget > iframe, #max-widget > iframe, #branding-widget > iframe, #message-preview > iframe")) {
-      theme(frame);
-      const set = (property, value) => {
-        if (frame.style.getPropertyValue(property) !== value || frame.style.getPropertyPriority(property) !== "important") {
-          frame.style.setProperty(property, value, "important");
-        }
-      };
-      if (frame.parentElement?.id === "min-widget") {
-        set("left", edge);
-        set("right", "auto");
-        set("top", "auto");
-        set("bottom", edge);
-        set("transform", "scale(.9333333333)");
-        set("transform-origin", "left bottom");
-      } else if (frame.parentElement?.id === "message-preview") {
-        set("left", edge);
-        set("right", "auto");
-        set("bottom", `calc(${edge} + 68px)`);
-      } else if (frame.parentElement?.id === "max-widget") {
-        if (innerWidth <= 767) {
-          const width = `${innerWidth}px`;
-          const height = `${innerHeight}px`;
-          set("left", "0px");
-          set("right", "auto");
-          set("bottom", "0px");
-          set("width", width);
-          set("min-width", width);
-          set("max-width", width);
-          set("height", height);
-          set("min-height", height);
-          set("max-height", height);
-          set("transform", "none");
-        } else {
-          set("left", edge);
-          set("right", "auto");
-          set("bottom", `calc(${edge} + 68px)`);
-        }
-      } else if (frame.parentElement?.id === "branding-widget") {
-        set("left", edge);
-        set("right", "auto");
-      }
-    }
-  };
-  const schedule = () => { if (!frameRequest) frameRequest = requestAnimationFrame(position); };
-
-  window.Tawk_API = window.Tawk_API || {};
-  placeholder.addEventListener("click", () => {
-    if (typeof window.Tawk_API.maximize === "function") window.Tawk_API.maximize();
-    else {
-      openWhenReady = true;
-      placeholder.classList.add("is-connecting");
-    }
+  const chatUrl = new URL("chat.js", luxCoreUrl);
+  chatUrl.search = luxCoreUrl.search;
+  let loading;
+  const load = () => loading ||= new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = chatUrl;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
   });
-  window.Tawk_API.onLoad = () => {
-    schedule();
-    placeholder.hidden = true;
-    if (openWhenReady) window.Tawk_API.maximize?.();
-  };
-
-  const script = document.createElement("script");
-  script.id = "luxureat-tawk";
-  script.async = true;
-  script.src = "https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0";
-  document.head.appendChild(script);
-
-  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
-  addEventListener("resize", schedule, { passive: true });
-  window.visualViewport?.addEventListener("resize", schedule, { passive: true });
-  window.visualViewport?.addEventListener("scroll", schedule, { passive: true });
+  ["pointerover", "focusin"].forEach((type) => placeholder.addEventListener(type, load, { once: true, passive: true }));
+  placeholder.addEventListener("click", () => {
+    placeholder.dataset.luxOpen = "true";
+    placeholder.classList.add("is-connecting");
+    load();
+  });
 })();
 
 function initLuxInfoPopovers() {

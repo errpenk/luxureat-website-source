@@ -54,6 +54,7 @@ for (const file of [
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 62 * 1024, "shared CSS exceeds the 62 KB compressed budget");
 assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScript still includes optional interactions");
+assert.ok(gzipSize("assets/js/chat.js") <= 3 * 1024, "on-demand chat integration exceeds 3 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? "240px 0px" : "1200px"/);
@@ -61,6 +62,8 @@ assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eag
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
 assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
+assert.match(core, /new URL\("chat\.js", luxCoreUrl\)/, "chat integration is not loaded on demand");
+assert.doesNotMatch(core, /https:\/\/embed\.tawk\.to\//, "third-party chat still loads from the critical shared runtime");
 assert.match(core, /luxureat-logo-64\.webp/, "cookie banner does not use the delivery-sized logo");
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/, "mobile analytics still competes with first-screen content");
 assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 1024, true, "material icon subset exceeds 12 KB");
@@ -75,6 +78,7 @@ assert.match(core, /"wheel", "touchstart", "pointerdown", "keydown"/, "user inpu
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
+  assert.doesNotMatch(home, /(?:preconnect|dns-prefetch)[^>]+embed\.tawk\.to/, "homepage still connects to chat before user intent");
   assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite-v2\.webp/);
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);

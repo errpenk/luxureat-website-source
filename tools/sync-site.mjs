@@ -241,8 +241,6 @@ function fontPreloads(page) {
   const versionFor = (font) => ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
-    `<link rel="preconnect" href="https://embed.tawk.to" crossorigin>`,
-    `<link rel="dns-prefetch" href="//embed.tawk.to">`,
     ...(page.key === "market-insights" ? [
       `<link rel="preload" href="../assets/media/market-services/china-market-hero-mobile.webp" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">`,
       `<link rel="preload" href="../assets/media/market-services/china-market-hero.webp" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">`,
