@@ -1,4 +1,4 @@
-export const assetVersion = "20260929-seo-perf-74";
+export const assetVersion = "20260929-chat-greeting-75";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -61,7 +61,7 @@ const page = (lang, slug, key, scripts, indexable = true) => ({
   route: slug === "index" ? lang : `${lang}/${slug}`,
   seo: { title: seo[lang][key][0], description: seo[lang][key][1] },
   indexable,
-  scripts: ["image-variants", "core", ...scripts],
+  scripts: ["image-variants", "core", "chat", ...scripts],
 });
 
 export const pages = [
@@ -103,6 +103,7 @@ export const scripts = {
   "academy-index": { src: "assets/data/academy-index.js", dependencies: [] },
   "brand-data": { src: "assets/data/brand.js", dependencies: [] },
   core: { src: "assets/js/core.js", dependencies: ["image-variants"] },
+  chat: { src: "assets/js/chat.js", dependencies: ["core"] },
   "new-arrivals": { src: "assets/js/new-arrivals.js", dependencies: [] },
   products: { src: "assets/js/products.js", dependencies: ["product-data"] },
   events: { src: "assets/js/events.js", dependencies: ["event-data"] },

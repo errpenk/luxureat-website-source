@@ -1,8 +1,34 @@
 (() => {
-  const placeholder = document.querySelector(".lux-tawk-placeholder");
-  if (!placeholder) return;
-
+  const isZh = document.documentElement.lang?.startsWith("zh");
+  const copy = isZh ? {
+    greeting: "您好！需要什么帮助？",
+    question: "我有一个问题",
+    more: "了解更多",
+    open: "打开客服对话",
+    close: "关闭客服问候",
+  } : {
+    greeting: "Hi! How can we help?",
+    question: "I have a question",
+    more: "Tell me more",
+    open: "Open customer support chat",
+    close: "Close support greeting",
+  };
   const edge = "clamp(18px, 3vw, 40px)";
+  const placeholder = document.createElement("button");
+  placeholder.type = "button";
+  placeholder.className = "lux-tawk-placeholder";
+  placeholder.setAttribute("aria-label", copy.open);
+  placeholder.innerHTML = '<svg viewBox="0 0 800 800" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M400 26.2c-193.3 0-350 156.7-350 350 0 136.2 77.9 254.3 191.5 312.1 15.4 8.1 31.4 15.1 48.1 20.8l-16.5 63.5c-2 7.8 5.4 14.7 13 12.1l229.8-77.6c14.6-5.3 28.8-11.6 42.4-18.7C672 630.6 750 512.5 750 376.2c0-193.3-156.7-350-350-350zm211.1 510.7c-10.8 26.5-41.9 77.2-121.5 77.2-79.9 0-110.9-51-121.6-77.4-2.8-6.8 5-13.4 13.8-11.8 76.2 13.7 147.7 13 215.3.3 8.9-1.8 16.8 4.8 14 11.7z"></path></svg>';
+
+  const greeting = document.createElement("aside");
+  greeting.className = "lux-chat-greeting";
+  greeting.setAttribute("role", "dialog");
+  greeting.setAttribute("aria-modal", "false");
+  greeting.setAttribute("aria-labelledby", "lux-chat-greeting-title");
+  greeting.hidden = true;
+  greeting.innerHTML = `<button type="button" class="lux-chat-greeting-close" data-lux-chat-close aria-label="${copy.close}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><p id="lux-chat-greeting-title"><span aria-hidden="true">👋</span>${copy.greeting}</p><div><button type="button" data-lux-chat-open>${copy.question}</button><button type="button" data-lux-chat-open>${copy.more}</button></div>`;
+  document.body.append(greeting, placeholder);
+
   const widgetTheme = `
     button.tawk-button.tawk-button-small.tawk-text-left {
       background: #e5e5e5 !important;
@@ -28,8 +54,9 @@
       height: 12.8571429px !important;
     }
   `;
-  let openWhenReady = placeholder.dataset.luxOpen === "true";
+  let openWhenReady = false;
   let frameRequest = 0;
+  let loaded = false;
   const theme = (frame) => {
     try {
       const frameDocument = frame.contentDocument;
@@ -91,26 +118,47 @@
     }
   };
   const schedule = () => { if (!frameRequest) frameRequest = requestAnimationFrame(position); };
-
-  window.Tawk_API = window.Tawk_API || {};
-  placeholder.addEventListener("click", () => {
-    if (typeof window.Tawk_API.maximize === "function") window.Tawk_API.maximize();
-    else openWhenReady = true;
-  });
-  window.Tawk_API.onLoad = () => {
-    schedule();
-    placeholder.hidden = true;
-    if (openWhenReady) window.Tawk_API.maximize?.();
+  const load = () => {
+    if (loaded) return;
+    loaded = true;
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_API.onLoad = () => {
+      schedule();
+      greeting.hidden = true;
+      placeholder.hidden = true;
+      if (openWhenReady) window.Tawk_API.maximize?.();
+    };
+    const script = document.createElement("script");
+    script.id = "luxureat-tawk";
+    script.async = true;
+    script.src = "https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0";
+    document.head.appendChild(script);
+    new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
+    addEventListener("resize", schedule, { passive: true });
+    window.visualViewport?.addEventListener("resize", schedule, { passive: true });
+    window.visualViewport?.addEventListener("scroll", schedule, { passive: true });
+  };
+  const open = () => {
+    greeting.hidden = true;
+    placeholder.classList.add("is-connecting");
+    if (typeof window.Tawk_API?.maximize === "function") window.Tawk_API.maximize();
+    else {
+      openWhenReady = true;
+      load();
+    }
   };
 
-  const script = document.createElement("script");
-  script.id = "luxureat-tawk";
-  script.async = true;
-  script.src = "https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0";
-  document.head.appendChild(script);
+  placeholder.addEventListener("click", open);
+  greeting.addEventListener("click", (event) => {
+    if (event.target.closest("[data-lux-chat-close]")) {
+      greeting.hidden = true;
+    } else if (event.target.closest("[data-lux-chat-open]")) open();
+  });
 
-  new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
-  addEventListener("resize", schedule, { passive: true });
-  window.visualViewport?.addEventListener("resize", schedule, { passive: true });
-  window.visualViewport?.addEventListener("scroll", schedule, { passive: true });
+  let shown = false;
+  try { shown = sessionStorage.getItem("luxureat_chat_greeting_shown") === "1"; } catch { /* Storage may be disabled. */ }
+  if (!shown) setTimeout(() => {
+    try { sessionStorage.setItem("luxureat_chat_greeting_shown", "1"); } catch { /* Storage may be disabled. */ }
+    greeting.hidden = false;
+  }, 900);
 })();

@@ -439,7 +439,7 @@ function buildAssetCatalogPhp() {
     return `        '${escapePhpString(handle)}' => array('src' => '${escapePhpString(script.src)}', 'dependencies' => ${phpList(script.dependencies)}),`;
   }).join('\n');
   const byPath = [...pages.map((page) => {
-    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core'] : page.scripts)},`;
+    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat'] : page.scripts)},`;
   }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('core'),`)].join('\n');
   return { catalog, byPath };
 }

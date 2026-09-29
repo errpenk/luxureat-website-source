@@ -116,8 +116,9 @@ assert(!walk(themeDir).some((file) => path.basename(file) === '.DS_Store'), 'the
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
-assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'product-data', 'products')"), 'functions.php loads responsive images and product behavior in dependency order');
+assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'chat', 'product-data', 'products')"), 'functions.php loads shared and product behavior in dependency order');
 assert(functionsPhp.includes("'core' => array('src' => 'assets/js/core.js', 'dependencies' => array('image-variants'))"), 'core runtime does not depend on responsive image mappings');
+assert(functionsPhp.includes("'chat' => array('src' => 'assets/js/chat.js', 'dependencies' => array('core'))"), 'lightweight chat UI loads after the critical runtime');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
 assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');
@@ -167,7 +168,7 @@ assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_c
 assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"), 'contact email subjects contain only the name and Italian enquiry type');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true") && functionsPhp.includes('wp_ajax_nopriv_luxureat_newsletter'), 'functions.php preserves the standalone MailPoet double opt-in newsletter');
 assert(!functionsPhp.includes('woocommerce_store_api_cart_item_images') && !functionsPhp.includes('luxureat_static_woo_catalog') && !functionsPhp.includes('LuxureatWooCatalog'), 'legacy WooCommerce catalogue and checkout image bridges are removed');
-assert(functionsPhp.includes("'zh' => array('image-variants', 'core')") && functionsPhp.includes("'en' => array('image-variants', 'core')"), 'WordPress homepages enqueue responsive mappings before the critical runtime');
+assert(functionsPhp.includes("'zh' => array('image-variants', 'core', 'chat')") && functionsPhp.includes("'en' => array('image-variants', 'core', 'chat')"), 'WordPress homepages enqueue responsive mappings and lightweight chat UI');
 assert(functionsPhp.includes('function luxureat_static_trim_plugin_assets()') && functionsPhp.includes("'jetpack-stats'") && !functionsPhp.includes("'google_gtagjs', 'jquery'"), 'static routes remove duplicate commerce analytics without removing Google Analytics');
 assert(functionsPhp.includes("add_action('wp_print_styles', 'luxureat_static_trim_plugin_assets', PHP_INT_MAX)") && functionsPhp.includes("remove_action('wp_head', 'print_emoji_detection_script', 7)"), 'late WooCommerce styles and emoji detection remain on static routes');
 assert(functionsPhp.includes("add_filter('wp_resource_hints', 'luxureat_static_resource_hints', PHP_INT_MAX, 2)") && functionsPhp.includes("[ic]0\\.wp\\.com"), 'unused WordPress CDN preconnects are not filtered after plugins add their hints');
@@ -320,8 +321,10 @@ assert(runtimeJs.includes('window.LuxureatBackInternalLink') && runtimeJs.includ
 assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.includes('location.hash.startsWith("#product-")'), 'reader and product detail routes remain restorable while Close clears only the current detail hash');
 assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-top floating action button');
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
-assert(coreJs.includes('new URL("chat.js", luxCoreUrl)') && !coreJs.includes('https://embed.tawk.to/'), 'critical runtime defers the third-party chat integration until user intent');
+assert(!coreJs.includes('lux-tawk-placeholder') && !coreJs.includes('https://embed.tawk.to/'), 'critical runtime excludes optional chat UI and third-party loading');
 assert(chatJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'on-demand chat script loads the Luxureat Tawk.to widget');
+assert(chatJs.includes('lux-chat-greeting') && chatJs.includes('data-lux-chat-open') && chatJs.includes('luxureat_chat_greeting_shown'), 'local bilingual greeting appears only on the first page of a browsing session');
+assert(!chatJs.includes('pointerover') && !chatJs.includes('focusin'), 'Tawk only connects after an explicit chat click');
 assert(runtimeJs.includes('lux-tawk-placeholder') && runtimeJs.includes('openWhenReady') && runtimeJs.includes('window.Tawk_API.maximize'), 'an immediate local chat launcher hands queued clicks to Tawk after it loads');
 assert(runtimeJs.includes('viewBox="0 0 800 800"') && runtimeJs.includes('M400 26.2c-193.3'), 'instant launcher uses the same round chat-bubble glyph as the live Tawk launcher');
 assert(runtimeJs.includes('set("left", edge)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "left bottom'), 'Tawk.to launcher is bottom-left and horizontally aligned with the 56px back-to-top control');
@@ -363,6 +366,7 @@ assert(integrationCss.includes('[data-caviar-item][hidden]'), 'integration.css h
 assert(integrationCss.includes('.lux-sort-menu'), 'integration.css styles the sort menu');
 assert(integrationCss.includes('.lux-back-to-top'), 'integration.css styles the back-to-top button');
 assert(integrationCss.includes('.lux-tawk-placeholder') && integrationCss.includes('background: #9df5ec') && integrationCss.includes('color: #000'), 'instant chat launcher matches the Tiffany-blue and black Tawk design');
+assert(integrationCss.includes('.lux-chat-greeting') && integrationCss.includes('.lux-chat-greeting-close'), 'local chat greeting is styled with an accessible close control');
 assert(integrationCss.includes('.lux-reader'), 'integration.css styles the shared reading container');
 assert((integrationCss.match(/width: 72px;/g) || []).length >= 2 && (integrationCss.match(/height: 38px;/g) || []).length >= 2, 'reader and product Back/Close controls keep one bilingual desktop/mobile size');
 assert(integrationCss.includes('@media (max-width: 720px)') && integrationCss.includes('.lux-menu {\n    width: 72px;\n    height: 38px;'), 'mobile Menu uses the same 72 by 38 control size as Back and Close');

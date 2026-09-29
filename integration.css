@@ -1264,7 +1264,77 @@ header:has(.lux-hero-fade-both) {
 .lux-tawk-placeholder svg { width: 30px; height: 30px; fill: currentColor; }
 .lux-tawk-placeholder.is-connecting svg { animation: lux-tawk-pulse .8s ease-in-out infinite alternate; }
 @keyframes lux-tawk-pulse { to { opacity: .55; transform: scale(.92); } }
-@media (prefers-reduced-motion: reduce) { .lux-tawk-placeholder.is-connecting svg { animation: none; } }
+.lux-chat-greeting {
+  position: fixed;
+  left: clamp(18px, 3vw, 40px);
+  bottom: calc(clamp(18px, 3vw, 40px) + 72px);
+  z-index: 1000001;
+  width: min(390px, calc(100vw - 36px));
+  color: #181818;
+  font-family: var(--lux-zh-body, "Spectral", serif);
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, .26));
+}
+.lux-chat-greeting[hidden] { display: none !important; }
+.lux-chat-greeting > p {
+  margin: 0;
+  padding: 22px 48px 22px 24px;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 22px 22px 22px 5px;
+  background: #fff;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.35;
+}
+.lux-chat-greeting > p span { margin-right: 10px; }
+.lux-chat-greeting > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.lux-chat-greeting > div button {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #18816f;
+  border-radius: 14px;
+  background: #fff;
+  color: #0d6b5d;
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.lux-chat-greeting > div button:hover,
+.lux-chat-greeting > div button:focus-visible {
+  border-color: #9df5ec;
+  background: #9df5ec;
+  color: #003734;
+}
+.lux-chat-greeting-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  padding: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+}
+.lux-chat-greeting-close:hover,
+.lux-chat-greeting-close:focus-visible { background: #f0f0f0; color: #111; }
+.lux-chat-greeting-close svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.8; }
+@media (max-width: 640px) {
+  .lux-chat-greeting { bottom: 86px; }
+  .lux-chat-greeting > p { padding: 18px 44px 18px 18px; font-size: 18px; }
+  .lux-chat-greeting > div button { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lux-tawk-placeholder.is-connecting svg { animation: none; }
+  .lux-chat-greeting > div button { transition: none; }
+}
 html:has(body.lux-reader-open),
 body.lux-reader-open {
   overflow: hidden;

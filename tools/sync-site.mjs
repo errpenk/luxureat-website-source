@@ -82,8 +82,8 @@ function footerFor(page) {
 }
 
 function scriptsFor(page) {
-  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core"].includes(handle)) : page.scripts;
-  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core"].includes(handle)) : [];
+  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat"].includes(handle)) : page.scripts;
+  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat"].includes(handle)) : [];
   const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
