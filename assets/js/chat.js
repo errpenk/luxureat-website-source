@@ -155,10 +155,17 @@
     } else if (event.target.closest("[data-lux-chat-open]")) open();
   });
 
+  const greetingKey = "luxureat_chat_greeting_shown";
+  const navigationType = performance.getEntriesByType?.("navigation")[0]?.type;
+  let enteredFromSite = false;
+  try { enteredFromSite = new URL(document.referrer).origin === location.origin; } catch { /* Direct visits have no referrer. */ }
   let shown = false;
-  try { shown = sessionStorage.getItem("luxureat_chat_greeting_shown") === "1"; } catch { /* Storage may be disabled. */ }
+  try {
+    if (!enteredFromSite && (!navigationType || navigationType === "navigate")) sessionStorage.removeItem(greetingKey);
+    shown = sessionStorage.getItem(greetingKey) === "1";
+  } catch { /* Storage may be disabled. */ }
   if (!shown) setTimeout(() => {
-    try { sessionStorage.setItem("luxureat_chat_greeting_shown", "1"); } catch { /* Storage may be disabled. */ }
+    try { sessionStorage.setItem(greetingKey, "1"); } catch { /* Storage may be disabled. */ }
     greeting.hidden = false;
   }, 900);
 })();

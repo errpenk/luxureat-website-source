@@ -325,6 +325,7 @@ assert(!coreJs.includes('lux-tawk-placeholder') && !coreJs.includes('https://emb
 assert(chatJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'on-demand chat script loads the Luxureat Tawk.to widget');
 assert(chatJs.includes('lux-chat-greeting') && chatJs.includes('data-lux-chat-open') && chatJs.includes('luxureat_chat_greeting_shown'), 'local bilingual greeting appears only on the first page of a browsing session');
 assert(!chatJs.includes('pointerover') && !chatJs.includes('focusin'), 'Tawk only connects after an explicit chat click');
+assert(chatJs.includes('document.referrer') && chatJs.includes('navigationType === "navigate"'), 'a new external or direct visit can show the local greeting again');
 assert(runtimeJs.includes('lux-tawk-placeholder') && runtimeJs.includes('openWhenReady') && runtimeJs.includes('window.Tawk_API.maximize'), 'an immediate local chat launcher hands queued clicks to Tawk after it loads');
 assert(runtimeJs.includes('viewBox="0 0 800 800"') && runtimeJs.includes('M400 26.2c-193.3'), 'instant launcher uses the same round chat-bubble glyph as the live Tawk launcher');
 assert(runtimeJs.includes('set("left", edge)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "left bottom'), 'Tawk.to launcher is bottom-left and horizontally aligned with the 56px back-to-top control');

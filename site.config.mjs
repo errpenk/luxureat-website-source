@@ -1,4 +1,4 @@
-export const assetVersion = "20260929-chat-greeting-75";
+export const assetVersion = "20260929-chat-reentry-76";
 
 export const contact = {
   email: "china@luxureat.com",

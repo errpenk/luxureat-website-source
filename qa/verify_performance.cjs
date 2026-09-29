@@ -69,6 +69,7 @@ assert.match(chat, /data-lux-chat-open/, "deferred chat interface has no local g
 assert.match(chat, /const load = \(\) =>[\s\S]*?https:\/\/embed\.tawk\.to\//, "Tawk does not wait for local chat intent");
 assert.doesNotMatch(chat, /pointerover|focusin/, "hover or focus still connects to Tawk");
 assert.match(chat, /luxureat_chat_greeting_shown/, "chat greeting is not limited to the first page of a browsing session");
+assert.match(chat, /document\.referrer[\s\S]*?navigationType === "navigate"/, "a new external or direct visit does not reset the chat greeting");
 assert.match(core, /luxureat-logo-64\.webp/, "cookie banner does not use the delivery-sized logo");
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/, "mobile analytics still competes with first-screen content");
 assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 1024, true, "material icon subset exceeds 12 KB");
