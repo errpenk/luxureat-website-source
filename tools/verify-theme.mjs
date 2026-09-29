@@ -322,6 +322,7 @@ assert(runtimeJs.includes('lux-back-to-top'), 'runtime scripts adds the back-to-
 assert(runtimeJs.includes('lux-back-to-top-icon') && !runtimeJs.includes('>arrow_upward<'), 'back-to-top control uses an inline SVG instead of a font ligature');
 assert(runtimeJs.includes('https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0'), 'runtime scripts loads the Luxureat Tawk.to widget');
 assert(runtimeJs.includes('lux-tawk-placeholder') && runtimeJs.includes('openWhenReady') && runtimeJs.includes('window.Tawk_API.maximize'), 'an immediate local chat launcher hands queued clicks to Tawk after it loads');
+assert(runtimeJs.includes('viewBox="0 0 800 800"') && runtimeJs.includes('M400 26.2c-193.3'), 'instant launcher uses the same round chat-bubble glyph as the live Tawk launcher');
 assert(runtimeJs.includes('set("left", edge)') && runtimeJs.includes('scale(.9333333333)') && runtimeJs.includes('transform-origin", "left bottom'), 'Tawk.to launcher is bottom-left and horizontally aligned with the 56px back-to-top control');
 assert(runtimeJs.includes('button.tawk-button.tawk-button-small.tawk-text-left') && runtimeJs.includes('background: #e5e5e5 !important') && runtimeJs.includes('color: #000 !important'), 'Tawk.to suggested replies use a grey background with black text');
 assert(runtimeJs.includes('.tawk-message-preview .tawk-suggested-messages-option') && runtimeJs.includes('justify-content: flex-start !important'), 'Tawk.to preview greeting and suggested replies share a left edge');

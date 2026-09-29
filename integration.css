@@ -1261,9 +1261,7 @@ header:has(.lux-hero-fade-both) {
   cursor: pointer;
 }
 .lux-tawk-placeholder[hidden] { display: none !important; }
-.lux-tawk-placeholder svg { width: 28px; height: 28px; }
-.lux-tawk-placeholder svg path:first-child { fill: currentColor; stroke: none; }
-.lux-tawk-placeholder svg path:last-child { fill: none; stroke: #9df5ec; stroke-width: 1.5; stroke-linecap: round; }
+.lux-tawk-placeholder svg { width: 30px; height: 30px; fill: currentColor; }
 .lux-tawk-placeholder.is-connecting svg { animation: lux-tawk-pulse .8s ease-in-out infinite alternate; }
 @keyframes lux-tawk-pulse { to { opacity: .55; transform: scale(.92); } }
 @media (prefers-reduced-motion: reduce) { .lux-tawk-placeholder.is-connecting svg { animation: none; } }
