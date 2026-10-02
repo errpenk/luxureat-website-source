@@ -6,12 +6,16 @@
     more: "了解更多",
     open: "打开客服对话",
     close: "关闭客服问候",
+    loading: "正在为您连接客服…",
+    failed: "对话加载失败，请再次点击客服按钮。",
   } : {
     greeting: "Hi! How can we help?",
     question: "I have a question",
     more: "Tell me more",
     open: "Open customer support chat",
     close: "Close support greeting",
+    loading: "Connecting you with LuxurEat…",
+    failed: "The chat could not load. Select the button again to open it in a new tab.",
   };
   const edge = "clamp(18px, 3vw, 40px)";
   const placeholder = document.createElement("button");
@@ -27,7 +31,12 @@
   greeting.setAttribute("aria-labelledby", "lux-chat-greeting-title");
   greeting.hidden = true;
   greeting.innerHTML = `<button type="button" class="lux-chat-greeting-close" data-lux-chat-close aria-label="${copy.close}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><p id="lux-chat-greeting-title"><span aria-hidden="true">👋</span>${copy.greeting}</p><div><button type="button" data-lux-chat-open>${copy.question}</button><button type="button" data-lux-chat-open>${copy.more}</button></div>`;
-  document.body.append(greeting, placeholder);
+  const status = document.createElement("div");
+  status.className = "lux-chat-status";
+  status.setAttribute("role", "status");
+  status.hidden = true;
+  status.innerHTML = '<span class="lux-chat-spinner" aria-hidden="true"></span><span></span>';
+  document.body.append(greeting, status, placeholder);
 
   const widgetTheme = `
     button.tawk-button.tawk-button-small.tawk-text-left {
@@ -57,6 +66,8 @@
   let openWhenReady = false;
   let frameRequest = 0;
   let loaded = false;
+  let failed = false;
+  let loadTimer;
   const theme = (frame) => {
     try {
       const frameDocument = frame.contentDocument;
@@ -123,6 +134,9 @@
     loaded = true;
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_API.onLoad = () => {
+      clearTimeout(loadTimer);
+      failed = false;
+      status.hidden = true;
       schedule();
       greeting.hidden = true;
       placeholder.hidden = true;
@@ -132,6 +146,15 @@
     script.id = "luxureat-tawk";
     script.async = true;
     script.src = "https://embed.tawk.to/6ab9ba439050213448937638/1k3inv6m0";
+    const fail = () => {
+      clearTimeout(loadTimer);
+      failed = true;
+      status.classList.add("is-error");
+      status.lastElementChild.textContent = copy.failed;
+      placeholder.classList.remove("is-connecting");
+    };
+    script.onerror = fail;
+    loadTimer = setTimeout(fail, 12000);
     document.head.appendChild(script);
     new MutationObserver(schedule).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style"] });
     addEventListener("resize", schedule, { passive: true });
@@ -139,9 +162,18 @@
     window.visualViewport?.addEventListener("scroll", schedule, { passive: true });
   };
   const open = () => {
+    if (failed) {
+      window.open("https://tawk.to/chat/6ab9ba439050213448937638/1k3inv6m0", "_blank", "noopener,noreferrer");
+      return;
+    }
     greeting.hidden = true;
+    status.lastElementChild.textContent = copy.loading;
+    status.hidden = false;
     placeholder.classList.add("is-connecting");
-    if (typeof window.Tawk_API?.maximize === "function") window.Tawk_API.maximize();
+    if (typeof window.Tawk_API?.maximize === "function") {
+      status.hidden = true;
+      window.Tawk_API.maximize();
+    }
     else {
       openWhenReady = true;
       load();

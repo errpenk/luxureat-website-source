@@ -1264,6 +1264,26 @@ header:has(.lux-hero-fade-both) {
 .lux-tawk-placeholder svg { width: 30px; height: 30px; fill: currentColor; }
 .lux-tawk-placeholder.is-connecting svg { animation: lux-tawk-pulse .8s ease-in-out infinite alternate; }
 @keyframes lux-tawk-pulse { to { opacity: .55; transform: scale(.92); } }
+.lux-chat-status {
+  position: fixed;
+  left: clamp(18px, 3vw, 40px);
+  bottom: calc(clamp(18px, 3vw, 40px) + 68px);
+  z-index: 1000002;
+  max-width: min(360px, calc(100vw - 36px));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: #fff;
+  color: #181818;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .24);
+  font: 16px/1.4 var(--lux-zh-body, "Spectral", serif);
+}
+.lux-chat-status[hidden] { display: none !important; }
+.lux-chat-spinner { width: 18px; height: 18px; flex: none; border: 2px solid #c9e9e4; border-top-color: #0d6b5d; border-radius: 50%; animation: lux-chat-spin .8s linear infinite; }
+.lux-chat-status.is-error .lux-chat-spinner { display: none; }
+@keyframes lux-chat-spin { to { transform: rotate(360deg); } }
 .lux-chat-greeting {
   position: fixed;
   left: clamp(18px, 3vw, 40px);
@@ -1333,6 +1353,7 @@ header:has(.lux-hero-fade-both) {
 }
 @media (prefers-reduced-motion: reduce) {
   .lux-tawk-placeholder.is-connecting svg { animation: none; }
+  .lux-chat-spinner { animation: none; }
   .lux-chat-greeting > div button { transition: none; }
 }
 html:has(body.lux-reader-open),
