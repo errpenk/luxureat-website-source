@@ -7,7 +7,7 @@
     open: "打开客服对话",
     close: "关闭客服问候",
     loading: "正在为您连接客服…",
-    failed: "对话加载失败，请再次点击客服按钮。",
+    failed: "对话加载失败，请再次点击客服图标。",
   } : {
     greeting: "Hi! How can we help?",
     question: "I have a question",

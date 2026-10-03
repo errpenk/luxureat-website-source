@@ -99,6 +99,9 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /class="lux-home-page /);
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
+  assert.doesNotMatch(home, /href="cooperation\.html#private-label">(?:了解合作方案|Explore Partnership)<\/a>/, "removed partnership CTA returned");
+  assert.match(home, /home-china-partnership-caviar-mobile\.webp 720w,[^\"]+" sizes="\(max-width: 600px\) 76vw, \(max-width: 900px\) 590px, 34vw"/, "partnership image sizes no longer match its layout");
+  assert.match(home, /home-china-partnership-truffles-mobile\.webp 720w,[^\"]+" sizes="\(max-width: 600px\) 50vw, \(max-width: 900px\) 346px, 20vw"/, "partnership inset sizes no longer match its layout");
   assert.match(home, /font-display:swap/);
   assert.doesNotMatch(home, /font-display:block/);
   assert.doesNotMatch(home, /\.fade-in-up\s*\{[^}]*opacity:\s*0|@keyframes fadeInUp\s*\{[^}]*opacity:\s*0/, "home hero animation must not hide the LCP text");
