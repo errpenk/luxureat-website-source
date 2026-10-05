@@ -838,10 +838,12 @@ if (luxNav && luxMenu) {
   };
   const savedPosition = () => {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(key) || "0");
+      const stored = sessionStorage.getItem(key);
+      if (!stored) return null;
+      const saved = JSON.parse(stored);
       return typeof saved === "number" ? { y: saved } : saved;
     } catch {
-      return { y: 0 };
+      return null;
     }
   };
   const restore = (position) => {
@@ -861,13 +863,14 @@ if (luxNav && luxMenu) {
 
   let restoreCancelled = false;
   const restoreWhenReady = () => {
-    restoreCancelled = false;
+    if (restoreCancelled) return;
     const position = savedPosition();
-    if (!restore(position)) return;
+    if (!location.hash && (!position || (!position.anchor && !position.y))) return;
+    if (!restore(position || { y: 0 })) return;
     let attempts = 0;
     const retry = () => {
       if (restoreCancelled || attempts++ >= 100) return;
-      restore(position);
+      restore(position || { y: 0 });
       setTimeout(retry, 100);
     };
     requestAnimationFrame(retry);

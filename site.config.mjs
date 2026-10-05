@@ -1,4 +1,4 @@
-export const assetVersion = "20261005-loading-perf-79";
+export const assetVersion = "20261005-scroll-fix-80";
 
 export const contact = {
   email: "china@luxureat.com",

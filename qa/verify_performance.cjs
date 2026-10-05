@@ -2,6 +2,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const zlib = require("node:zlib");
+const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file));
@@ -85,6 +86,32 @@ assert.doesNotMatch(core, /sessionStorage\.setItem\(`luxureatScroll:\$\{target\.
 assert.match(core, /elementFromPoint\(innerWidth \/ 2, innerHeight \/ 3\)[\s\S]*?anchor\?\.id/, "scroll restoration does not remember the visible content anchor");
 assert.match(core, /anchor\.getBoundingClientRect\(\)\.top - position\.offset[\s\S]*?setTimeout\(retry, 100\)/, "scroll restoration does not follow asynchronous layout changes");
 assert.match(core, /"wheel", "touchstart", "pointerdown", "keydown"/, "user input cannot cancel delayed scroll restoration");
+const scrollRestore = core.match(/\(\(\) => \{\n  const key = `luxureatScroll:\$\{location\.pathname\}`;[\s\S]*?\n\}\)\(\);/)?.[0];
+assert.ok(scrollRestore, "scroll restoration handler is missing");
+const restorationWrites = (stored, inputBeforePageShow = false) => {
+  const listeners = {};
+  let writes = 0;
+  const window = {
+    scrollY: 0,
+    addEventListener: (name, callback) => { listeners[name] = callback; },
+    scrollTo: () => { writes++; },
+    scrollBy: () => { writes++; },
+  };
+  vm.runInNewContext(scrollRestore, {
+    window, location: { pathname: "/zh/", hash: "" }, history: { scrollRestoration: "auto" },
+    performance: { getEntriesByType: () => [{ type: "navigate" }] },
+    sessionStorage: { getItem: () => stored, removeItem: () => {} },
+    document: { addEventListener: () => {}, getElementById: () => null },
+    requestAnimationFrame: () => {}, setTimeout: () => {},
+  });
+  if (inputBeforePageShow) listeners.wheel();
+  listeners.pageshow();
+  return writes;
+};
+assert.equal(restorationWrites(null), 0, "fresh visits repeatedly jump to the top");
+assert.equal(restorationWrites('{"y":0}'), 0, "a previous visit at the top repeatedly overrides scrolling");
+assert.equal(restorationWrites('{"y":400}', true), 0, "early user scrolling is overridden when the page finishes loading");
+assert.equal(restorationWrites('{"y":400}'), 1, "saved scroll position is not restored");
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
