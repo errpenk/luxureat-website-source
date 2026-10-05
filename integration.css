@@ -10975,9 +10975,10 @@ html[lang^="en"] .lux-reader-quote {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(5, 13, 13, .81), rgba(5, 13, 13, .89)),
-    url("assets/media/brand/home-values-background.webp") center / cover no-repeat;
+  background-image: linear-gradient(rgba(5, 13, 13, .81), rgba(5, 13, 13, .89)), var(--lux-home-bg, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: #f7f3ea;
 }
 .lux-home-market-system > header {
@@ -12717,9 +12718,10 @@ html[lang^="zh"] .lux-cert-awards h2 {
   isolation: isolate;
   padding: clamp(78px, 8vw, 128px) clamp(24px, 5vw, 80px);
   overflow: hidden;
-  background:
-    linear-gradient(rgba(9, 12, 13, .9), rgba(9, 12, 13, .94)),
-    url("assets/media/brand/home-partnership-process.webp") center 48% / cover no-repeat;
+  background-image: linear-gradient(rgba(9, 12, 13, .9), rgba(9, 12, 13, .94)), var(--lux-home-bg, none);
+  background-position: center 48%;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: #fff;
 }
 .lux-home-partnership-process-inner {
@@ -13689,19 +13691,22 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 
 /* Homepage photographic section backgrounds and group advantages */
 .lux-home-timeline {
-  background:
-    linear-gradient(rgba(5, 7, 7, .76), rgba(5, 7, 7, .86)),
-    url("assets/media/brand/home-brand-journey-background.webp") center / cover no-repeat;
+  background-image: linear-gradient(rgba(5, 7, 7, .76), rgba(5, 7, 7, .86)), var(--lux-home-bg, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 #selected-products {
-  background:
-    linear-gradient(rgba(4, 6, 6, .72), rgba(4, 6, 6, .84)),
-    url("assets/media/brand/home-selected-products-background.webp") center / cover no-repeat;
+  background-image: linear-gradient(rgba(4, 6, 6, .72), rgba(4, 6, 6, .84)), var(--lux-home-bg, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 .lux-home-partnership-process {
-  background:
-    linear-gradient(rgba(9, 12, 13, .62), rgba(9, 12, 13, .74)),
-    url("assets/media/brand/home-partnership-process.webp") center 48% / cover no-repeat;
+  background-image: linear-gradient(rgba(9, 12, 13, .62), rgba(9, 12, 13, .74)), var(--lux-home-bg, none);
+  background-position: center 48%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .lux-home-advantages {
@@ -13806,9 +13811,8 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 
 @media (max-width: 720px) {
   .lux-home-partnership-process {
-    background:
-      linear-gradient(rgba(9, 12, 13, .66), rgba(9, 12, 13, .78)),
-      url("assets/media/brand/home-partnership-process-mobile.webp") center / cover no-repeat;
+    background-image: linear-gradient(rgba(9, 12, 13, .66), rgba(9, 12, 13, .78)), var(--lux-home-bg, none);
+    background-position: center;
   }
   .lux-home-timeline,
   #selected-products {
@@ -13840,9 +13844,8 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 
 /* Homepage interaction and editorial alignment refinements */
 .lux-home-partnership-process {
-  background:
-    linear-gradient(rgba(9, 12, 13, .74), rgba(9, 12, 13, .84)),
-    url("assets/media/brand/home-partnership-process.webp") center 48% / cover no-repeat;
+  background-image: linear-gradient(rgba(9, 12, 13, .74), rgba(9, 12, 13, .84)), var(--lux-home-bg, none);
+  background-position: center 48%;
 }
 
 .lux-home-advantages-inner {
@@ -13949,8 +13952,7 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 
 @media (max-width: 720px) {
   .lux-home-partnership-process {
-    background:
-      linear-gradient(rgba(9, 12, 13, .76), rgba(9, 12, 13, .86)),
-      url("assets/media/brand/home-partnership-process-mobile.webp") center / cover no-repeat;
+    background-image: linear-gradient(rgba(9, 12, 13, .76), rgba(9, 12, 13, .86)), var(--lux-home-bg, none);
+    background-position: center;
   }
 }

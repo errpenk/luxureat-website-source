@@ -33,12 +33,15 @@ assert.ok(size("assets/fonts/NyghtSerif-home-critical.woff2") <= 16 * 1024, "Eng
 assert.ok(size("assets/fonts/Spectral-home-critical.woff2") <= 32 * 1024, "English home body subset exceeds 32 KB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-hero-critical.woff2") <= 64 * 1024, "Chinese home hero font exceeds 64 KB");
 assert.ok(size("assets/fonts/KingHwaOldSong-hero-critical.woff2") <= 16 * 1024, "Chinese home hero headline font exceeds 16 KB");
+assert.ok(size("assets/fonts/KingHwaOldSong-home-complete.woff2") <= 520 * 1024, "Chinese home headline font exceeds 520 KB");
+assert.ok(size("assets/fonts/LuxurEatZhiSong-home-complete.woff2") <= 160 * 1024, "Chinese home body font exceeds 160 KB");
 assert.ok(size("assets/fonts/KingHwaOldSong-market-hero-critical.woff2") <= 6 * 1024, "Chinese market hero headline font exceeds 6 KB");
 assert.ok(size("assets/fonts/LuxurEatZhiSong-market-critical.woff2") <= 76 * 1024, "Chinese market first-view body font exceeds 76 KB");
 assert.ok(size("assets/fonts/NyghtSerif-Regular-market.woff2") + size("assets/fonts/Spectral-Regular-market.woff2") <= 32 * 1024, "English market first-view fonts exceed 32 KB");
 assert.ok(size("assets/media/market-services/china-market-hero-mobile.webp") <= 72 * 1024, "mobile China Market hero exceeds 72 KB");
 const coreRuntime = read("assets/js/core.js").toString();
-assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('"2800px 0px"'), "native lazy images are not promoted ahead of the viewport");
+assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('luxIsMobile ? "600px 0px" : "1000px 0px"'), "native lazy images are not promoted near the viewport");
+assert.match(coreRuntime, /\[data-lux-bg\], \[data-lux-home-bg\]/, "homepage photographic backgrounds are not deferred");
 for (const locale of ["zh", "en"]) {
   const about = read(`${locale}/about-us.html`).toString();
   assert.ok((about.match(/class="lux-brand-promise-card"><img[^>]+loading="eager"[^>]+fetchpriority="low"/g) || []).length === 4, `${locale} brand-promise images are not preloaded at low priority`);
@@ -62,6 +65,7 @@ assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px 0px"/);
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
+assert.match(read("assets/js/core.js").toString(), /addEventListener\("load", \(\) => setTimeout\(startHero, 2500\)/, "desktop hero video starts before first-screen content settles");
 assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
 assert.doesNotMatch(core, /https:\/\/embed\.tawk\.to\//, "third-party chat still loads from the critical shared runtime");
 assert.doesNotMatch(core, /lux-tawk-placeholder|lux-chat-greeting/, "optional chat UI remains in the critical shared runtime");
@@ -90,10 +94,20 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
   assert.match(home, /data-lux-deferred-scripts/);
+  for (const background of ["home-selected-products-background", "home-values-background", "home-brand-journey-background", "home-partnership-process"]) {
+    assert.match(home, new RegExp(`data-lux-home-bg="\\.\\.\\/assets\\/media\\/brand\\/${background}\\.webp"`), `${lang} homepage background is requested before its section`);
+  }
+  assert.match(home, /home-selected-truffle-960\.webp 960w" sizes="\(max-width: 767px\) 100vw, 33vw"/, "homepage truffle card requests a full-width image");
+  assert.match(home, /home-selected-seasoning-oil-960\.webp 960w" sizes="\(max-width: 767px\) 100vw, 33vw"/, "homepage oil card requests a full-width image");
   assert.match(home, /rel="icon"[^>]+luxureat-logo\.png/);
   if (lang === "en") assert.match(home, /rel="preload"[^>]+NyghtSerif-home-critical\.woff2/);
   assert.match(home, lang === "zh" ? /rel="preload"[^>]+LuxurEatZhiSong-hero-critical\.woff2/ : /rel="preload"[^>]+Spectral-home-critical\.woff2/);
   if (lang === "zh") assert.match(home, /rel="preload"[^>]+KingHwaOldSong-hero-critical\.woff2/);
+  if (lang === "zh") {
+    assert.match(home, /KingHwaOldSong-home-complete\.woff2/);
+    assert.match(home, /LuxurEatZhiSong-home-complete\.woff2/);
+    assert.doesNotMatch(home, /(?:KingHwaOldSong|LuxurEatZhiSong)-site\.woff2/, "Chinese homepage downloads full site fonts");
+  }
   if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-home-critical|LuxurEatZhiSong-home-subset)\.woff2/);
   if (lang === "zh") assert.doesNotMatch(home, /rel="preload"[^>]+(?:KingHwaOldSong-site|LuxurEatZhiSong-site)\.woff2/);
   assert.match(home, /class="lux-home-page /);

@@ -280,7 +280,7 @@ const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*
 assert(registeredTextFonts.length === 0, "shared CSS still registers stale text fonts");
 assert(integrationStyles.includes('MaterialSymbolsOutlined-subset.ttf'), "local Material Symbols subset is missing");
 assert(["en", "zh"].flatMap((locale) => require("node:fs").readdirSync(locale).filter((name) => name.endsWith(".html")).map((name) => `${locale}/${name}`)).every((file) => !/<link\b[^>]*href=["']https:\/\/fonts\.googleapis\.com\//i.test(read(file))), "a page still depends on Google Fonts");
-assert(read("zh/index.html").includes('KingHwaOldSong-site.woff2') && read("zh/index.html").includes('class="lux-home-page '), "Chinese homepage does not use the complete KingHwa subset");
+assert(read("zh/index.html").includes('KingHwaOldSong-home-complete.woff2') && read("zh/index.html").includes('class="lux-home-page '), "Chinese homepage does not use its complete home font subset");
 assert(read("en/index.html").includes('NyghtSerif-home-critical.woff2') && read("en/index.html").includes('Spectral-home-critical.woff2') && read("en/index.html").includes('class="lux-home-page '), "English homepage does not use its reduced first-view fonts");
 assert(!read("zh/index.html").includes('rel="preload" href="../assets/fonts/KingHwaOldSong-subset.woff2"'), "Chinese homepage still forces the full KingHwa font into the critical path");
 assert(!require("node:fs").existsSync("assets/fonts/LanternMingA-subset.woff2") && !require("node:fs").existsSync("assets/fonts/LanternMing-SOURCE.md"), "retired font assets remain in the site bundle");

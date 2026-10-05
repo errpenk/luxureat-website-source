@@ -199,8 +199,13 @@ document.addEventListener("submit", (event) => {
   banner.hidden = Boolean(luxGetCookieConsent());
 })();
 
-const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg]");
+const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg], [data-lux-home-bg]");
 const loadLuxBackground = (element) => {
+  if (element.dataset.luxHomeBg) {
+    element.style.setProperty("--lux-home-bg", `url("${luxImageSource(element.dataset.luxHomeBg)}")`);
+    delete element.dataset.luxHomeBg;
+    return;
+  }
   element.style.backgroundImage = `url("${luxImageSource(element.dataset.luxBg)}")`;
   delete element.dataset.luxBg;
 };
@@ -249,7 +254,7 @@ if ("IntersectionObserver" in window) {
       target.loading = "eager";
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "1800px 0px" : "2800px 0px" });
+  }, { rootMargin: luxIsMobile ? "600px 0px" : "1000px 0px" });
   luxNativeLazyImages.forEach((image) => nativeImageObserver.observe(image));
 }
 
@@ -363,12 +368,11 @@ const luxVideoObserver = "IntersectionObserver" in window
     } else {
       target.pause();
     }
-  }), { rootMargin: luxIsMobile ? "0px" : "600px 0px", threshold: .01 })
+  }), { rootMargin: "0px", threshold: .01 })
   : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
   video.dataset.luxVideoReady = "true";
-  prepareLuxVideo(video);
   video.addEventListener("loadeddata", () => startLuxVideo(video), { once: true });
   video.addEventListener("canplay", () => startLuxVideo(video), { once: true });
   if (video.matches(".lux-hero-video")) {
@@ -377,8 +381,8 @@ const initLuxVideo = (video) => {
       video.preload = "auto";
       startLuxVideo(video);
     };
-    if (document.readyState === "complete") startHero();
-    else addEventListener("load", startHero, { once: true });
+    if (document.readyState === "complete") setTimeout(startHero, 2500);
+    else addEventListener("load", () => setTimeout(startHero, 2500), { once: true });
   } else if (!luxVideoObserver) {
     video.preload = "auto";
     startLuxVideo(video);
