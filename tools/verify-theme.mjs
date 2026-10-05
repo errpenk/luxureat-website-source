@@ -315,7 +315,7 @@ assert(academyJs.includes('window.luxLoadAcademyArticle = loadAcademyArticle') &
 assert(runtimeJs.includes("event.target.closest('a[href*=\"#reader-\"]')") && runtimeJs.includes('window.luxLoadAcademyArticle(id).then(showTarget)'), 'same-page knowledge links open the requested article instead of only changing the hash');
 assert(runtimeJs.includes('lux-reader-cover') && runtimeJs.includes('lux-reader-related-media'), 'runtime scripts renders the editorial article images');
 assert(runtimeJs.includes('lux-reader-layout') && runtimeJs.includes('lux-reader-quote'), 'runtime scripts renders long-form reader articles');
-assert(runtimeJs.includes('scrollRestoration'), 'runtime scripts restores saved scroll positions manually');
+assert(!runtimeJs.includes('scrollRestoration'), 'runtime scripts override native scroll restoration');
 assert(runtimeJs.includes('luxureat_internal_trail') && runtimeJs.includes('trail.slice(-20)') && runtimeJs.includes('window.LuxureatHasInternalBack = hasInternalBack'), 'internal detail navigation keeps a bounded multi-page return trail');
 assert(runtimeJs.includes('window.LuxureatBackInternalLink') && runtimeJs.includes('window.LuxureatCloseInternalLink') && !runtimeJs.includes('LuxureatReturnFromInternalLink'), 'Back traverses the internal trail while Close stays on the current section');
 assert(runtimeJs.includes('location.hash !== `#reader-${id}`') && runtimeJs.includes('location.hash.startsWith("#product-")'), 'reader and product detail routes remain restorable while Close clears only the current detail hash');

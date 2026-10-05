@@ -319,7 +319,7 @@ for (const locale of ["zh", "en"]) {
   assert(home.includes("data-lux-deferred-scripts") && !home.includes('defer src="../assets/data/products.js'), `${locale} homepage noncritical scripts still block DOMContentLoaded`);
 }
 assert(accountRuntime.includes("data-lux-deferred-scripts"), "mobile-first-load script deferral logic is incomplete");
-assert(!accountRuntime.includes("luxDeferredScripts.textContent") && accountRuntime.includes('["../data/products.js", "../data/events.js", "../data/journal.js"]'), "deferred script loading is not restricted to the trusted local catalog");
+assert(!accountRuntime.includes("luxDeferredScripts.textContent") && accountRuntime.includes('["../data/products.js", "../data/journal.js"]') && accountRuntime.includes('deferredUrl("../data/events.js")'), "deferred script loading is not restricted to the trusted local catalog");
 assert(accountRuntime.includes('event.target.closest?.("[data-reader-open]")') && accountRuntime.includes("trigger.click()"), "the first deferred article click is not replayed after its runtime loads");
 assert(journalRuntime.includes('document.readyState === "loading"') && journalRuntime.includes("initLuxReader()"), "the reader runtime does not cover deferred and post-load initialization");
 assert(productRuntime.includes('document.readyState === "complete"') && productRuntime.includes("initLuxProductDetails()"), "the product runtime does not cover deferred and post-load initialization");

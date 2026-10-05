@@ -2,7 +2,6 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const zlib = require("node:zlib");
-const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file));
@@ -62,9 +61,11 @@ assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScrip
 assert.ok(gzipSize("assets/js/chat.js") <= 4 * 1024, "deferred chat interface exceeds 4 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
-assert.match(read("assets/js/core.js").toString(), /rootMargin: "1200px 0px"/);
+assert.match(core, /rootMargin: luxIsMobile \? "600px 0px" : "1200px 0px"/, "mobile images are loaded too far ahead of the viewport");
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
+assert.match(core, /const loadHomeEvents = \(\) => eventLoading \|\|=/, "homepage events still pull the product and journal data into the first view");
+assert.doesNotMatch(core, /addEventListener\("scroll", loadDeferredScripts/, "scrolling starts the heavy product and journal scripts");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
 assert.match(read("assets/js/core.js").toString(), /addEventListener\("load", \(\) => setTimeout\(startHero, 2500\)/, "desktop hero video starts before first-screen content settles");
 assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
@@ -79,39 +80,9 @@ assert.match(core, /luxureat-logo-64\.webp/, "cookie banner does not use the del
 assert.match(read("assets/js/core.js").toString(), /luxIsMobile \? 15000 : 1000/, "mobile analytics still competes with first-screen content");
 assert.equal(size("assets/fonts/MaterialSymbolsOutlined-subset.ttf") <= 12 * 1024, true, "material icon subset exceeds 12 KB");
 assert.doesNotMatch(css, /src:\s*url\(["']?assets\/fonts\/(?!MaterialSymbols)/, "shared CSS still contains an unversioned text-font URL");
-assert.match(core, /navigation\?\.type === "reload"[\s\S]*?sessionStorage\.removeItem\(key\)/, "explicit refresh does not reset the current scroll position");
 assert.match(core, /new IntersectionObserver\(\(\[entry\]\) =>[\s\S]*?\.observe\(sentinel\)/, "back-to-top visibility still relies on scroll-time layout reads");
 assert.match(core, /const headerSentinel = document\.createElement\("span"\)[\s\S]*?\.observe\(headerSentinel\)/, "header scroll state still relies on startup layout reads");
-assert.doesNotMatch(core, /sessionStorage\.setItem\(`luxureatScroll:\$\{target\.pathname\}`/, "navigation still resets previously saved page positions");
-assert.match(core, /elementFromPoint\(innerWidth \/ 2, innerHeight \/ 3\)[\s\S]*?anchor\?\.id/, "scroll restoration does not remember the visible content anchor");
-assert.match(core, /anchor\.getBoundingClientRect\(\)\.top - position\.offset[\s\S]*?setTimeout\(retry, 100\)/, "scroll restoration does not follow asynchronous layout changes");
-assert.match(core, /"wheel", "touchstart", "pointerdown", "keydown"/, "user input cannot cancel delayed scroll restoration");
-const scrollRestore = core.match(/\(\(\) => \{\n  const key = `luxureatScroll:\$\{location\.pathname\}`;[\s\S]*?\n\}\)\(\);/)?.[0];
-assert.ok(scrollRestore, "scroll restoration handler is missing");
-const restorationWrites = (stored, inputBeforePageShow = false) => {
-  const listeners = {};
-  let writes = 0;
-  const window = {
-    scrollY: 0,
-    addEventListener: (name, callback) => { listeners[name] = callback; },
-    scrollTo: () => { writes++; },
-    scrollBy: () => { writes++; },
-  };
-  vm.runInNewContext(scrollRestore, {
-    window, location: { pathname: "/zh/", hash: "" }, history: { scrollRestoration: "auto" },
-    performance: { getEntriesByType: () => [{ type: "navigate" }] },
-    sessionStorage: { getItem: () => stored, removeItem: () => {} },
-    document: { addEventListener: () => {}, getElementById: () => null },
-    requestAnimationFrame: () => {}, setTimeout: () => {},
-  });
-  if (inputBeforePageShow) listeners.wheel();
-  listeners.pageshow();
-  return writes;
-};
-assert.equal(restorationWrites(null), 0, "fresh visits repeatedly jump to the top");
-assert.equal(restorationWrites('{"y":0}'), 0, "a previous visit at the top repeatedly overrides scrolling");
-assert.equal(restorationWrites('{"y":400}', true), 0, "early user scrolling is overridden when the page finishes loading");
-assert.equal(restorationWrites('{"y":400}'), 1, "saved scroll position is not restored");
+assert.doesNotMatch(core, /scrollRestoration|luxureatScroll:|setTimeout\(retry, 100\)/, "custom restoration can override early scrolling");
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();

@@ -240,7 +240,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: "1200px 0px" });
+  }, { rootMargin: luxIsMobile ? "600px 0px" : "1200px 0px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);
@@ -266,11 +266,11 @@ if (luxDeferredScripts) {
     url.search = coreUrl.search;
     return url.href;
   };
-  const data = ["../data/products.js", "../data/events.js", "../data/journal.js"].map(deferredUrl);
-  const runtimes = ["events.js", "journal.js", "products.js"].map(deferredUrl);
-  let started = false;
+  const data = ["../data/products.js", "../data/journal.js"].map(deferredUrl);
+  const runtimes = ["journal.js", "products.js"].map(deferredUrl);
   let loaded = false;
   let loading;
+  let eventLoading;
   const loadScript = (src) => new Promise((resolve, reject) => {
     const script = document.createElement("script");
     script.src = src;
@@ -278,10 +278,11 @@ if (luxDeferredScripts) {
     script.onerror = reject;
     document.body.append(script);
   });
+  const loadHomeEvents = () => eventLoading ||= loadScript(deferredUrl("../data/events.js"))
+    .then(() => loadScript(deferredUrl("events.js")));
   const loadDeferredScripts = () => {
-    if (started) return loading;
-    started = true;
-    loading = Promise.all(data.map(loadScript))
+    if (loading) return loading;
+    loading = Promise.all([loadHomeEvents(), ...data.map(loadScript)])
       .then(() => Promise.all(runtimes.map(loadScript)))
       .then(() => {
         loaded = true;
@@ -293,8 +294,7 @@ if (luxDeferredScripts) {
   const scheduleDeferredScripts = () => { if (!luxIsMobile) setTimeout(loadDeferredScripts, 800); };
   if (document.readyState === "complete") scheduleDeferredScripts();
   else addEventListener("load", scheduleDeferredScripts, { once: true });
-  addEventListener("scroll", loadDeferredScripts, { once: true, passive: true });
-  addEventListener("pointerdown", loadDeferredScripts, { once: true, passive: true });
+  loadHomeEvents().catch(() => {});
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest?.("[data-reader-open]");
     if (!trigger || loaded) return;
@@ -820,73 +820,6 @@ if (luxNav && luxMenu) {
 })();
 
 (() => {
-  const key = `luxureatScroll:${location.pathname}`;
-  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-
-  const navigation = performance.getEntriesByType?.("navigation")[0];
-  if (navigation?.type === "reload" || performance.navigation?.type === 1) {
-    sessionStorage.removeItem(key);
-  }
-
-  const save = () => {
-    const anchor = document.elementFromPoint(innerWidth / 2, innerHeight / 3)?.closest?.("[id]");
-    sessionStorage.setItem(key, JSON.stringify({
-      y: window.scrollY || 0,
-      anchor: anchor?.id || "",
-      offset: anchor?.getBoundingClientRect().top || 0,
-    }));
-  };
-  const savedPosition = () => {
-    try {
-      const stored = sessionStorage.getItem(key);
-      if (!stored) return null;
-      const saved = JSON.parse(stored);
-      return typeof saved === "number" ? { y: saved } : saved;
-    } catch {
-      return null;
-    }
-  };
-  const restore = (position) => {
-    const target = location.hash && document.querySelector(location.hash);
-    if (target) {
-      target.scrollIntoView();
-      return false;
-    }
-    const anchor = position.anchor && document.getElementById(position.anchor);
-    if (anchor) {
-      window.scrollBy(0, anchor.getBoundingClientRect().top - position.offset);
-    } else {
-      window.scrollTo(0, Number.isFinite(position.y) ? position.y : 0);
-    }
-    return true;
-  };
-
-  let restoreCancelled = false;
-  const restoreWhenReady = () => {
-    if (restoreCancelled) return;
-    const position = savedPosition();
-    if (!location.hash && (!position || (!position.anchor && !position.y))) return;
-    if (!restore(position || { y: 0 })) return;
-    let attempts = 0;
-    const retry = () => {
-      if (restoreCancelled || attempts++ >= 100) return;
-      restore(position || { y: 0 });
-      setTimeout(retry, 100);
-    };
-    requestAnimationFrame(retry);
-  };
-
-  ["wheel", "touchstart", "pointerdown", "keydown"].forEach((eventName) => {
-    window.addEventListener(eventName, () => { restoreCancelled = true; }, { passive: true });
-  });
-  window.addEventListener("pageshow", restoreWhenReady);
-  window.addEventListener("pagehide", save);
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") save();
-  });
-})();
-
-(() => {
   const lang = () => document.documentElement.lang?.startsWith("zh") ? "返回顶部" : "Back to top";
 
   const init = () => {
@@ -903,7 +836,6 @@ if (luxNav && luxMenu) {
 
     button.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
-      sessionStorage.setItem(`luxureatScroll:${location.pathname}`, "0");
     });
     const update = () => button.classList.toggle("visible", window.scrollY > 360);
     if ("IntersectionObserver" in window) {
