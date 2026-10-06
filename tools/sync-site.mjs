@@ -238,7 +238,7 @@ function fontPreloads(page) {
   if (page.lang === "en" && ["home", "products"].includes(page.key)) {
     fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
   }
-  const versionFor = (font) => ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
+  const versionFor = (font) => ["KingHwaOldSong-home-complete.woff2", "LuxurEatZhiSong-home-complete.woff2"].includes(font) ? `${assetVersion}-home-font6` : ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
     ...(page.key === "market-insights" ? [
