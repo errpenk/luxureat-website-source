@@ -13495,7 +13495,7 @@ html[lang] body .lux-header :is(.lux-nav > a, .lux-nav-item > a):is(:hover, :foc
 .lux-news-grid .lux-news-card .lux-event-card-copy {
   padding: 24px 0 0;
 }
-.lux-news-grid .lux-news-card:not(.lux-news-feature) .lux-event-card-copy strong {
+.lux-news-grid .lux-news-card .lux-event-card-copy strong {
   font-size: clamp(24px, 2.5vw, 36px);
 }
 .lux-reader-panel:has(.lux-brand-news-reader) {
