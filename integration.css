@@ -6559,6 +6559,9 @@ input[type="search"]::-webkit-search-decoration {
 .lux-news-center .lux-pagination { color: #171715; }
 .lux-news-center .lux-pagination button[aria-current="page"] { border-color: #006a64; color: #006a64; }
 .lux-news-center .lux-pagination :is(button, select):focus-visible { outline-color: #006a64; }
+body.lux-academy-page .lux-pagination { color: #111; }
+body.lux-academy-page .lux-pagination button[aria-current="page"] { border-color: #005b55; color: #005b55; }
+body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outline-color: #005b55; }
 
 .lux-about-section-divider {
   position: relative;

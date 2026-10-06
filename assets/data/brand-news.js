@@ -3,6 +3,9 @@
   const asset = (path) => new URL(path, assetBase).href;
   const image = (name, altZh, altEn) => ({ type: "image", src: asset(`media/brand-news/${name}`), alt: { zh: altZh, en: altEn } });
   const media = {
+    sialBanner: image("sial-paris-2026-lemons.webp", "SIAL Paris 2026 展会宣传图", "SIAL Paris 2026 campaign image"),
+    sialMap: image("sial-paris-2026-floor-plan.webp", "SIAL Paris 2026 展馆地图", "SIAL Paris 2026 floor plan"),
+    sialCity: image("sial-paris-2026-city.webp", "巴黎城市夜景与 SIAL Paris 2026 标志", "Paris skyline and SIAL Paris 2026"),
     ciccLogo: image("cicc-luxureat-logo.webp", "LuxurEat 品牌标志", "LuxurEat brand mark"),
     ciccBooth: image("cicc-truffleat-booth.webp", "Truffleat 展位与现场品鉴", "Truffleat booth and live tasting"),
     ciccCaviar: image("cicc-caviar-table.webp", "Caviareat 鱼子酱陈列", "Caviareat caviar presentation"),
@@ -30,6 +33,144 @@
   };
 
   window.LUXUREAT_BRAND_NEWS = [
+    {
+      "id": "sial-paris-2026-preview",
+      "eventId": "sial-paris-2026",
+      "date": "2026-10-06",
+      "cardImage": media.sialBanner.src,
+      "zh": {
+        "date": "2026年10月6日",
+        "author": "LuxurEat",
+        "category": "展会预告",
+        "title": "LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 携手亮相 SIAL Paris 2026",
+        "intro": "2026年10月17日至21日，四大品牌将齐聚巴黎，在这一全球食品行业的重要国际舞台上，呈现松露、鱼子酱及意大利特色美食。",
+        "opening": [],
+        "sections": [
+          [
+            "四大品牌，相聚巴黎",
+            [
+              "2026年10月17日至21日，LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 将共同亮相 SIAL Paris 2026，在 Hall 1 – Regione Lazio（拉齐奥大区展区）展示以意大利卓越美食为核心的精选产品。",
+              "SIAL Paris 是全球食品行业重要的国际交流平台之一，汇聚来自世界各地的生产商、经销商、采购商、进口商、餐饮专业人士及行业决策者。2026年展会将在 Paris Nord Villepinte 举行，预计汇集约 8,000家参展商，继续发挥其在全球食品商业、创新及行业趋势交流中的重要作用。"
+            ],
+            [
+              media.sialBanner
+            ]
+          ],
+          [
+            "松露、鱼子酱与意大利美食",
+            [
+              "四大品牌此次共同参展，希望通过精选食材、高端食品以及面向专业与国际市场的产品方案，从不同角度呈现意大利美食文化。",
+              "Truffleat 将带来以松露及松露制品为核心的产品，展现松露独特的香气与丰富的餐饮应用；Caviareat 聚焦鱼子酱与高端美食体验；LuxurEat 以精选高端食品为基础，呈现意大利美食文化与国际市场之间的连接；Ugolini Gourmet 则以对品质和意大利特色食品的持续探索，进一步丰富此次联合展示。",
+              "四个拥有不同品牌定位的名字，因为对产品品质和意大利美食文化的共同追求，在巴黎汇聚于同一舞台。"
+            ],
+            []
+          ],
+          [
+            "连接意大利品质与国际市场",
+            [
+              "参加 SIAL Paris 不仅是一次产品展示，更是与全球食品行业建立联系的重要机会。",
+              "在为期五天的展会期间，LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 将与采购商、经销商、餐饮行业专业人士及潜在合作伙伴展开交流，了解不同市场的需求，并探索新的国际合作可能。",
+              "从产品本身出发，四大品牌希望进一步建立意大利美食传统、当代消费需求与国际商业机会之间的连接。",
+              "因此，SIAL Paris 不仅是一扇展示产品的窗口，更是让新想法、新合作关系与未来项目得以产生的平台。"
+            ],
+            [
+              media.sialMap
+            ]
+          ],
+          [
+            "当意大利卓越美食遇见食品行业的未来",
+            [
+              "SIAL Paris 2026 将继续关注创新以及正在改变全球食品行业的发展趋势，为成熟企业、新兴品牌和行业决策者提供交流空间，共同探索新的产品、技术和消费趋势。",
+              "在这一国际背景下，LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 将以品质与意大利美食文化为共同基础，与来自不同国家和市场的专业人士展开交流。",
+              "从松露、鱼子酱到意大利特色美食，每一种产品不仅代表一种味道，也将成为探索新应用、新市场与新合作的起点。"
+            ],
+            [
+              media.sialCity
+            ]
+          ],
+          [
+            "巴黎见",
+            [
+              "2026年10月17日至21日，LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 将在 SIAL Paris 2026 – Hall 1 · Regione Lazio 与来自世界各地的食品行业伙伴见面。",
+              "五天时间，让意大利风味与国际市场相遇，也让产品、理念与新的商业关系产生更多可能。",
+              "SIAL Paris 2026",
+              "📅 2026年10月17–21日",
+              "📍 Paris Nord Villepinte · 法国巴黎",
+              "📍 Hall 1 · Regione Lazio",
+              "LuxurEat · Truffleat · Caviareat · Ugolini Gourmet",
+              "品味意大利卓越品质，启发新的风味、连接与机遇。"
+            ],
+            []
+          ]
+        ]
+      },
+      "en": {
+        "date": "October 6, 2026",
+        "author": "LuxurEat",
+        "category": "Exhibition Preview",
+        "title": "LuxurEat, Truffleat, Caviareat and Ugolini Gourmet Together at SIAL Paris 2026",
+        "intro": "From 17 to 21 October 2026, four brands will come together in Paris to present truffles, caviar and Italian gourmet specialties at one of the international food industry’s major global events.",
+        "opening": [],
+        "sections": [
+          [
+            "Four Brands Meet in Paris",
+            [
+              "From 17 to 21 October 2026, LuxurEat, Truffleat, Caviareat and Ugolini Gourmet will participate together in SIAL Paris 2026, presenting a selection dedicated to Italian gastronomic excellence at Hall 1 – Regione Lazio.",
+              "SIAL Paris is one of the international meeting points for the global food industry, bringing together producers, distributors, buyers, importers, foodservice professionals and decision-makers from around the world. The 2026 edition will take place at Paris Nord Villepinte, with around 8,000 exhibitors expected to participate, reinforcing the event’s role as a global platform for food business, innovation and emerging trends."
+            ],
+            [
+              media.sialBanner
+            ]
+          ],
+          [
+            "Truffles, Caviar and Italian Gastronomy",
+            [
+              "The joint participation of the four brands brings together different expressions of Italian gastronomy through a portfolio combining selected ingredients, gourmet products and solutions for professional and international markets.",
+              "Truffleat will place truffles and truffle products at the heart of the experience, highlighting their distinctive aromas and versatility. Caviareat will present its identity centered on caviar and fine gastronomy, while LuxurEat will showcase a premium selection connecting Italian food culture with international markets. Ugolini Gourmet will further enrich the presentation with its focus on quality and selected Italian specialties.",
+              "Four distinct brand identities come together in Paris, united by a shared commitment to product quality and Italian gastronomic culture."
+            ],
+            []
+          ],
+          [
+            "Connecting Italian Quality with International Markets",
+            [
+              "Participating in SIAL Paris is not only an opportunity to showcase products. It is also a chance to create new connections across the international food industry.",
+              "Throughout the five-day event, LuxurEat, Truffleat, Caviareat and Ugolini Gourmet will meet buyers, distributors, foodservice professionals and potential partners, exchanging perspectives on different markets and exploring new opportunities for international collaboration.",
+              "Starting with the products themselves, the four brands aim to create stronger connections between Italian gastronomic tradition, contemporary consumer needs and international business opportunities.",
+              "In this sense, SIAL Paris becomes more than a showcase: it is a place where new ideas, partnerships and future projects can take shape."
+            ],
+            [
+              media.sialMap
+            ]
+          ],
+          [
+            "Italian Excellence Meets the Future of Food",
+            [
+              "SIAL Paris 2026 will continue to place innovation and the transformation of the global food industry at the center of the event, bringing together established companies, emerging brands and industry decision-makers to explore new products, technologies and consumer trends.",
+              "Within this international environment, LuxurEat, Truffleat, Caviareat and Ugolini Gourmet will bring together quality and Italian gastronomic identity, opening a dialogue with professionals from different countries and markets.",
+              "From truffles and caviar to Italian gourmet specialties, each product becomes not only an expression of flavor, but also a starting point for exploring new applications, markets and partnerships."
+            ],
+            [
+              media.sialCity
+            ]
+          ],
+          [
+            "See You in Paris",
+            [
+              "From 17 to 21 October 2026, LuxurEat, Truffleat, Caviareat and Ugolini Gourmet will meet food industry professionals from around the world at SIAL Paris 2026 – Hall 1 · Regione Lazio.",
+              "Five days where Italian flavors meet the international market, creating new possibilities for products, ideas and business relationships.",
+              "SIAL Paris 2026",
+              "📅 17–21 October 2026",
+              "📍 Paris Nord Villepinte · Paris, France",
+              "📍 Hall 1 · Regione Lazio",
+              "LuxurEat · Truffleat · Caviareat · Ugolini Gourmet",
+              "Taste Italian excellence. Inspire new flavors, connections and opportunities."
+            ],
+            []
+          ]
+        ]
+      }
+    },
     {
       id: "cifce-changsha-2026-spotlight",
       eventId: "cifie-changsha-2026",

@@ -143,7 +143,7 @@ const enRecipePages = fs.readdirSync(path.join(themeDir, 'pages/en/recipe')).fil
 assert(zhRecipePages.length === 25 && enRecipePages.length === 25, 'theme contains all 25 bilingual recipe detail pairs');
 const zhNewsPages = fs.readdirSync(path.join(themeDir, 'pages/zh/news')).filter((file) => file.endsWith('.php'));
 const enNewsPages = fs.readdirSync(path.join(themeDir, 'pages/en/news')).filter((file) => file.endsWith('.php'));
-assert(zhNewsPages.length === 7 && enNewsPages.length === 7, 'theme contains all seven bilingual Brand News detail pairs');
+assert(zhNewsPages.length === 8 && enNewsPages.length === 8, 'theme contains all eight bilingual Brand News detail pairs');
 const recipeDetail = read(path.join(themeDir, 'pages/zh/recipe/truffle-eggs.php'));
 assert(recipeDetail.includes('class="lux-breadcrumb"') && recipeDetail.includes('<h1 id="lux-reader-title">松露鸡蛋</h1>'), 'recipe details expose a visible breadcrumb and one primary heading');
 assert(functionsPhp.includes("get_option('home')"), 'route URLs use the unfiltered WordPress home option');
