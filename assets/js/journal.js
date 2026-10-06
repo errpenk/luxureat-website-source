@@ -23,6 +23,7 @@ function initLuxReader() {
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[char]));
+  const formatEmphasis = (value) => escapeHtml(value).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   const formatTitle = (value) => lang === "en"
     ? escapeHtml(value).replace(/([\u3400-\u9fff]+)/g, '<span lang="zh-CN">$1</span>')
     : escapeHtml(value);
@@ -860,6 +861,7 @@ function initLuxReader() {
           <div>
             <p>${escapeHtml(article.eyebrow)} / ${escapeHtml(article.category)}</p>
             <h2 id="lux-reader-title">${formatTitle(article.articleTitle)}</h2>
+            ${article.subtitle ? `<p class="lux-event-reader-subtitle">${escapeHtml(article.subtitle)}</p>` : ""}
           </div>
           <p>${escapeHtml(article.intro)}</p>
         </header>
@@ -873,7 +875,7 @@ function initLuxReader() {
             <div class="lux-event-reader-copy">
               <aside>${lang === "zh" ? "活动回顾" : "Event Journal"}<br>${escapeHtml(article.location)}</aside>
               <div>
-                ${article.sections.map(([heading, text]) => `<section><h3>${escapeHtml(heading)}</h3><p>${escapeHtml(text)}</p></section>`).join("")}
+                ${article.sections.map(([heading, text]) => `<section><h3>${escapeHtml(heading)}</h3>${(Array.isArray(text) ? text : [text]).map((paragraph) => `<p>${formatEmphasis(paragraph)}</p>`).join("")}</section>`).join("")}
                 ${videoHtml}
                 <blockquote>${escapeHtml(article.quote)}</blockquote>
                 ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}</nav>` : ""}

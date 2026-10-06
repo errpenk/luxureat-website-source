@@ -15,14 +15,15 @@
     ? "brand.html"
     : lang === "zh" ? "/brand/" : "/en/brand/";
   const carouselLabels = lang === "zh"
-    ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）在中国即将参与及已经结束的展会。", map: "查看展会地图" }
-    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "Meet Us", meetCopy: "Explore upcoming and completed LuxurEat (露意膳) exhibitions across China.", map: "View exhibition map" };
+    ? { carousel: "最新活动轮播", previous: "上一个活动", next: "下一个活动", select: "切换至", meet: "与我们见面", meetCopy: "查看 LuxurEat（露意膳）即将参与及已经结束的国际展会。", map: "查看展会地图" }
+    : { carousel: "Latest events carousel", previous: "Previous event", next: "Next event", select: "Show", meet: "Meet Us", meetCopy: "Explore upcoming and completed LuxurEat exhibitions around the world.", map: "View exhibition map" };
   const atlasLabels = lang === "zh"
     ? { title: "各地区展会数量与月份", count: "场展览" }
     : { title: "Exhibitions by region and month", count: "exhibitions" };
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;",
   }[char]));
+  const formatEmphasis = (value) => escapeHtml(value).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   const icons = {
     location: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>',
     calendar: '<svg class="lux-lucide" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>',
@@ -57,7 +58,7 @@
         </figure>
         <div class="lux-event-copy">
           <h2>${escapeHtml(copy.title)}</h2>
-          ${copy.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+          ${copy.paragraphs.map((paragraph) => `<p>${formatEmphasis(paragraph)}</p>`).join("")}
           <a class="lux-event-meta" href="${escapeHtml(mapHref)}" target="_blank" rel="noopener" title="${escapeHtml(copy.mapTitle)}">${icons.location}${escapeHtml(copy.location)}</a>
           <a class="lux-event-meta" href="${escapeHtml(event.calendar)}" title="${escapeHtml(copy.calendarTitle)}">${icons.calendar}${escapeHtml(copy.date)}</a>
           <p><strong>${escapeHtml(copy.tagline)}</strong></p>

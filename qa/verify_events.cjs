@@ -26,10 +26,18 @@ const event = events?.find((item) => item.id === "cifie-changsha-2026");
 const secondEvent = events?.find((item) => item.id === "marca-china-2026");
 const sialEvent = events?.find((item) => item.id === "sial-guangzhou-2026");
 const romaEvent = events?.find((item) => item.id === "roma-bar-show-2026");
+const parisEvent = events?.find((item) => item.id === "sial-paris-2026");
 assert(fhcEvent, "FHC Shanghai 2026 event data is missing");
 assert(event, "Changsha 2026 event data is missing");
 assert(eventUtils, "shared Beijing event utilities are missing");
 assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma Bar Show event or cover dimensions are missing");
+assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
+assert(parisEvent.displayWidth === 520 && parisEvent.displayHeight === 530, "SIAL Paris poster dimensions are wrong");
+assert(parisEvent.zh.paragraphs.length === 3 && parisEvent.en.paragraphs.length === 3, "SIAL Paris homepage introductions are incomplete");
+assert(parisEvent.zh.sections.length === 4 && parisEvent.en.sections.length === 4, "SIAL Paris bilingual details are incomplete");
+assert(parisEvent.zh.location.includes("Hall 1 · Regione Lazio") && parisEvent.en.location.includes("Hall 1 · Regione Lazio"), "SIAL Paris stand location is missing");
+for (const file of ["sial-paris-2026.webp", "sial-paris-2026-520.webp", "sial-paris-2026-160.webp"]) assert(fs.existsSync(path.join(root, "assets/media/events", file)), `SIAL Paris image is missing: ${file}`);
+assert(read("assets/sial-paris-2026.ics").includes("DTEND;VALUE=DATE:20261022"), "SIAL Paris calendar must include October 21");
 for (const item of events) {
   assert(!Object.hasOwn(item, "status"), `${item.id} still requires a manually maintained status`);
   assert(item.type === "exhibition", `${item.id} event type is missing`);

@@ -1052,6 +1052,54 @@ function initLuxPartnershipLightbox() {
 }
 
 
+function luxCreatePagination(mount, { total, onChange, pageSize = 20, adjustable = true, scrollTarget = mount }) {
+  const zh = document.documentElement.lang?.startsWith("zh");
+  let page = 1;
+  let size = pageSize;
+  mount.classList.add("lux-pagination");
+  mount.setAttribute("aria-label", zh ? "翻页" : "Pagination");
+  const draw = () => {
+    const pages = Math.max(1, Math.ceil(total() / size));
+    page = Math.min(page, pages);
+    onChange(page, size);
+    mount.innerHTML = `${adjustable ? `<label>${zh ? "每页显示" : "Per page"} <select aria-label="${zh ? "每页显示" : "Items per page"}">${[10, 20, 50, 100].map((value) => `<option value="${value}"${size === value ? " selected" : ""}>${value}</option>`).join("")}</select></label>` : ""}<div class="lux-pagination-pages"><button type="button" data-page="prev"${page === 1 ? " disabled" : ""}>${zh ? "上一页" : "Previous"}</button>${Array.from({ length: pages }, (_, index) => `<button type="button" data-page="${index + 1}"${page === index + 1 ? ' aria-current="page"' : ""}>${index + 1}</button>`).join("")}<button type="button" data-page="next"${page === pages ? " disabled" : ""}>${zh ? "下一页" : "Next"}</button></div>`;
+  };
+  mount.addEventListener("change", (event) => {
+    if (event.target.matches("select")) { size = Number(event.target.value); page = 1; draw(); }
+  });
+  mount.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-page]");
+    if (!button) return;
+    const value = button.dataset.page;
+    page = value === "prev" ? page - 1 : value === "next" ? page + 1 : Number(value);
+    draw();
+    (typeof scrollTarget === "function" ? scrollTarget() : scrollTarget).scrollIntoView({ block: "start" });
+  });
+  draw();
+  return { reset: () => { page = 1; draw(); }, setPage: (value) => { page = value; draw(); } };
+}
+
+function initLuxRecipePagination() {
+  const library = document.querySelector("[data-recipe-library]");
+  if (!library) return;
+  const sections = [...document.querySelectorAll("#italian-flavor-recipes, [data-recipe-panel], #olive-recipes, #truffle-recipes, #healthy-light-recipes, #china-family-recipes")];
+  const nav = document.createElement("nav");
+  library.after(nav);
+  let panelState = new Map();
+  let currentPage = 1;
+  const pagination = luxCreatePagination(nav, { total: () => 2, adjustable: false, pageSize: 1, scrollTarget: () => library.hidden ? sections[0] : library, onChange: (page) => {
+    if (page === 2 && currentPage !== 2) panelState = new Map(sections.filter((section) => section.hasAttribute("data-recipe-panel")).map((section) => [section, section.hidden]));
+    sections.forEach((section) => { section.dataset.recipePage = "1"; section.hidden = page === 2 || (section.hasAttribute("data-recipe-panel") && (panelState.get(section) ?? section.hidden)); });
+    library.hidden = page !== 2;
+    currentPage = page;
+  } });
+  if (location.hash === "#recipe-library") { pagination.setPage(2); requestAnimationFrame(() => library.scrollIntoView({ block: "start" })); }
+  addEventListener("hashchange", () => {
+    pagination.setPage(location.hash === "#recipe-library" ? 2 : 1);
+    if (location.hash === "#recipe-library") requestAnimationFrame(() => library.scrollIntoView({ block: "start" }));
+  });
+}
+
 function initLuxRecipePanels() {
   const buttons = [...document.querySelectorAll("[data-recipe-panel-open]")];
   const panels = [...document.querySelectorAll("[data-recipe-panel]")];
@@ -1146,6 +1194,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLuxGiftScroller();
   initLuxPartnershipLightbox();
   initLuxRecipePanels();
+  initLuxRecipePagination();
   initLuxRecipeCtas();
   initLuxAwardLightbox();
   initLuxSectionFlips();

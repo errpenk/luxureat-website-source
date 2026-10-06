@@ -185,6 +185,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/events/marca-china-2026-poster.webp": "media/events/marca-china-2026-poster-720.webp",
   "media/events/marca-china-2026.png": "media/events/marca-china-2026-720.webp",
   "media/events/sial-guangzhou-2026.webp": "media/events/sial-guangzhou-2026-720.webp",
+  "media/events/sial-paris-2026.webp": "media/events/sial-paris-2026-720.webp",
   "media/journal/about-caviar.webp": "media/journal/about-caviar-mobile.webp",
   "media/journal/about-shrimp-tartare.webp": "media/journal/about-shrimp-tartare-720.webp",
   "media/journal/about-trufflebar-bar.webp": "media/journal/about-trufflebar-bar-720.webp",

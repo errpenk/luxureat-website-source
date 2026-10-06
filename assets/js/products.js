@@ -105,6 +105,8 @@ function initLuxCaviarControls() {
     : "<strong>Coming Soon</strong><span>No related products found</span>";
   empty.hidden = true;
   grid.insertAdjacentElement("afterend", empty);
+  const pageNav = document.createElement("nav");
+  grid.closest(".lux-product-browser").insertAdjacentElement("afterend", pageNav);
 
   const activeButtonClasses = ["border-primary", "text-primary", "bg-primary/10"];
   const inactiveButtonClasses = ["border-outline-variant", "text-on-surface-variant"];
@@ -132,6 +134,12 @@ function initLuxCaviarControls() {
   let activeView = "grid";
   let activeSortKey = "recommended";
   let searchTerm = "";
+  let matchingItems = items;
+  const pagination = luxCreatePagination(pageNav, { total: () => matchingItems.length, scrollTarget: grid, onChange: (page, size) => {
+    const start = (page - 1) * size;
+    items.forEach((item) => { item.hidden = true; });
+    matchingItems.forEach((item, index) => { item.hidden = index < start || index >= start + size; });
+  } });
   const mobileFilters = matchMedia("(max-width: 767px)");
 
   const syncMobileFilterPanel = () => {
@@ -169,18 +177,15 @@ function initLuxCaviarControls() {
   };
 
   const applyFilter = () => {
-    let visibleCount = 0;
-
-    items.forEach((item) => {
+    matchingItems = Array.from(grid.children).filter((item) => {
       const matchesSpecies = !activeFilters.category.size || item.dataset.species.split(" ").some((category) => activeFilters.category.has(category));
       const matchesType = !activeFilters.type.size || activeFilters.type.has(item.dataset.productType);
       const matchesSearch = !searchTerm || item.textContent.toLocaleLowerCase(lang === "zh" ? "zh-CN" : "en").includes(searchTerm);
       const matchesFilter = matchesSpecies && matchesType && matchesSearch;
-      item.hidden = !matchesFilter;
-      if (matchesFilter) {
-        visibleCount += 1;
-      }
+      return matchesFilter;
     });
+    const visibleCount = matchingItems.length;
+    pagination.reset();
 
     if (count) {
       count.textContent = String(visibleCount);
@@ -219,6 +224,8 @@ function initLuxCaviarControls() {
       .slice()
       .sort(option.compare)
       .forEach((item) => grid.appendChild(item));
+    matchingItems = Array.from(grid.children).filter((item) => matchingItems.includes(item));
+    pagination.reset();
   };
 
   const setSortOpen = (open) => {

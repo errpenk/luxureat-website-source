@@ -5,6 +5,95 @@
   window.LUXUREAT_EVENT_DATA = {
     events: [
       {
+        id: "sial-paris-2026",
+        type: "exhibition",
+        image: asset("media/events/sial-paris-2026.webp"),
+        cardImage: asset("media/events/sial-paris-2026.webp"),
+        previewImage: asset("media/events/sial-paris-2026.webp"),
+        poster: asset("media/events/sial-paris-2026.webp"),
+        displayPoster: asset("media/events/sial-paris-2026-520.webp"),
+        displayWidth: 520,
+        displayHeight: 530,
+        thumbnail: asset("media/events/sial-paris-2026-160.webp"),
+        calendar: asset("sial-paris-2026.ics"),
+        mapQuery: "Parc des Expositions Paris Nord Villepinte, 82 Avenue des Nations, 93420 Villepinte, France",
+        coordinates: [2.51833, 48.9675],
+        startDate: "2026-10-17",
+        endDate: "2026-10-21",
+        zh: {
+          posterAlt: "SIAL Paris 2026 海报：巴黎、松露、鱼子酱及四个参展品牌",
+          title: "SIAL Paris 2026｜巴黎，我们来了！🇫🇷",
+          articleTitle: "SIAL Paris 2026｜巴黎，我们来了！🇫🇷",
+          subtitle: "2026年10月17–21日 · 巴黎 · Hall 1 · Regione Lazio",
+          eyebrow: "即将举行",
+          date: "2026年10月17–21日",
+          dateIso: "2026.10.17–21",
+          location: "Hall 1 · Regione Lazio，巴黎",
+          city: "巴黎",
+          category: "国际展会",
+          paragraphs: [
+            "2026年10月17日至21日，LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 将共同亮相 **SIAL Paris 2026**，与来自世界各地的食品行业专业人士、合作伙伴及买家相聚巴黎。",
+            "作为全球食品行业的重要国际展会之一，SIAL Paris 汇聚来自不同市场的品牌、产品与创新理念，为食品行业提供交流、探索趋势与建立新合作的平台。本次展会，我们将带来以**松露、鱼子酱及意大利特色美食**为核心的精选产品，呈现意大利食材的品质、传统与多样化应用。",
+            "从高品质原料到面向餐饮、零售及国际市场的产品解决方案，我们希望通过此次展会，与更多行业伙伴分享我们的产品理念，并探索新的口味灵感、市场可能与商业合作机会。"
+          ],
+          intro: "2026年10月17日至21日，我们将来到巴黎，参加 SIAL Paris 2026。作为国际食品行业的重要交流平台，SIAL Paris 汇聚来自世界各地的品牌、专业人士、买家与行业伙伴，共同探索食品行业的新产品、新趋势与新机遇。",
+          sections: [
+            ["相聚 SIAL Paris 2026", [
+              "2026年10月17日至21日，我们将来到巴黎，参加 **SIAL Paris 2026**。作为国际食品行业的重要交流平台，SIAL Paris 汇聚来自世界各地的品牌、专业人士、买家与行业伙伴，共同探索食品行业的新产品、新趋势与新机遇。",
+              "此次参展，我们希望将意大利美食的传统、品质与创新带到巴黎，与国际市场分享我们对优质食材和现代美食体验的理解。"
+            ]],
+            ["四大品牌，共同亮相巴黎", "本届展会，**LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet** 将共同亮相。四个品牌从不同角度呈现意大利高端食品的魅力：从松露及松露制品，到鱼子酱和精选意大利特色食品，我们希望通过丰富的产品组合，为餐饮、零售及国际合作伙伴提供更多选择与灵感。"],
+            ["从优质食材到新的商业灵感", [
+              "在 SIAL Paris，我们带来的不仅是产品，也是关于风味、应用与市场可能性的探索。",
+              "通过松露、鱼子酱及意大利特色美食，我们期待与来自不同国家和市场的专业人士交流，探索产品开发、餐饮应用、零售以及国际合作等更多可能，让传统意大利风味与新的消费需求产生连接。"
+            ]],
+            ["巴黎见", "如果你也将在巴黎参加 SIAL Paris 2026，欢迎来到我们的展位，与我们的团队见面，了解产品，并一起交流新的想法与合作机会。"]
+          ],
+          quote: "品味意大利卓越品质。启发新的风味、连接与机遇。",
+          tagline: "品味意大利卓越品质，启发新的味觉与商业可能。",
+          closing: "欢迎来到 Hall 1 · Regione Lazio，与我们见面、交流并亲自探索 LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet 的美食世界。",
+          detail: "查看详情",
+          mapTitle: "打开地图导航",
+          calendarTitle: "添加到日历"
+        },
+        en: {
+          posterAlt: "SIAL Paris 2026 poster featuring Paris, truffles, caviar and the four exhibiting brands",
+          title: "SIAL Paris 2026 | Paris, Here We Come! 🇫🇷",
+          articleTitle: "SIAL Paris 2026 | Paris, Here We Come! 🇫🇷",
+          subtitle: "17–21 October 2026 · Paris · Hall 1 · Regione Lazio",
+          eyebrow: "Upcoming Event",
+          date: "17–21 October 2026",
+          dateIso: "17–21.10.2026",
+          location: "Hall 1 · Regione Lazio, Paris",
+          city: "Paris",
+          category: "International Exhibition",
+          paragraphs: [
+            "From **17 to 21 October 2026**, LuxurEat, Truffleat, Caviareat and Ugolini Gourmet will come together at **SIAL Paris 2026**, meeting food industry professionals, partners and buyers from around the world.",
+            "As one of the major international events for the global food industry, SIAL Paris brings together brands, products and new ideas from different markets, creating a platform to discover trends, exchange expertise and build new business connections. This year, we will present a selection centered around **truffles, caviar and Italian gourmet specialties**, showcasing the quality, tradition and versatility of Italian gastronomy.",
+            "From premium ingredients to solutions for foodservice, retail and international markets, our participation will be an opportunity to share our product vision, discover new inspirations and explore future partnerships and business opportunities."
+          ],
+          intro: "From 17 to 21 October 2026, we will be in Paris for SIAL Paris 2026, an international meeting point for the food industry, bringing together brands, professionals, buyers and partners from markets around the world.",
+          sections: [
+            ["Meet Us at SIAL Paris 2026", [
+              "From 17 to 21 October 2026, we will be in Paris for **SIAL Paris 2026**, an international meeting point for the food industry, bringing together brands, professionals, buyers and partners from markets around the world.",
+              "Our participation is an opportunity to bring the tradition, quality and creativity of Italian gastronomy to Paris and share our vision of premium ingredients and contemporary food experiences with an international audience."
+            ]],
+            ["Four Brands, One Italian Experience", "This year, **LuxurEat, Truffleat, Caviareat and Ugolini Gourmet** will come together at SIAL Paris. Each brand brings a different expression of Italian gourmet excellence. From truffles and truffle products to caviar and selected Italian specialties, our portfolio is designed to inspire new possibilities across foodservice, retail and international markets."],
+            ["From Premium Ingredients to New Opportunities", [
+              "At SIAL Paris, we are bringing more than products. We are bringing ideas about flavor, application and new market possibilities.",
+              "Through truffles, caviar and Italian gourmet specialties, we look forward to exchanging ideas with professionals from different countries and exploring opportunities in product development, foodservice, retail and international partnerships."
+            ]],
+            ["See You in Paris", "If you are attending SIAL Paris 2026, come and visit our stand. Meet our team, discover our products and explore new ideas and opportunities together."]
+          ],
+          quote: "Taste Italian excellence. Inspire new flavors, connections and opportunities.",
+          tagline: "Taste Italian excellence. Inspire new flavors, connections and opportunities.",
+          closing: "Come and meet us at Hall 1 · Regione Lazio to discover the world of LuxurEat, Truffleat, Caviareat and Ugolini Gourmet.",
+          detail: "View details",
+          mapTitle: "Open map directions",
+          calendarTitle: "Add to calendar"
+        }
+      },
+      {
         id: "roma-bar-show-2026",
         type: "exhibition",
         image: asset("media/brand-news/roma-bar-show-2026-cover.webp"),

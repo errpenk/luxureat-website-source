@@ -102,6 +102,15 @@ function initCaviarAcademy() {
         <button type="button" data-reader-open="${lang}-academy-${escapeHtml(article.slug)}">${copy.read}<span aria-hidden="true">→</span></button>
       </div>
     </article>`).join("");
+  const cards = [...list.querySelectorAll("[data-academy-item]")];
+  let matchingCards = cards;
+  const pageNav = document.createElement("nav");
+  list.after(pageNav);
+  const pagination = luxCreatePagination(pageNav, { total: () => matchingCards.length, scrollTarget: list, onChange: (page, size) => {
+    const start = (page - 1) * size;
+    cards.forEach((card) => { card.hidden = true; });
+    matchingCards.forEach((card, index) => { card.hidden = index < start || index >= start + size; });
+  } });
 
   const renderLatest = (topic = "all") => {
     const latestArticles = (topic === "all" ? articles : articles.filter((article) => article.topic === topic)).slice(0, 4);
@@ -125,12 +134,12 @@ function initCaviarAcademy() {
 
   const applyFilters = (topic) => {
     const query = search.value.trim().toLowerCase();
-    let visible = 0;
-    list.querySelectorAll("[data-academy-item]").forEach((card) => {
+    matchingCards = cards.filter((card) => {
       const matchesTopic = topic === "all" || card.dataset.academyTopic === topic;
-      card.hidden = !(matchesTopic && (!query || card.dataset.academySearchText.includes(query)));
-      if (!card.hidden) visible += 1;
+      return matchesTopic && (!query || card.dataset.academySearchText.includes(query));
     });
+    const visible = matchingCards.length;
+    pagination.reset();
     if (count) count.innerHTML = lang === "zh" ? `共显示 <strong>${visible}</strong> 篇文章` : `Showing <strong>${visible}</strong> articles`;
     if (empty) {
       empty.textContent = copy.empty;

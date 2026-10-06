@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//LuxurEat//Events//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:sial-paris-2026@luxureat.cn
+DTSTAMP:20261006T000000Z
+DTSTART;VALUE=DATE:20261017
+DTEND;VALUE=DATE:20261022
+SUMMARY:LuxurEat at SIAL Paris 2026
+LOCATION:Hall 1\, Regione Lazio\, Paris Nord Villepinte\, France
+DESCRIPTION:Meet LuxurEat\, Truffleat\, Caviareat and Ugolini Gourmet at Hall 1 in the Regione Lazio area.
+END:VEVENT
+END:VCALENDAR
