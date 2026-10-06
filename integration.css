@@ -3817,7 +3817,6 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   border: 1px solid #d4ccc0;
   transition: filter .3s ease, transform .45s ease;
 }
-.lux-event-card.is-full-image > img { aspect-ratio: auto; object-fit: contain; }
 .lux-event-card:hover > img,
 .lux-event-card:focus-visible > img {
   filter: brightness(.82);

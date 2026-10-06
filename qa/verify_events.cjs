@@ -36,7 +36,10 @@ assert(parisEvent.displayWidth === 520 && parisEvent.displayHeight === 530, "SIA
 assert(parisEvent.zh.paragraphs.length === 3 && parisEvent.en.paragraphs.length === 3, "SIAL Paris homepage introductions are incomplete");
 assert(parisEvent.zh.sections.length === 4 && parisEvent.en.sections.length === 4, "SIAL Paris bilingual details are incomplete");
 assert(parisEvent.zh.location.includes("Hall 1 · Regione Lazio") && parisEvent.en.location.includes("Hall 1 · Regione Lazio"), "SIAL Paris stand location is missing");
-assert(parisEvent.brandCardImage?.endsWith("/sial-paris-2026-brand.webp") && parisEvent.zh.cardTitle === "2026，相聚巴黎SIAL。" && parisEvent.zh.cardIntro.includes("LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet") && parisEvent.en.cardTitle === "2026, Meet Us at SIAL Paris.", "SIAL Paris Brand News preview is incomplete");
+assert(parisEvent.brandCardImage?.endsWith("/sial-paris-2026-brand.webp") && parisEvent.previewImage === parisEvent.brandCardImage, "SIAL Paris Brand News and detail images are wrong");
+assert(!parisEvent.zh.cardTitle && !parisEvent.en.cardTitle && !parisEvent.zh.cardIntro && !parisEvent.en.cardIntro, "SIAL Paris Brand News text has not reverted to the article title and intro");
+assert(parisEvent.poster?.endsWith("/sial-paris-2026.webp") && parisEvent.displayPoster?.endsWith("/sial-paris-2026-520.webp"), "SIAL Paris homepage artwork changed");
+assert(!read("integration.css").includes(".lux-event-card.is-full-image > img { aspect-ratio: auto"), "SIAL Paris thumbnail still overrides the shared banner ratio");
 for (const file of ["sial-paris-2026.webp", "sial-paris-2026-520.webp", "sial-paris-2026-160.webp"]) assert(fs.existsSync(path.join(root, "assets/media/events", file)), `SIAL Paris image is missing: ${file}`);
 assert(fs.existsSync(path.join(root, "assets/media/events/sial-paris-2026-brand.webp")), "SIAL Paris Brand News image is missing");
 assert(read("assets/sial-paris-2026.ics").includes("DTEND;VALUE=DATE:20261022"), "SIAL Paris calendar must include October 21");
