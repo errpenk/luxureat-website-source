@@ -432,6 +432,14 @@ function initLuxReader() {
           }).join("")}
         </div>
       </div>`;
+    const grid = newsMount.querySelector(".lux-news-grid");
+    const cards = [...grid.children];
+    const pageNav = document.createElement("nav");
+    grid.after(pageNav);
+    luxCreatePagination(pageNav, { total: () => cards.length, pageSize: 4, scrollTarget: newsMount, onChange: (page, size) => {
+      const start = (page - 1) * size;
+      cards.forEach((card, index) => { card.hidden = index < start || index >= start + size; });
+    } });
   };
   renderNewsCenter();
 

@@ -6555,9 +6555,11 @@ input[type="search"]::-webkit-search-decoration {
 .lux-pagination button[aria-current="page"] { border-color: #9df5ec; color: #9df5ec; }
 .lux-pagination button:disabled { opacity: .4; cursor: default; }
 .lux-pagination :is(button, select):focus-visible { outline: 2px solid #9df5ec; outline-offset: 2px; }
-.lux-product-browser + .lux-pagination { margin-left: 250px; }
 .lux-recipe-library + .lux-pagination { background: #171717; }
-@media (max-width: 767px) { .lux-product-browser + .lux-pagination { margin-left: 0; } }
+.lux-news-grid [hidden] { display: none !important; }
+.lux-news-center .lux-pagination { color: #171715; }
+.lux-news-center .lux-pagination button[aria-current="page"] { border-color: #006a64; color: #006a64; }
+.lux-news-center .lux-pagination :is(button, select):focus-visible { outline-color: #006a64; }
 
 .lux-about-section-divider {
   position: relative;
