@@ -298,12 +298,12 @@ function initLuxReader() {
         <div class="lux-recent-events-latest">
           ${latest.map((event) => {
             const copy = event[lang];
-            return copy ? `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}">
-              <img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}">
+            return copy ? `<a href="${eventHref(event.id)}" class="lux-event-card${event.brandCardImage ? " is-full-image" : ""}" data-event-open="${escapeHtml(event.id)}">
+              <img loading="lazy" decoding="async" src="${escapeHtml(event.brandCardImage || event.cardImage || event.image)}" alt="${escapeHtml(copy.cardTitle || copy.articleTitle)}">
               <span class="lux-event-card-copy">
                 <small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small>
-                <strong>${formatTitle(copy.articleTitle)}</strong>
-                <span>${escapeHtml(copy.intro)}</span>
+                <strong>${formatTitle(copy.cardTitle || copy.articleTitle)}</strong>
+                <span>${formatEmphasis(copy.cardIntro || copy.intro)}</span>
                 <span class="lux-narrative-link">${eventLabels.read}<span class="material-symbols-outlined" data-icon="arrow_forward" aria-hidden="true" translate="no"></span></span>
               </span>
             </a>` : "";
@@ -313,7 +313,7 @@ function initLuxReader() {
           <h3>${eventLabels.past}</h3>
           <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
-            return `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.cardImage || event.image)}" alt="${escapeHtml(copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.articleTitle)}</strong></span></a>`;
+            return `<a href="${eventHref(event.id)}" class="lux-event-card${event.brandCardImage ? " is-full-image" : ""}" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.brandCardImage || event.cardImage || event.image)}" alt="${escapeHtml(copy.cardTitle || copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.cardTitle || copy.articleTitle)}</strong></span></a>`;
           }).join("")}</div>
         </div>` : ""}
       </div>`;

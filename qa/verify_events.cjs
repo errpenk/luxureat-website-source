@@ -36,7 +36,9 @@ assert(parisEvent.displayWidth === 520 && parisEvent.displayHeight === 530, "SIA
 assert(parisEvent.zh.paragraphs.length === 3 && parisEvent.en.paragraphs.length === 3, "SIAL Paris homepage introductions are incomplete");
 assert(parisEvent.zh.sections.length === 4 && parisEvent.en.sections.length === 4, "SIAL Paris bilingual details are incomplete");
 assert(parisEvent.zh.location.includes("Hall 1 · Regione Lazio") && parisEvent.en.location.includes("Hall 1 · Regione Lazio"), "SIAL Paris stand location is missing");
+assert(parisEvent.brandCardImage?.endsWith("/sial-paris-2026-brand.webp") && parisEvent.zh.cardTitle === "2026，相聚巴黎SIAL。" && parisEvent.zh.cardIntro.includes("LuxurEat、Truffleat、Caviareat 与 Ugolini Gourmet") && parisEvent.en.cardTitle === "2026, Meet Us at SIAL Paris.", "SIAL Paris Brand News preview is incomplete");
 for (const file of ["sial-paris-2026.webp", "sial-paris-2026-520.webp", "sial-paris-2026-160.webp"]) assert(fs.existsSync(path.join(root, "assets/media/events", file)), `SIAL Paris image is missing: ${file}`);
+assert(fs.existsSync(path.join(root, "assets/media/events/sial-paris-2026-brand.webp")), "SIAL Paris Brand News image is missing");
 assert(read("assets/sial-paris-2026.ics").includes("DTEND;VALUE=DATE:20261022"), "SIAL Paris calendar must include October 21");
 for (const item of events) {
   assert(!Object.hasOwn(item, "status"), `${item.id} still requires a manually maintained status`);
