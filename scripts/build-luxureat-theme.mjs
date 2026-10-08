@@ -1090,7 +1090,7 @@ function luxureat_static_filter_plugin_style($html, $handle) {
         return '';
     }
     if ($handle === 'luxureat-integration' && in_array($path, array('zh', 'en'), true)) {
-        return str_replace("media='all'", "media='print' onload=\"this.onload=null;this.media='all'\"", $html)
+        return str_replace("media='all'", "media='print' onload=\\\"this.onload=null;this.media='all'\\\"", $html)
             . '<noscript>' . $html . '</noscript>';
     }
     return $html;
