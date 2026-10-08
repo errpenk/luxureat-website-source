@@ -18,7 +18,7 @@ img,video{display:block;max-width:100%}
 .lux-lang{display:inline-flex;align-items:center;gap:7px}
 .lux-lang a.active{color:#9df5ec}
 .lux-menu{display:none;border:1px solid rgba(233,195,73,.35);background:transparent;color:#e5e2e1;padding:9px 12px;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-.lux-home-hero{position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:90svh;padding-block:clamp(60px,8vh,96px);overflow:hidden;text-align:center}
+.lux-home-hero{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:auto!important;min-height:90svh;padding-block:clamp(60px,8vh,96px);overflow:hidden;text-align:center}
 .lux-home-hero>.absolute{position:absolute;inset:0;z-index:0}
 .lux-home-hero .lux-hero-video{width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(.28) contrast(1.06) brightness(.78);transform:scale(1.015)}
 .lux-hero-video-shade{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(19,19,19,.76),rgba(19,19,19,.34) 42%,rgba(19,19,19,.88)),rgba(0,0,0,.26)}
@@ -29,8 +29,8 @@ img,video{display:block;max-width:100%}
 .lux-home-hero h1 .text-secondary{color:#9df5ec}
 .lux-hero-support{max-width:672px;margin:0 auto 48px;color:#fff;font-family:var(--lux-zh-body,var(--lux-en-body));font-size:18px;line-height:1.75;font-weight:700}
 .lux-home-hero-actions{display:flex;align-items:center;justify-content:center;gap:24px}
-.lux-home-hero-action{display:block;min-height:44px;padding:10px 0 8px!important;border:0;border-bottom:1px solid currentColor;background:transparent;color:#9df5ec;font-family:var(--lux-page-heading);font-size:18px;line-height:27px;letter-spacing:.3em;text-transform:uppercase}
+.lux-home-hero-action{display:block;min-height:44px;padding:10px 0 8px!important;border:0;border-bottom:1px solid currentColor;background:transparent;color:#9df5ec;font-family:var(--lux-page-heading);font-size:18px!important;line-height:27px;letter-spacing:.3em;text-transform:uppercase}
 html[lang^="en"] .lux-home-hero h1{font-family:"Nyght Serif";font-size:clamp(56px,7vw,96px);font-weight:300;line-height:1.05;letter-spacing:-.035em}
 html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-height:1.65}
 @media(max-width:1439px){.lux-header{grid-template-columns:auto 1fr}.lux-nav{grid-column:1/-1;display:none}.lux-menu{display:inline-flex}}
-@media(max-width:720px){.lux-header{padding-inline:18px}.lux-brand{width:58px}.lux-brand img{width:54px;height:54px}.lux-menu{width:72px;height:38px;align-items:center;justify-content:center;padding:0;font-size:12px;font-weight:700}.lux-home-hero{min-height:100svh;padding-block:32px}.lux-home-hero-content{top:0}.lux-home-hero-actions{flex-direction:row;align-items:stretch;gap:12px;flex-wrap:wrap}.lux-home-hero-action{flex:0 0 auto}}
+@media(max-width:720px){.lux-header{padding-inline:18px}.lux-brand{width:58px}.lux-brand img{width:54px;height:54px}.lux-menu{width:72px;height:38px;align-items:center;justify-content:center;padding:0;font-size:12px;font-weight:700}.lux-home-hero{min-height:100svh;padding-block:32px}.lux-home-hero-content{top:0}.lux-home-hero-actions{flex-direction:row!important;align-items:stretch;gap:12px!important;flex-wrap:wrap}.lux-home-hero-action{flex:0 0 auto!important;width:auto!important}}
