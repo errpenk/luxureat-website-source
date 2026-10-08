@@ -4,13 +4,19 @@ const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) =>
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
+const luxMobileImageVersion = luxCoreUrl.searchParams.get("ver") || luxCoreUrl.searchParams.get("v") || "20261008-mobile-images-1";
+const luxVersionedMobileSource = (source) => {
+  const url = new URL(source, document.baseURI);
+  url.searchParams.set("v", luxMobileImageVersion);
+  return url.href;
+};
 const luxImageSource = (source) => {
   if (!luxIsMobile || !source) return source;
   try {
     const url = new URL(source, document.baseURI);
     const marker = url.pathname.indexOf("/assets/");
     const variant = marker < 0 ? null : window.LUXUREAT_IMAGE_VARIANTS?.[url.pathname.slice(marker + 8)];
-    return variant ? new URL(`../${variant}`, luxCoreUrl).href : source;
+    return variant ? luxVersionedMobileSource(new URL(`../${variant}`, luxCoreUrl).href) : source;
   } catch { return source; }
 };
 window.luxImageSource = luxImageSource;
@@ -216,7 +222,7 @@ if ("IntersectionObserver" in window) {
       loadLuxBackground(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "200px" : "400px" });
+  }, { rootMargin: luxIsMobile ? "900px" : "400px" });
   luxLazyBackgrounds.forEach((element) => backgroundObserver.observe(element));
 } else {
   luxLazyBackgrounds.forEach(loadLuxBackground);
@@ -224,8 +230,9 @@ if ("IntersectionObserver" in window) {
 
 if (luxIsMobile) {
   document.querySelectorAll("img[data-lux-mobile-src]").forEach((image) => {
-    if (image.dataset.luxSrc) image.dataset.luxSrc = image.dataset.luxMobileSrc;
-    else image.src = image.dataset.luxMobileSrc;
+    image.srcset = "";
+    if (image.dataset.luxSrc) image.dataset.luxSrc = luxVersionedMobileSource(image.dataset.luxMobileSrc);
+    else image.src = luxVersionedMobileSource(image.dataset.luxMobileSrc);
     delete image.dataset.luxMobileSrc;
   });
 }
@@ -240,7 +247,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "600px 0px" : "1200px 0px" });
+  }, { rootMargin: luxIsMobile ? "1200px 0px" : "1200px 0px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);
@@ -254,7 +261,7 @@ if ("IntersectionObserver" in window) {
       target.loading = "eager";
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "600px 0px" : "1000px 0px" });
+  }, { rootMargin: luxIsMobile ? "1200px 0px" : "1000px 0px" });
   luxNativeLazyImages.forEach((image) => nativeImageObserver.observe(image));
 }
 

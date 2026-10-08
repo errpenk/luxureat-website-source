@@ -40,7 +40,7 @@ assert.ok(size("assets/fonts/LuxurEatZhiSong-market-critical.woff2") <= 76 * 102
 assert.ok(size("assets/fonts/NyghtSerif-Regular-market.woff2") + size("assets/fonts/Spectral-Regular-market.woff2") <= 32 * 1024, "English market first-view fonts exceed 32 KB");
 assert.ok(size("assets/media/market-services/china-market-hero-mobile.webp") <= 72 * 1024, "mobile China Market hero exceeds 72 KB");
 const coreRuntime = read("assets/js/core.js").toString();
-assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('luxIsMobile ? "600px 0px" : "1000px 0px"'), "native lazy images are not promoted near the viewport");
+assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('luxIsMobile ? "1200px 0px" : "1000px 0px"'), "native lazy images are not promoted near the viewport");
 assert.match(coreRuntime, /\[data-lux-bg\], \[data-lux-home-bg\]/, "homepage photographic backgrounds are not deferred");
 for (const locale of ["zh", "en"]) {
   const about = read(`${locale}/about-us.html`).toString();
@@ -61,7 +61,7 @@ assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScrip
 assert.ok(gzipSize("assets/js/chat.js") <= 4 * 1024, "deferred chat interface exceeds 4 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
-assert.match(core, /rootMargin: luxIsMobile \? "600px 0px" : "1200px 0px"/, "mobile images are loaded too far ahead of the viewport");
+assert.match(core, /rootMargin: luxIsMobile \? "1200px 0px" : "1200px 0px"/, "mobile images start loading too late for scrolling");
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(core, /const loadHomeEvents = \(\) => eventLoading \|\|=/, "homepage events still pull the product and journal data into the first view");
@@ -113,8 +113,8 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /<html class="[^"]*lux-home-root/);
   assert.match(home, /data-lux-critical-fonts/);
   assert.doesNotMatch(home, /href="cooperation\.html#private-label">(?:了解合作方案|Explore Partnership)<\/a>/, "removed partnership CTA returned");
-  assert.match(home, /home-china-partnership-caviar-mobile\.webp 720w,[^\"]+" sizes="\(max-width: 600px\) 76vw, \(max-width: 900px\) 590px, 34vw"/, "partnership image sizes no longer match its layout");
-  assert.match(home, /home-china-partnership-truffles-mobile\.webp 720w,[^\"]+" sizes="\(max-width: 600px\) 50vw, \(max-width: 900px\) 346px, 20vw"/, "partnership inset sizes no longer match its layout");
+  assert.match(home, /home-china-partnership-caviar-mobile\.webp\?v=[^ ]+ 640w,[^\"]+" sizes="\(max-width: 600px\) 76vw, \(max-width: 900px\) 590px, 34vw"/, "partnership image sizes no longer match its layout");
+  assert.match(home, /home-china-partnership-truffles-mobile\.webp\?v=[^ ]+ 720w,[^\"]+" sizes="\(max-width: 600px\) 50vw, \(max-width: 900px\) 346px, 20vw"/, "partnership inset sizes no longer match its layout");
   assert.match(home, /font-display:swap/);
   assert.doesNotMatch(home, /font-display:block/);
   assert.doesNotMatch(home, /\.fade-in-up\s*\{[^}]*opacity:\s*0|@keyframes fadeInUp\s*\{[^}]*opacity:\s*0/, "home hero animation must not hide the LCP text");
@@ -148,8 +148,8 @@ for (const lang of ["zh", "en"]) for (const name of fs.readdirSync(path.join(roo
 for (const runtime of ["academy", "events", "journal", "products"]) {
   assert.match(read(`assets/js/${runtime}.js`).toString(), /luxResponsiveData/, `${runtime} does not select responsive dynamic images`);
 }
-assert.match(read("zh/index.html").toString(), /data-lux-mobile-src="\.\.\/assets\/media\/brand\/home-service-selection-mobile\.webp"/);
-assert.match(read("zh/index.html").toString(), /srcset="\.\.\/assets\/media\/brand\/[^"']+-mobile\.webp \d+w, \.\.\/assets\/media\/brand\/[^"']+ \d+w" sizes="100vw"/, "critical responsive images do not expose a native srcset");
+assert.match(read("zh/index.html").toString(), /data-lux-mobile-src="\.\.\/assets\/media\/brand\/home-service-selection-mobile\.webp\?v=[^"]+"/);
+assert.match(read("zh/index.html").toString(), /srcset="\.\.\/assets\/media\/brand\/[^"']+-mobile\.webp\?v=[^ ]+ \d+w, \.\.\/assets\/media\/brand\/[^"']+ \d+w" sizes="100vw"/, "critical responsive images do not expose a native srcset");
 for (const file of fs.readdirSync(path.join(root, "assets/media/brand")).filter((name) => name.endsWith("-mobile.webp"))) {
   assert.ok(size(`assets/media/brand/${file}`) <= 120 * 1024, `${file} exceeds the 120 KB mobile image budget`);
 }

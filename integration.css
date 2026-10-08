@@ -5639,7 +5639,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 @media (max-width: 720px) {
   #inquiry {
-    background-image: linear-gradient(rgba(8, 8, 8, .8), rgba(8, 8, 8, .92)), url("assets/media/brand/b2b-quotation-team-720.webp");
+    background-image: linear-gradient(rgba(8, 8, 8, .8), rgba(8, 8, 8, .92)), url("assets/media/brand/b2b-quotation-team-720.webp?v=20261008-mobile-images-1");
   }
 }
 
@@ -13063,30 +13063,30 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   .lux-home-partnership-process {
     background:
       linear-gradient(rgba(9, 12, 13, .9), rgba(9, 12, 13, .94)),
-      url("assets/media/brand/home-partnership-process-mobile.webp") center / cover no-repeat;
+      url("assets/media/brand/home-partnership-process-mobile.webp?v=20261008-mobile-images-1") center / cover no-repeat;
   }
 }
 
 
 @media (max-width: 640px) {
-  .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/cert-food-safety-720.webp"); }
-  .lux-card-photo-two { --lux-card-bg: url("assets/media/brand/cert-quality-products-mobile.webp"); }
-  #core-services .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/gifting-service-volume-720.webp"); }
+  .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/cert-food-safety-720.webp?v=20261008-mobile-images-1"); }
+  .lux-card-photo-two { --lux-card-bg: url("assets/media/brand/cert-quality-products-mobile.webp?v=20261008-mobile-images-1"); }
+  #core-services .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/gifting-service-volume-720.webp?v=20261008-mobile-images-1"); }
   .lux-home-harvest {
-    background-image: linear-gradient(rgba(102, 100, 96, .86), rgba(102, 100, 96, .86)), url("assets/media/brand/home-values-ribbed-background-720.webp");
+    background-image: linear-gradient(rgba(102, 100, 96, .86), rgba(102, 100, 96, .86)), url("assets/media/brand/home-values-ribbed-background-720.webp?v=20261008-mobile-images-1");
   }
   .lux-home-harvest .lux-home-editorial-frame::before {
-    background-image: linear-gradient(rgba(16, 16, 16, .76), rgba(16, 16, 16, .76)), url("assets/media/brand/home-values-caviar-plating-mobile.webp");
+    background-image: linear-gradient(rgba(16, 16, 16, .76), rgba(16, 16, 16, .76)), url("assets/media/brand/home-values-caviar-plating-mobile.webp?v=20261008-mobile-images-1");
   }
-  #mission-objectives { background-image: url("assets/media/brand/about-mission-rome-720.webp"); }
+  #mission-objectives { background-image: url("assets/media/brand/about-mission-rome-720.webp?v=20261008-mobile-images-1"); }
   .lux-gift-catalogue-section {
-    background-image: linear-gradient(rgba(10, 10, 10, .68), rgba(10, 10, 10, .82)), url("assets/media/brand/gifting-catalogue-texture-720.webp");
+    background-image: linear-gradient(rgba(10, 10, 10, .68), rgba(10, 10, 10, .82)), url("assets/media/brand/gifting-catalogue-texture-720.webp?v=20261008-mobile-images-1");
   }
   .lux-collab-mosaic-lead {
-    background-image: linear-gradient(rgba(208, 172, 45, .9), rgba(208, 172, 45, .9)), url("assets/media/brand/gifting-collab-lead-caviar-mobile.webp");
+    background-image: linear-gradient(rgba(208, 172, 45, .9), rgba(208, 172, 45, .9)), url("assets/media/brand/gifting-collab-lead-caviar-mobile.webp?v=20261008-mobile-images-1");
   }
-  .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(2) { --lux-market-image: url("assets/media/brand/home-values-contemporary-caviar-720.webp"); }
-  .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(3) { --lux-market-image: url("assets/media/brand/values-sustainability-720.webp"); }
+  .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(2) { --lux-market-image: url("assets/media/brand/home-values-contemporary-caviar-720.webp?v=20261008-mobile-images-1"); }
+  .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(3) { --lux-market-image: url("assets/media/brand/values-sustainability-720.webp?v=20261008-mobile-images-1"); }
 }
 
 

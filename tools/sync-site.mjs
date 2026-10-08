@@ -114,12 +114,12 @@ function addMobileImageSources(file, html, dimensions) {
         .map((suffix) => source.replace(/\.(?:avif|webp|png|jpe?g)$/i, suffix))
         .find((candidate) => fs.existsSync(path.resolve(path.dirname(file), candidate)));
     if (!mobile) return tag;
-    if (!fs.existsSync(path.resolve(path.dirname(file), mobile))) return tag;
+    if (!fs.existsSync(path.resolve(path.dirname(file), mobile.split(/[?#]/, 1)[0]))) return tag;
     let output = /\bdata-lux-mobile-src=/.test(tag)
       ? tag
       : tag.replace(/^<img\b/i, `<img data-lux-mobile-src="${mobile}"`);
     if (!/\bdata-lux-src=/.test(output)) {
-      const mobileWidth = dimensions.get(mobile)?.[0];
+      const mobileWidth = dimensions.get(mobile.split(/[?#]/, 1)[0])?.[0];
       const desktopWidth = dimensions.get(source)?.[0];
       if (mobileWidth && desktopWidth) {
         const srcset = `srcset="${mobile} ${mobileWidth}w, ${source} ${desktopWidth}w"`;
@@ -297,6 +297,7 @@ function render(page, dimensions) {
   html = addMobileImageSources(file, html, dimensions);
   html = addImageDimensions(html, dimensions);
   html = deferHeroVideos(html);
+  html = html.replace(/(\.\.\/assets\/media\/[^"'\s,]+-(?:mobile|720)\.webp)(?:\?v=[^"'\s,]+)?/g, `$1?v=${assetVersion}`);
   return [file, html];
 }
 

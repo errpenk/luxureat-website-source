@@ -9,7 +9,7 @@ const manifestFile = path.join(root, "assets/data/image-variants.js");
 const checkOnly = process.argv.includes("--check");
 const mobileWidth = 720;
 const sourceThreshold = 100 * 1024;
-const outputLimit = 72 * 1024;
+const outputLimit = 48 * 1024;
 const raster = /\.(?:avif|jpe?g|png|webp)$/i;
 
 const walk = (directory) => fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -36,7 +36,7 @@ for (const source of originals) {
       const temporary = `${target}.tmp-${process.pid}`;
       for (const quality of [56, 48, 40, 32, 24, 20]) {
         if (fs.existsSync(temporary)) fs.rmSync(temporary);
-        await sharp(target).rotate().resize({ width: mobileWidth, withoutEnlargement: true }).webp({ quality, effort: 6 }).toFile(temporary);
+        await sharp(target).rotate().resize({ width: 640, withoutEnlargement: true }).webp({ quality, effort: 6 }).toFile(temporary);
         if (fs.statSync(temporary).size <= outputLimit) break;
       }
       fs.renameSync(temporary, target);
@@ -53,6 +53,10 @@ for (const source of originals) {
         if (fs.existsSync(temporary)) fs.rmSync(temporary);
         await sharp(source).rotate().resize({ width: mobileWidth, withoutEnlargement: true }).webp({ quality, effort: 6 }).toFile(temporary);
         if (fs.statSync(temporary).size <= outputLimit) break;
+      }
+      if (fs.statSync(temporary).size > outputLimit) {
+        fs.rmSync(temporary);
+        await sharp(source).rotate().resize({ width: 560, withoutEnlargement: true }).webp({ quality: 20, effort: 6 }).toFile(temporary);
       }
       fs.renameSync(temporary, target);
       generated += 1;
