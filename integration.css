@@ -2697,6 +2697,14 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
   padding-top: 28px;
   border-top: 1px solid rgba(255, 255, 255, .18);
 }
+#maison-overview .lux-home-maison-head {
+  display: flex;
+  justify-content: center;
+  padding-top: 0;
+  border-top: 0;
+  text-align: center;
+}
+#maison-overview .lux-home-maison-head > div:first-child { align-items: center; }
 .lux-home-maison-head > div:first-child,
 .lux-home-maison-intro {
   display: flex;
@@ -8811,6 +8819,26 @@ body {
   gap: clamp(34px, 4vw, 68px);
   align-items: stretch;
 }
+.lux-home-market-system > .lux-home-maison-reach {
+  width: min(100%, 1600px);
+  margin: clamp(38px, 5vw, 64px) auto 0;
+}
+.lux-home-market-system .lux-home-maison-reach > span {
+  color: #e9c349;
+  font-size: 18px;
+  line-height: 1.75;
+  letter-spacing: normal;
+}
+.lux-home-market-system .lux-home-maison-reach > a {
+  color: #e9c349;
+  font: 600 18px/1.75 var(--lux-page-heading);
+  letter-spacing: normal;
+}
+.lux-home-market-system .lux-home-market-collage > .lux-home-market-stat { border: 0; }
+.lux-home-market-system .lux-market-card-back,
+.lux-home-market-system .lux-market-card-front > span {
+  border: 1px solid rgba(255, 255, 255, .8);
+}
 .lux-home-market-collage {
   display: grid;
   grid-template-columns: minmax(180px, .72fr) minmax(0, 1.28fr);
@@ -10112,7 +10140,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(76px, 9vw, 138px) max(28px, calc((100vw - 1600px) / 2));
+  padding: clamp(76px, 9vw, 138px) max(80px, calc((100vw - 1440px) / 2 + 80px));
   align-items: center;
   background: #f2efe9;
   color: #171715;
@@ -10418,7 +10446,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 @media (max-width: 900px) {
   .lux-home-why {
     grid-template-columns: 1fr;
-    padding-inline: max(20px, calc((100vw - 720px) / 2));
+    padding-inline: 80px;
   }
   .lux-home-why-media {
     min-height: clamp(430px, 88vw, 620px);
@@ -10427,7 +10455,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 @media (max-width: 600px) {
   .lux-home-why {
     width: 100%;
-    padding-inline: 16px;
+    padding-inline: 24px;
     padding-block: 64px;
   }
   .lux-home-why-media {
@@ -10992,6 +11020,7 @@ html[lang^="en"] .lux-reader-quote {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  background-color: #000;
   background-image: linear-gradient(rgba(5, 13, 13, .81), rgba(5, 13, 13, .89)), var(--lux-home-bg, none);
   background-position: center;
   background-size: cover;
@@ -12586,9 +12615,9 @@ html[lang^="zh"] .lux-cert-awards h2 {
   z-index: 1;
 }
 .lux-home-partnership-manufacturing-top {
-  width: min(100%, 1560px);
+  width: 100%;
   margin: 0 auto;
-  padding: clamp(72px, 8vw, 128px) clamp(24px, 5vw, 80px) clamp(42px, 4vw, 60px);
+  padding: clamp(72px, 8vw, 128px) max(clamp(24px, 5vw, 80px), calc((100vw - 1400px) / 2)) clamp(42px, 4vw, 60px);
 }
 .lux-home-partnership-manufacturing-head {
   position: relative;
@@ -12995,8 +13024,11 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
 
 
 .lux-home-partnership-manufacturing-gallery {
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+  width: 100%;
+  margin-inline: 0;
+}
+@media (max-width: 767px) {
+  .lux-home-why { padding-inline: 24px; }
 }
 .lux-home-partnership-manufacturing-gallery figure[data-partnership-image] {
   cursor: zoom-in;
@@ -13691,6 +13723,24 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
   .lux-brand-news-links [data-news-open] { grid-template-columns: 74px minmax(0, 1fr) auto; gap: 12px; }
   .lux-brand-news-event-link > img,
   .lux-brand-news-links [data-news-open] > img { width: 74px; height: 54px; }
+}
+
+html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-meta { font-size: 12px !important; }
+html[lang^="zh"] body .lux-brand-news-sheet #lux-reader-title {
+  font-size: clamp(42px, 5vw, 72px) !important;
+  line-height: 1.12 !important;
+}
+html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-intro {
+  font-size: 18px !important;
+  line-height: 1.75 !important;
+}
+html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy h3 {
+  font-size: 30px !important;
+  line-height: 1.2 !important;
+}
+html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
+  font-size: 18px !important;
+  line-height: 1.78 !important;
 }
 
 .lux-event-frame > a { display: block; width: 100%; height: 100%; }

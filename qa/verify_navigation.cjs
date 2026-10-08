@@ -162,7 +162,7 @@ assert(journalRuntime.includes('LuxureatBackInternalLink') && productRuntime.inc
 
 const submenuTargets = {
   zh: {
-    "index.html": ["meet-us", "selected-products", "italian-food-culture", "maison-overview", "market-system", "brand-timeline", "china-partnership", "partnership-process"],
+    "index.html": ["meet-us", "selected-products", "italian-food-culture", "market-system", "brand-timeline", "china-partnership", "partnership-process"],
     "about-us.html": ["about-us", "featured", "brand-promise", "seasonal-notes"],
     "product.html": ["product-catalogue"],
     "new.html": ["olive-oil", "pizza", "gelato"],
@@ -176,7 +176,7 @@ const submenuTargets = {
     "contact.html": ["brand-consultation", "global-footprint"],
   },
   en: {
-    "index.html": ["meet-us", "selected-products", "italian-food-culture", "maison-overview", "market-system", "brand-timeline", "china-partnership", "partnership-process"],
+    "index.html": ["meet-us", "selected-products", "italian-food-culture", "market-system", "brand-timeline", "china-partnership", "partnership-process"],
     "about-us.html": ["about-us", "featured", "brand-promise", "seasonal-notes"],
     "product.html": ["product-catalogue"],
     "new.html": ["olive-oil", "pizza", "gelato"],

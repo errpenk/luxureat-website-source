@@ -208,7 +208,7 @@ document.addEventListener("submit", (event) => {
 const luxLazyBackgrounds = document.querySelectorAll("[data-lux-bg], [data-lux-home-bg]");
 const loadLuxBackground = (element) => {
   if (element.dataset.luxHomeBg) {
-    element.style.setProperty("--lux-home-bg", `url("${luxImageSource(element.dataset.luxHomeBg)}")`);
+    element.style.setProperty("--lux-home-bg", `url("${new URL(luxImageSource(element.dataset.luxHomeBg), document.baseURI).href}")`);
     delete element.dataset.luxHomeBg;
     return;
   }
@@ -622,7 +622,7 @@ const luxMenu = document.querySelector(".lux-menu");
 
 const luxNavigation = {
   zh: [
-    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["品牌概览", "maison-overview"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["合作流程", "partnership-process"]]],
+    ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["合作流程", "partnership-process"]]],
     ["about-us.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["品牌承诺", "brand-promise"], ["时令随笔", "seasonal-notes"]]],
     ["new.html", "热门新品", [["橄榄油", "olive-oil"], ["披萨", "pizza"], ["意式手工冰淇淋", "gelato"]]],
     ["product.html", "系列产品", [["全部分类", "product-catalogue"], ["鱼子酱", "?category=caviar#product-catalogue"], ["松露", "?category=truffle#product-catalogue"], ["披萨", "?category=pizza#product-catalogue"], ["橄榄油", "?category=olive-oil#product-catalogue"], ["意大利面", "?category=pasta#product-catalogue"], ["意式手工冰淇淋", "?category=gelato#product-catalogue"]]],
@@ -636,7 +636,7 @@ const luxNavigation = {
     ["contact.html", "联系我们", [["品牌咨询", "brand-consultation"], ["全球足迹", "global-footprint"]]],
   ],
   en: [
-    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Group Overview", "maison-overview"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
+    ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
     ["about-us.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Brand Promise", "brand-promise"], ["Seasonal Notes", "seasonal-notes"]]],
     ["new.html", "New Arrivals", [["Olive Oil", "olive-oil"], ["Pizza", "pizza"], ["Gelato", "gelato"]]],
     ["product.html", "Products", [["All Categories", "product-catalogue"], ["Caviar", "?category=caviar#product-catalogue"], ["Truffle", "?category=truffle#product-catalogue"], ["Pizza", "?category=pizza#product-catalogue"], ["Olive Oil", "?category=olive-oil#product-catalogue"], ["Italian Pasta", "?category=pasta#product-catalogue"], ["Italian Gelato", "?category=gelato#product-catalogue"]]],
