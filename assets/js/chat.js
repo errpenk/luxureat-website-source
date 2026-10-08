@@ -26,8 +26,6 @@
 
   const greeting = document.createElement("aside");
   greeting.className = "lux-chat-greeting";
-  greeting.setAttribute("role", "dialog");
-  greeting.setAttribute("aria-modal", "false");
   greeting.setAttribute("aria-labelledby", "lux-chat-greeting-title");
   greeting.hidden = true;
   greeting.innerHTML = `<button type="button" class="lux-chat-greeting-close" data-lux-chat-close aria-label="${copy.close}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><p id="lux-chat-greeting-title"><span aria-hidden="true">👋</span>${copy.greeting}</p><div><button type="button" data-lux-chat-open>${copy.question}</button><button type="button" data-lux-chat-open>${copy.more}</button></div>`;
