@@ -196,7 +196,7 @@
     if (!enteredFromSite && (!navigationType || navigationType === "navigate")) sessionStorage.removeItem(greetingKey);
     shown = sessionStorage.getItem(greetingKey) === "1";
   } catch { /* Storage may be disabled. */ }
-  if (!shown) setTimeout(() => {
+  if (!shown && !matchMedia("(max-width: 767px)").matches) setTimeout(() => {
     try { sessionStorage.setItem(greetingKey, "1"); } catch { /* Storage may be disabled. */ }
     greeting.hidden = false;
   }, 900);

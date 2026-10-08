@@ -282,9 +282,16 @@ for (const file of require("node:fs").readdirSync("zh").filter((name) => name.en
 }
 const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
 assert(registeredTextFonts.length === 0, "shared CSS still registers stale text fonts");
+for (const locale of ["zh", "en"]) {
+  for (const name of require("node:fs").readdirSync(locale).filter((file) => file.endsWith(".html"))) {
+    const faces = read(`${locale}/${name}`).match(/<style data-lux-critical-fonts>(.*?)<\/style>/s)?.[1] || "";
+    const families = [...faces.matchAll(/@font-face\{font-family:"([^"]+)"/g)].map((match) => match[1]);
+    assert(families.every((family) => locale === "en" ? ["Nyght Serif", "Spectral"].includes(family) : /KingHwa|ZhiSong/.test(family)), `${locale}/${name} registers an unapproved text font`);
+  }
+}
 assert(integrationStyles.includes('MaterialSymbolsOutlined-subset.ttf'), "local Material Symbols subset is missing");
 assert(["en", "zh"].flatMap((locale) => require("node:fs").readdirSync(locale).filter((name) => name.endsWith(".html")).map((name) => `${locale}/${name}`)).every((file) => !/<link\b[^>]*href=["']https:\/\/fonts\.googleapis\.com\//i.test(read(file))), "a page still depends on Google Fonts");
-assert(read("zh/index.html").includes('KingHwaOldSong-home-complete.woff2') && read("zh/index.html").includes('class="lux-home-page '), "Chinese homepage does not use its complete home font subset");
+assert(read("zh/index.html").includes('KingHwaOldSong-home-critical.woff2') && read("zh/index.html").includes('KingHwaOldSong-home-complete.woff2') && read("zh/index.html").includes('class="lux-home-page '), "Chinese homepage does not use its critical and complete home font subsets");
 assert(read("en/index.html").includes('NyghtSerif-home-critical.woff2') && read("en/index.html").includes('Spectral-home-critical.woff2') && read("en/index.html").includes('class="lux-home-page '), "English homepage does not use its reduced first-view fonts");
 assert(!read("zh/index.html").includes('rel="preload" href="../assets/fonts/KingHwaOldSong-subset.woff2"'), "Chinese homepage still forces the full KingHwa font into the critical path");
 assert(!require("node:fs").existsSync("assets/fonts/LanternMingA-subset.woff2") && !require("node:fs").existsSync("assets/fonts/LanternMing-SOURCE.md"), "retired font assets remain in the site bundle");
@@ -399,7 +406,7 @@ assert(integrationStyles.includes('font-family: "Material Symbols Outlined" !imp
 assert(integrationStyles.includes('.material-symbols-outlined::before') && integrationStyles.includes('content: attr(data-icon)'), "material icons do not render from non-translatable attributes");
 assert(!/<span\b[^>]*\bmaterial-symbols-outlined\b[^>]*>\s*[a-z0-9_]+\s*<\/span>/i.test(productRuntime + journalRuntime), "a dynamic material icon still exposes translatable ligature text");
 assert(integrationStyles.includes('font-size: 18px !important') && integrationStyles.includes('line-height: 1.65 !important'), "English body copy does not meet the enlarged reading scale");
-assert(read("assets/data/products.js").includes("subtitle: chinese") && integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && integrationStyles.includes('font-family: "KingHwa Old Song Site" !important'), "Chinese product-name data or its English-interface KingHwa styling is missing");
+assert(read("assets/data/products.js").includes("subtitle: chinese") && !integrationStyles.includes('html[lang^="en"] body [lang^="zh"]') && !read("en/product.html").includes('font-family:"KingHwa Old Song Site"'), "English interface registers a Chinese text font");
 const zhBlog = read("zh/blog.html");
 assert(zhBlog.includes("从松露、鱼子酱与橄榄油，到美食词典、生产者与产地故事"), "Chinese Blog kicker is outdated");
 const academyRuntime = read("assets/js/academy.js");

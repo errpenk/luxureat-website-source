@@ -183,7 +183,7 @@ function deferHeroVideos(html) {
 
 function fontPreloads(page) {
   const zhCritical = {
-    home: ["KingHwaOldSong-home-complete.woff2", "LuxurEatZhiSong-home-complete.woff2"],
+    home: ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2"],
     journal: ["KingHwaOldSong-journal-critical.woff2", "LuxurEatZhiSong-journal-critical.woff2"],
     products: ["KingHwaOldSong-caviar-critical.woff2", "LuxurEatZhiSong-caviar-critical.woff2"],
     new: ["KingHwaOldSong-news-critical.woff2", "LuxurEatZhiSong-news-critical.woff2"],
@@ -215,10 +215,10 @@ function fontPreloads(page) {
       ...(page.key === "home" ? [["KingHwaOldSong-hero-critical.woff2", "KingHwa Hero Critical", 700]] : []),
       [critical[0], "KingHwa Page Critical", 700, "normal", page.key !== "home"],
       ...(page.key === "products" ? [["KingHwaOldSong-labels-critical.woff2", "KingHwa Labels Critical", 700, "normal", false]] : []),
-      [page.key === "home" ? critical[0] : "KingHwaOldSong-site.woff2", "KingHwa Old Song Site", 700, "normal", false],
+      [page.key === "home" ? "KingHwaOldSong-home-complete.woff2" : "KingHwaOldSong-site.woff2", "KingHwa Old Song Site", 700, "normal", false],
       ...(page.key === "home" ? [["LuxurEatZhiSong-hero-critical.woff2", "ZhiSong Hero Critical", 400]] : []),
       [critical[1], "ZhiSong Page Critical", 400, "normal", page.key !== "home"],
-      [page.key === "home" ? critical[1] : "LuxurEatZhiSong-site.woff2", "LuxurEat ZhiSong Site", 400, "normal", false],
+      [page.key === "home" ? "LuxurEatZhiSong-home-complete.woff2" : "LuxurEatZhiSong-site.woff2", "LuxurEat ZhiSong Site", 400, "normal", false],
     ]
     : page.key === "home"
       ? [
@@ -235,9 +235,6 @@ function fontPreloads(page) {
         ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
         ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
       ];
-  if (page.lang === "en" && ["home", "products"].includes(page.key)) {
-    fonts.push(["KingHwaOldSong-labels-critical.woff2", "KingHwa Old Song Site", 700, "normal", false]);
-  }
   const versionFor = (font) => ["KingHwaOldSong-home-complete.woff2", "LuxurEatZhiSong-home-complete.woff2"].includes(font) ? `${assetVersion}-home-font6` : ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
