@@ -4,7 +4,7 @@ const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) =>
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
-const luxMobileImageVersion = luxCoreUrl.searchParams.get("ver") || luxCoreUrl.searchParams.get("v") || "20261008-mobile-images-1";
+const luxMobileImageVersion = "20261008-mobile-images-1";
 const luxVersionedMobileSource = (source) => {
   const url = new URL(source, document.baseURI);
   url.searchParams.set("v", luxMobileImageVersion);
