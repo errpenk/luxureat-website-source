@@ -114,6 +114,7 @@ assert(!generatedPages.includes('data-account-open') && !generatedPages.includes
 assert(fs.statSync(path.join(themeDir, 'screenshot.png')).size <= 100 * 1024, 'theme preview screenshot stays below 100 KB');
 assert(!walk(themeDir).some((file) => path.basename(file) === '.DS_Store'), 'theme package excludes Finder metadata');
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
+assert(functionsPhp.includes("$handle === 'luxureat-integration' && in_array($path, array('zh', 'en'), true)") && functionsPhp.includes("media='print' onload"), 'WordPress home defers shared CSS after inline first-view styles');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
 assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'chat', 'product-data', 'products')"), 'functions.php loads shared and product behavior in dependency order');

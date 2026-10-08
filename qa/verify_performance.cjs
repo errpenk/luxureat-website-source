@@ -87,6 +87,11 @@ assert.doesNotMatch(core, /scrollRestoration|luxureatScroll:|setTimeout\(retry, 
 
 for (const lang of ["zh", "en"]) {
   const home = read(`${lang}/index.html`).toString();
+  assert.match(home, /<style data-lux-home-critical>[\s\S]*?\.lux-home-hero/ , `${lang} home lacks inline first-view CSS`);
+  for (const stylesheet of ["tailwind-home", "newsletter", "home-watermarks-lock"]) {
+    assert.match(home, new RegExp(`${stylesheet}\\.css[^\"]*\" media=\"print\" onload=`), `${lang} home ${stylesheet} still blocks first paint`);
+  }
+  assert.match(home, /integration\.css[^\"]*" media="print" onload=/, `${lang} static home integration CSS still blocks first paint`);
   assert.doesNotMatch(home, /(?:preconnect|dns-prefetch)[^>]+embed\.tawk\.to/, "homepage still connects to chat before user intent");
   assert.match(home, /assets\/js\/chat\.js/, "homepage does not load the lightweight local chat greeting");
   assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite-v2\.webp/);

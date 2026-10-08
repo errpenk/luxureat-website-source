@@ -1089,6 +1089,10 @@ function luxureat_static_filter_plugin_style($html, $handle) {
     if (isset(luxureat_static_routes()[$path]) && in_array($handle, array('wc-blocks-style', 'woocommerce-inline'), true)) {
         return '';
     }
+    if ($handle === 'luxureat-integration' && in_array($path, array('zh', 'en'), true)) {
+        return str_replace("media='all'", "media='print' onload=\"this.onload=null;this.media='all'\"", $html)
+            . '<noscript>' . $html . '</noscript>';
+    }
     return $html;
 }
 add_filter('style_loader_tag', 'luxureat_static_filter_plugin_style', PHP_INT_MAX, 2);
