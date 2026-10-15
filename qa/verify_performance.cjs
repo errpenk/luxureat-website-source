@@ -19,6 +19,7 @@ const htaccess = read(".htaccess").toString();
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
 assert.match(htaccess, /css\|js\|mjs\|ttf\|woff2/, "static TTF fonts do not receive the immutable cache lifetime");
 assert.ok(size("assets/media/brand/home-hero-truffle-poster-lite-v2.webp") <= 9 * 1024, "homepage delivery poster exceeds 9 KB");
+assert.ok(size("assets/media/brand/home-topic-01-olive-mobile.webp") <= 20 * 1024, "mobile olive card exceeds 20 KB");
 assert.ok(size("assets/media/brand/luxureat-logo-144.webp") <= 5 * 1024, "homepage delivery logo exceeds 5 KB");
 assert.ok(size("assets/media/brand/luxureat-logo-64.webp") <= 2 * 1024 && size("assets/media/brand/luxureat-logo-96.webp") <= 3 * 1024, "navigation logos exceed their delivery budgets");
 for (const service of ["selection", "partnership", "foodservice"]) {
@@ -44,7 +45,7 @@ assert.ok(size("assets/fonts/LuxurEatZhiSong-market-critical.woff2") <= 76 * 102
 assert.ok(size("assets/fonts/NyghtSerif-Regular-market.woff2") + size("assets/fonts/Spectral-Regular-market.woff2") <= 32 * 1024, "English market first-view fonts exceed 32 KB");
 assert.ok(size("assets/media/market-services/china-market-hero-mobile.webp") <= 72 * 1024, "mobile China Market hero exceeds 72 KB");
 const coreRuntime = read("assets/js/core.js").toString();
-assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('luxIsMobile ? "1200px 0px" : "1000px 0px"'), "native lazy images are not promoted near the viewport");
+assert.ok(coreRuntime.includes('img[loading="lazy"]:not([data-lux-src])') && coreRuntime.includes('target.loading = "eager"') && coreRuntime.includes('luxIsMobile ? "600px 0px" : "1000px 0px"'), "native lazy images are not promoted near the viewport");
 assert.match(coreRuntime, /\[data-lux-bg\], \[data-lux-home-bg\]/, "homepage photographic backgrounds are not deferred");
 for (const locale of ["zh", "en"]) {
   const about = read(`${locale}/about-us.html`).toString();
@@ -65,7 +66,7 @@ assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScrip
 assert.ok(gzipSize("assets/js/chat.js") <= 4 * 1024, "deferred chat interface exceeds 4 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
-assert.match(core, /rootMargin: luxIsMobile \? "1200px 0px" : "1200px 0px"/, "mobile images start loading too late for scrolling");
+assert.match(core, /rootMargin: luxIsMobile \? "600px 0px" : "1200px 0px"/, "mobile images start loading too late for scrolling");
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
 assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
 assert.match(core, /const loadHomeEvents = \(\) => eventLoading \|\|=/, "homepage events still pull the product and journal data into the first view");
@@ -99,6 +100,8 @@ for (const lang of ["zh", "en"]) {
   assert.doesNotMatch(home, /(?:preconnect|dns-prefetch)[^>]+embed\.tawk\.to/, "homepage still connects to chat before user intent");
   assert.match(home, /assets\/js\/chat\.js/, "homepage does not load the lightweight local chat greeting");
   assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite-v2\.webp/);
+  assert.match(home, /home-topic-01-olive-mobile\.webp\?v=[^ ]+ 720w/, `${lang} home lacks the mobile olive card`);
+  assert.match(home, /assets\/js\/core\.js\?v=[^"']+-mobile-prefetch2/, `${lang} home still references cached image loading code`);
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
   assert.match(home, /data-lux-deferred-scripts/);

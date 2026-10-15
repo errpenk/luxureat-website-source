@@ -222,7 +222,7 @@ if ("IntersectionObserver" in window) {
       loadLuxBackground(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "900px" : "400px" });
+  }, { rootMargin: luxIsMobile ? "500px" : "400px" });
   luxLazyBackgrounds.forEach((element) => backgroundObserver.observe(element));
 } else {
   luxLazyBackgrounds.forEach(loadLuxBackground);
@@ -247,7 +247,7 @@ if ("IntersectionObserver" in window) {
       loadLuxImage(target);
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "1200px 0px" : "1200px 0px" });
+  }, { rootMargin: luxIsMobile ? "600px 0px" : "1200px 0px" });
   luxLazyImages.forEach((image) => imageObserver.observe(image));
 } else {
   luxLazyImages.forEach(loadLuxImage);
@@ -261,7 +261,7 @@ if ("IntersectionObserver" in window) {
       target.loading = "eager";
       observer.unobserve(target);
     });
-  }, { rootMargin: luxIsMobile ? "1200px 0px" : "1000px 0px" });
+  }, { rootMargin: luxIsMobile ? "600px 0px" : "1000px 0px" });
   luxNativeLazyImages.forEach((image) => nativeImageObserver.observe(image));
 }
 
