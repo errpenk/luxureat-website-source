@@ -545,7 +545,7 @@ html.dark body.lux-academy-page {
   background: rgba(157, 245, 236, .1);
   color: #9df5ec;
 }
-@media (min-width: 1081px) {
+@media (min-width: 1280px) {
   .lux-nav-item::after {
     content: "";
     position: absolute;
@@ -2150,7 +2150,7 @@ html.dark body {
 }
 body { padding-top: 0 !important; }
 body:has(.lux-nav.open) { overflow-x: hidden; }
-@media (max-width: 1439px) {
+@media (max-width: 1279px) {
   .lux-header { position: fixed; grid-template-columns: auto 1fr; }
   .lux-actions { gap: 12px; }
   .lux-nav {
@@ -2207,8 +2207,8 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-nav .lux-nav-item.is-expanded .lux-nav-flyout { display: block; }
   .lux-nav-flyout a { padding: 8px 12px; border: 0; }
   .lux-menu { display: inline-flex; }
-  .lux-footer-grid { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 1439px) { .lux-footer-grid { grid-template-columns: 1fr 1fr; } }
 
 @media (max-width: 720px) {
   .lux-header { padding-inline: 18px; }
@@ -6340,7 +6340,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   stroke-linejoin: round;
 }
 
-@media (max-width: 1439px) {
+@media (max-width: 1279px) {
   .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
     position: fixed;
@@ -12511,7 +12511,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
     border-bottom-color: currentColor;
   }
 }
-@media (max-width: 1439px) {
+@media (max-width: 1279px) {
   .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
     background: rgba(7, 7, 7, .97);
@@ -13457,7 +13457,7 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
   html[lang] body .lux-lang { font-size: 10px; letter-spacing: .06em; }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
   html[lang^="en"] body .lux-nav { gap: clamp(6px, .55vw, 10px); }
   html[lang^="en"] body .lux-nav-item > a {
     font-size: 10px !important;
