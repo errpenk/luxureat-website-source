@@ -148,6 +148,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand/home-timeline-cooperation.webp": "media/brand/home-timeline-cooperation-mobile.webp",
   "media/brand/home-timeline-experience.jpg": "media/brand/home-timeline-experience-mobile.webp",
   "media/brand/home-timeline-vision.webp": "media/brand/home-timeline-vision-mobile.webp",
+  "media/brand/home-topic-01-olive.webp": "media/brand/home-topic-01-olive-mobile.webp",
   "media/brand/home-topic-02-pizza.webp": "media/brand/home-topic-02-pizza-720.webp",
   "media/brand/home-topic-03-culture.webp": "media/brand/home-topic-03-culture-720.webp",
   "media/brand/home-topic-04-nutrition.webp": "media/brand/home-topic-04-nutrition-720.webp",
