@@ -109,6 +109,14 @@ const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
+for (const [page, count] of [['blog', 67], ['product', 47], ['recipe', 25], ['brand', 8]]) {
+  for (const lang of ['zh', 'en']) {
+    const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
+    const links = html.match(/<nav class="lux-static-detail-links"[^>]*><ul>([\s\S]*?)<\/ul><\/nav>/)?.[1];
+    assert(links, `${lang}/${page} needs server-rendered detail links`);
+    assert((links.match(/<li><a href=/g) || []).length === count, `${lang}/${page} detail links are incomplete`);
+  }
+}
 assert(!/srcset="[^"\n]*get_template_directory_uri\(\) \. '\/assets\/[^']+ \d+w/.test(generatedPages), 'generated srcset descriptors remain outside PHP asset paths');
 assert(!generatedPages.includes('data-account-open') && !generatedPages.includes('lux-account-link') && !generatedPages.includes('lux-bag-link') && !generatedPages.includes('data-bag-count'), 'generated bilingual pages contain no consumer account or shopping-bag header entry point');
 assert(fs.statSync(path.join(themeDir, 'screenshot.png')).size <= 100 * 1024, 'theme preview screenshot stays below 100 KB');

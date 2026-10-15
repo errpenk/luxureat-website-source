@@ -242,7 +242,23 @@ function convertHtmlSource(html, lang) {
 }
 
 function convertHtml(file, lang) {
-  return convertHtmlSource(fs.readFileSync(path.join(sourceDir, file), 'utf8'), lang);
+  let html = convertHtmlSource(fs.readFileSync(path.join(sourceDir, file), 'utf8'), lang);
+  const detailIndexes = {
+    'blog.html': [articleInputs, 'data-academy-list', articleRoute, (item) => item.title],
+    'product.html': [productInputs, 'data-caviar-grid', productRoute, (item) => item.title],
+    'recipe.html': [recipeInputs, 'data-recipe-library-app', recipeRoute, (item) => item.title],
+    'brand.html': [brandNewsInputs, 'data-news-center', brandNewsRoute, (item) => item.article.title],
+  };
+  const detailIndex = detailIndexes[path.basename(file)];
+  if (detailIndex) {
+    const [items, mount, routeFor, titleFor] = detailIndex;
+    const links = items.filter((item) => item.lang === lang).map((item) =>
+      `<li><a href="<?php echo esc_url(luxureat_static_url('${routeFor(item)}')); ?>">${escapeHtml(titleFor(item))}</a></li>`).join('');
+    const pattern = new RegExp(`(<(?:div|section)\\b[^>]*\\b${mount}\\b[^>]*>)(</(?:div|section)>)`);
+    if (!pattern.test(html)) throw new Error(`Missing ${mount} in ${file}`);
+    html = html.replace(pattern, `$1<nav class="lux-static-detail-links" aria-label="${lang === 'zh' ? '全部内容' : 'All content'}"><ul>${links}</ul></nav>$2`);
+  }
+  return html;
 }
 
 function escapeHtml(value) {
