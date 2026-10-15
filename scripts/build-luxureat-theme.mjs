@@ -728,6 +728,10 @@ function luxureat_static_reject_noncanonical_requests() {
         return;
     }
 
+    // WP Super Cache does not recognize 410 and can replay its cached body as HTTP 200.
+    if (!defined('DONOTCACHEPAGE')) {
+        define('DONOTCACHEPAGE', true);
+    }
     status_header(410);
     nocache_headers();
     header('X-Robots-Tag: noindex, nofollow', true);
@@ -773,15 +777,16 @@ function luxureat_static_disable_consumer_commerce() {
     if (is_admin() || (function_exists('wp_doing_ajax') && wp_doing_ajax())) {
         return;
     }
-    $is_consumer_page = (function_exists('is_cart') && is_cart())
+    $path = luxureat_static_current_path();
+    $is_consumer_page = in_array($path, array('cart', 'checkout', 'my-account', 'en/cart', 'en/checkout', 'en/my-account'), true)
+        || (function_exists('is_cart') && is_cart())
         || (function_exists('is_checkout') && is_checkout())
         || (function_exists('is_account_page') && is_account_page());
     if (!$is_consumer_page) {
         return;
     }
-    $path = luxureat_static_current_path();
     $language = $path === 'en' || strpos($path, 'en/') === 0 ? 'en' : 'zh';
-    wp_safe_redirect(luxureat_static_url($language . '/product'), 302);
+    wp_safe_redirect(luxureat_static_url($language . '/product'), 301);
     exit;
 }
 add_action('template_redirect', 'luxureat_static_disable_consumer_commerce', -50);
