@@ -373,7 +373,6 @@ function brandNewsPageHtml(item, imageDimensions) {
   const cover = articleAsset(item.cardImage);
   const linkedEvent = eventInputs.find((event) => event.lang === item.lang && event.id === item.eventId);
   const relatedStory = brandNewsInputs.find((story) => story.lang === item.lang && story.id === item.relatedNewsId);
-  const imageCredit = item.imageSourceUrl ? `<figcaption>${item.lang === 'zh' ? '图片来源：FHC官网首页视频 · ' : 'Image source: FHC homepage video · '}<a href="${escapeHtml(item.imageSourceUrl)}" target="_blank" rel="noopener">www.fhcchina.com</a></figcaption>` : '';
   const renderMedia = (entry) => {
     if (entry.type === 'video') {
       const video = articleAsset(item.video);
@@ -382,6 +381,9 @@ function brandNewsPageHtml(item, imageDimensions) {
     }
     const source = articleAsset(entry.src);
     const alt = entry.alt?.[item.lang] || article.title;
+    const imageCredit = entry.sourceUrl
+      ? `<figcaption>${item.lang === 'zh' ? '图片来源：FHC官网首页视频 · ' : 'Image source: FHC homepage video · '}<a href="${escapeHtml(entry.sourceUrl)}" target="_blank" rel="noopener">www.fhcchina.com</a></figcaption>`
+      : entry.note?.[item.lang] ? `<figcaption>${escapeHtml(entry.note[item.lang])}</figcaption>` : '';
     return `<figure class="lux-brand-news-media"><img${imageDimensions.get(source) || ''} loading="lazy" decoding="async" src="${escapeHtml(source)}" alt="${escapeHtml(alt)}">${imageCredit}</figure>`;
   };
   const sections = (article.sections || []).map(([heading, paragraphs, media = []]) => `<section class="lux-reader-section"><h2>${escapeHtml(heading)}</h2>${renderArticleContent(paragraphs)}${media.map(renderMedia).join('')}</section>`).join('');
@@ -393,8 +395,8 @@ function brandNewsPageHtml(item, imageDimensions) {
     ? `<a class="lux-brand-news-event-link" href="<?php echo esc_url(luxureat_static_url('${brandNewsRoute(relatedStory)}')); ?>"><img${imageDimensions.get(articleAsset(relatedStory.cardImage)) || ''} loading="lazy" decoding="async" src="${escapeHtml(articleAsset(relatedStory.cardImage))}" alt=""><span><small>${item.lang === 'zh' ? '相关阅读' : 'Related Article'}</small><strong>${escapeHtml(relatedStory.article.title)}</strong></span><span aria-hidden="true">→</span></a>`
     : '';
   const body = `<main class="lux-article-page">${breadcrumbHtml(item.lang, 'brand.html', item.lang === 'zh' ? '品牌新闻' : 'Brand News', article.title)}<article class="lux-brand-news-reader lux-brand-news-seo-page">
-    <figure class="lux-brand-news-hero"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}">${imageCredit}</figure>
-    <div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)} ↗</a>` : ''}</header><div class="lux-brand-news-copy">${renderArticleContent(article.opening || [])}${sections}${linkedEventHtml}${relatedStoryHtml}</div></div>
+    <figure class="lux-brand-news-hero"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>
+    <div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)} ↗</a>` : ''}</header><div class="lux-brand-news-copy">${renderArticleContent(article.opening || [])}${sections}${item.imageNote?.[item.lang] ? `<p class="lux-brand-news-image-note">${escapeHtml(item.imageNote[item.lang])}</p>` : ''}${linkedEventHtml}${relatedStoryHtml}</div></div>
   </article></main>`;
   return detailPageHtml({ lang: item.lang, pageKey: 'news', title: article.title, description: article.intro, route: brandNewsRoute(item), alternateRoute: brandNewsRoute(alternate || item), body });
 }
