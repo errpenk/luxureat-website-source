@@ -67,7 +67,6 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand-news/cicc-caviar-table.webp": "media/brand-news/cicc-caviar-table-720.webp",
   "media/brand-news/cicc-truffleat-booth.webp": "media/brand-news/cicc-truffleat-booth-720.webp",
   "media/brand-news/cifce-family-table.webp": "media/brand-news/cifce-family-table-720.webp",
-  "media/brand-news/fhc-breakfast-drizzle-2026.webp": "media/brand-news/fhc-breakfast-drizzle-2026-720.webp",
   "media/brand-news/fhc-breakfast-family-2026.webp": "media/brand-news/fhc-breakfast-family-2026-720.webp",
   "media/brand-news/fhc-breakfast-pairings-2026.webp": "media/brand-news/fhc-breakfast-pairings-2026-720.webp",
   "media/brand-news/fhc-trade-conversations-2026.webp": "media/brand-news/fhc-trade-conversations-2026-720.webp",

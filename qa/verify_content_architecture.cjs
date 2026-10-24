@@ -193,6 +193,8 @@ assert(brandNews.length === 10 && brandNews.every((item) => item.zh && item.en),
 const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026");
 assert(fhcNews.length === 2 && fhcNews.every((item) => item.relatedNewsId && item.zh.sourceUrl === "https://www.fhcchina.com/" && item.zh.sections.some((section) => section[2]?.length) && item.en.sections.some((section) => section[2]?.length)), "FHC bilingual news, images or links are incomplete");
 assert(new Set(fhcNews.flatMap((item) => [item.cardImage, ...item.zh.sections.flatMap((section) => (section[2] || []).map((media) => media.src))])).size === 4, "FHC breakfast images must not repeat");
+assert(fhcNews.find((item) => item.id === "fhc-shanghai-2026-pancakes")?.cardImage.endsWith("fhc-breakfast-pairings-2026.webp"), "FHC pancake cover does not use the requested image");
+assert(fhcNews.find((item) => item.id === "fhc-shanghai-2026-breakfast")?.zh.sections[2][2][0].sourceUrl === "https://www.shifair.com/", "FHC chef image must credit Shifair");
 const parisNews = brandNews.find((item) => item.id === "sial-paris-2026-preview");
 assert(parisNews?.eventId === "sial-paris-2026" && parisNews.zh.sections.length === 5 && parisNews.en.sections.length === 5, "SIAL Paris bilingual news is not linked to its event");
 assert(parisNews.zh.sections.flatMap((section) => section[2] || []).length === 3 && parisNews.en.sections.flatMap((section) => section[2] || []).length === 3, "SIAL Paris news images are not placed in the article");

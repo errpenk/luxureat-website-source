@@ -382,7 +382,7 @@ function brandNewsPageHtml(item, imageDimensions) {
     const source = articleAsset(entry.src);
     const alt = entry.alt?.[item.lang] || article.title;
     const imageCredit = entry.sourceUrl
-      ? `<figcaption>${item.lang === 'zh' ? '图片来源：FHC官网首页视频 · ' : 'Image source: FHC homepage video · '}<a href="${escapeHtml(entry.sourceUrl)}" target="_blank" rel="noopener">www.fhcchina.com</a></figcaption>`
+      ? `<figcaption>${item.lang === 'zh' ? '图片来源：' : 'Image source: '}<a href="${escapeHtml(entry.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(entry.sourceName?.[item.lang] || entry.sourceUrl)}</a></figcaption>`
       : entry.note?.[item.lang] ? `<figcaption>${escapeHtml(entry.note[item.lang])}</figcaption>` : '';
     return `<figure class="lux-brand-news-media"><img${imageDimensions.get(source) || ''} loading="lazy" decoding="async" src="${escapeHtml(source)}" alt="${escapeHtml(alt)}">${imageCredit}</figure>`;
   };
