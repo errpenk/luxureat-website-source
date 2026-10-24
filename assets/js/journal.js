@@ -863,6 +863,10 @@ function initLuxReader() {
     const relatedNews = brandNews.filter((story) => story.eventId === id && story[lang]);
     const allEvents = events.map((item) => ({ item, copy: item[lang] })).filter(({ copy: itemCopy }) => itemCopy);
     const videoHtml = event.video ? `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${event.videoWidth || 720}" height="${event.videoHeight || 768}" poster="${escapeHtml(event.videoPoster || event.previewImage || event.image)}"><source src="${escapeHtml(event.video)}" type="video/mp4"></video><figcaption>${escapeHtml(event.videoSource?.[lang] || "")}</figcaption></figure>` : "";
+    const galleryHtml = event.gallery?.length ? `<section class="lux-event-gallery" aria-label="${lang === "zh" ? "展会现场视频" : "Exhibition gallery"}">
+      <div class="lux-event-gallery-heading"><span>${lang === "zh" ? "现场影像" : "From the show floor"}</span><h3>${lang === "zh" ? "SIAL Paris 2026 现场视频" : "SIAL Paris 2026 Video Gallery"}</h3></div>
+      <div class="lux-event-gallery-grid">${event.gallery.map((media) => `<figure><video controls playsinline webkit-playsinline preload="none" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}" aria-label="${escapeHtml(media[lang])}"><source src="${escapeHtml(media.video)}" type="video/mp4"></video><figcaption>${escapeHtml(media[lang])}</figcaption></figure>`).join("")}</div>
+    </section>` : "";
     body.innerHTML = `
       <article class="lux-event-reader">
         <header class="lux-event-reader-intro">
@@ -889,6 +893,7 @@ function initLuxReader() {
                 ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}</nav>` : ""}
               </div>
             </div>
+            ${galleryHtml}
           </section>
           <aside class="lux-event-reader-index">
             <div><h3>${lang === "zh" ? "所有活动" : "All Events"}</h3><span>${String(allEvents.length).padStart(2, "0")}</span></div>

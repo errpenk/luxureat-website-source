@@ -21,6 +21,11 @@
         coordinates: [2.51833, 48.9675],
         startDate: "2026-10-17",
         endDate: "2026-10-21",
+        gallery: [
+          { video: asset("media/events/sial-paris-2026-gallery-01.mp4"), poster: asset("media/events/sial-paris-2026-gallery-01.webp"), width: 480, height: 640, zh: "现场烹饪演示", en: "Live cooking demonstration" },
+          { video: asset("media/events/sial-paris-2026-gallery-02.mp4"), poster: asset("media/events/sial-paris-2026-gallery-02.webp"), width: 768, height: 576, zh: "厨师现场制作菜品", en: "Chef preparing a dish" },
+          { video: asset("media/events/sial-paris-2026-gallery-03.mp4"), poster: asset("media/events/sial-paris-2026-gallery-03.webp"), width: 768, height: 576, zh: "菜品调味细节", en: "Finishing touches on a dish" }
+        ],
         zh: {
           posterAlt: "SIAL Paris 2026 海报：巴黎、松露、鱼子酱及四个参展品牌",
           title: "SIAL Paris 2026｜巴黎，我们来了！🇫🇷",

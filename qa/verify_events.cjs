@@ -32,6 +32,13 @@ assert(event, "Changsha 2026 event data is missing");
 assert(eventUtils, "shared Beijing event utilities are missing");
 assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma Bar Show event or cover dimensions are missing");
 assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
+assert(parisEvent.gallery?.length === 3, "SIAL Paris gallery must include all three videos");
+for (const media of parisEvent.gallery) {
+  assert(media.zh && media.en && media.width && media.height, "SIAL Paris gallery captions or dimensions are missing");
+  for (const file of [media.video, media.poster]) {
+    assert(fs.existsSync(path.join(root, "assets", file.split("/assets/")[1])), `SIAL Paris gallery asset is missing: ${file}`);
+  }
+}
 assert(parisEvent.displayWidth === 520 && parisEvent.displayHeight === 530, "SIAL Paris poster dimensions are wrong");
 assert(parisEvent.zh.paragraphs.length === 3 && parisEvent.en.paragraphs.length === 3, "SIAL Paris homepage introductions are incomplete");
 assert(parisEvent.zh.sections.length === 4 && parisEvent.en.sections.length === 4, "SIAL Paris bilingual details are incomplete");

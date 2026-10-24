@@ -3989,6 +3989,40 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   font-size: clamp(28px, 3vw, 44px);
   line-height: 1.08;
 }
+.lux-event-gallery {
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid #d4ccc0;
+}
+.lux-event-gallery-heading span {
+  color: #766f66;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.lux-event-gallery-heading h3 {
+  margin: 8px 0 24px;
+  font-family: var(--lux-page-heading);
+  font-size: clamp(24px, 3vw, 34px);
+}
+.lux-event-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+.lux-event-gallery-grid figure { margin: 0; }
+.lux-event-gallery-grid video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #111;
+}
+.lux-event-gallery-grid figcaption {
+  padding-top: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
 .lux-event-reader-index {
   position: sticky;
   top: 28px;
@@ -4041,6 +4075,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 
 @media (max-width: 900px) {
+  .lux-event-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .lux-recent-events-head,
   .lux-event-card,
   .lux-event-reader-intro,
@@ -4064,6 +4099,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 
 @media (max-width: 640px) {
+  .lux-event-gallery-grid { grid-template-columns: 1fr; }
   .lux-past-events-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px 16px;
