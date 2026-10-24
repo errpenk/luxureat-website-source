@@ -3,6 +3,10 @@
   const asset = (path) => new URL(path, assetBase).href;
   const image = (name, altZh, altEn) => ({ type: "image", src: asset(`media/brand-news/${name}`), alt: { zh: altZh, en: altEn } });
   const media = {
+    fhcIndustry: image("fhc-2026-food-industry.webp", "FHC 官网首页视频中的食品行业场景", "Food industry scene from the FHC homepage video"),
+    fhcCategories: image("fhc-2026-food-categories.webp", "FHC 官网首页视频中的食品品类展示", "Food categories from the FHC homepage video"),
+    fhcVisitors: image("fhc-2026-visitors.webp", "FHC 官网首页视频中的展会观众", "Visitors in the FHC homepage video"),
+    fhcShow: image("fhc-2026-food-show.webp", "FHC 官网首页视频中的食品展示", "Food showcase from the FHC homepage video"),
     sialBanner: image("sial-paris-2026-lemons.webp", "SIAL Paris 2026 展会宣传图", "SIAL Paris 2026 campaign image"),
     sialMap: image("sial-paris-2026-floor-plan.webp", "SIAL Paris 2026 展馆地图", "SIAL Paris 2026 floor plan"),
     sialCity: image("sial-paris-2026-city.webp", "巴黎城市夜景与 SIAL Paris 2026 标志", "Paris skyline and SIAL Paris 2026"),
@@ -33,6 +37,70 @@
   };
 
   window.LUXUREAT_BRAND_NEWS = [
+    {
+      id: "fhc-shanghai-2026-breakfast",
+      eventId: "fhc-shanghai-2026",
+      relatedNewsId: "fhc-shanghai-2026-pancakes",
+      imageSourceUrl: "https://www.fhcchina.com/",
+      date: "2026-10-24",
+      cardImage: media.fhcIndustry.src,
+      zh: {
+        date: "2026年10月24日", author: "LuxurEat", category: "展会预告",
+        title: "LuxurEat亮相2026 FHC上海环球食品展：从早餐开始，探索意式风味",
+        intro: "2026年11月10日至12日，上海新国际博览中心，N3馆 · N3A10展位，期待与您相见。",
+        source: "FHC上海环球食品展官网", sourceUrl: "https://www.fhcchina.com/",
+        opening: ["一家人围坐餐桌，享用刚做好的松饼，为新的一天挑选喜欢的风味——这正是LuxurEat希望在2026 FHC上海环球食品展上分享的日常场景。", "此次参展，我们将以早餐为切入点，介绍旗下特色产品的不同搭配方式。其中，TrufflElixir松露风味淋酱系列将成为重点展示的产品之一。"],
+        sections: [
+          ["枫糖浆之外，早餐还可以有什么选择？", ["TrufflElixir将松露与不同的甜味及果味相结合，为松饼、华夫饼等早餐食品提供枫糖浆之外的新选择。", "我们的想法很简单：让消费者通过熟悉的早餐搭配，认识不同的松露风味。轻轻淋在松饼上的一个动作，就可以开启一次新的味觉探索。"], [media.fhcCategories]],
+          ["让松露走进家庭早餐", ["提到松露，人们常常想到餐厅和节日餐桌。通过TrufflElixir，我们希望探索更多日常食用场景，尤其是家庭早餐。", "围绕有儿童和青少年的家庭早餐场景，我们希望以直观的搭配方式，让全家一起认识不同风味，发现各自喜欢的组合。", "从认识产品，到尝试搭配，再到找到适合自家餐桌的吃法，是我们希望与中国市场共同探索的方向。"]],
+          ["与中国食品行业伙伴面对面交流", ["在本届FHC展会上，LuxurEat将与Truffleat、CaviarEat及Ugolini Gourmet品牌共同亮相。", "我们诚邀中国进口商、经销商、零售及电商采购商，以及酒店、咖啡馆、烘焙和餐饮行业的专业人士莅临展位，了解产品、交流应用场景，并探讨合作机会。", "从家庭餐桌到酒店早餐，从咖啡馆到零售渠道，我们期待与合作伙伴一起，为消费者带来更多风味选择。"]],
+          ["2026 FHC上海环球食品展", ["日期：2026年11月10日至12日", "地点：上海新国际博览中心（SNIEC）", "展馆：N3馆", "展位号：N3A10", "欢迎通过 www.luxureat.cn 联系我们，预约展会期间的商务洽谈。", "相约上海，从一顿早餐开始，发现LuxurEat的风味世界。"]]
+        ]
+      },
+      en: {
+        date: "October 24, 2026", author: "LuxurEat", category: "Exhibition Preview",
+        title: "LuxurEat at FHC Shanghai 2026: Exploring Italian Flavours, Starting with Breakfast",
+        intro: "Meet us November 10–12, 2026, at Shanghai New International Expo Centre, Hall N3 · Booth N3A10.",
+        source: "FHC Shanghai official website", sourceUrl: "https://www.fhcchina.com/",
+        opening: ["A family gathers around the table for freshly made pancakes, each person choosing a flavour to start the day. This is the everyday moment LuxurEat hopes to share at FHC Shanghai 2026.", "We will use breakfast to explore new ways to enjoy our specialty products. One of the highlights will be the TrufflElixir range of truffle-flavoured drizzles."],
+        sections: [
+          ["What else can go on breakfast besides maple syrup?", ["TrufflElixir combines truffle with sweet and fruity notes, offering an alternative topping for pancakes, waffles and other breakfast favourites.", "The idea is simple: let people discover different truffle flavours through familiar breakfast pairings. A drizzle over a pancake can begin a new taste experience."], [media.fhcCategories]],
+          ["Bringing truffle to the family breakfast table", ["Truffle often brings restaurants and festive meals to mind. With TrufflElixir, we want to explore more everyday occasions, especially breakfast at home.", "For families with children and teenagers, straightforward pairings can help everyone discover flavours and find their own favourite combination.", "Learning about the product, trying different pairings and finding a place for it at the family table are ideas we look forward to exploring with the Chinese market."]],
+          ["Meeting China's food industry in person", ["LuxurEat will appear at FHC alongside Truffleat, CaviarEat and Ugolini Gourmet.", "We invite importers, distributors, retail and ecommerce buyers, and professionals from hotels, cafés, bakeries and restaurants to visit our booth, explore product uses and discuss partnership opportunities.", "From home and hotel breakfasts to cafés and retail shelves, we look forward to bringing more flavour choices to consumers with our partners."]],
+          ["FHC Shanghai Global Food Trade Show 2026", ["Dates: November 10–12, 2026", "Venue: Shanghai New International Expo Centre (SNIEC)", "Hall: N3", "Booth: N3A10", "Contact us through www.luxureat.cn to arrange a business meeting during the show.", "See you in Shanghai. Let's start with breakfast and discover the world of LuxurEat flavours."]]
+        ]
+      }
+    },
+    {
+      id: "fhc-shanghai-2026-pancakes",
+      eventId: "fhc-shanghai-2026",
+      relatedNewsId: "fhc-shanghai-2026-breakfast",
+      imageSourceUrl: "https://www.fhcchina.com/",
+      date: "2026-10-24",
+      cardImage: media.fhcVisitors.src,
+      zh: {
+        date: "2026年10月24日", author: "LuxurEat", category: "展会预告",
+        title: "早餐松饼上，除了枫糖浆，还可以淋上什么？",
+        intro: "今年11月，LuxurEat将携TrufflElixir松露风味淋酱系列亮相2026 FHC上海环球食品展，为家庭早餐带来新的搭配灵感。",
+        source: "FHC上海环球食品展官网", sourceUrl: "https://www.fhcchina.com/",
+        opening: [],
+        sections: [
+          ["从熟悉的早餐开始", ["将松露与不同的甜味及果味相结合，搭配松饼、华夫饼，让熟悉的早餐成为一次新的味觉探索——这是我们此次希望与中国市场分享的产品理念。"], [media.fhcShow]],
+          ["相约FHC上海", ["我们诚邀进口商、经销商、零售与电商采购商，以及酒店、咖啡馆、烘焙和餐饮行业的专业人士到访，了解LuxurEat、Truffleat、CaviarEat及Ugolini Gourmet，并探讨合作机会。", "📅 2026年11月10日至12日", "📍 上海新国际博览中心（SNIEC）", "🤝 N3馆 · N3A10展位", "🌐 www.luxureat.cn", "欢迎提前联系我们，预约商务洽谈。上海见！"]]
+        ]
+      },
+      en: {
+        date: "October 24, 2026", author: "LuxurEat", category: "Exhibition Preview",
+        title: "What Else Can You Drizzle on Breakfast Pancakes Besides Maple Syrup?",
+        intro: "This November, LuxurEat will bring its TrufflElixir range of truffle-flavoured drizzles to FHC Shanghai 2026, with fresh ideas for the family breakfast table.",
+        source: "FHC Shanghai official website", sourceUrl: "https://www.fhcchina.com/",
+        opening: [],
+        sections: [
+          ["Start with a familiar breakfast", ["Combining truffle with sweet and fruity notes, TrufflElixir can be paired with pancakes and waffles. It turns a familiar breakfast into an opportunity to explore new flavours—the product idea we want to share with the Chinese market."], [media.fhcShow]],
+          ["Meet us at FHC Shanghai", ["We invite importers, distributors, retail and ecommerce buyers, and professionals from hotels, cafés, bakeries and restaurants to meet LuxurEat, Truffleat, CaviarEat and Ugolini Gourmet and discuss opportunities to work together.", "📅 November 10–12, 2026", "📍 Shanghai New International Expo Centre (SNIEC)", "🤝 Hall N3 · Booth N3A10", "🌐 www.luxureat.cn", "Contact us in advance to arrange a business meeting. See you in Shanghai!"]]
+        ]
+      }
+    },
     {
       "id": "sial-paris-2026-preview",
       "eventId": "sial-paris-2026",

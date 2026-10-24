@@ -910,14 +910,16 @@ function initLuxReader() {
     currentId = `news:${id}`;
     const copy = labels();
     const linkedEvent = events.find((event) => event.id === item.eventId);
+    const relatedStory = brandNews.find((story) => story.id === item.relatedNewsId);
+    const imageCredit = item.imageSourceUrl ? `<figcaption>${lang === "zh" ? "图片来源：FHC官网首页视频 · " : "Image source: FHC homepage video · "}<a href="${escapeHtml(item.imageSourceUrl)}" target="_blank" rel="noopener">www.fhcchina.com</a></figcaption>` : "";
     const renderMedia = (entry) => {
       if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${escapeHtml(lang === "zh" ? "视频来源：arsial.lazio" : "Video source: arsial.lazio")}</figcaption></figure>`;
       const alt = entry.alt?.[lang] || article.title;
-      return `<figure class="lux-brand-news-media"><button type="button" data-reader-image="${escapeHtml(entry.src)}" aria-label="${escapeHtml(lang === "zh" ? `放大查看：${alt}` : `View full size: ${alt}`)}"><img loading="lazy" decoding="async" src="${escapeHtml(entry.src)}" alt="${escapeHtml(alt)}"></button></figure>`;
+      return `<figure class="lux-brand-news-media"><button type="button" data-reader-image="${escapeHtml(entry.src)}" aria-label="${escapeHtml(lang === "zh" ? `放大查看：${alt}` : `View full size: ${alt}`)}"><img loading="lazy" decoding="async" src="${escapeHtml(entry.src)}" alt="${escapeHtml(alt)}"></button>${imageCredit}</figure>`;
     };
     body.innerHTML = `
       <article class="lux-brand-news-reader">
-        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}"></figure>
+        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}">${imageCredit}</figure>
         <div class="lux-brand-news-sheet">
           <header>
             <p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p>
@@ -933,6 +935,7 @@ function initLuxReader() {
               ${sectionMedia.map(renderMedia).join("")}
             </section>`).join("")}
             ${linkedEvent ? `<a href="${eventHref(linkedEvent.id)}" class="lux-brand-news-event-link" data-event-open="${escapeHtml(linkedEvent.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${formatTitle(linkedEvent[lang].articleTitle)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
+            ${relatedStory ? `<a href="${newsHref(relatedStory.id)}" class="lux-brand-news-event-link" data-news-open="${escapeHtml(relatedStory.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(relatedStory.cardImage)}" alt=""><span><small>${lang === "zh" ? "相关阅读" : "Related Article"}</small><strong>${escapeHtml(relatedStory[lang].title)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
           </div>
         </div>
       </article>`;
