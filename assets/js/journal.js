@@ -936,7 +936,6 @@ function initLuxReader() {
               ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
               ${sectionMedia.map(renderMedia).join("")}
             </section>`).join("")}
-            ${item.imageNote?.[lang] ? `<p class="lux-brand-news-image-note">${escapeHtml(item.imageNote[lang])}</p>` : ""}
             ${linkedEvent ? `<a href="${eventHref(linkedEvent.id)}" class="lux-brand-news-event-link" data-event-open="${escapeHtml(linkedEvent.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${formatTitle(linkedEvent[lang].articleTitle)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
             ${relatedStory ? `<a href="${newsHref(relatedStory.id)}" class="lux-brand-news-event-link" data-news-open="${escapeHtml(relatedStory.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(relatedStory.cardImage)}" alt=""><span><small>${lang === "zh" ? "相关阅读" : "Related Article"}</small><strong>${escapeHtml(relatedStory[lang].title)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
           </div>

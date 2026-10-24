@@ -3,7 +3,7 @@
   const asset = (path) => new URL(path, assetBase).href;
   const image = (name, altZh, altEn) => ({ type: "image", src: asset(`media/brand-news/${name}`), alt: { zh: altZh, en: altEn } });
   const media = {
-    fhcBreakfastFamily: image("fhc-breakfast-family-2026.webp", "一家人围坐餐桌享用松饼与华夫饼的早餐场景示意", "Illustrative family breakfast with pancakes and waffles"),
+    fhcIndustry: image("fhc-2026-food-industry.webp", "FHC 官网首页视频中的食品行业场景", "Food industry scene from the FHC homepage video"),
     fhcChefs: { ...image("fhc-chefs-shifair.webp", "FHC展会现场厨师演示", "Chefs demonstrating at an FHC event"), sourceUrl: "https://www.shifair.com/", sourceName: { zh: "世展网", en: "Shifair" } },
     fhcBreakfastPairings: image("fhc-breakfast-pairings-2026.webp", "松饼与华夫饼的不同淋酱搭配示意", "Illustrative pancake and waffle pairings"),
     fhcTradeConversations: { ...image("fhc-trade-conversations-2026.webp", "FHC展会现场的行业交流", "Industry conversations at FHC"), sourceUrl: "https://www.fhcchina.com/", sourceName: { zh: "FHC官网", en: "FHC official site" } },
@@ -41,9 +41,8 @@
       id: "fhc-shanghai-2026-breakfast",
       eventId: "fhc-shanghai-2026",
       relatedNewsId: "fhc-shanghai-2026-pancakes",
-      imageNote: { zh: "封面早餐配图为场景示意，非产品实拍。", en: "The breakfast cover is illustrative, not a product photograph." },
       date: "2026-10-24",
-      cardImage: media.fhcBreakfastFamily.src,
+      cardImage: media.fhcIndustry.src,
       zh: {
         date: "2026年10月24日", author: "LuxurEat", category: "展会预告",
         title: "LuxurEat亮相2026 FHC上海环球食品展：从早餐开始，探索意式风味",
@@ -75,7 +74,6 @@
       id: "fhc-shanghai-2026-pancakes",
       eventId: "fhc-shanghai-2026",
       relatedNewsId: "fhc-shanghai-2026-breakfast",
-      imageNote: { zh: "封面早餐配图为场景示意，非产品实拍。", en: "The breakfast cover is illustrative, not a product photograph." },
       date: "2026-10-24",
       cardImage: media.fhcBreakfastPairings.src,
       zh: {
