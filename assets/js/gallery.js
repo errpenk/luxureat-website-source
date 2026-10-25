@@ -7,7 +7,7 @@
   const events = new Map((window.LUXUREAT_EVENT_DATA?.events || []).map((event) => [event.id, event]));
   const grid = document.querySelector("[data-gallery-grid]");
   const empty = document.querySelector("[data-gallery-empty]");
-  const more = document.querySelector("[data-gallery-more]");
+  const pageNav = document.querySelector("[data-gallery-pagination]");
   const dialog = document.querySelector("[data-gallery-dialog]");
   const viewer = document.querySelector("[data-gallery-viewer]");
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -16,7 +16,7 @@
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
     if (!eventFor(media)) return "";
-    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery12" : lang === "zh" ? "/brand/" : "/en/brand/";
+    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery13" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
@@ -31,8 +31,8 @@
   if (events.has(hashEvent) && gallery.some((media) => media.eventId === hashEvent)) form.elements.event.value = hashEvent;
 
   const ordered = [...gallery].sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
-  let visible = 12;
   let matches = [];
+  let eventCounts = new Map();
 
   const card = (media) => {
     const title = media[lang].title;
@@ -48,10 +48,11 @@
     const media = items[0];
     const href = eventHref(media);
     const name = eventName(media);
-    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2><p>${escapeHtml(placeName(media))} · ${escapeHtml(items.length)} ${lang === "zh" ? "条影像" : items.length === 1 ? "media item" : "media items"}</p></div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
+    const count = eventCounts.get(media.eventId || media.id) || items.length;
+    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2><p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p></div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
   };
 
-  const render = () => {
+  const filterMatches = () => {
     const search = form.elements.search.value.trim().toLocaleLowerCase();
     const start = form.elements.start.value;
     const end = form.elements.end.value;
@@ -67,30 +68,37 @@
         && (!eventId || media.eventId === eventId)
         && (!kind || media.kind === kind);
     });
+    eventCounts = new Map();
+    for (const media of matches) {
+      const key = media.eventId || media.id;
+      eventCounts.set(key, (eventCounts.get(key) || 0) + 1);
+    }
+  };
+
+  const renderPage = (page, size) => {
     const groups = new Map();
-    for (const media of matches.slice(0, visible)) {
+    for (const media of matches.slice((page - 1) * size, page * size)) {
       const key = media.eventId || media.id;
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(media);
     }
     grid.innerHTML = [...groups.values()].map(group).join("");
     empty.hidden = matches.length !== 0;
-    more.hidden = visible >= matches.length;
   };
 
-  form.addEventListener("input", () => { visible = 12; render(); });
+  filterMatches();
+  const pagination = luxCreatePagination(pageNav, { total: () => matches.length, scrollTarget: grid, onChange: renderPage });
+  form.addEventListener("input", () => { filterMatches(); pagination.reset(); });
   form.addEventListener("change", () => {
-    visible = 12;
     const eventId = form.elements.event.value;
     history.replaceState(null, "", `${location.pathname}${eventId ? `#event-${encodeURIComponent(eventId)}` : ""}`);
-    render();
+    filterMatches();
+    pagination.reset();
   });
   form.addEventListener("reset", () => {
-    visible = 12;
     history.replaceState(null, "", location.pathname);
-    setTimeout(render, 0);
+    setTimeout(() => { filterMatches(); pagination.reset(); }, 0);
   });
-  more.addEventListener("click", () => { visible += 12; render(); });
   document.querySelectorAll("[data-gallery-layout]").forEach((button) => button.addEventListener("click", () => {
     grid.dataset.layout = button.dataset.galleryLayout;
     document.querySelectorAll("[data-gallery-layout]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
@@ -113,5 +121,4 @@
   dialog.querySelector("[data-gallery-close]").addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
   dialog.addEventListener("close", () => { viewer.replaceChildren(); });
-  render();
 })();
