@@ -16,7 +16,7 @@
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
     if (!eventFor(media)) return "";
-    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery13" : lang === "zh" ? "/brand/" : "/en/brand/";
+    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery15" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
@@ -111,14 +111,15 @@
     if (!media) return;
     const title = media[lang].title;
     const mediaHtml = media.kind === "video"
-      ? `<video controls playsinline autoplay preload="metadata" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video>`
+      ? `<video controls playsinline autoplay preload="metadata" width="${media.width}" height="${media.height}" style="width:${media.width}px;aspect-ratio:${media.width}/${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video>`
       : `<img src="${escapeHtml(media.src)}" width="${media.width}" height="${media.height}" alt="${escapeHtml(title)}">`;
     viewer.innerHTML = `<div class="lux-gallery-viewer-media">${mediaHtml}</div>`;
     dialog.setAttribute("aria-label", title);
     dialog.showModal();
     viewer.querySelector("video")?.play().catch(() => {});
   });
-  dialog.querySelector("[data-gallery-close]").addEventListener("click", () => dialog.close());
-  dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog || event.target.closest("[data-gallery-close]")) dialog.close();
+  });
   dialog.addEventListener("close", () => { viewer.replaceChildren(); });
 })();
