@@ -16,7 +16,7 @@
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
     if (!eventFor(media)) return "";
-    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery9" : lang === "zh" ? "/brand/" : "/en/brand/";
+    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery10" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
