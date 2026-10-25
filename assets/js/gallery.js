@@ -6,7 +6,6 @@
   const gallery = window.LUXUREAT_GALLERY_DATA || [];
   const events = new Map((window.LUXUREAT_EVENT_DATA?.events || []).map((event) => [event.id, event]));
   const grid = document.querySelector("[data-gallery-grid]");
-  const count = document.querySelector("[data-gallery-count]");
   const empty = document.querySelector("[data-gallery-empty]");
   const more = document.querySelector("[data-gallery-more]");
   const dialog = document.querySelector("[data-gallery-dialog]");
@@ -17,7 +16,7 @@
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
     if (!eventFor(media)) return "";
-    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery8" : lang === "zh" ? "/brand/" : "/en/brand/";
+    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery9" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
@@ -75,7 +74,6 @@
       groups.get(key).push(media);
     }
     grid.innerHTML = [...groups.values()].map(group).join("");
-    count.textContent = lang === "zh" ? `共 ${matches.length} 条素材` : `${matches.length} media ${matches.length === 1 ? "item" : "items"}`;
     empty.hidden = matches.length !== 0;
     more.hidden = visible >= matches.length;
   };

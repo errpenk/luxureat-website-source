@@ -85,7 +85,7 @@ function scriptsFor(page) {
   const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat"].includes(handle)) : page.scripts;
   const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
-  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : galleryPage && ["event-data", "gallery", "journal"].includes(handle) ? "-gallery8" : ""}"></script>`).join("\n");
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : galleryPage && ["event-data", "gallery", "journal"].includes(handle) ? "-gallery9" : ""}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";
@@ -278,7 +278,7 @@ function render(page, dimensions) {
   html = replaceRegion(html, "footer", /<footer class="lux-footer">[\s\S]*?<\/footer>/, footerFor(page));
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
-  const integrationVersion = ["gallery", "news"].includes(page.key) ? "-gallery8" : "-desktop-nav2";
+  const integrationVersion = ["gallery", "news"].includes(page.key) ? "-gallery9" : "-desktop-nav2";
   html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : ""}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
