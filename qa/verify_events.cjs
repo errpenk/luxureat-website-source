@@ -18,6 +18,7 @@ const context = {
   URL,
 };
 vm.runInNewContext(read("assets/data/events.js"), context);
+vm.runInNewContext(read("assets/data/gallery.js"), context);
 
 const events = context.window.LUXUREAT_EVENT_DATA?.events;
 const eventUtils = context.window.LUXUREAT_EVENT_UTILS;
@@ -27,15 +28,17 @@ const secondEvent = events?.find((item) => item.id === "marca-china-2026");
 const sialEvent = events?.find((item) => item.id === "sial-guangzhou-2026");
 const romaEvent = events?.find((item) => item.id === "roma-bar-show-2026");
 const parisEvent = events?.find((item) => item.id === "sial-paris-2026");
+const gallery = context.window.LUXUREAT_GALLERY_DATA || [];
 assert(fhcEvent, "FHC Shanghai 2026 event data is missing");
 assert(event, "Changsha 2026 event data is missing");
 assert(eventUtils, "shared Beijing event utilities are missing");
 assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma Bar Show event or cover dimensions are missing");
 assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
-assert(parisEvent.gallery?.length === 3, "SIAL Paris gallery must include all three videos");
-for (const media of parisEvent.gallery) {
-  assert(media.zh && media.en && media.width && media.height, "SIAL Paris gallery captions or dimensions are missing");
-  for (const file of [media.video, media.poster]) {
+assert(gallery.filter((media) => media.eventId === parisEvent.id).length === 3, "SIAL Paris gallery must include all three videos");
+for (const media of gallery) {
+  assert(media.id && media.date && media.zh?.title && media.en?.title && media.width && media.height, "gallery metadata is incomplete");
+  assert(!media.eventId || events.some((item) => item.id === media.eventId), `gallery event is missing: ${media.id}`);
+  for (const file of [media.src, media.poster].filter(Boolean)) {
     assert(fs.existsSync(path.join(root, "assets", file.split("/assets/")[1])), `SIAL Paris gallery asset is missing: ${file}`);
   }
 }

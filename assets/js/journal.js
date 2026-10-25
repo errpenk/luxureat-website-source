@@ -7,6 +7,7 @@ function initLuxReader() {
   window.luxResponsiveData?.(window.LUXUREAT_EVENT_DATA);
   const articles = articleData.articles || {};
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
+  const galleryItems = window.LUXUREAT_GALLERY_DATA || [];
   const brandNews = window.LUXUREAT_BRAND_NEWS || [];
   const eventMount = document.querySelector("[data-recent-events]");
   const mapMount = document.querySelector("[data-exhibition-map]");
@@ -863,9 +864,12 @@ function initLuxReader() {
     const relatedNews = brandNews.filter((story) => story.eventId === id && story[lang]);
     const allEvents = events.map((item) => ({ item, copy: item[lang] })).filter(({ copy: itemCopy }) => itemCopy);
     const videoHtml = event.video ? `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${event.videoWidth || 720}" height="${event.videoHeight || 768}" poster="${escapeHtml(event.videoPoster || event.previewImage || event.image)}"><source src="${escapeHtml(event.video)}" type="video/mp4"></video><figcaption>${escapeHtml(event.videoSource?.[lang] || "")}</figcaption></figure>` : "";
-    const galleryHtml = event.gallery?.length ? `<section class="lux-event-gallery" aria-label="${lang === "zh" ? "展会现场视频" : "Exhibition gallery"}">
-      <div class="lux-event-gallery-heading"><span>${lang === "zh" ? "现场影像" : "From the show floor"}</span><h3>${lang === "zh" ? "SIAL Paris 2026 现场视频" : "SIAL Paris 2026 Video Gallery"}</h3></div>
-      <div class="lux-event-gallery-grid">${event.gallery.map((media) => `<figure><video controls playsinline webkit-playsinline preload="none" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}" aria-label="${escapeHtml(media[lang])}"><source src="${escapeHtml(media.video)}" type="video/mp4"></video><figcaption>${escapeHtml(media[lang])}</figcaption></figure>`).join("")}</div>
+    const eventMedia = galleryItems.filter((media) => media.eventId === id);
+    const galleryRoute = location.protocol === "file:" || location.pathname.endsWith(".html") ? "gallery.html" : lang === "zh" ? "/gallery/" : "/en/gallery/";
+    const galleryHref = `${galleryRoute}#event-${encodeURIComponent(id)}`;
+    const galleryHtml = eventMedia.length ? `<section class="lux-event-gallery" aria-label="${lang === "zh" ? "展会现场视频" : "Exhibition gallery"}">
+      <div class="lux-event-gallery-heading"><span>${lang === "zh" ? "现场影像" : "From the show floor"}</span><h3>${escapeHtml(article.articleTitle)} · ${lang === "zh" ? "影像画廊" : "Visual Gallery"}</h3><a href="${galleryHref}">${lang === "zh" ? "查看企业画廊" : "Explore the Gallery"} →</a></div>
+      <div class="lux-event-gallery-grid">${eventMedia.slice(0, 3).map((media) => `<figure>${media.kind === "video" ? `<video controls playsinline webkit-playsinline preload="none" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}" aria-label="${escapeHtml(media[lang].title)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video>` : `<img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(media.src)}" alt="${escapeHtml(media[lang].title)}">`}<figcaption>${escapeHtml(media[lang].title)}</figcaption></figure>`).join("")}</div>
     </section>` : "";
     body.innerHTML = `
       <article class="lux-event-reader">

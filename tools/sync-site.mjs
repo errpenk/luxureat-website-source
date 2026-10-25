@@ -189,6 +189,7 @@ function fontPreloads(page) {
     new: ["KingHwaOldSong-news-critical.woff2", "LuxurEatZhiSong-news-critical.woff2"],
     rituals: ["KingHwaOldSong-rituals-critical.woff2", "LuxurEatZhiSong-rituals-critical.woff2"],
     news: ["KingHwaOldSong-news-critical.woff2", "LuxurEatZhiSong-news-critical.woff2"],
+    gallery: ["KingHwaOldSong-news-critical.woff2", "LuxurEatZhiSong-news-critical.woff2"],
     blog: ["KingHwaOldSong-blog-critical.woff2", "LuxurEatZhiSong-blog-critical.woff2"],
     certification: ["KingHwaOldSong-certification-critical.woff2", "LuxurEatZhiSong-certification-critical.woff2"],
     gifting: ["KingHwaOldSong-gifting-critical.woff2", "LuxurEatZhiSong-gifting-critical.woff2"],

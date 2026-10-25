@@ -20,7 +20,8 @@ for (const lang of ["zh", "en"]) {
     const aboutLabel = lang === "zh" ? "关于我们" : "About Us";
     const certificationLabel = lang === "zh" ? "品质认证" : "Certification";
     const productHref = 'href="product.html"';
-    assert((header.match(/<a\b/g) || []).length === 12, `${lang}/${file} does not have the aligned twelve-page navigation`);
+    assert((header.match(/<a\b/g) || []).length === 13, `${lang}/${file} does not have the aligned thirteen-page navigation`);
+    assert(header.includes(`href="gallery.html">${lang === "zh" ? "企业画廊" : "Gallery"}</a>`), `${lang}/${file} is missing Gallery navigation`);
     assert(header.includes(`href="brand.html">${newsLabel}</a>`), `${lang}/${file} is missing Brand News navigation`);
     assert(new RegExp(`(?:class="active" )?href="blog\\.html">${blogLabel}</a>`).test(header), `${lang}/${file} is missing Blog navigation`);
     assert(header.includes(`href="recipe.html">${recipeLabel}</a>`), `${lang}/${file} has the wrong Recipe Art label`);
@@ -140,6 +141,7 @@ assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is miss
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
 assert(core.includes('["china-market-insights.html", "中国市场"') && core.includes('["china-market-insights.html", "China Market"'), "bilingual China Market navigation is missing");
 assert(core.includes('["import-export-services.html", "中国服务"') && core.includes('["import-export-services.html", "China Services"'), "bilingual China Services navigation is missing");
+assert(core.includes('["gallery.html", "企业画廊"') && core.includes('["gallery.html", "Gallery"'), "bilingual Gallery navigation is missing");
 assert(core.includes('["blog.html", "知识博客"') && core.includes('["探索意大利", "culture-academy"]') && core.includes('["营养与配料指南", "nutrition-guide"]'), "Chinese Blog topics are incomplete");
 assert(!core.includes('["意大利美食学院", "?topic=academy"]') && !core.includes('["Italian Food Academy", "?topic=academy"]'), "Food Academy is still duplicated in Blog navigation");
 assert(core.includes('["意式手工冰淇淋", "gelato-academy"]') && !core.includes('["意式 Gelato", "gelato-academy"]'), "Chinese Gelato academy label is not localized");
