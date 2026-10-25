@@ -17,10 +17,9 @@
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
     if (!eventFor(media)) return "";
-    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery3" : lang === "zh" ? "/brand/" : "/en/brand/";
+    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery6" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
-  const dateLabel = (date) => new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en-GB", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" }).format(new Date(`${date}T12:00:00Z`));
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
 
   for (const place of unique(gallery.map(placeName))) form.elements.place.add(new Option(place, place));
@@ -38,13 +37,11 @@
 
   const card = (media) => {
     const title = media[lang].title;
-    const type = media.kind === "video" ? lang === "zh" ? "视频" : "Video" : lang === "zh" ? "图片" : "Photo";
     return `<article class="lux-gallery-card">
       <button type="button" class="lux-gallery-card-media" data-gallery-open="${escapeHtml(media.id)}" aria-label="${escapeHtml(`${lang === "zh" ? "查看" : "View"} ${title}`)}">
         <img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(media.poster || media.src)}" alt="">
-        <span class="lux-gallery-card-type">${escapeHtml(type)}</span>${media.kind === "video" ? '<span class="lux-gallery-play" aria-hidden="true">▶</span>' : ""}
+        ${media.kind === "video" ? '<span class="lux-gallery-play" aria-hidden="true">▶</span>' : ""}
       </button>
-      <div class="lux-gallery-card-copy"><small>${escapeHtml(dateLabel(media.date))} · ${escapeHtml(type)}</small><h4>${escapeHtml(title)}</h4></div>
     </article>`;
   };
 
@@ -52,7 +49,7 @@
     const media = items[0];
     const href = eventHref(media);
     const name = eventName(media);
-    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><span class="lux-gallery-kicker">${lang === "zh" ? "展会现场" : "EXHIBITION"}</span><h3>${escapeHtml(name)}</h3><p>${escapeHtml(placeName(media))} · ${escapeHtml(items.length)} ${lang === "zh" ? "条影像" : items.length === 1 ? "media item" : "media items"}</p></div>${href ? `<a href="${escapeHtml(href)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
+    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><span class="lux-gallery-kicker">${lang === "zh" ? "展会现场" : "EXHIBITION"}</span><h3>${escapeHtml(name)}</h3><p>${escapeHtml(placeName(media))} · ${escapeHtml(items.length)} ${lang === "zh" ? "条影像" : items.length === 1 ? "media item" : "media items"}</p></div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
   };
 
   const render = () => {
@@ -93,9 +90,13 @@
   form.addEventListener("reset", () => {
     visible = 12;
     history.replaceState(null, "", location.pathname);
-    queueMicrotask(render);
+    setTimeout(render, 0);
   });
   more.addEventListener("click", () => { visible += 12; render(); });
+  document.querySelectorAll("[data-gallery-layout]").forEach((button) => button.addEventListener("click", () => {
+    grid.dataset.layout = button.dataset.galleryLayout;
+    document.querySelectorAll("[data-gallery-layout]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
+  }));
 
   grid.addEventListener("click", (event) => {
     const button = event.target.closest("[data-gallery-open]");
@@ -103,11 +104,11 @@
     const media = gallery.find((item) => item.id === button.dataset.galleryOpen);
     if (!media) return;
     const title = media[lang].title;
-    const href = eventHref(media);
     const mediaHtml = media.kind === "video"
       ? `<video controls playsinline autoplay preload="metadata" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video>`
       : `<img src="${escapeHtml(media.src)}" width="${media.width}" height="${media.height}" alt="${escapeHtml(title)}">`;
-    viewer.innerHTML = `<div class="lux-gallery-viewer-media">${mediaHtml}</div><div class="lux-gallery-viewer-copy"><small>${escapeHtml(dateLabel(media.date))} · ${escapeHtml(placeName(media))}</small><h2>${escapeHtml(title)}</h2>${href ? `<a href="${escapeHtml(href)}">${lang === "zh" ? "查看" : "View"} ${escapeHtml(eventName(media))} →</a>` : ""}</div>`;
+    viewer.innerHTML = `<div class="lux-gallery-viewer-media">${mediaHtml}</div>`;
+    dialog.setAttribute("aria-label", title);
     dialog.showModal();
     viewer.querySelector("video")?.play().catch(() => {});
   });
