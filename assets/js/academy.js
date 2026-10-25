@@ -14,11 +14,21 @@ const loadScript = (path) => new Promise((resolve) => {
   document.body.appendChild(script);
 });
 const loadAcademyReader = () => academyReaderLoading ||= loadScript("journal.js");
+const applyAcademyCms = () => {
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
+    const id = key.split(":")[0];
+    for (const articles of [window.LUXUREAT_ACADEMY_DATA?.articles, window.LUXUREAT_ARTICLE_DATA?.articles]) {
+      if (articles?.[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.image ? { image: cms.image } : {}) });
+    }
+  }
+};
+applyAcademyCms();
 const loadAcademyArticle = (id) => {
   if (window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return Promise.resolve(true);
   if (academyArticleLoading.has(id)) return academyArticleLoading.get(id);
   const loading = (async () => {
     const ready = await loadScript(`../data/academy-articles/${encodeURIComponent(id)}.js`);
+    if (ready) applyAcademyCms();
     return ready && loadAcademyReader();
   })();
   academyArticleLoading.set(id, loading);

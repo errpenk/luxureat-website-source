@@ -5,6 +5,12 @@
   font-style: normal;
   font-display: swap;
 }
+.lux-cms-prose > :is(h2,h3){margin:2rem 0 .8rem}
+.lux-cms-prose > :is(ul,ol){padding-left:1.5rem;margin:0 0 1.5rem;line-height:1.8}
+.lux-cms-prose li+li{margin-top:.35rem}
+.lux-cms-prose figure{margin:2rem 0}
+.lux-cms-prose :is(img,video){display:block;max-width:100%;height:auto}
+.lux-cms-prose blockquote{margin:2rem 0;padding-left:1.25rem;border-left:3px solid #00b7af}
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined" !important;
   font-weight: 300;

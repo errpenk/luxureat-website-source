@@ -4,6 +4,19 @@
 
   const lang = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
   const gallery = window.LUXUREAT_GALLERY_DATA || [];
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.gallery || {})) {
+    const id = key.slice(0, key.lastIndexOf(":"));
+    let item = gallery.find((entry) => entry.id === id);
+    if (!item) {
+      item = { id, kind: "video", width: 768, height: 576, zh: { title: id }, en: { title: id } };
+      gallery.push(item);
+    }
+    item[cms.lang] = { title: cms.title };
+    if (cms.eventId) item.eventId = cms.eventId;
+    if (cms.date) item.date = cms.date;
+    if (cms.src) item.src = cms.src;
+    if (cms.poster) item.poster = cms.poster;
+  }
   const events = new Map((window.LUXUREAT_EVENT_DATA?.events || []).map((event) => [event.id, event]));
   const grid = document.querySelector("[data-gallery-grid]");
   const empty = document.querySelector("[data-gallery-empty]");

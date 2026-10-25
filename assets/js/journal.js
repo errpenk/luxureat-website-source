@@ -6,8 +6,29 @@ function initLuxReader() {
   window.luxResponsiveData?.(articleData);
   window.luxResponsiveData?.(window.LUXUREAT_EVENT_DATA);
   const articles = articleData.articles || {};
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.recipe || {})) {
+    const id = key.split(":")[0];
+    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.image ? { image: cms.image } : {}) });
+  }
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
+    const id = key.split(":")[0];
+    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.image ? { image: cms.image } : {}) });
+  }
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
   const galleryItems = window.LUXUREAT_GALLERY_DATA || [];
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.gallery || {})) {
+    const id = key.slice(0, key.lastIndexOf(":"));
+    let item = galleryItems.find((entry) => entry.id === id);
+    if (!item) {
+      item = { id, kind: "video", width: 768, height: 576, zh: { title: id }, en: { title: id } };
+      galleryItems.push(item);
+    }
+    item[cms.lang] = { title: cms.title };
+    if (cms.eventId) item.eventId = cms.eventId;
+    if (cms.date) item.date = cms.date;
+    if (cms.src) item.src = cms.src;
+    if (cms.poster) item.poster = cms.poster;
+  }
   const brandNews = window.LUXUREAT_BRAND_NEWS || [];
   const eventMount = document.querySelector("[data-recent-events]");
   const mapMount = document.querySelector("[data-exhibition-map]");
@@ -667,6 +688,11 @@ function initLuxReader() {
     currentId = id;
     if (location.hash !== `#reader-${id}`) history.replaceState(history.state, "", `${location.pathname}${location.search}#reader-${id}`);
     const copy = labels();
+    if (article.cmsHtml) {
+      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><div class="lux-reader-copy lux-cms-prose">${article.cmsHtml}</div></section></article>`;
+      showReader(copy);
+      return;
+    }
     if (article.type === "recipe" && article.recipe) {
       const recipe = article.recipe;
       const relatedContent = contentLinks[topicFor(id, article)] || {};

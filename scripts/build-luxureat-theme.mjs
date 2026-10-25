@@ -340,7 +340,7 @@ function articlePageHtml(article, imageDimensions) {
     const currentBlogLink = article.lang === 'zh' ? '../en/blog.html' : '../zh/blog.html';
     html = html.replace(`href="${currentBlogLink}"`, `href="<?php echo esc_url(luxureat_static_url('${articleRoute(alternate)}')); ?>"`);
   }
-  html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n${pageBody}\n$2`);
+  html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n<?php if (!luxureat_cms_detail('${escapePhpString(`${article.lang}-academy-${article.slug}`)}', '${article.lang}', 'blog')): ?>${pageBody}<?php endif; ?>\n$2`);
   return convertHtmlSource(html, article.lang);
 }
 
@@ -411,7 +411,7 @@ function recipePageHtml(article, imageDimensions) {
   const productHref = `product.html${article.productCategory ? `?category=${encodeURIComponent(article.productCategory)}#product-catalogue` : ''}`;
   const details = [[labels.region, recipe.region], [labels.oil, recipe.oil], [labels.professionalTip, recipe.professionalTip], [labels.foodSafety, recipe.foodSafety], [labels.allergens, recipe.allergens], [labels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
   const body = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'recipe.html', article.lang === 'zh' ? '食谱艺术' : 'Recipes', article.title)}<article class="lux-recipe-reader lux-recipe-seo-page"><section class="lux-recipe-hero"><figure><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(article.title)}"></figure><div class="lux-recipe-intro"><span>${escapeHtml(article.eyebrow)}</span><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p>${escapeHtml(article.intro)}</p><dl class="lux-recipe-facts"><div><dt>${labels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div><div><dt>${labels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div><div><dt>${labels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div></dl></div></section><section class="lux-recipe-body"><aside class="lux-recipe-ingredients"><h2>${labels.ingredients}</h2><ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside><div class="lux-recipe-method"><h2>${labels.method}</h2><ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></div></section><section class="lux-recipe-nutrition"><header><h2>${labels.nutrition}</h2></header><dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${labels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ''}</section><section class="lux-recipe-details">${details}${recipe.products ? `<div><dt>${labels.products}</dt><dd><a class="lux-recipe-product-link" href="${productHref}">${escapeHtml(recipe.products)}</a></dd></div>` : ''}</section></article></main>`;
-  return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body });
+  return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body: `<?php if (!luxureat_cms_detail('${escapePhpString(article.id)}', '${article.lang}', 'recipe')): ?>${body}<?php endif; ?>` });
 }
 
 function buildRoutesPhp() {
@@ -509,6 +509,69 @@ if (!defined('ABSPATH')) {
 function luxureat_static_routes() {
     $routes = require get_template_directory() . '/routes.php';
     return is_array($routes) ? $routes : array();
+}
+
+function luxureat_cms_posts($kind) {
+    $posts = get_posts(array(
+        'post_type' => 'post', 'post_status' => array('publish', 'draft'),
+        'numberposts' => -1, 'meta_key' => '_luxureat_kind', 'meta_value' => $kind,
+    ));
+    $result = array();
+    foreach ($posts as $post) {
+        $source_id = get_post_meta($post->ID, '_luxureat_source_id', true);
+        if (!$source_id) continue;
+        $result[$source_id . ':' . get_post_meta($post->ID, '_luxureat_lang', true)] = $post;
+    }
+    return $result;
+}
+
+function luxureat_cms_post($source_id, $lang, $kind) {
+    static $cache = array();
+    if (!isset($cache[$kind])) $cache[$kind] = luxureat_cms_posts($kind);
+    return isset($cache[$kind][$source_id . ':' . $lang]) ? $cache[$kind][$source_id . ':' . $lang] : null;
+}
+
+function luxureat_cms_payload($kind) {
+    $result = array();
+    foreach (luxureat_cms_posts($kind) as $post) {
+        $id = get_post_meta($post->ID, '_luxureat_source_id', true);
+        $lang = get_post_meta($post->ID, '_luxureat_lang', true);
+        $image = get_the_post_thumbnail_url($post->ID, 'full');
+        $record = array(
+            'title' => get_the_title($post),
+            'intro' => get_the_excerpt($post),
+            'image' => $image ? $image : '',
+            'cmsHtml' => apply_filters('the_content', $post->post_content),
+        );
+        if ($kind === 'gallery') {
+            $video_id = (int) get_post_meta($post->ID, '_luxureat_video_attachment_id', true);
+            $video_url = $video_id ? wp_get_attachment_url($video_id) : '';
+            if (preg_match('/<video\\b[^>]*\\bsrc=["\\\']([^"\\\']+)/i', $post->post_content, $video_match)) {
+                $video_url = esc_url_raw(html_entity_decode($video_match[1], ENT_QUOTES));
+            }
+            $record['src'] = $video_url ? $video_url : '';
+            $record['poster'] = $record['image'];
+            $record['eventId'] = get_post_meta($post->ID, '_luxureat_event_id', true);
+            $record['date'] = get_post_meta($post->ID, '_luxureat_date', true);
+            $record['lang'] = $lang;
+        }
+        $result[$id . ':' . $lang] = $record;
+    }
+    return $result;
+}
+
+function luxureat_cms_detail($source_id, $lang, $kind) {
+    $post = luxureat_cms_post($source_id, $lang, $kind);
+    if (!$post) return false;
+    $title = get_the_title($post);
+    $image = get_the_post_thumbnail_url($post->ID, 'full');
+    $parent = $kind === 'recipe' ? ($lang === 'zh' ? '食谱艺术' : 'Recipes') : ($lang === 'zh' ? '知识博客' : 'Knowledge Blog');
+    $parent_url = luxureat_static_url($lang . '/' . ($kind === 'recipe' ? 'recipe' : 'blog'));
+    echo '<main class="lux-article-page"><nav class="lux-breadcrumb"><a href="' . esc_url($parent_url) . '">' . esc_html($parent) . '</a><span> / </span><span>' . esc_html($title) . '</span></nav>';
+    echo '<article class="lux-reader-layout lux-academy-reader"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h1 id="lux-reader-title">' . esc_html($title) . '</h1><p class="lux-reader-summary">' . esc_html(get_the_excerpt($post)) . '</p></div>';
+    if ($image) echo '<figure class="lux-reader-cover"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '"></figure>';
+    echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . apply_filters('the_content', $post->post_content) . '</div></section></article></main>';
+    return true;
 }
 
 function luxureat_static_aliases() {
@@ -1062,6 +1125,13 @@ ${byPath}
             filemtime($source),
             true
         );
+        $cms_kinds = array('journal-data' => 'recipe', 'academy-index' => 'blog', 'gallery-data' => 'gallery');
+        if (isset($cms_kinds[$handle])) {
+            $kind = $cms_kinds[$handle];
+            wp_add_inline_script('luxureat-' . $handle,
+                'window.LUXUREAT_CMS = window.LUXUREAT_CMS || {}; window.LUXUREAT_CMS[' . wp_json_encode($kind) . '] = ' . wp_json_encode(luxureat_cms_payload($kind), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';',
+                'after');
+        }
         if ($handle === 'core') {
             wp_localize_script('luxureat-core', 'LuxureatNewsletter', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
