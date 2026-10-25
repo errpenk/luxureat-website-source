@@ -865,11 +865,11 @@ function initLuxReader() {
     const allEvents = events.map((item) => ({ item, copy: item[lang] })).filter(({ copy: itemCopy }) => itemCopy);
     const videoHtml = event.video ? `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${event.videoWidth || 720}" height="${event.videoHeight || 768}" poster="${escapeHtml(event.videoPoster || event.previewImage || event.image)}"><source src="${escapeHtml(event.video)}" type="video/mp4"></video><figcaption>${escapeHtml(event.videoSource?.[lang] || "")}</figcaption></figure>` : "";
     const eventMedia = galleryItems.filter((media) => media.eventId === id);
-    const galleryRoute = location.protocol === "file:" || location.pathname.endsWith(".html") ? "gallery.html" : lang === "zh" ? "/gallery/" : "/en/gallery/";
+    const galleryRoute = location.protocol === "file:" || location.pathname.endsWith(".html") ? "gallery.html?v=20261025-gallery3" : lang === "zh" ? "/gallery/" : "/en/gallery/";
     const galleryHref = `${galleryRoute}#event-${encodeURIComponent(id)}`;
-    const galleryHtml = eventMedia.length ? `<section class="lux-event-gallery" aria-label="${lang === "zh" ? "展会现场视频" : "Exhibition gallery"}">
-      <div class="lux-event-gallery-heading"><span>${lang === "zh" ? "现场影像" : "From the show floor"}</span><h3>${escapeHtml(article.articleTitle)} · ${lang === "zh" ? "影像画廊" : "Visual Gallery"}</h3><a href="${galleryHref}">${lang === "zh" ? "查看企业画廊" : "Explore the Gallery"} →</a></div>
-      <div class="lux-event-gallery-grid">${eventMedia.slice(0, 3).map((media) => `<figure>${media.kind === "video" ? `<video controls playsinline webkit-playsinline preload="none" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}" aria-label="${escapeHtml(media[lang].title)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video>` : `<img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(media.src)}" alt="${escapeHtml(media[lang].title)}">`}<figcaption>${escapeHtml(media[lang].title)}</figcaption></figure>`).join("")}</div>
+    const galleryHtml = eventMedia.length ? `<section class="lux-event-gallery" aria-label="${lang === "zh" ? "展会现场影像" : "Exhibition gallery"}">
+      <div class="lux-event-gallery-heading"><span>${lang === "zh" ? "现场影像" : "FROM THE SHOW FLOOR"}</span><h3>${lang === "zh" ? "查看这场展会的影像" : "Explore media from this exhibition"}</h3><p>${eventMedia.length} ${lang === "zh" ? "条影像 · 在企业画廊中浏览" : eventMedia.length === 1 ? "media item · Browse in the company gallery" : "media items · Browse in the company gallery"}</p><a href="${galleryHref}">${lang === "zh" ? "打开影像画廊" : "Open the gallery"} →</a></div>
+      <a class="lux-event-gallery-preview" href="${galleryHref}" aria-label="${lang === "zh" ? "打开本次展会影像画廊" : "Open this exhibition gallery"}"><img loading="lazy" decoding="async" width="${eventMedia[0].width}" height="${eventMedia[0].height}" src="${escapeHtml(eventMedia[0].poster || eventMedia[0].src)}" alt=""></a>
     </section>` : "";
     body.innerHTML = `
       <article class="lux-event-reader">
