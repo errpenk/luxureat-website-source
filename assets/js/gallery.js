@@ -17,7 +17,7 @@
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
     if (!eventFor(media)) return "";
-    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery6" : lang === "zh" ? "/brand/" : "/en/brand/";
+    const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery8" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
@@ -49,7 +49,7 @@
     const media = items[0];
     const href = eventHref(media);
     const name = eventName(media);
-    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><span class="lux-gallery-kicker">${lang === "zh" ? "展会现场" : "EXHIBITION"}</span><h3>${escapeHtml(name)}</h3><p>${escapeHtml(placeName(media))} · ${escapeHtml(items.length)} ${lang === "zh" ? "条影像" : items.length === 1 ? "media item" : "media items"}</p></div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
+    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2><p>${escapeHtml(placeName(media))} · ${escapeHtml(items.length)} ${lang === "zh" ? "条影像" : items.length === 1 ? "media item" : "media items"}</p></div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
   };
 
   const render = () => {

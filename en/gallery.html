@@ -14,7 +14,7 @@
 <style data-lux-critical-fonts>@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Regular.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Regular.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:400;font-style:normal;font-display:swap}@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-RegularItalic.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:400;font-style:italic;font-display:swap}@font-face{font-family:"Nyght Serif";src:url("../assets/fonts/NyghtSerif-Bold.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:700;font-style:normal;font-display:swap}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Italic.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:400;font-style:italic;font-display:swap}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-Light.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:300;font-style:normal;font-display:swap}@font-face{font-family:"Spectral";src:url("../assets/fonts/Spectral-SemiBold.woff2?v=20261008-mobile-images-1") format("woff2");font-weight:600;font-style:normal;font-display:swap}</style>
 <!-- lux:fonts:end -->
 <link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20261008-mobile-images-1">
-<link rel="stylesheet" href="../integration.css?v=20261008-mobile-images-1-gallery6">
+<link rel="stylesheet" href="../integration.css?v=20261008-mobile-images-1-gallery8">
 <link rel="stylesheet" href="../assets/css/newsletter.css?v=20261008-mobile-images-1">
 <link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head>
@@ -40,8 +40,7 @@
       <img loading="eager" fetchpriority="high" decoding="async" src="../assets/media/events/sial-paris-2026-gallery-02.webp" alt="" width="768" height="576">
     </div>
   </section>
-  <section class="lux-gallery-archive" aria-labelledby="gallery-archive-title">
-    <div class="lux-gallery-intro"><div><span class="lux-gallery-kicker">THE COLLECTION</span><h2 id="gallery-archive-title">Visual Stories</h2></div><p>Find media by name, exhibition, location or date.</p></div>
+  <section class="lux-gallery-archive" aria-label="Company gallery media">
     <form id="gallery-filters" class="lux-gallery-filters" data-gallery-filters role="search">
       <label class="lux-gallery-search">Search by name<input name="search" type="search" autocomplete="off" placeholder="Media or exhibition name"></label>
       <label>Location<select name="place"><option value="">All locations</option></select></label>
@@ -49,7 +48,7 @@
       <details class="lux-gallery-filter-more"><summary>More filters</summary><div><label>From<input name="start" type="date"></label><label>To<input name="end" type="date"></label><label>Type<select name="kind"><option value="">All types</option><option value="photo">Photos</option><option value="video">Videos</option></select></label></div></details>
       <button type="reset" class="lux-gallery-reset">Clear filters</button>
     </form>
-    <div id="gallery-results" class="lux-gallery-results-head"><p data-gallery-count role="status" aria-live="polite"></p><div class="lux-gallery-layout" role="group" aria-label="Media size"><button type="button" data-gallery-layout="large" aria-pressed="true">Large</button><button type="button" data-gallery-layout="small" aria-pressed="false">Small</button></div></div>
+    <div id="gallery-results" class="lux-gallery-results-head"><p data-gallery-count role="status" aria-live="polite"></p><div class="lux-gallery-layout" role="group" aria-label="Media size"><button type="button" data-gallery-layout="large" aria-label="Large images" title="Large images" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button><button type="button" data-gallery-layout="small" aria-label="Small images" title="Small images" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></button></div></div>
     <div class="lux-gallery-groups" data-gallery-grid data-layout="large"></div>
     <p class="lux-gallery-empty" data-gallery-empty hidden>No media matches your filters. Try another search.</p>
     <button class="lux-gallery-more" type="button" data-gallery-more hidden>Load more</button>
@@ -84,12 +83,12 @@ Please enter a valid email address."></p>
 <script defer src="../assets/data/image-variants.js?v=20261008-mobile-images-1"></script>
 <script defer src="../assets/js/core.js?v=20261008-mobile-images-1-mobile-prefetch2"></script>
 <script defer src="../assets/js/chat.js?v=20261008-mobile-images-1"></script>
-<script defer src="../assets/data/events.js?v=20261008-mobile-images-1-gallery6"></script>
+<script defer src="../assets/data/events.js?v=20261008-mobile-images-1-gallery8"></script>
 <script defer src="../assets/data/gallery.js?v=20261008-mobile-images-1"></script>
 <script defer src="../assets/data/brand-news.js?v=20261008-mobile-images-1"></script>
 <script defer src="../assets/data/journal.js?v=20261008-mobile-images-1"></script>
-<script defer src="../assets/js/gallery.js?v=20261008-mobile-images-1-gallery6"></script>
-<script defer src="../assets/js/journal.js?v=20261008-mobile-images-1-gallery6"></script>
+<script defer src="../assets/js/gallery.js?v=20261008-mobile-images-1-gallery8"></script>
+<script defer src="../assets/js/journal.js?v=20261008-mobile-images-1-gallery8"></script>
 <!-- lux:scripts:end -->
 </body>
 </html>
