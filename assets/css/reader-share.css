@@ -1,6 +1,5 @@
-.lux-reader-related-grid img { object-fit: contain; }
-.lux-reader-related-media { aspect-ratio: 16 / 10; }
-.lux-reader-related-grid img { height: 100% !important; }
+.lux-reader-related-grid .is-caviar-species-related .lux-reader-related-media { aspect-ratio: 16 / 10; }
+.lux-reader-related-grid .is-caviar-species-related img { height: 100% !important; object-fit: contain; }
 
 .lux-academy-reader .lux-reader-hero { align-items: center; }
 .lux-academy-reader .lux-reader-hero-copy { align-self: center; }
@@ -9,6 +8,9 @@
 .lux-cms-prose :is(figure, .wp-block-image) { width: fit-content; max-width: 100%; margin: 2rem auto; text-align: center; }
 .lux-cms-prose :is(figure, .wp-block-image) img,
 .lux-cms-prose > img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+.lux-reader-body :is(.lux-reader-cover, .lux-cms-prose figure, .lux-reader-section-media figure) img { width: auto; max-width: min(100%, 960px); max-height: min(68dvh, 700px); height: auto; object-fit: contain; margin-inline: auto; }
+.lux-reader-body .lux-cms-prose > img { max-width: min(100%, 960px); max-height: min(68dvh, 700px); }
+.lux-reader-body .lux-brand-news-media img { width: auto; max-width: min(100%, 960px); max-height: min(68dvh, 700px); object-fit: contain; margin-inline: auto; }
 
 @font-face { font-family: "LuxChinaMedia"; src: url("../fonts/chinamediaicons.woff") format("woff"); font-display: block; }
 .lux-reader-share { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
@@ -19,10 +21,9 @@
 .lux-china-icon.icon-qq::before { content: "\6d"; }
 .lux-china-icon.icon-weibo::before { content: "\48"; }
 .lux-china-icon.icon-wechat::before { content: "\45"; }
+.lux-china-icon.icon-wechat-circle::before { content: "\46"; }
 .lux-share-status { min-width: 3em; color: #07534a; font: 12px/1.3 var(--lux-page-body); }
 .lux-reader-header-share { margin-right: auto; }
-.lux-reader.is-blog-reader .lux-reader-header-share { display: none; }
-.lux-academy-reader .lux-reader-hero-copy .lux-reader-share { justify-content: center; margin-top: 22px; }
 .lux-share-qr[hidden] { display: none; }
 .lux-share-qr { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; padding: 20px; background: rgba(0,0,0,.6); }
 .lux-share-qr > div { position: relative; display: grid; justify-items: center; gap: 14px; width: min(360px,100%); padding: 30px; background: #f4f2ee; color: #07534a; text-align: center; }

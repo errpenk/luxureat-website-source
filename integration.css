@@ -4083,7 +4083,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   width: 72px;
   height: 72px;
   aspect-ratio: 1;
-  object-fit: contain;
+  object-fit: cover;
 }
 .lux-event-reader-index [data-event-open] span {
   display: grid;

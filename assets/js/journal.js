@@ -638,13 +638,14 @@ function initLuxReader() {
   let currentId = "";
   let archiveOrigin = false;
   const stack = [];
+  const caviarSpeciesSlugs = new Set(["white-sturgeon-caviar", "sevruga-caviar", "oscetra-caviar", "kaluga-amur-caviar", "beluga-caviar", "baerii-caviar"]);
   const shareIcon = (path) => `<svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
   const shareUi = () => `<nav class="lux-reader-share" aria-label="${lang === "zh" ? "分享文章" : "Share this page"}">
     <button type="button" data-share="copy" aria-label="${lang === "zh" ? "复制链接" : "Copy link"}" title="${lang === "zh" ? "复制链接" : "Copy link"}">${shareIcon('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>')}</button>
     <button type="button" data-share="qq" aria-label="QQ" title="QQ"><span class="lux-china-icon icon-qq" aria-hidden="true"></span></button>
     <button type="button" data-share="weibo" aria-label="微博" title="微博"><span class="lux-china-icon icon-weibo" aria-hidden="true"></span></button>
     <button type="button" data-share="wechat" aria-label="${lang === "zh" ? "微信" : "WeChat"}" title="${lang === "zh" ? "微信" : "WeChat"}"><span class="lux-china-icon icon-wechat" aria-hidden="true"></span></button>
-    <button type="button" data-share="moments" aria-label="${lang === "zh" ? "微信朋友圈" : "WeChat Moments"}" title="${lang === "zh" ? "朋友圈" : "Moments"}">${shareIcon('<circle cx="12" cy="12" r="9"/><path d="m12 3 4 7-4 2-5-3m14 3-7 1-2-4m5 11-4-6 3-4M7 20l2-7 5 1M3 12l7-1 2 3"/>')}</button>
+    <button type="button" data-share="moments" aria-label="${lang === "zh" ? "微信朋友圈" : "WeChat Moments"}" title="${lang === "zh" ? "朋友圈" : "Moments"}"><span class="lux-china-icon icon-wechat-circle" aria-hidden="true"></span></button>
     <span class="lux-share-status" role="status" aria-live="polite"></span>
   </nav>`;
   reader.querySelector("[data-share-ui]").innerHTML = shareUi();
@@ -706,7 +707,6 @@ function initLuxReader() {
 
   const showReader = (copy) => {
     reader.hidden = false;
-    reader.classList.toggle("is-blog-reader", !!body.querySelector(".lux-academy-reader"));
     reader.querySelector("[data-share-qr]").hidden = true;
     document.body.classList.add("lux-reader-open");
     backButton.hidden = stack.length === 0 && !window.LuxureatHasInternalBack?.();
@@ -759,7 +759,7 @@ function initLuxReader() {
     if (location.hash !== `#reader-${id}`) history.replaceState(history.state, "", `${location.pathname}${location.search}#reader-${id}`);
     const copy = labels();
     if (article.cmsHtml && article.slug) {
-      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p>${shareUi()}</div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><div class="lux-reader-copy lux-cms-prose">${article.cmsHtml.replaceAll(/https?:\/\/i\d\.wp\.com\/luxureat\.cn\/wp-content\/uploads\//g, "https://luxureat.cn/wp-content/uploads/")}</div></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; return related ? `<button type="button"${related.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
+      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><div class="lux-reader-copy lux-cms-prose">${article.cmsHtml.replaceAll(/https?:\/\/i\d\.wp\.com\/luxureat\.cn\/wp-content\/uploads\//g, "https://luxureat.cn/wp-content/uploads/")}</div></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; const isCaviarSpecies = caviarSpeciesSlugs.has(article.slug); return related ? `<button type="button"${related.wideCover || isCaviarSpecies ? ` class="${[related.wideCover && "is-wide-cover", isCaviarSpecies && "is-caviar-species-related"].filter(Boolean).join(" ")}"` : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
       showReader(copy);
       return;
     }
@@ -943,7 +943,7 @@ function initLuxReader() {
               ${article.related.map((relatedId) => {
                 const item = articles[relatedId];
                 return item ? `
-                  <button type="button"${item.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}">
+                  <button type="button"${item.wideCover || caviarSpeciesSlugs.has(article.slug) ? ` class="${[item.wideCover && "is-wide-cover", caviarSpeciesSlugs.has(article.slug) && "is-caviar-species-related"].filter(Boolean).join(" ")}"` : ""} data-reader-related="${escapeHtml(relatedId)}">
                     <span class="lux-reader-related-media">
                       ${item.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt="">` : topicArt(item, true)}
                       <span class="lux-reader-related-cta">${copy.read}</span>
