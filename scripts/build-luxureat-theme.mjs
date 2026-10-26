@@ -1107,7 +1107,7 @@ function luxureat_static_assets() {
         array(),
         filemtime($theme_dir . '/integration.css')
     );
-    if (preg_match('~^(zh|en)/blog/~', $path)) {
+    if (preg_match('~^(?:blog|zh/blog|en/blog)/~', $path)) {
         wp_enqueue_style('luxureat-reader-share', $theme_uri . '/assets/css/reader-share.css', array('luxureat-integration'), filemtime($theme_dir . '/assets/css/reader-share.css'));
     }
 
