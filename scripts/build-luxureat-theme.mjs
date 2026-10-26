@@ -506,6 +506,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+add_filter('the_content', function ($content) {
+    return preg_replace('~https?://i[0-9]+\\.wp\\.com/luxureat\\.cn/wp-content/uploads/~', 'https://luxureat.cn/wp-content/uploads/', $content);
+}, 9999);
+
 function luxureat_static_routes() {
     $routes = require get_template_directory() . '/routes.php';
     return is_array($routes) ? $routes : array();

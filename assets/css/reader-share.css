@@ -1,0 +1,37 @@
+.lux-reader-related-grid img { object-fit: contain; }
+.lux-reader-related-media { aspect-ratio: 16 / 10; }
+.lux-reader-related-grid img { height: 100% !important; }
+
+.lux-academy-reader .lux-reader-hero { align-items: center; }
+.lux-academy-reader .lux-reader-hero-copy { align-self: center; }
+.lux-academy-reader .lux-reader-summary { font-style: italic; }
+.lux-cms-prose :is(figure, .wp-block-image) { width: fit-content; max-width: 100%; margin: 2rem auto; text-align: center; }
+.lux-cms-prose :is(figure, .wp-block-image) img,
+.lux-cms-prose > img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+
+@font-face { font-family: "LuxChinaMedia"; src: url("../fonts/chinamediaicons.woff") format("woff"); font-display: block; }
+.lux-reader-share { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.lux-reader-share button { display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 1px solid currentColor; border-radius: 50%; background: transparent; color: #07534a; cursor: pointer; transition: color .18s, background .18s, border-color .18s; }
+.lux-reader-share button:is(:hover,:focus-visible) { color: #89670f; background: #f5edd6; border-color: #89670f; }
+.lux-reader-share .lux-lucide { width: 18px; height: 18px; }
+.lux-china-icon::before { font-family: "LuxChinaMedia"; font-size: 19px; font-style: normal; line-height: 1; }
+.lux-china-icon.icon-qq::before { content: "\6d"; }
+.lux-china-icon.icon-weibo::before { content: "\48"; }
+.lux-china-icon.icon-wechat::before { content: "\45"; }
+.lux-share-status { min-width: 3em; color: #07534a; font: 12px/1.3 var(--lux-page-body); }
+.lux-reader-header-share { margin-right: auto; }
+.lux-reader.is-blog-reader .lux-reader-header-share { display: none; }
+.lux-academy-reader .lux-reader-hero-copy .lux-reader-share { justify-content: center; margin-top: 22px; }
+.lux-share-qr[hidden] { display: none; }
+.lux-share-qr { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; padding: 20px; background: rgba(0,0,0,.6); }
+.lux-share-qr > div { position: relative; display: grid; justify-items: center; gap: 14px; width: min(360px,100%); padding: 30px; background: #f4f2ee; color: #07534a; text-align: center; }
+.lux-share-qr [data-share-qr-close] { position: absolute; top: 8px; right: 10px; border: 0; background: none; color: inherit; font-size: 28px; cursor: pointer; }
+.lux-share-qr [data-share-qr-image] svg { width: min(240px,65vw); height: auto; }
+.lux-share-qr p { margin: 0; font-size: 14px; }
+@media (max-width: 640px) {
+  .lux-reader-header-share { position: absolute; top: 14px; left: 14px; }
+  .lux-reader:has(.lux-reader-back:not([hidden])) .lux-reader-header-share { left: 92px; }
+  .lux-reader-header-share .lux-reader-share { gap: 4px; }
+  .lux-reader-header-share .lux-reader-share button { width: 32px; height: 32px; }
+  .lux-reader-header-share .lux-share-status { position: absolute; top: 36px; left: 0; }
+}

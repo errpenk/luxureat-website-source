@@ -104,7 +104,7 @@ const typographyCss = ["integration.css", ...fs.readdirSync(path.join(root, "ass
   .map((name) => `assets/css/${name}`)].map(read).join("\n");
 const allowedFontFamilies = new Set([
   "inherit", '"Material Symbols Outlined"', '"Nyght Serif"', '"Spectral"',
-  '"KingHwa Old Song Site"', '"LuxurEat ZhiSong Site"',
+  '"KingHwa Old Song Site"', '"LuxurEat ZhiSong Site"', '"LuxChinaMedia"',
 ]);
 const unapprovedFontFamilies = [...typographyCss.matchAll(/font-family\s*:\s*([^;}]+)/g)]
   .map((match) => match[1].replace(/\s*!important\s*$/, "").trim())
@@ -286,7 +286,7 @@ for (const file of require("node:fs").readdirSync("zh").filter((name) => name.en
   const page = read(`zh/${file}`);
   assert(/@font-face\{font-family:"(?:KingHwa|ZhiSong|LuxurEat ZhiSong)[^}]+font-display:swap/.test(page) && !/font-display:block/.test(page), `${file} can hide Chinese text while fonts load`);
 }
-const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
+const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => !["Material Symbols Outlined", "LuxChinaMedia"].includes(family));
 assert(registeredTextFonts.length === 0, "shared CSS still registers stale text fonts");
 for (const locale of ["zh", "en"]) {
   for (const name of require("node:fs").readdirSync(locale).filter((file) => file.endsWith(".html"))) {

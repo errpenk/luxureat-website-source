@@ -611,6 +611,10 @@ function initLuxReader() {
   };
   syncReaderCards();
 
+  const shareStyles = document.createElement("link");
+  shareStyles.rel = "stylesheet";
+  shareStyles.href = luxJournalAsset("css/reader-share.css");
+  document.head.appendChild(shareStyles);
   const reader = document.createElement("div");
   reader.className = "lux-reader";
   reader.hidden = true;
@@ -619,9 +623,11 @@ function initLuxReader() {
     <section class="lux-reader-panel" role="dialog" aria-modal="true" aria-labelledby="lux-reader-title">
       <header class="lux-reader-header">
         <button type="button" class="lux-reader-back" data-reader-back hidden></button>
+        <div class="lux-reader-header-share" data-share-ui></div>
         <button type="button" class="lux-reader-close" data-reader-close></button>
       </header>
       <div class="lux-reader-body" tabindex="-1"></div>
+      <div class="lux-share-qr" data-share-qr hidden role="dialog" aria-modal="true" aria-label="${lang === "zh" ? "微信分享" : "Share with WeChat"}"><div><button type="button" data-share-qr-close aria-label="${lang === "zh" ? "关闭" : "Close"}">×</button><strong data-share-qr-title></strong><div data-share-qr-image></div><p data-share-qr-help></p></div></div>
     </section>`;
   document.body.appendChild(reader);
 
@@ -632,12 +638,76 @@ function initLuxReader() {
   let currentId = "";
   let archiveOrigin = false;
   const stack = [];
+  const shareIcon = (path) => `<svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
+  const shareUi = () => `<nav class="lux-reader-share" aria-label="${lang === "zh" ? "分享文章" : "Share this page"}">
+    <button type="button" data-share="copy" aria-label="${lang === "zh" ? "复制链接" : "Copy link"}" title="${lang === "zh" ? "复制链接" : "Copy link"}">${shareIcon('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>')}</button>
+    <button type="button" data-share="qq" aria-label="QQ" title="QQ"><span class="lux-china-icon icon-qq" aria-hidden="true"></span></button>
+    <button type="button" data-share="weibo" aria-label="微博" title="微博"><span class="lux-china-icon icon-weibo" aria-hidden="true"></span></button>
+    <button type="button" data-share="wechat" aria-label="${lang === "zh" ? "微信" : "WeChat"}" title="${lang === "zh" ? "微信" : "WeChat"}"><span class="lux-china-icon icon-wechat" aria-hidden="true"></span></button>
+    <button type="button" data-share="moments" aria-label="${lang === "zh" ? "微信朋友圈" : "WeChat Moments"}" title="${lang === "zh" ? "朋友圈" : "Moments"}">${shareIcon('<circle cx="12" cy="12" r="9"/><path d="m12 3 4 7-4 2-5-3m14 3-7 1-2-4m5 11-4-6 3-4M7 20l2-7 5 1M3 12l7-1 2 3"/>')}</button>
+    <span class="lux-share-status" role="status" aria-live="polite"></span>
+  </nav>`;
+  reader.querySelector("[data-share-ui]").innerHTML = shareUi();
+  const shareUrl = () => location.href;
+  const shareTitle = () => body.querySelector("#lux-reader-title")?.textContent.trim() || document.title;
+  const showShareQr = async (moments) => {
+    const qr = reader.querySelector("[data-share-qr]");
+    qr.hidden = false;
+    qr.querySelector("[data-share-qr-title]").textContent = moments ? (lang === "zh" ? "分享到朋友圈" : "Share to Moments") : (lang === "zh" ? "分享到微信" : "Share to WeChat");
+    qr.querySelector("[data-share-qr-help]").textContent = lang === "zh" ? "用微信扫描二维码，打开后分享给好友或朋友圈。" : "Scan with WeChat, then share to a chat or Moments.";
+    const image = qr.querySelector("[data-share-qr-image]");
+    image.textContent = lang === "zh" ? "正在生成二维码…" : "Generating QR code…";
+    try {
+      if (!window.qrcode) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = luxJournalAsset("js/vendor/qrcode.js");
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+      const code = window.qrcode(0, "M");
+      code.addData(shareUrl());
+      code.make();
+      image.innerHTML = code.createSvgTag({ cellSize: 5, margin: 4 });
+    } catch {
+      image.textContent = lang === "zh" ? "二维码暂不可用，请复制链接。" : "QR code unavailable. Please copy the link.";
+    }
+  };
+  reader.addEventListener("click", async (event) => {
+    if (event.target.closest("[data-share-qr-close]") || event.target.matches("[data-share-qr]")) { reader.querySelector("[data-share-qr]").hidden = true; return; }
+    const button = event.target.closest("[data-share]");
+    if (!button) return;
+    const type = button.dataset.share;
+    const url = shareUrl();
+    const title = shareTitle();
+    if (type === "copy") {
+      try { await navigator.clipboard.writeText(url); }
+      catch {
+        const input = document.createElement("textarea");
+        input.value = url;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+      }
+      button.closest(".lux-reader-share").querySelector(".lux-share-status").textContent = lang === "zh" ? "已复制" : "Copied";
+    } else if (type === "qq" || type === "weibo") {
+      const target = type === "qq" ? `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}` : `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+      window.open(target, "_blank", "noopener,noreferrer,width=700,height=600");
+    } else if (navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+      try { await navigator.share({ title, url }); } catch (error) { if (error.name !== "AbortError") showShareQr(type === "moments"); }
+    } else showShareQr(type === "moments");
+  });
   const syncReaderTop = () => {
     panel.classList.toggle("is-at-top", body.scrollTop <= 4);
   };
 
   const showReader = (copy) => {
     reader.hidden = false;
+    reader.classList.toggle("is-blog-reader", !!body.querySelector(".lux-academy-reader"));
+    reader.querySelector("[data-share-qr]").hidden = true;
     document.body.classList.add("lux-reader-open");
     backButton.hidden = stack.length === 0 && !window.LuxureatHasInternalBack?.();
     backButton.textContent = copy.back;
@@ -689,7 +759,7 @@ function initLuxReader() {
     if (location.hash !== `#reader-${id}`) history.replaceState(history.state, "", `${location.pathname}${location.search}#reader-${id}`);
     const copy = labels();
     if (article.cmsHtml && article.slug) {
-      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><div class="lux-reader-copy lux-cms-prose">${article.cmsHtml}</div></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; return related ? `<button type="button"${related.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
+      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p>${shareUi()}</div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><div class="lux-reader-copy lux-cms-prose">${article.cmsHtml.replaceAll(/https?:\/\/i\d\.wp\.com\/luxureat\.cn\/wp-content\/uploads\//g, "https://luxureat.cn/wp-content/uploads/")}</div></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; return related ? `<button type="button"${related.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
       showReader(copy);
       return;
     }
@@ -904,10 +974,6 @@ function initLuxReader() {
     const eventMedia = galleryItems.filter((media) => media.eventId === id);
     const galleryRoute = location.protocol === "file:" || location.pathname.endsWith(".html") ? "gallery.html?v=20261025-gallery15" : lang === "zh" ? "/gallery/" : "/en/gallery/";
     const galleryHref = `${galleryRoute}#event-${encodeURIComponent(id)}`;
-    const galleryHtml = eventMedia.length && !document.body.classList.contains("lux-gallery-page") ? `<section class="lux-event-gallery" aria-label="${lang === "zh" ? "展会现场影像" : "Exhibition gallery"}">
-      <div class="lux-event-gallery-heading"><span>${lang === "zh" ? "现场影像" : "FROM THE SHOW FLOOR"}</span><h3>${lang === "zh" ? "查看这场展会的影像" : "Explore media from this exhibition"}</h3><p>${eventMedia.length} ${lang === "zh" ? "条影像 · 在企业画廊中浏览" : eventMedia.length === 1 ? "media item · Browse in the company gallery" : "media items · Browse in the company gallery"}</p><a href="${galleryHref}">${lang === "zh" ? "打开影像画廊" : "Open the gallery"} →</a></div>
-      <a class="lux-event-gallery-preview" href="${galleryHref}" aria-label="${lang === "zh" ? "打开本次展会影像画廊" : "Open this exhibition gallery"}"><img loading="lazy" decoding="async" width="${eventMedia[0].width}" height="${eventMedia[0].height}" src="${escapeHtml(eventMedia[0].poster || eventMedia[0].src)}" alt=""></a>
-    </section>` : "";
     body.innerHTML = `
       <article class="lux-event-reader">
         <header class="lux-event-reader-intro">
@@ -931,7 +997,7 @@ function initLuxReader() {
                 ${article.sections.map(([heading, text]) => `<section><h3>${escapeHtml(heading)}</h3>${(Array.isArray(text) ? text : [text]).map((paragraph) => `<p>${formatEmphasis(paragraph)}</p>`).join("")}</section>`).join("")}
                 ${videoHtml}
                 <blockquote>${escapeHtml(article.quote)}</blockquote>
-                ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}</nav>` : ""}
+                ${relatedNews.length || eventMedia.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}${eventMedia.length ? `<a href="${galleryHref}"><img loading="lazy" decoding="async" src="${escapeHtml(eventMedia[0].poster || eventMedia[0].src)}" alt=""><span><small>${lang === "zh" ? "企业画廊" : "Company Gallery"}</small><strong>${lang === "zh" ? "查看这场展会的影像" : "Explore media from this exhibition"}</strong></span><span aria-hidden="true">→</span></a>` : ""}</nav>` : ""}
               </div>
             </div>
           </section>
@@ -940,7 +1006,6 @@ function initLuxReader() {
             ${allEvents.map(({ item, copy: itemCopy }) => `<a href="${eventHref(item.id)}" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${formatTitle(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span></a>`).join("")}
           </aside>
         </div>
-        ${galleryHtml}
       </article>`;
     history.replaceState(null, "", `#event-${encodeURIComponent(id)}`);
     showReader(copy);

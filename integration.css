@@ -4081,7 +4081,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 }
 .lux-event-reader-index [data-event-open] img {
   width: 72px;
-  aspect-ratio: 4 / 3;
+  height: 72px;
+  aspect-ratio: 1;
   object-fit: contain;
 }
 .lux-event-reader-index [data-event-open] span {
@@ -10893,7 +10894,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   display: block;
   height: auto;
   aspect-ratio: 16 / 10;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   background: transparent;
 }
