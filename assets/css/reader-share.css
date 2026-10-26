@@ -5,6 +5,7 @@
 .lux-academy-reader .lux-reader-hero { align-items: center; }
 .lux-academy-reader .lux-reader-hero-copy { align-self: center; }
 .lux-academy-reader .lux-reader-summary { font-style: italic; }
+.lux-academy-reader .lux-reader-cover img { object-fit: contain; }
 .lux-cms-prose :is(figure, .wp-block-image) { width: fit-content; max-width: 100%; margin: 2rem auto; text-align: center; }
 .lux-cms-prose :is(figure, .wp-block-image) img,
 .lux-cms-prose > img { display: block; max-width: 100%; height: auto; margin-inline: auto; }

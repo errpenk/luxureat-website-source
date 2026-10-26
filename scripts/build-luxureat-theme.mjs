@@ -506,9 +506,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_filter('the_content', function ($content) {
+function luxureat_origin_upload_images($content) {
     return preg_replace('~https?://i[0-9]+\\.wp\\.com/luxureat\\.cn/wp-content/uploads/~', 'https://luxureat.cn/wp-content/uploads/', $content);
-}, 9999);
+}
+add_filter('the_content', 'luxureat_origin_upload_images', PHP_INT_MAX);
 
 function luxureat_static_routes() {
     $routes = require get_template_directory() . '/routes.php';
@@ -545,7 +546,7 @@ function luxureat_cms_payload($kind) {
             'title' => get_the_title($post),
             'intro' => get_the_excerpt($post),
             'image' => $image ? $image : '',
-            'cmsHtml' => apply_filters('the_content', $post->post_content),
+            'cmsHtml' => luxureat_origin_upload_images(apply_filters('the_content', $post->post_content)),
         );
         if ($kind === 'gallery') {
             $video_id = (int) get_post_meta($post->ID, '_luxureat_video_attachment_id', true);
@@ -578,7 +579,7 @@ function luxureat_cms_detail($source_id, $lang, $kind) {
     echo '<main class="lux-article-page"><nav class="lux-breadcrumb"><a href="' . esc_url($parent_url) . '">' . esc_html($parent) . '</a><span> / </span><span>' . esc_html($title) . '</span></nav>';
     echo '<article class="lux-reader-layout lux-academy-reader"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h1 id="lux-reader-title">' . esc_html($title) . '</h1><p class="lux-reader-summary">' . esc_html(get_the_excerpt($post)) . '</p></div>';
     if ($image) echo '<figure class="lux-reader-cover"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '"></figure>';
-    echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . apply_filters('the_content', $post->post_content) . '</div></section></article></main>';
+    echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . luxureat_origin_upload_images(apply_filters('the_content', $post->post_content)) . '</div></section></article></main>';
     return true;
 }
 
@@ -1106,6 +1107,9 @@ function luxureat_static_assets() {
         array(),
         filemtime($theme_dir . '/integration.css')
     );
+    if (preg_match('~^(zh|en)/blog/~', $path)) {
+        wp_enqueue_style('luxureat-reader-share', $theme_uri . '/assets/css/reader-share.css', array('luxureat-integration'), filemtime($theme_dir . '/assets/css/reader-share.css'));
+    }
 
     $catalog = array(
 ${catalog}
