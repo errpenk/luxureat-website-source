@@ -15,7 +15,8 @@
     if (cms.eventId) item.eventId = cms.eventId;
     if (cms.date) item.date = cms.date;
     if (cms.src) item.src = cms.src;
-    if (cms.poster) item.poster = cms.poster;
+    const videoPoster = cms.cmsHtml?.match(/<video\b[^>]*\bposter=["']([^"']+)/i)?.[1];
+    if (videoPoster || cms.poster) item.poster = videoPoster || cms.poster;
   }
   const events = new Map((window.LUXUREAT_EVENT_DATA?.events || []).map((event) => [event.id, event]));
   const grid = document.querySelector("[data-gallery-grid]");
