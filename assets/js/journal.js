@@ -1,5 +1,6 @@
 const luxJournalAssetBase = new URL("../", document.currentScript?.src || location.href);
 const luxJournalAsset = (path) => new URL(path, luxJournalAssetBase).href;
+const luxJournalAssetVersion = new URL(document.currentScript?.src || location.href).searchParams.get("ver") || "1";
 
 function initLuxReader() {
   const articleData = window.LUXUREAT_ARTICLE_DATA || {};
@@ -613,7 +614,7 @@ function initLuxReader() {
 
   const shareStyles = document.createElement("link");
   shareStyles.rel = "stylesheet";
-  shareStyles.href = luxJournalAsset("css/reader-share.css");
+  shareStyles.href = `${luxJournalAsset("css/reader-share.css")}?ver=${encodeURIComponent(luxJournalAssetVersion)}`;
   document.head.appendChild(shareStyles);
   const reader = document.createElement("div");
   reader.className = "lux-reader";

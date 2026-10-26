@@ -22,6 +22,8 @@
 .lux-china-icon.icon-weibo::before { content: "\48"; }
 .lux-china-icon.icon-wechat::before { content: "\45"; }
 .lux-china-icon.icon-wechat-circle::before { content: "\46"; }
+html[lang^="zh"] body .lux-reader-share .lux-china-icon,
+html[lang^="zh"] body .lux-reader-share .lux-china-icon::before { font-family: "LuxChinaMedia" !important; }
 .lux-share-status { min-width: 3em; color: #07534a; font: 12px/1.3 var(--lux-page-body); }
 .lux-reader-header-share { margin-right: auto; }
 .lux-share-qr[hidden] { display: none; }
