@@ -1,8 +1,12 @@
 .lux-gallery-filters { display: flex; flex-wrap: wrap; align-items: end; }
-.lux-gallery-filters .lux-gallery-search { flex: 1 1 60%; }
+.lux-gallery-filters .lux-gallery-search { position: relative; flex: 1 1 0; }
 .lux-gallery-filters .lux-gallery-filter-more { flex: 1 1 100%; padding-top: 0; }
-.lux-gallery-filters .lux-gallery-reset { flex: none; order: 0; }
+.lux-gallery-filters .lux-gallery-reset { flex: 0 0 min(25%, 260px); order: 0; }
 .lux-gallery-filters .lux-gallery-filter-more { order: 1; }
+.lux-gallery-suggestions { position: absolute; z-index: 10; top: 100%; left: 0; right: 0; display: grid; padding: 6px; border: 1px solid #d2ccc4; background: #fff; box-shadow: 0 12px 20px #0002; }
+.lux-gallery-suggestions[hidden] { display: none; }
+.lux-gallery-suggestions button { padding: 12px 14px; border: 0; background: #fff; color: #171715; text-align: left; cursor: pointer; }
+.lux-gallery-suggestions button:hover, .lux-gallery-suggestions button:focus-visible { background: #d5f7f3; }
 .lux-gallery-filter-more > div { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .lux-gallery-dialog { box-sizing: border-box; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; overflow-y: auto; background: #171715; color: #f7f4ee; }
 .lux-gallery-dialog[open] { display: block; }
@@ -26,8 +30,8 @@
 .lux-gallery-dialog .lux-gallery-video-play[hidden] { display: none; }
 .lux-gallery-video-play svg { width: 26px; height: 26px; margin-left: 4px; fill: currentColor; }
 .lux-gallery-caption { width: min(740px, calc(100% - 140px)); margin: 22px auto 0; font: 400 16px/1.55 var(--lux-page-body); }
-.lux-gallery-caption-top { display: flex; justify-content: space-between; gap: 20px; color: #aaa39b; font-style: italic; }
-.lux-gallery-caption p { margin: 12px 0; }
+.lux-gallery-caption-top { color: #aaa39b; font-style: italic; text-align: center; }
+.lux-gallery-caption p { margin: 12px 0; text-align: center; }
 .lux-gallery-caption a { display: block; width: fit-content; margin: 8px auto 0; color: #f7f4ee; text-decoration: underline; text-underline-offset: 5px; }
 .lux-gallery-caption a:hover, .lux-gallery-caption a:focus-visible { color: #9df5ec; }
 @media (max-width: 900px) { .lux-gallery-filter-more > div { grid-template-columns: repeat(2,minmax(0,1fr)); } }

@@ -26,6 +26,8 @@
   const caption = document.querySelector("[data-gallery-caption]");
   const previous = dialog.querySelector("[data-gallery-prev]");
   const next = dialog.querySelector("[data-gallery-next]");
+  const searchInput = form.elements.search;
+  const suggestions = form.querySelector("#gallery-suggestions");
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
   const eventFor = (media) => events.get(media.eventId);
   const eventName = (media) => eventFor(media)?.[lang]?.galleryTitle || eventFor(media)?.[lang]?.articleTitle || (lang === "zh" ? "企业影像" : "Company media");
@@ -47,6 +49,31 @@
   if (events.has(hashEvent) && gallery.some((media) => media.eventId === hashEvent)) form.elements.event.value = hashEvent;
 
   const ordered = [...gallery].sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
+  const searchCandidates = unique(gallery.map(eventName)).concat(unique(gallery.map((media) => media[lang].title)));
+  const showSuggestions = () => {
+    const query = searchInput.value.trim().toLocaleLowerCase();
+    const options = query ? searchCandidates.filter((name) => name.toLocaleLowerCase().includes(query) && name.toLocaleLowerCase() !== query).slice(0, 6) : [];
+    suggestions.innerHTML = options.map((name) => `<button type="button" role="option" data-gallery-suggestion="${escapeHtml(name)}">${escapeHtml(name)}</button>`).join("");
+    suggestions.hidden = !options.length;
+    searchInput.setAttribute("aria-expanded", String(Boolean(options.length)));
+  };
+  searchInput.addEventListener("input", showSuggestions);
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") { suggestions.hidden = true; searchInput.setAttribute("aria-expanded", "false"); }
+    if (event.key === "ArrowDown" && !suggestions.hidden) { event.preventDefault(); suggestions.querySelector("button")?.focus(); }
+  });
+  suggestions.addEventListener("click", (event) => {
+    const option = event.target.closest("[data-gallery-suggestion]");
+    if (!option) return;
+    searchInput.value = option.dataset.gallerySuggestion;
+    suggestions.hidden = true;
+    searchInput.setAttribute("aria-expanded", "false");
+    searchInput.focus();
+    form.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  document.addEventListener("click", (event) => {
+    if (!form.querySelector(".lux-gallery-search").contains(event.target)) { suggestions.hidden = true; searchInput.setAttribute("aria-expanded", "false"); }
+  });
   let matches = [];
   let eventCounts = new Map();
 
@@ -112,6 +139,8 @@
     pagination.reset();
   });
   form.addEventListener("reset", () => {
+    suggestions.hidden = true;
+    searchInput.setAttribute("aria-expanded", "false");
     history.replaceState(null, "", location.pathname);
     setTimeout(() => { filterMatches(); pagination.reset(); }, 0);
   });
@@ -134,7 +163,7 @@
     const index = eventSequence.indexOf(media);
     const href = eventHref(media);
     const eventTitle = (eventCopy?.galleryTitle || eventCopy?.articleTitle || "").split("·")[0].trim();
-    caption.innerHTML = `<div class="lux-gallery-caption-top"><span>${escapeHtml(title)}</span><span>${index + 1} / ${eventSequence.length}</span></div><p>${escapeHtml(placeName(media))}${eventCopy?.date ? ` · ${escapeHtml(eventCopy.date)}` : ""}</p>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "了解" : "Explore"} ${escapeHtml(eventTitle)} <span aria-hidden="true">→</span></a>` : ""}`;
+    caption.innerHTML = `<div class="lux-gallery-caption-top">${index + 1} / ${eventSequence.length}</div><p>${escapeHtml(placeName(media))}${eventCopy?.date ? ` · ${escapeHtml(eventCopy.date)}` : ""}</p>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "了解" : "Explore"} ${escapeHtml(eventTitle)} <span aria-hidden="true">→</span></a>` : ""}`;
     previous.disabled = index <= 0;
     next.disabled = index >= eventSequence.length - 1;
     dialog.setAttribute("aria-label", title);

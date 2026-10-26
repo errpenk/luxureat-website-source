@@ -947,7 +947,7 @@ function initLuxReader() {
     const linkedEvent = events.find((event) => event.id === item.eventId);
     const relatedStory = brandNews.find((story) => story.id === item.relatedNewsId);
     const renderMedia = (entry) => {
-      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${escapeHtml(lang === "zh" ? "视频来源：arsial.lazio" : "Video source: arsial.lazio")}</figcaption></figure>`;
+      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${lang === "zh" ? "视频来源：" : "Video source: "}${item.videoSourceUrl ? `<a href="${escapeHtml(item.videoSourceUrl)}" target="_blank" rel="noopener">arsial.lazio</a>` : "arsial.lazio"}</figcaption></figure>`;
       const alt = entry.alt?.[lang] || article.title;
       const imageCredit = entry.sourceUrl
         ? `<figcaption>${lang === "zh" ? "图片来源：" : "Image source: "}<a href="${escapeHtml(entry.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(entry.sourceName?.[lang] || entry.sourceUrl)}</a></figcaption>`
@@ -956,7 +956,7 @@ function initLuxReader() {
     };
     body.innerHTML = `
       <article class="lux-brand-news-reader">
-        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}"></figure>
+        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}">${item.cardImageSourceUrl ? `<figcaption>${lang === "zh" ? "封面图片来源：" : "Cover image source: "}<a href="${escapeHtml(item.cardImageSourceUrl)}" target="_blank" rel="noopener">${escapeHtml(item.cardImageSourceName || "SIAL Paris")}</a></figcaption>` : ""}</figure>
         <div class="lux-brand-news-sheet">
           <header>
             <p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p>

@@ -13674,12 +13674,15 @@ html[lang] body .lux-header :is(.lux-nav > a, .lux-nav-item > a):is(:hover, :foc
   color: #5d5a56;
 }
 .lux-brand-news-hero {
+  position: relative;
   width: 100%;
   height: 45vh;
   height: 45dvh;
   margin: 0;
   background: #fff;
 }
+.lux-brand-news-hero figcaption { position: absolute; right: 18px; bottom: 68px; padding: 5px 9px; background: #171715c9; color: #fff; font: 12px/1.4 var(--lux-page-body); }
+.lux-brand-news-hero figcaption a, .lux-brand-news-media figcaption a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .lux-brand-news-hero img {
   display: block;
   width: 100%;

@@ -76,10 +76,11 @@ for (const [id, article] of blogs) {
 }
 for (const media of gallery) {
   const video = attach(media.src);
-  const image = attach(media.poster);
+  const image = attach(media.poster || media.src);
   for (const lang of ['zh', 'en']) {
     const title = media[lang].title;
-    posts.push({ id: ++postId, slug: `${lang}-${media.id}`, title, excerpt: '', body: `<figure><video controls playsinline poster="${xml(asset(media.poster))}" src="${xml(asset(media.src))}"></video></figure>`, kind: 'gallery', lang, route: `${lang === 'zh' ? '' : 'en/'}gallery/#event-${media.eventId}`, image, sourceId: media.id, eventId: media.eventId, date: media.date, video });
+    const body = media.kind === 'photo' ? `<figure><img src="${xml(asset(media.src))}" alt="${xml(title)}"></figure>` : `<figure><video controls playsinline poster="${xml(asset(media.poster))}" src="${xml(asset(media.src))}"></video></figure>`;
+    posts.push({ id: ++postId, slug: `${lang}-${media.id}`, title, excerpt: '', body, kind: 'gallery', lang, route: `${lang === 'zh' ? '' : 'en/'}gallery/#event-${media.eventId}`, image, sourceId: media.id, eventId: media.eventId, date: media.date, video });
   }
 }
 

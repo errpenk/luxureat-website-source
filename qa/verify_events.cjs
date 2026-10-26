@@ -34,7 +34,7 @@ assert(event, "Changsha 2026 event data is missing");
 assert(eventUtils, "shared Beijing event utilities are missing");
 assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma Bar Show event or cover dimensions are missing");
 assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
-assert(gallery.filter((media) => media.eventId === parisEvent.id).length === 3, "SIAL Paris gallery must include all three videos");
+assert(gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "video").length === 3 && gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "photo").length === 3, "SIAL Paris gallery must include three videos and three photos");
 for (const media of gallery) {
   assert(media.id && media.date && media.zh?.title && media.en?.title && media.width && media.height, "gallery metadata is incomplete");
   assert(!media.eventId || events.some((item) => item.id === media.eventId), `gallery event is missing: ${media.id}`);
