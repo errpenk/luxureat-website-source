@@ -4068,12 +4068,12 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   appearance: none;
   width: 100%;
   display: grid;
-  grid-template-columns: 72px 1fr auto;
+  grid-template-columns: 72px minmax(0, 1fr);
   gap: 16px;
   align-items: center;
   padding: 18px 0;
   border: 0;
-  border-bottom: 1px solid #d4ccc0;
+  border-bottom: 0;
   background: transparent;
   color: inherit;
   text-align: left;
@@ -10871,6 +10871,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-color: transparent;
   background: #f4f2ee;
 }
+.lux-academy-reader .lux-reader-cover img { min-height: 0; height: auto; aspect-ratio: auto; object-fit: contain; }
 .lux-about-story .lux-reader-section-media,
 .lux-about-story .lux-reader-section-media figure,
 .lux-about-story .lux-reader-section-media .lux-about-image-button,
