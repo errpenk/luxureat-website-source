@@ -550,7 +550,11 @@ function luxureat_cms_payload($kind) {
                 $video_url = esc_url_raw(html_entity_decode($video_match[1], ENT_QUOTES));
             }
             $record['src'] = $video_url ? $video_url : '';
-            $record['poster'] = $record['image'];
+            $poster_url = $record['image'];
+            if (preg_match('/<video\\b[^>]*\\bposter=["\\\']([^"\\\']+)/i', $post->post_content, $poster_match)) {
+                $poster_url = esc_url_raw(html_entity_decode($poster_match[1], ENT_QUOTES));
+            }
+            $record['poster'] = $poster_url;
             $record['eventId'] = get_post_meta($post->ID, '_luxureat_event_id', true);
             $record['date'] = get_post_meta($post->ID, '_luxureat_date', true);
             $record['lang'] = $lang;
