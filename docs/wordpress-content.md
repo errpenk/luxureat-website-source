@@ -6,7 +6,7 @@ The live site now reads imported WordPress posts for recipes, knowledge articles
 
 - **Posts → LuxurEat · 食谱**: bilingual recipe posts. Edit the title, excerpt, featured image and body.
 - **Posts → LuxurEat · 知识博客**: bilingual knowledge articles. Edit the same fields; body images are editable in the Classic block and imported image files are in Media Library.
-- **Posts → LuxurEat · 企业画廊**: three Chinese and three English records. Edit the title and featured image. Existing videos are in Media Library.
+- **Posts → LuxurEat · 企业画廊**: six Chinese and six English records. Edit the title and featured image. Gallery photos and videos are in Media Library.
 
 The imported posts have `_luxureat_source_id`, `_luxureat_lang` and `_luxureat_kind` metadata. Keep these values when editing an existing post: they connect the editor entry with its existing bilingual site URL. Gallery event, date and video attachment IDs are also held in post metadata. The original theme assets remain as the fallback, so accidental deletion of a post does not blank the page.
 
