@@ -956,7 +956,7 @@ function initLuxReader() {
     };
     body.innerHTML = `
       <article class="lux-brand-news-reader">
-        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}">${item.cardImageSourceUrl ? `<figcaption>${lang === "zh" ? "封面图片来源：" : "Cover image source: "}<a href="${escapeHtml(item.cardImageSourceUrl)}" target="_blank" rel="noopener">${escapeHtml(item.cardImageSourceName || "SIAL Paris")}</a></figcaption>` : ""}</figure>
+        <figure class="lux-brand-news-hero"><img loading="eager" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(article.title)}"></figure>
         <div class="lux-brand-news-sheet">
           <header>
             <p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p>

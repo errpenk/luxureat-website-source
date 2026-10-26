@@ -39,8 +39,8 @@
       zh: { title: "菜品调味细节" },
       en: { title: "Finishing touches on a dish" },
     },
-    { id: "sial-paris-2026-lazio-stage", eventId: "sial-paris-2026", kind: "photo", date: "2026-10-20", src: asset("media/events/sial-paris-2026-gallery-04.webp"), width: 1203, height: 1600, zh: { title: "拉齐奥展区现场交流" }, en: { title: "Conversations at the Lazio pavilion" } },
-    { id: "sial-paris-2026-lazio-cooking", eventId: "sial-paris-2026", kind: "photo", date: "2026-10-20", src: asset("media/events/sial-paris-2026-gallery-05.webp"), width: 1200, height: 1600, zh: { title: "拉齐奥展区烹饪展示" }, en: { title: "Cooking presentation at the Lazio pavilion" } },
-    { id: "sial-paris-2026-lazio-flavours", eventId: "sial-paris-2026", kind: "photo", date: "2026-10-20", src: asset("media/events/sial-paris-2026-gallery-06.webp"), width: 1200, height: 1600, zh: { title: "拉齐奥风味现场" }, en: { title: "Lazio flavours on show" } },
+    { id: "sial-paris-2026-lazio-stage", eventId: "sial-paris-2026", kind: "photo", date: "2026-10-20", src: asset("media/events/sial-paris-2026-gallery-04.webp"), thumb: asset("media/events/sial-paris-2026-gallery-04-720.webp"), width: 1203, height: 1600, zh: { title: "拉齐奥展区现场交流" }, en: { title: "Conversations at the Lazio pavilion" } },
+    { id: "sial-paris-2026-lazio-cooking", eventId: "sial-paris-2026", kind: "photo", date: "2026-10-20", src: asset("media/events/sial-paris-2026-gallery-05.webp"), thumb: asset("media/events/sial-paris-2026-gallery-05-720.webp"), width: 1200, height: 1600, zh: { title: "拉齐奥展区烹饪展示" }, en: { title: "Cooking presentation at the Lazio pavilion" } },
+    { id: "sial-paris-2026-lazio-flavours", eventId: "sial-paris-2026", kind: "photo", date: "2026-10-20", src: asset("media/events/sial-paris-2026-gallery-06.webp"), thumb: asset("media/events/sial-paris-2026-gallery-06-720.webp"), width: 1200, height: 1600, zh: { title: "拉齐奥风味现场" }, en: { title: "Lazio flavours on show" } },
   ];
 })();

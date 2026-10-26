@@ -81,7 +81,7 @@
     const title = media[lang].title;
     return `<article class="lux-gallery-card">
       <button type="button" class="lux-gallery-card-media" data-gallery-open="${escapeHtml(media.id)}" aria-label="${escapeHtml(`${lang === "zh" ? "查看" : "View"} ${title}`)}">
-        <img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(media.poster || media.src)}" alt="">
+        <img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(media.poster || media.thumb || media.src)}" alt="">
         ${media.kind === "video" ? '<span class="lux-gallery-play" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5 19 12 8 19Z"/></svg></span>' : ""}
       </button>
     </article>`;
@@ -98,7 +98,6 @@
   const filterMatches = () => {
     const search = form.elements.search.value.trim().toLocaleLowerCase();
     const start = form.elements.start.value;
-    const end = form.elements.end.value;
     const place = form.elements.place.value;
     const eventId = form.elements.event.value;
     const kind = form.elements.kind.value;
@@ -106,7 +105,6 @@
       const names = `${media.zh.title} ${media.en.title} ${eventName(media)} ${placeName(media)}`.toLocaleLowerCase();
       return (!search || names.includes(search))
         && (!start || media.date >= start)
-        && (!end || media.date <= end)
         && (!place || placeName(media) === place)
         && (!eventId || media.eventId === eventId)
         && (!kind || media.kind === kind);
@@ -155,7 +153,7 @@
     currentMedia = media;
     const title = media[lang].title;
     const mediaHtml = media.kind === "video"
-      ? `<div class="lux-gallery-video"><video playsinline preload="metadata" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video><button type="button" class="lux-gallery-video-play" data-gallery-play aria-label="${lang === "zh" ? "播放视频" : "Play video"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 19 12 8 19Z"/></svg></button></div>`
+      ? `<div class="lux-gallery-video"><video playsinline preload="auto" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video><button type="button" class="lux-gallery-video-play" data-gallery-play aria-label="${lang === "zh" ? "播放视频" : "Play video"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 19 12 8 19Z"/></svg></button></div>`
       : `<img src="${escapeHtml(media.src)}" width="${media.width}" height="${media.height}" alt="${escapeHtml(title)}">`;
     viewer.innerHTML = mediaHtml;
     const event = eventFor(media);
@@ -180,6 +178,16 @@
     const nextMedia = eventSequence[eventSequence.indexOf(currentMedia) + delta];
     if (nextMedia) showMedia(nextMedia);
   };
+  const warmedPhotos = new Set();
+  const warmPhoto = (media) => {
+    if (media?.kind !== "photo" || warmedPhotos.has(media.src)) return;
+    warmedPhotos.add(media.src);
+    const image = new Image();
+    image.src = media.src;
+  };
+  grid.addEventListener("pointerover", (event) => warmPhoto(gallery.find((item) => item.id === event.target.closest("[data-gallery-open]")?.dataset.galleryOpen)));
+  grid.addEventListener("focusin", (event) => warmPhoto(gallery.find((item) => item.id === event.target.closest("[data-gallery-open]")?.dataset.galleryOpen)));
+  grid.addEventListener("touchstart", (event) => warmPhoto(gallery.find((item) => item.id === event.target.closest("[data-gallery-open]")?.dataset.galleryOpen)), { passive: true });
   grid.addEventListener("click", (event) => {
     const button = event.target.closest("[data-gallery-open]");
     if (!button) return;
@@ -187,6 +195,9 @@
     if (!media) return;
     eventSequence = matches.filter((item) => item.eventId === media.eventId);
     showMedia(media);
+    const index = eventSequence.indexOf(media);
+    warmPhoto(eventSequence[index - 1]);
+    warmPhoto(eventSequence[index + 1]);
     dialog.showModal();
   });
   previous.addEventListener("click", () => step(-1));
