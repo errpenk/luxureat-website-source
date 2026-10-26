@@ -15,6 +15,7 @@
 <!-- lux:fonts:end -->
 <link rel="stylesheet" href="../assets/css/tailwind-site.css?v=20261008-mobile-images-1">
 <link rel="stylesheet" href="../integration.css?v=20261008-mobile-images-1-gallery15">
+<link rel="stylesheet" href="../assets/css/gallery-viewer.css?v=20261008-mobile-images-1">
 <link rel="stylesheet" href="../assets/css/newsletter.css?v=20261008-mobile-images-1">
 <link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head>
@@ -43,9 +44,7 @@
   <section class="lux-gallery-archive" aria-label="Company gallery media">
     <form id="gallery-filters" class="lux-gallery-filters" data-gallery-filters role="search">
       <label class="lux-gallery-search">Search by name<input name="search" type="search" autocomplete="off" placeholder="Media or exhibition name"></label>
-      <label>Location<select name="place"><option value="">All locations</option></select></label>
-      <label>Exhibition<select name="event"><option value="">All exhibitions</option></select></label>
-      <details class="lux-gallery-filter-more"><summary>More filters</summary><div><label>From<input name="start" type="date"></label><label>To<input name="end" type="date"></label><label>Type<select name="kind"><option value="">All types</option><option value="photo">Photos</option><option value="video">Videos</option></select></label></div></details>
+      <details class="lux-gallery-filter-more"><summary>More filters</summary><div><label>Location<select name="place"><option value="">All locations</option></select></label><label>Exhibition<select name="event"><option value="">All exhibitions</option></select></label><label>From<input name="start" type="date"></label><label>To<input name="end" type="date"></label><label>Type<select name="kind"><option value="">All types</option><option value="photo">Photos</option><option value="video">Videos</option></select></label></div></details>
       <button type="reset" class="lux-gallery-reset">Clear filters</button>
     </form>
     <div id="gallery-results" class="lux-gallery-results-head"><div class="lux-gallery-layout" role="group" aria-label="Media size"><button type="button" data-gallery-layout="large" aria-label="Large images" title="Large images" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button><button type="button" data-gallery-layout="small" aria-label="Small images" title="Small images" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></button></div></div>
@@ -55,7 +54,7 @@
     <noscript><p><a href="brand.html#event-sial-paris-2026">View SIAL Paris 2026 exhibition videos</a></p></noscript>
   </section>
 </main>
-<dialog class="lux-gallery-dialog lux-about-lightbox" data-gallery-dialog aria-label="Media viewer"><div class="lux-image-lightbox-frame"><button type="button" data-gallery-close aria-label="Close"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button><div data-gallery-viewer></div></div></dialog>
+<dialog class="lux-gallery-dialog" data-gallery-dialog aria-label="Media viewer"><div class="lux-gallery-dialog-shell"><button type="button" class="lux-gallery-close" data-gallery-close aria-label="Close"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg></button><div class="lux-gallery-stage"><button type="button" class="lux-gallery-arrow" data-gallery-prev aria-label="Previous"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button><div class="lux-gallery-viewer" data-gallery-viewer></div><button type="button" class="lux-gallery-arrow" data-gallery-next aria-label="Next"><svg class="lux-lucide" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button></div><div class="lux-gallery-caption" data-gallery-caption></div></div></dialog>
 <!-- lux:footer:start -->
 <section class="lux-newsletter" aria-labelledby="lux-newsletter-title-en">
   <div class="lux-newsletter-inner">

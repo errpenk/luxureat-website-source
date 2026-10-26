@@ -23,6 +23,9 @@
   const pageNav = document.querySelector("[data-gallery-pagination]");
   const dialog = document.querySelector("[data-gallery-dialog]");
   const viewer = document.querySelector("[data-gallery-viewer]");
+  const caption = document.querySelector("[data-gallery-caption]");
+  const previous = dialog.querySelector("[data-gallery-prev]");
+  const next = dialog.querySelector("[data-gallery-next]");
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
   const eventFor = (media) => events.get(media.eventId);
   const eventName = (media) => eventFor(media)?.[lang]?.galleryTitle || eventFor(media)?.[lang]?.articleTitle || (lang === "zh" ? "企业影像" : "Company media");
@@ -117,22 +120,63 @@
     document.querySelectorAll("[data-gallery-layout]").forEach((choice) => choice.setAttribute("aria-pressed", String(choice === button)));
   }));
 
+  let currentMedia = null;
+  let eventSequence = [];
+  const showMedia = (media) => {
+    currentMedia = media;
+    const title = media[lang].title;
+    const mediaHtml = media.kind === "video"
+      ? `<div class="lux-gallery-video"><video playsinline preload="metadata" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video><button type="button" class="lux-gallery-video-play" data-gallery-play aria-label="${lang === "zh" ? "播放视频" : "Play video"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 19 12 8 19Z"/></svg></button></div>`
+      : `<img src="${escapeHtml(media.src)}" width="${media.width}" height="${media.height}" alt="${escapeHtml(title)}">`;
+    viewer.innerHTML = mediaHtml;
+    const event = eventFor(media);
+    const eventCopy = event?.[lang];
+    const index = eventSequence.indexOf(media);
+    const href = eventHref(media);
+    const eventTitle = (eventCopy?.galleryTitle || eventCopy?.articleTitle || "").split("·")[0].trim();
+    caption.innerHTML = `<div class="lux-gallery-caption-top"><span>${escapeHtml(title)}</span><span>${index + 1} / ${eventSequence.length}</span></div><p>${escapeHtml(placeName(media))}${eventCopy?.date ? ` · ${escapeHtml(eventCopy.date)}` : ""}</p>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "了解" : "Explore"} ${escapeHtml(eventTitle)} <span aria-hidden="true">→</span></a>` : ""}`;
+    previous.disabled = index <= 0;
+    next.disabled = index >= eventSequence.length - 1;
+    dialog.setAttribute("aria-label", title);
+    const video = viewer.querySelector("video");
+    if (video) {
+      const play = viewer.querySelector("[data-gallery-play]");
+      play.addEventListener("click", () => { video.controls = true; video.play().catch(() => {}); });
+      video.addEventListener("play", () => { play.hidden = true; });
+      video.addEventListener("pause", () => { play.hidden = false; });
+      video.addEventListener("ended", () => { play.hidden = false; });
+    }
+  };
+  const step = (delta) => {
+    const nextMedia = eventSequence[eventSequence.indexOf(currentMedia) + delta];
+    if (nextMedia) showMedia(nextMedia);
+  };
   grid.addEventListener("click", (event) => {
     const button = event.target.closest("[data-gallery-open]");
     if (!button) return;
-    const media = gallery.find((item) => item.id === button.dataset.galleryOpen);
+    const media = matches.find((item) => item.id === button.dataset.galleryOpen);
     if (!media) return;
-    const title = media[lang].title;
-    const mediaHtml = media.kind === "video"
-      ? `<video controls playsinline autoplay preload="metadata" width="${media.width}" height="${media.height}" style="width:${media.width}px;aspect-ratio:${media.width}/${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video>`
-      : `<img src="${escapeHtml(media.src)}" width="${media.width}" height="${media.height}" alt="${escapeHtml(title)}">`;
-    viewer.innerHTML = `<div class="lux-gallery-viewer-media">${mediaHtml}</div>`;
-    dialog.setAttribute("aria-label", title);
+    eventSequence = matches.filter((item) => item.eventId === media.eventId);
+    showMedia(media);
     dialog.showModal();
-    viewer.querySelector("video")?.play().catch(() => {});
   });
+  previous.addEventListener("click", () => step(-1));
+  next.addEventListener("click", () => step(1));
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") { event.preventDefault(); step(-1); }
+    if (event.key === "ArrowRight") { event.preventDefault(); step(1); }
+  });
+  let touchStart = null;
+  viewer.addEventListener("touchstart", (event) => { touchStart = [event.changedTouches[0].clientX, event.changedTouches[0].clientY]; }, { passive: true });
+  viewer.addEventListener("touchend", (event) => {
+    if (!touchStart) return;
+    const dx = event.changedTouches[0].clientX - touchStart[0];
+    const dy = event.changedTouches[0].clientY - touchStart[1];
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+    touchStart = null;
+  }, { passive: true });
   dialog.addEventListener("click", (event) => {
-    if (event.target === dialog || event.target.closest("[data-gallery-close]")) dialog.close();
+    if (event.target === dialog || event.target.closest("[data-gallery-close]") || event.target.closest("[data-event-open]")) dialog.close();
   });
-  dialog.addEventListener("close", () => { viewer.replaceChildren(); });
+  dialog.addEventListener("close", () => { viewer.replaceChildren(); currentMedia = null; eventSequence = []; });
 })();
