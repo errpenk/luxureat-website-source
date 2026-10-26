@@ -10871,7 +10871,13 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-color: transparent;
   background: #f4f2ee;
 }
-.lux-academy-reader .lux-reader-cover img { min-height: 0; height: auto; aspect-ratio: auto; object-fit: contain; }
+.lux-academy-reader .lux-reader-cover img,
+.lux-academy-reader.is-wide-cover .lux-reader-cover img {
+  min-height: 0;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
 .lux-about-story .lux-reader-section-media,
 .lux-about-story .lux-reader-section-media figure,
 .lux-about-story .lux-reader-section-media .lux-about-image-button,
