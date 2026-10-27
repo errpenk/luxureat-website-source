@@ -3,11 +3,12 @@
 
 .lux-academy-reader .lux-reader-hero { align-items: center; }
 .lux-academy-reader .lux-reader-hero-copy { align-self: center; }
-.lux-academy-reader .lux-reader-summary { font-style: italic; }
+.lux-academy-reader .lux-reader-hero .lux-reader-summary { font-style: italic !important; }
 .lux-academy-reader .lux-reader-cover img { object-fit: contain; }
 .lux-cms-prose :is(figure, .wp-block-image) { width: fit-content; max-width: 100%; margin: 2rem auto; text-align: center; }
 .lux-cms-prose :is(figure, .wp-block-image) img,
-.lux-cms-prose > img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+.lux-cms-prose > img,
+.lux-cms-prose p > img { display: block; max-width: min(100%, 960px); max-height: min(68dvh, 700px); width: auto; height: auto; margin-inline: auto; object-fit: contain; }
 .lux-reader-body :is(.lux-reader-cover, .lux-cms-prose figure, .lux-reader-section-media figure) img { width: auto; max-width: min(100%, 960px); max-height: min(68dvh, 700px); height: auto; object-fit: contain; margin-inline: auto; }
 .lux-reader-body .lux-cms-prose > img { max-width: min(100%, 960px); max-height: min(68dvh, 700px); }
 .lux-reader-body .lux-brand-news-media img { width: auto; max-width: min(100%, 960px); max-height: min(68dvh, 700px); object-fit: contain; margin-inline: auto; }

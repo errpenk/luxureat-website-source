@@ -17,10 +17,10 @@ vm.runInNewContext(read("assets/data/academy.js"), context);
 
 const data = context.window.LUXUREAT_ACADEMY_DATA;
 const titles = data.order.map((slug) => data.articles[`en-academy-${slug}`]?.title);
-assert(titles.length === 52, `academy does not expose the complete topic order: ${titles.length}`);
+assert(titles.length === 53, `academy does not expose the complete topic order: ${titles.length}`);
 for (const title of ["What is extra virgin olive oil?", "Choosing Olive Oil: What to Check First", "Olive Oil on an Empty Stomach: Nutrition, Tolerance and Myths", "Italian food is more than one flavour", "Italy's twenty regions: a map of the table", "How to Read a Food Ingredient List", "Italian Gelato: From Urban Tradition to Modern Craft"]) assert(titles.includes(title), `academy topic is missing: ${title}`);
 assert(titles.includes("Italian Pizza Begins with the Dough"), "Pizza Academy topic is missing");
-assert(Object.keys(data.articles).length === 104, "academy does not expose all articles in both languages");
+assert(Object.keys(data.articles).length === 106, "academy does not expose all articles in both languages");
 const zhTitles = data.order.map((slug) => data.articles[`zh-academy-${slug}`]?.title);
 assert(zhTitles.every((title, index) => title && title !== titles[index]), "Chinese article titles are not localized");
 assert(!data.order.includes("gelato-professional") && !data.order.includes("gelato-media") && !data.order.includes("producer-awards"), "Removed academy placeholders are still published");
@@ -123,7 +123,7 @@ assert(runtime.includes('addEventListener("hashchange"') && runtime.includes("to
 assert(runtime.includes('search.addEventListener("input"') && runtime.includes("data-reader-open") && runtime.includes("data-academy-topic-filter"), "academy search, topic filters or reader integration is missing");
 assert(runtime.includes("academy-articles/") && !runtime.includes('../data/academy.js') && !runtime.includes('../data/academy-columns.js'), "academy reader does not load one article at a time");
 assert(runtime.includes('href="${articleHref(article)}"'), "academy cards do not expose crawlable article URLs");
-assert(fs.readdirSync(path.join(root, "assets/data/academy-articles")).filter((file) => file.endsWith(".js")).length === 134, "academy article chunks are incomplete");
+assert(fs.readdirSync(path.join(root, "assets/data/academy-articles")).filter((file) => file.endsWith(".js")).length === 136, "academy article chunks are incomplete");
 assert(runtime.includes("const introCopy") && runtime.includes("introTitle.textContent") && runtime.includes("introSummary.textContent"), "academy topic introduction does not follow the active filter");
 assert(runtime.includes('params.has("topic")') && runtime.includes("topicNav.getBoundingClientRect().top - headerOffset"), "Blog submenu links do not position the selected topic below the fixed header");
 assert(!runtime.includes('["academy", copy.academy]') && !read("assets/data/academy.js").includes('topic: "academy"'), "Food Academy articles are not merged into Explore Italy");

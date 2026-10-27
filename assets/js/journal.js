@@ -126,6 +126,7 @@ function initLuxReader() {
     "dictionary-food-labels": [productLink("product.html?product=summer-truffle-slices-water-350g", "用水浸夏季松露片练习阅读食品标签", "Practise Reading a Food Label with Summer Truffle Slices")],
     "dictionary-italian-menu": [recipeLink("family-chicken-cacciatora", "从猎人烩鸡认识意大利主菜", "Learn Italian Main-Course Terms with Chicken Cacciatora"), recipeLink("gelato-classic", "从意式手工冰淇淋认识甜点栏目", "Learn Dessert Menu Terms with Gelato")],
     "dictionary-pasta-risotto": [recipeLink("family-spaghetti-pomodoro", "用番茄意面理解意面形状与酱汁", "Understand Pasta Shapes with Spaghetti al Pomodoro"), recipeLink("black-truffle-risotto", "用黑松露烩饭理解 Risotto 技法", "Understand Risotto Technique with Black Truffle Risotto")],
+    "dictionary-spaghetti-history": [recipeLink("family-spaghetti-pomodoro", "从番茄意面认识今日的意大利餐桌", "Explore Today's Italian Table with Spaghetti al Pomodoro"), recipeLink("olive-pasta", "用蒜香橄榄油意面理解经典做法", "Explore a Classic with Garlic and Olive Oil Pasta")],
     "evo-chocolate-dessert": [recipeLink("gelato-classic", "在经典意式冰淇淋上尝试少量橄榄油", "Try a Small EVOO Finish on Classic Gelato"), productLink("new.html#olive-oil", "选择适合甜点的意大利橄榄油", "Explore Italian Olive Oils for Desserts")],
     "evo-vs-common-cooking-oil": [recipeLink("light-grilled-zucchini", "用烤西葫芦比较橄榄油的完成风味", "Compare Finishing Flavour on Grilled Courgettes"), recipeLink("olive-pasta", "观察橄榄油在意面乳化中的作用", "See EVOO's Role in Pasta Emulsification"), productLink("new.html#olive-oil", "查看意大利橄榄油产品方向", "Explore the Italian Olive Oil Range")],
     "gelato-flavours": [recipeLink("gelato-classic", "用基础配方练习牛奶、香草与坚果风味", "Practise Milk, Vanilla and Nut Flavours with a Classic Base"), productLink("new.html#gelato", "查看意式手工冰淇淋基底与新品", "Explore Gelato Bases and New Products")],
@@ -646,16 +647,15 @@ function initLuxReader() {
     <button type="button" data-share="qq" aria-label="QQ" title="QQ"><span class="lux-china-icon icon-qq" aria-hidden="true"></span></button>
     <button type="button" data-share="weibo" aria-label="微博" title="微博"><span class="lux-china-icon icon-weibo" aria-hidden="true"></span></button>
     <button type="button" data-share="wechat" aria-label="${lang === "zh" ? "微信" : "WeChat"}" title="${lang === "zh" ? "微信" : "WeChat"}"><span class="lux-china-icon icon-wechat" aria-hidden="true"></span></button>
-    <button type="button" data-share="moments" aria-label="${lang === "zh" ? "微信朋友圈" : "WeChat Moments"}" title="${lang === "zh" ? "朋友圈" : "Moments"}"><span class="lux-china-icon icon-wechat-circle" aria-hidden="true"></span></button>
     <span class="lux-share-status" role="status" aria-live="polite"></span>
   </nav>`;
   reader.querySelector("[data-share-ui]").innerHTML = shareUi();
   const shareUrl = () => location.href;
   const shareTitle = () => body.querySelector("#lux-reader-title")?.textContent.trim() || document.title;
-  const showShareQr = async (moments) => {
+  const showShareQr = async () => {
     const qr = reader.querySelector("[data-share-qr]");
     qr.hidden = false;
-    qr.querySelector("[data-share-qr-title]").textContent = moments ? (lang === "zh" ? "分享到朋友圈" : "Share to Moments") : (lang === "zh" ? "分享到微信" : "Share to WeChat");
+    qr.querySelector("[data-share-qr-title]").textContent = lang === "zh" ? "分享到微信" : "Share to WeChat";
     qr.querySelector("[data-share-qr-help]").textContent = lang === "zh" ? "用微信扫描二维码，打开后分享给好友或朋友圈。" : "Scan with WeChat, then share to a chat or Moments.";
     const image = qr.querySelector("[data-share-qr-image]");
     image.textContent = lang === "zh" ? "正在生成二维码…" : "Generating QR code…";
@@ -677,6 +677,7 @@ function initLuxReader() {
       image.textContent = lang === "zh" ? "二维码暂不可用，请复制链接。" : "QR code unavailable. Please copy the link.";
     }
   };
+  let shareStatusTimer;
   reader.addEventListener("click", async (event) => {
     if (event.target.closest("[data-share-qr-close]") || event.target.matches("[data-share-qr]")) { reader.querySelector("[data-share-qr]").hidden = true; return; }
     const button = event.target.closest("[data-share]");
@@ -694,13 +695,16 @@ function initLuxReader() {
         document.execCommand("copy");
         input.remove();
       }
-      button.closest(".lux-reader-share").querySelector(".lux-share-status").textContent = lang === "zh" ? "已复制" : "Copied";
+      const status = button.closest(".lux-reader-share").querySelector(".lux-share-status");
+      status.textContent = lang === "zh" ? "已复制" : "Copied";
+      clearTimeout(shareStatusTimer);
+      shareStatusTimer = setTimeout(() => { status.textContent = ""; }, 2000);
     } else if (type === "qq" || type === "weibo") {
       const target = type === "qq" ? `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}` : `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
       window.open(target, "_blank", "noopener,noreferrer,width=700,height=600");
     } else if (navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
-      try { await navigator.share({ title, url }); } catch (error) { if (error.name !== "AbortError") showShareQr(type === "moments"); }
-    } else showShareQr(type === "moments");
+      try { await navigator.share({ title, url }); } catch (error) { if (error.name !== "AbortError") showShareQr(); }
+    } else showShareQr();
   });
   const syncReaderTop = () => {
     panel.classList.toggle("is-at-top", body.scrollTop <= 4);

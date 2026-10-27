@@ -40,7 +40,7 @@ const prose = (content) => (Array.isArray(content) ? content : [content]).map((i
   if (typeof item === 'string' && item.startsWith('• ')) return `<ul><li>${xml(item.slice(2))}</li></ul>`;
   return `<p>${xml(item)}</p>`;
 }).join('\n');
-const blogBody = (article) => [
+const blogBody = (article) => article.cmsHtml || [
   prose(article.opening || []),
   ...(article.sections || []).map(([heading, content], i) => `<h2>${xml(heading)}</h2>${prose(content)}${(article.sectionMedia?.[i] || []).map((media) => `<figure><img src="${xml(asset(media.src))}" alt="${xml(media.alt || heading)}"></figure>`).join('')}`),
   article.quote ? `<blockquote>${xml(article.quote)}</blockquote>` : '',

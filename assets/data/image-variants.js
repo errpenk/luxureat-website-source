@@ -54,6 +54,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/academy/producers-neapolitan-pizzaiuolo.webp": "media/academy/producers-neapolitan-pizzaiuolo-720.webp",
   "media/academy/producers-parmigiano-cheesemakers.webp": "media/academy/producers-parmigiano-cheesemakers-720.webp",
   "media/academy/sevruga-caviar-cover-page-bg.png": "media/academy/sevruga-caviar-cover-page-bg-720.webp",
+  "media/academy/spaghetti-history-naples.webp": "media/academy/spaghetti-history-naples-720.webp",
   "media/academy/story-of-italian-gelato.webp": "media/academy/story-of-italian-gelato-720.webp",
   "media/academy/story-of-italian-pizza.webp": "media/academy/story-of-italian-pizza-720.webp",
   "media/academy/truffle-buying-truffle-products.webp": "media/academy/truffle-buying-truffle-products-720.webp",

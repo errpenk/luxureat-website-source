@@ -5047,7 +5047,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 }
 .lux-reader-related-media:hover img,
 .lux-reader-related-grid button:focus-visible img {
-  filter: brightness(.82) saturate(.9) contrast(1.02);
+  filter: saturate(.98) contrast(1.02);
 }
 .lux-reader-related-grid button > span:not(.lux-reader-related-media) {
   color: #77736c;
@@ -13796,7 +13796,7 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
   background: #111;
 }
 .lux-brand-news-event-link,
-.lux-brand-news-links [data-news-open] {
+.lux-brand-news-links > a {
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr) auto;
   width: 100%;
@@ -13813,7 +13813,7 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
   transition: background-color .2s ease;
 }
 .lux-brand-news-event-link > img,
-.lux-brand-news-links [data-news-open] > img {
+.lux-brand-news-links > a > img {
   width: 96px;
   height: 64px;
   object-fit: cover;
@@ -13821,27 +13821,27 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
   transition: transform .25s ease;
 }
 .lux-brand-news-event-link > span:nth-of-type(1),
-.lux-brand-news-links [data-news-open] > span:nth-of-type(1) { display: grid; gap: 4px; }
+.lux-brand-news-links > a > span:nth-of-type(1) { display: grid; gap: 4px; }
 .lux-brand-news-event-link small,
-.lux-brand-news-links [data-news-open] small { color: #8b8781; font: 500 11px/1.4 var(--lux-page-body); letter-spacing: .04em; }
+.lux-brand-news-links > a small { color: #8b8781; font: 500 11px/1.4 var(--lux-page-body); letter-spacing: .04em; }
 .lux-brand-news-event-link strong,
-.lux-brand-news-links [data-news-open] strong { color: #4f4b46; font: 600 15px/1.45 var(--lux-page-heading); transition: color .2s ease; }
+.lux-brand-news-links > a strong { color: #4f4b46; font: 600 15px/1.45 var(--lux-page-heading); transition: color .2s ease; }
 .lux-brand-news-event-link > span:last-child,
-.lux-brand-news-links [data-news-open] > span:last-child { transition: transform .2s ease; }
+.lux-brand-news-links > a > span:last-child { transition: transform .2s ease; }
 .lux-brand-news-event-link:is(:hover, :focus-visible),
-.lux-brand-news-links [data-news-open]:is(:hover, :focus-visible) { background: #f4f1eb; }
+.lux-brand-news-links > a:is(:hover, :focus-visible) { background: #f4f1eb; }
 .lux-brand-news-event-link:is(:hover, :focus-visible) > img,
-.lux-brand-news-links [data-news-open]:is(:hover, :focus-visible) > img { transform: scale(1.04); }
+.lux-brand-news-links > a:is(:hover, :focus-visible) > img { transform: scale(1.04); }
 .lux-brand-news-event-link:is(:hover, :focus-visible) strong,
-.lux-brand-news-links [data-news-open]:is(:hover, :focus-visible) strong { color: #006a64; }
+.lux-brand-news-links > a:is(:hover, :focus-visible) strong { color: #006a64; }
 .lux-brand-news-event-link:is(:hover, :focus-visible) > span:last-child,
-.lux-brand-news-links [data-news-open]:is(:hover, :focus-visible) > span:last-child { transform: translateX(6px); }
+.lux-brand-news-links > a:is(:hover, :focus-visible) > span:last-child { transform: translateX(6px); }
 .lux-brand-news-event-link:focus-visible,
-.lux-brand-news-links [data-news-open]:focus-visible { outline: 2px solid #006a64; outline-offset: 3px; }
+.lux-brand-news-links > a:focus-visible { outline: 2px solid #006a64; outline-offset: 3px; }
 .lux-brand-news-event-link { margin-top: 54px; cursor: pointer; }
 .lux-brand-news-links { display: grid; margin-top: 42px; }
 .lux-brand-news-links > strong { margin-bottom: 12px; color: #4f4b46; }
-.lux-brand-news-links [data-news-open] { cursor: pointer; }
+.lux-brand-news-links > a { cursor: pointer; }
 .lux-brand-news-media figcaption {
   margin-top: 10px;
   color: #99938c;
@@ -13872,9 +13872,9 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
   .lux-brand-news-meta span + span::before { margin-right: 10px; }
   html[lang] body .lux-brand-news-sheet #lux-reader-title { font-size: 30px !important; line-height: 1.42 !important; }
   .lux-brand-news-event-link,
-  .lux-brand-news-links [data-news-open] { grid-template-columns: 74px minmax(0, 1fr) auto; gap: 12px; }
+  .lux-brand-news-links > a { grid-template-columns: 74px minmax(0, 1fr) auto; gap: 12px; }
   .lux-brand-news-event-link > img,
-  .lux-brand-news-links [data-news-open] > img { width: 74px; height: 54px; }
+  .lux-brand-news-links > a > img { width: 74px; height: 54px; }
 }
 
 html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-meta { font-size: 12px !important; }

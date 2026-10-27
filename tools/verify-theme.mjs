@@ -109,7 +109,7 @@ const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
-for (const [page, count] of [['blog', 67], ['product', 47], ['recipe', 25], ['brand', 11]]) {
+for (const [page, count] of [['blog', 68], ['product', 47], ['recipe', 25], ['brand', 11]]) {
   for (const lang of ['zh', 'en']) {
     const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
     const links = html.match(/<nav class="lux-static-detail-links"[^>]*><ul>([\s\S]*?)<\/ul><\/nav>/)?.[1];
