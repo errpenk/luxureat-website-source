@@ -4599,7 +4599,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 /* Company gallery */
 .lux-gallery-page { background: #f2eee8; color: #171715; }
 .lux-gallery-main { min-height: 70vh; }
-.lux-gallery-hero { position: relative; display: grid; place-items: center; min-height: 82svh; padding: 150px 24px 100px; overflow: hidden; background: #171715; color: #e5e2e1; text-align: center; }
+.lux-gallery-hero { position: relative; display: grid; place-items: center; box-sizing: border-box; min-height: 82svh; padding: 120px 24px; overflow: hidden; background: #171715; color: #e5e2e1; text-align: center; }
 .lux-gallery-hero::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.68), rgba(0,0,0,.34) 46%, rgba(0,0,0,.75)); content: ""; }
 .lux-gallery-hero-images { position: absolute; inset: 0; }
 .lux-gallery-hero-images img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
@@ -4664,7 +4664,7 @@ html[lang] body .lux-gallery-event-heading p { font-style: oblique 10deg !import
   .lux-gallery-groups[data-layout="small"] .lux-gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
-  .lux-gallery-hero { min-height: 68svh; padding: 128px 20px 80px; }
+  .lux-gallery-hero { min-height: 68svh; padding: 80px 20px; }
   .lux-gallery-hero h1 { font-size: 56px; }
   .lux-gallery-archive { width: calc(100% - 36px); margin-top: -48px; padding: 0 0 88px; }
   .lux-gallery-filters { gap: 14px; padding: 18px; }

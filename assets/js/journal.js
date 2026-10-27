@@ -641,10 +641,11 @@ function initLuxReader() {
   let archiveOrigin = false;
   const stack = [];
   const caviarSpeciesSlugs = new Set(["white-sturgeon-caviar", "sevruga-caviar", "oscetra-caviar", "kaluga-amur-caviar", "beluga-caviar", "baerii-caviar"]);
+  const seasonalReaderIds = new Set(archiveGroups().flatMap(([, ids]) => ids));
   const shareIcon = (path) => `<svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
   const shareUi = () => `<nav class="lux-reader-share" aria-label="${lang === "zh" ? "分享文章" : "Share this page"}">
     <button type="button" data-share="copy" aria-label="${lang === "zh" ? "复制链接" : "Copy link"}" title="${lang === "zh" ? "复制链接" : "Copy link"}">${shareIcon('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>')}</button>
-    <button type="button" data-share="qq" aria-label="QQ" title="QQ"><span class="lux-china-icon icon-qq" aria-hidden="true"></span></button>
+    <a data-share="qq" href="https://connect.qq.com/widget/shareqq/index.html" target="_blank" rel="noopener noreferrer" aria-label="QQ" title="QQ"><span class="lux-china-icon icon-qq" aria-hidden="true"></span></a>
     <button type="button" data-share="weibo" aria-label="微博" title="微博"><span class="lux-china-icon icon-weibo" aria-hidden="true"></span></button>
     <button type="button" data-share="wechat" aria-label="${lang === "zh" ? "微信" : "WeChat"}" title="${lang === "zh" ? "微信" : "WeChat"}"><span class="lux-china-icon icon-wechat" aria-hidden="true"></span></button>
     <span class="lux-share-status" role="status" aria-live="polite"></span>
@@ -699,8 +700,10 @@ function initLuxReader() {
       status.textContent = lang === "zh" ? "已复制" : "Copied";
       clearTimeout(shareStatusTimer);
       shareStatusTimer = setTimeout(() => { status.textContent = ""; }, 2000);
-    } else if (type === "qq" || type === "weibo") {
-      const target = type === "qq" ? `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}` : `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+    } else if (type === "qq") {
+      button.href = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+    } else if (type === "weibo") {
+      const target = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
       window.open(target, "_blank", "noopener,noreferrer,width=700,height=600");
     } else if (navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
       try { await navigator.share({ title, url }); } catch (error) { if (error.name !== "AbortError") showShareQr(); }
@@ -907,7 +910,7 @@ function initLuxReader() {
     const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(article.tocLabels?.[index] || heading)}</a>`).join("");
 
     body.innerHTML = `
-      <article class="lux-reader-layout${article.slug ? " lux-academy-reader" : ""}${article.wideCover ? " is-wide-cover" : ""}">
+      <article class="lux-reader-layout${article.slug ? " lux-academy-reader" : ""}${seasonalReaderIds.has(id) ? " lux-seasonal-reader" : ""}${article.wideCover ? " is-wide-cover" : ""}">
         <div class="lux-reader-rule"></div>
         <section class="lux-reader-hero">
           <div class="lux-reader-hero-copy">
