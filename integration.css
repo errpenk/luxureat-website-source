@@ -4634,6 +4634,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
 .lux-gallery-event-heading > div { text-align: center; }
 .lux-gallery-event-heading h2 { margin: 0 0 7px; font: 700 clamp(28px, 3vw, 40px)/1.2 var(--lux-page-heading); }
 .lux-gallery-event-heading p { margin: 0; color: #766f66; font: italic 400 14px/1.5 var(--lux-page-body); }
+html[lang] body .lux-gallery-event-heading p { font-style: oblique 10deg !important; font-size: 14px !important; line-height: 1.5 !important; font-synthesis: style; }
 .lux-gallery-event-heading a { grid-column: 3; justify-self: end; padding: 10px 0; color: #006a64; font: 600 14px/1.5 var(--lux-page-body); text-decoration: none; }
 .lux-gallery-event-heading a:hover { color: #004d49; }
 .lux-gallery-event-heading a span { margin-left: 14px; }
