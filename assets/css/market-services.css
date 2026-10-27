@@ -1555,8 +1555,8 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
 .lux-faq-suggestion { display: flex; align-items: center; gap: 8px; margin: 18px 0 0; color: #625c54; font: 400 14px/1.5 var(--lux-zh-body, var(--lux-page-heading)); }
 .lux-faq-suggestion[hidden] { display: none; }
 .lux-faq-suggestion button { padding: 0 0 2px; border-width: 0 0 1px; border-color: #9c7415; color: #9c7415; }
-.lux-import-export-page #faq .lux-ms-faq { border-top-color: rgba(41,38,33,.24); }
-.lux-import-export-page #faq .lux-ms-faq details { border-bottom-color: rgba(41,38,33,.18); background: rgba(255,255,255,.4); }
+.lux-import-export-page #faq .lux-ms-faq { border-top: 0; }
+.lux-import-export-page #faq .lux-ms-faq details { border-bottom: 0; background: rgba(255,255,255,.4); }
 .lux-import-export-page #faq .lux-ms-faq details + details { margin-top: 6px; }
 .lux-import-export-page #faq .lux-ms-faq summary { padding-inline: 20px; color: #292621; font-size: clamp(18px, 1.5vw, 22px); }
 .lux-import-export-page #faq .lux-ms-faq summary::after { color: #9c7415; }

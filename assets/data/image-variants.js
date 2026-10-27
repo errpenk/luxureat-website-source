@@ -188,6 +188,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/certifications/ifs.png": "media/certifications/ifs-720.webp",
   "media/events/cifie-changsha-2026-poster.webp": "media/events/cifie-changsha-2026-poster-720.webp",
   "media/events/fhc-shanghai-2026.webp": "media/events/fhc-shanghai-2026-720.webp",
+  "media/events/gallery-hero-caviar.webp": "media/events/gallery-hero-caviar-720.webp",
   "media/events/marca-china-2026-poster.webp": "media/events/marca-china-2026-poster-720.webp",
   "media/events/marca-china-2026.png": "media/events/marca-china-2026-720.webp",
   "media/events/sial-guangzhou-2026.webp": "media/events/sial-guangzhou-2026-720.webp",
