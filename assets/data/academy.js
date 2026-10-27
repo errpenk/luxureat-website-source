@@ -4688,6 +4688,7 @@
     articles[`${article.lang}-academy-${article.slug}`] = {
       ...article,
       image: academyImage(article.imageFile),
+      sectionMedia: [["spaghetti-history-naples.webp", "spaghetti-history-marco-polo.webp", "spaghetti-history-tomato.webp"].map((file) => ({ src: academyImage(file), alt: article.title }))],
       related: article.relatedSlugs.map((slug) => `${article.lang}-academy-${slug}`),
     };
   }
