@@ -10,10 +10,10 @@
 .lux-reader-body .lux-academy-reader .lux-reader-cover { order: -1; width: 100%; height: 45dvh; margin: 0; background: #f4f2ee; }
 .lux-reader-body .lux-academy-reader .lux-reader-cover img { display: block; width: 100%; height: 100%; max-width: none; max-height: none; min-height: 0; aspect-ratio: auto; border: 0; object-fit: contain; filter: none; }
 .lux-reader-body .lux-academy-reader .lux-reader-cover figcaption { display: none; }
-.lux-reader-body .lux-academy-reader .lux-reader-hero-copy { position: relative; z-index: 1; box-sizing: border-box; width: 75%; margin: -56px auto 0; padding: clamp(34px, 5vw, 54px) clamp(30px, 6vw, 64px) 36px; background: #f4f2ee; }
-.lux-reader-body .lux-academy-reader .lux-reader-hero-copy #lux-reader-title { max-width: 100%; font-size: clamp(36px, 4vw, 64px) !important; line-height: 1.16 !important; }
-.lux-reader-body .lux-academy-reader .lux-reader-summary { max-width: 100%; font-style: oblique 10deg !important; font-synthesis: style; }
-html[lang^="zh"] body .lux-academy-reader .lux-reader-summary { max-width: calc(100% - 14px); transform: skewX(-7deg); transform-origin: left center; }
+.lux-reader-body .lux-academy-reader .lux-reader-hero-copy { position: relative; z-index: 1; box-sizing: border-box; width: 75%; margin: -56px auto 0; padding: clamp(34px, 5vw, 54px) clamp(30px, 6vw, 64px) 36px; background: #f4f2ee; text-align: center; }
+.lux-reader-body .lux-academy-reader .lux-reader-hero-copy #lux-reader-title { max-width: 100%; margin-inline: auto; color: #07534a; font-size: clamp(36px, 4vw, 64px) !important; line-height: 1.16 !important; }
+.lux-reader-body .lux-academy-reader .lux-reader-summary { max-width: 100%; margin-inline: auto; color: #89670f; font-style: oblique 10deg !important; font-synthesis: style; }
+html[lang^="zh"] body .lux-academy-reader .lux-reader-summary { max-width: calc(100% - 14px); transform: skewX(-7deg); transform-origin: center center; }
 .lux-reader-body .lux-academy-reader .lux-reader-content { box-sizing: border-box; width: min(1180px, 100%); margin-inline: auto; padding: 50px 28px 0; }
 .lux-reader-body .lux-academy-reader .lux-reader-related { box-sizing: border-box; width: min(1180px, 100%); margin-inline: auto; padding-inline: 28px; }
 .lux-academy-reader .lux-reader-cover img { object-fit: contain; }
