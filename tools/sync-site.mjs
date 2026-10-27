@@ -53,11 +53,12 @@ function footerFor(page) {
   const strictEnglishFonts = page.key === "market-insights" && lang === "en";
   const newsletterHeading = strictEnglishFonts ? newsletter.heading.replace(/\s*\(露意膳\)/g, "") : newsletter.heading;
   const footerDescription = strictEnglishFonts ? copy.description.replace(/\s*\(露意膳\)/g, "") : copy.description;
+  const newsletterIcon = page.key === "home" ? "newsletter-envelope-gold.svg" : "newsletter-envelope.svg";
 
   const markup = `<!-- lux:footer:start -->
 <section class="lux-newsletter" aria-labelledby="lux-newsletter-title-${lang}">
   <div class="lux-newsletter-inner">
-    <div class="lux-newsletter-intro"><img class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/newsletter-envelope.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-${lang}">${newsletterHeading}</h2><p>${newsletter.body}</p></div></div>
+    <div class="lux-newsletter-intro"><img class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/${newsletterIcon}" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-${lang}">${newsletterHeading}</h2><p>${newsletter.body}</p></div></div>
     <form class="lux-newsletter-form" data-newsletter-form novalidate>
       <label class="lux-visually-hidden" for="lux-newsletter-email-${lang}">${newsletter.placeholder}</label>
       <div><input id="lux-newsletter-email-${lang}" name="email" type="email" autocomplete="email" maxlength="120" placeholder="${newsletter.placeholder}"><button type="submit">${newsletter.button}</button></div>
@@ -82,10 +83,10 @@ function footerFor(page) {
 }
 
 function scriptsFor(page) {
-  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat"].includes(handle)) : page.scripts;
-  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat"].includes(handle)) : [];
+  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions"].includes(handle)) : page.scripts;
+  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
-  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : galleryPage && ["event-data", "gallery-data", "brand-news-data", "gallery", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : handle === "home-interactions" ? "-flavour6" : galleryPage && ["event-data", "gallery-data", "brand-news-data", "gallery", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";
@@ -279,7 +280,7 @@ function render(page, dimensions) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   const integrationVersion = ["gallery", "news"].includes(page.key) ? "-gallery17" : "-desktop-nav2";
-  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("gallery-viewer.css") ? "-gallery17" : ""}`);
+  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("gallery-viewer.css") ? "-gallery17" : asset.endsWith("home-editorial.css") ? "-ugolini16" : ""}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
   } else {

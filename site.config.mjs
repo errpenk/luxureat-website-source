@@ -68,7 +68,7 @@ const page = (lang, slug, key, scripts, indexable = true) => ({
 });
 
 export const pages = [
-  page("zh", "index", "home", ["product-data", "event-data", "events", "journal-data", "journal", "products"]),
+  page("zh", "index", "home", ["home-interactions", "product-data", "event-data", "events", "journal-data", "journal", "products"]),
   page("zh", "about-us", "journal", ["journal-data", "journal"]),
   page("zh", "product", "products", ["product-data", "products"]),
   page("zh", "new", "new", ["journal-data", "journal", "new-arrivals"]),
@@ -81,7 +81,7 @@ export const pages = [
   page("zh", "china-market-insights", "market-insights", ["market-insights-ui"]),
   page("zh", "import-export-services", "import-export", ["import-export-ui"]),
   page("zh", "contact", "contact", ["brand-data", "brand"]),
-  page("en", "index", "home", ["product-data", "event-data", "events", "journal-data", "journal", "products"]),
+  page("en", "index", "home", ["home-interactions", "product-data", "event-data", "events", "journal-data", "journal", "products"]),
   page("en", "about-us", "journal", ["journal-data", "journal"]),
   page("en", "product", "products", ["product-data", "products"]),
   page("en", "new", "new", ["journal-data", "journal", "new-arrivals"]),
@@ -110,6 +110,7 @@ export const scripts = {
   "brand-data": { src: "assets/data/brand.js", dependencies: [] },
   core: { src: "assets/js/core.js", dependencies: ["image-variants"] },
   chat: { src: "assets/js/chat.js", dependencies: ["core"] },
+  "home-interactions": { src: "assets/js/home-interactions.js", dependencies: [] },
   "new-arrivals": { src: "assets/js/new-arrivals.js", dependencies: [] },
   products: { src: "assets/js/products.js", dependencies: ["product-data"] },
   events: { src: "assets/js/events.js", dependencies: ["event-data"] },

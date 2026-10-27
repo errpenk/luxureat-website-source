@@ -1,0 +1,240 @@
+/* Homepage hierarchy inspired by Ugolini's editorial rhythm, using LuxurEat's palette. */
+.lux-home-page {
+  --home-black: #101312;
+  --home-deep: #171c1b;
+  --home-teal: #9df5ec;
+  --home-gold: #d7b76d;
+  --home-ivory: #f1eee7;
+}
+.lux-home-page :is(a, button):not(.lux-home-hero-action) { text-decoration: none !important; }
+.lux-home-page .lux-narrative-link { border-bottom: 0 !important; }
+.lux-home-page .lux-reader-rule { display: none; }
+
+.lux-home-page .lux-home-services {
+  padding: clamp(76px, 8vw, 112px) 0;
+  background: var(--home-ivory);
+}
+.lux-home-page .lux-home-services-inner { width: min(100%, 1440px); }
+.lux-home-page .lux-home-services header { margin-bottom: 38px; text-align: center; }
+.lux-home-page .lux-home-services header > span { color: #067d77; }
+.lux-home-page .lux-home-services h2 { max-width: 860px; margin-inline: auto; font-size: clamp(38px, 4vw, 58px); line-height: 1.2; }
+.lux-home-page .lux-home-services h2 em { color: #a47b25; }
+.lux-home-page .lux-home-services-grid { gap: clamp(14px, 2vw, 28px); }
+.lux-home-page .lux-home-service-card { border-color: #d8d4c8; background: #fff; }
+.lux-home-page .lux-home-service-card::before,
+.lux-home-page .lux-home-service-card::after { content: none; }
+.lux-home-page .lux-home-service-card > div { display: flex; min-height: 235px; flex-direction: column; align-items: center; padding: 58px 26px 28px; text-align: center; }
+.lux-home-page .lux-home-service-card .material-symbols-outlined { position: absolute; z-index: 2; top: 0; left: 50%; display: grid; width: 88px; height: 88px; place-items: center; margin: 0; border: 7px solid #fff; border-radius: 50%; color: #067d77; background: #fff; box-shadow: 0 5px 18px rgba(0, 0, 0, .12); font-size: 38px; transform: translate(-50%, -50%); }
+.lux-home-page .lux-home-service-card p { min-height: 0; }
+.lux-home-page .lux-home-service-card b { margin-top: auto; padding-top: 20px; color: #006d67; }
+
+.lux-home-page .lux-home-selected-products > div:first-of-type { flex-direction: column; align-items: center; text-align: center; }
+.lux-home-page .lux-home-selected-products > div:first-of-type > div { margin-inline: auto; }
+.lux-home-page .lux-home-selected-products > div:first-of-type p { margin-inline: auto; }
+.lux-home-page .lux-home-selected-products > div:first-of-type > a { margin-top: 14px; }
+
+.lux-home-page .lux-home-topic-preview { padding: clamp(80px, 8vw, 120px) clamp(22px, 5vw, 80px); background: #f8f7f4; }
+.lux-home-page .lux-home-topic-preview header { display: block; margin-bottom: 52px; text-align: center; }
+.lux-home-page .lux-home-topic-preview header > span { color: #0a7770; }
+.lux-home-page .lux-home-topic-preview h2 { margin: 10px 0 14px; color: #171b19; }
+.lux-home-page .lux-home-topic-preview h2 br { display: none; }
+.lux-home-page .lux-home-topic-preview h2 em { color: #a07935; }
+.lux-home-page .lux-home-topic-preview header p { max-width: 700px; margin-inline: auto; color: #5c615e; }
+.lux-home-page .lux-home-topic-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 38px; }
+.lux-home-page .lux-home-topic-grid::before { display: none; }
+.lux-home-page .lux-topic-preview-card,
+.lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) { display: flex; min-height: 160px; align-items: center; gap: 22px; padding: 20px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.lux-home-page .lux-topic-preview-card figure { flex: 0 0 104px; width: 104px; height: 104px; border-radius: 50%; background: #e8e7e2; opacity: 1; translate: none; transition: none; }
+.lux-home-page .lux-topic-preview-card figure img { width: 100%; height: 100%; object-fit: cover; }
+.lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) { transform: none; border-radius: 0; }
+.lux-home-page .lux-topic-preview-card > div { min-height: 0; padding: 0; }
+.lux-home-page .lux-topic-preview-card > div > span { margin: 0 0 6px; color: #0a7770; font-size: 10px; }
+.lux-home-page .lux-topic-preview-card > div > h3 { margin: 0 0 7px; color: #171b19; font-size: clamp(20px, 2vw, 27px); line-height: 1.2; }
+.lux-home-page .lux-topic-preview-card > div > p { display: -webkit-box; max-width: none; overflow: hidden; color: #656b67; font-size: 12px; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.lux-home-page .lux-topic-preview-card > div > b { display: none; }
+.lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) figure img { transform: scale(1.05); }
+
+.lux-home-page .lux-home-market-system {
+  min-height: 680px;
+  padding: clamp(90px, 10vw, 140px) clamp(24px, 6vw, 88px);
+  background-image: linear-gradient(90deg, rgba(5, 12, 11, .9), rgba(5, 12, 11, .55)), var(--lux-home-bg, none);
+}
+.lux-home-page .lux-home-market-system-layout {
+  display: grid;
+  width: min(1280px, 100%);
+  grid-template-columns: minmax(0, 1.05fr) minmax(310px, .8fr);
+  gap: clamp(50px, 8vw, 130px);
+  align-items: center;
+  margin: auto;
+  padding: 0;
+}
+.lux-home-page .lux-feature-intro { color: #f8f7f4; }
+.lux-home-page .lux-feature-intro > span { color: var(--home-gold); font-size: 11px; font-weight: 700; letter-spacing: .22em; }
+.lux-home-page .lux-feature-intro h2 { margin: 22px 0; font: 500 clamp(48px, 5.7vw, 80px)/1.05 var(--lux-page-heading); }
+.lux-home-page .lux-feature-intro p { max-width: 520px; margin: 0 0 34px; color: #d7dfda; font-size: 18px; line-height: 1.8; }
+.lux-home-page .lux-feature-intro a { display: inline-flex; padding: 12px 20px; border: 1px solid #e2e8e2; color: #fff; font-size: 13px; letter-spacing: .12em; }
+.lux-home-page .lux-feature-intro a:is(:hover, :focus-visible) { border-color: var(--home-teal); color: #05120f; background: var(--home-teal); }
+.lux-home-page .lux-feature-intro .lux-feature-values-link { margin: 10px 0 0 10px; border-color: var(--home-gold); color: var(--home-gold); }
+.lux-home-page .lux-home-market-collage { display: none; }
+.lux-home-page .lux-home-market-features { display: block; border: 0; }
+.lux-home-page .lux-market-feature {
+  display: block;
+  min-height: 0;
+  padding: 25px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.45);
+  color: #fff;
+  background: transparent !important;
+  transform: none !important;
+}
+.lux-home-page .lux-market-feature .lux-market-card-front { display: block; padding: 0; }
+.lux-home-page .lux-market-feature .lux-market-card-front > span,
+.lux-home-page .lux-market-feature .lux-market-card-back { display: none; }
+.lux-home-page .lux-home-market-features h3 { margin: 0; color: #fff; font-size: clamp(27px, 2.8vw, 38px); font-weight: 500; }
+.lux-home-page .lux-home-market-features p { display: none; }
+.lux-home-page .lux-market-feature:is(:hover, :focus-visible) h3 { color: var(--home-teal); }
+.lux-home-page .lux-market-feature[aria-pressed="true"] h3 { color: var(--home-gold); }
+.lux-home-page .lux-market-feature[role="button"] { cursor: pointer; }
+.lux-home-page .lux-market-feature[role="button"]:focus-visible { outline: 2px solid var(--home-teal); outline-offset: 5px; }
+.lux-home-page .lux-home-market-system > .lux-home-maison-reach { display: none; }
+.lux-home-page .lux-home-market-system { position: relative; isolation: isolate; overflow: hidden; padding-bottom: clamp(120px, 12vw, 170px); background-image: none !important; background-color: #07100e; }
+.lux-home-page .lux-market-slides,
+.lux-home-page .lux-market-slides::after,
+.lux-home-page .lux-market-slide { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lux-home-page .lux-market-slides { z-index: 0; overflow: hidden; }
+.lux-home-page .lux-market-slides::after { content: ""; z-index: 1; background: linear-gradient(90deg, rgba(5, 12, 11, .88), rgba(5, 12, 11, .53)); }
+.lux-home-page .lux-market-slide { display: block; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 1s ease, transform 7s ease; }
+.lux-home-page .lux-market-slide.is-active { opacity: 1; transform: scale(1); }
+.lux-home-page .lux-home-market-system-layout,
+.lux-home-page .lux-market-pagination { position: relative; z-index: 2; }
+.lux-home-page .lux-market-pagination { display: flex; width: max-content; gap: 12px; margin: 44px auto 0; }
+.lux-home-page .lux-market-pagination button { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(255,255,255,.58); border-radius: 50%; background: rgba(5, 12, 11, .55); cursor: pointer; }
+.lux-home-page .lux-market-pagination button span { width: 9px; height: 9px; border-radius: 50%; background: #fff; }
+.lux-home-page .lux-market-pagination button[aria-pressed="true"] { border-color: var(--home-gold); background: var(--home-gold); }
+.lux-home-page .lux-market-pagination button[aria-pressed="true"] span { background: #17201c; }
+.lux-home-page .lux-market-pagination button:focus-visible { outline: 2px solid var(--home-teal); outline-offset: 3px; }
+
+.lux-home-page .lux-home-advantages { padding: clamp(54px, 6vw, 84px) clamp(24px, 6vw, 88px); background: #f8f7f4; }
+.lux-home-page .lux-home-advantages-inner { width: min(1280px, 100%); margin: auto; }
+.lux-home-page .lux-advantages-head { margin-bottom: 24px; text-align: center; }
+.lux-home-page .lux-advantages-head span { color: #0a7770; font-size: 11px; font-weight: 700; letter-spacing: .2em; }
+.lux-home-page .lux-advantages-head h2 { margin: 14px 0 0; color: #171b19; font: 500 clamp(40px, 4.7vw, 62px)/1.1 var(--lux-page-heading); }
+.lux-home-page .lux-home-advantages-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+.lux-home-page .lux-home-advantages-grid article { min-height: 200px; padding: 18px; border: 0; border-left: 1px solid #d4d5d1; text-align: center; }
+.lux-home-page .lux-home-advantages-grid article:first-child { border-left: 0; }
+.lux-home-page .lux-home-advantages-grid .lux-lucide { width: 30px; height: 30px; margin: 0 auto 22px; color: #0a7770; }
+.lux-home-page .lux-home-advantages-grid h3 { margin-bottom: 14px; color: #171b19; font-size: 27px; }
+.lux-home-page .lux-home-advantages-grid p { color: #626763; font-size: 15px; line-height: 1.7; }
+.lux-home-page .lux-home-advantages-grid .lux-advantage-item { display: block; padding: 0 22px; }
+.lux-home-page .lux-advantage-flip { display: block; width: 100%; height: 205px; padding: 0; border: 0; background: transparent; cursor: pointer; perspective: 1000px; }
+.lux-home-page .lux-advantage-flip:focus-visible { outline: 2px solid #0a7770; outline-offset: 4px; }
+.lux-home-page .lux-advantage-flip-inner { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.2,.7,.2,1); }
+.lux-home-page .lux-advantage-flip.is-flipped .lux-advantage-flip-inner { transform: rotateY(180deg); }
+.lux-home-page .lux-advantage-face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.lux-home-page .lux-advantage-front img { width: min(158px, 85%); aspect-ratio: 1; border: 3px solid var(--home-gold); border-radius: 50%; object-fit: cover; }
+.lux-home-page .lux-advantage-back { transform: rotateY(180deg); text-align: center; }
+.lux-home-page .lux-advantage-back .lux-lucide { flex: none; margin-bottom: 16px; }
+.lux-home-page .lux-advantage-title { color: #171b19; font: 500 clamp(23px, 2vw, 29px)/1.2 var(--lux-page-heading); }
+.lux-home-page .lux-advantage-copy { max-width: 220px; margin-top: 14px; color: #626763; font: 400 15px/1.7 var(--lux-page-heading); }
+
+.lux-home-page .lux-newsletter {
+  padding: clamp(90px, 9vw, 130px) 24px;
+  background: linear-gradient(rgba(5, 13, 12, .65), rgba(5, 13, 12, .8)), url('../media/brand/home-selected-products-background.webp') center/cover;
+}
+.lux-home-page .lux-newsletter-inner { width: min(760px, 100%); grid-template-columns: 1fr; gap: 26px; padding: clamp(30px, 5vw, 60px); background: rgba(247, 246, 242, .95); color: #171b19; text-align: center; }
+.lux-home-page .lux-newsletter-intro { display: block; transform: none; }
+.lux-home-page .lux-newsletter-icon { width: 56px; height: 56px; margin: 0 auto 18px; transform: none; }
+.lux-home-page .lux-newsletter-form input { border-bottom-color: #17584b; }
+.lux-home-page .lux-newsletter-form button { border-color: #17584b; color: #17584b; }
+.lux-home-page .lux-newsletter-form button:is(:hover, :focus-visible) { border-color: #17584b; background: #17584b; color: #fff; }
+.lux-home-page .lux-newsletter-form [data-newsletter-feedback].is-success { color: #17584b; }
+.lux-home-page .lux-newsletter-copy h2 { margin-bottom: 12px; color: #171b19; font-size: clamp(30px, 3.2vw, 42px); line-height: 1.3; }
+.lux-home-page .lux-newsletter-copy p { max-width: 560px; margin: auto; color: #626763; }
+.lux-home-page .lux-newsletter-form { width: min(520px, 100%); margin: auto; }
+.lux-home-page .lux-newsletter-form input { color: #171b19; }
+.lux-home-page .lux-newsletter-form button { color: #17584b; }
+
+.lux-home-page .lux-home-maison { min-height: 620px; }
+.lux-home-page .lux-home-maison-overlay { background: linear-gradient(90deg, rgba(5,13,12,.86), rgba(5,13,12,.45)); }
+.lux-home-page .lux-home-maison-inner { width: min(1280px, calc(100% - 48px)); margin-inline: auto; }
+.lux-home-page .lux-home-maison-head { display: block; max-width: 780px; margin-inline: auto; text-align: center; }
+.lux-home-page #maison-overview .lux-home-maison-head { display: flex; justify-content: center; text-align: center; }
+.lux-home-page #maison-overview .lux-home-maison-head > div:first-child { display: flex; align-items: center; }
+.lux-home-page .lux-home-maison-head h2 { font-size: clamp(46px, 5.5vw, 76px); line-height: 1.15; }
+.lux-home-page .lux-home-maison-head p { max-width: 600px; margin: 24px auto; color: #e4e9e5; font-size: 18px; line-height: 1.75; }
+.lux-home-page .lux-home-maison-head a { display: inline-flex; padding: 12px 21px; border: 1px solid #fff; color: #fff; font-size: 13px; letter-spacing: .1em; }
+.lux-home-page .lux-home-maison-head a:is(:hover,:focus-visible) { border-color: var(--home-teal); color: #061310; background: var(--home-teal); }
+
+.lux-home-page .lux-home-timeline { border-top: 0; padding-top: clamp(56px, 6vw, 86px); background: #f8f7f4; color: #171b19; }
+.lux-home-page .lux-home-timeline > header { border-top: 0; padding-top: 0; }
+.lux-home-page .lux-home-timeline > header > span,
+.lux-home-page .lux-home-timeline-steps article > span { color: #8a621d; }
+.lux-home-page .lux-home-timeline-steps article.is-active::after { color: rgba(138, 98, 29, .65); }
+.lux-home-page .lux-home-timeline-steps article.is-active::before { box-shadow: none; }
+.lux-home-page .lux-home-timeline-steps article.is-active > span::after { color: rgba(138, 98, 29, .16); }
+.lux-home-page .lux-home-timeline > header h2,
+.lux-home-page .lux-home-timeline-steps h3 { color: #171b19; }
+.lux-home-page .lux-home-timeline > header p,
+.lux-home-page .lux-home-timeline-steps p { color: #4e5854; }
+.lux-home-page .lux-home-timeline-steps article { opacity: .68; }
+.lux-home-page .lux-home-timeline-steps article.is-active { opacity: 1; }
+.lux-home-page .lux-home-services { background: #f8f7f4; }
+.lux-home-page .lux-home-service-card { border: 0; background: #fff; }
+.lux-home-page .lux-home-service-card figure::after { display: none; }
+
+.lux-home-page .lux-partnership-parallax {
+  height: clamp(180px, 22vw, 320px);
+  background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-parallax.webp');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.lux-home-page .lux-partnership-parallax-real {
+  background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-real-parallax.webp');
+}
+.lux-home-page .lux-home-partnership-continuum { background: #f2efe9; }
+.lux-home-page .lux-home-partnership-continuum::before,
+.lux-home-page .lux-home-partnership-continuum > .lux-home-why::before,
+.lux-home-page .lux-home-partnership-continuum > .lux-home-why::after,
+.lux-home-page .lux-home-partnership-continuum > .lux-home-partnership-manufacturing::before { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lux-home-page .lux-market-slide,
+  .lux-home-page .lux-advantage-flip-inner { transition: none; }
+}
+
+@media (max-width: 900px) {
+  .lux-home-page .lux-home-topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+  .lux-home-page .lux-home-market-system-layout { grid-template-columns: 1fr; gap: 40px; }
+  .lux-home-page .lux-home-advantages-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-home-page .lux-home-advantages-grid article:nth-child(odd) { border-left: 0; }
+}
+@media (max-width: 600px) {
+  .lux-home-page .lux-home-services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .lux-home-page .lux-home-service-card { min-width: 0; grid-template-columns: 1fr; grid-template-rows: 150px auto; }
+  .lux-home-page .lux-home-service-card figure { min-height: 0; }
+  .lux-home-page .lux-home-service-card > div { min-height: 230px; padding: 39px 10px 16px; }
+  .lux-home-page .lux-home-service-card .material-symbols-outlined { width: 62px; height: 62px; border-width: 5px; font-size: 29px; }
+  .lux-home-page .lux-home-service-card h3 { margin-bottom: 8px; font-size: 18px; }
+  .lux-home-page .lux-home-service-card p { font-size: 12px !important; line-height: 1.45 !important; }
+  .lux-home-page .lux-home-service-card b { padding-top: 10px; font-size: 12px; }
+  .lux-home-page .lux-home-selected-products > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .lux-home-page #selected-products > .grid > .group { min-width: 0; aspect-ratio: 3 / 4 !important; }
+  .lux-home-page #selected-products > .grid > .group > div:last-child > h3 { left: 10px; bottom: 12px; width: calc(100% - 56px); font-size: 17px !important; }
+  .lux-home-page #selected-products > .grid > .group > div:last-child > p { left: 10px; bottom: 12px; display: -webkit-box; width: calc(100% - 56px); overflow: hidden; font-size: 10px !important; line-height: 1.25 !important; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
+  .lux-home-page .lux-partnership-parallax { height: 180px; background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-parallax-720.webp'); background-attachment: scroll; }
+  .lux-home-page .lux-home-topic-preview header { margin-bottom: 28px; }
+  .lux-home-page .lux-home-topic-grid { grid-template-columns: 1fr; }
+  .lux-home-page .lux-topic-preview-card { min-height: 124px; gap: 16px; }
+  .lux-home-page .lux-topic-preview-card figure { flex-basis: 82px; width: 82px; min-width: 82px; max-width: 82px; height: 82px; min-height: 82px; max-height: 82px; }
+  .lux-home-page .lux-home-market-system { padding: 78px 22px; }
+  .lux-home-page .lux-feature-intro h2 { font-size: 46px; }
+  .lux-home-page .lux-home-advantages-grid { grid-template-columns: 1fr; }
+  .lux-home-page .lux-home-advantages-grid article,
+  .lux-home-page .lux-home-advantages-grid article:nth-child(odd) { min-height: 0; padding: 24px 0; border: 0; border-top: 1px solid #d4d5d1; text-align: left; }
+  .lux-home-page .lux-advantage-flip { height: 180px; }
+  .lux-home-page .lux-advantage-front img { width: 136px; }
+  .lux-home-page .lux-home-advantages-grid .lux-lucide { margin: 0 0 14px; }
+  .lux-home-page .lux-home-maison { min-height: 580px; }
+  .lux-home-page .lux-partnership-parallax-real { background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-real-parallax-720.webp'); }
+}

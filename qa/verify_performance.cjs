@@ -105,7 +105,7 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
   assert.match(home, /data-lux-deferred-scripts/);
-  for (const background of ["home-selected-products-background", "home-values-background", "home-brand-journey-background", "home-partnership-process"]) {
+  for (const background of ["home-selected-curated-background", "home-values-background", "home-brand-journey-background", "home-partnership-process"]) {
     assert.match(home, new RegExp(`data-lux-home-bg="\\.\\.\\/assets\\/media\\/brand\\/${background}\\.webp"`), `${lang} homepage background is requested before its section`);
   }
   assert.match(home, /home-selected-truffle-960\.webp 960w" sizes="\(max-width: 767px\) 100vw, 33vw"/, "homepage truffle card requests a full-width image");

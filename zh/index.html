@@ -71,6 +71,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 <link rel="stylesheet" href="../integration.css?v=20261008-mobile-images-1-desktop-nav2" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../integration.css?v=20261008-mobile-images-1-desktop-nav2" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="../assets/css/home-watermarks-lock.css?v=20261008-mobile-images-1" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../assets/css/home-watermarks-lock.css?v=20261008-mobile-images-1" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="../assets/css/newsletter.css?v=20261008-mobile-images-1" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../assets/css/newsletter.css?v=20261008-mobile-images-1" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="../assets/css/home-editorial.css?v=20261008-mobile-images-1-ugolini16">
 <link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 </head>
 <body class="lux-home-page antialiased bg-background text-on-background selection:bg-primary selection:text-on-primary">
@@ -125,7 +126,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 </div>
 </section>
 <!-- 2. Strategic Categories (Commerce Focused) -->
-<section class="lux-home-selected-products py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="selected-products" data-lux-home-bg="../assets/media/brand/home-selected-products-background.webp">
+<section class="lux-home-selected-products py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="selected-products" data-lux-home-bg="../assets/media/brand/home-selected-curated-background.webp">
 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
 <div class="max-w-xl">
 <span class="lux-selected-products-kicker">CURATED SELECTION / 品质精选</span>
@@ -188,35 +189,40 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 <header class="lux-home-maison-head">
 <div>
 <h2 id="section-5">从意大利经验，<br/>到全球美食集团</h2>
+<p>从产地、产品研发到中国市场合作，我们让意大利食材与更多餐桌相遇。</p><a href="about-us.html">了解我们的故事 ↗</a>
 </div>
 </header>
 </div>
 </section>
-<section class="lux-home-advantages" aria-label="LuxurEat（露意膳）集团优势">
+<section class="lux-home-advantages" id="why-luxureat" aria-label="LuxurEat（露意膳）集团优势">
 <div class="lux-home-advantages-inner">
-<div class="lux-home-advantages-grid">
-<article><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></svg><div><h3>安全</h3><p>严格食品安全标准与合规体系</p></div></article>
-<article><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><div><h3>稳定</h3><p>稳定供应、品质与专业交付</p></div></article>
-<article><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7a3 3 0 0 0 3 3V2"/><path d="M6 12v10"/><path d="M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3Zm0 0v7"/></svg><div><h3>口味</h3><p>尊重产地与意大利真实风味</p></div></article>
-<article><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 12 5.3 5.5 5.5 0 0 0 2 8.5C2 13.4 7.4 17.5 12 22c1.2-1.17 2.47-2.31 3.65-3.5"/><path d="M12 5 9 14l4-2 2 6 2-7 3 1"/></svg><div><h3>健康</h3><p>关注成分透明与均衡选择</p></div></article>
+<header class="lux-advantages-head"><span>WHY LUXUREAT / 品质与信赖</span><h2>为什么选择 LuxurEat</h2></header>
+<div class="lux-home-advantages-grid" data-advantage-grid>
+<article class="lux-advantage-item"><button type="button" class="lux-advantage-flip" data-advantage-flip aria-label="安全：严格食品安全标准与合规体系" aria-pressed="false"><span class="lux-advantage-flip-inner"><span class="lux-advantage-face lux-advantage-front"><img src="../assets/media/brand/home-advantage-safety.webp" width="520" height="347" loading="lazy" decoding="async" alt=""></span><span class="lux-advantage-face lux-advantage-back"><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></svg><span class="lux-advantage-title">安全</span><span class="lux-advantage-copy">严格食品安全标准与合规体系</span></span></span></button></article>
+<article class="lux-advantage-item"><button type="button" class="lux-advantage-flip" data-advantage-flip aria-label="稳定：稳定供应、品质与专业交付" aria-pressed="false"><span class="lux-advantage-flip-inner"><span class="lux-advantage-face lux-advantage-front"><img src="../assets/media/brand/home-advantage-consistency.webp" width="520" height="344" loading="lazy" decoding="async" alt=""></span><span class="lux-advantage-face lux-advantage-back"><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg><span class="lux-advantage-title">稳定</span><span class="lux-advantage-copy">稳定供应、品质与专业交付</span></span></span></button></article>
+<article class="lux-advantage-item"><button type="button" class="lux-advantage-flip" data-advantage-flip aria-label="口味：尊重产地与意大利真实风味" aria-pressed="false"><span class="lux-advantage-flip-inner"><span class="lux-advantage-face lux-advantage-front"><img src="../assets/media/brand/home-advantage-flavour.webp" width="520" height="520" loading="lazy" decoding="async" alt=""></span><span class="lux-advantage-face lux-advantage-back"><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7a3 3 0 0 0 3 3V2"/><path d="M6 12v10"/><path d="M21 15V2a5 5 0 0 0-5 5v6a2 2 0 0 0 2 2h3Zm0 0v7"/></svg><span class="lux-advantage-title">口味</span><span class="lux-advantage-copy">尊重产地与意大利真实风味</span></span></span></button></article>
+<article class="lux-advantage-item"><button type="button" class="lux-advantage-flip" data-advantage-flip aria-label="健康：关注成分透明与均衡选择" aria-pressed="false"><span class="lux-advantage-flip-inner"><span class="lux-advantage-face lux-advantage-front"><img src="../assets/media/brand/home-advantage-health.webp" width="520" height="347" loading="lazy" decoding="async" alt=""></span><span class="lux-advantage-face lux-advantage-back"><svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 12 5.3 5.5 5.5 0 0 0 2 8.5C2 13.4 7.4 17.5 12 22c1.2-1.17 2.47-2.31 3.65-3.5"/><path d="M12 5 9 14l4-2 2 6 2-7 3 1"/></svg><span class="lux-advantage-title">健康</span><span class="lux-advantage-copy">关注成分透明与均衡选择</span></span></span></button></article>
 </div>
 </div>
 </section>
 <section class="lux-home-market-system" id="market-system" data-lux-home-bg="../assets/media/brand/home-values-background.webp" aria-label="我们的价值观">
-<div class="lux-home-market-system-layout">
-<div class="lux-home-market-collage">
-<figure class="lux-home-market-collage-main"><img srcset="../assets/media/brand/home-values-truffle-mobile.webp?v=20261008-mobile-images-1 640w, ../assets/media/brand/home-values-truffle.webp 1086w" sizes="100vw" width="720" height="960" data-lux-mobile-src="../assets/media/brand/home-values-truffle-mobile.webp?v=20261008-mobile-images-1" loading="lazy" decoding="async" src="../assets/media/brand/home-values-truffle.webp" alt="LuxurEat（露意膳） 意大利黑松露"></figure>
-<figure class="lux-home-market-collage-secondary"><img srcset="../assets/media/brand/home-values-caviar-plating-mobile.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-values-caviar-plating.webp 1545w" sizes="100vw" width="720" height="488" data-lux-mobile-src="../assets/media/brand/home-values-caviar-plating-mobile.webp?v=20261008-mobile-images-1" loading="lazy" decoding="async" src="../assets/media/brand/home-values-caviar-plating.webp" alt="LuxurEat（露意膳） 鱼子酱餐桌艺术"></figure>
-<a class="lux-home-market-stat" href="about-us.html#reader-zh-harvest" data-reader-open="zh-harvest" aria-label="查看我们的价值观"><strong>查看我们的价值观</strong><span class="lux-home-market-learn">点击查看 <i aria-hidden="true" translate="no"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></i></span></a>
+<div class="lux-market-slides" aria-hidden="true">
+<img width="2000" height="1143" srcset="../assets/media/brand/home-values-background-720.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-values-background.webp 2000w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-values-background-720.webp?v=20261008-mobile-images-1" class="lux-market-slide is-active" src="../assets/media/brand/home-values-background.webp" alt="" loading="eager" decoding="async">
+<img srcset="../assets/media/brand/home-flavour-caviar-720.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-flavour-caviar.webp 1600w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-flavour-caviar-720.webp?v=20261008-mobile-images-1" width="1600" height="1067" class="lux-market-slide" src="../assets/media/brand/home-flavour-caviar.webp" alt="" loading="lazy" decoding="async">
+<img srcset="../assets/media/brand/home-flavour-truffle-one-720.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-flavour-truffle-one.webp 1600w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-flavour-truffle-one-720.webp?v=20261008-mobile-images-1" width="1600" height="1067" class="lux-market-slide" src="../assets/media/brand/home-flavour-truffle-one.webp" alt="" loading="lazy" decoding="async">
+<img srcset="../assets/media/brand/home-flavour-truffle-two-720.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-flavour-truffle-two.webp 1600w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-flavour-truffle-two-720.webp?v=20261008-mobile-images-1" width="1600" height="1067" class="lux-market-slide" src="../assets/media/brand/home-flavour-truffle-two.webp" alt="" loading="lazy" decoding="async">
 </div>
+<div class="lux-home-market-system-layout">
+<div class="lux-feature-intro"><span>FLAVOUR JOURNEYS / 风味专题</span><h2>餐桌上的<br>意大利风味</h2><p>从松露与鱼子酱，到工艺、产地与可持续的选择，沿着食材认识意大利。</p><a href="product.html">探索产品系列 ↗</a><a class="lux-feature-values-link" href="about-us.html#reader-zh-harvest" data-reader-open="zh-harvest">了解我们的价值观 ↗</a></div>
 <div class="lux-home-market-features">
-<article class="lux-market-feature" tabindex="0"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="history_edu" aria-hidden="true" translate="no"></span><h3>传统传承</h3><p>把意大利家族餐桌的真实风味与传统工艺延续至今。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
-<article class="lux-market-feature" tabindex="0"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="lightbulb" aria-hidden="true" translate="no"></span><h3>创新表达</h3><p>让经典食谱与现代料理相连，使优质食材自然融入日常。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
-<article class="lux-market-feature" tabindex="0"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="eco" aria-hidden="true" translate="no"></span><h3>可持续性</h3><p>尊重环境、生物与食物多样性，珍视每一份产地价值。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
-<article class="lux-market-feature" tabindex="0"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="verified" aria-hidden="true" translate="no"></span><h3>责任实践</h3><p>以透明、适量与长期主义，让意大利美食文化持续生长。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
+<article class="lux-market-feature" role="button" tabindex="0" data-market-slide-to="0" aria-label="传统传承" aria-pressed="true"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="history_edu" aria-hidden="true" translate="no"></span><h3>传统传承</h3><p>把意大利家族餐桌的真实风味与传统工艺延续至今。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
+<article class="lux-market-feature" role="button" tabindex="0" data-market-slide-to="1" aria-label="创新表达" aria-pressed="false"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="lightbulb" aria-hidden="true" translate="no"></span><h3>创新表达</h3><p>让经典食谱与现代料理相连，使优质食材自然融入日常。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
+<article class="lux-market-feature" role="button" tabindex="0" data-market-slide-to="2" aria-label="可持续性" aria-pressed="false"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="eco" aria-hidden="true" translate="no"></span><h3>可持续性</h3><p>尊重环境、生物与食物多样性，珍视每一份产地价值。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
+<article class="lux-market-feature" role="button" tabindex="0" data-market-slide-to="3" aria-label="责任实践" aria-pressed="false"><div class="lux-market-card-front"><span class="material-symbols-outlined" data-icon="verified" aria-hidden="true" translate="no"></span><h3>责任实践</h3><p>以透明、适量与长期主义，让意大利美食文化持续生长。</p></div><span class="lux-market-card-back" aria-hidden="true"></span></article>
 </div>
 </div>
 <div class="lux-home-maison-reach"><span>全球办公室</span><p>意大利 · 美国（西雅图） · 泰国（曼谷） · 中国（上海）</p><a href="contact.html#global-footprint">联系全球团队</a></div>
+<div class="lux-market-pagination" role="group" aria-label="切换风味图片"><button type="button" data-market-slide-to="0" aria-label="第 1 张" aria-pressed="true"><span></span></button><button type="button" data-market-slide-to="1" aria-label="第 2 张" aria-pressed="false"><span></span></button><button type="button" data-market-slide-to="2" aria-label="第 3 张" aria-pressed="false"><span></span></button><button type="button" data-market-slide-to="3" aria-label="第 4 张" aria-pressed="false"><span></span></button></div>
 </section>
 <aside class="lux-home-global-reach" aria-label="LuxurEat（露意膳） 全球业务范围">
 <div>
@@ -235,8 +241,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 </div>
 </aside>
 <!-- Brand partnership timeline -->
-<section class="lux-home-timeline" id="brand-timeline" data-lux-home-bg="../assets/media/brand/home-brand-journey-background.webp" data-home-timeline aria-labelledby="home-timeline-title">
-<header><span>BRAND JOURNEY / 品牌历程</span><h2 id="home-timeline-title">传统、经验与创新</h2><p>从意大利美食传统出发，历经专业餐饮实践、产品研发与全球合作，我们致力于构建值得信赖的品牌、产品与服务网络。从产地选择到市场服务，我们持续连接真实风味、专业伙伴与长期价值。</p></header>
+<section class="lux-home-timeline" id="brand-timeline" data-lux-home-bg="../assets/media/brand/home-brand-journey-background.webp" data-home-timeline aria-label="品牌历程">
 <div class="lux-home-timeline-layout">
 <div class="lux-home-timeline-steps">
 <article data-timeline-step data-timeline-index="0" class="is-active"><span>品牌起点</span><h3>源于意大利美食热忱</h3><p>LuxurEat（露意膳） 的故事源于对意大利料理、优质原料与传统工艺的长期热爱。我们从真实风味与产地知识出发，逐步建立对松露、鱼子酱及高端食品的专业判断，并把尊重食材、尊重手艺的原则写入品牌根基。</p><img srcset="../assets/media/brand/home-china-partnership-roberto-mobile.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-china-partnership-roberto.jpg 960w" sizes="100vw" width="720" height="901" data-lux-mobile-src="../assets/media/brand/home-china-partnership-roberto-mobile.webp?v=20261008-mobile-images-1" class="lux-timeline-step-orbit" loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-roberto.jpg" alt="Roberto Ugolini 与 TrufflEat 品牌"></article>
@@ -252,6 +257,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 </figure>
 </div>
 </section>
+<div class="lux-partnership-parallax" aria-hidden="true"></div>
 <div class="lux-home-partnership-continuum">
 <section class="lux-home-why" id="china-partnership" aria-labelledby="lux-home-why-title">
 <div class="lux-home-why-media">
@@ -275,6 +281,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 </div>
 </div>
 </section>
+<div class="lux-partnership-parallax lux-partnership-parallax-real" aria-hidden="true"></div>
 <section class="lux-home-partnership-manufacturing" aria-labelledby="partnership-manufacturing-title-zh">
 <div class="lux-home-partnership-manufacturing-top">
 <header class="lux-home-partnership-manufacturing-head"><div class="lux-home-partnership-manufacturing-head-copy"><span>REAL PARTNERSHIP / 真实合作现场</span><h2 id="partnership-manufacturing-title-zh">真实的意大利产地与专业现场</h2><p>我们的合作不只停留在选品页面，而是进入生产、展会、专业厨房与实际渠道。每一项方案都建立在可验证的产品、团队与交付能力之上。</p></div><div class="lux-home-partnership-manufacturing-orbits" aria-hidden="true"><figure><img srcset="../assets/media/brand/home-china-partnership-roberto-mobile.webp?v=20261008-mobile-images-1 720w, ../assets/media/brand/home-china-partnership-roberto.jpg 960w" sizes="100vw" width="720" height="901" data-lux-mobile-src="../assets/media/brand/home-china-partnership-roberto-mobile.webp?v=20261008-mobile-images-1" loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-roberto.jpg" alt=""></figure><figure><img srcset="../assets/media/brand/home-partnership-italy-pavilion-mobile.webp?v=20261008-mobile-images-1 640w, ../assets/media/brand/home-partnership-italy-pavilion.webp 860w" sizes="100vw" width="720" height="1279" data-lux-mobile-src="../assets/media/brand/home-partnership-italy-pavilion-mobile.webp?v=20261008-mobile-images-1" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt=""></figure></div></header>
@@ -305,7 +312,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 <!-- lux:footer:start -->
 <section class="lux-newsletter" aria-labelledby="lux-newsletter-title-zh">
   <div class="lux-newsletter-inner">
-    <div class="lux-newsletter-intro"><img width="1024" height="1024" class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/newsletter-envelope.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-zh">LUXUREAT（露意膳）通讯｜订阅我们的更新</h2><p>接收产品上新、品牌活动与意式风味资讯。提交后，请通过邮件完成确认。</p></div></div>
+    <div class="lux-newsletter-intro"><img width="1024" height="1024" class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/newsletter-envelope-gold.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-zh">LUXUREAT（露意膳）通讯｜订阅我们的更新</h2><p>接收产品上新、品牌活动与意式风味资讯。提交后，请通过邮件完成确认。</p></div></div>
     <form class="lux-newsletter-form" data-newsletter-form novalidate>
       <label class="lux-visually-hidden" for="lux-newsletter-email-zh">请输入电子邮箱</label>
       <div><input id="lux-newsletter-email-zh" name="email" type="email" autocomplete="email" maxlength="120" placeholder="请输入电子邮箱"><button type="submit">确认订阅</button></div>
@@ -329,5 +336,6 @@ Please enter a valid email address."></p>
 <script defer src="../assets/data/image-variants.js?v=20261008-mobile-images-1"></script>
 <script defer src="../assets/js/core.js?v=20261008-mobile-images-1-mobile-prefetch2"></script>
 <script defer src="../assets/js/chat.js?v=20261008-mobile-images-1"></script>
+<script defer src="../assets/js/home-interactions.js?v=20261008-mobile-images-1-flavour6"></script>
 <script type="application/json" data-lux-deferred-scripts></script>
 <!-- lux:scripts:end --></body></html>
