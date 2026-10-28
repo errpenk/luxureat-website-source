@@ -760,7 +760,17 @@ if (luxNav && luxMenu) {
     }
   }
 
+  let menuScrollY = 0;
   const setOpen = (open) => {
+    if (open) {
+      menuScrollY = window.scrollY;
+      document.body.style.setProperty("--lux-menu-scroll-top", `-${menuScrollY}px`);
+      document.body.classList.add("lux-menu-open");
+    } else if (document.body.classList.contains("lux-menu-open")) {
+      document.body.classList.remove("lux-menu-open");
+      document.body.style.removeProperty("--lux-menu-scroll-top");
+      window.scrollTo(0, menuScrollY);
+    }
     luxNav.classList.toggle("open", open);
     luxHeader?.classList.toggle("is-menu-open", open);
     luxMenu.setAttribute("aria-expanded", String(open));
@@ -773,6 +783,9 @@ if (luxNav && luxMenu) {
 
   luxMenu.addEventListener("click", () => {
     setOpen(!luxNav.classList.contains("open"));
+  });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1280 && luxNav.classList.contains("open")) setOpen(false);
   });
 
   luxNav.querySelectorAll("a").forEach((link) => {
