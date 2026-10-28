@@ -13,7 +13,7 @@ function initLuxReader() {
   }
   for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
     const id = key.split(":")[0];
-    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.image ? { image: cms.image } : {}) });
+    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.date ? { date: cms.date } : {}), ...(cms.image ? { image: cms.image } : {}) });
   }
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
   const galleryItems = window.LUXUREAT_GALLERY_DATA || [];

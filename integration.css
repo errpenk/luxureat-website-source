@@ -4400,7 +4400,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   gap: 40px;
   padding-top: 52px;
 }
-.lux-reader-content:has(> .lux-cms-prose) { display: block; max-width: 820px; margin-inline: auto; }
+.lux-reader-content:has(> .lux-cms-prose):not(:has(> .lux-reader-aside)) { display: block; max-width: 820px; margin-inline: auto; }
 .lux-reader-aside {
   display: grid;
   gap: 8px;
@@ -14178,9 +14178,9 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-past-events { border-top: 0; padding-top: 0; }
 .lux-news-card .lux-narrative-link { border-bottom: 0; text-decoration: none; }
 .lux-journal-season-head::before { content: none; }
-.lux-journal-season-head { justify-content: center; }
+.lux-journal-season-head { flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
 .lux-journal-season-head h3 { font-size: clamp(46px, 7vw, 92px); line-height: .95; text-align: center; }
-.lux-journal-season-head > div:last-child { position: absolute; right: 0; }
+.lux-journal-season-head > div:last-child { position: static; }
 .lux-journal-season-head .lux-narrative-link { border-bottom: 0; text-decoration: none; }
 @media (max-width: 640px) {
   .lux-journal-season-head { display: grid; justify-items: center; gap: 16px; }

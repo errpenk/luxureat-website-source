@@ -548,6 +548,7 @@ function luxureat_cms_payload($kind) {
             'image' => $image ? $image : '',
             'cmsHtml' => luxureat_origin_upload_images(apply_filters('the_content', $post->post_content)),
         );
+        if ($kind === 'blog') $record['date'] = get_the_date('Y-m-d', $post);
         if ($kind === 'gallery') {
             $video_id = (int) get_post_meta($post->ID, '_luxureat_video_attachment_id', true);
             $video_url = $video_id ? wp_get_attachment_url($video_id) : '';
