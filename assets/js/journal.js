@@ -774,7 +774,7 @@ function initLuxReader() {
       const units = article.lang === "zh" ? plainText.replace(/\s/g, "").length / 300 : (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length / 200;
       const readTime = article.lang === "zh" ? `${Math.max(1, Math.ceil(units))} 分钟阅读` : `${Math.max(1, Math.ceil(units))} min read`;
       const metaParts = (article.meta || "").split("·").map((part) => part.trim()).filter(Boolean);
-      const date = article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "未注明" : "Not specified"));
+      const date = article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "2026年10月28日" : "October 28, 2026"));
       const metadata = [article.lang === "zh" ? "知识博客" : "Knowledge Blog", article.column || article.eyebrow, readTime, article.keyword || metaParts.find((part) => !/^(?:19|20)\d{2}/.test(part)) || article.topicLabel];
       const sidebar = [[article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow], [article.lang === "zh" ? "档案" : "Series", article.archive || article.topicLabel], [article.lang === "zh" ? "日期" : "Date", date]];
       const tocLabel = article.lang === "zh" ? "目录" : "Contents";
@@ -892,7 +892,7 @@ function initLuxReader() {
     const asideRows = [
       [article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow],
       [article.lang === "zh" ? "档案" : "Series", article.archive || localizeArchiveLabel(metaParts[0]) || copy.archive],
-      [article.lang === "zh" ? "日期" : "Date", article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "未注明" : "Not specified"))],
+      [article.lang === "zh" ? "日期" : "Date", article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "2026年10月28日" : "October 28, 2026"))],
     ].filter(([, value]) => value);
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
     const figureLabel = article.lang === "zh" ? "图" : "Figure";
