@@ -1121,7 +1121,7 @@
       src: asset(`media/recipes/${key}.mp4`),
       source: `https://www.pexels.com/video/${video[1]}-${video[0]}/`,
       creator: video[2],
-      description: recipeVideoDescriptions[key][article.lang],
+      description: recipeVideoDescriptions[key][id.startsWith("zh-") ? 0 : 1],
     };
     article.productCategory = recipeProductCategories[key] || (article.topic === "olive" ? "olive-oil" : article.topic);
     article.productCategories = recipeProductCategoryGroups[key] || [article.productCategory];

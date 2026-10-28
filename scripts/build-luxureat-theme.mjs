@@ -502,6 +502,9 @@ function functionsPhp() {
   const { catalog, byPath } = buildAssetCatalogPhp();
   const seoCatalog = buildSeoCatalogPhp();
   const eventIds = [...new Set(eventInputs.map((event) => event.id))];
+  const recipeVideoRows = recipeInputs.filter((article) => article.video).map((article) =>
+    `        '${escapePhpString(article.id)}' => array('slug' => '${escapePhpString(article.slug)}', 'lang' => '${article.lang}', 'description' => '${escapePhpString(article.video.description)}', 'source' => '${escapePhpString(article.video.source)}', 'creator' => '${escapePhpString(article.video.creator)}'),`
+  ).join('\n');
   return `<?php
 if (!defined('ABSPATH')) {
     exit;
@@ -571,6 +574,31 @@ function luxureat_cms_payload($kind) {
     return $result;
 }
 
+function luxureat_cms_recipe_video($source_id, $image) {
+    $videos = array(
+${recipeVideoRows}
+    );
+    if (!isset($videos[$source_id])) return '';
+    $video = $videos[$source_id];
+    $src = get_template_directory_uri() . '/assets/media/recipes/' . $video['slug'] . '.mp4';
+    $zh = $video['lang'] === 'zh';
+    $prefix = $zh ? '画面：' : 'Video: ';
+    $suffix = $zh ? '。素材画面，非本食谱操作演示。来源：' : '. Stock footage, not a demonstration of this recipe. Source: ';
+    return '<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="' . esc_url($image) . '" aria-label="' . esc_attr($video['description']) . '"><source src="' . esc_url($src) . '" type="video/mp4"></video><figcaption>' . esc_html($prefix . $video['description'] . $suffix) . '<a href="' . esc_url($video['source']) . '" target="_blank" rel="noopener noreferrer">' . esc_html($video['creator']) . ' / Pexels</a></figcaption></figure>';
+}
+
+function luxureat_cms_recipe_content($content, $source_id, $image) {
+    $video = luxureat_cms_recipe_video($source_id, $image);
+    if (!$video) return $content;
+    $pattern = '~(<h[2-4]\\b[^>]*>\\s*(?:每份的估计营养成分|Estimated nutrition per serving)\\s*</h[2-4]>\\s*<dl\\b[^>]*>.*?</dl>(?:\\s*<p>\\s*(?:<strong>)?\\s*(?:营养说明|Nutrition note).*?</p>)?)~su';
+    if (preg_match($pattern, $content)) {
+        return preg_replace_callback($pattern, function ($match) use ($video) {
+            return '<section class="lux-cms-recipe-nutrition">' . $match[1] . $video . '</section>';
+        }, $content, 1);
+    }
+    return $content . '<section class="lux-cms-recipe-nutrition">' . $video . '</section>';
+}
+
 function luxureat_cms_detail($source_id, $lang, $kind) {
     $post = luxureat_cms_post($source_id, $lang, $kind);
     if (!$post) return false;
@@ -581,7 +609,9 @@ function luxureat_cms_detail($source_id, $lang, $kind) {
     echo '<main class="lux-article-page"><nav class="lux-breadcrumb"><a href="' . esc_url($parent_url) . '">' . esc_html($parent) . '</a><span> / </span><span>' . esc_html($title) . '</span></nav>';
     echo '<article class="lux-reader-layout lux-academy-reader"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h1 id="lux-reader-title">' . esc_html($title) . '</h1><p class="lux-reader-summary">' . esc_html(get_the_excerpt($post)) . '</p></div>';
     if ($image) echo '<figure class="lux-reader-cover"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '"></figure>';
-    echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . luxureat_origin_upload_images(apply_filters('the_content', $post->post_content)) . '</div></section></article></main>';
+    $content = luxureat_origin_upload_images(apply_filters('the_content', $post->post_content));
+    if ($kind === 'recipe') $content = luxureat_cms_recipe_content($content, $source_id, $image);
+    echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . $content . '</div></section></article></main>';
     return true;
 }
 
