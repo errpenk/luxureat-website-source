@@ -1059,9 +1059,70 @@
     "truffle-ravioli": { zh: "LuxurEat（露意膳）松露与意大利面产品", en: "LuxurEat (露意膳) truffle and pasta products" },
     "olive-pasta": { zh: "LuxurEat（露意膳）特级初榨橄榄油与意大利面产品", en: "LuxurEat (露意膳) extra-virgin olive oil and pasta products" },
   };
+  const recipeVideos = {
+    "truffle-eggs": [4828460, "person-cooking-sunny-side-up", "Ketut Subiyanto"],
+    "truffle-toast": [7929033, "a-person-cutting-a-poached-egg-on-an-avocado-toast", "Nicola Barts"],
+    "truffle-tagliolini": [6211544, "crop-people-making-pasta", "Antonius Ferret"],
+    "truffle-ravioli": [37313798, "chef-preparing-delicious-ravioli-dish", "Olga Kobylko"],
+    "black-truffle-risotto": [31194667, "elegant-risotto-meal-with-fresh-juice-setting", "Zenia Diamond"],
+    "mushroom-soup": [5950766, "a-person-putting-a-bowl-of-mushroom-soup-on-a-surface", "alleksana"],
+    "beef-carpaccio-scallop-truffle": [8477208, "chef-slicing-meat", "Los Muertos Crew"],
+    "shrimp-tartare-truffle": [38916212, "exquisite-seafood-dish-with-lemon-squeeze-outdoors", "Alberto Escalona"],
+    "sweet-bread-butter-caviar": [8901903, "an-orange-and-black-caviar-on-top", "Ivan S"],
+    "truffle-tiramisu": [36911779, "elegant-tiramisu-dessert-preparation-at-home", "Melike"],
+    "olive-bruschetta": [37210931, "fresh-bruschetta-preparation-with-tomatoes", "Anh Nguyen"],
+    "olive-pasta": [6327759, "a-person-pouring-liquid-in-the-bowl", "Tima Miroshnichenko"],
+    "pizza-margherita": [6092988, "chef-hands-putting-basil-topping-on-pizza", "ROMAN ODINTSOV"],
+    "gelato-classic": [5659617, "woman-scooping-gelato", "ROMAN ODINTSOV"],
+    "olive-panzanella": [37210926, "preparing-bruschetta-with-fresh-ingredients", "Anh Nguyen"],
+    "olive-pinzimonio": [6328266, "raw-food-presentation", "Tima Miroshnichenko"],
+    "light-fennel-orange-salad": [3699004, "a-person-cutting-up-an-orange-on-a-plate", "Erkan Avanoğlu"],
+    "light-grilled-zucchini": [5616331, "vegetables-being-cooked-on-a-grill", "Askar Abayev"],
+    "light-sea-bass-acqua-pazza": [29643123, "delicious-fish-cooking-with-fresh-herbs", "Edson Colibri Cardoso"],
+    "family-spaghetti-pomodoro": [36391232, "delicious-spaghetti-with-tomato-sauce-and-basil", "Hanna M"],
+    "family-zucchini-frittata": [6289318, "close-up-video-of-an-omelette", "Klaus Nielsen"],
+    "family-chicken-cacciatora": [4362882, "a-close-up-shot-of-chickens-being-cooked", "Suraphat Nuea-on"],
+    "truffle-summer-crostini": [4109923, "a-person-dipping-bread-in-olive-oil", "Polina Tankilevitch"],
+    "truffle-trout": [39170687, "grilled-trout-with-lemon-and-herbs-outdoors", "Zoltan Eberhart"],
+    "truffle-lamb": [39327749, "authentic-street-style-lamb-stew-cooking", "Syafril Anggara"],
+  };
+  const recipeVideoDescriptions = {
+    "truffle-eggs": ["煎制太阳蛋", "Frying sunny-side-up eggs"],
+    "truffle-toast": ["切开牛油果吐司上的水波蛋", "Cutting a poached egg on avocado toast"],
+    "truffle-tagliolini": ["手工制作新鲜意大利面", "Making fresh pasta by hand"],
+    "truffle-ravioli": ["厨师制作意式馄饨", "A chef preparing ravioli"],
+    "black-truffle-risotto": ["摆盘后的意式烩饭", "A plated risotto"],
+    "mushroom-soup": ["端上一碗奶油蘑菇汤", "Serving a bowl of creamy mushroom soup"],
+    "beef-carpaccio-scallop-truffle": ["厨师切制牛肉", "A chef slicing beef"],
+    "shrimp-tartare-truffle": ["柠檬搭配海鲜料理", "A seafood dish with lemon"],
+    "sweet-bread-butter-caviar": ["鱼子酱点缀寿司", "Caviar topping sushi"],
+    "truffle-tiramisu": ["制作提拉米苏甜点", "Preparing tiramisu"],
+    "olive-bruschetta": ["制作番茄香草烤面包", "Preparing tomato and herb bruschetta"],
+    "olive-pasta": ["为意大利面淋上橄榄油", "Drizzling olive oil over pasta"],
+    "pizza-margherita": ["为玛格丽特披萨加入罗勒", "Adding basil to a Margherita pizza"],
+    "gelato-classic": ["舀取巧克力意式冰淇淋", "Scooping chocolate gelato"],
+    "olive-panzanella": ["为番茄烤面包加入配料", "Garnishing tomato bruschetta"],
+    "olive-pinzimonio": ["摆放新鲜蔬菜", "Arranging fresh vegetables"],
+    "light-fennel-orange-salad": ["切制橙片", "Slicing an orange"],
+    "light-grilled-zucchini": ["烤制多种蔬菜", "Grilling assorted vegetables"],
+    "light-sea-bass-acqua-pazza": ["用香草烹制鱼料理", "Cooking fish with fresh herbs"],
+    "family-spaghetti-pomodoro": ["番茄罗勒意大利面", "Spaghetti with tomato and basil"],
+    "family-zucchini-frittata": ["切开蔬菜烘蛋", "Slicing a vegetable omelette"],
+    "family-chicken-cacciatora": ["锅中炖煮鸡肉", "Chicken simmering in a pot"],
+    "truffle-summer-crostini": ["将面包蘸入橄榄油", "Dipping bread in olive oil"],
+    "truffle-trout": ["柠檬香草烤鳟鱼", "Grilled trout with lemon and herbs"],
+    "truffle-lamb": ["大锅烹制羊肉炖菜", "Cooking lamb stew in a large pan"],
+  };
   Object.entries(articles).forEach(([id, article]) => {
     if (article.type !== "recipe" || !article.recipe) return;
     const key = id.replace(/^(?:zh|en)-recipe-/, "");
+    const video = recipeVideos[key];
+    if (video) article.video = {
+      src: asset(`media/recipes/${key}.mp4`),
+      source: `https://www.pexels.com/video/${video[1]}-${video[0]}/`,
+      creator: video[2],
+      description: recipeVideoDescriptions[key][article.lang],
+    };
     article.productCategory = recipeProductCategories[key] || (article.topic === "olive" ? "olive-oil" : article.topic);
     article.productCategories = recipeProductCategoryGroups[key] || [article.productCategory];
     if (recipeProductLabels[key]) article.recipe.products = recipeProductLabels[key][article.lang];
