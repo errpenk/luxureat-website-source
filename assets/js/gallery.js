@@ -45,7 +45,7 @@
   const relatedLinks = (collection, className) => {
     const links = collection
       ? [[`${pageHref("blog")}#olive-academy`, lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"], [`${pageHref("product")}?category=olive-oil#product-catalogue`, lang === "zh" ? "橄榄油系列产品" : "Olive Oil Products"]]
-      : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "SIAL Paris 2026 展会详情" : "SIAL Paris 2026 Event Details"], [pageHref("product"), lang === "zh" ? "系列产品" : "Products"]];
+      : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "展会详情" : "Event details"], [pageHref("product"), lang === "zh" ? "系列产品" : "Products"]];
     const label = className === "lux-gallery-caption-related" ? "" : `<span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>`;
     return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}">${label}${links.map(([href, name]) => `<a href="${escapeHtml(href)}">${escapeHtml(name)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
   };
@@ -101,16 +101,17 @@
 
   const group = (items) => {
     const media = items[0];
-    const href = eventHref(media);
     const name = eventName(media);
     const collection = eventFor(media)?.galleryCollection;
     const count = eventCounts.get(media.eventId || media.id) || items.length;
     const subtitle = eventFor(media)?.[lang]?.subtitle;
     const headingDetail = collection
       ? `<p class="lux-gallery-collection-subtitle">${escapeHtml(subtitle)}</p>`
-      : `<p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p>`;
+      : media.eventId === "sial-paris-2026"
+        ? `<p>${lang === "zh" ? "记录 SIAL Paris 2026 巴黎展会的意大利美食与现场交流。" : "Italian food and conversations at SIAL Paris 2026."}</p>`
+        : `<p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p>`;
     const related = collection || media.eventId === "sial-paris-2026" ? relatedLinks(collection, "lux-gallery-related") : "";
-    return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2>${headingDetail}</div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
+    return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2>${headingDetail}</div></div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
   };
 
   const filterMatches = () => {
