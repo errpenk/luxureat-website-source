@@ -2157,6 +2157,13 @@ html.dark body {
 body { padding-top: 0 !important; }
 body:has(.lux-nav.open) { overflow-x: hidden; }
 @media (max-width: 1279px) {
+  body.lux-menu-open {
+    position: fixed;
+    top: var(--lux-menu-scroll-top);
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+  }
   .lux-header { position: fixed; grid-template-columns: auto 1fr; }
   .lux-actions { gap: 12px; }
   .lux-nav {
@@ -2173,7 +2180,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
     align-items: center;
   }
   .lux-nav.open { display: flex; }
-  .lux-nav.open { max-height: calc(100vh - 78px); overflow: auto; }
+  .lux-nav.open { max-height: calc(100dvh - 78px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .lux-nav-item > a { display: block; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.08); }
   .lux-nav-toggle {
     display: grid;
