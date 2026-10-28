@@ -838,6 +838,10 @@ function initLuxReader() {
             <header><h3>${recipeLabels.nutrition}</h3></header>
             <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
             ${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${recipeLabels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ""}
+            ${article.video ? `<figure class="lux-recipe-video">
+              <video controls playsinline preload="none" poster="${escapeHtml(article.image)}" aria-label="${escapeHtml(article.title)} — ${article.lang === "zh" ? "菜品相关素材画面" : "related stock footage"}"><source src="${escapeHtml(article.video.src)}" type="video/mp4"></video>
+              <figcaption>${article.lang === "zh" ? "画面：" : "Video: "}${escapeHtml(article.video.description)}${article.lang === "zh" ? "。素材画面，非本食谱操作演示。来源：" : ". Stock footage, not a demonstration of this recipe. Source: "}<a href="${escapeHtml(article.video.source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(article.video.creator)} / Pexels</a></figcaption>
+            </figure>` : ""}
           </section>
           <section class="lux-recipe-details">
             ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.professionalTip, recipe.professionalTip], [recipeLabels.foodSafety, recipe.foodSafety], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}

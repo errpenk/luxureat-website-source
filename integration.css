@@ -14200,3 +14200,28 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   .lux-journal-season-head { display: grid; justify-items: center; gap: 16px; }
   .lux-journal-season-head > div:last-child { position: static; }
 }
+
+
+.lux-recipe-video {
+  width: min(100%, 720px);
+  margin: 32px auto 0;
+  text-align: center;
+}
+.lux-recipe-video video {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #151513;
+}
+.lux-recipe-video figcaption {
+  margin: 10px 0 0;
+  color: #77736c;
+  font: italic 400 13px/1.5 var(--lux-page-heading);
+}
+.lux-recipe-video a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
