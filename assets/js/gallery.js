@@ -39,6 +39,15 @@
     const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery15" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
+  const pageHref = (page) => location.protocol === "file:" || location.pathname.endsWith(".html")
+    ? `${page}.html`
+    : `${lang === "zh" ? "/" : "/en/"}${page}/`;
+  const relatedLinks = (collection, className) => {
+    const links = collection
+      ? [[`${pageHref("blog")}#olive-academy`, lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"], [`${pageHref("product")}?category=olive-oil#product-catalogue`, lang === "zh" ? "橄榄油系列产品" : "Olive Oil Products"]]
+      : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "SIAL Paris 2026 展会详情" : "SIAL Paris 2026 Event Details"], [pageHref("product"), lang === "zh" ? "系列产品" : "Products"]];
+    return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}"><span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>${links.map(([href, label]) => `<a href="${escapeHtml(href)}">${escapeHtml(label)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
+  };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
 
   for (const place of unique(gallery.map(placeName))) form.elements.place.add(new Option(place, place));
@@ -99,7 +108,7 @@
     const headingDetail = collection
       ? `<p class="lux-gallery-collection-subtitle">${escapeHtml(subtitle)}</p>`
       : `<p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p>`;
-    const related = collection ? `<nav class="lux-gallery-related" aria-label="${lang === "zh" ? "相关内容" : "Related content"}"><a href="blog.html#olive-academy">${lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"} <span aria-hidden="true">→</span></a><a href="product.html?category=olive-oil#product-catalogue">${lang === "zh" ? "橄榄油系列产品" : "Olive Oil Products"} <span aria-hidden="true">→</span></a></nav>` : "";
+    const related = collection || media.eventId === "sial-paris-2026" ? relatedLinks(collection, "lux-gallery-related") : "";
     return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2>${headingDetail}</div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
   };
 
@@ -162,7 +171,7 @@
     currentMedia = media;
     const title = media[lang].title;
     const mediaHtml = media.kind === "video"
-      ? `<div class="lux-gallery-video"><video playsinline preload="auto" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video><button type="button" class="lux-gallery-video-play" data-gallery-play aria-label="${lang === "zh" ? "播放视频" : "Play video"}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 19 12 8 19Z"/></svg></button></div>`
+      ? `<div class="lux-gallery-video"><video controls playsinline preload="metadata" width="${media.width}" height="${media.height}" poster="${escapeHtml(media.poster)}"><source src="${escapeHtml(media.src)}" type="video/mp4"></video></div>`
       : `<img src="${escapeHtml(media.src)}" width="${media.width}" height="${media.height}" alt="${escapeHtml(title)}">`;
     viewer.innerHTML = mediaHtml;
     const event = eventFor(media);
@@ -171,19 +180,11 @@
     const href = eventHref(media);
     const eventTitle = (eventCopy?.galleryTitle || eventCopy?.articleTitle || "").split("·")[0].trim();
     caption.innerHTML = event?.galleryCollection
-      ? `<p class="lux-gallery-chapter-title">${escapeHtml(title)}</p>`
+      ? `<p class="lux-gallery-chapter-title">${escapeHtml(title)}</p>${relatedLinks(true, "lux-gallery-caption-related")}`
       : `<div class="lux-gallery-caption-top">${index + 1} / ${eventSequence.length}</div><p>${escapeHtml(placeName(media))}${eventCopy?.date ? ` · ${escapeHtml(eventCopy.date)}` : ""}</p>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "了解" : "Explore"} ${escapeHtml(eventTitle)} <span aria-hidden="true">→</span></a>` : ""}`;
     previous.disabled = index <= 0;
     next.disabled = index >= eventSequence.length - 1;
     dialog.setAttribute("aria-label", title);
-    const video = viewer.querySelector("video");
-    if (video) {
-      const play = viewer.querySelector("[data-gallery-play]");
-      play.addEventListener("click", () => { video.controls = true; video.play().catch(() => {}); });
-      video.addEventListener("play", () => { play.hidden = true; });
-      video.addEventListener("pause", () => { play.hidden = false; });
-      video.addEventListener("ended", () => { play.hidden = false; });
-    }
   };
   const step = (delta) => {
     const nextMedia = eventSequence[eventSequence.indexOf(currentMedia) + delta];
