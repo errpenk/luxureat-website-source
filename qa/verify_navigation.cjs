@@ -159,7 +159,7 @@ for (const [label, category] of [["鱼子酱", "caviar"], ["松露", "truffle"],
 for (const [label, category] of [["Caviar", "caviar"], ["Truffle", "truffle"], ["Pizza", "pizza"], ["Olive Oil", "olive-oil"], ["Italian Pasta", "pasta"], ["Italian Gelato", "gelato"]]) {
   assert(core.includes(`["${label}", "?category=${category}#product-catalogue"]`), `English Products submenu is missing ${category}`);
 }
-assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && core.includes('luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item")'), "mobile navigation does not expose the current page submenu without :has support");
+assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && !core.includes('currentItem?.classList.add("is-expanded")'), "mobile navigation opens a submenu by default");
 assert(core.includes('classList.toggle("is-scrolled", window.scrollY > 1)') && !core.includes('document.body.classList.contains("lux-home-page")'), "shared header does not react to the top scroll state on every page");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");
 assert(core.includes('luxureat_internal_trail') && core.includes('luxReturnScroll') && core.includes('LuxureatBackInternalLink') && core.includes('history.back()'), "internal content links do not preserve their multi-page trail and source reading position");
