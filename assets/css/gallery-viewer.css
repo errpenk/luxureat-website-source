@@ -29,8 +29,8 @@
 .lux-gallery-caption { width: min(740px, calc(100% - 140px)); margin: 22px auto 0; font: 400 16px/1.55 var(--lux-page-body); }
 .lux-gallery-caption-top { color: #aaa39b; font-style: italic; text-align: center; }
 .lux-gallery-caption p { margin: 12px 0; text-align: center; }
-.lux-gallery-caption a { display: block; width: fit-content; margin: 8px auto 0; color: #f7f4ee; text-decoration: underline; text-underline-offset: 5px; }
-.lux-gallery-caption a:hover, .lux-gallery-caption a:focus-visible { color: #9df5ec; }
+.lux-gallery-caption a { display: block; width: fit-content; margin: 8px auto 0; color: #9df5ec; font-style: italic; text-decoration: none; }
+.lux-gallery-caption a:is(:hover,:focus-visible,:active) { color: #d0a14c; }
 @media (max-width: 900px) { .lux-gallery-filters { grid-template-columns: repeat(2,minmax(0,1fr)); } .lux-gallery-filters .lux-gallery-search { grid-column: 1 / -1; } .lux-gallery-filters .lux-gallery-place { grid-column: 1; grid-row: 2; } .lux-gallery-filters .lux-gallery-reset { grid-column: 2; grid-row: 2; } .lux-gallery-filters .lux-gallery-filter-more { grid-row: 3; } .lux-gallery-filter-more > div { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 600px) {
   .lux-gallery-filters .lux-gallery-search { grid-column: 1 / -1; }
@@ -50,12 +50,12 @@
 .lux-gallery-collection .lux-gallery-event-heading > div { width: 100%; }
 .lux-gallery-collection-subtitle { max-width: 680px; margin: 12px auto 0 !important; font-size: clamp(14px, 1.3vw, 16px); font-style: italic; line-height: 1.65; text-align: center; }
 .lux-gallery-related, .lux-gallery-caption-related { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 24px; text-align: center; }
-.lux-gallery-related { margin: 24px auto 0; }
+.lux-gallery-related { margin: 24px auto 0; font-style: italic; }
 .lux-gallery-related > span { color: #766f66; }
 .lux-gallery-related a { color: #006a64; text-decoration: none; }
 .lux-gallery-related a:is(:hover,:focus-visible,:active) { color: #8f6928; }
 .lux-gallery-related a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-.lux-gallery-caption-related { margin: 18px auto 0; }
+.lux-gallery-caption-related { margin: 18px auto 0; font-style: italic; }
 .lux-gallery-caption-related > span { color: #d5d1ca; }
 .lux-gallery-caption .lux-gallery-caption-related a { display: inline; width: auto; margin: 0; color: #9df5ec; text-decoration: none; }
 .lux-gallery-caption .lux-gallery-caption-related a:is(:hover,:focus-visible,:active) { color: #d0a14c; }

@@ -46,7 +46,8 @@
     const links = collection
       ? [[`${pageHref("blog")}#olive-academy`, lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"], [`${pageHref("product")}?category=olive-oil#product-catalogue`, lang === "zh" ? "橄榄油系列产品" : "Olive Oil Products"]]
       : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "SIAL Paris 2026 展会详情" : "SIAL Paris 2026 Event Details"], [pageHref("product"), lang === "zh" ? "系列产品" : "Products"]];
-    return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}"><span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>${links.map(([href, label]) => `<a href="${escapeHtml(href)}">${escapeHtml(label)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
+    const label = className === "lux-gallery-caption-related" ? "" : `<span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>`;
+    return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}">${label}${links.map(([href, name]) => `<a href="${escapeHtml(href)}">${escapeHtml(name)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
   };
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
 

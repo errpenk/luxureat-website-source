@@ -22,7 +22,7 @@
 .lux-home-page .lux-home-services-grid { gap: clamp(14px, 2vw, 28px); }
 .lux-home-page .lux-home-service-card { border-color: #d8d4c8; background: #fff; }
 .lux-home-page .lux-home-service-card::before,
-.lux-home-page .lux-home-service-card::after { content: none; }
+.lux-home-page .lux-home-service-card::after { display: none; content: none; }
 .lux-home-page .lux-home-service-card > div { display: flex; min-height: 235px; flex-direction: column; align-items: center; padding: 58px 26px 28px; text-align: center; }
 .lux-home-page .lux-home-service-card .material-symbols-outlined { position: absolute; z-index: 2; top: 0; left: 50%; display: grid; width: 88px; height: 88px; place-items: center; margin: 0; border: 7px solid #fff; border-radius: 50%; color: #067d77; background: #fff; box-shadow: 0 5px 18px rgba(0, 0, 0, .12); font-size: 38px; transform: translate(-50%, -50%); }
 .lux-home-page .lux-home-service-card p { min-height: 0; }
@@ -161,6 +161,7 @@
 .lux-home-page .lux-home-timeline-steps p { color: #4e5854; }
 .lux-home-page .lux-home-timeline-steps article { opacity: .68; }
 .lux-home-page .lux-home-timeline-steps article.is-active { opacity: 1; }
+.lux-home-page .lux-home-timeline-steps article.is-active { transform: none; }
 .lux-home-page .lux-home-services { background: #f8f7f4; }
 .lux-home-page .lux-home-service-card { border: 0; background: #fff; }
 .lux-home-page .lux-home-service-card figure::after { display: none; }
@@ -194,14 +195,18 @@
 }
 @media (max-width: 600px) {
   .lux-home-page .lux-home-services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .lux-home-page .lux-home-services-grid > :last-child { grid-column: 1 / -1; width: calc(50% - 7px); justify-self: center; }
   .lux-home-page .lux-home-service-card { min-width: 0; grid-template-columns: 1fr; grid-template-rows: 150px auto; }
   .lux-home-page .lux-home-service-card figure { min-height: 0; }
   .lux-home-page .lux-home-service-card > div { min-height: 230px; padding: 39px 10px 16px; }
   .lux-home-page .lux-home-service-card .material-symbols-outlined { width: 62px; height: 62px; border-width: 5px; font-size: 29px; }
   .lux-home-page .lux-home-service-card h3 { margin-bottom: 8px; font-size: 18px; }
-  .lux-home-page .lux-home-service-card p { font-size: 12px !important; line-height: 1.45 !important; }
+  .lux-home-page .lux-home-service-card p { font-size: 15px !important; line-height: 1.5 !important; text-align: center; }
   .lux-home-page .lux-home-service-card b { padding-top: 10px; font-size: 12px; }
   .lux-home-page .lux-home-selected-products > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .lux-home-page .lux-home-selected-products > .grid > :last-child { grid-column: 1 / -1; width: calc(50% - 6px); justify-self: center; }
+  .lux-home-page .lux-home-selected-products > div:first-of-type { align-items: center; text-align: center; }
+  .lux-home-page .lux-home-selected-products > div:first-of-type p { font-size: 15px; line-height: 1.6; }
   .lux-home-page #selected-products > .grid > .group { min-width: 0; aspect-ratio: 3 / 4 !important; }
   .lux-home-page #selected-products > .grid > .group > div:last-child > h3 { left: 10px; bottom: 12px; width: calc(100% - 56px); font-size: 17px !important; }
   .lux-home-page #selected-products > .grid > .group > div:last-child > p { left: 10px; bottom: 12px; display: -webkit-box; width: calc(100% - 56px); overflow: hidden; font-size: 10px !important; line-height: 1.25 !important; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
