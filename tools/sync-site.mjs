@@ -86,7 +86,7 @@ function scriptsFor(page) {
   const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions"].includes(handle)) : page.scripts;
   const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
-  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : handle === "home-interactions" ? "-flavour6" : ["gallery-data", "gallery"].includes(handle) ? "-gallery20" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : handle === "home-interactions" ? "-flavour7" : ["gallery-data", "gallery"].includes(handle) ? "-gallery20" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";

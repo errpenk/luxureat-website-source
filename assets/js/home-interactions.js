@@ -1,7 +1,3 @@
-const reach = document.querySelector('.lux-home-page .lux-home-global-reach');
-const newsletter = document.querySelector('.lux-home-page .lux-newsletter');
-if (reach && newsletter) reach.after(newsletter);
-
 const market = document.querySelector('.lux-home-page .lux-home-market-system');
 if (market) {
   const slides = [...market.querySelectorAll('.lux-market-slide')];
