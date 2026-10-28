@@ -798,8 +798,8 @@ function initLuxReader() {
       const relatedContent = contentLinks[topicFor(id, article)] || {};
       const relatedKnowledge = knowledgeForRecipe(id, article, relatedContent.knowledge);
       const recipeLabels = article.lang === "zh"
-        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", knowledge: "相关知识", products: "相关产品" }
-        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", knowledge: "Related guide", products: "Related products" };
+        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", knowledge: "相关知识", products: "相关产品" }
+        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", knowledge: "Related guide", products: "Related products" };
       const productCategories = article.productCategories?.length
         ? article.productCategories
         : [article.productCategory || relatedContent.productCategory].filter(Boolean);
@@ -836,8 +836,8 @@ function initLuxReader() {
           </section>
           <section class="lux-recipe-nutrition">
             <header><h3>${recipeLabels.nutrition}</h3></header>
+            <p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote || (article.lang === "zh" ? "营养数据为每份估算值。" : "Nutrition values are estimates per serving."))}</p>
             <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
-            ${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${recipeLabels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ""}
             ${article.video ? `<figure class="lux-recipe-video">
               <video controls playsinline preload="none" poster="${escapeHtml(article.image)}" aria-label="${escapeHtml(article.title)} — ${article.lang === "zh" ? "菜品相关素材画面" : "related stock footage"}"><source src="${escapeHtml(article.video.src)}" type="video/mp4"></video>
               <figcaption>${escapeHtml(article.video.description)}</figcaption>

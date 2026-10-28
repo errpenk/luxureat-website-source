@@ -4849,16 +4849,12 @@ html[lang] body .lux-gallery-event-heading p { font-style: oblique 10deg !import
 }
 
 .lux-recipe-nutrition-note {
-  margin: 1.5rem 0 0;
+  margin: 0 0 1.5rem;
   color: var(--lux-text-muted, #6f6a63);
   font-size: 0.92rem;
   line-height: 1.7;
-}
-
-.lux-recipe-nutrition-note strong {
-  display: block;
-  margin-bottom: 0.25rem;
-  color: var(--lux-text, #171512);
+  font-style: oblique 10deg !important;
+  font-synthesis: style;
 }
 .lux-recipe-details {
   display: grid;
@@ -14218,7 +14214,9 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-recipe-video figcaption {
   margin: 10px 0 0;
   color: #77736c;
-  font: italic 400 13px/1.5 var(--lux-page-heading);
+  font: oblique 10deg 400 13px/1.5 var(--lux-page-heading);
+  font-style: oblique 10deg !important;
+  font-synthesis: style;
 }
 .lux-recipe-video a {
   color: inherit;

@@ -406,12 +406,12 @@ function recipePageHtml(article, imageDimensions) {
   const recipe = article.recipe;
   const image = articleAsset(article.image);
   const labels = article.lang === 'zh'
-    ? { time: '时间', difficulty: '难度', servings: '份量', ingredients: '食材', method: '准备', nutrition: '每份的估计营养成分', nutritionNote: '营养说明', region: '参考产区', oil: '推荐用油', professionalTip: '专业提示', foodSafety: '食品安全', allergens: '过敏原提示', substitutions: '可替换食材', products: '相关产品' }
-    : { time: 'Time', difficulty: 'Difficulty', servings: 'Serves', ingredients: 'Ingredients', method: 'Method', nutrition: 'Estimated nutrition per serving', nutritionNote: 'Nutrition note', region: 'Reference region', oil: 'Suggested oil', professionalTip: 'Professional tip', foodSafety: 'Food safety', allergens: 'Allergen note', substitutions: 'Substitutions', products: 'Related products' };
+    ? { time: '时间', difficulty: '难度', servings: '份量', ingredients: '食材', method: '准备', nutrition: '每份的估计营养成分', region: '参考产区', oil: '推荐用油', professionalTip: '专业提示', foodSafety: '食品安全', allergens: '过敏原提示', substitutions: '可替换食材', products: '相关产品' }
+    : { time: 'Time', difficulty: 'Difficulty', servings: 'Serves', ingredients: 'Ingredients', method: 'Method', nutrition: 'Estimated nutrition per serving', region: 'Reference region', oil: 'Suggested oil', professionalTip: 'Professional tip', foodSafety: 'Food safety', allergens: 'Allergen note', substitutions: 'Substitutions', products: 'Related products' };
   const productHref = `product.html${article.productCategory ? `?category=${encodeURIComponent(article.productCategory)}#product-catalogue` : ''}`;
   const details = [[labels.region, recipe.region], [labels.oil, recipe.oil], [labels.professionalTip, recipe.professionalTip], [labels.foodSafety, recipe.foodSafety], [labels.allergens, recipe.allergens], [labels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
   const videoHtml = article.video ? `<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="${escapeHtml(image)}" aria-label="${escapeHtml(article.title)}"><source src="${escapeHtml(articleAsset(article.video.src))}" type="video/mp4"></video><figcaption>${escapeHtml(article.video.description)}</figcaption></figure>` : '';
-  const body = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'recipe.html', article.lang === 'zh' ? '食谱艺术' : 'Recipes', article.title)}<article class="lux-recipe-reader lux-recipe-seo-page"><section class="lux-recipe-hero"><figure><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(article.title)}"></figure><div class="lux-recipe-intro"><span>${escapeHtml(article.eyebrow)}</span><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p>${escapeHtml(article.intro)}</p><dl class="lux-recipe-facts"><div><dt>${labels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div><div><dt>${labels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div><div><dt>${labels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div></dl></div></section><section class="lux-recipe-body"><aside class="lux-recipe-ingredients"><h2>${labels.ingredients}</h2><ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside><div class="lux-recipe-method"><h2>${labels.method}</h2><ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></div></section><section class="lux-recipe-nutrition"><header><h2>${labels.nutrition}</h2></header><dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${labels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ''}${videoHtml}</section><section class="lux-recipe-details">${details}${recipe.products ? `<div><dt>${labels.products}</dt><dd><a class="lux-recipe-product-link" href="${productHref}">${escapeHtml(recipe.products)}</a></dd></div>` : ''}</section></article></main>`;
+  const body = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'recipe.html', article.lang === 'zh' ? '食谱艺术' : 'Recipes', article.title)}<article class="lux-recipe-reader lux-recipe-seo-page"><section class="lux-recipe-hero"><figure><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(article.title)}"></figure><div class="lux-recipe-intro"><span>${escapeHtml(article.eyebrow)}</span><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p>${escapeHtml(article.intro)}</p><dl class="lux-recipe-facts"><div><dt>${labels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div><div><dt>${labels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div><div><dt>${labels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div></dl></div></section><section class="lux-recipe-body"><aside class="lux-recipe-ingredients"><h2>${labels.ingredients}</h2><ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside><div class="lux-recipe-method"><h2>${labels.method}</h2><ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></div></section><section class="lux-recipe-nutrition"><header><h2>${labels.nutrition}</h2></header><p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote || (article.lang === 'zh' ? '营养数据为每份估算值。' : 'Nutrition values are estimates per serving.'))}</p><dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>${videoHtml}</section><section class="lux-recipe-details">${details}${recipe.products ? `<div><dt>${labels.products}</dt><dd><a class="lux-recipe-product-link" href="${productHref}">${escapeHtml(recipe.products)}</a></dd></div>` : ''}</section></article></main>`;
   return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body: `<?php if (!luxureat_cms_detail('${escapePhpString(article.id)}', '${article.lang}', 'recipe')): ?>${body}<?php endif; ?>` });
 }
 
@@ -503,7 +503,7 @@ function functionsPhp() {
   const seoCatalog = buildSeoCatalogPhp();
   const eventIds = [...new Set(eventInputs.map((event) => event.id))];
   const recipeVideoRows = recipeInputs.filter((article) => article.video).map((article) =>
-    `        '${escapePhpString(article.id)}' => array('slug' => '${escapePhpString(article.slug)}', 'lang' => '${article.lang}', 'description' => '${escapePhpString(article.video.description)}'),`
+    `        '${escapePhpString(article.id)}' => array('slug' => '${escapePhpString(article.slug)}', 'lang' => '${article.lang}', 'description' => '${escapePhpString(article.video.description)}', 'note' => '${escapePhpString(article.recipe.nutritionNote || (article.lang === 'zh' ? '营养数据为每份估算值。' : 'Nutrition values are estimates per serving.'))}'),`
   ).join('\n');
   return `<?php
 if (!defined('ABSPATH')) {
@@ -574,28 +574,31 @@ function luxureat_cms_payload($kind) {
     return $result;
 }
 
-function luxureat_cms_recipe_video($source_id, $image) {
+function luxureat_cms_recipe_media($source_id, $image) {
     $videos = array(
 ${recipeVideoRows}
     );
     if (!isset($videos[$source_id])) return '';
     $video = $videos[$source_id];
     $src = get_template_directory_uri() . '/assets/media/recipes/' . $video['slug'] . '.mp4';
-    return '<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="' . esc_url($image) . '" aria-label="' . esc_attr($video['description']) . '"><source src="' . esc_url($src) . '" type="video/mp4"></video><figcaption>' . esc_html($video['description']) . '</figcaption></figure>';
+    return array(
+        'video' => '<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="' . esc_url($image) . '" aria-label="' . esc_attr($video['description']) . '"><source src="' . esc_url($src) . '" type="video/mp4"></video><figcaption>' . esc_html($video['description']) . '</figcaption></figure>',
+        'note' => $video['note'],
+    );
 }
 
 function luxureat_cms_recipe_content($content, $source_id, $image) {
-    $video = luxureat_cms_recipe_video($source_id, $image);
-    if (!$video) return $content;
-    $pattern = '~(<h[2-4]\\b[^>]*>\\s*(?:每份的估计营养成分|Estimated nutrition per serving)\\s*</h[2-4]>\\s*<dl\\b[^>]*>.*?</dl>(?:\\s*<p>\\s*(?:<strong>)?\\s*(?:营养说明|Nutrition note).*?</p>)?)~su';
+    $media = luxureat_cms_recipe_media($source_id, $image);
+    if (!$media) return $content;
+    $note = '<p class="lux-recipe-nutrition-note">' . esc_html($media['note']) . '</p>';
+    $pattern = '~(<h[2-4]\\b[^>]*>\\s*(?:每份的估计营养成分|Estimated nutrition per serving)\\s*</h[2-4]>)(\\s*<dl\\b[^>]*>.*?</dl>)(?:\\s*<p>\\s*(?:<strong>)?\\s*(?:营养说明|Nutrition note).*?</p>)?~su';
     if (preg_match($pattern, $content)) {
-        return preg_replace_callback($pattern, function ($match) use ($video) {
-            return '<section class="lux-cms-recipe-nutrition">' . $match[1] . $video . '</section>';
+        return preg_replace_callback($pattern, function ($match) use ($note, $media) {
+            return '<section class="lux-cms-recipe-nutrition">' . $match[1] . $note . $match[2] . $media['video'] . '</section>';
         }, $content, 1);
     }
-    return $content . '<section class="lux-cms-recipe-nutrition">' . $video . '</section>';
+    return $content . '<section class="lux-cms-recipe-nutrition">' . $note . $media['video'] . '</section>';
 }
-
 function luxureat_cms_detail($source_id, $lang, $kind) {
     $post = luxureat_cms_post($source_id, $lang, $kind);
     if (!$post) return false;
