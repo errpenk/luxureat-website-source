@@ -44,8 +44,8 @@
     : `${lang === "zh" ? "/" : "/en/"}${page}/`;
   const relatedLinks = (collection, className) => {
     const links = collection
-      ? [[`${pageHref("blog")}#olive-academy`, lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"], [`${pageHref("product")}?category=olive-oil#product-catalogue`, lang === "zh" ? "橄榄油系列产品" : "Olive Oil Products"]]
-      : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "展会详情" : "Event details"], [pageHref("product"), lang === "zh" ? "系列产品" : "Products"]];
+      ? [[`${pageHref("blog")}#olive-academy`, lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"], [`${pageHref("product")}?category=olive-oil#product-catalogue`, lang === "zh" ? "橄榄油产品" : "Olive Oil Products"]]
+      : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "展会详情" : "Event details"], [pageHref("product"), lang === "zh" ? "我们的产品" : "Our Products"]];
     const label = className === "lux-gallery-caption-related" ? "" : `<span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>`;
     return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}">${label}${links.map(([href, name]) => `<a href="${escapeHtml(href)}">${escapeHtml(name)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
   };
