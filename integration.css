@@ -14225,3 +14225,9 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.lux-cms-recipe-nutrition > h2 {
+  margin: 2rem 0 .8rem;
+}
+.lux-cms-prose .lux-recipe-video {
+  margin: 32px auto 0;
+}
