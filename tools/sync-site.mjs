@@ -86,7 +86,7 @@ function scriptsFor(page) {
   const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions"].includes(handle)) : page.scripts;
   const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
-  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : handle === "home-interactions" ? "-flavour6" : galleryPage && ["event-data", "gallery-data", "brand-news-data", "gallery", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : handle === "home-interactions" ? "-flavour6" : ["gallery-data", "gallery"].includes(handle) ? "-gallery18" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";
@@ -281,7 +281,7 @@ function render(page, dimensions) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   const integrationVersion = ["gallery", "news"].includes(page.key) ? "-gallery17" : "-desktop-nav2";
-  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("gallery-viewer.css") ? "-gallery17" : asset.endsWith("home-editorial.css") ? "-ugolini16" : ""}`);
+  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("gallery-viewer.css") ? "-gallery18" : asset.endsWith("home-editorial.css") ? "-ugolini16" : ""}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
   } else {

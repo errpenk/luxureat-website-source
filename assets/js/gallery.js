@@ -19,6 +19,7 @@
     if (videoPoster || cms.poster) item.poster = videoPoster || cms.poster;
   }
   const events = new Map((window.LUXUREAT_EVENT_DATA?.events || []).map((event) => [event.id, event]));
+  for (const media of gallery) if (media.collection) events.set(media.eventId, { ...media.collection, galleryCollection: true });
   const grid = document.querySelector("[data-gallery-grid]");
   const empty = document.querySelector("[data-gallery-empty]");
   const pageNav = document.querySelector("[data-gallery-pagination]");
@@ -34,7 +35,7 @@
   const eventName = (media) => eventFor(media)?.[lang]?.galleryTitle || eventFor(media)?.[lang]?.articleTitle || (lang === "zh" ? "企业影像" : "Company media");
   const placeName = (media) => media.place?.[lang] || eventFor(media)?.[lang]?.city || "";
   const eventHref = (media) => {
-    if (!eventFor(media)) return "";
+    if (!eventFor(media) || eventFor(media).galleryCollection) return "";
     const brand = location.protocol === "file:" || location.pathname.endsWith(".html") ? "brand.html?v=20261025-gallery15" : lang === "zh" ? "/brand/" : "/en/brand/";
     return `${brand}#event-${encodeURIComponent(media.eventId)}`;
   };
@@ -49,7 +50,7 @@
   const hashEvent = decodeURIComponent(location.hash).replace(/^#event-/, "");
   if (events.has(hashEvent) && gallery.some((media) => media.eventId === hashEvent)) form.elements.event.value = hashEvent;
 
-  const ordered = [...gallery].sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
+  const ordered = [...gallery].sort((a, b) => b.date.localeCompare(a.date) || (a.eventId === b.eventId && a.sequence && b.sequence ? a.sequence - b.sequence : a.id.localeCompare(b.id)));
   const searchCandidates = unique(gallery.map(eventName)).concat(unique(gallery.map((media) => media[lang].title)));
   const showSuggestions = () => {
     const query = searchInput.value.trim().toLocaleLowerCase();
@@ -92,8 +93,14 @@
     const media = items[0];
     const href = eventHref(media);
     const name = eventName(media);
+    const collection = eventFor(media)?.galleryCollection;
     const count = eventCounts.get(media.eventId || media.id) || items.length;
-    return `<section class="lux-gallery-event" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2><p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p></div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div></section>`;
+    const subtitle = eventFor(media)?.[lang]?.subtitle;
+    const headingDetail = collection
+      ? `<p class="lux-gallery-collection-subtitle">${escapeHtml(subtitle)}</p>`
+      : `<p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p>`;
+    const related = collection ? `<nav class="lux-gallery-related" aria-label="${lang === "zh" ? "相关内容" : "Related content"}"><a href="blog.html#olive-academy">${lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"} <span aria-hidden="true">→</span></a><a href="product.html?category=olive-oil#product-catalogue">${lang === "zh" ? "橄榄油系列产品" : "Olive Oil Products"} <span aria-hidden="true">→</span></a></nav>` : "";
+    return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2>${headingDetail}</div>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "展会详情" : "Event details"} <span aria-hidden="true">→</span></a>` : ""}</div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
   };
 
   const filterMatches = () => {
@@ -130,6 +137,7 @@
 
   filterMatches();
   const pagination = luxCreatePagination(pageNav, { total: () => matches.length, scrollTarget: grid, onChange: renderPage });
+  if (form.elements.event.value) requestAnimationFrame(() => grid.scrollIntoView({ block: "start" }));
   form.addEventListener("input", () => { filterMatches(); pagination.reset(); });
   form.addEventListener("change", () => {
     const eventId = form.elements.event.value;
@@ -162,7 +170,9 @@
     const index = eventSequence.indexOf(media);
     const href = eventHref(media);
     const eventTitle = (eventCopy?.galleryTitle || eventCopy?.articleTitle || "").split("·")[0].trim();
-    caption.innerHTML = `<div class="lux-gallery-caption-top">${index + 1} / ${eventSequence.length}</div><p>${escapeHtml(placeName(media))}${eventCopy?.date ? ` · ${escapeHtml(eventCopy.date)}` : ""}</p>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "了解" : "Explore"} ${escapeHtml(eventTitle)} <span aria-hidden="true">→</span></a>` : ""}`;
+    caption.innerHTML = event?.galleryCollection
+      ? `<p class="lux-gallery-chapter-title">${escapeHtml(title)}</p>`
+      : `<div class="lux-gallery-caption-top">${index + 1} / ${eventSequence.length}</div><p>${escapeHtml(placeName(media))}${eventCopy?.date ? ` · ${escapeHtml(eventCopy.date)}` : ""}</p>${href ? `<a href="${escapeHtml(href)}" data-event-open="${escapeHtml(media.eventId)}">${lang === "zh" ? "了解" : "Explore"} ${escapeHtml(eventTitle)} <span aria-hidden="true">→</span></a>` : ""}`;
     previous.disabled = index <= 0;
     next.disabled = index >= eventSequence.length - 1;
     dialog.setAttribute("aria-label", title);

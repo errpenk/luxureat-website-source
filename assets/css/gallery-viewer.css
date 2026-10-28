@@ -48,3 +48,13 @@
   .lux-gallery-viewer :is(img,video) { max-height: calc(100dvh - 250px); }
   .lux-gallery-caption { width: calc(100% - 104px); margin-top: 18px; font-size: 14px; }
 }
+
+.lux-gallery-collection .lux-gallery-event-heading { display: block; text-align: center; }
+.lux-gallery-collection .lux-gallery-event-heading > div { width: 100%; }
+.lux-gallery-collection .lux-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lux-gallery-collection-subtitle { max-width: 680px; margin: 12px auto 0 !important; font-size: clamp(14px, 1.3vw, 16px); font-style: italic; line-height: 1.65; text-align: center; }
+.lux-gallery-related { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; margin: 24px auto 0; }
+.lux-gallery-related a { color: #005b55; text-decoration: underline; text-underline-offset: 4px; }
+.lux-gallery-chapter-title { font-size: clamp(17px, 2vw, 22px); line-height: 1.4; }
+.lux-gallery-groups { scroll-margin-top: 90px; }
+@media (max-width: 600px) { .lux-gallery-collection .lux-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

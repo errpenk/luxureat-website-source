@@ -202,6 +202,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/events/sial-paris-2026-gallery-05.webp": "media/events/sial-paris-2026-gallery-05-720.webp",
   "media/events/sial-paris-2026-gallery-06.webp": "media/events/sial-paris-2026-gallery-06-720.webp",
   "media/events/sial-paris-2026.webp": "media/events/sial-paris-2026-720.webp",
+  "media/gallery/quattrociocchi-americo-01-grove-poster.webp": "media/gallery/quattrociocchi-americo-01-grove-poster-720.webp",
   "media/journal/about-caviar.webp": "media/journal/about-caviar-mobile.webp",
   "media/journal/about-shrimp-tartare.webp": "media/journal/about-shrimp-tartare-720.webp",
   "media/journal/about-trufflebar-bar.webp": "media/journal/about-trufflebar-bar-720.webp",

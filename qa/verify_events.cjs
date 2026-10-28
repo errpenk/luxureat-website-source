@@ -29,6 +29,7 @@ const sialEvent = events?.find((item) => item.id === "sial-guangzhou-2026");
 const romaEvent = events?.find((item) => item.id === "roma-bar-show-2026");
 const parisEvent = events?.find((item) => item.id === "sial-paris-2026");
 const gallery = context.window.LUXUREAT_GALLERY_DATA || [];
+const collections = new Set(gallery.filter((media) => media.collection).map((media) => media.eventId));
 assert(fhcEvent, "FHC Shanghai 2026 event data is missing");
 assert(event, "Changsha 2026 event data is missing");
 assert(eventUtils, "shared Beijing event utilities are missing");
@@ -36,8 +37,8 @@ assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma
 assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
 assert(gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "video").length === 3 && gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "photo").length === 3, "SIAL Paris gallery must include three videos and three photos");
 for (const media of gallery) {
-  assert(media.id && media.date && media.zh?.title && media.en?.title && media.width && media.height, "gallery metadata is incomplete");
-  assert(!media.eventId || events.some((item) => item.id === media.eventId), `gallery event is missing: ${media.id}`);
+  assert(media.id && (media.date || collections.has(media.eventId)) && media.zh?.title && media.en?.title && media.width && media.height, "gallery metadata is incomplete");
+  assert(!media.eventId || collections.has(media.eventId) || events.some((item) => item.id === media.eventId), `gallery event is missing: ${media.id}`);
   for (const file of [media.src, media.poster].filter(Boolean)) {
     assert(fs.existsSync(path.join(root, "assets", file.split("/assets/")[1])), `SIAL Paris gallery asset is missing: ${file}`);
   }
