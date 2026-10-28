@@ -478,7 +478,7 @@ assert(enRituals.includes('data-reader-open="en-recipe-truffle-eggs"'), 'English
 assert(zhRituals.includes('data-reader-open="zh-recipe-truffle-tagliolini"') && zhRituals.includes('data-reader-open="zh-recipe-truffle-ravioli"') && zhRituals.includes('data-reader-open="zh-recipe-black-truffle-risotto"'), 'Chinese rituals ceremony cards open reader details');
 assert(zhRituals.includes("luxureat_static_url('zh/product'"), 'Chinese rituals shopping CTA links to products');
 assert(enRituals.includes("luxureat_static_url('en/product'"), 'English rituals shopping CTA links to products');
-assert(zhRituals.includes('食材购买') && zhRituals.includes('系列产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
+assert(zhRituals.includes('食材购买') && zhRituals.includes('我们的产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
 assert(enRituals.includes('Buy Ingredients') && enRituals.includes('Products') && !enRituals.includes('>Shop Now<'), 'English rituals shopping CTA mirrors the requested wording');
 assert((zhRituals.match(/lux-dark-photo-block/g) || []).length >= 3, 'Chinese rituals ceremony cards use dark photo backgrounds');
 
@@ -486,7 +486,7 @@ assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') &&
 assert(zhCaviar.includes("luxureat_static_url('zh/recipe'"), 'Chinese caviar ritual CTA links to rituals');
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
 assert(zhCaviar.indexOf('从早餐、第一道主食到甜点') > zhCaviar.indexOf('>食谱艺术</h3>') && zhCaviar.indexOf('从早餐、第一道主食到甜点') < zhCaviar.indexOf('>探索食谱</a>'), 'Chinese recipe introduction stays between the recipe heading and CTA');
-assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
+assert(zhCaviar.includes('我们的产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
 assert(zhCaviar.includes('lux-products-main'), 'Chinese product listing hero starts flush below the fixed nav');
 const enProducts = read(path.join(themeDir, 'pages/en/product.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');

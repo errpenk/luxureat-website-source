@@ -22,7 +22,7 @@ function headerFor(page) {
   const { lang, key } = page;
   const otherLang = lang === "zh" ? "en" : "zh";
   const counterpart = pages.find((item) => item.lang === otherLang && item.key === key) || pages.find((item) => item.lang === otherLang && item.key === "home");
-  const nav = navigation.map((item) => `<a${item.key === key ? ' class="active"' : ""} href="${link(slugFor(item, lang))}">${esc(item[lang])}</a>`).join("");
+  const nav = navigation.map((item) => `<a${item.key === key || (key === "new" && item.key === "products") ? ' class="active"' : ""} href="${link(slugFor(item, lang))}">${esc(item[lang])}</a>`).join("");
   const labels = lang === "zh"
     ? { nav: "navigation", open: "关闭", closed: "菜单", menu: "菜单" }
     : { nav: "navigation", open: "Close", closed: "Menu", menu: "Menu" };
@@ -86,7 +86,7 @@ function scriptsFor(page) {
   const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions"].includes(handle)) : page.scripts;
   const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
-  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2" : handle === "home-interactions" ? "-flavour7" : ["gallery-data", "gallery"].includes(handle) ? "-gallery21" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2-menu1" : handle === "home-interactions" ? "-flavour7" : ["gallery-data", "gallery"].includes(handle) ? "-gallery21" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";

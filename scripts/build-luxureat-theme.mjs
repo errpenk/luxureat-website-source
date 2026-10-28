@@ -363,7 +363,7 @@ function productPageHtml(product, imageDimensions) {
     ? { back: '返回产品系列', facts: '产品信息' }
     : { back: 'Back to Products', facts: 'Product information' };
   const facts = (product.details || []).map(({ label, value }) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
-  const body = `<main class="lux-article-page">${breadcrumbHtml(product.lang, 'product.html', product.lang === 'zh' ? '系列产品' : 'Products', product.title)}<article class="lux-reader-layout lux-product-seo-page"><div class="lux-reader-rule"></div><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(product.eyebrow)}</span><span>${escapeHtml(product.unit)}</span><span>${escapeHtml(product.manufacturer)}</span></div><h1 id="lux-reader-title">${escapeHtml(product.title)}</h1><p class="lux-reader-summary">${escapeHtml(product.desc)}</p></div><figure class="lux-reader-cover"><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}"></figure></section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="product.html">${labels.back}</a></aside><div class="lux-reader-copy"><section class="lux-reader-section"><h2>${labels.facts}</h2><dl class="lux-seo-facts">${facts}</dl></section></div></section></article></main>`;
+  const body = `<main class="lux-article-page">${breadcrumbHtml(product.lang, 'product.html', product.lang === 'zh' ? '我们的产品' : 'Products', product.title)}<article class="lux-reader-layout lux-product-seo-page"><div class="lux-reader-rule"></div><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(product.eyebrow)}</span><span>${escapeHtml(product.unit)}</span><span>${escapeHtml(product.manufacturer)}</span></div><h1 id="lux-reader-title">${escapeHtml(product.title)}</h1><p class="lux-reader-summary">${escapeHtml(product.desc)}</p></div><figure class="lux-reader-cover"><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}"></figure></section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="product.html">${labels.back}</a></aside><div class="lux-reader-copy"><section class="lux-reader-section"><h2>${labels.facts}</h2><dl class="lux-seo-facts">${facts}</dl></section></div></section></article></main>`;
   return detailPageHtml({ lang: product.lang, pageKey: 'products', title: product.title, description: product.cardDesc || product.desc, route: productRoute(product), alternateRoute: productRoute(alternate || product), body });
 }
 
@@ -1075,7 +1075,7 @@ function luxureat_static_seo_head() {
         $parent_names = array(
             'Article' => $is_zh ? '知识博客' : 'Knowledge Blog',
             'NewsArticle' => $is_zh ? '品牌新闻' : 'Brand News',
-            'Product' => $is_zh ? '系列产品' : 'Products',
+            'Product' => $is_zh ? '我们的产品' : 'Products',
             'Event' => $is_zh ? '品牌新闻' : 'Brand News',
             'Recipe' => $is_zh ? '食谱艺术' : 'Recipes',
         );

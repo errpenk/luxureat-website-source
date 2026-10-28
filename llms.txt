@@ -7,7 +7,7 @@ The website is bilingual in Chinese and English. It presents LuxurEat's products
 ## Chinese
 
 - [首页](https://luxureat.cn/): LuxurEat 露意膳集团与意大利高端美食概览
-- [系列产品](https://luxureat.cn/product/): 松露、鱼子酱及意大利高端食品
+- [我们的产品](https://luxureat.cn/product/): 松露、鱼子酱及意大利高端食品
 - [食谱艺术](https://luxureat.cn/recipe/): 产品应用与食谱
 - [品牌新闻](https://luxureat.cn/brand/): 品牌动态与活动
 - [知识博客](https://luxureat.cn/blog/): 食材知识与专业指南
