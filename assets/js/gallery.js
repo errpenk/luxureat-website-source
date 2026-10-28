@@ -49,6 +49,7 @@
     const label = className === "lux-gallery-caption-related" ? "" : `<span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>`;
     return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}">${label}${links.map(([href, name]) => `<a href="${escapeHtml(href)}">${escapeHtml(name)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
   };
+  const flagBase = new URL("../media/flags/", document.currentScript?.src || location.href);
   const unique = (values) => [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, lang === "zh" ? "zh-CN" : "en"));
 
   for (const place of unique(gallery.map(placeName))) form.elements.place.add(new Option(place, place));
@@ -111,7 +112,8 @@
         ? `<p>${lang === "zh" ? "记录 SIAL Paris 2026 巴黎展会的意大利美食与现场交流。" : "Italian food and conversations at SIAL Paris 2026."}</p>`
         : `<p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p>`;
     const related = collection || media.eventId === "sial-paris-2026" ? relatedLinks(collection, "lux-gallery-related") : "";
-    return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div><h2>${escapeHtml(name)}</h2>${headingDetail}</div></div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
+    const flag = collection ? "italy.svg" : media.eventId === "sial-paris-2026" ? "france.svg" : "";
+    return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div>${flag ? `<img class="lux-gallery-event-flag" src="${escapeHtml(new URL(flag, flagBase).href)}" alt="" width="52" height="52">` : ""}<h2>${escapeHtml(name)}</h2>${headingDetail}</div></div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
   };
 
   const filterMatches = () => {
@@ -207,7 +209,7 @@
     if (!button) return;
     const media = matches.find((item) => item.id === button.dataset.galleryOpen);
     if (!media) return;
-    eventSequence = matches.filter((item) => item.eventId === media.eventId);
+    eventSequence = matches;
     showMedia(media);
     const index = eventSequence.indexOf(media);
     warmPhoto(eventSequence[index - 1]);

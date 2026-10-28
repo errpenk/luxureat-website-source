@@ -13,8 +13,7 @@
 .lux-gallery-dialog::backdrop { background: #171715; }
 .lux-gallery-dialog-shell { box-sizing: border-box; position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 100dvh; width: min(100%, 1320px); margin: auto; padding: 76px 24px 40px; }
 .lux-gallery-dialog :is(.lux-gallery-close,.lux-gallery-arrow) { display: grid; place-items: center; flex: none; padding: 0; border: 1px solid rgba(255,255,255,.58); border-radius: 50%; background: rgba(23,23,21,.78); color: #fff; cursor: pointer; }
-.lux-gallery-dialog :is(.lux-gallery-close,.lux-gallery-arrow):hover,
-.lux-gallery-dialog :is(.lux-gallery-close,.lux-gallery-arrow):focus-visible { border-color: #9df5ec; background: #9df5ec; color: #003734; }
+.lux-gallery-dialog :is(.lux-gallery-close,.lux-gallery-arrow):hover { border-color: #9df5ec; background: #9df5ec; color: #003734; }
 .lux-gallery-dialog :is(.lux-gallery-close,.lux-gallery-arrow):focus-visible { outline: 2px solid #9df5ec; outline-offset: 3px; }
 .lux-gallery-dialog .lux-gallery-close { position: absolute; z-index: 3; top: 24px; right: 30px; width: 48px; height: 48px; }
 .lux-gallery-dialog .lux-gallery-close svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -48,6 +47,7 @@
 
 .lux-gallery-collection .lux-gallery-event-heading { display: block; text-align: center; }
 .lux-gallery-collection .lux-gallery-event-heading > div { width: 100%; }
+.lux-gallery-event-flag { display: block; width: 52px; height: 52px; margin: 0 auto 18px; }
 .lux-gallery-collection-subtitle { max-width: 680px; margin: 12px auto 0 !important; font-size: clamp(14px, 1.3vw, 16px); font-style: italic; line-height: 1.65; text-align: center; }
 .lux-gallery-related, .lux-gallery-caption-related { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 24px; text-align: center; }
 .lux-gallery-related { margin: 24px auto 0; font-style: italic; }

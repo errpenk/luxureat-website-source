@@ -334,7 +334,6 @@ function initLuxReader() {
           }).join("")}
         </div>
         ${past.length ? `<div class="lux-past-events">
-          <h3>${eventLabels.past}</h3>
           <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
             return `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.brandCardImage || event.cardImage || event.image)}" alt="${escapeHtml(copy.cardTitle || copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.cardTitle || copy.articleTitle)}</strong></span></a>`;
@@ -767,7 +766,19 @@ function initLuxReader() {
     if (location.hash !== `#reader-${id}`) history.replaceState(history.state, "", `${location.pathname}${location.search}#reader-${id}`);
     const copy = labels();
     if (article.cmsHtml && article.slug && article.type !== "recipe") {
-      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><div class="lux-reader-copy lux-cms-prose">${article.cmsHtml.replaceAll(/https?:\/\/i\d\.wp\.com\/luxureat\.cn\/wp-content\/uploads\//g, "https://luxureat.cn/wp-content/uploads/")}</div></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; const isCaviarSpecies = caviarSpeciesSlugs.has(article.slug); return related ? `<button type="button"${related.wideCover || isCaviarSpecies ? ` class="${[related.wideCover && "is-wide-cover", isCaviarSpecies && "is-caviar-species-related"].filter(Boolean).join(" ")}"` : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
+      const cmsDoc = document.createElement("div");
+      cmsDoc.innerHTML = article.cmsHtml.replaceAll(/https?:\/\/i\d\.wp\.com\/luxureat\.cn\/wp-content\/uploads\//g, "https://luxureat.cn/wp-content/uploads/");
+      const cmsHeadings = [...cmsDoc.querySelectorAll("h2, h3")];
+      cmsHeadings.forEach((heading, index) => { heading.id = `lux-reader-section-${index}`; });
+      const plainText = `${article.intro} ${cmsDoc.textContent}`;
+      const units = article.lang === "zh" ? plainText.replace(/\s/g, "").length / 300 : (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length / 200;
+      const readTime = article.lang === "zh" ? `${Math.max(1, Math.ceil(units))} 分钟阅读` : `${Math.max(1, Math.ceil(units))} min read`;
+      const metaParts = (article.meta || "").split("·").map((part) => part.trim()).filter(Boolean);
+      const date = article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "未注明" : "Not specified"));
+      const metadata = [article.lang === "zh" ? "知识博客" : "Knowledge Blog", article.column || article.eyebrow, readTime, article.keyword || metaParts.find((part) => !/^(?:19|20)\d{2}/.test(part)) || article.topicLabel];
+      const sidebar = [[article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow], [article.lang === "zh" ? "档案" : "Series", article.archive || article.topicLabel], [article.lang === "zh" ? "日期" : "Date", date]];
+      const tocLabel = article.lang === "zh" ? "目录" : "Contents";
+      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid">${metadata.map((item) => `<span>${escapeHtml(item || "")}</span>`).join("")}</div><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><aside class="lux-reader-aside">${sidebar.map(([label, value]) => `<span>${escapeHtml(label)}：${escapeHtml(value)}</span>`).join("")}</aside><div class="lux-reader-copy lux-cms-prose">${cmsDoc.innerHTML}</div><aside class="lux-reader-pull"><p>${escapeHtml(article.asideSummary || article.intro)}</p><nav class="lux-reader-toc" aria-label="${escapeHtml(tocLabel)}"><span>${escapeHtml(tocLabel)}</span>${cmsHeadings.map((heading) => `<a href="#${escapeHtml(heading.id)}">${escapeHtml(heading.textContent.trim())}</a>`).join("")}</nav></aside></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; const isCaviarSpecies = caviarSpeciesSlugs.has(article.slug); return related ? `<button type="button"${related.wideCover || isCaviarSpecies ? ` class="${[related.wideCover && "is-wide-cover", isCaviarSpecies && "is-caviar-species-related"].filter(Boolean).join(" ")}"` : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
       showReader(copy);
       return;
     }
@@ -881,7 +892,7 @@ function initLuxReader() {
     const asideRows = [
       [article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow],
       [article.lang === "zh" ? "档案" : "Series", article.archive || localizeArchiveLabel(metaParts[0]) || copy.archive],
-      [article.lang === "zh" ? "日期" : "Date", metaParts[1] || ""],
+      [article.lang === "zh" ? "日期" : "Date", article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "未注明" : "Not specified"))],
     ].filter(([, value]) => value);
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
     const figureLabel = article.lang === "zh" ? "图" : "Figure";

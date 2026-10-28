@@ -9444,16 +9444,19 @@ body {
   width: min(100%, 1440px);
   margin-inline: auto;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   gap: 30px;
 }
 .lux-home-global-reach p {
   margin: 0;
+  text-align: center;
   font-size: 14px;
   line-height: 1.7;
 }
 .lux-home-global-reach ul {
   display: flex;
+  justify-content: center;
   flex: 0 0 auto;
   margin: 0;
   padding: 0;
@@ -9555,7 +9558,7 @@ body {
     transform: translate(-50%, -50%);
   }
   .lux-home-global-reach > div {
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
     gap: 16px;
   }
@@ -9728,7 +9731,7 @@ body {
   }
   .lux-home-global-reach ul {
     flex-wrap: wrap;
-    padding-left: 6px;
+    padding-left: 0;
   }
   .lux-about-vr {
     margin-block: 42px;
@@ -14168,4 +14171,18 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
     background-image: linear-gradient(rgba(9, 12, 13, .76), rgba(9, 12, 13, .86)), var(--lux-home-bg, none);
     background-position: center;
   }
+}
+
+/* Gallery, event, and editorial refinements. */
+.lux-event-reader-intro { border-top: 0; }
+.lux-past-events { border-top: 0; padding-top: 0; }
+.lux-news-card .lux-narrative-link { border-bottom: 0; text-decoration: none; }
+.lux-journal-season-head::before { content: none; }
+.lux-journal-season-head { justify-content: center; }
+.lux-journal-season-head h3 { font-size: clamp(46px, 7vw, 92px); line-height: .95; text-align: center; }
+.lux-journal-season-head > div:last-child { position: absolute; right: 0; }
+.lux-journal-season-head .lux-narrative-link { border-bottom: 0; text-decoration: none; }
+@media (max-width: 640px) {
+  .lux-journal-season-head { display: grid; justify-items: center; gap: 16px; }
+  .lux-journal-season-head > div:last-child { position: static; }
 }

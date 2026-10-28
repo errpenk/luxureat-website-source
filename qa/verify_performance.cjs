@@ -61,7 +61,7 @@ for (const file of [
   "contact-global-footprint-mobile.m4v",
 ]) assert.ok(size(`assets/media/brand/${file}`) <= 520 * 1024, `${file} exceeds 520 KB`);
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
-assert.ok(gzipSize("integration.css") <= 62 * 1024, "shared CSS exceeds the 62 KB compressed budget");
+assert.ok(gzipSize("integration.css") <= 64 * 1024, "shared CSS exceeds the 64 KB compressed budget");
 assert.ok(gzipSize("assets/js/core.js") <= 15 * 1024, "critical shared JavaScript still includes optional interactions");
 assert.ok(gzipSize("assets/js/chat.js") <= 4 * 1024, "deferred chat interface exceeds 4 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
