@@ -133,6 +133,8 @@ assert(latestEvent.includes("LUXUREAT_EVENT_UTILS?.getHomeEvents"), "home events
 assert(latestEvent.includes("section.hidden = true"), "home event section is not hidden when no active events remain");
 assert(journal.includes("LUXUREAT_EVENT_UTILS.groupBrandEvents"), "Brand News events do not use shared Beijing grouping and sorting");
 assert(journal.includes("luxCreatePagination(pageNav, { total: () => cards.length, pageSize: 6") && css.includes(".lux-news-grid [hidden] { display: none !important; }") && css.includes("grid-template-columns: repeat(3, minmax(0, 1fr));"), "Brand News three-column pagination is missing");
+const shareCss = read("assets/css/reader-share.css");
+assert(["qq", "weibo", "wechat"].every((name) => journal.includes(`shareBrandIcon("${name}")`)) && !shareCss.includes("LuxChinaMedia") && shareCss.includes(".lux-share-brand"), "Reader share icons must render as SVGs without an icon font");
 assert(!css.includes(".lux-product-browser + .lux-pagination { margin-left:"), "Product pagination is offset from the page center");
 assert(!journal.includes("new Date(`${event.endDate}"), "Brand News still parses calendar dates as local timestamps");
 assert(latestEvent.includes("setInterval(() => show(index + 1), 2500)"), "home event autoplay is not set to 2.5 seconds");

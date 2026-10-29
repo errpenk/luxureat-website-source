@@ -12,18 +12,11 @@
 .lux-reader-body .lux-cms-prose > img { max-width: min(100%, 960px); max-height: min(68dvh, 700px); }
 .lux-reader-body .lux-brand-news-media img { width: auto; max-width: min(100%, 960px); max-height: min(68dvh, 700px); object-fit: contain; margin-inline: auto; }
 
-@font-face { font-family: "LuxChinaMedia"; src: url("../fonts/chinamediaicons.woff") format("woff"); font-display: block; }
 .lux-reader-share { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
 .lux-reader-share :is(button, a) { display: grid; place-items: center; width: 38px; height: 38px; padding: 0; border: 1px solid currentColor; border-radius: 50%; background: transparent; color: #07534a; cursor: pointer; text-decoration: none; transition: color .18s, background .18s, border-color .18s; }
 .lux-reader-share :is(button, a):is(:hover,:focus-visible) { color: #89670f; background: #f5edd6; border-color: #89670f; }
 .lux-reader-share .lux-lucide { width: 18px; height: 18px; }
-.lux-china-icon::before { font-family: "LuxChinaMedia"; font-size: 19px; font-style: normal; line-height: 1; }
-.lux-china-icon.icon-qq::before { content: "\6d"; }
-.lux-china-icon.icon-weibo::before { content: "\48"; }
-.lux-china-icon.icon-wechat::before { content: "\45"; }
-.lux-china-icon.icon-wechat-circle::before { content: "\46"; }
-html[lang^="zh"] body .lux-reader-share .lux-china-icon,
-html[lang^="zh"] body .lux-reader-share .lux-china-icon::before { font-family: "LuxChinaMedia" !important; }
+.lux-reader-share .lux-share-brand { width: 18px; height: 18px; }
 .lux-share-status { min-width: 3em; color: #07534a; font: 12px/1.3 var(--lux-page-body); }
 .lux-reader-header-share { margin-right: auto; }
 .lux-reader-body :is(.lux-seasonal-reader, .lux-academy-reader) .lux-reader-rule { display: none; }
