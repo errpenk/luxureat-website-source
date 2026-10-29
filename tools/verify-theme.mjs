@@ -492,6 +492,15 @@ const enProducts = read(path.join(themeDir, 'pages/en/product.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
 assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
 assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') && productDataJs.includes('products[`en-${slug}`]'), 'English product page renders registered product details from product data');
+for (const lang of ['zh', 'en']) {
+  const productPages = path.join(themeDir, `pages/${lang}/product`);
+  const files = fs.readdirSync(productPages).filter((file) => file.endsWith('.php'));
+  assert(files.length === 47, `${lang} standalone product route count`);
+  for (const file of files) {
+    const html = read(path.join(productPages, file));
+    assert(html.includes('lux-product-videos') && (html.match(/assets\/media\/products\/videos\/\d+\.mp4/g) || []).length === 2, `${lang}/${file} shows two product videos`);
+  }
+}
 assert(enProducts.includes("luxureat_static_url('en/recipe'"), 'English products ritual CTA links to rituals');
 const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));
 const enCertification = read(path.join(themeDir, 'pages/en/certification.php'));
