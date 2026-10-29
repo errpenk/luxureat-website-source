@@ -1766,6 +1766,30 @@ body.lux-reader-open {
   margin: 0 0 24px;
   font: 500 clamp(32px, 4vw, 48px)/1.15 var(--lux-page-heading);
 }
+.lux-product-videos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin-top: 40px;
+}
+.lux-product-videos video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #1c1b1b;
+}
+@media (max-width: 600px) {
+  .lux-product-videos {
+    grid-auto-columns: minmax(240px, 85%);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .lux-product-videos video { scroll-snap-align: start; }
+}
 .lux-product-recent {
   padding: clamp(48px, 7vw, 92px) 0;
   background: #e7e4e1;
