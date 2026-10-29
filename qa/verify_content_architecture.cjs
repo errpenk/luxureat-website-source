@@ -189,8 +189,10 @@ assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM C
 assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
 assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
 assert(!/https:\/\/webapi\.amap\.com\//.test(journalRuntime), "legacy AMap loader is still present");
-assert(brandNews.length === 11 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
-const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026");
+assert(brandNews.length === 12 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
+const newFhcNews = brandNews.find((item) => item.id === "fhc-shanghai-2026-new-products");
+assert(newFhcNews?.eventId === "fhc-shanghai-2026" && newFhcNews.cardImage.endsWith("fhc-shanghai-2026-booth.webp") && newFhcNews.zh.sections.length === 4 && newFhcNews.en.sections.length === 4, "new FHC bilingual news is incomplete or uses the wrong image");
+const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026" && item.id !== newFhcNews.id);
 assert(fhcNews.length === 2 && fhcNews.every((item) => item.relatedNewsId && item.zh.sourceUrl === "https://www.fhcchina.com/" && item.zh.sections.some((section) => section[2]?.length) && item.en.sections.some((section) => section[2]?.length)), "FHC bilingual news, images or links are incomplete");
 assert(new Set(fhcNews.flatMap((item) => [item.cardImage, ...item.zh.sections.flatMap((section) => (section[2] || []).map((media) => media.src))])).size === 4, "FHC breakfast images must not repeat");
 assert(fhcNews.find((item) => item.id === "fhc-shanghai-2026-pancakes")?.cardImage.endsWith("fhc-breakfast-pairings-2026.webp"), "FHC pancake cover does not use the requested image");
@@ -205,7 +207,7 @@ assert(romaNews?.video.includes("roma-bar-show-2026.mp4") && romaNews.cardImage.
 assert(romaNews?.videoPoster.endsWith("roma-bar-show-2026-video-poster.jpg") && romaNews.videoWidth === 1080 && romaNews.videoHeight === 1920, "Roma Bar Show video poster or native dimensions are incomplete");
 const changshaEvent = events.events.find((item) => item.id === "cifie-changsha-2026");
 assert(changshaEvent?.video.includes("cifie-changsha-2026-video.mp4") && changshaEvent.videoSource?.en.includes("WeChat Channels"), "Changsha event video or source is incomplete");
-assert(brandNews.filter((item) => item.eventId).length === 10 && journalRuntime.includes("lux-brand-news-event-link") && journalRuntime.includes("lux-brand-news-links"), "Brand News and Exhibitions & Events are not cross-linked");
+assert(brandNews.filter((item) => item.eventId).length === 11 && journalRuntime.includes("lux-brand-news-event-link") && journalRuntime.includes("lux-brand-news-links"), "Brand News and Exhibitions & Events are not cross-linked");
 assert(brandNews.filter((item) => item.eventId).every((item) => events.events.some((event) => event.id === item.eventId)), "a Brand News event link has no matching shared event record");
 assert(journalRuntime.includes('data-news-open="${escapeHtml(item.id)}"') && journalRuntime.includes("renderBrandNews"), "News Centre previews do not open separate articles");
 assert(!journalRuntime.includes("data-news-search-form") && !journalRuntime.includes("data-news-search-text"), "removed Brand News search UI is still present");

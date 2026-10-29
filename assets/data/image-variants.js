@@ -70,6 +70,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand-news/cifce-family-table.webp": "media/brand-news/cifce-family-table-720.webp",
   "media/brand-news/fhc-2026-food-industry.webp": "media/brand-news/fhc-2026-food-industry-720.webp",
   "media/brand-news/fhc-breakfast-pairings-2026.webp": "media/brand-news/fhc-breakfast-pairings-2026-720.webp",
+  "media/brand-news/fhc-shanghai-2026-booth.webp": "media/brand-news/fhc-shanghai-2026-booth-720.webp",
   "media/brand-news/fhc-trade-conversations-2026.webp": "media/brand-news/fhc-trade-conversations-2026-720.webp",
   "media/brand-news/marca-italian-pavilion-poster.webp": "media/brand-news/marca-italian-pavilion-poster-720.webp",
   "media/brand-news/marca-recap-booth.webp": "media/brand-news/marca-recap-booth-720.webp",

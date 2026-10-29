@@ -3,6 +3,7 @@
   const asset = (path) => new URL(path, assetBase).href;
   const image = (name, altZh, altEn) => ({ type: "image", src: asset(`media/brand-news/${name}`), alt: { zh: altZh, en: altEn } });
   const media = {
+    fhcBooth: image("fhc-shanghai-2026-booth.webp", "FHC 上海 2026 N3A10 展位设计，展示 TrufflElixir 与 PRO 8", "FHC Shanghai 2026 booth N3A10 featuring TrufflElixir and PRO 8"),
     fhcIndustry: image("fhc-2026-food-industry.webp", "FHC 官网首页视频中的食品行业场景", "Food industry scene from the FHC homepage video"),
     fhcChefs: { ...image("fhc-chefs-shifair.webp", "FHC展会现场厨师演示", "Chefs demonstrating at an FHC event"), sourceUrl: "https://www.shifair.com/", sourceName: { zh: "世展网", en: "Shifair" } },
     fhcBreakfastPairings: image("fhc-breakfast-pairings-2026.webp", "松饼与华夫饼的不同淋酱搭配示意", "Illustrative pancake and waffle pairings"),
@@ -37,6 +38,36 @@
   };
 
   window.LUXUREAT_BRAND_NEWS = [
+    {
+      id: "fhc-shanghai-2026-new-products",
+      eventId: "fhc-shanghai-2026",
+      date: "2026-10-29",
+      cardImage: media.fhcBooth.src,
+      zh: {
+        date: "2026年10月29日", author: "LuxurEat", category: "展会预告",
+        title: "FHC 上海 2026｜让松露从早餐开始融入日常",
+        intro: "我们将在上海带来一个全新的理念：让松露融入日常生活，从早餐开始。",
+        opening: [],
+        sections: [
+          ["TrufflElixir 松露糖浆", ["在2026年上海FHC展会上，我们将首次展示 TrufflElixir松露糖浆，可搭配华夫饼及其他早餐美食。我们希望让年轻一代也能品尝并喜爱松露，让这种珍贵食材不只出现在特别晚宴上。"]],
+          ["PRO 8 松露酱", ["我们还将展示 PRO 8松露酱，精选八种珍贵菌菇与松露制成，不添加双孢蘑菇。产品有两种口味：白松露款和Uncinatum松露款。"]],
+          ["美味与营养", ["我们在追求美味的同时，也注重营养：产品不含麸质、不含过敏原，与目前市场上的产品相比，热量减少50%以上。"]],
+          ["欢迎莅临", ["欢迎莅临我们的展位，了解新品，发现松露更多不同的享用方式。", "2026年上海FHC展会", "2026年11月10日至12日", "上海新国际博览中心", "N3馆 · N3A10展位"]],
+        ],
+      },
+      en: {
+        date: "October 29, 2026", author: "LuxurEat", category: "Exhibition Preview",
+        title: "FHC Shanghai 2026 | Bringing Truffles into Everyday Life, Starting with Breakfast",
+        intro: "In Shanghai, we will bring a new idea: making truffles part of everyday life, starting with breakfast.",
+        opening: [],
+        sections: [
+          ["TrufflElixir Truffle Syrup", ["At FHC Shanghai 2026, we will present TrufflElixir, our truffle syrup, created to accompany waffles and other breakfast favourites. We want younger generations to discover the taste of truffles and show that this ingredient can be enjoyed well before a special dinner."]],
+          ["PRO 8 Truffle Sauce", ["We will also present PRO 8, our truffle sauce made with eight selected mushrooms and truffle, without champignon mushrooms. The range includes two versions: one with white truffle and one with Uncinatum truffle."]],
+          ["Flavour and Nutritional Care", ["Our approach combines flavour with nutritional care: products that are gluten-free and allergen-free, with over 50% fewer calories than products currently on the market."]],
+          ["Visit Us", ["Visit our booth to explore the new products and discover more ways to enjoy truffles.", "FHC Shanghai 2026", "November 10–12, 2026", "Shanghai New International Expo Centre", "Hall N3 · Booth N3A10"]],
+        ],
+      },
+    },
     {
       id: "sial-paris-2026-lazio-global",
       eventId: "sial-paris-2026",

@@ -109,7 +109,7 @@ const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
-for (const [page, count] of [['blog', 68], ['product', 47], ['recipe', 25], ['brand', 11]]) {
+for (const [page, count] of [['blog', 68], ['product', 47], ['recipe', 25], ['brand', 12]]) {
   for (const lang of ['zh', 'en']) {
     const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
     const links = html.match(/<nav class="lux-static-detail-links"[^>]*><ul>([\s\S]*?)<\/ul><\/nav>/)?.[1];
@@ -153,7 +153,7 @@ const enRecipePages = fs.readdirSync(path.join(themeDir, 'pages/en/recipe')).fil
 assert(zhRecipePages.length === 25 && enRecipePages.length === 25, 'theme contains all 25 bilingual recipe detail pairs');
 const zhNewsPages = fs.readdirSync(path.join(themeDir, 'pages/zh/news')).filter((file) => file.endsWith('.php'));
 const enNewsPages = fs.readdirSync(path.join(themeDir, 'pages/en/news')).filter((file) => file.endsWith('.php'));
-assert(zhNewsPages.length === 11 && enNewsPages.length === 11, 'theme contains all eleven bilingual Brand News detail pairs');
+assert(zhNewsPages.length === 12 && enNewsPages.length === 12, 'theme contains all twelve bilingual Brand News detail pairs');
 const recipeDetail = read(path.join(themeDir, 'pages/zh/recipe/truffle-eggs.php'));
 assert(recipeDetail.includes('class="lux-breadcrumb"') && recipeDetail.includes('<h1 id="lux-reader-title">松露鸡蛋</h1>'), 'recipe details expose a visible breadcrumb and one primary heading');
 assert(functionsPhp.includes("get_option('home')"), 'route URLs use the unfiltered WordPress home option');
