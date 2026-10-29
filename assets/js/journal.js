@@ -836,7 +836,7 @@ function initLuxReader() {
           </section>
           <section class="lux-recipe-nutrition">
             <header><h3>${recipeLabels.nutrition}</h3></header>
-            <p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote || (article.lang === "zh" ? "营养数据为每份估算值。" : "Nutrition values are estimates per serving."))}</p>
+            ${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote)}</p>` : ""}
             <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
             ${article.video ? `<figure class="lux-recipe-video">
               <video controls playsinline preload="none" poster="${escapeHtml(article.image)}" aria-label="${escapeHtml(article.title)} — ${article.lang === "zh" ? "菜品相关素材画面" : "related stock footage"}"><source src="${escapeHtml(article.video.src)}" type="video/mp4"></video>
