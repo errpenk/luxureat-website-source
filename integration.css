@@ -4407,6 +4407,9 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   gap: 40px;
   padding-top: 52px;
 }
+.lux-reader-content:has(> .lux-reader-pull) > .lux-reader-aside { grid-column: 1; grid-row: 1; }
+.lux-reader-content:has(> .lux-reader-pull) > .lux-reader-copy { grid-column: 2; grid-row: 1; }
+.lux-reader-content:has(> .lux-reader-pull) > .lux-reader-pull { grid-column: 3; grid-row: 1; }
 .lux-reader-content:has(> .lux-cms-prose):not(:has(> .lux-reader-aside)) { display: block; max-width: 820px; margin-inline: auto; }
 .lux-reader-aside {
   display: grid;
@@ -5283,6 +5286,10 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   .lux-reader-content {
     gap: 28px;
     padding-top: 38px;
+  }
+  .lux-reader-content:has(> .lux-reader-pull) > :is(.lux-reader-aside, .lux-reader-pull, .lux-reader-copy) {
+    grid-column: 1;
+    grid-row: auto;
   }
   .lux-reader-aside {
     justify-items: center;
