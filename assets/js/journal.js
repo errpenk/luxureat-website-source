@@ -1,6 +1,7 @@
 const luxJournalAssetBase = new URL("../", document.currentScript?.src || location.href);
 const luxJournalAsset = (path) => new URL(path, luxJournalAssetBase).href;
-const luxJournalAssetVersion = new URL(document.currentScript?.src || location.href).searchParams.get("ver") || "1";
+const luxJournalScriptUrl = new URL(document.currentScript?.src || location.href);
+const luxJournalAssetVersion = luxJournalScriptUrl.searchParams.get("ver") || luxJournalScriptUrl.searchParams.get("v") || "1";
 
 function initLuxReader() {
   const articleData = window.LUXUREAT_ARTICLE_DATA || {};
