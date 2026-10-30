@@ -14252,6 +14252,43 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   font-style: oblique 10deg !important;
   font-synthesis: style;
 }
+
+/* Keep the requested Chinese editorial lines visibly slanted with the site's custom fonts. */
+html[lang^="zh"] .lux-about-story .lux-reader-summary {
+  color: #8f6928 !important;
+  font-style: oblique 14deg !important;
+  font-synthesis: style;
+  transform: skewX(-5deg);
+  transform-origin: left center;
+}
+html[lang^="zh"] .lux-about-story .lux-reader-quote {
+  margin-inline: auto;
+  padding-left: 0;
+  border-left: 0;
+  text-align: center;
+  font-style: oblique 14deg !important;
+  font-synthesis: style;
+  transform: skewX(-5deg);
+}
+html[lang^="zh"] :is(
+  .lux-recipe-video figcaption,
+  .lux-cert-network-story blockquote p,
+  .lux-cert-results blockquote p,
+  .lux-cert-quote-slides [data-cert-quote],
+  .lux-contact-results-main figcaption p,
+  .lux-contact-results-grid blockquote p
+) {
+  font-style: oblique 14deg !important;
+  font-synthesis: style;
+  transform: skewX(-5deg);
+}
+html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
+  animation-name: luxQuoteInItalic;
+}
+@keyframes luxQuoteInItalic {
+  from { opacity: 0; transform: translateX(12px) skewX(-5deg); }
+  to { opacity: 1; transform: translateX(0) skewX(-5deg); }
+}
 .lux-recipe-video a {
   color: inherit;
   text-decoration: underline;

@@ -51,7 +51,8 @@
 .lux-gallery-event-heading > div { display: flex; flex-direction: column; align-items: center; }
 .lux-gallery-event-flag { display: block; width: 52px; height: 52px; margin: 0 auto 18px; }
 .lux-gallery-event-flag + h2 { margin-top: 18px; }
-.lux-gallery-collection-subtitle { max-width: 680px; margin: 12px auto 0 !important; font-size: clamp(14px, 1.3vw, 16px); font-style: italic; line-height: 1.65; text-align: center; }
+.lux-gallery-collection-subtitle { max-width: 680px; margin: 12px auto 0 !important; font-size: clamp(14px, 1.3vw, 16px); font-style: oblique 14deg !important; font-synthesis: style; transform: skewX(-5deg); line-height: 1.65; text-align: center; }
+html[lang^="zh"] #event-sial-paris-2026 .lux-gallery-event-heading p { font-style: oblique 14deg !important; font-synthesis: style; transform: skewX(-5deg); }
 .lux-gallery-related, .lux-gallery-caption-related { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 24px; text-align: center; }
 .lux-gallery-related { margin: 24px auto 0; font-style: italic; }
 .lux-gallery-related > span { color: #766f66; }

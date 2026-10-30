@@ -110,6 +110,11 @@ html[lang="en"] :is(.lux-ms-lead, .lux-ms-prose p, .lux-ms-note) { font-family: 
   color: #87918f;
   font: 400 13px/1.65 var(--lux-zh-body, var(--lux-page-heading));
 }
+html[lang^="zh"] .lux-market-insights-page .lux-ms-source {
+  font-style: oblique 14deg !important;
+  font-synthesis: style;
+  transform: skewX(-5deg);
+}
 html[lang="en"] .lux-ms-source { font-family: var(--lux-en-body); }
 .lux-ms-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(28px, 4vw, 56px); row-gap: clamp(28px, 4vw, 44px); }
 .lux-ms-card-grid.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
