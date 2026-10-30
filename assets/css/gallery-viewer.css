@@ -10,6 +10,7 @@
 .lux-gallery-filter-more > div { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .lux-gallery-dialog { box-sizing: border-box; width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; overflow-y: auto; background: #171715; color: #f7f4ee; }
 .lux-gallery-dialog[open] { display: block; }
+.lux-gallery-dialog:focus { outline: none; }
 .lux-gallery-dialog::backdrop { background: #171715; }
 .lux-gallery-dialog-shell { box-sizing: border-box; position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 100dvh; width: min(100%, 1320px); margin: auto; padding: 76px 24px 40px; }
 .lux-gallery-dialog :is(.lux-gallery-close,.lux-gallery-arrow) { display: grid; place-items: center; flex: none; padding: 0; border: 1px solid rgba(255,255,255,.58); border-radius: 50%; background: rgba(23,23,21,.78); color: #fff; cursor: pointer; }

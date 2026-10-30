@@ -215,6 +215,8 @@
     warmPhoto(eventSequence[index - 1]);
     warmPhoto(eventSequence[index + 1]);
     dialog.showModal();
+    dialog.tabIndex = -1;
+    dialog.focus({ preventScroll: true });
   });
   previous.addEventListener("click", () => step(-1));
   next.addEventListener("click", () => step(1));
