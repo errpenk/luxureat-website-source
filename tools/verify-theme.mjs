@@ -498,7 +498,7 @@ for (const lang of ['zh', 'en']) {
   assert(files.length === 47, `${lang} standalone product route count`);
   for (const file of files) {
     const html = read(path.join(productPages, file));
-    assert(html.includes('lux-product-videos') && (html.match(/assets\/media\/products\/videos\/\d+\.mp4/g) || []).length === 2, `${lang}/${file} shows two product videos`);
+    assert(html.includes('lux-product-videos') && (html.match(/assets\/media\/products\/videos\/[\w-]+\.mp4/g) || []).length === 2, `${lang}/${file} shows two product videos`);
   }
 }
 assert(enProducts.includes("luxureat_static_url('en/recipe'"), 'English products ritual CTA links to rituals');
