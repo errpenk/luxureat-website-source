@@ -1,8 +1,8 @@
 .lux-reader-related-grid .lux-reader-related-media { aspect-ratio: 16 / 10; background: #f4f2ee; }
 .lux-reader-related-grid button .lux-reader-related-media img { width: 100%; height: 100% !important; aspect-ratio: auto !important; object-fit: cover !important; object-position: center; background: transparent; }
-.lux-reader-related-grid .lux-reader-related-media::after,
-.lux-reader-related-grid button:is(:hover, :focus-visible) .lux-reader-related-media::after { opacity: 1; background: rgba(0, 0, 0, .18); }
-.lux-reader-related-grid button .lux-reader-related-cta,
+.lux-reader-related-grid .lux-reader-related-media::after { opacity: 0; background: rgba(0, 0, 0, .18); }
+.lux-reader-related-grid button:is(:hover, :focus-visible) .lux-reader-related-media::after { opacity: 1; }
+.lux-reader-related-grid button .lux-reader-related-cta { opacity: 0 !important; }
 .lux-reader-related-grid button:is(:hover, :focus-visible) .lux-reader-related-cta {
   opacity: 1 !important;
   border-color: #9df5ec !important;
