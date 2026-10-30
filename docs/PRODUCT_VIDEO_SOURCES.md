@@ -1,6 +1,6 @@
 # 产品视频素材来源
 
-核对日期：2026-10-30。47 款产品各展示两段视频，共使用 66 个视频文件；同名产品的不同规格共用本次更新的视频。中英文页面共用。本次替换的视频保留原片完整时长，转为 640 × 360 px 并去除声音；未替换的视频仍为 4 秒静音片段。页面只展示视频，不显示来源。
+核对日期：2026-10-30。47 款产品各展示两段视频，共使用 66 个视频文件；同名产品的不同规格共用本次更新的视频。中英文页面共用。本次替换的视频保留原片完整时长，转为 640 × 360 px 并去除声音；整颗夏季黑松露的松露特写视频采用 3 倍速；未替换的视频仍为 4 秒静音片段。页面只展示视频，不显示来源。
 
 未替换的素材来自 Pexels 单条视频页面，按 [Pexels License](https://www.pexels.com/license/) 用于网站商业展示；本次替换素材来自用户提供的七个文件夹。素材是相关食材、制作或食用场景，不代表具体 SKU、品牌工厂或生产过程的实拍。
 
@@ -22,10 +22,10 @@
 | `black-truffle-sauce-80g` | 用户提供 · [`refresh-13944500.mp4`](../assets/media/products/videos/refresh-13944500.mp4) | 用户提供 · [`refresh-4253723.mp4`](../assets/media/products/videos/refresh-4253723.mp4) |
 | `black-truffle-sauce-180g` | 用户提供 · [`refresh-13944500.mp4`](../assets/media/products/videos/refresh-13944500.mp4) | 用户提供 · [`refresh-4253723.mp4`](../assets/media/products/videos/refresh-4253723.mp4) |
 | `black-truffle-sauce-500g` | 用户提供 · [`refresh-13944500.mp4`](../assets/media/products/videos/refresh-13944500.mp4) | 用户提供 · [`refresh-4253723.mp4`](../assets/media/products/videos/refresh-4253723.mp4) |
-| `whole-summer-truffles-35g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537.mp4`](../assets/media/products/videos/refresh-855537.mp4) |
-| `whole-summer-truffles-55g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537.mp4`](../assets/media/products/videos/refresh-855537.mp4) |
-| `whole-summer-truffles-110g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537.mp4`](../assets/media/products/videos/refresh-855537.mp4) |
-| `whole-summer-truffles-275g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537.mp4`](../assets/media/products/videos/refresh-855537.mp4) |
+| `whole-summer-truffles-35g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537-3x.mp4`](../assets/media/products/videos/refresh-855537-3x.mp4) |
+| `whole-summer-truffles-55g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537-3x.mp4`](../assets/media/products/videos/refresh-855537-3x.mp4) |
+| `whole-summer-truffles-110g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537-3x.mp4`](../assets/media/products/videos/refresh-855537-3x.mp4) |
+| `whole-summer-truffles-275g` | 用户提供 · [`refresh-19551103.mp4`](../assets/media/products/videos/refresh-19551103.mp4) | 用户提供 · [`refresh-855537-3x.mp4`](../assets/media/products/videos/refresh-855537-3x.mp4) |
 | `winter-black-truffle-sauce-80g` | 用户提供 · [`refresh-13944500.mp4`](../assets/media/products/videos/refresh-13944500.mp4) | 用户提供 · [`refresh-4253723.mp4`](../assets/media/products/videos/refresh-4253723.mp4) |
 | `winter-black-truffle-sauce-180g` | 用户提供 · [`refresh-13944500.mp4`](../assets/media/products/videos/refresh-13944500.mp4) | 用户提供 · [`refresh-4253723.mp4`](../assets/media/products/videos/refresh-4253723.mp4) |
 | `winter-black-truffle-sauce-500g` | 用户提供 · [`refresh-13944500.mp4`](../assets/media/products/videos/refresh-13944500.mp4) | 用户提供 · [`refresh-4253723.mp4`](../assets/media/products/videos/refresh-4253723.mp4) |
