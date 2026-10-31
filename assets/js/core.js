@@ -142,6 +142,7 @@ if (luxDelayedAnalytics) {
 }
 
 const luxEngagementUrl = new URL("engagement.js", luxCoreUrl);
+luxEngagementUrl.searchParams.set("v", "wechat-contact1");
 luxEngagementUrl.search = luxCoreUrl.search;
 let luxEngagementLoading;
 const loadLuxEngagement = () => luxEngagementLoading ||= new Promise((resolve) => {

@@ -188,7 +188,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
       cookie: ["Cookie政策", cookieZh],
       terms: ["销售条款", termsZh],
       shipping: ["配送说明", shippingZh],
-      wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
+      wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信 ID：", " 与我们联系。"],
     }
     : {
       close: "Close",
@@ -196,7 +196,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
       cookie: ["Cookie Policy", cookieEn],
       terms: ["Terms of Sale", termsEn],
       shipping: ["Shipping", shippingEn],
-      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
+      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: ", "."],
     };
 
   const modal = document.createElement("div");
@@ -218,7 +218,8 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     if (!item) return;
     const isLegal = ["privacy", "cookie", "terms", "shipping"].includes(key);
     const qr = key === "wechat" ? `<img loading="eager" fetchpriority="high" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.webp")}" alt="WeChat QR">` : "";
-    const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
+    const wechatId = key === "wechat" ? '<strong class="lux-footer-wechat-id-value" lang="en">LuxurEatChina</strong>' : "";
+    const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}${wechatId}${luxEscapeCoreHtml(item[3] || "")}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
     body.classList.toggle("is-legal", isLegal);
     panel.classList.toggle("is-legal", isLegal);
