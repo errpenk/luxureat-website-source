@@ -67,7 +67,7 @@ LuxurEat（露意膳）尊重并保护您的个人信息。本政策说明我们
 LuxurEat (露意膳) respects and protects your personal information. This policy explains how we collect, use, store, share and protect information when you visit our website, register an account, place an order, attend an event or contact us.
 
 1. Controller
-Luxureat (Shanghai) Trading Co., Ltd.; Unified Social Credit Code: 91310000MAERED2X1W; Legal representative: UGOLINI ROBERTO; Registered address: Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai; Email: info@luxureat.com.
+LuxurEat (Shanghai) Trading Co., Ltd.; Unified Social Credit Code: 91310000MAERED2X1W; Legal representative: UGOLINI ROBERTO; Registered address: Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai; Email: info@luxureat.com.
 
 2. Scope and updates
 This policy applies to the LuxurEat (露意膳) website and related online services. Material changes will be prominently notified, and separate consent will be obtained where required by law.
@@ -106,7 +106,7 @@ The site is intended primarily for adults. We do not knowingly collect personal 
 Third-party services follow their own privacy rules. For complaints, contact info@luxureat.com or the competent regulator.
 
 16. Contact
-Luxureat (Shanghai) Trading Co., Ltd.
+LuxurEat (Shanghai) Trading Co., Ltd.
 Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai
 info@luxureat.com`;
   const cookieZh = `最后更新日期：2026年8月12日

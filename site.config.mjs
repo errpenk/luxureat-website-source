@@ -130,7 +130,7 @@ export const footer = {
     description: "Beyond importing, we are committed to defining a new standard for premium Italian gastronomy in China.<br>Rooted in authentic flavor and guided by quality and safety, LuxurEat (露意膳) brings Italian food culture and innovative experiences to China.",
     newsletter: { heading: "LUXUREAT (露意膳) JOURNAL | SUBSCRIBE TO OUR UPDATES", body: "Receive new product releases, brand events and notes on authentic Italian flavour. Confirm your subscription through the email we send you.", placeholder: "Enter your email address", button: "Subscribe", invalid: "请输入正确的邮箱格式。\nPlease enter a valid email address." },
 
-    copyright: "© 2026 LuxurEat (露意膳)｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W",
+    copyright: "© 2026 LuxurEat (露意膳)｜LuxurEat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W",
     legal: [
       ["privacy", "Privacy Policy"], ["cookie", "Cookie Policy"], ["terms", "Terms of Sale"], ["shipping", "Shipping"]
     ],
