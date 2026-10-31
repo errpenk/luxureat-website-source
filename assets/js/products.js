@@ -457,7 +457,7 @@ function initLuxProductDetails() {
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
               <button type="button" data-purchase-cta${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
-              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(quoteHref)}">${luxEscapeProductHtml(localized("合作专属报价", "Exclusive Partnership Quote"))}</a>
+              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(quoteHref)}">${luxEscapeProductHtml(localized("合作专属报价", "Partnership Quote"))}</a>
             </div>
             <aside class="lux-product-wechat" aria-label="${luxEscapeProductHtml(localized("微信：LuxurEatChina", "WeChat: LuxurEatChina"))}"><img width="104" height="104" loading="lazy" decoding="async" src="${luxWechatQrUrl}" alt="${luxEscapeProductHtml(localized("微信二维码", "WeChat QR code"))}"><span class="lux-wechat-copy"><span lang="${lang}">${luxEscapeProductHtml(localized("更多详情与合作细节，也可搜索我们的微信号：", "More details or more information, you can also search for our WeChat ID:"))}</span><b lang="en">LuxurEatChina</b></span></aside>
           </div>
