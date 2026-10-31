@@ -1712,16 +1712,20 @@ body.lux-reader-open {
 }
 .lux-product-purchase {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 14px;
   align-items: center;
 }
 .lux-product-summary > button,
 .lux-product-purchase > button,
-.lux-product-summary > .lux-product-quote-link {
+.lux-product-purchase > .lux-product-quote-link {
   width: fit-content;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
   gap: 14px;
   padding: 18px 34px;
   border: 2px solid #006a64;
@@ -1732,7 +1736,7 @@ body.lux-reader-open {
 }
 .lux-product-summary > button:hover,
 .lux-product-purchase > button:hover,
-.lux-product-summary > .lux-product-quote-link:hover { background: #006a64; color: #fff; }
+.lux-product-purchase > .lux-product-quote-link:hover { background: #006a64; color: #fff; }
 .lux-product-specs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2275,6 +2279,9 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-product-gallery { grid-template-columns: 1fr; align-items: stretch; }
   .lux-product-thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); max-height: none; order: 2; }
   .lux-product-thumb { width: 100%; }
+  .lux-product-purchase { gap: 8px; }
+  .lux-product-purchase > button,
+  .lux-product-purchase > .lux-product-quote-link { padding-inline: 10px; font-size: 11px; letter-spacing: .04em; }
   .lux-product-specs,
   .lux-product-specs.has-label-details { grid-template-columns: 1fr; padding-inline: 20px; }
   .lux-product-recent-inner { width: calc(100% - 40px); }
@@ -5836,6 +5843,7 @@ html[lang^="en"] .lux-wechat-copy > span { font-family: "Spectral", serif; }
   font: 700 17px/1.3 "Spectral", serif;
   overflow-wrap: anywhere;
 }
+.lux-product-wechat b { color: #af8d11; }
 .lux-product-wechat b,
 .lux-quote-wechat b { letter-spacing: 0 !important; text-transform: none !important; }
 .lux-contact-choice-note {
