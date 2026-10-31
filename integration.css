@@ -1731,6 +1731,44 @@ body.lux-reader-open {
 }
 .lux-product-summary > button:hover,
 .lux-product-purchase > button:hover { background: #006a64; color: #fff; }
+.lux-wechat-qr-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 8px;
+  overflow: hidden;
+  background: #071817;
+  border: 1px solid rgba(157, 245, 236, .45);
+  border-radius: 10px;
+}
+.lux-wechat-qr-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.lux-product-wechat {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  background: #edf5f3;
+  border: 1px solid rgba(0, 106, 100, .22);
+  border-radius: 12px;
+}
+.lux-product-wechat > span:last-child {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  color: #1c1b1b;
+  font: 400 14px/1.4 var(--lux-page-heading);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.lux-product-wechat strong { color: #004b47; font-size: 18px; }
+.lux-product-wechat small { color: #4d5b59; font: 400 13px/1.4 var(--lux-page-heading); }
+.lux-product-wechat b { color: #9a7400; font-size: 15px; overflow-wrap: anywhere; }
 .lux-product-specs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -5557,6 +5595,33 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   margin: 8px 0 4px;
   border-top: 1px solid rgba(233, 195, 73, .68);
 }
+.lux-contact-choice-note {
+  margin-left: 6px;
+  color: #007f78;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+.lux-quote-wechat {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  margin: 22px 0 0;
+  padding: 14px;
+  background: rgba(4, 27, 26, .72);
+  border: 1px solid rgba(157, 245, 236, .38);
+  border-radius: 12px;
+}
+.lux-quote-wechat figcaption {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.lux-quote-wechat strong { color: #fff; font: 700 18px/1.3 var(--lux-page-heading); }
+.lux-quote-wechat span { color: rgba(255, 255, 255, .72); font-size: 13px; }
+.lux-quote-wechat b { color: #9df5ec; font-size: 15px; overflow-wrap: anywhere; }
 .lux-contact-form .relative {
   transition: border-color .2s ease;
 }
@@ -5833,6 +5898,8 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   #inquiry {
     background-image: linear-gradient(rgba(8, 8, 8, .8), rgba(8, 8, 8, .92)), url("assets/media/brand/b2b-quotation-team-720.webp?v=20261008-mobile-images-1");
   }
+  .lux-product-wechat,
+  .lux-quote-wechat { grid-template-columns: 88px minmax(0, 1fr); }
 }
 
 .lux-partners-card {

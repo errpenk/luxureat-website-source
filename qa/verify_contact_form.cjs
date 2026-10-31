@@ -12,17 +12,21 @@ const themeBuilder = read("scripts/build-luxureat-theme.mjs");
 
 for (const page of [zh, en]) {
   assert.match(page, /data-contact-form novalidate/);
-  for (const name of ["name", "email", "inquiry_type", "message"]) {
+  for (const name of ["name", "inquiry_type", "message"]) {
     assert.match(page, new RegExp(`name="${name}"[^>]*required|required[^>]*name="${name}"`));
     assert.match(page, new RegExp(`data-contact-error="${name}"`));
   }
+  assert.doesNotMatch(page, /name="email"[^>]*required|required[^>]*name="email"/);
   assert.doesNotMatch(page, /name="phone"[^>]*required|required[^>]*name="phone"/);
+  assert.match(page, /data-contact-error="email"/);
+  assert.match(page, /data-contact-error="phone"/);
   assert.doesNotMatch(page, /name="company"[^>]*required|required[^>]*name="company"/);
   assert.doesNotMatch(page, /name="product_industry"[^>]*required|required[^>]*name="product_industry"/);
   assert.match(page, /name="company"/);
   assert.match(page, /name="product_industry"/);
   assert.match(page, /class="lux-contact-honeypot" name="website"/);
-  assert.equal((page.match(/lux-required-icon/g) || []).length, 4);
+  assert.equal((page.match(/lux-required-icon/g) || []).length, 3);
+  assert.match(page, /lux-contact-choice-note/);
   assert.match(page, /lux-contact-services/);
   assert.match(page, /lux-contact-left/);
   assert.match(page, /lux-contact-business-card/);
@@ -40,7 +44,8 @@ assert.ok(en.includes('class="font-headline-md text-secondary">Product & Tasting
 assert.ok(runtime.includes('window.LuxureatContact'));
 assert.ok(runtime.includes('mailto:roberto@ugolinigroup.com'));
 assert.ok(runtime.includes('data.get("name")') && runtime.includes('data.get("inquiry_type")') && runtime.includes('data.get("company")') && runtime.includes('data.get("product_industry")') && runtime.includes('data.get("phone")'));
-assert.ok(runtime.includes('["name", "email", "inquiry_type", "message"]'));
+assert.ok(runtime.includes('["name", "inquiry_type", "message"]'));
+assert.ok(runtime.includes('contactRequired') && runtime.includes('clearError("phone")'));
 assert.ok(runtime.includes('"酒店餐饮与专业供应": "Fornitura per hotel, ristorazione e professionisti"'));
 assert.ok(runtime.includes('const subject = `${data.get("name")} + ${inquiryLabels[data.get("inquiry_type")]}`'));
 assert.ok(css.includes('.lux-contact-field-error.is-shaking'));
@@ -56,5 +61,7 @@ assert.ok(themeBuilder.includes("$subject = $name . ' + ' . $inquiry_labels[$inq
 for (const label of ["Nome: ", "Azienda: ", "Prodotto / Settore: ", "Telefono / WeChat: ", "E-mail: ", "Messaggio:", "Non fornito"]) assert.ok(themeBuilder.includes(label));
 assert.ok(themeBuilder.includes("$_POST['website']"));
 assert.ok(themeBuilder.includes("wp_ajax_nopriv_luxureat_contact"));
+assert.ok(themeBuilder.includes("($raw_email === '' && $phone === '')"));
+assert.ok(themeBuilder.includes("($raw_email !== '' && !is_email($email))"));
 
 console.log("Contact form verification passed.");

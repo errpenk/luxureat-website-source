@@ -5,6 +5,7 @@ const luxEscapeProductHtml = (value) => String(value).replace(/[&<>"']/g, (char)
 window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
 const luxProductVideoBase = new URL("../media/products/videos/", document.currentScript?.src || location.href);
+const luxWechatQrUrl = new URL("../media/brand/wechat-qr.webp", document.currentScript?.src || location.href);
 function renderLuxProductCatalog() {
   const grid = document.querySelector("[data-caviar-grid]");
   const data = window.LUXUREAT_PRODUCT_DATA;
@@ -456,6 +457,10 @@ function initLuxProductDetails() {
             <div class="lux-product-purchase">
               <button type="button" data-purchase-cta${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
             </div>
+            <aside class="lux-product-wechat" aria-label="${luxEscapeProductHtml(localized("微信咨询", "WeChat enquiry"))}">
+              <span class="lux-wechat-qr-frame"><img width="600" height="600" loading="lazy" decoding="async" src="${luxWechatQrUrl}" alt="${luxEscapeProductHtml(localized("微信咨询二维码", "WeChat enquiry QR code"))}"></span>
+              <span><strong>${luxEscapeProductHtml(localized("微信咨询", "Enquire on WeChat"))}</strong><small>${luxEscapeProductHtml(localized("扫码添加或搜索微信号", "Scan the code or search WeChat ID"))}</small><b>LuxurEatChina</b></span>
+            </aside>
           </div>
         </section>
         <section class="lux-product-specs${product.details ? " has-label-details" : ""}">

@@ -11,13 +11,17 @@ for (const lang of ["zh", "en"]) {
   assert.doesNotMatch(cooperation, /class="lux-quote-hero-cta"/);
   assert.match(cooperation, /class="lux-contact-form lux-quote-form lg:w-1\/2" data-contact-form novalidate/);
   assert.match(cooperation, /class="lux-quote-submit"/);
-  assert.equal((cooperation.match(/class="lux-required-star"/g) || []).length, 8);
+  assert.equal((cooperation.match(/class="lux-required-star"/g) || []).length, 7);
   for (const name of ["name", "company", "email", "phone", "product_industry", "estimated_quantity", "delivery_market", "target_date", "inquiry_type", "message", "form_context", "website"]) {
     assert.match(cooperation, new RegExp(`name="${name}"`), `${lang} B2B quote form is missing ${name}`);
   }
   for (const name of ["company", "product_industry", "estimated_quantity", "delivery_market"]) {
     assert.match(cooperation, new RegExp(`name="${name}"[^>]*required`), `${lang} B2B quote form should require ${name}`);
   }
+  assert.doesNotMatch(cooperation, /name="email"[^>]*required|required[^>]*name="email"/);
+  assert.match(cooperation, /data-contact-error="phone"/);
+  assert.match(cooperation, /class="lux-quote-wechat"/);
+  assert.match(cooperation, /LuxurEatChina/);
   assert.match(contact, /class="lux-contact-b2b-cta" href="cooperation\.html#inquiry"/);
   assert.match(contact, /class="lux-contact-b2b-action"/);
 }
@@ -27,6 +31,7 @@ assert.ok(builder.includes("'zh/cooperation', 'en/cooperation'"), "quote pages d
 assert.ok(builder.includes("$estimated_quantity") && builder.includes("$delivery_market") && builder.includes("$is_b2b_quote"), "quote-specific fields are not handled by the server");
 const runtime = read("assets/js/brand.js");
 assert.ok(runtime.includes('"estimated_quantity", "delivery_market"') && runtime.includes("const quoteDetails = isQuoteForm"), "quote-specific fields are not validated or included in fallback email");
+assert.ok(runtime.includes('["name", "company", "product_industry", "estimated_quantity", "delivery_market", "inquiry_type", "message"]'), "quote form should accept email or phone / WeChat");
 const css = read("integration.css");
 assert.ok(css.includes("b2b-quotation-team.webp") && css.includes(".lux-quote-copy") && css.includes("position: sticky"));
 assert.ok(css.includes(".lux-quote-submit") && css.includes("rgba(157,245,236,.58)") && css.includes("place-content: center start"), "quote submit area is not vertically centered, left aligned, or glowing");

@@ -607,7 +607,7 @@ document.querySelectorAll("[data-count-up]").forEach((counter) => {
         if (intersectionRatio >= .35) animate();
         else {
           window.cancelAnimationFrame(frameId);
-          counter.textContent = "0";
+          showFinal();
         }
       });
     }, { threshold: .35 });
