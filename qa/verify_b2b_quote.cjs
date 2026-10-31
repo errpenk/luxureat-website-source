@@ -34,6 +34,7 @@ assert.ok(products.includes('class="lux-product-wechat"') && products.includes('
 const css = read("integration.css");
 assert.ok(css.includes(".lux-product-wechat") && css.includes(".lux-quote-wechat") && css.includes('font: 700 17px/1.3 "Spectral", serif;') && css.includes("#e9c349"));
 assert.ok(css.includes(".lux-product-summary .lux-wechat-copy") && css.includes("text-transform: none;"), "WeChat ID should retain its mixed-case spelling");
+assert.ok(/\.lux-product-gallery\s*\{[^}]*align-items:\s*center/.test(css) && css.includes(".lux-product-gallery { grid-template-columns: 1fr; align-items: stretch; }"), "product thumbnails should center as a column beside the main image on desktop");
 assert.ok(css.includes(".lux-product-summary > p,\n.lux-product-summary .lux-wechat-copy > span { font-size: 18px !important; }") && css.includes(".lux-quote-copy .lux-wechat-copy > span { color: #fff; }") && css.includes("color: #e9c349") && css.includes("color: #e9c349 !important;") && css.includes("text-transform: none !important;"), "requested WeChat copy, ID and contact-choice colors or sizing are incomplete");
 assert.ok(css.includes('var(--lux-zh-body, "LuxurEat ZhiSong Site")'));
 assert.ok(css.includes("b2b-quotation-team.webp") && css.includes(".lux-quote-copy") && css.includes("position: sticky"));
