@@ -14,7 +14,6 @@
   const text = lang === "zh" ? {
     required: "请填写所有必填信息。",
     invalidEmail: "请输入有效的电子邮箱。",
-    contactRequired: "请填写电子邮箱或电话/微信其中一种。",
     sending: "正在发送…",
     send: "发送信息",
     success: "信息已发送，我们会尽快与您联系。",
@@ -25,7 +24,6 @@
   } : {
     required: "Please complete all required fields.",
     invalidEmail: "Please enter a valid email address.",
-    contactRequired: "Please provide either an email address or a phone / WeChat contact.",
     sending: "Sending…",
     send: "Send Message",
     success: "Your message has been sent. We will be in touch soon.",
@@ -69,8 +67,8 @@
   const validate = () => {
     let firstInvalid = null;
     const requiredFields = isQuoteForm
-      ? ["name", "company", "product_industry", "estimated_quantity", "delivery_market", "inquiry_type", "message"]
-      : ["name", "inquiry_type", "message"];
+      ? ["name", "company", "email", "product_industry", "estimated_quantity", "delivery_market", "inquiry_type", "message"]
+      : ["name", "email", "inquiry_type", "message"];
     requiredFields.forEach((name) => {
       clearError(name);
       const control = field(name);
@@ -80,21 +78,12 @@
       }
     });
     const email = field("email");
-    const phone = field("phone");
-    clearError("email");
-    clearError("phone");
-    if (!String(email?.value || "").trim() && !String(phone?.value || "").trim()) {
-      showError("email");
-      showError("phone");
-      firstInvalid ||= phone || email;
-    }
     if (email.value && !email.validity.valid) {
       showError("email");
       firstInvalid ||= email;
     }
     if (firstInvalid) {
-      const missingContact = !String(email?.value || "").trim() && !String(phone?.value || "").trim();
-      setFeedback(missingContact ? text.contactRequired : email === firstInvalid ? text.invalidEmail : text.required);
+      setFeedback(email === firstInvalid ? text.invalidEmail : text.required);
       firstInvalid.focus();
       return false;
     }
@@ -105,10 +94,6 @@
   form.querySelectorAll("input, select, textarea").forEach((control) => {
     const clear = () => {
       clearError(control.name);
-      if (["email", "phone"].includes(control.name)) {
-        clearError("email");
-        clearError("phone");
-      }
       if (feedback.textContent) setFeedback("");
     };
     control.addEventListener("input", clear);
@@ -147,7 +132,7 @@
       `${text.labels[1]}：${data.get("company") || text.notProvided}`,
       `${text.labels[2]}：${data.get("product_industry") || text.notProvided}`,
       `${text.labels[3]}：${data.get("phone") || text.notProvided}`,
-      `${text.labels[4]}：${data.get("email") || text.notProvided}`,
+      `${text.labels[4]}：${data.get("email")}`,
       ...quoteDetails,
       "",
       `${text.labels[5]}：`,

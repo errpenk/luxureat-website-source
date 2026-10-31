@@ -1396,13 +1396,13 @@ function luxureat_static_contact_ajax() {
         'Brand & Media Partnerships' => 'Collaborazioni con brand e media',
         'Other' => 'Altro',
     );
-    if ($name === '' || ($raw_email === '' && $phone === '') || $content === '' || !isset($inquiry_labels[$inquiry_type])) {
+    if ($name === '' || $raw_email === '' || $content === '' || !isset($inquiry_labels[$inquiry_type])) {
         wp_send_json_error(array('message' => $message('请填写所有必填信息。', 'Please complete all required fields.')), 400);
     }
     if ($is_b2b_quote && ($company === '' || $product_industry === '' || $estimated_quantity === '' || $delivery_market === '')) {
         wp_send_json_error(array('message' => $message('请填写所有必填报价信息。', 'Please complete all required quote details.')), 400);
     }
-    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($estimated_quantity) > 240 || strlen($delivery_market) > 360 || strlen($target_date) > 120 || strlen($phone) > 120 || strlen($content) > 12000 || ($raw_email !== '' && !is_email($email))) {
+    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($estimated_quantity) > 240 || strlen($delivery_market) > 360 || strlen($target_date) > 120 || strlen($phone) > 120 || strlen($content) > 12000 || !is_email($email)) {
         wp_send_json_error(array('message' => $message('请检查所填信息后重试。', 'Please check the information and try again.')), 400);
     }
 
@@ -1420,9 +1420,9 @@ function luxureat_static_contact_ajax() {
             . "Mercato di consegna: " . $delivery_market . "\n"
             . "Data di consegna desiderata: " . ($target_date ?: 'Non fornito') . "\n" : '')
         . "Telefono / WeChat: " . ($phone ?: 'Non fornito') . "\n"
-        . "E-mail: " . ($email ?: 'Non fornito') . "\n\n"
+        . "E-mail: " . $email . "\n\n"
         . "Messaggio:\n" . $content;
-    $headers = $email !== '' ? array('Reply-To: ' . $name . ' <' . $email . '>') : array();
+    $headers = array('Reply-To: ' . $name . ' <' . $email . '>');
     if (!wp_mail('roberto@ugolinigroup.com', $subject, $body, $headers)) {
         wp_send_json_error(array('message' => $message('暂时无法发送，请稍后再试。', 'Your message could not be sent. Please try again later.')), 500);
     }
