@@ -609,11 +609,7 @@ assert(runtimeJs.includes('data-home-timeline') && runtimeJs.includes('data-cert
 assert(runtimeJs.includes('initLuxScrollReveal') && runtimeJs.includes('"body > section"') && runtimeJs.includes('"main section"') && runtimeJs.includes('target.classList.toggle("is-in-view", isIntersecting)') && runtimeJs.includes('rootMargin: "0px 0px -8%", threshold: 0') && runtimeJs.includes('prefers-reduced-motion: reduce'), 'one shared observer covers tall inner-page sections with reversible, reduced-motion-safe scroll reveals');
 assert(runtimeJs.includes('if (document.querySelector(".lux-products-main")) return;'), 'product listing pages opt out of the global scroll reveal');
 assert(integrationCss.includes('.lux-scroll-reveal {') && integrationCss.includes('translate: 0 12px;') && integrationCss.includes('transition: opacity .38s ease-out, translate .38s'), 'scroll reveals use compositor-friendly opacity and translate transitions');
-assert(!runtimeJs.includes('counter.textContent = "0"')
-  && zhHome.includes('data-count-up="20" data-count-suffix="+">20+</strong>')
-  && zhHome.includes('data-count-up="4">4</strong>')
-  && zhHome.includes('data-count-up="7" data-count-suffix="K+">7K+</strong>')
-  && enHome.includes('data-count-up="20" data-count-suffix="+">20+</strong>'), 'homepage counters render their real values before JavaScript and never reset offscreen');
+assert(runtimeJs.includes('counter.textContent = "0"') && !runtimeJs.includes('observer.disconnect();\\n      animate();'), 'homepage counters reset offscreen and replay whenever they re-enter');
 assert(runtimeJs.includes('grid.scrollTo({ left: 0, behavior: "auto" })') && runtimeJs.includes('grid.scrollTo({ left: limit, behavior: "smooth" })') && runtimeJs.includes('grid.scrollTo({ left: 0, behavior: "smooth" })') && runtimeJs.includes('entry.intersectionRatio >= .25'), 'partnership scroller runs from left to right and returns left on every viewport entry');
 assert(integrationCss.includes('.lux-home-timeline-visual') && integrationCss.includes('position: sticky'), 'homepage timeline keeps its image gallery visible while milestones scroll');
 assert(zhHome.includes('lux-home-maison-media') && enHome.includes('lux-home-maison-media') && zhHome.includes('home-maison-sturgeon-background.webp') && enHome.includes('home-maison-sturgeon-background.webp'), 'bilingual home overview sections use the isolated sturgeon background image');
