@@ -835,6 +835,8 @@ if (luxNav && luxMenu) {
   const lang = () => document.documentElement.lang?.startsWith("zh") ? "返回顶部" : "Back to top";
 
   const init = () => {
+    const activeScroller = () => document.querySelector(".lux-product-detail:not([hidden]) .lux-product-body, .lux-reader:not([hidden]) .lux-reader-body, .lux-footer-modal:not([hidden]) .lux-footer-modal-body.is-legal");
+    const scrollPosition = () => activeScroller()?.scrollTop ?? window.scrollY;
     const sentinel = document.createElement("span");
     sentinel.setAttribute("aria-hidden", "true");
     sentinel.style.cssText = "position:absolute;top:360px;width:1px;height:1px;pointer-events:none;opacity:0";
@@ -847,15 +849,16 @@ if (luxNav && luxMenu) {
     document.body.appendChild(button);
 
     button.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      (activeScroller() || window).scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     });
-    const update = () => button.classList.toggle("visible", window.scrollY > 360);
+    const update = () => button.classList.toggle("visible", scrollPosition() > 360);
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([entry]) => {
-        button.classList.toggle("visible", window.scrollY > 360 || (!entry.isIntersecting && entry.boundingClientRect.top < 0));
+        button.classList.toggle("visible", scrollPosition() > 360 || (!entry.isIntersecting && entry.boundingClientRect.top < 0));
       }).observe(sentinel);
     }
     window.addEventListener("scroll", update, { passive: true });
+    document.addEventListener("scroll", update, { capture: true, passive: true });
     window.addEventListener("pageshow", update);
     update();
   };
