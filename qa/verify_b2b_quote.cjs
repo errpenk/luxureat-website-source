@@ -33,6 +33,7 @@ const products = read("assets/js/products.js");
 assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('More details or more information, you can also search for our WeChat ID:') && products.includes('更多详情与合作细节，也可搜索我们的微信号：') && products.includes('<b lang="en">LuxurEatChina</b>') && products.includes('lux-product-quote-link') && products.includes('detailHref("cooperation", "inquiry")'));
 const css = read("integration.css");
 assert.ok(css.includes(".lux-product-wechat") && css.includes(".lux-quote-wechat") && css.includes('font: 700 17px/1.3 "Spectral", serif;') && css.includes("#8a6500"));
+assert.ok(css.includes(".lux-wechat-copy") && css.includes("text-transform: none;"), "WeChat ID should retain its mixed-case spelling");
 assert.ok(css.includes('var(--lux-zh-body, "LuxurEat ZhiSong Site")'));
 assert.ok(css.includes("b2b-quotation-team.webp") && css.includes(".lux-quote-copy") && css.includes("position: sticky"));
 assert.ok(css.includes(".lux-quote-submit") && css.includes("rgba(157,245,236,.58)") && css.includes("place-content: center start"), "quote submit area is not vertically centered, left aligned, or glowing");

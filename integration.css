@@ -5811,6 +5811,8 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   display: flex;
   flex-direction: column;
   gap: 6px;
+  letter-spacing: 0;
+  text-transform: none;
 }
 .lux-product-summary .lux-wechat-copy > span,
 .lux-wechat-copy > span {

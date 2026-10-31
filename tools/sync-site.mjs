@@ -281,7 +281,7 @@ function render(page, dimensions) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   const italicPage = page.lang === "zh" && ["journal", "rituals", "gallery", "certification", "market-insights", "contact"].includes(page.key);
-  const integrationVersion = `${page.key === "rituals" ? "-recipe-pagination2-recipe-videos4" : ["gallery", "news"].includes(page.key) ? "-gallery18" : "-desktop-nav3"}-menu-scroll1-reader-lead1-wechat-contact2${italicPage ? "-final-italic1" : ""}`;
+  const integrationVersion = `${page.key === "rituals" ? "-recipe-pagination2-recipe-videos4" : ["gallery", "news"].includes(page.key) ? "-gallery18" : "-desktop-nav3"}-menu-scroll1-reader-lead1-wechat-contact3${italicPage ? "-final-italic1" : ""}`;
   html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("gallery-viewer.css") ? "-gallery21-final-italic1" : asset.endsWith("market-services.css") && page.lang === "zh" && page.key === "market-insights" ? "-final-italic1" : asset.endsWith("rituals.css") ? "-recipe2" : asset.endsWith("home-editorial.css") ? "-ugolini20" : ""}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
