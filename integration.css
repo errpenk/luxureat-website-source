@@ -1717,7 +1717,8 @@ body.lux-reader-open {
   align-items: center;
 }
 .lux-product-summary > button,
-.lux-product-purchase > button {
+.lux-product-purchase > button,
+.lux-product-summary > .lux-product-quote-link {
   width: fit-content;
   display: inline-flex;
   align-items: center;
@@ -1730,7 +1731,8 @@ body.lux-reader-open {
   text-transform: uppercase;
 }
 .lux-product-summary > button:hover,
-.lux-product-purchase > button:hover { background: #006a64; color: #fff; }
+.lux-product-purchase > button:hover,
+.lux-product-summary > .lux-product-quote-link:hover { background: #006a64; color: #fff; }
 .lux-product-specs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -5805,6 +5807,22 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   object-fit: contain;
 }
 .lux-quote-wechat img { width: 84px; height: 84px; }
+.lux-wechat-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lux-product-summary .lux-wechat-copy > span,
+.lux-wechat-copy > span {
+  color: #111;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: none;
+}
+html[lang^="zh"] .lux-wechat-copy > span { font-family: var(--lux-zh-body, "LuxurEat ZhiSong Site"); }
+html[lang^="en"] .lux-wechat-copy > span { font-family: "Spectral", serif; }
 .lux-product-wechat b,
 .lux-quote-wechat b,
 .lux-footer-wechat-id-value {

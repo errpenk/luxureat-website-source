@@ -18,7 +18,7 @@ for (const lang of ["zh", "en"]) {
   for (const name of ["company", "product_industry", "estimated_quantity", "delivery_market"]) {
     assert.match(cooperation, new RegExp(`name="${name}"[^>]*required`), `${lang} B2B quote form should require ${name}`);
   }
-  assert.match(cooperation, /lux-quote-wechat[^>]*><img[^>]+wechat-qr\.webp[^>]+><b lang="en">LuxurEatChina<\/b>/);
+  assert.match(cooperation, /lux-quote-wechat[^>]*><img[^>]+wechat-qr\.webp[^>]+><span class="lux-wechat-copy"><span lang="(?:zh|en)">(?:更多详情与合作细节，也可搜索我们的微信号：|More details or more information, you can also search for our WeChat ID:)<\/span><b lang="en">LuxurEatChina<\/b><\/span>/);
   assert.match(contact, /class="lux-contact-b2b-cta" href="cooperation\.html#inquiry"/);
   assert.match(contact, /class="lux-contact-b2b-action"/);
 }
@@ -30,7 +30,7 @@ const runtime = read("assets/js/brand.js");
 assert.ok(runtime.includes('"estimated_quantity", "delivery_market"') && runtime.includes("const quoteDetails = isQuoteForm"), "quote-specific fields are not validated or included in fallback email");
 assert.ok(runtime.includes('contactRequired: "请填写电子邮箱或电话/微信其中一种。"') && runtime.includes('email?.value') && runtime.includes('phone?.value'), "quote form does not allow either email or phone / WeChat contact");
 const products = read("assets/js/products.js");
-assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('<b lang="en">LuxurEatChina</b>'));
+assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('More details or more information, you can also search for our WeChat ID:') && products.includes('更多详情与合作细节，也可搜索我们的微信号：') && products.includes('<b lang="en">LuxurEatChina</b>') && products.includes('lux-product-quote-link') && products.includes('detailHref("cooperation", "inquiry")'));
 const css = read("integration.css");
 assert.ok(css.includes(".lux-product-wechat") && css.includes(".lux-quote-wechat") && css.includes('font: 700 17px/1.3 "Spectral", serif;') && css.includes("#8a6500"));
 assert.ok(css.includes('var(--lux-zh-body, "LuxurEat ZhiSong Site")'));
