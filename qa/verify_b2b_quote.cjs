@@ -31,6 +31,9 @@ assert.ok(runtime.includes('"estimated_quantity", "delivery_market"') && runtime
 assert.ok(runtime.includes('contactRequired: "请填写电子邮箱或电话/微信其中一种。"') && runtime.includes('email?.value') && runtime.includes('phone?.value'), "quote form does not allow either email or phone / WeChat contact");
 const products = read("assets/js/products.js");
 assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('More details or more information, you can also search for our WeChat ID:') && products.includes('更多详情与合作细节，也可搜索我们的微信号：') && products.includes('<b lang="en">LuxurEatChina</b>') && products.includes('lux-product-quote-link') && products.includes('合作专属报价') && products.includes('Partnership Quote') && !products.includes('Exclusive Partnership Quote') && products.includes('detailHref("cooperation", "inquiry")'));
+const productData = read("assets/data/products.js");
+assert.ok(productData.includes('"black-truffle-sauce-80g"') && productData.includes('"black-truffle-sauce-180g"') && productData.includes('"black-truffle-sauce-500g"'));
+assert.doesNotMatch(productData, /manufacturer:\s*"APPENNINO FOOD GROUP SPA"/);
 const css = read("integration.css");
 assert.ok(css.includes(".lux-product-wechat") && css.includes(".lux-quote-wechat") && css.includes('font: 700 17px/1.3 "Spectral", serif;') && css.includes("#e9c349"));
 assert.ok(css.includes(".lux-product-summary .lux-wechat-copy") && css.includes("text-transform: none;"), "WeChat ID should retain its mixed-case spelling");

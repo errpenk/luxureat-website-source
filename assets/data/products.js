@@ -145,7 +145,7 @@
       id: slug, sku: slug, unit, category: "truffle",
       categories: index < 4 ? ["truffle", "olive-oil"] : ["truffle"],
       typeKey: typeKeys[family.zh.type], registration, hsCode, validUntil,
-      manufacturer: "APPENNINO FOOD GROUP SPA", image,
+      image,
       gallery: [image, ...(galleries[category] || [])],
       catalogOnly: true, amount: 0, currency: "", priceLabel: "PRICE",
     };
