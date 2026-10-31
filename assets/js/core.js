@@ -605,10 +605,6 @@ document.querySelectorAll("[data-count-up]").forEach((counter) => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(({ intersectionRatio }) => {
         if (intersectionRatio >= .35) animate();
-        else {
-          window.cancelAnimationFrame(frameId);
-          counter.textContent = "0";
-        }
       });
     }, { threshold: .35 });
     observer.observe(counter);
