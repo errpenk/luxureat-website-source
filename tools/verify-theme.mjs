@@ -93,7 +93,7 @@ for (const file of [
   'assets/data/events.js',
   'assets/data/journal.js',
   'assets/data/brand.js',
-  'assets/documents/tin-caviar-academy.pdf',
+  'assets/documents/tin-caviar-brochure.pdf',
   'assets/documents/luxureat-brochure.pdf',
   'screenshot.png',
   'README.md',
@@ -141,7 +141,7 @@ assert(functionsPhp.includes("define('DONOTCACHEPAGE', true);") && functionsPhp.
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
 assert(functionsPhp.includes('luxureat_static_disable_consumer_commerce') && functionsPhp.includes("in_array($path, array('cart', 'checkout', 'my-account', 'en/cart', 'en/checkout', 'en/my-account'), true)") && functionsPhp.includes("luxureat_static_url($language . '/product'), 301"), 'legacy WooCommerce consumer pages redirect to the product catalogue even without WooCommerce conditional tags');
 assert(functionsPhp.includes('luxureat_static_publish_root_metadata') && functionsPhp.includes("add_action('after_setup_theme', 'luxureat_static_publish_root_metadata', 1)") && functionsPhp.includes("array('robots.txt', 'llms.txt')") && functionsPhp.includes("trailingslashit(ABSPATH) . $filename") && functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes("header_remove('Set-Cookie')") && functionsPhp.includes("header('Vary: Accept-Encoding', true)") && functionsPhp.includes('luxureat_baidu_site_verification'), 'root search metadata publishing and cacheable fallbacks ship in the generated theme');
-assert(functionsPhp.includes("'/catalogues/tin-caviar-academy.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
+assert(functionsPhp.includes("'/catalogues/tin-caviar-brochure.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
