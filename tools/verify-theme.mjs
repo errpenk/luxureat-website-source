@@ -498,10 +498,21 @@ for (const lang of ['zh', 'en']) {
   assert(files.length === 47, `${lang} standalone product route count`);
   for (const file of files) {
     const html = read(path.join(productPages, file));
-    assert(html.includes('lux-product-videos') && (html.match(/assets\/media\/products\/videos\/[\w-]+\.mp4/g) || []).length === 2, `${lang}/${file} shows two product videos`);
+    const videoCount = (html.match(/assets\/media\/products\/videos\/[\w-]+\.mp4/g) || []).length;
+    assert(html.includes('lux-product-showcase-videos') && [5, 6].includes(videoCount), `${lang}/${file} adds three landscape or four portrait scenes and retains the original pair`);
   }
 }
 assert(enProducts.includes("luxureat_static_url('en/recipe'"), 'English products ritual CTA links to rituals');
+for (const lang of ['zh', 'en']) {
+  const recipeDir = path.join(themeDir, 'pages', lang, 'recipe');
+  for (const file of fs.readdirSync(recipeDir)) {
+    const html = read(path.join(recipeDir, file));
+    const extra = html.match(/<div class="lux-recipe-extra-videos">([\s\S]*?)<\/div>/)?.[1] || '';
+    assert([2, 3].includes((extra.match(/<video /g) || []).length), `${lang}/${file} adds two or three recipe clips`);
+    assert(html.indexOf('lux-recipe-video') < html.indexOf('lux-recipe-extra-videos'), `${lang}/${file} keeps original video above added clips`);
+    assert((extra.match(/data-lux-autoplay autoplay muted loop playsinline/g) || []).length >= 2, `${lang}/${file} added clips autoplay silently`);
+  }
+}
 const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));
 const enCertification = read(path.join(themeDir, 'pages/en/certification.php'));
 assert(enCertification.includes('Quality &amp; Certification') && enCertification.includes('Responsible Trade'), 'English certification page mirrors the Chinese certification page');

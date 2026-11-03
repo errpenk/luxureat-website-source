@@ -966,7 +966,7 @@ html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--l
 .lux-service-bento {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: clamp(250px, 18vw, 330px);
+  grid-template-rows: 330px 300px 300px;
   gap: 12px;
 }
 .lux-service-bento a {
@@ -996,10 +996,12 @@ html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--l
 .lux-service-bento a:nth-child(2) { grid-column: span 5; }
 .lux-service-bento a:nth-child(3) { grid-column: span 4; }
 .lux-service-bento a:nth-child(4) { grid-column: span 8; }
+.lux-service-bento a:nth-child(5) { grid-column: span 12; }
 .lux-service-bento a.is-media-ready:nth-child(1) { background-image: url("../media/market-services/service-nav-import.webp"); }
 .lux-service-bento a.is-media-ready:nth-child(2) { background-image: url("../media/market-services/service-nav-sourcing.webp"); }
 .lux-service-bento a.is-media-ready:nth-child(3) { background-image: url("../media/market-services/service-nav-market-entry.webp"); }
 .lux-service-bento a.is-media-ready:nth-child(4) { background-image: url("../media/market-services/service-nav-brand-digital.webp"); }
+.lux-service-bento a.is-media-ready:nth-child(5) { background-image: url("../media/market-services/business-development-distributors.webp"); }
 .lux-service-bento a span {
   color: #e9c349;
   font: 600 11px/1.4 var(--lux-page-heading);
@@ -1026,6 +1028,7 @@ html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--l
   font-size: clamp(16px, 1.25vw, 20px) !important;
   transition: opacity .28s ease, transform .4s ease;
 }
+.lux-service-bento a small { line-height: 1.45 !important; }
 html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
 .lux-service-bento .lux-lucide {
   position: absolute;
@@ -1057,6 +1060,11 @@ html[lang="en"] .lux-service-bento a small { font-family: var(--lux-en-body); }
 }
 .lux-service-bento a:is(:hover, :focus-visible, .is-tapped) .lux-lucide { transform: translateX(6px); }
 .lux-service-bento a:focus-visible { outline: 2px solid #0c847d; outline-offset: 3px; }
+@media (max-width: 900px) {
+  .lux-service-bento { grid-template-columns: 1fr; grid-template-rows: none; }
+  .lux-service-bento a:nth-child(n) { grid-column: 1; min-height: 300px; }
+  .lux-service-bento a:nth-child(1) { min-height: 330px; }
+}
 
 .lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) > .lux-ms-shell {
   display: grid;
@@ -1619,12 +1627,14 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
   .lux-import-export-page .lux-ms-section,
   .lux-import-export-page .lux-ms-section.is-muted,
   .lux-import-export-page .lux-ms-section.is-light { padding: 64px 0; }
-  .lux-service-bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
-  .lux-service-bento a:nth-child(n) { grid-column: 1; min-height: 250px; height: auto; }
+  .lux-service-bento { grid-template-columns: 1fr; grid-template-rows: none; }
+  .lux-service-bento a:nth-child(n) { grid-column: 1; min-height: 0; height: auto; padding: 56px 26px 28px; }
+  .lux-service-bento a strong,
+  .lux-service-bento a span,
+  .lux-service-bento a small { opacity: 1 !important; transform: none !important; }
+  .lux-service-bento a small { position: static; display: block; margin-top: 18px; }
   .lux-service-bento a strong { font-size: 26px; }
-  .lux-service-bento a small { bottom: 26px; font-size: 16px !important; line-height: 1.5 !important; }
-  .lux-service-bento a:not(.is-tapped) strong { opacity: 1; transform: none; }
-  .lux-service-bento a:not(.is-tapped) small { opacity: 0; transform: translateY(10px); }
+  .lux-service-bento a small { font-size: 16px !important; line-height: 1.5 !important; }
   .lux-service-media { min-height: 270px; }
   .lux-import-export-page #import-into-china .lux-ms-process article { min-height: 250px; align-items: center; padding: 58px 20px 24px; text-align: center; }
   .lux-import-export-page #import-into-china .lux-ms-process article::before { left: 50%; transform: translateX(-50%); }

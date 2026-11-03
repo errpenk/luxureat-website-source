@@ -1,5 +1,7 @@
 # 产品视频素材来源
 
+2026-11-03 补充：每款产品新增四段竖屏或三段横屏场景视频。新增区独立于产品说明中的原有两段视频；原有 videoIds 与本次修改前完全一致。新增画面按原比例展示，不加背景、不裁切；同排等高，桌面竖屏高 250px、横屏高 180px，手机分别 180px、120px，空间不足时横向滑动。同系列规格共用相关食材、调味或烹饪场景；这些场景不代表具体 SKU 实拍。
+
 核对日期：2026-10-30。47 款产品各展示两段视频，共使用 66 个视频文件；同名产品的不同规格共用本次更新的视频。中英文页面共用。本次替换的视频保留原片完整时长，转为 640 × 360 px 并去除声音；整颗夏季黑松露的松露特写视频采用 3 倍速；未替换的视频仍为 4 秒静音片段。页面只展示视频，不显示来源。
 
 未替换的素材来自 Pexels 单条视频页面，按 [Pexels License](https://www.pexels.com/license/) 用于网站商业展示；本次替换素材来自用户提供的七个文件夹。素材是相关食材、制作或食用场景，不代表具体 SKU、品牌工厂或生产过程的实拍。
@@ -53,3 +55,71 @@
 | `spaghetti-ad-archetto` | [Pexels 37116696](https://www.pexels.com/video/37116696/) · [`37116696.mp4`](../assets/media/products/videos/37116696.mp4) | [Pexels 4058085](https://www.pexels.com/video/4058085/) · [`4058085.mp4`](../assets/media/products/videos/4058085.mp4) |
 | `spaghetti-quadrati-ad-archetto` | [Pexels 1793156](https://www.pexels.com/video/1793156/) · [`1793156.mp4`](../assets/media/products/videos/1793156.mp4) | [Pexels 4084465](https://www.pexels.com/video/4084465/) · [`4084465.mp4`](../assets/media/products/videos/4084465.mp4) |
 | `bucatini-ad-archetto` | [Pexels 8107806](https://www.pexels.com/video/8107806/) · [`8107806.mp4`](../assets/media/products/videos/8107806.mp4) | [Pexels 4389249](https://www.pexels.com/video/4389249/) · [`4389249.mp4`](../assets/media/products/videos/4389249.mp4) |
+
+
+## 2026-11-03 新增场景对应表
+
+| 产品 | 方向 | 新增视频 ID |
+|---|---|---|
+| 白松露风味油 · 60 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
+| 白松露风味油 · 250 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
+| 白松露特级初榨橄榄油 · 60 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
+| 白松露特级初榨橄榄油 · 250 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
+| 夏季黑松露片 · 50 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 夏季黑松露片 · 80 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 夏季黑松露片 · 180 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 水浸夏季黑松露片 · 350 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 葵花籽油浸夏季黑松露片 · 350 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 松露蜂蜜 · 50 g | landscape | 6792647, 31656449, scene-19905874 |
+| 松露蜂蜜 · 170 g | landscape | 9491522, 31185864, scene-19905874 |
+| 白松露酱 · 80 g | portrait | scene-4253138, scene-13636685, scene-5950767, scene-14477476 |
+| 白松露酱 · 500 g | portrait | scene-4253138, scene-13636685, scene-5950767, scene-14477476 |
+| 黑松露酱 · 80 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 黑松露酱 · 180 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 黑松露酱 · 500 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 整颗夏季黑松露 · 35 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
+| 整颗夏季黑松露 · 55 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
+| 整颗夏季黑松露 · 110 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
+| 整颗夏季黑松露 · 275 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
+| 冬季黑松露酱 · 80 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 冬季黑松露酱 · 180 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 冬季黑松露酱 · 500 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 冬季黑松露汁 · 350 ml | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
+| 坎波菲洛内细面（原产地认证） · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 坎波菲洛内细扁面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 坎波菲洛内宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 坎波菲洛内宽扁面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 坎波菲洛内干长面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 坎波菲洛内平扁面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 坎波菲洛内鸡蛋面皮 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 藏红花宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 松露宽面 · 250 g | portrait | scene-4253138, scene-13636685, scene-6221669, scene-6221664 |
+| 牛肝菌宽面 · 250 g | portrait | scene-4253138, scene-13636685, scene-5950767, scene-14477476 |
+| 鱿鱼墨汁宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 辣椒宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 鼠尾草宽面 · 250 g | portrait | scene-15792800, scene-15764502, scene-6221664, scene-13636685 |
+| 菠菜宽面 · 250 g | portrait | scene-15792800, scene-15764502, scene-6221664, scene-13636685 |
+| 荨麻宽面 · 250 g | portrait | scene-15792800, scene-15764502, scene-6221664, scene-13636685 |
+| 柠檬宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 粗通心粉 · 6 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 斜管面 · 10 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 袖筒面 · 6 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 螺旋粉 · 6 × 350 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| U型长面 · 12 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 方形粗面 · 12 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| U型细管面 · 10 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+
+新增 scene 素材源文件：
+
+- `scene-15432510`: `/Users/mac/Downloads/Sughi/15432510_1080_1920_30fps.mp4`
+- `scene-6222170`: `/Users/mac/Downloads/Sughi/6222170-uhd_2160_3840_24fps.mp4`
+- `scene-15764502`: `/Users/mac/Downloads/Pesto/15764502_2160_3840_60fps.mp4`
+- `scene-6221669`: `/Users/mac/Downloads/Pesto/6221669-uhd_2160_3840_24fps.mp4`
+- `scene-15792800`: `/Users/mac/Downloads/Pesto/15792800_2160_3840_25fps.mp4`
+- `scene-6221664`: `/Users/mac/Downloads/Pesto/6221664-uhd_2160_3840_24fps.mp4`
+- `scene-4253138`: `/Users/mac/Downloads/Salse con tartufo/4253138-uhd_2160_4096_25fps.mp4`
+- `scene-15064649`: `/Users/mac/Downloads/Salse con tartufo/15064649_2160_3840_25fps.mp4`
+- `scene-13636685`: `/Users/mac/Downloads/Salse con tartufo/13636685_1080_1920_30fps.mp4`
+- `scene-5950767`: `/Users/mac/Downloads/Salse ai funghi/5950767-uhd_2160_3840_30fps.mp4`
+- `scene-14477476`: `/Users/mac/Downloads/Salse ai funghi/14477476_2160_3840_60fps.mp4`
+- `scene-19905874`: `/Users/mac/Downloads/Truffleat/19905874-uhd_3840_2160_24fps.mp4`

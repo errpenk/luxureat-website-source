@@ -33,13 +33,14 @@
     });
   });
   const serviceLinks = [...document.querySelectorAll(".lux-service-bento a")];
-  serviceLinks.forEach((link) => link.addEventListener("click", (event) => {
-    if (!touchMode.matches || link.classList.contains("is-tapped")) return;
+  const expandableServiceLinks = touchMode.matches && !matchMedia("(max-width: 640px)").matches;
+  if (expandableServiceLinks) serviceLinks.forEach((link) => link.addEventListener("click", (event) => {
+    if (link.classList.contains("is-tapped")) return;
     event.preventDefault();
     serviceLinks.forEach((item) => item.classList.remove("is-tapped"));
     link.classList.add("is-tapped");
   }));
-  if (touchMode.matches && "IntersectionObserver" in window) {
+  if (expandableServiceLinks && "IntersectionObserver" in window) {
     const visibleServiceLinks = new Map();
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.isIntersecting

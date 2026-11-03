@@ -269,7 +269,31 @@
     "spaghetti-quadrati-ad-archetto": [1793156, 4084465],
     "bucatini-ad-archetto": [8107806, 4389249],
   };
-  for (const product of Object.values(products)) product.videoIds = productVideoIds[product.id] || [];
+  const newScenes = {
+    oil: ["truffle-oil-pizza-portrait", "truffle-oil-salmon-portrait", "truffle-oil-bottles-portrait", "truffle-oil-pour-portrait"],
+    pasta: ["scene-15432510", "scene-6222170", "scene-6221669", "scene-6221664"],
+    greenPasta: ["scene-15792800", "scene-15764502", "scene-6221664", "scene-13636685"],
+    truffle: ["scene-4253138", "scene-13636685", "scene-6221669", "scene-6221664"],
+    mushroom: ["scene-4253138", "scene-13636685", "scene-5950767", "scene-14477476"],
+    sauce: ["scene-4253138", "scene-13636685", "scene-15064649", "scene-14477476"],
+    whole: ["refresh-19905875", "refresh-19905887", "scene-19905874"],
+    slices: ["refresh-19551103", "refresh-855537-3x", "scene-19905874"],
+  };
+  for (const product of Object.values(products)) {
+    product.videoIds = productVideoIds[product.id] || [];
+    const id = product.id;
+    const group = /(?:oil|evoo)-/.test(id) && !id.includes("slices") ? "oil"
+      : id.startsWith("whole-") ? "whole"
+      : id.includes("slices") ? "slices"
+      : /(?:spinach|nettle|sage)-/.test(id) ? "greenPasta"
+      : id.includes("porcini") || id.startsWith("white-truffle-sauce") ? "mushroom"
+      : /(?:sauce|juice)/.test(id) ? "sauce"
+      : id === "truffle-fettuccine" ? "truffle" : "pasta";
+    product.showcaseVideoIds = id.startsWith("truffle-honey")
+      ? [9491522, 31185864, 6792647, 31656449].filter((video) => !product.videoIds.includes(video)).concat("scene-19905874")
+      : newScenes[group];
+    product.showcaseLayout = product.showcaseVideoIds.length === 4 ? "portrait" : "landscape";
+  }
 
   window.LUXUREAT_PRODUCT_DATA = { images, galleries, products };
 })();
