@@ -1765,24 +1765,21 @@ body.lux-reader-open {
 }
 .lux-product-showcase-videos {
   display: flex;
-  justify-content: safe center;
+  align-items: flex-start;
   gap: 8px;
-  margin: 24px clamp(20px, 4vw, 50px);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  width: min(780px, calc(100% - 48px));
+  margin: 24px auto;
 }
 .lux-product-showcase-videos video {
   display: block;
-  width: auto;
-  height: 180px;
-  aspect-ratio: auto;
+  width: 0;
+  min-width: 0;
+  height: auto;
+  flex-basis: 0;
   object-fit: contain;
   background: transparent;
-  flex: none;
-  scroll-snap-align: start;
 }
-.lux-product-showcase-videos.is-portrait video { height: 250px; }
-.lux-product-seo-page .lux-product-showcase-videos { margin: 24px 0; }
+.lux-product-seo-page .lux-product-showcase-videos { width: 100%; margin: 24px 0; }
 .lux-product-story {
   width: min(780px, calc(100% - 48px));
   margin: 0 auto;
@@ -2304,8 +2301,8 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-product-purchase > .lux-product-quote-link { padding-inline: 10px; letter-spacing: .04em; }
   .lux-product-specs,
   .lux-product-specs.has-label-details { grid-template-columns: 1fr; padding-inline: 20px; }
-  .lux-product-showcase-videos { justify-content: safe center; gap: 6px; margin-inline: 20px; }
-  .lux-product-showcase-videos video { height: 120px; }
+  .lux-product-showcase-videos { justify-content: safe center; gap: 6px; overflow-x: auto; }
+  .lux-product-showcase-videos video { width: auto; height: 120px; flex: none; }
   .lux-product-showcase-videos.is-portrait video { height: 180px; }
   .lux-product-recent-inner { width: calc(100% - 40px); }
   .lux-product-recent-nav { inset-inline: 8px; }
@@ -14393,6 +14390,6 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   margin: 32px auto 0;
 }
 
-.lux-recipe-extra-videos { display: flex; justify-content: safe center; gap: 8px; overflow-x: auto; margin: 20px 0; scroll-snap-type: x mandatory; }
-.lux-recipe-extra-videos video { display: block; width: auto; height: 180px; flex: none; object-fit: contain; background: transparent; scroll-snap-align: start; }
-@media (max-width: 640px) { .lux-recipe-extra-videos { gap: 6px; } .lux-recipe-extra-videos video { height: 140px; } }
+.lux-recipe-extra-videos { display: flex; align-items: flex-start; gap: 8px; width: min(100%, 720px); margin: 20px auto; }
+.lux-recipe-extra-videos video { display: block; width: 0; min-width: 0; height: auto; flex-basis: 0; object-fit: contain; background: transparent; }
+@media (max-width: 640px) { .lux-recipe-extra-videos { gap: 6px; } }

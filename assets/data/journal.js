@@ -1135,7 +1135,8 @@
   const recipeExtraVideos = {
     "truffle-eggs": [
         "recipes/family-zucchini-frittata.mp4",
-        "products/videos/scene-19905874.mp4"
+        "products/videos/scene-19905874.mp4",
+        "recipes/olive-pasta.mp4"
     ],
     "truffle-toast": [
         "recipes/truffle-eggs.mp4",
@@ -1154,27 +1155,34 @@
     ],
     "black-truffle-risotto": [
         "products/videos/scene-19905874.mp4",
-        "products/videos/truffle-oil-pour-portrait.mp4"
+        "products/videos/truffle-oil-pour-portrait.mp4",
+        "recipes/olive-pasta.mp4"
     ],
     "mushroom-soup": [
         "products/videos/scene-5950767.mp4",
-        "products/videos/scene-14477476.mp4"
+        "products/videos/scene-14477476.mp4",
+        "products/videos/refresh-4253150.mp4",
+        "products/videos/refresh-4253330.mp4"
     ],
     "beef-carpaccio-scallop-truffle": [
         "products/videos/scene-15064649.mp4",
-        "products/videos/scene-19905874.mp4"
+        "products/videos/scene-19905874.mp4",
+        "recipes/olive-pasta.mp4"
     ],
     "shrimp-tartare-truffle": [
         "products/videos/scene-19905874.mp4",
-        "products/videos/truffle-oil-pour-portrait.mp4"
+        "products/videos/truffle-oil-pour-portrait.mp4",
+        "recipes/olive-pasta.mp4"
     ],
     "sweet-bread-butter-caviar": [
         "recipes/extra-caviar-service.mp4",
-        "recipes/extra-caviar-detail.mp4"
+        "recipes/extra-caviar-detail.mp4",
+        "recipes/truffle-summer-crostini.mp4"
     ],
     "truffle-tiramisu": [
         "products/videos/scene-19905874.mp4",
-        "products/videos/truffle-oil-pour-portrait.mp4"
+        "products/videos/truffle-oil-pour-portrait.mp4",
+        "products/videos/refresh-19551103.mp4"
     ],
     "olive-bruschetta": [
         "recipes/olive-panzanella.mp4",
@@ -1184,12 +1192,16 @@
     "olive-pasta": [
         "products/videos/scene-13636685.mp4",
         "products/videos/scene-6221664.mp4",
-        "products/videos/truffle-oil-pour-portrait.mp4"
+        "products/videos/truffle-oil-pour-portrait.mp4",
+        "recipes/truffle-tagliolini.mp4",
+        "products/videos/10054735.mp4"
     ],
     "pizza-margherita": [
         "products/videos/truffle-oil-pizza-portrait.mp4",
         "products/videos/truffle-oil-bottles-portrait.mp4",
-        "products/videos/truffle-oil-pour-portrait.mp4"
+        "products/videos/truffle-oil-pour-portrait.mp4",
+        "new-arrivals/editorial-mosaic/mosaic-pizza-video-01.mp4",
+        "products/videos/4109923.mp4"
     ],
     "gelato-classic": [
         "recipes/extra-gelato-mix.mp4",
@@ -1198,28 +1210,36 @@
     "olive-panzanella": [
         "recipes/olive-bruschetta.mp4",
         "recipes/olive-pinzimonio.mp4",
-        "products/videos/truffle-oil-bottles-portrait.mp4"
+        "products/videos/truffle-oil-bottles-portrait.mp4",
+        "recipes/truffle-summer-crostini.mp4"
     ],
     "olive-pinzimonio": [
         "recipes/light-grilled-zucchini.mp4",
-        "products/videos/truffle-oil-bottles-portrait.mp4"
+        "products/videos/truffle-oil-bottles-portrait.mp4",
+        "recipes/olive-pasta.mp4"
     ],
     "light-fennel-orange-salad": [
         "recipes/olive-pinzimonio.mp4",
-        "products/videos/truffle-oil-bottles-portrait.mp4"
+        "products/videos/truffle-oil-bottles-portrait.mp4",
+        "products/videos/4109923.mp4"
     ],
     "light-grilled-zucchini": [
         "recipes/family-zucchini-frittata.mp4",
-        "products/videos/truffle-oil-bottles-portrait.mp4"
+        "products/videos/truffle-oil-bottles-portrait.mp4",
+        "recipes/olive-pasta.mp4",
+        "products/videos/4109923.mp4"
     ],
     "light-sea-bass-acqua-pazza": [
         "recipes/truffle-trout.mp4",
-        "products/videos/truffle-oil-salmon-portrait.mp4"
+        "products/videos/truffle-oil-salmon-portrait.mp4",
+        "recipes/olive-pasta.mp4"
     ],
     "family-spaghetti-pomodoro": [
         "products/videos/scene-15432510.mp4",
         "products/videos/scene-6222170.mp4",
-        "products/videos/scene-13636685.mp4"
+        "products/videos/scene-13636685.mp4",
+        "recipes/olive-pasta.mp4",
+        "products/videos/10054735.mp4"
     ],
     "family-zucchini-frittata": [
         "recipes/truffle-eggs.mp4",
@@ -1227,7 +1247,9 @@
     ],
     "family-chicken-cacciatora": [
         "products/videos/scene-6222170.mp4",
-        "products/videos/truffle-oil-bottles-portrait.mp4"
+        "products/videos/truffle-oil-bottles-portrait.mp4",
+        "recipes/family-spaghetti-pomodoro.mp4",
+        "products/videos/4109923.mp4"
     ],
     "truffle-summer-crostini": [
         "recipes/olive-bruschetta.mp4",
@@ -1241,12 +1263,53 @@
     ],
     "truffle-lamb": [
         "products/videos/scene-19905874.mp4",
-        "products/videos/truffle-oil-pour-portrait.mp4"
+        "products/videos/truffle-oil-pour-portrait.mp4",
+        "products/videos/refresh-19551103.mp4"
     ]
+};
+  const recipeExtraVideoRatios = {
+    "recipes/family-zucchini-frittata.mp4": 0.563889,
+    "products/videos/scene-19905874.mp4": 1.777778,
+    "recipes/olive-pasta.mp4": 0.563889,
+    "recipes/truffle-eggs.mp4": 1.773399,
+    "recipes/olive-bruschetta.mp4": 0.563889,
+    "products/videos/scene-13636685.mp4": 0.5625,
+    "products/videos/scene-4253138.mp4": 0.527859,
+    "recipes/truffle-tagliolini.mp4": 0.563889,
+    "products/videos/truffle-oil-pour-portrait.mp4": 0.527473,
+    "products/videos/scene-5950767.mp4": 0.5625,
+    "products/videos/scene-14477476.mp4": 0.5625,
+    "products/videos/refresh-4253150.mp4": 1.777778,
+    "products/videos/refresh-4253330.mp4": 1.777778,
+    "products/videos/scene-15064649.mp4": 0.5625,
+    "recipes/extra-caviar-service.mp4": 0.5625,
+    "recipes/extra-caviar-detail.mp4": 0.5625,
+    "recipes/truffle-summer-crostini.mp4": 1.773399,
+    "products/videos/refresh-19551103.mp4": 1.777778,
+    "recipes/olive-panzanella.mp4": 1.773399,
+    "products/videos/scene-6221669.mp4": 0.5625,
+    "products/videos/truffle-oil-bottles-portrait.mp4": 0.527473,
+    "products/videos/scene-6221664.mp4": 0.5625,
+    "products/videos/truffle-oil-pizza-portrait.mp4": 0.527473,
+    "new-arrivals/editorial-mosaic/mosaic-pizza-video-01.mp4": 0.566038,
+    "recipes/extra-gelato-mix.mp4": 1.893491,
+    "recipes/extra-gelato-scoop.mp4": 1.893491,
+    "recipes/olive-pinzimonio.mp4": 0.563889,
+    "recipes/light-grilled-zucchini.mp4": 1.773399,
+    "products/videos/4109923.mp4": 1.777778,
+    "recipes/truffle-trout.mp4": 1.773399,
+    "products/videos/truffle-oil-salmon-portrait.mp4": 0.562061,
+    "products/videos/scene-15432510.mp4": 0.5625,
+    "products/videos/scene-6222170.mp4": 0.5625,
+    "recipes/family-spaghetti-pomodoro.mp4": 0.563889,
+    "recipes/light-sea-bass-acqua-pazza.mp4": 0.563889,
+    "products/videos/10054735.mp4": 1.777778
 };
   for (const [id, article] of Object.entries(articles)) {
     if (article.type !== "recipe") continue;
-    article.extraVideos = (recipeExtraVideos[id.replace(/^(?:zh|en)-recipe-/, "")] || []).map((path) => asset(`media/${path}`));
+    const extraPaths = recipeExtraVideos[id.replace(/^(?:zh|en)-recipe-/, "")] || [];
+    article.extraVideos = extraPaths.map((path) => asset(`media/${path}`));
+    article.extraVideoRatios = extraPaths.map((path) => recipeExtraVideoRatios[path]);
   }
 
   window.LUXUREAT_ARTICLE_DATA = { images, articles };

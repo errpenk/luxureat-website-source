@@ -279,6 +279,41 @@
     whole: ["refresh-19905875", "refresh-19905887", "scene-19905874"],
     slices: ["refresh-19551103", "refresh-855537-3x", "scene-19905874"],
   };
+  const sceneRatios = {
+    "truffle-oil-pizza-portrait": 0.527473,
+    "truffle-oil-salmon-portrait": 0.562061,
+    "truffle-oil-bottles-portrait": 0.527473,
+    "truffle-oil-pour-portrait": 0.527473,
+    "scene-15432510": 0.5625,
+    "scene-6222170": 0.5625,
+    "scene-6221669": 0.5625,
+    "scene-6221664": 0.5625,
+    "scene-15792800": 0.5625,
+    "scene-15764502": 0.5625,
+    "scene-13636685": 0.5625,
+    "scene-4253138": 0.527859,
+    "scene-5950767": 0.5625,
+    "scene-14477476": 0.5625,
+    "scene-15064649": 0.5625,
+    "refresh-19905875": 1.777778,
+    "refresh-19905887": 1.777778,
+    "scene-19905874": 1.777778,
+    "refresh-19551103": 1.777778,
+    "refresh-855537-3x": 1.777778,
+    "9491522": 1.777778,
+    "31185864": 1.777778,
+    "6792647": 1.777778,
+    "31656449": 1.777778,
+    "4109923": 1.777778,
+    "5897983": 1.777778,
+    "10054735": 1.777778,
+    "8107801": 1.777778,
+    "6288312": 1.777778,
+    "8963624": 1.777778,
+    "refresh-13944500": 1.777778,
+    "refresh-4253150": 1.777778,
+    "refresh-4253330": 1.777778
+};
   for (const product of Object.values(products)) {
     product.videoIds = productVideoIds[product.id] || [];
     const id = product.id;
@@ -291,8 +326,17 @@
       : id === "truffle-fettuccine" ? "truffle" : "pasta";
     product.showcaseVideoIds = id.startsWith("truffle-honey")
       ? [9491522, 31185864, 6792647, 31656449].filter((video) => !product.videoIds.includes(video)).concat("scene-19905874")
-      : newScenes[group];
+      : [...newScenes[group]];
     product.showcaseLayout = product.showcaseVideoIds.length === 4 ? "portrait" : "landscape";
+    const supplements = group === "oil" ? [4109923, 5897983]
+      : group === "mushroom" ? ["refresh-13944500"]
+      : group === "sauce" ? ["refresh-4253150", "refresh-4253330"]
+      : [10054735, 8107801, 6288312, 8963624];
+    for (const video of supplements) {
+      if (product.showcaseVideoIds.reduce((sum, id) => sum + sceneRatios[id], 0) >= 3.2) break;
+      if (!product.videoIds.includes(video) && !product.showcaseVideoIds.includes(video)) product.showcaseVideoIds.push(video);
+    }
+    product.showcaseVideoRatios = product.showcaseVideoIds.map((id) => sceneRatios[id]);
   }
 
   window.LUXUREAT_PRODUCT_DATA = { images, galleries, products };

@@ -169,7 +169,7 @@ assert(functionsPhp.includes("'zh/brand.html' => 'zh/brand'") && functionsPhp.in
 assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'functions.php maps the English certification route');
 assert(functionsPhp.includes("'en/caviar' => 'en/product'"), 'legacy English caviar route redirects to product');
 assert(functionsPhp.includes("'en/private' => 'en/cooperation'"), 'legacy English private route redirects to cooperation');
-assert(functionsPhp.includes('function luxureat_static_seo_head()') && functionsPhp.includes("rel=\"canonical\"") && functionsPhp.includes("hreflang=\"x-default\"") && functionsPhp.includes('application/ld+json'), 'functions.php emits canonical, alternate-language, social and structured SEO metadata');
+assert(functionsPhp.includes('function luxureat_static_seo_head()') && functionsPhp.includes("rel=\"canonical\"") && functionsPhp.includes("hreflang=\"zh-CN\"") && functionsPhp.includes('application/ld+json'), 'functions.php emits canonical, alternate-language, social and structured SEO metadata');
 assert(functionsPhp.includes('luxureat_static_disable_yoast_output') && functionsPhp.includes("remove_action('wpseo_head'") && functionsPhp.includes('Front_End_Integration::class'), 'static routes use the theme SEO output without duplicate Yoast metadata');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 assert(!functionsPhp.includes('wp_ajax_nopriv_luxureat_account') && !functionsPhp.includes('wc_create_new_customer') && !functionsPhp.includes('wp_signon('), 'functions.php does not expose consumer account registration or login endpoints');
@@ -499,7 +499,7 @@ for (const lang of ['zh', 'en']) {
   for (const file of files) {
     const html = read(path.join(productPages, file));
     const videoCount = (html.match(/assets\/media\/products\/videos\/[\w-]+\.mp4/g) || []).length;
-    assert(html.includes('lux-product-showcase-videos') && [5, 6].includes(videoCount), `${lang}/${file} adds three landscape or four portrait scenes and retains the original pair`);
+    assert(html.includes('lux-product-showcase-videos') && [5, 7].includes(videoCount), `${lang}/${file} adds related scenes to match description width and retains the original pair`);
   }
 }
 assert(enProducts.includes("luxureat_static_url('en/recipe'"), 'English products ritual CTA links to rituals');
@@ -508,7 +508,7 @@ for (const lang of ['zh', 'en']) {
   for (const file of fs.readdirSync(recipeDir)) {
     const html = read(path.join(recipeDir, file));
     const extra = html.match(/<div class="lux-recipe-extra-videos">([\s\S]*?)<\/div>/)?.[1] || '';
-    assert([2, 3].includes((extra.match(/<video /g) || []).length), `${lang}/${file} adds two or three recipe clips`);
+    assert([2, 3, 4, 5].includes((extra.match(/<video /g) || []).length), `${lang}/${file} adds related recipe clips`);
     assert(html.indexOf('lux-recipe-video') < html.indexOf('lux-recipe-extra-videos'), `${lang}/${file} keeps original video above added clips`);
     assert((extra.match(/data-lux-autoplay autoplay muted loop playsinline/g) || []).length >= 2, `${lang}/${file} added clips autoplay silently`);
   }

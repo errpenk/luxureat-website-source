@@ -1,6 +1,6 @@
 # 产品视频素材来源
 
-2026-11-03 补充：每款产品新增四段竖屏或三段横屏场景视频。新增区独立于产品说明中的原有两段视频；原有 videoIds 与本次修改前完全一致。新增画面按原比例展示，不加背景、不裁切；同排等高，桌面竖屏高 250px、横屏高 180px，手机分别 180px、120px，空间不足时横向滑动。同系列规格共用相关食材、调味或烹饪场景；这些场景不代表具体 SKU 实拍。
+2026-11-03 补充：每款产品的新增视频整排与产品说明正文等宽（最大 780px），按原片比例分配宽度并保持等高，不补背景、不裁切。原有两段产品介绍视频未改动。原先四段竖屏的较窄组合补充一段相关食材或烹饪片段，现每款有三段或五段新增视频；同系列不同规格可以共用相关场景。手机端仍保留紧凑等高和横向滑动，放得下时居中。
 
 核对日期：2026-10-30。47 款产品各展示两段视频，共使用 66 个视频文件；同名产品的不同规格共用本次更新的视频。中英文页面共用。本次替换的视频保留原片完整时长，转为 640 × 360 px 并去除声音；整颗夏季黑松露的松露特写视频采用 3 倍速；未替换的视频仍为 4 秒静音片段。页面只展示视频，不显示来源。
 
@@ -59,55 +59,55 @@
 
 ## 2026-11-03 新增场景对应表
 
-| 产品 | 方向 | 新增视频 ID |
-|---|---|---|
-| 白松露风味油 · 60 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
-| 白松露风味油 · 250 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
-| 白松露特级初榨橄榄油 · 60 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
-| 白松露特级初榨橄榄油 · 250 ml | portrait | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait |
-| 夏季黑松露片 · 50 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
-| 夏季黑松露片 · 80 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
-| 夏季黑松露片 · 180 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
-| 水浸夏季黑松露片 · 350 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
-| 葵花籽油浸夏季黑松露片 · 350 g | landscape | refresh-19551103, refresh-855537-3x, scene-19905874 |
-| 松露蜂蜜 · 50 g | landscape | 6792647, 31656449, scene-19905874 |
-| 松露蜂蜜 · 170 g | landscape | 9491522, 31185864, scene-19905874 |
-| 白松露酱 · 80 g | portrait | scene-4253138, scene-13636685, scene-5950767, scene-14477476 |
-| 白松露酱 · 500 g | portrait | scene-4253138, scene-13636685, scene-5950767, scene-14477476 |
-| 黑松露酱 · 80 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 黑松露酱 · 180 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 黑松露酱 · 500 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 整颗夏季黑松露 · 35 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
-| 整颗夏季黑松露 · 55 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
-| 整颗夏季黑松露 · 110 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
-| 整颗夏季黑松露 · 275 g | landscape | refresh-19905875, refresh-19905887, scene-19905874 |
-| 冬季黑松露酱 · 80 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 冬季黑松露酱 · 180 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 冬季黑松露酱 · 500 g | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 冬季黑松露汁 · 350 ml | portrait | scene-4253138, scene-13636685, scene-15064649, scene-14477476 |
-| 坎波菲洛内细面（原产地认证） · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 坎波菲洛内细扁面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 坎波菲洛内宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 坎波菲洛内宽扁面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 坎波菲洛内干长面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 坎波菲洛内平扁面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 坎波菲洛内鸡蛋面皮 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 藏红花宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 松露宽面 · 250 g | portrait | scene-4253138, scene-13636685, scene-6221669, scene-6221664 |
-| 牛肝菌宽面 · 250 g | portrait | scene-4253138, scene-13636685, scene-5950767, scene-14477476 |
-| 鱿鱼墨汁宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 辣椒宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 鼠尾草宽面 · 250 g | portrait | scene-15792800, scene-15764502, scene-6221664, scene-13636685 |
-| 菠菜宽面 · 250 g | portrait | scene-15792800, scene-15764502, scene-6221664, scene-13636685 |
-| 荨麻宽面 · 250 g | portrait | scene-15792800, scene-15764502, scene-6221664, scene-13636685 |
-| 柠檬宽面 · 250 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 粗通心粉 · 6 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 斜管面 · 10 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 袖筒面 · 6 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 螺旋粉 · 6 × 350 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| U型长面 · 12 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| 方形粗面 · 12 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
-| U型细管面 · 10 × 500 g | portrait | scene-15432510, scene-6222170, scene-6221669, scene-6221664 |
+| 产品 | 新增视频 ID |
+|---|---|
+| 白松露风味油 · 60 ml | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait, 5897983 |
+| 白松露风味油 · 250 ml | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait, 4109923 |
+| 白松露特级初榨橄榄油 · 60 ml | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait, 4109923 |
+| 白松露特级初榨橄榄油 · 250 ml | truffle-oil-pizza-portrait, truffle-oil-salmon-portrait, truffle-oil-bottles-portrait, truffle-oil-pour-portrait, 4109923 |
+| 夏季黑松露片 · 50 g | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 夏季黑松露片 · 80 g | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 夏季黑松露片 · 180 g | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 水浸夏季黑松露片 · 350 g | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 葵花籽油浸夏季黑松露片 · 350 g | refresh-19551103, refresh-855537-3x, scene-19905874 |
+| 松露蜂蜜 · 50 g | 6792647, 31656449, scene-19905874 |
+| 松露蜂蜜 · 170 g | 9491522, 31185864, scene-19905874 |
+| 白松露酱 · 80 g | scene-4253138, scene-13636685, scene-5950767, scene-14477476, refresh-13944500 |
+| 白松露酱 · 500 g | scene-4253138, scene-13636685, scene-5950767, scene-14477476, refresh-13944500 |
+| 黑松露酱 · 80 g | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 黑松露酱 · 180 g | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 黑松露酱 · 500 g | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 整颗夏季黑松露 · 35 g | refresh-19905875, refresh-19905887, scene-19905874 |
+| 整颗夏季黑松露 · 55 g | refresh-19905875, refresh-19905887, scene-19905874 |
+| 整颗夏季黑松露 · 110 g | refresh-19905875, refresh-19905887, scene-19905874 |
+| 整颗夏季黑松露 · 275 g | refresh-19905875, refresh-19905887, scene-19905874 |
+| 冬季黑松露酱 · 80 g | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 冬季黑松露酱 · 180 g | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 冬季黑松露酱 · 500 g | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 冬季黑松露汁 · 350 ml | scene-4253138, scene-13636685, scene-15064649, scene-14477476, refresh-4253150 |
+| 坎波菲洛内细面（原产地认证） · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 坎波菲洛内细扁面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 6288312 |
+| 坎波菲洛内宽面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 坎波菲洛内宽扁面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 坎波菲洛内干长面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 坎波菲洛内平扁面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 坎波菲洛内鸡蛋面皮 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 藏红花宽面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 松露宽面 · 250 g | scene-4253138, scene-13636685, scene-6221669, scene-6221664, 10054735 |
+| 牛肝菌宽面 · 250 g | scene-4253138, scene-13636685, scene-5950767, scene-14477476, refresh-13944500 |
+| 鱿鱼墨汁宽面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 辣椒宽面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 鼠尾草宽面 · 250 g | scene-15792800, scene-15764502, scene-6221664, scene-13636685, 10054735 |
+| 菠菜宽面 · 250 g | scene-15792800, scene-15764502, scene-6221664, scene-13636685, 10054735 |
+| 荨麻宽面 · 250 g | scene-15792800, scene-15764502, scene-6221664, scene-13636685, 10054735 |
+| 柠檬宽面 · 250 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 粗通心粉 · 6 × 500 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 斜管面 · 10 × 500 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 袖筒面 · 6 × 500 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 螺旋粉 · 6 × 350 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| U型长面 · 12 × 500 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| 方形粗面 · 12 × 500 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
+| U型细管面 · 10 × 500 g | scene-15432510, scene-6222170, scene-6221669, scene-6221664, 10054735 |
 
 新增 scene 素材源文件：
 
