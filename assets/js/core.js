@@ -357,6 +357,7 @@ const prepareLuxVideo = (video) => {
   video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
 };
 const startLuxVideo = (video) => {
+  if (!video.isConnected || video.dataset.luxVideoVisible !== "true") return;
   prepareLuxVideo(video);
   if (video.dataset.luxPlayPending) return;
   video.dataset.luxPlayPending = "true";
@@ -371,12 +372,33 @@ const startLuxVideo = (video) => {
 const luxVideoObserver = "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting) {
+      target.dataset.luxVideoVisible = "true";
+      loadLuxVideo(target);
       target.preload = "auto";
       startLuxVideo(target);
     } else {
+      delete target.dataset.luxVideoVisible;
       target.pause();
     }
   }), { rootMargin: "0px", threshold: .01 })
+  : null;
+const loadLuxVideo = (video) => {
+  let changed = false;
+  [video, ...video.querySelectorAll("source[data-src]")].forEach((source) => {
+    if (!source.dataset.src) return;
+    source.src = source.dataset.src;
+    delete source.dataset.src;
+    changed = true;
+  });
+  if (changed) video.load();
+};
+const luxVideoPreloadObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries, observer) => entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    target.preload = target.dataset.luxVideoVisible === "true" ? "auto" : luxSaveData ? "none" : "metadata";
+    loadLuxVideo(target);
+    observer.unobserve(target);
+  }), { rootMargin: "300px", threshold: 0 })
   : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
@@ -386,15 +408,22 @@ const initLuxVideo = (video) => {
   if (video.matches(".lux-hero-video")) {
     const startHero = () => {
       if (luxIsMobile || luxSaveData) return;
-      video.preload = "auto";
-      startLuxVideo(video);
+      if (luxVideoObserver) luxVideoObserver.observe(video);
+      else {
+        video.dataset.luxVideoVisible = "true";
+        loadLuxVideo(video);
+        startLuxVideo(video);
+      }
     };
-    if (document.readyState === "complete") setTimeout(startHero, 2500);
-    else addEventListener("load", () => setTimeout(startHero, 2500), { once: true });
+    if (document.readyState === "complete") startHero();
+    else addEventListener("load", startHero, { once: true });
   } else if (!luxVideoObserver) {
+    video.dataset.luxVideoVisible = "true";
+    loadLuxVideo(video);
     video.preload = "auto";
     startLuxVideo(video);
   } else {
+    luxVideoPreloadObserver?.observe(video);
     luxVideoObserver.observe(video);
   }
 };
@@ -735,6 +764,7 @@ if (luxNav && luxMenu) {
       const link = document.createElement("a");
       link.href = pageHref(href);
       link.textContent = label;
+      if (href === currentPage || (href === "product.html" && currentPage === "new.html") || pathParts.includes(href.replace(/\.html$/, ""))) link.setAttribute("aria-current", "page");
       return link;
     }));
   }

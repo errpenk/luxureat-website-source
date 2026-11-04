@@ -14416,3 +14416,6 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 @media (max-width: 640px) {
   .lux-catalogue-switch a { padding-inline: 16px; }
 }
+
+/* Current page remains visible in the footer without waiting for interaction. */
+.lux-footer nav a[aria-current="page"] { color: #9df5ec !important; }
