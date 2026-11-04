@@ -14451,3 +14451,52 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-academy-card-copy h2 { text-align: center; }
   .lux-footer nav a { font-family: var(--lux-page-heading) !important; }
 }
+
+/* Mobile editorial alignment: keep copy and paired controls visually centered. */
+@media (max-width: 720px) {
+  .lux-home-page .lux-feature-intro > span,
+  .lux-home-page .lux-feature-intro h2,
+  .lux-home-page .lux-feature-intro p,
+  .lux-home-page .lux-home-why-copy,
+  .lux-home-page .lux-home-why-copy h2,
+  .lux-home-page .lux-home-why-copy > p,
+  .lux-home-page .lux-home-selected-products > div:first-of-type,
+  .lux-home-page .lux-home-selected-products > div:first-of-type :is(span, h2, p),
+  .lux-new-page .lux-page-hero-content,
+  .lux-new-page .lux-new-editorial-intro,
+  .lux-about-story .lux-reader-hero-copy,
+  .lux-about-story .lux-reader-copy,
+  .lux-recipe-anchor > .grid > div:first-child,
+  .lux-journal-season-card,
+  .lux-brand-promise-copy,
+  .lux-brand-promise-card > div {
+    text-align: center;
+  }
+
+  .lux-home-page .lux-feature-intro p,
+  .lux-home-page .lux-home-why-copy > p,
+  .lux-home-page .lux-home-selected-products > div:first-of-type p,
+  .lux-about-story .lux-reader-summary,
+  .lux-about-story .lux-reader-copy p,
+  .lux-recipe-anchor > .grid > div:first-child p,
+  .lux-brand-promise-copy h2,
+  .lux-brand-promise-copy p,
+  .lux-brand-promise-card p {
+    margin-inline: auto;
+  }
+
+  .lux-home-page .lux-feature-intro .lux-feature-values-link { margin-left: 12px; }
+  .lux-home-page .lux-home-why-copy h2 { margin-inline: auto; }
+  .lux-home-page .lux-home-why-metrics > div { text-align: center; }
+  .lux-home-page .lux-home-why-metrics > div::before { left: 50%; transform: translateX(-50%); }
+  .lux-home-page .lux-home-partnership-process ol > li:last-child {
+    width: calc((100% - 16px) / 2);
+    min-width: 0;
+  }
+  .lux-recipe-anchor > .grid > div:first-child .flex { justify-content: center; }
+  .lux-recipe-anchor > .grid > div:first-child .lux-recipe-jump-nav { justify-items: center; }
+  .lux-about-story .lux-reader-hero-copy :is(h1, h2),
+  .lux-about-story .lux-reader-copy :is(h2, h3) { margin-inline: auto; }
+  .lux-brand-promise-icon { margin-inline: auto; }
+  .lux-new-editorial-intro div { text-align: center; }
+}
