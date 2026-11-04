@@ -108,6 +108,11 @@ for (const file of [
 const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
+const assetsByPath = functionsPhp.match(/\$assets_by_path = array\(([\s\S]*?)\n    \);/)?.[1] || '';
+assert(assetsByPath.length > 0, 'generated route asset mapping exists');
+for (const [, route, handles] of assetsByPath.matchAll(/'([^']+)' => array\(([^)]*)\)/g)) {
+  if (handles.includes("'core'")) assert(handles.includes("'image-variants'") && handles.indexOf("'image-variants'") < handles.indexOf("'core'"), `${route} registers core's image dependency so WordPress prints the video runtime`);
+}
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
 for (const [page, count] of [['blog', 68], ['product', 53], ['recipe', 25], ['brand', 12]]) {
   for (const lang of ['zh', 'en']) {
