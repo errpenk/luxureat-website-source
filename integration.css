@@ -1639,6 +1639,9 @@ body.lux-reader-open {
   object-fit: cover;
 }
 .lux-product-image:hover img { transform: scale(1.04); }
+.lux-product-gallery.is-elixir :is(.lux-product-image, .lux-product-thumb) { aspect-ratio: 4 / 3; background: #171a18; }
+.lux-product-seo-page.is-elixir .lux-reader-cover { aspect-ratio: 4 / 3; padding: 0; background: #171a18; }
+.lux-product-seo-page.is-elixir .lux-reader-cover img { width: 100%; height: 100%; object-fit: cover; }
 .lux-product-image-lightbox {
   width: min(94vw, 1400px);
   height: min(92vh, 1000px);
@@ -1780,6 +1783,10 @@ body.lux-reader-open {
   background: transparent;
 }
 .lux-product-seo-page .lux-product-showcase-videos { width: 100%; margin: 24px 0; }
+.lux-product-showcase-videos img { display: block; width: 0; min-width: 0; height: auto; flex-basis: 0; object-fit: contain; background: transparent; }
+.lux-product-showcase-videos.is-mixed-media { overflow-x: auto; justify-content: safe center; }
+.lux-product-story .lux-product-showcase-videos { width: 100%; margin: 24px 0; }
+.lux-elixir-story-videos video { object-fit: contain; background: transparent; }
 .lux-product-story {
   width: min(780px, calc(100% - 48px));
   margin: 0 auto;
@@ -2303,6 +2310,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-product-specs.has-label-details { grid-template-columns: 1fr; padding-inline: 20px; }
   .lux-product-showcase-videos { justify-content: safe center; gap: 6px; overflow-x: auto; }
   .lux-product-showcase-videos video { width: auto; height: 120px; flex: none; }
+  .lux-product-showcase-videos.is-mixed-media img { width: auto; height: 120px; flex: none; }
   .lux-product-showcase-videos.is-portrait video { height: 180px; }
   .lux-product-recent-inner { width: calc(100% - 40px); }
   .lux-product-recent-nav { inset-inline: 8px; }

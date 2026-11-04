@@ -49,7 +49,13 @@ const en = read("en/new.html");
 assert(!zh.includes("Pizza") && !zh.includes("Gelato") && !zh.includes("意式披萨"), "Chinese new arrivals still use Pizza, Gelato or 意式披萨");
 assert(zh.includes("披萨") && zh.includes("意式手工冰淇淋"), "Chinese product names are not fully localized");
 assert(zh.includes("手工工艺的真材实料") && !zh.includes("低温里的真实原料"), "Chinese Gelato craft message is not updated");
-assert(!zh.includes("开心果") && !en.toLowerCase().includes("pistachio"), "new-arrivals copy still names a specific Gelato flavour ingredient");
+assert(!zh.match(/id="gelato"[\s\S]*?<\/article>/)?.[0].includes("开心果") && !en.match(/id="gelato"[\s\S]*?<\/article>/)?.[0].toLowerCase().includes("pistachio"), "Gelato copy still names a specific flavour ingredient");
+for (const lang of ["zh", "en"]) {
+  const html = read(`${lang}/index.html`);
+  assert(!read(`${lang}/new.html`).includes('id="truffelixir"') && html.indexOf('id="truffelixir"') > html.indexOf('class="lux-home-services-grid"') && html.includes('href="product.html?category=truffelixir#product-catalogue"'), `${lang} TrufflElixir introduction must appear below the homepage service cards and link to all six products`);
+  const intro = html.match(/<section class="lux-elixir-intro"[\s\S]*?<\/section>/)?.[0] || "";
+  assert(intro.includes('series-pancakes.webp') && !intro.includes('<video') && !intro.includes('<figcaption') && !intro.includes('aria-hidden="true"'), `${lang} TrufflElixir introduction must use the supplied photo without captions or CTA arrows`);
+}
 assert(zh.includes("LuxurEat（露意膳）") && en.includes("LuxurEat (露意膳)"), "localized LuxurEat brand suffixes are missing");
 assert((zh.match(/厨师建议 · 专注餐饮/g) || []).length === 3 && (en.match(/CHEF'S NOTES · FOODSERVICE FOCUS/g) || []).length === 3, "chef recommendation foodservice labels are missing");
 for (const keyword of ["产地严选", "专业验证", "耐心精筛", "手工匠心"]) assert(zh.includes(`<strong>${keyword}</strong>`), `Chinese flip-card keyword is missing ${keyword}`);

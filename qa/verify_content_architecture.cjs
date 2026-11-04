@@ -43,6 +43,21 @@ const journal = load("assets/data/journal.js", "LUXUREAT_ARTICLE_DATA");
 const recipeProductCategories = new Set(["caviar", "truffle", "olive-oil", "pizza", "gelato"]);
 const recipeLinkedProductCategories = new Set([...recipeProductCategories, "pasta"]);
 const pastaProducts = Object.entries(products.products).filter(([key, product]) => key.startsWith("zh-") && product.category === "pasta");
+for (const lang of ["zh", "en"]) {
+  const elixirs = Object.entries(products.products).filter(([key, product]) => key.startsWith(`${lang}-`) && product.series === "TrufflElixir");
+  assert(elixirs.length === 6, `${lang} TrufflElixir catalogue must contain the six supplied flavours`);
+  assert(elixirs.every(([, product]) => product.unit === "100 ml" && product.typeKey === "syrup" && product.sku.startsWith("TE-ELX-100-") && product.details.some(({ label, value }) => label === "EAN-13" && /^\d{13}$/.test(value))), `${lang} TrufflElixir label identity is incomplete`);
+  assert(elixirs.every(([, product]) => !product.registration && !product.showcaseVideoIds?.length && !/gluten-free|无麸质/i.test(product.desc)), `${lang} TrufflElixir must not inherit unrelated videos or unverified claims`);
+  for (const [, product] of elixirs) {
+    const tamarind = product.id.includes("tamarind");
+    const mediaItems = [...product.showcaseMedia, ...product.storyMedia];
+    assert(mediaItems.length === (tamarind ? 6 : 5) && mediaItems.filter(({ type }) => type === "video").length === (tamarind ? 2 : 5), `${product.id} media must match its supplied folder`);
+    assert(new Set(mediaItems.map(({ src }) => src)).size === mediaItems.length && product.storyMedia.length === 2 && product.storyMedia.every(({ type }) => type === "video"), `${product.id} must keep two videos below its description without duplicating the upper media`);
+    for (const media of mediaItems) {
+      assert(media.ratio > 0 && [media.src, media.poster].filter(Boolean).every((url) => fs.existsSync(path.join(root, "assets", url.split("/assets/")[1]))), `${product.id} media file or aspect ratio is missing`);
+    }
+  }
+}
 assert(pastaProducts.length === 23, "bilingual pasta catalogue does not contain all 23 supplied products");
 assert(pastaProducts.every(([, product]) => product.typeKey === "pasta" && product.eyebrow === "面食" && product.gallery.length === 4), "pasta category, label type or four-image gallery is incomplete");
 assert(pastaProducts.every(([, product]) => product.gallery[0] === product.image && product.gallery.slice(1).every((image) => image.includes("/products/pasta/process-"))), "pasta gallery does not preserve each lead image before the three supplied process images");
@@ -50,7 +65,7 @@ assert(Object.keys(products.products).filter((key) => key.startsWith("en-") && p
 for (const locale of ["zh", "en"]) {
   const productPage = read(`${locale}/product.html`);
   assert(productPage.indexOf('data-caviar-filter="pasta"') < productPage.indexOf('data-caviar-filter="gelato"'), `${locale} Pasta category is not listed before Italian Gelato`);
-  assert(productPage.indexOf('data-caviar-filter="pasta"') < productPage.indexOf('data-caviar-filter="seasoning-oil"'), `${locale} Pasta label type is not listed before Seasoning Oil`);
+  assert(!productPage.includes('data-caviar-filter-group="type"'), `${locale} obsolete label-type filters remain`);
 }
 assert(read("zh/product.html").includes('"KingHwa Labels Critical"'), "mixed Chinese product titles do not keep KingHwa for Latin characters and numerals");
 for (const article of Object.values(journal.articles).filter((item) => item.type === "recipe")) {

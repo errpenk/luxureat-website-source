@@ -109,7 +109,7 @@ const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
-for (const [page, count] of [['blog', 68], ['product', 47], ['recipe', 25], ['brand', 12]]) {
+for (const [page, count] of [['blog', 68], ['product', 53], ['recipe', 25], ['brand', 12]]) {
   for (const lang of ['zh', 'en']) {
     const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
     const links = html.match(/<nav class="lux-static-detail-links"[^>]*><ul>([\s\S]*?)<\/ul><\/nav>/)?.[1];
@@ -495,10 +495,15 @@ assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') &&
 for (const lang of ['zh', 'en']) {
   const productPages = path.join(themeDir, `pages/${lang}/product`);
   const files = fs.readdirSync(productPages).filter((file) => file.endsWith('.php'));
-  assert(files.length === 47, `${lang} standalone product route count`);
+  assert(files.length === 53, `${lang} standalone product route count`);
   for (const file of files) {
     const html = read(path.join(productPages, file));
     const videoCount = (html.match(/assets\/media\/products\/videos\/[\w-]+\.mp4/g) || []).length;
+    if (file.startsWith('truffelixir-')) {
+      const elixirVideoCount = (html.match(/truffelixir\/videos\/[\w-]+\.mp4/g) || []).length;
+      assert(videoCount === 0 && html.includes('TE-ELX-100-') && html.includes('is-mixed-media') && elixirVideoCount === (file.includes('tamarind') ? 2 : 5), `${lang}/${file} includes the matching supplied Elixir media`);
+      continue;
+    }
     assert(html.includes('lux-product-showcase-videos') && [5, 7].includes(videoCount), `${lang}/${file} adds related scenes to match description width and retains the original pair`);
   }
 }
