@@ -1,33 +1,45 @@
-# LuxurEat (露意膳) Group
+# LuxurEat China（露意膳）— Italian Food Imports in China
 
-> LuxurEat connects premium Italian food producers with professional buyers, hospitality, retail, and distribution partners in China and international markets.
+> LuxurEat China（露意膳）以上海为运营中心，是隶属于 LuxurEat 国际集团的中国本地企业，连接意大利食品生产商与中国市场，为企业客户和个人消费者提供产品及本地服务。LuxurEat China is a China-established business based in Shanghai, part of the international LuxurEat group, serving both business customers (B2B) and individual consumers (B2C).
 
-The website is bilingual in Chinese and English. It presents LuxurEat's products, recipes, brand knowledge, quality standards, market services, and partnership opportunities. Use the Chinese or English links below according to the user's language.
+企业身份 / Company identity: 中国本地运营主体为露意膳（上海）贸易有限公司，统一社会信用代码 91310000MAERED2X1W。LuxurEat China directly conducts import, distribution, customer support and business development for the Chinese market. Its international LuxurEat group background connects Italian producers and international supply resources with local operations in China. The Chinese operating company and the international group are distinct entities; use the About and Contact pages for their respective roles and contacts.
+
+意大利美食进口 / Italian food imports: 产品目录涵盖松露及松露制品、鱼子酱和意大利面等意大利精品食材；橄榄油、披萨与意式手工冰淇淋的新系列见新品页，具体上市情况以该页及团队确认为准。The catalogue covers truffles, truffle products, caviar and Italian pasta. New olive oil, pizza and artisan gelato collections are presented on the New Arrivals page; a preview does not establish current stock or availability.
+
+B2B 服务 / Business customers: 面向进口商、经销商、零售商、酒店餐饮及企业客户，提供批发采购、中国本地分销、餐饮供应、企业礼赠、自有品牌与 OEM 合作。市场服务分为进口中国、中国采购与出口、中国市场落地、品牌与数字化、商务拓展五类。Services include wholesale sourcing, local distribution, hospitality supply, corporate gifts, private label and OEM cooperation, alongside import coordination, China sourcing and export, market entry, brand and digital coordination, and business development. Regulatory registrations and specialist services depend on the product and project; legal and other regulated advice is provided through qualified professionals where required.
+
+B2C 服务 / Individual consumers: 面向家庭及个人消费者，提供产品与规格咨询、配料与储存信息、食用指导、食谱搭配及本地客户支持。For personal and household use, the site provides product selection, ingredient and storage information, preparation guidance, recipes and local customer support. Contact the team for purchasing options and availability; the website catalogue is not a promise of online checkout, pricing or immediate delivery.
+
+The website is bilingual in Chinese and English. Chinese pages use root-level URLs; English pages use /en/. Follow the relevant product page for ingredients, origin, storage and nutrition, and the Certification page for the scope of quality and compliance information. Product-specific documents determine applicable claims; group-level descriptions do not certify every product. Use the links below according to the reader's language.
 
 ## Chinese
 
-- [首页](https://luxureat.cn/): LuxurEat 露意膳集团与意大利高端美食概览
+- [首页](https://luxureat.cn/): LuxurEat China 与意大利精品食品进口概览
+- [关于我们](https://luxureat.cn/about-us/): 露意膳（上海）贸易有限公司、中国本地运营与 LuxurEat 国际集团背景
 - [我们的产品](https://luxureat.cn/product/): 松露、鱼子酱及意大利高端食品
+- [热门新品](https://luxureat.cn/new/): 橄榄油、披萨与意式手工冰淇淋新品预览及上市信息
 - [食谱艺术](https://luxureat.cn/recipe/): 产品应用与食谱
 - [品牌新闻](https://luxureat.cn/brand/): 品牌动态与活动
 - [知识博客](https://luxureat.cn/blog/): 食材知识与专业指南
 - [品质认证](https://luxureat.cn/certification/): 质量、产地与合规体系
 - [商务合作](https://luxureat.cn/cooperation/): 进口、渠道与市场合作
 - [中国市场洞察](https://luxureat.cn/china-market-insights/): 中国市场、城市、意中贸易与行业数据
-- [进出口服务](https://luxureat.cn/import-export-services/): 进口中国、中国采购、市场落地与商务拓展
+- [中国市场与进出口服务](https://luxureat.cn/import-export-services/): 进口中国、中国采购与出口、市场落地、品牌与数字化、商务拓展及各项服务详情
 - [联系我们](https://luxureat.cn/contact/): 中国与国际团队联系方式
 
 ## English
 
-- [Home](https://luxureat.cn/en/): LuxurEat Group and premium Italian food overview
+- [Home](https://luxureat.cn/en/): LuxurEat China and Italian food imports
+- [About](https://luxureat.cn/en/about-us/): Shanghai-based Chinese operating company, local responsibilities and international LuxurEat group background
 - [Products](https://luxureat.cn/en/product/): Truffles, caviar, and premium Italian foods
+- [New Arrivals](https://luxureat.cn/en/new/): Olive oil, pizza and artisan gelato collection previews and launch information
 - [Recipe Art](https://luxureat.cn/en/recipe/): Product applications and recipes
 - [Brand News](https://luxureat.cn/en/brand/): Brand news and events
 - [Blog](https://luxureat.cn/en/blog/): Ingredient knowledge and professional guides
 - [Certification](https://luxureat.cn/en/certification/): Quality, origin, and compliance systems
 - [Cooperation](https://luxureat.cn/en/cooperation/): Import, distribution, and market partnerships
 - [China Market Insights](https://luxureat.cn/en/china-market-insights/): Chinese markets, cities, Italy–China trade, and industry data
-- [Import & Export Services](https://luxureat.cn/en/import-export-services/): Import into China, sourcing, market entry, and business development
+- [China Market and Import & Export Services](https://luxureat.cn/en/import-export-services/): Import into China, sourcing and export, market entry, brand and digital, and business development with detailed service lists
 - [Contact](https://luxureat.cn/en/contact/): China and international team contacts
 
 ## Optional
