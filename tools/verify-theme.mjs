@@ -515,7 +515,7 @@ for (const lang of ['zh', 'en']) {
     const extra = html.match(/<div class="lux-recipe-extra-videos">([\s\S]*?)<\/div>/)?.[1] || '';
     assert([2, 3, 4, 5].includes((extra.match(/<video /g) || []).length), `${lang}/${file} adds related recipe clips`);
     assert(html.indexOf('lux-recipe-video') < html.indexOf('lux-recipe-extra-videos'), `${lang}/${file} keeps original video above added clips`);
-    assert((extra.match(/data-lux-autoplay autoplay muted loop playsinline/g) || []).length >= 2, `${lang}/${file} added clips autoplay silently`);
+    assert((extra.match(/data-lux-autoplay muted loop playsinline/g) || []).length >= 2 && !/\ssrc=|\sautoplay\s/.test(extra) && extra.includes('preload="none"'), `${lang}/${file} added clips defer transfer and autoplay silently when visible`);
   }
 }
 const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));

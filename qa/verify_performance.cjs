@@ -62,7 +62,7 @@ for (const file of [
 ]) assert.ok(size(`assets/media/brand/${file}`) <= 520 * 1024, `${file} exceeds 520 KB`);
 assert.ok(size("assets/media/events/exhibition-atlas-globe-mobile.m4v") <= 180 * 1024, "mobile event atlas video exceeds 180 KB");
 assert.ok(gzipSize("integration.css") <= 64 * 1024, "shared CSS exceeds the 64 KB compressed budget");
-assert.ok(gzipSize("assets/js/core.js") <= 15.2 * 1024, "critical shared JavaScript exceeds its 15.2 KB compressed budget");
+assert.ok(gzipSize("assets/js/core.js") <= 15.5 * 1024, "critical shared JavaScript including deferred media loading exceeds its 15.5 KB compressed budget");
 assert.ok(gzipSize("assets/js/chat.js") <= 4 * 1024, "deferred chat interface exceeds 4 KB compressed");
 assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter, footer and legal JavaScript exceeds 17 KB compressed");
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
@@ -72,7 +72,7 @@ assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeo
 assert.match(core, /const loadHomeEvents = \(\) => eventLoading \|\|=/, "homepage events still pull the product and journal data into the first view");
 assert.doesNotMatch(core, /addEventListener\("scroll", loadDeferredScripts/, "scrolling starts the heavy product and journal scripts");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");
-assert.match(read("assets/js/core.js").toString(), /addEventListener\("load", \(\) => setTimeout\(startHero, 2500\)/, "desktop hero video starts before first-screen content settles");
+assert.match(core, /addEventListener\("load", startHero, \{ once: true \}\)/, "desktop hero video must wait for first-screen content without a fixed playback delay");
 assert.match(read("assets/js/core.js").toString(), /data-lux-analytics-src/, "analytics cannot load after the mobile critical path");
 assert.doesNotMatch(core, /https:\/\/embed\.tawk\.to\//, "third-party chat still loads from the critical shared runtime");
 assert.doesNotMatch(core, /lux-tawk-placeholder|lux-chat-greeting/, "optional chat UI remains in the critical shared runtime");
