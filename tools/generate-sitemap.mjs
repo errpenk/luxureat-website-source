@@ -95,7 +95,6 @@ const xml = [
     const links = [
       zh && `    <xhtml:link rel="alternate" hreflang="zh-CN" href="${escapeXml(zh)}" />`,
       en && `    <xhtml:link rel="alternate" hreflang="en" href="${escapeXml(en)}" />`,
-      zh && `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(zh)}" />`,
     ].filter(Boolean);
     return ['  <url>', `    <loc>${escapeXml(url)}</loc>`, ...links, '  </url>'].join('\n');
   }),

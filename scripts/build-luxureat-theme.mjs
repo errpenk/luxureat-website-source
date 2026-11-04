@@ -1063,7 +1063,6 @@ function luxureat_static_seo_head() {
         $en_route = $meta['lang'] === 'en' ? $route : $meta['alternate'];
         echo '<link rel="alternate" hreflang="en" href="' . esc_url(luxureat_static_url($en_route)) . '">' . "\n";
     }
-    echo '<link rel="alternate" hreflang="x-default" href="' . esc_url(luxureat_static_url($zh_route)) . '">' . "\n";
     $is_article = in_array($meta['type'], array('Article', 'NewsArticle'), true);
     $og_type = $is_article ? 'article' : ($meta['type'] === 'Product' ? 'product' : 'website');
     echo '<meta property="og:type" content="' . esc_attr($og_type) . '">' . "\n";
