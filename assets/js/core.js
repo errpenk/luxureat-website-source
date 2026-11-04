@@ -1214,20 +1214,30 @@ function initLuxSectionFlips() {
     });
 
     if (reducedMotion || !("IntersectionObserver" in window)) return;
+    let autoFlipped = false;
     let timers = [];
     const resetAutoFlip = () => {
       timers.forEach(window.clearTimeout);
       timers = [];
       buttons.forEach((button) => button.classList.remove("is-auto-flipped"));
     };
-    new IntersectionObserver(([entry]) => {
+    const flipObserver = new IntersectionObserver(([entry]) => {
       resetAutoFlip();
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting || autoFlipped) return;
+      autoFlipped = true;
       buttons.forEach((button, index) => {
         timers.push(window.setTimeout(() => button.classList.add("is-auto-flipped"), 120 + index * 180));
         timers.push(window.setTimeout(() => button.classList.remove("is-auto-flipped"), 1050 + index * 180));
       });
-    }, { threshold: .45 }).observe(group);
+    }, { threshold: .45 });
+    flipObserver.observe(group);
+    addEventListener("pageshow", (event) => {
+      if (!event.persisted) return;
+      autoFlipped = false;
+      resetAutoFlip();
+      flipObserver.unobserve(group);
+      flipObserver.observe(group);
+    });
   });
 }
 
