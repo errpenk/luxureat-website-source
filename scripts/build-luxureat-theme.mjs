@@ -479,7 +479,7 @@ function buildAssetCatalogPhp() {
   }).join('\n');
   const byPath = [...pages.map((page) => {
     return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat', 'home-interactions'] : page.scripts)},`;
-  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('core'),`)].join('\n');
+  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('image-variants', 'core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('image-variants', 'core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('image-variants', 'core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('image-variants', 'core'),`)].join('\n');
   return { catalog, byPath };
 }
 
@@ -1171,7 +1171,7 @@ ${catalog}
 ${byPath}
     );
 
-    foreach (isset($assets_by_path[$path]) ? $assets_by_path[$path] : array('core') as $handle) {
+    foreach (isset($assets_by_path[$path]) ? $assets_by_path[$path] : array('image-variants', 'core') as $handle) {
         if (!isset($catalog[$handle])) {
             continue;
         }
