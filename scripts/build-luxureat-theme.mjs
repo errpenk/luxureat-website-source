@@ -924,7 +924,7 @@ function luxureat_static_publish_root_metadata() {
         return;
     }
 
-    foreach (array('robots.txt', 'llms.txt') as $filename) {
+    foreach (array('robots.txt', 'llms.txt', 'sitemap.xml') as $filename) {
         $source = get_template_directory() . '/' . $filename;
         $target = trailingslashit(ABSPATH) . $filename;
         if (!is_readable($source)) {
