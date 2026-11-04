@@ -202,7 +202,7 @@
       "topicLabel": "松露学院",
       "column": "松露学院",
       "eyebrow": "松露学院",
-      "title": "意大利松露地图：为什么著名产地不只有阿尔巴？",
+      "title": "意大利松露地图：主要产地不只有阿尔巴",
       "meta": "松露学院 · 2026",
       "archive": "松露学院",
       "image": placeholderImage,

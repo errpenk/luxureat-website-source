@@ -220,6 +220,55 @@
     products[`en-${slug}`] = { ...common, unit: packaging, title: `${italian} · ${packaging}`, eyebrow: "Pasta", subtitle: "Pastificio Strampelli", desc: descEn, cardDesc: descEn, mainIngredients: `Main ingredients: ${ingredientsEn}`, details: [...pastaDetails("en", ["Pasta", code, packaging, cookingEn, "", ingredientsEn, "Bronze-drawn; slowly dried for 24–48 hours at 40–45°C", "Pastificio Strampelli"]), { label: "EAN Code", value: ean }] };
   });
 
+  const elixirMedia = {
+    "dark-chocolate": [[4458588, 1.896296], [4458665, 1.777778], [5515587, 1.777778], [7015435, 1.777778], [7141506, 1.896296]],
+    strawberry: [[13674866, 1.777778], [15763722, 1.777778], [2583475, 1.777778], [6663330, 2.074975], [6664286, 2.074975]],
+    pistachio: [[15858641, 1.777778], [4389504, 1.897233], [6004931, 1.777778], [6529554, 1.777778], [7015397, 1.777778]],
+    "madagascar-vanilla": [[329918097, 1.777778], [17095007, 1.777778], [6529503, 1.777778], [6956368, 1.777778], [7015398, 1.777778]],
+    "spicy-mango": [[20054254, 1.777778], [202732639, 1.777778], [229708700, 1.777778], [234281481, 1.777778], [236261895, 1.777778]],
+    tamarind: [[328686365, 1.777778], [205637740, 1.502693, "image"], [214490562, 1.780456, "image"], [3698196, 1.777778], [264152318, 0.562667, "image"], [39468205, 0.666667, "image"]],
+  };
+  const elixirRows = [
+    ["dark-chocolate", "Dark Chocolate", "黑巧克力", "023", "0805698516723", "糖、水、天然香料、天然松露香料、可可提取物。", "Sugar, water, natural flavoring, natural truffle flavoring, cocoa extract.", 1423, 340, 84.1],
+    ["strawberry", "Strawberry", "草莓", "009", "0805698516808", "糖水、天然香料、浓缩草莓汁、柠檬酸、天然松露香料、色素 E163。", "Sweetened water, natural flavoring, concentrated strawberry juice, citric acid, natural truffle flavoring, color E163.", 1448, 346, 85.7],
+    ["spicy-mango", "Spicy Mango", "香辣芒果", "015", "0805698516860", "糖、水、天然香料、天然松露香料、浓缩芒果汁、色素 E161b 和 E150a、阿拉伯胶。", "Sugar, water, natural flavoring, natural truffle flavoring, concentrated mango juice, colors E161b and E150a, acacia gum.", 1414, 338, 83],
+    ["pistachio", "Pistachio", "开心果", "003", "0805698516747", "糖水、天然香料、天然松露香料、天然开心果香料。", "Sweetened water, natural flavoring, natural truffle flavoring, natural pistachio flavoring.", 1423, 340, 84.1],
+    ["tamarind", "Tamarind", "罗望子", "026", "0805698517065", "糖、水、天然罗望子香料、浓缩罗望子汁、天然松露香料。", "Sugar, water, natural tamarind flavoring, concentrated tamarind juice, natural truffle flavoring.", 1347, 322, 80],
+    ["madagascar-vanilla", "Madagascar Vanilla", "马达加斯加香草", "005", "0805698516761", "糖、水、天然香草香料、浓缩香草香料、浓缩柠檬汁、天然松露香料、添加剂 E202（用途待供应商确认）。", "Sugar, water, natural vanilla flavoring, concentrated vanilla flavoring, concentrated lemon juice, natural truffle flavoring, E202 (function awaiting supplier confirmation).", 1423, 340, 84.1],
+  ];
+  elixirRows.forEach(([flavour, english, chinese, code, ean, ingredientsZh, ingredientsEn, kj, kcal, carbs]) => {
+    const slug = `truffelixir-${flavour}-100ml`;
+    const image = asset(`media/products/truffelixir/${flavour}.svg`);
+    const allMedia = elixirMedia[flavour].map(([id, ratio, type = "video"]) => ({ type, ratio,
+      src: asset(`media/products/truffelixir/${type === "video" ? "videos" : "stills"}/${flavour}-${id}.${type === "video" ? "mp4" : "webp"}`),
+      poster: type === "video" ? asset(`media/products/truffelixir/stills/${flavour}-${id}.webp`) : undefined,
+    }));
+    const storyMedia = allMedia.filter(({ type }) => type === "video").slice(-2);
+    const showcaseMedia = allMedia.filter((media) => !storyMedia.includes(media));
+    const common = { id: slug, sku: `TE-ELX-100-${code}`, unit: "100 ml", category: "truffelixir", categories: ["truffelixir", "truffle"], typeKey: "syrup", manufacturer: "Truffleat S.r.l.", image, gallery: [image], showcaseMedia, storyMedia, catalogOnly: true, amount: 0, currency: "", priceLabel: "PRICE", series: "TrufflElixir" };
+    for (const lang of ["zh", "en"]) {
+      const zh = lang === "zh";
+      const summary = zh ? `TrufflElixir ${chinese}风味糖浆，含天然松露香料，意大利制造，净含量 100 ml。` : `TrufflElixir ${english.toLowerCase()} syrup with natural truffle flavoring, made in Italy. Net content: 100 ml.`;
+      const allergen = zh ? "过敏原信息尚待供应商确认；对配料过敏者请先咨询。" : "Allergen information awaits supplier confirmation; consult before use if allergic to any ingredient.";
+      const details = [
+        ["系列 / Series", "TrufflElixir"],
+        [zh ? "产品类型" : "Product Type", zh ? "风味糖浆" : "Flavoured syrup"],
+        [zh ? "产品编号" : "SKU", common.sku],
+        ["EAN-13", ean],
+        [zh ? "净含量" : "Net Content", "100 ml"],
+        [zh ? "配料（供应商资料）" : "Ingredients (supplier sheet)", zh ? ingredientsZh : ingredientsEn],
+        [zh ? "原产国" : "Country of Origin", zh ? "意大利" : "Italy"],
+        [zh ? "生产商" : "Manufacturer", "Truffleat S.r.l."],
+        [zh ? "生产地址" : "Manufacturing Facility", "Via Tuscania 9, 01028 Orte (VT), Italy"],
+        [zh ? "贮存条件" : "Storage", zh ? "阴凉干燥处保存，避免光照。" : "Store in a cool, dry place, protected from light."],
+        [zh ? "保质期" : "Shelf Life", zh ? "24 个月；生产日期及批次以实际包装为准。" : "24 months; see the actual pack for production date and batch."],
+        [zh ? "致敏提醒" : "Allergen Advice", allergen + (flavour === "pistachio" ? (zh ? " 开心果香料是否含坚果衍生成分也需确认。" : " Confirm whether the pistachio flavoring contains tree nut derivatives.") : "")],
+        [zh ? "营养资料参考值（待确认）" : "Provisional Nutrition (awaiting confirmation)", zh ? `每 100 ml：能量 ${kj} kJ / ${kcal} kcal，蛋白质 0 g，脂肪 0 g，碳水化合物 ${carbs} g，钠约 12 mg。以最终产品标签为准。` : `Per 100 ml: energy ${kj} kJ / ${kcal} kcal, protein 0 g, fat 0 g, carbohydrate ${carbs} g, sodium approximately 12 mg. Subject to confirmation against the final product label.`],
+      ].map(([label, value]) => ({ label, value }));
+      products[`${lang}-${slug}`] = { ...common, title: zh ? `TrufflElixir ${chinese}风味糖浆 · 100 ml` : `TrufflElixir ${english} · 100 ml`, eyebrow: zh ? "风味糖浆" : "Flavoured syrup", subtitle: zh ? english : "TrufflElixir", desc: summary, cardDesc: summary, mainIngredients: `${zh ? "配料：" : "Ingredients: "}${zh ? ingredientsZh : ingredientsEn}`, details };
+    }
+  });
+
   const productVideoIds = {
     "white-truffle-oil-60ml": [33460121, 4109923],
     "white-truffle-oil-250ml": [14527415, 5897983],
@@ -315,6 +364,7 @@
     "refresh-4253330": 1.777778
 };
   for (const product of Object.values(products)) {
+    if (product.series === "TrufflElixir") continue;
     product.videoIds = productVideoIds[product.id] || [];
     const id = product.id;
     const group = /(?:oil|evoo)-/.test(id) && !id.includes("slices") ? "oil"

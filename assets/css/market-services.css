@@ -1766,6 +1766,11 @@ html[lang="en"] .lux-service-detail-list { font-family: var(--lux-en-body); }
 
 html[lang="en"] .lux-service-detail-list :is(li, a) { line-height: 1.4; }
 html[lang="en"] .lux-service-detail-list li { padding-block: 5px; }
+html[lang="en"] .lux-service-detail-list { align-self: start; height: auto; min-height: 0; align-content: start; }
+html[lang="en"] .lux-service-detail-list li { margin-block: 0; min-height: 0; }
+@media (min-width: 901px) {
+  html[lang="en"] .lux-service-group:nth-child(n+3) .lux-service-detail-list { grid-template-rows: repeat(7, auto); }
+}
 
 html[lang="en"] .lux-service-group:nth-child(-n+2) .lux-service-detail-list { align-self: start; }
 html[lang="en"] .lux-service-group:nth-child(-n+2) .lux-service-detail-list li { display: flex; align-items: flex-start; }
