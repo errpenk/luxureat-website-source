@@ -437,7 +437,8 @@ function initLuxProductDetails() {
         key,
         item,
         index,
-        score: (productFamily(key) === productFamily(id) ? 100 : 0)
+        score: (product.series && item.series === product.series ? 200 : 0)
+          + (productFamily(key) === productFamily(id) ? 100 : 0)
           + (productUse(key) && productUse(key) === productUse(id) ? 40 : 0)
           + (item.categories?.some((category) => product.categories?.includes(category)) ? 10 : 0),
       }))

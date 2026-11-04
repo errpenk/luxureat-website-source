@@ -18,13 +18,15 @@ const applyAcademyCms = () => {
   for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
     const id = key.split(":")[0];
     for (const articles of [window.LUXUREAT_ACADEMY_DATA?.articles, window.LUXUREAT_ARTICLE_DATA?.articles]) {
-      if (articles?.[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, ...(cms.cmsHtml !== undefined ? { cmsHtml: cms.cmsHtml } : {}), ...(cms.image ? { image: cms.image } : {}) });
+      if (articles && Object.hasOwn(articles, id)) Object.assign(articles[id], { title: cms.title, intro: cms.intro, ...(cms.cmsHtml !== undefined ? { cmsHtml: cms.cmsHtml } : {}), ...(cms.image ? { image: cms.image } : {}) });
     }
   }
 };
 applyAcademyCms();
 const loadAcademyArticle = (id) => {
-  const cached = window.LUXUREAT_ARTICLE_DATA?.articles?.[id];
+  if (!/^(?:zh|en)-academy-[a-z0-9-]+$/.test(id)) return Promise.resolve(false);
+  const articles = window.LUXUREAT_ARTICLE_DATA?.articles || {};
+  const cached = Object.hasOwn(articles, id) ? articles[id] : undefined;
   const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
   if (cached?.sections && (!cms || cached.cmsHtml)) return Promise.resolve(true);
   if (academyArticleLoading.has(id)) return academyArticleLoading.get(id);
@@ -32,6 +34,7 @@ const loadAcademyArticle = (id) => {
     const ready = await loadScript(`../data/academy-articles/${encodeURIComponent(id)}.js`);
     if (ready) {
       applyAcademyCms();
+      if (!Object.hasOwn(window.LUXUREAT_ARTICLE_DATA?.articles || {}, id)) return false;
       const article = window.LUXUREAT_ARTICLE_DATA.articles[id];
       if (window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`]) {
         try {
