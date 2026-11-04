@@ -6,3 +6,4 @@
 
 .lux-brand-promise-feature>img,.lux-brand-promise-card>img{clip-path:inset(0);transition:transform .85s cubic-bezier(.4,0,.2,1),clip-path .85s cubic-bezier(.4,0,.2,1)}.lux-brand-promise-feature>img:hover,.lux-brand-promise-card>img:hover{clip-path:inset(1.22%);transform:scale(1.025)}@media(prefers-reduced-motion:reduce){.lux-brand-promise-feature>img,.lux-brand-promise-card>img{transition:none}}
 .lux-reader-article-cta:is(:hover,:focus-visible){border-color:#81d8d0;background:#81d8d0;color:#101010}
+@media(max-width:720px){.lux-brand-promise-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

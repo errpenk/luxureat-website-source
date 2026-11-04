@@ -14402,9 +14402,6 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-recipe-extra-videos video { display: block; width: 0; min-width: 0; height: auto; flex-basis: 0; object-fit: contain; background: transparent; }
 @media (max-width: 640px) { .lux-recipe-extra-videos { gap: 6px; } }
 
-.lux-journal-season-grid.has-single-card { display: block; max-width: 420px; margin-inline: auto; }
-
-
 .lux-catalogue-switch { display: inline-flex; align-items: stretch; width: fit-content; max-width: 100%; margin: 16px auto 0; padding: 4px; gap: 4px; border: .5px solid #fff; background: rgba(0, 28, 26, .55); }
 .lux-catalogue-switch a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 22px; color: #e5f7f4; font-size: 14px; line-height: 1.4; text-decoration: none; white-space: nowrap; }
 .lux-catalogue-switch a[aria-current="page"] { background: #9df5ec; color: #004b47; }
@@ -14419,3 +14416,38 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 
 /* Current page remains visible in the footer without waiting for interaction. */
 .lux-footer nav a[aria-current="page"] { color: #9df5ec !important; }
+@media (max-width: 720px) {
+  .lux-home-page .lux-feature-intro,
+  .lux-home-page .lux-home-partnership-manufacturing-head-copy,
+  .lux-home-page .lux-home-partnership-process header,
+  .lux-home-page .lux-home-partnership-manufacturing-advantages,
+  .lux-about-program,
+  .lux-recipe-library > header,
+  .lux-recipe-theme > header,
+  .lux-recent-events-head,
+  .lux-exhibition-map-head,
+  .lux-academy-intro,
+  #quality-system > div.max-w-3xl,
+  #certification-system > div:last-child {
+    text-align: center;
+  }
+
+  .lux-home-page .lux-feature-intro p,
+  .lux-home-page .lux-home-partnership-manufacturing-head-copy p,
+  .lux-home-page .lux-home-partnership-process header p,
+  .lux-about-program p,
+  #quality-system > div.max-w-3xl p,
+  #certification-system > div:last-child p {
+    margin-inline: auto;
+  }
+
+  .lux-home-page .lux-feature-intro a { justify-content: center; }
+  .lux-home-page .lux-feature-intro .lux-feature-values-link { margin-left: 0; }
+  .lux-home-page .lux-home-partnership-manufacturing-advantages > div { text-align: center; }
+  .lux-home-page .lux-home-partnership-manufacturing-advantages dt { justify-content: center; }
+  .lux-home-page .lux-home-partnership-manufacturing-advantages dd { margin-inline: auto; }
+  .lux-home-page .lux-home-partnership-process ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lux-home-page .lux-home-partnership-process ol > li:last-child { grid-column: 1 / -1; width: calc(50% - 8px); justify-self: center; }
+  .lux-academy-card-copy h2 { text-align: center; }
+  .lux-footer nav a { font-family: var(--lux-page-heading) !important; }
+}
