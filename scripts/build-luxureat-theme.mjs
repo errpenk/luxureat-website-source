@@ -518,7 +518,7 @@ function functionsPhp() {
   const seoCatalog = buildSeoCatalogPhp();
   const eventIds = [...new Set(eventInputs.map((event) => event.id))];
   const recipeVideoRows = recipeInputs.filter((article) => article.video).map((article) =>
-    `        '${escapePhpString(article.id)}' => array('slug' => '${escapePhpString(article.slug)}', 'lang' => '${article.lang}', 'description' => '${escapePhpString(article.video.description)}', 'note' => '${escapePhpString(article.recipe.nutritionNote || '')}', 'ratios' => array(${(article.extraVideoRatios || []).join(', ')}), 'extras' => array(${(article.extraVideos || []).map((src) => "'" + escapePhpString(articleAsset(src).replace('../', '/')) + "'").join(', ')})),`
+    `        '${escapePhpString(article.id)}' => array('slug' => '${escapePhpString(article.slug)}', 'lang' => '${article.lang}', 'description' => '${escapePhpString(article.video.description)}', 'note' => '${escapePhpString(article.recipe.nutritionNote || '')}', 'ratios' => array(${(article.extraVideoRatios || []).join(', ')}), 'extras' => array(${(article.extraVideos || []).map((src) => "'" + escapePhpString(articleAsset(src).replace(/^(\.\.\/)+/, '/')) + "'").join(', ')})),`
   ).join('\n');
   return `<?php
 if (!defined('ABSPATH')) {

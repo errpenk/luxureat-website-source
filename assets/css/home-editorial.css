@@ -8,7 +8,7 @@
 .lux-elixir-actions { margin-top: 28px; }
 .lux-elixir-actions a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 22px; border: 1px solid #004b47; color: #004b47; }
 .lux-elixir-actions a:is(:hover, :focus-visible) { background: #9df5ec; }
-@media (max-width: 760px) { .lux-elixir-intro { grid-template-columns: 1fr; margin-top: 40px; gap: 24px; } .lux-elixir-intro figure { height: 260px; } }
+@media (max-width: 760px) { .lux-elixir-intro { grid-template-columns: 1fr; margin-top: 40px; gap: 24px; } .lux-elixir-intro figure { height: 260px; } .lux-elixir-copy h2, .lux-elixir-actions { text-align: center; } }
 .lux-home-page {
   --home-black: #101312;
   --home-deep: #171c1b;
