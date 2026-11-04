@@ -14393,3 +14393,18 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-recipe-extra-videos { display: flex; align-items: flex-start; gap: 8px; width: min(100%, 720px); margin: 20px auto; }
 .lux-recipe-extra-videos video { display: block; width: 0; min-width: 0; height: auto; flex-basis: 0; object-fit: contain; background: transparent; }
 @media (max-width: 640px) { .lux-recipe-extra-videos { gap: 6px; } }
+
+.lux-journal-season-grid.has-single-card { display: block; max-width: 420px; margin-inline: auto; }
+
+
+.lux-catalogue-switch { display: inline-flex; align-items: stretch; width: fit-content; max-width: 100%; margin: 16px auto 0; padding: 4px; gap: 4px; border: .5px solid #fff; background: rgba(0, 28, 26, .55); }
+.lux-catalogue-switch a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 22px; color: #e5f7f4; font-size: 14px; line-height: 1.4; text-decoration: none; white-space: nowrap; }
+.lux-catalogue-switch a[aria-current="page"] { background: #9df5ec; color: #004b47; }
+.lux-catalogue-switch a:hover { color: #9df5ec; }
+.lux-catalogue-switch a[aria-current="page"]:hover { background: #004b47; }
+.lux-catalogue-switch a:focus-visible { outline: 2px solid #9df5ec; outline-offset: 3px; }
+.lux-page-hero-content > .lux-catalogue-switch { margin-top: 0; }
+.lux-new-hero .lux-hero-support::before { display: none; }
+@media (max-width: 640px) {
+  .lux-catalogue-switch a { padding-inline: 16px; }
+}

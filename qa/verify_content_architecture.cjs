@@ -149,7 +149,7 @@ assert(marketServicesCss.includes("background: linear-gradient(#e9e6df 0 50%, #e
 assert(marketServicesCss.includes(".lux-faq-tools {\n    position: sticky;\n    top: 72px;") && marketServicesCss.includes("#italian-wine .lux-ms-heading .lux-ms-lead { color: #292621; }"), "mobile FAQ tools are not sticky or wine copy lacks light-background contrast");
 const marketInsightsRuntime = read("assets/js/market-insights.js");
 assert(marketInsightsRuntime.includes('document.querySelectorAll("[data-market-copy-group]")') && marketServicesCss.includes("content: attr(data-market-card-explanation)"), "market-card explanatory copy transitions are missing");
-assert(marketServicesCss.includes("grid-template-rows: 330px 300px 300px") && marketServicesCss.includes(".lux-service-bento a small {\n  position: absolute;"), "service bento cards do not keep a fixed hover footprint");
+assert(marketServicesCss.includes("grid-template-rows: auto auto") && marketServicesCss.includes(".lux-service-group > a small {\n  position: absolute;"), "service bento cards do not keep a fixed hover footprint");
 
 assert(!html.includes("assets/images/"), "HTML still references assets/images");
 assert(!html.includes("assets/article-images/"), "HTML still references assets/article-images");

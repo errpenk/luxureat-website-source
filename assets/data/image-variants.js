@@ -232,6 +232,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/market-services/service-bridge-caviar-retail.webp": "media/market-services/service-bridge-caviar-retail-mobile.webp",
   "media/market-services/service-bridge-caviar-tasting.webp": "media/market-services/service-bridge-caviar-tasting-mobile.webp",
   "media/market-services/service-bridge-warehouse.webp": "media/market-services/service-bridge-warehouse-mobile.webp",
+  "media/market-services/service-nav-business-development.webp": "media/market-services/service-nav-business-development-720.webp",
   "media/market-services/service-nav-import.webp": "media/market-services/service-nav-import-720.webp",
   "media/market-services/service-nav-sourcing.webp": "media/market-services/service-nav-sourcing-720.webp",
   "media/market-services/sourcing-team.webp": "media/market-services/sourcing-team-mobile.webp",

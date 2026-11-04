@@ -2,7 +2,7 @@
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const touchMode = matchMedia("(hover: none), (pointer: coarse)");
   const deferredBackgrounds = document.querySelectorAll([
-    ".lux-service-bento a",
+    ".lux-service-group > a",
     "#import-into-china .lux-ms-process article",
     ".lux-flip-orbit-front",
     "#sourcing-export .lux-ms-card",
@@ -32,7 +32,7 @@
       card.classList.toggle("is-tapped");
     });
   });
-  const serviceLinks = [...document.querySelectorAll(".lux-service-bento a")];
+  const serviceLinks = [...document.querySelectorAll(".lux-service-group > a")];
   const expandableServiceLinks = touchMode.matches && !matchMedia("(max-width: 640px)").matches;
   if (expandableServiceLinks) serviceLinks.forEach((link) => link.addEventListener("click", (event) => {
     if (link.classList.contains("is-tapped")) return;
