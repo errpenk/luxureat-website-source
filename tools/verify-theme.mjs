@@ -127,7 +127,7 @@ assert(!generatedPages.includes('data-account-open') && !generatedPages.includes
 assert(fs.statSync(path.join(themeDir, 'screenshot.png')).size <= 100 * 1024, 'theme preview screenshot stays below 100 KB');
 assert(!walk(themeDir).some((file) => path.basename(file) === '.DS_Store'), 'theme package excludes Finder metadata');
 assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles');
-assert(functionsPhp.includes("$handle === 'luxureat-integration' && in_array($path, array('zh', 'en'), true)") && functionsPhp.includes("media='print' onload"), 'WordPress home defers shared CSS after inline first-view styles');
+assert(!functionsPhp.includes("media='print' onload"), 'WordPress applies the final shared stylesheet before first paint');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
 assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'chat', 'product-data', 'products')"), 'functions.php loads shared and product behavior in dependency order');
@@ -621,6 +621,7 @@ assert(!zhGifting.includes('拥有食品进口资质') && !enGifting.includes('f
 
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
+assert([zhHome, enHome].every((home) => !/<link\b[^>]+rel="stylesheet"[^>]+media="print"/.test(home)), 'bilingual homepages apply final layout styles before painting');
 assert(!zhHome.includes('embed.tawk.to') && !enHome.includes('embed.tawk.to'), 'bilingual pages do not connect to chat before user intent');
 assert(['EXPLORE LUXUREAT / 探索露意膳', 'CURATED SELECTION / 品质精选', 'CHINA PARTNERSHIP / 渠道合作', 'REAL PARTNERSHIP / 真实合作现场', 'HOW WE WORK / 合作流程'].every((label) => zhHome.includes(label)), 'Chinese homepage bilingual kickers keep English before Chinese');
 assert(!zhHome.includes('OUR VALUES / 品牌根基') && !zhHome.includes('为卓越风味打造的') && !zhHome.includes('从意大利家族餐桌上的一份食谱'), 'Chinese homepage values section omits its introductory copy');

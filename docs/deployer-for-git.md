@@ -77,3 +77,7 @@ LuxurEat Static
 ```
 
 Future source changes should be made in `errpenk/luxureat-website-source`. The generated theme repository should be treated as a deployment target.
+
+## Page cache
+
+WP Super Cache is enabled in Simple mode for anonymous visitors; logged-in visitors bypass the cache. LiteSpeed page caching is unavailable on this host. After publishing, open a WordPress admin page to run the theme build-version check and clear old page caches; verify the public HTML contains the new stylesheet version.
