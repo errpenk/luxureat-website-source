@@ -2523,6 +2523,8 @@ html[lang^="zh"] .lux-reader-archive-card strong {
 .lux-latest-event {
   position: relative;
   overflow: hidden;
+  /* Reserve the async carousel/map block before events.js hydrates it. */
+  min-height: 1200px;
   padding: clamp(70px, 8vw, 108px) clamp(22px, 5vw, 80px);
   background: #eeeae5;
   color: #1f2424;
@@ -9737,6 +9739,7 @@ body {
   }
 }
 @media (max-width: 767px) {
+  .lux-latest-event { min-height: 0; }
   .lux-latest-event .lux-meet-map {
     background-position: center;
     background-size: cover;
