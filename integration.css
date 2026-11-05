@@ -14410,6 +14410,8 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-catalogue-switch a:focus-visible { outline: 2px solid #9df5ec; outline-offset: 3px; }
 .lux-page-hero-content > .lux-catalogue-switch { margin-top: 0; }
 .lux-new-hero .lux-hero-support::before { display: none; }
+.lux-product-video-notes { display: grid; gap: 24px; margin-top: 32px; }
+.lux-product-video-notes > p { margin: 0; }
 @media (max-width: 640px) {
   .lux-catalogue-switch a { padding-inline: 16px; }
 }
