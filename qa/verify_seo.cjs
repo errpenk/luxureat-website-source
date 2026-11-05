@@ -48,6 +48,7 @@ try {
   assert.match(robots, /Allow: \/wp-admin\/admin-ajax\.php/);
   assert.doesNotMatch(robots, /Disallow: \/(?:en\/)?(?:bag|cart|checkout|my-account)\//, "obsolete commerce paths do not need dedicated crawler directives");
   assert.match(robots, /Sitemap: https:\/\/luxureat\.cn\/sitemap\.xml/);
+  assert.doesNotMatch(robots, /^Agentmap:/m, "robots.txt must contain only standard crawler directives");
   assert.doesNotMatch(robots, /Disallow: \/assets\//, "search engines need access to render assets");
 
   const llms = read("llms.txt");
