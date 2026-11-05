@@ -1777,5 +1777,3 @@ html[lang="en"] .lux-service-group:nth-child(-n+2) .lux-service-detail-list li {
 
 .lux-service-detail-list { color: #84610c; }
 .lux-service-detail-list a:is(:hover, :focus-visible) { color: #005a54; }
-
-html[lang] body.lux-import-export-page .lux-ms-card h3[lang="en"] { font-family: "Nyght Serif" !important; font-weight: 400 !important; }

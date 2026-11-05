@@ -14,7 +14,7 @@ function initLuxReader() {
   }
   for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
     const id = key.split(":")[0];
-    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, ...(cms.cmsHtml !== undefined ? { cmsHtml: cms.cmsHtml } : {}), ...(cms.date ? { date: cms.date } : {}), ...(cms.image ? { image: cms.image } : {}) });
+    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.date ? { date: cms.date } : {}), ...(cms.image ? { image: cms.image } : {}) });
   }
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
   const galleryItems = window.LUXUREAT_GALLERY_DATA || [];
@@ -586,10 +586,6 @@ function initLuxReader() {
       const image = node.querySelector("img");
       const background = node.querySelector(".lux-dark-photo-bg, [style*='background-image']");
       if (image) {
-        image.removeAttribute("srcset");
-        image.removeAttribute("sizes");
-        image.removeAttribute("data-lux-mobile-src");
-        if (image.hasAttribute("data-lux-src")) image.setAttribute("data-lux-src", article.cardImage || article.image);
         image.src = article.cardImage || article.image;
         image.alt = article.cardTitle || article.title;
         if (article.cardPosition || article.coverPosition) image.style.objectPosition = article.cardPosition || article.coverPosition;
@@ -853,7 +849,7 @@ function initLuxReader() {
               <video controls playsinline preload="none" poster="${escapeHtml(article.image)}" aria-label="${escapeHtml(article.title)} — ${article.lang === "zh" ? "菜品相关素材画面" : "related stock footage"}"><source src="${escapeHtml(article.video.src)}" type="video/mp4"></video>
               <figcaption>${escapeHtml(article.video.description)}</figcaption>
             </figure>` : ""}
-            ${article.extraVideos?.length ? `<div class="lux-recipe-extra-videos">${article.extraVideos.map((src, index) => `<video style="flex-grow: ${article.extraVideoRatios[index]}; aspect-ratio: ${article.extraVideoRatios[index]}" data-lux-autoplay muted loop playsinline preload="none" controls aria-label="${escapeHtml(article.title)} ${index + 1}"><source data-src="${escapeHtml(src)}" type="video/mp4"></video>`).join("")}</div>` : ""}
+            ${article.extraVideos?.length ? `<div class="lux-recipe-extra-videos">${article.extraVideos.map((src, index) => `<video style="flex-grow: ${article.extraVideoRatios[index]}; aspect-ratio: ${article.extraVideoRatios[index]}" data-lux-autoplay autoplay muted loop playsinline preload="metadata" controls aria-label="${escapeHtml(article.title)} ${index + 1}"><source src="${escapeHtml(src)}" type="video/mp4"></video>`).join("")}</div>` : ""}
           </section>
           <section class="lux-recipe-details">
             ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.professionalTip, recipe.professionalTip], [recipeLabels.foodSafety, recipe.foodSafety], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}

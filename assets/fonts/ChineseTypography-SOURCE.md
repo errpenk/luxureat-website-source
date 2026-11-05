@@ -30,5 +30,3 @@ The derivative uses a distinct family and filename. To replace it with the origi
 - Run `npm run check` after changing Chinese copy. The content-architecture check scans all Chinese source text, compares it with the coverage manifest, and rejects unapproved text-font declarations.
 
 Both files retain the original layout tables and WOFF2 compression.
-
-The homepage complete subsets also include the TrufflElixir introduction. Regenerate both homepage complete WOFF2 files when that copy changes, retaining their existing glyph coverage.

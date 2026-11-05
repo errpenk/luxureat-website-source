@@ -57,7 +57,6 @@
   });
   if (("IntersectionObserver" in window) && !reducedMotion) document.querySelectorAll("#sourcing-export .lux-ms-card-grid, #brand-digital .lux-ms-card-grid").forEach((group) => {
     const cards = [...group.querySelectorAll(".lux-ms-card")];
-    let autoRevealed = false;
     let timers = [];
     const reset = () => {
       timers.forEach(clearTimeout);
@@ -65,23 +64,14 @@
       cards.forEach((card) => card.classList.remove("is-auto-revealed"));
     };
 
-    const revealObserver = new IntersectionObserver(([entry]) => {
+    new IntersectionObserver(([entry]) => {
       reset();
-      if (!entry.isIntersecting || autoRevealed) return;
-      autoRevealed = true;
+      if (!entry.isIntersecting) return;
       cards.forEach((card, index) => {
         timers.push(setTimeout(() => card.classList.add("is-auto-revealed"), index * 140));
         timers.push(setTimeout(() => card.classList.remove("is-auto-revealed"), 1050 + index * 140));
       });
-    }, { threshold: .22 });
-    revealObserver.observe(group);
-    addEventListener("pageshow", (event) => {
-      if (!event.persisted) return;
-      autoRevealed = false;
-      reset();
-      revealObserver.unobserve(group);
-      revealObserver.observe(group);
-    });
+    }, { threshold: .22 }).observe(group);
   });
 
   document.querySelectorAll(".lux-flip-orbit").forEach((button) => {

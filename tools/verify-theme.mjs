@@ -108,11 +108,6 @@ for (const file of [
 const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
-const assetsByPath = functionsPhp.match(/\$assets_by_path = array\(([\s\S]*?)\n    \);/)?.[1] || '';
-assert(assetsByPath.length > 0, 'generated route asset mapping exists');
-for (const [, route, handles] of assetsByPath.matchAll(/'([^']+)' => array\(([^)]*)\)/g)) {
-  if (handles.includes("'core'")) assert(handles.includes("'image-variants'") && handles.indexOf("'image-variants'") < handles.indexOf("'core'"), `${route} registers core's image dependency so WordPress prints the video runtime`);
-}
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
 for (const [page, count] of [['blog', 68], ['product', 53], ['recipe', 25], ['brand', 12]]) {
   for (const lang of ['zh', 'en']) {
@@ -145,7 +140,7 @@ assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && 
 assert(functionsPhp.includes("define('DONOTCACHEPAGE', true);") && functionsPhp.indexOf("define('DONOTCACHEPAGE', true);") < functionsPhp.indexOf('status_header(410);'), '410 responses bypass WP Super Cache');
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
 assert(functionsPhp.includes('luxureat_static_disable_consumer_commerce') && functionsPhp.includes("in_array($path, array('cart', 'checkout', 'my-account', 'en/cart', 'en/checkout', 'en/my-account'), true)") && functionsPhp.includes("luxureat_static_url($language . '/product'), 301"), 'legacy WooCommerce consumer pages redirect to the product catalogue even without WooCommerce conditional tags');
-assert(functionsPhp.includes('luxureat_static_publish_root_metadata') && functionsPhp.includes("add_action('after_setup_theme', 'luxureat_static_publish_root_metadata', 1)") && functionsPhp.includes("array('robots.txt', 'llms.txt', 'sitemap.xml', '.well-known/ard.json')") && functionsPhp.includes("trailingslashit(ABSPATH) . $filename") && functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("'/sitemap.xml' =>") && functionsPhp.includes("'/.well-known/ard.json' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes("header_remove('Set-Cookie')") && functionsPhp.includes("header('Vary: Accept-Encoding', true)") && functionsPhp.includes('luxureat_baidu_site_verification'), 'root search metadata publishing and cacheable fallbacks ship in the generated theme');
+assert(functionsPhp.includes('luxureat_static_publish_root_metadata') && functionsPhp.includes("add_action('after_setup_theme', 'luxureat_static_publish_root_metadata', 1)") && functionsPhp.includes("array('robots.txt', 'llms.txt')") && functionsPhp.includes("trailingslashit(ABSPATH) . $filename") && functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes("header_remove('Set-Cookie')") && functionsPhp.includes("header('Vary: Accept-Encoding', true)") && functionsPhp.includes('luxureat_baidu_site_verification'), 'root search metadata publishing and cacheable fallbacks ship in the generated theme');
 assert(functionsPhp.includes("'/catalogues/tin-caviar-brochure.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
@@ -520,7 +515,7 @@ for (const lang of ['zh', 'en']) {
     const extra = html.match(/<div class="lux-recipe-extra-videos">([\s\S]*?)<\/div>/)?.[1] || '';
     assert([2, 3, 4, 5].includes((extra.match(/<video /g) || []).length), `${lang}/${file} adds related recipe clips`);
     assert(html.indexOf('lux-recipe-video') < html.indexOf('lux-recipe-extra-videos'), `${lang}/${file} keeps original video above added clips`);
-    assert((extra.match(/data-lux-autoplay muted loop playsinline/g) || []).length >= 2 && !/\ssrc=|\sautoplay\s/.test(extra) && extra.includes('preload="none"'), `${lang}/${file} added clips defer transfer and autoplay silently when visible`);
+    assert((extra.match(/data-lux-autoplay autoplay muted loop playsinline/g) || []).length >= 2, `${lang}/${file} added clips autoplay silently`);
   }
 }
 const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));
