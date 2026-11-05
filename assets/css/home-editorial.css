@@ -145,7 +145,7 @@
 
 .lux-home-page .lux-home-inline-newsletter {
   padding: clamp(90px, 9vw, 130px) 24px;
-  background: linear-gradient(rgba(5, 13, 12, .65), rgba(5, 13, 12, .8)), url('../media/brand/home-selected-products-background.webp') center/cover;
+  background: linear-gradient(rgba(5, 13, 12, .65), rgba(5, 13, 12, .8)), var(--lux-home-bg, none) center/cover;
 }
 .lux-home-page .lux-home-inline-newsletter .lux-newsletter-inner { width: min(760px, 100%); grid-template-columns: 1fr; gap: 26px; padding: clamp(30px, 5vw, 60px); background: rgba(247, 246, 242, .95); color: #171b19; text-align: center; }
 .lux-home-page .lux-home-inline-newsletter .lux-newsletter-intro { display: block; transform: none; }
@@ -199,13 +199,13 @@
 
 .lux-home-page .lux-partnership-parallax {
   height: clamp(180px, 22vw, 320px);
-  background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-parallax.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), var(--lux-home-bg, none);
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
 }
 .lux-home-page .lux-partnership-parallax-real {
-  background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-real-parallax.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), var(--lux-home-bg, none);
 }
 .lux-home-page .lux-home-partnership-continuum { background: #f2efe9; }
 .lux-home-page .lux-home-partnership-continuum::before,
@@ -241,7 +241,7 @@
   .lux-home-page #selected-products > .grid > .group { min-width: 0; aspect-ratio: 3 / 4 !important; }
   .lux-home-page #selected-products > .grid > .group > div:last-child > h3 { left: 10px; bottom: 12px; width: calc(100% - 56px); font-size: 17px !important; }
   .lux-home-page #selected-products > .grid > .group > div:last-child > p { left: 10px; bottom: 12px; display: -webkit-box; width: calc(100% - 56px); overflow: hidden; font-size: 10px !important; line-height: 1.25 !important; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
-  .lux-home-page .lux-partnership-parallax { height: 180px; background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-parallax-720.webp'); background-attachment: scroll; }
+  .lux-home-page .lux-partnership-parallax { height: 180px; background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), var(--lux-home-bg, none); background-attachment: scroll; }
   .lux-home-page .lux-home-topic-preview header { margin-bottom: 28px; }
   .lux-home-page .lux-home-topic-grid { grid-template-columns: 1fr; }
   .lux-home-page .lux-topic-preview-card { min-height: 124px; gap: 16px; }
@@ -255,5 +255,5 @@
   .lux-home-page .lux-advantage-front img { width: 136px; }
   .lux-home-page .lux-home-advantages-grid .lux-lucide { margin: 0 0 14px; }
   .lux-home-page .lux-home-maison { min-height: 580px; }
-  .lux-home-page .lux-partnership-parallax-real { background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), url('../media/brand/home-partnership-real-parallax-720.webp'); }
+  .lux-home-page .lux-partnership-parallax-real { background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), var(--lux-home-bg, none); }
 }

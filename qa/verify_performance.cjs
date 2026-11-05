@@ -14,6 +14,9 @@ assert.match(homeCritical, /flex-direction:row!important/);
 assert.match(homeCritical, /width:auto!important/);
 const core = read("assets/js/core.js").toString();
 const chat = read("assets/js/chat.js").toString();
+const homeEditorial = read("assets/css/home-editorial.css").toString();
+assert.doesNotMatch(homeEditorial, /url\(["']\.\.\/media\/brand\/home-(?:selected-products-background|partnership-(?:real-)?parallax)/, "offscreen editorial backgrounds still download before the viewport loader");
+assert.match(homeCritical, /content-visibility:auto/, "homepage containment waits for deferred CSS");
 const htaccess = read(".htaccess").toString();
 const ard = JSON.parse(read(".well-known/ard.json"));
 assert.ok(Array.isArray(ard.entries) && ard.entries.length > 0, "ARD manifest has no entries");
@@ -105,6 +108,7 @@ for (const lang of ["zh", "en"]) {
     assert.match(home, new RegExp(`${stylesheet}\\.css[^\"]*\" media=\"print\" onload=`), `${lang} home ${stylesheet} still blocks first paint`);
   }
   assert.match(home, /integration\.css[^\"]*" media="print" onload=/, `${lang} static home integration CSS still blocks first paint`);
+  assert.match(home, /home-editorial\.css[^\"]*" media="print" onload=/, `${lang} home editorial CSS still blocks first paint`);
   assert.doesNotMatch(home, /(?:preconnect|dns-prefetch)[^>]+embed\.tawk\.to/, "homepage still connects to chat before user intent");
   assert.match(home, /assets\/js\/chat\.js/, "homepage does not load the lightweight local chat greeting");
   assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite-v2\.webp/);
@@ -113,6 +117,13 @@ for (const lang of ["zh", "en"]) {
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
   assert.match(home, /data-lux-deferred-scripts/);
+  const marketSlide = home.match(/<img[^>]+class="lux-market-slide is-active"[^>]*>/)?.[0] || "";
+  assert.match(marketSlide, /data-lux-mobile-src=/, `${lang} deferred values image has no mobile candidate`);
+  assert.match(marketSlide, /data-lux-src=/, `${lang} offscreen values image bypasses the viewport loader`);
+  assert.doesNotMatch(marketSlide, /\s(?:src|srcset)=/, `${lang} values image starts a duplicate native request`);
+  for (const background of ["home-selected-products-background", "home-partnership-parallax", "home-partnership-real-parallax"]) {
+    assert.ok(home.includes(`data-lux-home-bg="../assets/media/brand/${background}.webp"`), `${lang} ${background} bypasses the viewport loader`);
+  }
   for (const background of ["home-selected-curated-background", "home-values-background", "home-brand-journey-background", "home-partnership-process"]) {
     assert.match(home, new RegExp(`data-lux-home-bg="\\.\\.\\/assets\\/media\\/brand\\/${background}\\.webp"`), `${lang} homepage background is requested before its section`);
   }
@@ -156,7 +167,7 @@ for (const match of allHtml.matchAll(/<img\b[^>]*(?:\.avif|\.gif|\.jpe?g|\.png|\
 }
 for (const lang of ["zh", "en"]) for (const name of fs.readdirSync(path.join(root, lang)).filter((file) => file.endsWith(".html"))) {
   const html = read(`${lang}/${name}`).toString();
-  for (const match of html.matchAll(/<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
+  for (const match of html.matchAll(/<img\b[^>]*\ssrc=["']([^"']+)["'][^>]*>/gi)) {
     const source = match[1].split(/[?#]/, 1)[0];
     if (!/^\.\.\/assets\/media\/.*\.(?:avif|jpe?g|png|webp)$/i.test(source)) continue;
     const file = path.resolve(root, lang, source);

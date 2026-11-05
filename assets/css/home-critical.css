@@ -35,3 +35,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 @media(min-width:1280px) and (max-width:1550px){.lux-header{padding-inline:clamp(16px,1.8vw,28px);gap:clamp(10px,1vw,16px)}.lux-brand{width:58px}.lux-nav,.lux-actions{gap:clamp(5px,.5vw,8px)}.lux-nav a,.lux-lang{font-size:10px;letter-spacing:.06em}html[lang^="en"] .lux-nav{gap:clamp(6px,.55vw,10px)}}
 @media(max-width:1279px){.lux-header{grid-template-columns:auto 1fr}.lux-nav{grid-column:1/-1;display:none}.lux-menu{display:inline-flex}}
 @media(max-width:720px){.lux-header{padding-inline:18px}.lux-brand{width:58px}.lux-brand img{width:54px;height:54px}.lux-menu{width:72px;height:38px;align-items:center;justify-content:center;padding:0;font-size:12px;font-weight:700}.lux-home-hero{min-height:100svh;padding-block:32px}.lux-home-hero-content{top:0}.lux-home-hero-actions{flex-direction:row!important;align-items:stretch;gap:12px!important;flex-wrap:wrap}.lux-home-hero-action{flex:0 0 auto!important;width:auto!important}}
+
+/* Keep below-the-fold layout deferred while full stylesheets load. */
+.lux-home-page > :is(section, aside, footer){content-visibility:auto;contain-intrinsic-size:auto 900px}
+.lux-home-page > .lux-home-partnership-continuum{contain-intrinsic-size:auto 1800px}

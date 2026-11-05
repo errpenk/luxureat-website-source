@@ -289,8 +289,8 @@ function render(page, dimensions) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   const italicPage = page.lang === "zh" && ["journal", "rituals", "gallery", "certification", "market-insights", "contact"].includes(page.key);
-  const integrationVersion = `${page.key === "rituals" ? "-recipe-pagination2-recipe-videos4" : ["gallery", "news"].includes(page.key) ? "-gallery18" : "-desktop-nav3"}-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10${italicPage ? "-final-italic1" : ""}`;
-  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("journal.css") ? "-featured-layout2" : asset.endsWith("import-export-catalogues.css") ? "-brand2" : asset.endsWith("gallery-viewer.css") ? "-gallery21-final-italic1" : asset.endsWith("market-services.css") && page.lang === "zh" && page.key === "market-insights" ? "-final-italic1" : asset.endsWith("rituals.css") ? "-recipe2" : asset.endsWith("home-editorial.css") ? "-ugolini20" : ""}`);
+  const integrationVersion = `${page.key === "rituals" ? "-recipe-pagination2-recipe-videos4" : ["gallery", "news"].includes(page.key) ? "-gallery18" : "-desktop-nav3"}-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10-perf1${italicPage ? "-final-italic1" : ""}`;
+  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("journal.css") ? "-featured-layout2" : asset.endsWith("import-export-catalogues.css") ? "-brand2" : asset.endsWith("gallery-viewer.css") ? "-gallery21-final-italic1" : asset.endsWith("market-services.css") && page.lang === "zh" && page.key === "market-insights" ? "-final-italic1" : asset.endsWith("rituals.css") ? "-recipe2" : asset.endsWith("home-editorial.css") ? "-ugolini20-perf1" : ""}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
   } else {
@@ -304,7 +304,7 @@ function render(page, dimensions) {
     } else {
       html = html.replace(/(?=<link rel="stylesheet" href="\.\.\/assets\/css\/tailwind-home\.css)/, `${criticalMarkup}\n`);
     }
-    html = html.replace(/<link rel="stylesheet" href="(\.\.\/(?:integration\.css|assets\/css\/(?:tailwind-home|newsletter|home-watermarks-lock)\.css)\?v=[^"]+)">/g,
+    html = html.replace(/<link rel="stylesheet" href="(\.\.\/(?:integration\.css|assets\/css\/(?:tailwind-home|newsletter|home-watermarks-lock|home-editorial)\.css)\?v=[^"]+)">/g,
       (_, href) => `<link rel="stylesheet" href="${href}" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="${href}" rel="stylesheet"></noscript>`);
   }
   html = html.replace(/<link rel="preload" href="\.\.\/assets\/fonts\/KingHwaOldSong-subset\.woff2" as="font" type="font\/woff2" crossorigin>\n?/g, "");

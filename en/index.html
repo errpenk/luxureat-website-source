@@ -50,6 +50,10 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 @media(min-width:1280px) and (max-width:1550px){.lux-header{padding-inline:clamp(16px,1.8vw,28px);gap:clamp(10px,1vw,16px)}.lux-brand{width:58px}.lux-nav,.lux-actions{gap:clamp(5px,.5vw,8px)}.lux-nav a,.lux-lang{font-size:10px;letter-spacing:.06em}html[lang^="en"] .lux-nav{gap:clamp(6px,.55vw,10px)}}
 @media(max-width:1279px){.lux-header{grid-template-columns:auto 1fr}.lux-nav{grid-column:1/-1;display:none}.lux-menu{display:inline-flex}}
 @media(max-width:720px){.lux-header{padding-inline:18px}.lux-brand{width:58px}.lux-brand img{width:54px;height:54px}.lux-menu{width:72px;height:38px;align-items:center;justify-content:center;padding:0;font-size:12px;font-weight:700}.lux-home-hero{min-height:100svh;padding-block:32px}.lux-home-hero-content{top:0}.lux-home-hero-actions{flex-direction:row!important;align-items:stretch;gap:12px!important;flex-wrap:wrap}.lux-home-hero-action{flex:0 0 auto!important;width:auto!important}}
+
+/* Keep below-the-fold layout deferred while full stylesheets load. */
+.lux-home-page > :is(section, aside, footer){content-visibility:auto;contain-intrinsic-size:auto 900px}
+.lux-home-page > .lux-home-partnership-continuum{contain-intrinsic-size:auto 1800px}
 </style>
 <!-- lux:home-critical:end -->
 <link rel="stylesheet" href="../assets/css/tailwind-home.css?v=20261104-mobile-grids-flips" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../assets/css/tailwind-home.css?v=20261104-mobile-grids-flips" rel="stylesheet"></noscript>
@@ -87,10 +91,10 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
         ::-webkit-scrollbar-thumb { background: #353535; }
     </style>
 
-<link rel="stylesheet" href="../integration.css?v=20261104-mobile-grids-flips-desktop-nav3-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../integration.css?v=20261104-mobile-grids-flips-desktop-nav3-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="../integration.css?v=20261104-mobile-grids-flips-desktop-nav3-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10-perf1" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../integration.css?v=20261104-mobile-grids-flips-desktop-nav3-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10-perf1" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="../assets/css/home-watermarks-lock.css?v=20261104-mobile-grids-flips" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../assets/css/home-watermarks-lock.css?v=20261104-mobile-grids-flips" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="../assets/css/newsletter.css?v=20261104-mobile-grids-flips" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../assets/css/newsletter.css?v=20261104-mobile-grids-flips" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="../assets/css/home-editorial.css?v=20261104-mobile-grids-flips-ugolini20">
+<link rel="stylesheet" href="../assets/css/home-editorial.css?v=20261104-mobile-grids-flips-ugolini20-perf1" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="../assets/css/home-editorial.css?v=20261104-mobile-grids-flips-ugolini20-perf1" rel="stylesheet"></noscript>
 <link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">
 <link rel="ard" href="https://luxureat.cn/.well-known/ard.json">
 </head>
@@ -231,7 +235,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 </section>
 <section class="lux-home-market-system" id="market-system" data-lux-home-bg="../assets/media/brand/home-values-background.webp" aria-label="Our Values">
 <div class="lux-market-slides" aria-hidden="true">
-<img width="2000" height="1143" srcset="../assets/media/brand/home-values-background-720.webp?v=20261104-mobile-grids-flips 720w, ../assets/media/brand/home-values-background.webp 2000w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-values-background-720.webp?v=20261104-mobile-grids-flips" class="lux-market-slide is-active" src="../assets/media/brand/home-values-background.webp" alt="" loading="eager" decoding="async">
+<img width="2000" height="1143" data-lux-mobile-src="../assets/media/brand/home-values-background-720.webp?v=20261104-mobile-grids-flips" class="lux-market-slide is-active" data-lux-src="../assets/media/brand/home-values-background.webp" alt="" loading="lazy" decoding="async">
 <img srcset="../assets/media/brand/home-flavour-caviar-720.webp?v=20261104-mobile-grids-flips 720w, ../assets/media/brand/home-flavour-caviar.webp 1600w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-flavour-caviar-720.webp?v=20261104-mobile-grids-flips" width="1600" height="1067" class="lux-market-slide" src="../assets/media/brand/home-flavour-caviar.webp" alt="" loading="lazy" decoding="async">
 <img srcset="../assets/media/brand/home-flavour-truffle-one-720.webp?v=20261104-mobile-grids-flips 720w, ../assets/media/brand/home-flavour-truffle-one.webp 1600w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-flavour-truffle-one-720.webp?v=20261104-mobile-grids-flips" width="1600" height="1067" class="lux-market-slide" src="../assets/media/brand/home-flavour-truffle-one.webp" alt="" loading="lazy" decoding="async">
 <img srcset="../assets/media/brand/home-flavour-truffle-two-720.webp?v=20261104-mobile-grids-flips 720w, ../assets/media/brand/home-flavour-truffle-two.webp 1600w" sizes="100vw" data-lux-mobile-src="../assets/media/brand/home-flavour-truffle-two-720.webp?v=20261104-mobile-grids-flips" width="1600" height="1067" class="lux-market-slide" src="../assets/media/brand/home-flavour-truffle-two.webp" alt="" loading="lazy" decoding="async">
@@ -264,7 +268,7 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 </ul>
 </div>
 </aside>
-<section class="lux-newsletter lux-home-inline-newsletter" aria-labelledby="lux-newsletter-inline-title-en">
+<section class="lux-newsletter lux-home-inline-newsletter" data-lux-home-bg="../assets/media/brand/home-selected-products-background.webp" aria-labelledby="lux-newsletter-inline-title-en">
   <div class="lux-newsletter-inner">
     <div class="lux-newsletter-intro"><img width="1024" height="1024" class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/newsletter-envelope-gold.svg" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-inline-title-en">LUXUREAT (露意膳) JOURNAL | SUBSCRIBE TO OUR UPDATES</h2><p>Receive new product releases, brand events and notes on authentic Italian flavour. Confirm your subscription through the email we send you.</p></div></div>
     <form class="lux-newsletter-form" data-newsletter-form novalidate>
@@ -293,7 +297,7 @@ Please enter a valid email address."></p>
 </figure>
 </div>
 </section>
-<div class="lux-partnership-parallax" aria-hidden="true"></div>
+<div class="lux-partnership-parallax" data-lux-home-bg="../assets/media/brand/home-partnership-parallax.webp" aria-hidden="true"></div>
 <div class="lux-home-partnership-continuum">
 <section class="lux-home-why" id="china-partnership" aria-labelledby="lux-home-why-title">
 <div class="lux-home-why-media">
@@ -317,7 +321,7 @@ Please enter a valid email address."></p>
 </div>
 </div>
 </section>
-<div class="lux-partnership-parallax lux-partnership-parallax-real" aria-hidden="true"></div>
+<div class="lux-partnership-parallax lux-partnership-parallax-real" data-lux-home-bg="../assets/media/brand/home-partnership-real-parallax.webp" aria-hidden="true"></div>
 <section class="lux-home-partnership-manufacturing" aria-labelledby="partnership-manufacturing-title-en">
 <div class="lux-home-partnership-manufacturing-top">
 <header class="lux-home-partnership-manufacturing-head"><div class="lux-home-partnership-manufacturing-head-copy"><span>REAL PARTNERSHIP / ON THE GROUND</span><h2 id="partnership-manufacturing-title-en">Real Italian origins, real professional settings</h2><p>Our partnerships extend beyond sourcing pages into production, trade fairs, professional kitchens and active channels. Every programme is grounded in verifiable products, people and delivery capability.</p></div><div class="lux-home-partnership-manufacturing-orbits" aria-hidden="true"><figure><img srcset="../assets/media/brand/home-china-partnership-roberto-mobile.webp?v=20261104-mobile-grids-flips 720w, ../assets/media/brand/home-china-partnership-roberto.jpg 960w" sizes="100vw" width="720" height="901" data-lux-mobile-src="../assets/media/brand/home-china-partnership-roberto-mobile.webp?v=20261104-mobile-grids-flips" loading="lazy" decoding="async" src="../assets/media/brand/home-china-partnership-roberto.jpg" alt=""></figure><figure><img srcset="../assets/media/brand/home-partnership-italy-pavilion-mobile.webp?v=20261104-mobile-grids-flips 640w, ../assets/media/brand/home-partnership-italy-pavilion.webp 860w" sizes="100vw" width="720" height="1279" data-lux-mobile-src="../assets/media/brand/home-partnership-italy-pavilion-mobile.webp?v=20261104-mobile-grids-flips" loading="lazy" decoding="async" src="../assets/media/brand/home-partnership-italy-pavilion.webp" alt=""></figure></div></header>

@@ -603,7 +603,15 @@ for (const href of [
 assert(zhGifting.includes('特色经营') && enGifting.includes('Specialty Operations') && zhGifting.includes('specialty-operation.webp') && enGifting.includes('specialty-operation.webp'), 'bilingual partnership cases use the requested specialty-operation title and image');
 assert(integrationCss.includes('grid-template-rows: auto 1fr auto') && integrationCss.includes('min-height: 182px'), 'China partnership columns align their headings, dividers, QR codes, and contact details');
 assert(integrationCss.includes('.lux-home-gifting-image img:nth-child(3)') && integrationCss.includes('z-index: 6'), 'the requested homepage partnership photo stays above the collage');
-assert(['#selected-products {', '.lux-home-market-system {', '.lux-home-why {', '.lux-home-gifting {'].every((selector) => integrationCss.includes(selector)) && integrationCss.includes('Lightweight editorial geometry for the four homepage story containers'), 'four homepage story containers use lightweight CSS background ornaments');
+for (const [selector, background] of [
+  ['#selected-products', 'radial-gradient('],
+  ['.lux-home-market-system', 'var(--lux-home-bg, none)'],
+  ['.lux-home-why', 'radial-gradient('],
+  ['.lux-home-gifting', 'repeating-linear-gradient('],
+]) {
+  assert(integrationCss.split(selector + ' {').slice(1).some((block) => block.split('}')[0].includes(background)), selector + ' preserves its live homepage background');
+}
+assert((integrationCss.match(/\{/g) || []).length === (integrationCss.match(/\}/g) || []).length, 'shared stylesheet has balanced rule blocks');
 assert(integrationCss.includes('rotateY(0deg) translateZ(1px)') && integrationCss.includes('-webkit-transform: rotateY(180deg) translateZ(1px)'), 'certification card faces remain isolated during English and Chinese flips');
 assert(hasExactHref(zhGifting, 'mailto:china@luxureat.com') && hasExactHref(zhGifting, 'mailto:roberto@ugolinigroup.com') && hasExactHref(enGifting, 'mailto:china@luxureat.com') && hasExactHref(enGifting, 'mailto:roberto@ugolinigroup.com'), 'bilingual gifting contact block routes each displayed email to itself');
 assert(zhGifting.includes('mailto:roberto@ugolinigroup.com?subject=') && enGifting.includes('mailto:roberto@ugolinigroup.com?subject='), 'bilingual generic gifting email actions default to Roberto');

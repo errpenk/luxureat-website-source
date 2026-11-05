@@ -29,10 +29,6 @@
 }
 
 
-.lux-home-page > :is(section, aside, footer) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
 .lux-scroll-reveal {
   opacity: 0;
   translate: 0 12px;

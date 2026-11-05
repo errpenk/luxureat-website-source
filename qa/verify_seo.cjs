@@ -12,8 +12,9 @@ const sitemapFile = path.join(temporary, "sitemap.xml");
 try {
   execFileSync(process.execPath, [path.join(root, "tools/generate-sitemap.mjs"), sitemapFile]);
   const sitemap = fs.readFileSync(sitemapFile, "utf8");
-  assert.equal((sitemap.match(/<url>/g) || []).length, 330, "sitemap must contain every public bilingual page and detail route");
+  assert.equal((sitemap.match(/<url>/g) || []).length, 342, "sitemap must contain every public bilingual page and detail route");
   assert.doesNotMatch(sitemap, /\/bag\//, "shopping bags must not be indexed");
+  assert.doesNotMatch(sitemap, /hreflang="x-default"/, "sitemap language alternates must match the live Chinese and English pairs");
   for (const route of [
     "/blog/caviar-after-opening/",
     "/blog/dictionary-spaghetti-history/",
@@ -37,8 +38,8 @@ try {
     assert.ok(sitemap.includes(`<loc>https://luxureat.cn${route}</loc>`), `sitemap is missing ${route}`);
   }
   assert.doesNotMatch(sitemap, /\/(?:en\/)?events\//, "removed standalone event layouts must not remain in the sitemap");
-  for (const language of ["zh-CN", "en", "x-default"]) {
-    assert.equal((sitemap.match(new RegExp(`hreflang="${language}"`, "g")) || []).length, 330, `${language} alternates are incomplete`);
+  for (const language of ["zh-CN", "en"]) {
+    assert.equal((sitemap.match(new RegExp(`hreflang="${language}"`, "g")) || []).length, 342, `${language} alternates are incomplete`);
   }
 
   const robots = read("robots.txt");
@@ -52,7 +53,7 @@ try {
   assert.doesNotMatch(robots, /Disallow: \/assets\//, "search engines need access to render assets");
 
   const llms = read("llms.txt");
-  assert.match(llms, /^# LuxurEat \(露意膳\) Group$/m);
+  assert.match(llms, /^# LuxurEat China（露意膳）— Italian Food Imports in China$/m);
   assert.match(llms, /^> .+/m);
   assert.match(llms, /^## Chinese$/m);
   assert.match(llms, /^## English$/m);
