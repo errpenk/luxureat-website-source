@@ -1,6 +1,4 @@
 # LuxurEat search crawler policy
-Agentmap: https://luxureat.cn/.well-known/ard.json
-
 User-agent: *
 Disallow: /wp-admin/
 Allow: /wp-admin/admin-ajax.php

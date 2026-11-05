@@ -120,7 +120,15 @@ html[lang^="zh"] .lux-catalogue-toggle::after { content: "单击即可在线浏�
   text-align: center;
 }
 
+.lux-catalogue-copy:has(.is-tin) { background: #000; }
+.lux-catalogue-copy:has(.is-tin) h3 { color: #fff; }
+.lux-catalogue-copy:has(.is-tin) p,
+.lux-catalogue-copy:has(.is-tin) .lux-catalogue-pages { color: #d3cec5; }
+.lux-catalogue-copy:has(.is-tin) .lux-catalogue-actions a:last-child { color: #9df5ec; }
+
 .lux-catalogue-logo-link { display: inline-flex; align-items: center; justify-content: center; }
+@font-face { font-family: "Lux Catalogue Latin"; src: url("../fonts/NyghtSerif-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+html[lang] body .lux-catalogue-copy h3 .lux-catalogue-brand { font-family: "Lux Catalogue Latin", serif !important; font-size: inherit; font-weight: 400 !important; -webkit-text-stroke: 0; }
 .lux-catalogue-logo { display: block; object-fit: contain; transition: transform .3s ease; }
 .lux-catalogue-logo-link:hover .lux-catalogue-logo,
 .lux-catalogue-logo-link:focus-visible .lux-catalogue-logo { transform: scale(1.035); }

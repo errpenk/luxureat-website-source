@@ -18,17 +18,39 @@ const applyAcademyCms = () => {
   for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
     const id = key.split(":")[0];
     for (const articles of [window.LUXUREAT_ACADEMY_DATA?.articles, window.LUXUREAT_ARTICLE_DATA?.articles]) {
-      if (articles?.[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.image ? { image: cms.image } : {}) });
+      if (articles && Object.hasOwn(articles, id)) Object.assign(articles[id], { title: cms.title, intro: cms.intro, ...(cms.cmsHtml !== undefined ? { cmsHtml: cms.cmsHtml } : {}), ...(cms.image ? { image: cms.image } : {}) });
     }
   }
 };
 applyAcademyCms();
 const loadAcademyArticle = (id) => {
-  if (window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return Promise.resolve(true);
+  if (!/^(?:zh|en)-academy-[a-z0-9-]+$/.test(id)) return Promise.resolve(false);
+  const articles = window.LUXUREAT_ARTICLE_DATA?.articles || {};
+  const cached = Object.hasOwn(articles, id) ? articles[id] : undefined;
+  const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
+  if (cached?.sections && (!cms || cached.cmsHtml)) return Promise.resolve(true);
   if (academyArticleLoading.has(id)) return academyArticleLoading.get(id);
   const loading = (async () => {
     const ready = await loadScript(`../data/academy-articles/${encodeURIComponent(id)}.js`);
-    if (ready) applyAcademyCms();
+    if (ready) {
+      applyAcademyCms();
+      if (!Object.hasOwn(window.LUXUREAT_ARTICLE_DATA?.articles || {}, id)) return false;
+      const article = window.LUXUREAT_ARTICLE_DATA.articles[id];
+      if (window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`]) {
+        try {
+          const url = new URL(`${id.startsWith('zh-') ? '' : 'en/'}blog/${encodeURIComponent(article.slug)}/`, location.origin);
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Article request failed');
+          const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+          const content = doc.querySelector('.lux-reader-copy');
+          if (!content) throw new Error('Article content missing');
+          article.cmsHtml = content.innerHTML;
+        } catch {
+          academyArticleLoading.delete(id);
+          return false;
+        }
+      }
+    }
     return ready && loadAcademyReader();
   })();
   academyArticleLoading.set(id, loading);
@@ -46,10 +68,16 @@ document.addEventListener("pointerover", (event) => {
 document.addEventListener("click", (event) => {
   const trigger = event.target.closest?.(academyTriggerSelector);
   const id = academyTriggerId(trigger);
-  if (!id || window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return;
+  if (!id) return;
+  const article = window.LUXUREAT_ARTICLE_DATA?.articles?.[id];
+  const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
+  if (article?.sections && (!cms || article.cmsHtml)) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  loadAcademyArticle(id).then((ready) => { if (ready) trigger.click(); });
+  loadAcademyArticle(id).then((ready) => {
+    if (ready) trigger.click();
+    else if (article?.slug) location.assign(new URL(`${id.startsWith('zh-') ? '' : 'en/'}blog/${encodeURIComponent(article.slug)}/`, location.origin));
+  });
 }, true);
 
 function initCaviarAcademy() {

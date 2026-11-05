@@ -1,6 +1,18 @@
 const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-storage-index]");
+  if (!button) return;
+  const gallery = button.closest(".lux-product-storage-gallery");
+  gallery.querySelectorAll("[data-storage-image]").forEach((image) => {
+    image.classList.toggle("is-active", image.dataset.storageImage === button.dataset.storageIndex);
+  });
+  gallery.querySelectorAll("[data-storage-index]").forEach((thumb) => {
+    thumb.setAttribute("aria-pressed", String(thumb === button));
+  });
+});
+
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
@@ -272,6 +284,7 @@ if (luxDeferredScripts) {
   const deferredUrl = (path) => {
     const url = new URL(path, coreUrl);
     url.search = coreUrl.search;
+    url.searchParams.set("content", "20261105-product-copy7");
     return url.href;
   };
   const data = ["../data/products.js", "../data/journal.js"].map(deferredUrl);
@@ -357,6 +370,7 @@ const prepareLuxVideo = (video) => {
   video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
 };
 const startLuxVideo = (video) => {
+  if (!video.isConnected || video.dataset.luxVideoVisible !== "true") return;
   prepareLuxVideo(video);
   if (video.dataset.luxPlayPending) return;
   video.dataset.luxPlayPending = "true";
@@ -371,12 +385,33 @@ const startLuxVideo = (video) => {
 const luxVideoObserver = "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting) {
+      target.dataset.luxVideoVisible = "true";
+      loadLuxVideo(target);
       target.preload = "auto";
       startLuxVideo(target);
     } else {
+      delete target.dataset.luxVideoVisible;
       target.pause();
     }
   }), { rootMargin: luxIsMobile ? "400px 0px" : "200px 0px", threshold: .01 })
+  : null;
+const loadLuxVideo = (video) => {
+  let changed = false;
+  [video, ...video.querySelectorAll("source[data-src]")].forEach((source) => {
+    if (!source.dataset.src) return;
+    source.src = source.dataset.src;
+    delete source.dataset.src;
+    changed = true;
+  });
+  if (changed) video.load();
+};
+const luxVideoPreloadObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries, observer) => entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    target.preload = target.dataset.luxVideoVisible === "true" ? "auto" : luxSaveData ? "none" : "metadata";
+    loadLuxVideo(target);
+    observer.unobserve(target);
+  }), { rootMargin: "300px", threshold: 0 })
   : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
@@ -386,15 +421,22 @@ const initLuxVideo = (video) => {
   if (video.matches(".lux-hero-video")) {
     const startHero = () => {
       if (luxIsMobile || luxSaveData) return;
-      video.preload = "auto";
-      startLuxVideo(video);
+      if (luxVideoObserver) luxVideoObserver.observe(video);
+      else {
+        video.dataset.luxVideoVisible = "true";
+        loadLuxVideo(video);
+        startLuxVideo(video);
+      }
     };
-    if (document.readyState === "complete") setTimeout(startHero, 2500);
-    else addEventListener("load", () => setTimeout(startHero, 2500), { once: true });
+    if (document.readyState === "complete") startHero();
+    else addEventListener("load", startHero, { once: true });
   } else if (!luxVideoObserver) {
+    video.dataset.luxVideoVisible = "true";
+    loadLuxVideo(video);
     video.preload = "auto";
     startLuxVideo(video);
   } else {
+    if (!luxIsMobile && !luxSaveData) luxVideoPreloadObserver?.observe(video);
     luxVideoObserver.observe(video);
   }
 };
@@ -735,6 +777,7 @@ if (luxNav && luxMenu) {
       const link = document.createElement("a");
       link.href = pageHref(href);
       link.textContent = label;
+      if (href === currentPage || (href === "product.html" && currentPage === "new.html") || pathParts.includes(href.replace(/\.html$/, ""))) link.setAttribute("aria-current", "page");
       return link;
     }));
   }
@@ -1184,20 +1227,30 @@ function initLuxSectionFlips() {
     });
 
     if (reducedMotion || !("IntersectionObserver" in window)) return;
+    let autoFlipped = false;
     let timers = [];
     const resetAutoFlip = () => {
       timers.forEach(window.clearTimeout);
       timers = [];
       buttons.forEach((button) => button.classList.remove("is-auto-flipped"));
     };
-    new IntersectionObserver(([entry]) => {
+    const flipObserver = new IntersectionObserver(([entry]) => {
       resetAutoFlip();
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting || autoFlipped) return;
+      autoFlipped = true;
       buttons.forEach((button, index) => {
         timers.push(window.setTimeout(() => button.classList.add("is-auto-flipped"), 120 + index * 180));
         timers.push(window.setTimeout(() => button.classList.remove("is-auto-flipped"), 1050 + index * 180));
       });
-    }, { threshold: .45 }).observe(group);
+    }, { threshold: .45 });
+    flipObserver.observe(group);
+    addEventListener("pageshow", (event) => {
+      if (!event.persisted) return;
+      autoFlipped = false;
+      resetAutoFlip();
+      flipObserver.unobserve(group);
+      flipObserver.observe(group);
+    });
   });
 }
 

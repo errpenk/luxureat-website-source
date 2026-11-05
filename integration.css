@@ -27,6 +27,8 @@
 .material-symbols-outlined::before {
   content: attr(data-icon);
 }
+
+
 .lux-home-page > :is(section, aside, footer) {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
@@ -52,6 +54,8 @@
     transition: none;
   }
 }
+
+
 .lux-academy-page {
   margin: 0;
   background: #f4f2ee;
@@ -716,6 +720,7 @@ html[lang="en"] h1 {
   transition: transform .28s ease, border-color .28s ease, background .28s ease;
   transform-origin: center;
 }
+
 .lux-footprint-card > p:not(.lux-footprint-role),
 .lux-footprint-card > a {
   font-size: var(--lux-footprint-detail-size) !important;
@@ -983,6 +988,7 @@ header:has(.lux-hero-fade-both) {
 .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/cert-food-safety.webp"); }
 .lux-card-photo-two { --lux-card-bg: url("assets/media/brand/cert-quality-products.webp"); }
 .lux-card-photo-three { --lux-card-bg: url("assets/media/brand/cert-gallery-truffle-hand.webp"); }
+
 .lux-muted-block {
   background: rgb(102, 100, 96) !important;
 }
@@ -1634,8 +1640,8 @@ body.lux-reader-open {
 }
 .lux-product-image:hover img { transform: scale(1.04); }
 .lux-product-gallery.is-elixir :is(.lux-product-image, .lux-product-thumb) { aspect-ratio: 4 / 3; background: #171a18; }
-.lux-product-seo-page.is-elixir .lux-reader-cover { aspect-ratio: 4 / 3; padding: 0; background: #171a18; }
-.lux-product-seo-page.is-elixir .lux-reader-cover img { width: 100%; height: auto; min-height: 0; aspect-ratio: 4 / 3; object-fit: contain; border: 0; }
+.lux-product-seo-page.is-elixir .lux-reader-cover { aspect-ratio: 4 / 3; padding: 0; background: #fff; }
+.lux-product-seo-page.is-elixir .lux-reader-cover img { display: block; width: 100%; height: 100%; min-height: 0; aspect-ratio: auto; object-fit: contain; border: 1px solid #171717; }
 .lux-product-image-lightbox {
   width: min(94vw, 1400px);
   height: min(92vh, 1000px);
@@ -1803,11 +1809,6 @@ body.lux-reader-open {
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: #1c1b1b;
-}
-.lux-product-video-note {
-  display: grid;
-  gap: 18px;
-  margin-top: 32px;
 }
 @media (max-width: 600px) {
   .lux-product-videos {
@@ -2277,6 +2278,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-menu { display: inline-flex; }
 }
 @media (max-width: 1439px) { .lux-footer-grid { grid-template-columns: 1fr 1fr; } }
+
 @media (max-width: 720px) {
   .lux-header { padding-inline: 18px; }
   .lux-brand { width: 58px; }
@@ -2313,6 +2315,7 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   .lux-product-recent-inner { width: calc(100% - 40px); }
   .lux-product-recent-nav { inset-inline: 8px; }
 }
+
 @media (min-width: 1024px) {
   .lux-gift-grid {
     display: flex !important;
@@ -2324,8 +2327,10 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
     scroll-snap-align: start;
   }
 }
-:root {
-/* Navigation interaction contract: state changes color only; Title-case labels need a larger optical size; Match the partnership CTA to Explore Partnership; About-page closing statement: restrained KingHwa display treatment; Shared non-home hero: kicker, title and support copy form one centered stack; Editorial hero tail: one horizontal rule followed by a centered fading stem; Mobile editorial heroes: center the copy without the decorative stem; Every page-top hero follows the homepage's 14px / 18px support scale; Lightweight editorial geometry for the four homepage story containers. */
+
+
+/* QA contracts: Navigation interaction contract: state changes color only; Title-case labels need a larger optical size; Match the partnership CTA to Explore Partnership; About-page closing statement: restrained KingHwa display treatment; Shared non-home hero: kicker, title and support copy form one centered stack; Editorial hero tail: one horizontal rule followed by a centered fading stem; Mobile editorial heroes: center the copy without the decorative stem; Every page-top hero follows the homepage's 14px / 18px support scale; Lightweight editorial geometry for the four homepage story containers. */
+
 :root {
   --lux-type-mega: 80px;
   --lux-type-xl: 56px;
@@ -2341,11 +2346,13 @@ body:has(.lux-nav.open) { overflow-x: hidden; }
   --lux-type-nav: 13px;
   --lux-type-number: 80px;
 }
+
 h1.font-display,
 h1.font-headline {
   font-size: clamp(56px, 7vw, var(--lux-type-mega)) !important;
   line-height: 1.05 !important;
 }
+
 h2.font-display,
 h2.font-headline,
 .lux-modules h2,
@@ -2353,6 +2360,7 @@ h2.font-headline,
   font-size: clamp(36px, 5vw, var(--lux-type-xl)) !important;
   line-height: 1.1 !important;
 }
+
 h3.font-display,
 h3.font-headline,
 .lux-product-story h3,
@@ -2361,12 +2369,14 @@ h3.font-headline,
   font-size: var(--lux-type-lg) !important;
   line-height: 1.2 !important;
 }
+
 .lux-reader-copy h3,
 .lux-reader-hero-copy h2,
 .lux-footer-modal-body h2 {
   font-size: var(--lux-type-md) !important;
   line-height: 1.5 !important;
 }
+
 .lux-footprint-heading strong,
 .lux-footprint-card summary strong,
 .lux-reader-archive-card strong,
@@ -2374,6 +2384,7 @@ h3.font-headline,
   font-size: var(--lux-type-title) !important;
   line-height: 1.2 !important;
 }
+
 p,
 li,
 input,
@@ -2387,6 +2398,7 @@ select,
   font-size: var(--lux-type-body) !important;
   line-height: 1.5 !important;
 }
+
 small,
 .lux-footer a,
 .lux-footer button,
@@ -2398,12 +2410,14 @@ small,
   font-size: var(--lux-type-body-sm) !important;
   line-height: 1.5 !important;
 }
+
 .lux-nav a,
 .lux-actions a,
 .lux-lang {
   font-size: var(--lux-type-nav) !important;
   line-height: 1.4 !important;
 }
+
 button,
 [data-purchase-cta],
 [data-product-open],
@@ -2417,6 +2431,7 @@ button,
   font-size: var(--lux-type-button) !important;
   line-height: 1 !important;
 }
+
 .lux-footprint-heading small,
 .lux-footprint-card summary small,
 .lux-reader-archive-copy > span,
@@ -2427,15 +2442,18 @@ button,
   font-size: var(--lux-type-caption-up) !important;
   line-height: 1.4 !important;
 }
+
 .lux-product-summary > .lux-product-price {
   font-size: clamp(56px, 6vw, var(--lux-type-number)) !important;
   line-height: 1 !important;
 }
+
 @media (max-width: 640px) {
   h1.font-display,
   h1.font-headline {
     font-size: 32px !important;
   }
+
   h2.font-display,
   h2.font-headline,
   .lux-modules h2,
@@ -2443,6 +2461,9 @@ button,
     font-size: var(--lux-type-lg) !important;
   }
 }
+
+
+
 .lux-footer .lux-with-icon {
   display: flex !important;
   align-items: center;
@@ -2458,6 +2479,7 @@ button,
   color: #9df5ec;
   opacity: .9;
 }
+
 h1.zh-display-title {
   font-family: var(--lux-page-heading);
   font-size: clamp(64px, 8.4vw, 120px) !important;
@@ -2465,6 +2487,7 @@ h1.zh-display-title {
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
+
 html[lang^="zh"] :is(
   .zh-display-title,
   .font-display,
@@ -2480,6 +2503,7 @@ html[lang^="zh"] :is(
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
+
 html[lang^="zh"] .article-card h4,
 html[lang^="zh"] .lux-reader-archive-card strong {
   color: #c9a227 !important;
@@ -2488,12 +2512,14 @@ html[lang^="zh"] .lux-reader-archive-card:hover strong,
 html[lang^="zh"] .lux-reader-archive-card:focus-visible strong {
   color: #c9a227 !important;
 }
+
 html[lang^="zh"] .lux-reader-archive h2,
 html[lang^="zh"] .lux-reader-archive-card strong {
   font-family: var(--lux-page-heading);
   font-weight: 700 !important;
   letter-spacing: 0 !important;
 }
+
 .lux-latest-event {
   position: relative;
   overflow: hidden;
@@ -2532,6 +2558,7 @@ html[lang^="zh"] .lux-reader-archive-card strong {
   overflow: hidden;
   contain: paint;
 }
+
 video[autoplay],
 video[data-lux-autoplay] {
   pointer-events: none;
@@ -2702,9 +2729,12 @@ video[data-lux-autoplay]::-webkit-media-controls-play-button {
 @media (prefers-reduced-motion: reduce) {
   .lux-latest-event-track { transition: none; }
 }
+
 .lux-action-copy {
   font-size: 18px !important;
 }
+
+
 .lux-home-maison {
   position: relative;
   isolation: isolate;
@@ -2897,6 +2927,8 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
 @media (prefers-reduced-motion: reduce) {
   video.lux-home-maison-media { display: none; }
 }
+
+
 .lux-home-editorial {
   position: relative;
   overflow: hidden;
@@ -2959,6 +2991,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
 }
 .lux-home-harvest-facts h4,
 .lux-home-harvest-facts p { margin-top: 0; }
+
 .lux-home-harvest {
   background:
     linear-gradient(rgba(102, 100, 96, .86), rgba(102, 100, 96, .86)),
@@ -3018,6 +3051,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   font-size: 18px !important;
   letter-spacing: 0 !important;
 }
+
 .lux-home-gifting {
   background: #070707;
 }
@@ -3129,6 +3163,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   display: grid;
   gap: 7px;
 }
+
 @media (max-width: 900px) {
   .lux-home-editorial {
     padding: 72px 20px;
@@ -3174,10 +3209,13 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
     border-left: 0;
   }
 }
+
+
 .lux-event-detail-link {
   background: transparent !important;
   transform-origin: left center;
 }
+
 .lux-home-why {
   position: relative;
   isolation: isolate;
@@ -3241,6 +3279,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
 .lux-home-why-metrics strong {
   font-variant-numeric: tabular-nums;
 }
+
 @media (max-width: 767px) {
   .lux-latest-event-carousel::before {
     top: 18px;
@@ -3259,6 +3298,8 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
     font-size: 10px;
   }
 }
+
+
 .lux-journal-season-head::before {
   content: "";
   position: absolute;
@@ -3290,12 +3331,14 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
 .lux-journal-season-card:nth-child(3) { grid-column: 9 / 13; }
 .lux-journal-season-card .lux-reader-media { aspect-ratio: 4 / 5; }
 .lux-journal-season-card:nth-child(2) .lux-reader-media { aspect-ratio: 4 / 4.5; }
+
 @media (max-width: 900px) {
   .lux-journal-season-grid { grid-template-columns: 1fr; }
   .lux-journal-season-card:nth-child(n) { grid-column: 1; margin-top: 0; }
   .lux-journal-season-card .lux-reader-media,
   .lux-journal-season-card:nth-child(2) .lux-reader-media { aspect-ratio: 4 / 3; }
 }
+
 .lux-narrative-link {
   appearance: none;
   display: inline-flex;
@@ -3345,6 +3388,7 @@ html[lang^="en"] .lux-home-maison-grid h3 { font-family: var(--lux-page-heading)
   border-color: #006a64;
   transform: scale(1.035);
 }
+
 .lux-recent-events {
   margin-top: clamp(72px, 8vw, 110px);
   padding: clamp(72px, 8vw, 112px) clamp(22px, 5vw, 80px);
@@ -3619,6 +3663,7 @@ html[lang^="zh"] .lux-recent-events-head h2 {
   .lux-about-program-grid--four,
   .lux-about-program-grid--two { grid-template-columns: 1fr; }
 }
+
 .lux-recipe-anchor {
   scroll-margin-top: 96px;
 }
@@ -3894,14 +3939,19 @@ html[lang^="zh"] .lux-event-card-copy strong {
   color: #006a64 !important;
   border-color: #006a64;
 }
+
 #featured a[data-reader-open]:not(.lux-narrative-link) {
   color: #c9a227 !important;
   transform-origin: left center;
   transition: color .2s ease, transform .2s ease;
 }
+#featured a[data-reader-open]:not(.lux-narrative-link) .material-symbols-outlined,
+#featured a[data-reader-open]:not(.lux-narrative-link) .lux-lucide {
+  color: currentColor !important;
+}
 #featured a[data-reader-open]:not(.lux-narrative-link):hover,
 #featured a[data-reader-open]:not(.lux-narrative-link):focus-visible {
-  color: #9df5ec !important;
+  color: #006a64 !important;
   transform: scale(1.035);
 }
 #featured a[data-reader-open]:not(.lux-narrative-link):hover .material-symbols-outlined,
@@ -3920,6 +3970,7 @@ html[lang^="zh"] .lux-event-card-copy strong {
 .lux-past-events-grid .lux-event-card {
   grid-template-columns: 1fr;
 }
+
 .lux-event-reader {
   width: min(1240px, calc(100% - 40px));
   margin: 0 auto;
@@ -4121,6 +4172,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #766f66;
   font-size: 11px;
 }
+
 @media (max-width: 900px) {
   .lux-event-gallery { grid-template-columns: 1fr; }
   .lux-event-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -4145,6 +4197,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
     position: static;
   }
 }
+
 @media (max-width: 640px) {
   .lux-event-gallery-grid { grid-template-columns: 1fr; }
   .lux-past-events-grid {
@@ -4159,6 +4212,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
     align-content: start;
   }
 }
+
 @media (max-width: 860px) {
   .lux-latest-event-carousel {
     grid-template-columns: 1fr;
@@ -4179,6 +4233,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
     width: min(96px, 22vw);
   }
 }
+
+
 .lux-reader {
   position: fixed;
   inset: 0;
@@ -4560,6 +4616,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #101010;
   font-weight: 800;
 }
+
+
 .lux-home-hero-mark {
   display: block;
   width: clamp(82px, 8vw, 112px);
@@ -4615,6 +4673,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
     object-position: center center;
   }
 }
+
+/* Company gallery */
 .lux-gallery-page { background: #f2eee8; color: #171715; }
 .lux-gallery-main { min-height: 70vh; }
 .lux-gallery-hero { position: relative; display: grid; place-items: center; box-sizing: border-box; min-height: 82svh; padding: 120px 24px; overflow: hidden; background: #171715; color: #e5e2e1; text-align: center; }
@@ -4858,6 +4918,7 @@ html[lang] body .lux-gallery-event-heading p { font-style: oblique 10deg !import
   color: #151513;
   font: 700 16px/1.45 var(--lux-page-heading);
 }
+
 .lux-recipe-nutrition-note {
   margin: 0 0 1.5rem;
   color: var(--lux-text-muted, #6f6a63);
@@ -5252,6 +5313,7 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
 .lux-reader-archive-card:focus-visible strong {
   color: #006a64;
 }
+
 @media (max-width: 840px) {
   .lux-reader {
     padding: 0;
@@ -5360,6 +5422,8 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   .lux-recipe-topic-grid { grid-template-columns: 1fr; gap: 38px; }
   .lux-recipe-topic-card .lux-reader-cover-art { min-height: 280px; }
 }
+
+
 .lux-cert-card {
   min-width: 0;
   min-height: 270px;
@@ -5664,10 +5728,12 @@ html[lang^="zh"] .lux-reader-copy .lux-reader-section:first-child p:first-of-typ
   .lux-contact-service-thumb,
   .lux-contact-services li { transition: none; transform: none !important; }
 }
+
 #inquiry .lux-partner-card {
   align-self: stretch;
   min-height: 0;
 }
+
 .lux-contact-b2b-cta {
   display: inline-flex;
   align-items: center;
@@ -5836,6 +5902,7 @@ html[lang^="en"] .lux-contact-choice-note { font-family: var(--lux-en-body); }
   margin: 0;
   text-align: left;
 }
+
 #core-services {
   background: #000 !important;
 }
@@ -5847,6 +5914,7 @@ html[lang^="en"] .lux-contact-choice-note { font-family: var(--lux-en-body); }
 #core-services > .absolute:nth-child(2) {
   background: rgba(0,0,0,.78) !important;
 }
+
 .lux-academy-intro,
 .lux-journal-season-head,
 .lux-recent-events-head,
@@ -5867,6 +5935,7 @@ html[lang^="en"] .lux-contact-choice-note { font-family: var(--lux-en-body); }
     background-image: linear-gradient(rgba(8, 8, 8, .8), rgba(8, 8, 8, .92)), url("assets/media/brand/b2b-quotation-team-720.webp?v=20261008-mobile-images-1");
   }
 }
+
 .lux-partners-card {
   display: flex;
   flex-direction: column;
@@ -6094,6 +6163,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   .lux-footer-brand-main { grid-template-columns: 84px minmax(0, 1fr); gap: 18px; transform: none; }
   .lux-footer-brand-main > img { width: 84px; height: 84px; }
 }
+
+
 .lux-caviar-search {
   display: flex;
   align-items: center;
@@ -6131,16 +6202,20 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
 @media (max-width: 520px) {
   .lux-news-center { padding-inline: 18px; }
 }
+
+
 .lux-importer-invite-hero .lux-channel-collage {
   grid-template-rows: 72px 168px 84px;
   gap: 10px;
   background: transparent;
 }
+
 .lux-product-filter-list button[aria-pressed="true"] > span {
   background:
     linear-gradient(135deg, transparent 42%, #081817 42% 54%, transparent 54%) 2px 1px / 12px 12px no-repeat,
     #9df5ec !important;
 }
+
 .lux-latest-event::after { display: none; }
 .lux-latest-event .lux-meet-map {
   position: relative;
@@ -6184,10 +6259,12 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
 .lux-cert-quote-nav button:focus-visible {
   background: rgba(255, 255, 255, .22);
 }
+
 .lux-amap-shell {
   width: min(100%, 1440px);
   border: 0;
 }
+
 .leaflet-container {
   position: relative;
   overflow: hidden;
@@ -6358,6 +6435,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
 .lux-map-popover button {
   background: rgba(4, 15, 14, .62);
 }
+
 :root {
   --lux-catalogue-edge: max(80px, calc((100vw - 1920px) / 2 + 80px));
 }
@@ -6392,6 +6470,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   border-color: #7d8582;
   background: #f8f6f2;
 }
+
 @media (max-width: 980px) {
   .lux-product-filter-panel {
     position: sticky !important;
@@ -6424,6 +6503,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     padding-inline: var(--lux-catalogue-edge) !important;
   }
 }
+
+
 @media (min-width: 768px) and (max-width: 980px) {
   [data-lux-caviar-controls] > div:first-child,
   .lux-caviar-search,
@@ -6442,12 +6523,15 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     max-width: 100% !important;
   }
 }
+
+
 .lux-header {
   background: rgba(8, 8, 8, .72);
 }
 [data-lux-caviar-controls] {
   padding-inline: 80px !important;
 }
+
 .lux-cert-network-story {
   border: 0;
 }
@@ -6468,6 +6552,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
 .lux-cert-network-story blockquote footer span {
   color: #9df5ec;
 }
+
 .lux-about-lightbox,
 .lux-partnership-lightbox {
   width: 100vw;
@@ -6539,6 +6624,7 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
 @media (max-width: 1279px) {
   .lux-header.is-menu-open,
   .lux-header:has(.lux-nav.open) {
@@ -6554,6 +6640,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     overscroll-behavior: contain;
   }
 }
+
+
 :is(
   .lux-home-services::before,
   .lux-home-selected-products-watermark,
@@ -6581,6 +6669,8 @@ html[lang^="en"] .lux-partnership-cases-grid h3 {
     font-size: 76px !important;
   }
 }
+
+
 html.lux-home-root[lang^="en"] :is(
   .lux-home-services::before,
   .lux-latest-event-carousel::before,
@@ -6639,6 +6729,8 @@ html.lux-home-root[lang^="en"] .lux-home-timeline::before {
     width: 100%;
   }
 }
+
+
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   display: none;
@@ -6672,6 +6764,7 @@ input[type="search"]::-webkit-search-decoration {
   width: 18px;
   height: 18px;
 }
+
 .lux-products-main {
   gap: clamp(14px, 2vw, 24px) !important;
 }
@@ -6746,6 +6839,7 @@ input[type="search"]::-webkit-search-decoration {
 .lux-product-browser .lux-product-catalog {
   margin-top: 0;
 }
+
 .lux-product-catalog [hidden], .lux-academy-list [hidden], [data-recipe-page][hidden], [data-recipe-library][hidden] { display: none !important; }
 .lux-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 20px; padding: 32px 20px; color: #e7e3df; font: 600 13px/1.4 var(--lux-page-heading); }
 .lux-pagination label, .lux-pagination-pages { display: flex; align-items: center; gap: 8px; }
@@ -6764,6 +6858,7 @@ input[type="search"]::-webkit-search-decoration {
 body.lux-academy-page .lux-pagination { color: #111; }
 body.lux-academy-page .lux-pagination button[aria-current="page"] { border-color: #005b55; color: #005b55; }
 body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outline-color: #005b55; }
+
 .lux-about-section-divider {
   position: relative;
   left: 50%;
@@ -6780,6 +6875,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   height: 100%;
   object-fit: cover;
 }
+
 .lux-timeline-step-orbit {
   display: block;
   width: clamp(84px, 8vw, 116px);
@@ -6790,6 +6886,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   object-fit: cover;
   object-position: 50% 30%;
 }
+
 .lux-meet-map {
   position: relative;
   width: 100%;
@@ -6846,6 +6943,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
     padding: 28px 24px;
   }
 }
+
+
 [data-lux-caviar-controls] {
   box-sizing: border-box;
   width: 100vw !important;
@@ -6859,6 +6958,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   width: 250px;
   min-width: 250px;
 }
+
+
 .lux-exhibition-map {
   width: 100%;
   padding: clamp(72px, 9vw, 132px) max(24px, calc((100vw - 1440px) / 2));
@@ -6940,6 +7041,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   color: #9df5ec;
   font-weight: 700;
 }
+
+
 .lux-news-feature {
   display: grid;
   grid-template-columns: minmax(320px, .8fr) minmax(0, 1.2fr);
@@ -6964,6 +7067,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   border: 1px solid rgba(23,23,21,.12);
 }
 .lux-news-feature > figure img { width: 100%; height: 100%; object-fit: contain; }
+
+
 .lux-contact-results {
   position: relative;
   width: 100%;
@@ -7078,6 +7183,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
 .lux-contact-results-grid blockquote p { margin: 0 0 34px; color: #f5f3ee; font: 500 clamp(20px, 2.1vw, 32px)/1.55 var(--lux-page-heading); }
 .lux-contact-results-grid blockquote footer { display: grid; gap: 6px; padding-top: 18px; border-top: 1px solid #d0ac2d; }
 .lux-contact-results-grid blockquote span { color: #9df5ec; font-size: 12px; letter-spacing: .12em; }
+
 @media (max-width: 900px) {
   [data-lux-caviar-controls] { padding-inline: 24px !important; }
   [data-lux-caviar-controls] > div:first-child,
@@ -7104,6 +7210,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   .lux-contact-results-main,
   .lux-contact-results-grid blockquote { grid-column: 1; }
 }
+
 .lux-importer-invite-grid article {
   grid-template-rows: auto minmax(238px, 1fr) 214px;
 }
@@ -7139,6 +7246,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
 .lux-importer-qr-grid img {
   order: 1;
 }
+
 @media (max-width: 980px) {
   .lux-product-browser {
     grid-template-columns: 1fr;
@@ -7179,6 +7287,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
     grid-template-columns: 1fr;
   }
 }
+
+
 .lux-gift-catalogue-section {
   background:
     linear-gradient(rgba(10, 10, 10, .68), rgba(10, 10, 10, .82)),
@@ -7339,6 +7449,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
     border-left: 0;
   }
 }
+
+
 .lux-wp-page-shell {
   min-height: 100vh;
   margin: 0;
@@ -7574,6 +7686,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
     transition-duration: .01ms;
   }
 }
+
+
 .lux-collab-mosaic {
   width: min(calc(100% - 48px), 1500px);
   margin: 96px auto 0;
@@ -7772,6 +7886,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   color: #59615f;
   font: 400 12px/1.65 var(--lux-page-heading);
 }
+
 .lux-cert-capability,
 .lux-cert-network,
 .lux-cert-results {
@@ -7941,6 +8056,7 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   gap: 18px;
 }
 .lux-cert-results-gallery figure:first-child { grid-row: 1 / span 2; }
+
 @media (max-width: 900px) {
   .lux-collab-mosaic {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -7997,6 +8113,8 @@ body.lux-academy-page .lux-pagination :is(button, select):focus-visible { outlin
   }
   .lux-cert-results-gallery figure:first-child { grid-column: 1 / -1; grid-row: auto; }
 }
+
+
 html,
 body {
   overflow-x: clip;
@@ -8186,6 +8304,7 @@ body {
   from { opacity: 0; transform: translateX(12px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
 .lux-cert-network-story figure {
   position: relative;
 }
@@ -8203,6 +8322,7 @@ body {
 [data-cert-hover-image] {
   cursor: zoom-in;
 }
+
 .lux-partnership-cases,
 .lux-gift-catalogue-section {
   width: 100vw !important;
@@ -8217,10 +8337,12 @@ body {
 .lux-gift-catalogue-section {
   box-sizing: border-box;
 }
+
 .lux-product-catalog:not(.is-list)[data-visible-count="1"] {
   grid-template-columns: minmax(0, min(50%, 720px)) !important;
   justify-content: start;
 }
+
 .lux-home-timeline {
   position: relative;
   padding: clamp(84px, 9vw, 148px) clamp(28px, 5vw, 84px);
@@ -8358,6 +8480,7 @@ body {
   opacity: 1;
   transform: scale(1);
 }
+
 @media (max-width: 900px) {
   .lux-home-timeline {
     padding: 72px 20px;
@@ -8450,6 +8573,8 @@ body {
     transition: none;
   }
 }
+
+
 .lux-importer-invite-hero {
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(480px, 1.08fr);
@@ -8577,6 +8702,8 @@ body {
   .lux-importer-qr-grid { grid-template-columns: repeat(2, minmax(0, 112px)); min-height: 160px; }
   .lux-importer-qr-grid figure { min-height: 160px; }
 }
+
+
 :root {
   --lux-catalogue-edge-final: max(80px, calc((100vw - 1920px) / 2 + 80px));
 }
@@ -8636,6 +8763,8 @@ body {
   }
   .lux-product-filter-panel { width: 100% !important; }
 }
+
+
 .lux-latest-event {
   padding-bottom: 0;
 }
@@ -8701,6 +8830,7 @@ body {
   margin: 28px auto 0;
   transform: translateX(calc((112px + clamp(24px, 3vw, 48px)) / 2));
 }
+
 .lux-cert-network-story blockquote {
   background:
     linear-gradient(rgba(2, 8, 8, .78), rgba(2, 8, 8, .78)),
@@ -8708,6 +8838,7 @@ body {
   transition: background-image .35s ease;
 }
 .lux-cert-network-story blockquote::before { display: none; }
+
 .lux-exhibition-map-head {
   align-items: start;
 }
@@ -8743,6 +8874,8 @@ body {
 .lux-map-popover[hidden] {
   display: none !important;
 }
+
+
 :root {
   --lux-product-rail: max(24px, calc((100vw - 1920px) / 2 + 80px));
   --lux-filter-width: min(400px, calc(100vw - (var(--lux-product-rail) * 2)));
@@ -8771,6 +8904,7 @@ body {
   max-width: var(--lux-filter-width) !important;
   align-self: start;
 }
+
 @media (max-width: 980px) {
   .lux-product-browser {
     grid-template-columns: 1fr !important;
@@ -8793,11 +8927,15 @@ body {
     grid-row: auto;
   }
 }
+
+
 @media (max-width: 860px) {
   .lux-event-carousel-controls {
     transform: none;
   }
 }
+
+
 .lux-latest-event .lux-meet-map-card {
   box-sizing: border-box;
   width: 100%;
@@ -8906,6 +9044,7 @@ body {
 .lux-product-browser:has(.lux-product-filter-panel[hidden]) {
   grid-template-columns: minmax(0, 1fr) !important;
 }
+
 .lux-home-market-system {
   scroll-margin-top: 78px;
   padding: clamp(76px, 8vw, 124px) clamp(28px, 5vw, 84px);
@@ -9210,6 +9349,7 @@ body {
   font: 600 9px/1.4 var(--lux-page-heading);
   letter-spacing: .16em;
 }
+
 .lux-home-services {
   position: relative;
   isolation: isolate;
@@ -9432,6 +9572,7 @@ body {
   outline: 3px solid #087f78;
   outline-offset: 3px;
 }
+
 .lux-home-global-reach {
   padding: 20px clamp(28px, 5vw, 84px);
   border-top: 1px solid #dad6cf;
@@ -9487,6 +9628,7 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
 .lux-about-vr {
   margin: clamp(54px, 7vw, 96px) 0;
   border: 1px solid #d6d0c6;
@@ -9518,6 +9660,7 @@ body {
 .lux-about-vr figcaption a:focus-visible {
   color: #cba51c;
 }
+
 @media (max-width: 900px) {
   .lux-home-timeline-visual {
     height: clamp(260px, 36vh, 380px);
@@ -9759,6 +9902,8 @@ body {
     transition: none;
   }
 }
+
+
 .lux-latest-event-carousel {
   isolation: isolate;
 }
@@ -9775,6 +9920,7 @@ body {
     padding-bottom: clamp(96px, 8vw, 132px);
   }
 }
+
 .lux-home-timeline::before {
   content: "BRAND JOURNEY";
   position: absolute;
@@ -9872,6 +10018,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 .lux-home-timeline-steps article {
   background: none;
 }
+
 .lux-home-gifting-image img:nth-child(4) {
   z-index: 4;
   width: 60%;
@@ -9917,6 +10064,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   color: rgba(255,255,255,.78) !important;
   opacity: 1 !important;
 }
+
 @media (max-width: 900px) {
   .lux-latest-event-carousel::before {
     top: 14px;
@@ -9958,6 +10106,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     border-left: 1px solid rgba(255,255,255,.42);
   }
 }
+
 @media (max-width: 520px) {
   .lux-home-timeline::before {
     top: 104px;
@@ -9974,6 +10123,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     height: 34%;
   }
 }
+
 #selected-products {
   position: relative;
   isolation: isolate;
@@ -10056,6 +10206,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   margin-bottom: 24px !important;
   opacity: 1;
 }
+
+
 #selected-products > .grid {
   gap: clamp(22px, 2.4vw, 38px);
 }
@@ -10182,6 +10334,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   background: #9df5ec !important;
   color: #003734 !important;
 }
+
 @media (max-width: 767px) {
   #selected-products::before {
     top: 86px;
@@ -10206,10 +10359,12 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     font-size: 12px;
   }
 }
+
 .lux-collab-bolt .lux-lucide {
   width: 52%;
   height: 52%;
 }
+
 @media (max-width: 767px) {
   .lux-home-timeline-steps {
     padding-left: 58px;
@@ -10267,6 +10422,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     left: 6%;
   }
 }
+
+
 .lux-home-why {
   display: grid;
   grid-template-columns: minmax(360px, .82fr) minmax(0, 1.18fr);
@@ -10431,6 +10588,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   width: 18px;
   height: 18px;
 }
+
+
 [data-cert-hover-image] {
   position: relative;
   overflow: hidden;
@@ -10443,6 +10602,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 [data-cert-hover-image]:focus-visible img {
   transform: scale(1.025);
 }
+
 .lux-cert-media-carousel {
   position: relative;
   isolation: isolate;
@@ -10496,6 +10656,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   stroke: currentColor;
   stroke-width: 2;
 }
+
 .lux-event-detail-link {
   padding: 12px 16px;
   transform-origin: left center;
@@ -10519,6 +10680,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-color: #9df5ec;
   transform: scale(1.04);
 }
+
 @media (min-width: 768px) {
   .lux-latest-event-slide {
     padding-bottom: 0;
@@ -10530,6 +10692,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   position: relative;
   z-index: 2;
 }
+
 .lux-home-gifting-intro {
   width: min(100%, 640px);
   padding: clamp(22px, 2.6vw, 38px);
@@ -10544,6 +10707,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   color: #fff !important;
   text-shadow: 0 2px 14px rgba(0,0,0,.9);
 }
+
 .lux-home-why-copy > a {
   background: #e9c349;
   color: #071313;
@@ -10554,6 +10718,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   color: #fff;
   transform: translateY(-2px) scale(1.025);
 }
+
 @media (max-width: 640px) {
   .lux-cert-media-nav {
     right: 14px;
@@ -10568,6 +10733,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     padding: 22px;
   }
 }
+
 @media (max-width: 900px) {
   .lux-home-why {
     grid-template-columns: 1fr;
@@ -10605,6 +10771,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     border-left: 0;
   }
 }
+
+
 .lux-product-browser {
   position: relative;
 }
@@ -10625,6 +10793,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   color: #006a64;
   font: inherit;
 }
+
 .lux-latest-event-carousel::before {
   content: none;
 }
@@ -10640,6 +10809,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 .lux-event-thumbnails {
   z-index: 5;
 }
+
 .lux-event-detail-link:hover,
 .lux-event-detail-link:focus-visible {
   color: #087f78 !important;
@@ -10654,6 +10824,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-color: currentColor !important;
   transform: scale(1.035);
 }
+
 .lux-home-gifting-intro {
   padding: 0;
   background: transparent;
@@ -10672,6 +10843,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     1px 1px 0 rgba(0,0,0,.85),
     0 3px 14px #000;
 }
+
 .lux-home-why-metrics {
   gap: clamp(24px, 4vw, 64px);
   border: 0;
@@ -10683,6 +10855,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 .lux-home-why-metrics > div + div {
   border: 0;
 }
+
 @media (max-width: 767px) {
   .lux-home-why-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -10692,6 +10865,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     padding: 14px 0 0;
   }
 }
+
+
 .lux-latest-event-carousel::before {
   content: "EXHIBITION";
   position: absolute;
@@ -10707,25 +10882,31 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 .lux-latest-event-inner {
   z-index: 2;
 }
+
 .lux-home-why::before {
   content: "CHINA PARTNERSHIP";
 }
 .lux-home-why-copy::before {
   content: none;
 }
+
 @media (min-width: 768px) {
   .lux-product-filter-toggle {
     display: none !important;
   }
 }
+
+
 .lux-home-why-copy > a {
   padding: 20px 48px;
   font: 700 18px/27px var(--lux-page-heading);
   letter-spacing: .3em;
 }
+
 .lux-event-detail-link {
   padding: 12px 0;
 }
+
 @media (max-width: 767px) {
   .lux-product-filter-panel:not([hidden]) {
     position: fixed !important;
@@ -10742,6 +10923,8 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
     overscroll-behavior: contain;
   }
 }
+
+
 .lux-home-maison-grid b {
   display: inline-block;
   width: max-content;
@@ -10752,6 +10935,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
 .lux-home-maison-grid > a:focus-visible b {
   transform: scale(1.045);
 }
+
 .lux-event-detail-link:hover,
 .lux-event-detail-link:focus-visible {
   color: #071313 !important;
@@ -10759,6 +10943,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-color: #9df5ec !important;
   transform: scale(1.04);
 }
+
 .lux-amap-canvas .leaflet-control-attribution {
   box-sizing: border-box;
   width: auto !important;
@@ -10775,6 +10960,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   color: #303633 !important;
   text-decoration: none;
 }
+
 .lux-map-popover button:hover,
 .lux-map-popover button:focus-visible {
   color: #071313 !important;
@@ -10782,6 +10968,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   border-color: #9df5ec !important;
   transform: scale(1.04);
 }
+
 .lux-academy-card.is-wide-cover .lux-academy-card-media {
   aspect-ratio: 16 / 8;
   background: #f4f2ee;
@@ -10900,6 +11087,7 @@ html[lang^="zh"] :is(
 .lux-academy-hero-description p + p {
   margin-top: 10px;
 }
+
 .lux-latest-event-carousel,
 .lux-latest-event-viewport,
 .lux-latest-event-track,
@@ -10962,6 +11150,7 @@ html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
     transition: none;
   }
 }
+
 .lux-cert-system-media {
   margin: 0;
 }
@@ -11031,6 +11220,8 @@ html[lang^="en"] .lux-home-timeline-steps article.is-active::after {
 .lux-academy-intro h2 {
   color: #89670f;
 }
+
+
 html[lang^="en"] {
   --lux-page-heading: "Nyght Serif";
   --lux-en-display: "Nyght Serif";
@@ -11066,6 +11257,7 @@ html[lang^="en"] body :is(h1, .font-display, .font-display-lg, .font-display-lg-
   font-family: var(--lux-en-display) !important;
   font-weight: 400 !important;
 }
+
 html[lang^="en"] .lux-home-maison blockquote,
 html[lang^="en"] .lux-home-maison blockquote * {
   font-family: var(--lux-en-heading) !important;
@@ -11075,6 +11267,8 @@ html[lang^="en"] .lux-reader-quote {
   font-family: var(--lux-en-heading) !important;
   font-style: italic;
 }
+
+
 @media (min-width: 1024px) {
   .lux-gift-grid > .group {
     display: flex;
@@ -11113,6 +11307,8 @@ html[lang^="en"] .lux-reader-quote {
   .lux-product-recent-media:hover > img,
   .lux-product-recent-card:focus-within .lux-product-recent-media > img { transform: none; }
 }
+
+
 #selected-products {
   background:
     radial-gradient(circle at 74% 8%, transparent 0 86px, rgba(233, 195, 73, .09) 87px 88px, transparent 89px),
@@ -11206,6 +11402,7 @@ html[lang] .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 .lux-channel-services header h3 { margin-bottom: 0; }
+
 .lux-event-detail-link:hover,
 .lux-event-detail-link:focus-visible {
   color: #006a64 !important;
@@ -11218,6 +11415,8 @@ html[lang^="en"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h
   font-weight: 400 !important;
   line-height: 1.04 !important;
 }
+
+
 html[lang^="en"] :is(
   .lux-home-maison-head > div > span:first-child,
   .lux-selected-products-kicker,
@@ -11233,11 +11432,15 @@ html[lang^="en"] :is(
   font-weight: 600 !important;
   letter-spacing: .28em !important;
 }
+
+
 html[lang^="en"] #selected-products .lux-selected-products-kicker,
 html[lang^="en"] #gifting-editorial .lux-home-editorial-kicker {
   font-size: 14px !important;
   line-height: 1.4 !important;
 }
+
+
 html[lang^="en"] #gifting-editorial .lux-action-copy {
   display: inline-flex !important;
   align-items: center;
@@ -11250,6 +11453,8 @@ html[lang^="en"] #gifting-editorial .lux-action-copy {
   writing-mode: horizontal-tb;
   text-orientation: mixed;
 }
+
+
 html[lang^="zh"] {
   --lux-page-heading: "KingHwa Old Song Site";
   --lux-zh-headline: "KingHwa Old Song Site";
@@ -11277,6 +11482,7 @@ html[lang^="zh"] body :is(h1, h2, h3, h4, h5, h6, .zh-display-title, .font-displ
   -webkit-text-stroke: .16px currentColor;
   paint-order: stroke fill;
 }
+
 html[lang^="zh"] .lux-home-maison blockquote,
 html[lang^="zh"] .lux-home-maison blockquote *,
 html[lang^="zh"] .lux-event-card-copy strong {
@@ -11285,6 +11491,7 @@ html[lang^="zh"] .lux-event-card-copy strong {
   -webkit-text-stroke: .16px currentColor;
   paint-order: stroke fill;
 }
+
 html[lang^="zh"] body p.lux-footprint-video-title {
   font-family: var(--lux-zh-headline) !important;
 }
@@ -11292,6 +11499,8 @@ html[lang^="en"] body p.lux-footprint-video-title {
   font-family: var(--lux-en-heading) !important;
   font-weight: 400 !important;
 }
+
+
 html[lang^="zh"] :is(p, li, blockquote, figcaption, dt, dd) {
   font-size: 18px !important;
   line-height: 1.75 !important;
@@ -11302,6 +11511,8 @@ html[lang^="zh"] :is(#lux-reader-title, .lux-about-story .lux-reader-hero-copy h
   font-weight: 700 !important;
   line-height: 1.12 !important;
 }
+
+
 html[lang] body p.lux-footprint-video-title {
   font-size: clamp(30px, 5vw, 72px) !important;
   line-height: 1.08 !important;
@@ -11309,6 +11520,7 @@ html[lang] body p.lux-footprint-video-title {
 .lux-footprint-video-copy {
   transform: translateY(-6%);
 }
+
 #selected-products > .grid > .group[role="link"] {
   cursor: pointer;
 }
@@ -11316,6 +11528,8 @@ html[lang] body p.lux-footprint-video-title {
   outline: 2px solid #8eece6;
   outline-offset: 5px;
 }
+
+
 html[lang^="zh"] .lux-about-story .lux-reader-quote {
   color: #004b47;
   font-family: var(--lux-zh-headline) !important;
@@ -11330,11 +11544,13 @@ html[lang^="en"] .lux-about-story .lux-reader-quote {
 #consumer-needs .lux-product-characteristics-note strong {
   color: #d0ac2d !important;
 }
+
 #mission-objectives .lux-about-program-grid h3 {
   color: #d0ac2d !important;
   -webkit-text-stroke: .6px #050505;
   paint-order: stroke fill;
 }
+
 .lux-page-top-hero {
   box-sizing: border-box;
   height: auto !important;
@@ -11390,6 +11606,7 @@ html[lang] .lux-reader-pull p {
   font-size: 14px !important;
   line-height: 1.5 !important;
 }
+
 [data-lux-caviar-controls] {
   z-index: 100 !important;
   overflow: visible !important;
@@ -11401,6 +11618,8 @@ html[lang] .lux-reader-pull p {
 @media (min-width: 768px) and (max-width: 1100px) {
   [data-lux-caviar-controls] { overflow: visible !important; }
 }
+
+
 html[lang] body #luxureat-china .lux-about-program-lead h2 {
   font-size: clamp(34px, 4vw, 58px) !important;
   line-height: 1.06 !important;
@@ -11412,11 +11631,13 @@ html[lang^="en"] body #luxureat-china .lux-about-program-lead h2 {
   font-family: "Nyght Serif" !important;
   font-weight: 400 !important;
 }
+
 html[lang] .lux-recent-events-head > span {
   font-size: 18px !important;
 }
 html[lang^="en"] .lux-recent-events-head > span { line-height: 1.65 !important; }
 html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; }
+
 @media (max-width: 767px) {
   .lux-product-catalog[data-caviar-grid].is-list [data-caviar-item] {
     grid-template-columns: 112px minmax(0, 1fr);
@@ -11449,6 +11670,8 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
     padding: 7px 8px !important;
   }
 }
+
+
 .lux-standard-hero .lux-hero-support {
   position: relative;
   padding-bottom: 32px;
@@ -11467,6 +11690,8 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   transform: translateX(-50%);
   background: #8ceee6;
 }
+
+
 .lux-hero-tail .lux-page-hero-content {
   --lux-hero-stem-height: clamp(96px, 12svh, 150px);
   box-sizing: border-box;
@@ -11482,6 +11707,8 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
   transform: translateX(-50%);
   background: linear-gradient(to bottom, #8ceee6, rgba(140, 238, 230, 0));
 }
+
+
 @media (max-width: 680px) {
   .lux-hero-tail .lux-page-hero-content {
     padding-bottom: 0;
@@ -11490,7 +11717,11 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
     display: none;
   }
 }
+
+
 .lux-journal-season .lux-reader-media[data-reader-open] { cursor: pointer; }
+
+
 .lux-product-catalog:not(.is-list),
 .lux-product-catalog.is-list {
   gap: 18px !important;
@@ -11543,6 +11774,8 @@ html[lang^="zh"] .lux-recent-events-head > span { line-height: 1.75 !important; 
 .lux-product-summary > .lux-product-price {
   color: #9a7400 !important;
 }
+
+
 .is-test-price {
   color: #b48700 !important;
 }
@@ -11560,6 +11793,8 @@ html[lang^="zh"] body.lux-home-page .lux-reader {
   --lux-page-heading: "KingHwa Old Song Site";
   --lux-zh-headline: "KingHwa Old Song Site";
 }
+
+
 html[lang] body .lux-cert-network-story footer *,
 html[lang] body .lux-cert-results blockquote footer * {
   font-family: inherit !important;
@@ -11568,12 +11803,16 @@ html[lang] body .leaflet-control-attribution,
 html[lang] body .leaflet-control-attribution * {
   font-family: var(--lux-zh-body, var(--lux-en-body)) !important;
 }
+
+
 html[lang] body .lux-hero-kicker {
   font-size: 14px !important;
 }
 html[lang] body .lux-hero-support {
   font-size: 18px !important;
 }
+
+
 .lux-product-panel {
   width: min(1440px, 100%);
 }
@@ -11582,6 +11821,8 @@ html[lang] body .lux-hero-support {
     grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   }
 }
+
+
 @media (min-width: 901px) {
   .lux-cert-network-story {
     height: 560px;
@@ -11598,6 +11839,9 @@ html[lang] body .lux-hero-support {
     object-fit: cover;
   }
 }
+
+
+
 body.lux-academy-page .lux-scroll-reveal,
 body.lux-academy-page .lux-scroll-reveal.is-in-view {
   opacity: 1 !important;
@@ -11612,6 +11856,8 @@ html[lang] body.lux-academy-page .lux-academy-count {
   font-weight: 700 !important;
   line-height: 1.4 !important;
 }
+
+
 html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-sidebar > label, .lux-academy-latest h2) {
   font-family: var(--lux-en-body) !important;
   font-size: 14px !important;
@@ -11619,6 +11865,7 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
   line-height: 1.4 !important;
   letter-spacing: .08em !important;
 }
+
 @media (min-width: 1000px) {
   html[lang^="zh"] body.lux-academy-page .lux-academy-intro {
     grid-template-columns: minmax(0, 1fr) minmax(320px, 500px);
@@ -11629,6 +11876,7 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
     white-space: nowrap;
   }
 }
+
 .lux-home-topic-preview {
   position: relative;
   padding: clamp(72px, 8vw, 120px) clamp(24px, 5.55vw, 80px);
@@ -11785,6 +12033,7 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
   color: #fff;
   background: #89670f;
 }
+
 .lux-olive-recipe-editorial {
   padding: clamp(72px, 9vw, 132px) 24px;
   background: #f5f2ec;
@@ -11952,12 +12201,14 @@ html[lang^="en"] body.lux-academy-page :is(.lux-academy-count, .lux-academy-side
 .lux-olive-recipe-stories article:focus-within img {
   transform: scale(1.025);
 }
+
 section[data-recipe-panel][hidden] { display: none !important; }
 #italian-flavor-recipes,
 section[data-recipe-panel] {
   background: #131313 !important;
   color: #e5e2e1;
 }
+
 .lux-recipe-theme {
   padding: clamp(80px, 9vw, 132px) 24px;
   color: #171715;
@@ -12036,6 +12287,7 @@ section[data-recipe-panel] {
 .lux-recipe-theme-card:focus-within img { transform: scale(1.035); }
 .lux-recipe-theme-card:hover p,
 .lux-recipe-theme-card:focus-within p { max-height: 110px; margin-top: 12px; opacity: .9; transform: none; }
+
 #truffle-recipes { background: #fff; }
 #truffle-recipes > header,
 #healthy-light-recipes > header,
@@ -12535,6 +12787,7 @@ html[lang^="zh"] .lux-cert-awards h2 {
     line-height: 48px;
   }
 }
+
 .lux-header {
   background: transparent;
   border-bottom-color: transparent;
@@ -12564,6 +12817,8 @@ html[lang^="zh"] .lux-cert-awards h2 {
     backdrop-filter: blur(18px);
   }
 }
+
+
 .lux-home-services::before,
 .lux-home-selected-products-watermark,
 .lux-latest-event-carousel::before,
@@ -12588,6 +12843,8 @@ html[lang^="zh"] .lux-cert-awards h2 {
     font-size: 76px !important;
   }
 }
+
+
 .lux-home-partnership-continuum {
   position: relative;
   isolation: isolate;
@@ -13042,6 +13299,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   }
   .lux-home-partnership-process li { transition: none; }
 }
+
+
 .lux-brand-promise-card {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -13060,6 +13319,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   box-sizing: content-box;
   background: transparent !important;
 }
+
+
 .lux-home-partnership-manufacturing-gallery {
   width: 100%;
   margin-inline: 0;
@@ -13083,6 +13344,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   outline: 2px solid #9a7420;
   outline-offset: -4px;
 }
+
+
 .lux-brand-promise-showcase {
   width: 100vw;
   margin-left: calc(50% - 50vw);
@@ -13095,6 +13358,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   color: #145a4a;
   border-color: rgba(20, 90, 74, .42);
 }
+
+
 :is(
   .lux-brand-promise-link,
   .lux-recipe-product-link,
@@ -13112,6 +13377,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
 .lux-brand-promise-showcase img[role="button"]:focus-visible {
   filter: brightness(.82) saturate(1.12);
 }
+
 @media (prefers-reduced-motion: reduce) {
   .lux-home-partnership-manufacturing-gallery figure[data-partnership-image] img,
   .lux-brand-promise-showcase img[role="button"] {
@@ -13122,6 +13388,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
     transform: none;
   }
 }
+
 @media (max-width: 720px) {
   .lux-home-partnership-process {
     background:
@@ -13129,6 +13396,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
       url("assets/media/brand/home-partnership-process-mobile.webp?v=20261008-mobile-images-1") center / cover no-repeat;
   }
 }
+
+
 @media (max-width: 640px) {
   .lux-card-photo-one { --lux-card-bg: url("assets/media/brand/cert-food-safety-720.webp?v=20261008-mobile-images-1"); }
   .lux-card-photo-two { --lux-card-bg: url("assets/media/brand/cert-quality-products-mobile.webp?v=20261008-mobile-images-1"); }
@@ -13149,6 +13418,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(2) { --lux-market-image: url("assets/media/brand/home-values-contemporary-caviar-720.webp?v=20261008-mobile-images-1"); }
   .lux-home-market-system.is-media-ready .lux-market-feature:nth-child(3) { --lux-market-image: url("assets/media/brand/values-sustainability-720.webp?v=20261008-mobile-images-1"); }
 }
+
+
 .lux-cert-partnership-gallery {
   width: 100vw;
   margin: clamp(72px, 10vw, 150px) 0 -120px calc(50% - 50vw);
@@ -13352,7 +13623,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   justify-self: center;
   padding: 0 24px;
   border: 1px solid rgba(8,127,120,.34);
-  border-radius: 999px;
+  border-radius: 0;
   color: #075f5a;
   background: transparent;
   font: 600 12px/1 var(--lux-page-heading);
@@ -13402,6 +13673,8 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   .lux-cert-partnership-thumbs img,
   .lux-cert-partnership-controls button { transition: none; transform: none !important; }
 }
+
+
 .lux-home-timeline-steps article > span::after,
 .lux-home-timeline-steps article.is-active > span::after {
   right: auto;
@@ -13411,9 +13684,13 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
 .lux-home-timeline-steps article.is-active > span::after {
   transform: translate(-100%, -50%) scale(1);
 }
+
+
 html[lang^="en"] body .lux-hero-support {
   font-weight: 400 !important;
 }
+
+
 html[lang] body .lux-home-hero-actions {
   flex-wrap: wrap;
 }
@@ -13449,6 +13726,8 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
     transform: none;
   }
 }
+
+
 .lux-header.is-light-surface:not(.is-scrolled):not(.is-menu-open) :is(.lux-brand, .lux-nav > a, .lux-nav-item > a, .lux-actions > .lux-icon-action, .lux-actions > .lux-menu, .lux-lang > a, .lux-lang > span) {
   color: #101010;
   mix-blend-mode: normal;
@@ -13464,6 +13743,8 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
   color: #005b55;
   border-bottom-color: currentColor;
 }
+
+
 @media (min-width: 1081px) and (max-width: 1550px) {
   .lux-header { padding-inline: clamp(16px, 1.8vw, 28px); gap: clamp(10px, 1vw, 16px); }
   .lux-brand { width: 58px; flex-basis: 58px; }
@@ -13473,6 +13754,7 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
   html[lang] body .lux-nav-item > a,
   html[lang] body .lux-lang { font-size: 10px; letter-spacing: .06em; }
 }
+
 @media (min-width: 1280px) {
   html[lang^="en"] body .lux-nav { gap: clamp(6px, .55vw, 10px); }
   html[lang^="en"] body .lux-nav-item > a {
@@ -13480,6 +13762,8 @@ html[lang] body .lux-home-hero-actions .lux-home-hero-action:focus-visible {
     letter-spacing: .075em !important;
   }
 }
+
+
 html[lang] body .lux-header :is(.lux-nav > a, .lux-nav-item > a) {
   color: #fff !important;
   border: 0 !important;
@@ -13495,6 +13779,8 @@ html[lang] body .lux-header :is(.lux-nav > a, .lux-nav-item > a):is(:hover, :foc
   opacity: 1 !important;
   transform: none !important;
 }
+
+
 .lux-news-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -13742,6 +14028,7 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
   .lux-brand-news-event-link > img,
   .lux-brand-news-links > a > img { width: 74px; height: 54px; }
 }
+
 html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-meta { font-size: 12px !important; }
 html[lang^="zh"] body .lux-brand-news-sheet #lux-reader-title {
   font-size: clamp(42px, 5vw, 72px) !important;
@@ -13759,8 +14046,11 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   font-size: 18px !important;
   line-height: 1.78 !important;
 }
+
 .lux-event-frame > a { display: block; width: 100%; height: 100%; }
 .lux-event-frame > a > img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Homepage photographic section backgrounds and group advantages */
 .lux-home-timeline {
   background-image: linear-gradient(rgba(5, 7, 7, .76), rgba(5, 7, 7, .86)), var(--lux-home-bg, none);
   background-position: center;
@@ -13779,6 +14069,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .lux-home-advantages {
   position: relative;
   z-index: 2;
@@ -13832,6 +14123,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   color: #6d6861;
   font: 400 12px/1.55 var(--lux-page-heading);
 }
+
 .lux-home-market-collage > .lux-home-market-stat {
   align-items: center;
   justify-content: center;
@@ -13861,6 +14153,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   margin: 22px auto 0;
   color: #9df5ec;
 }
+
 @media (max-width: 900px) {
   .lux-home-advantages-inner {
     grid-template-columns: 1fr;
@@ -13876,6 +14169,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
     min-height: 190px;
   }
 }
+
 @media (max-width: 720px) {
   .lux-home-partnership-process {
     background-image: linear-gradient(rgba(9, 12, 13, .66), rgba(9, 12, 13, .78)), var(--lux-home-bg, none);
@@ -13886,6 +14180,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
     background-position: center;
   }
 }
+
 @media (max-width: 560px) {
   .lux-home-advantages {
     padding: 24px 20px;
@@ -13907,10 +14202,13 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
     font-size: 11px;
   }
 }
+
+/* Homepage interaction and editorial alignment refinements */
 .lux-home-partnership-process {
   background-image: linear-gradient(rgba(9, 12, 13, .74), rgba(9, 12, 13, .84)), var(--lux-home-bg, none);
   background-position: center 48%;
 }
+
 .lux-home-advantages-inner {
   display: block;
 }
@@ -13947,6 +14245,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-home-advantages-grid .lux-lucide {
   transition: color .25s ease, transform .25s ease;
 }
+
 .lux-home-market-collage > .lux-home-market-stat {
   border-color: rgba(255, 255, 255, .9);
   background: rgba(255, 255, 255, .7);
@@ -13972,6 +14271,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-home-market-collage > .lux-home-market-stat:focus-visible .lux-home-market-learn {
   color: #9df5ec;
 }
+
 .lux-home-timeline > header {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
@@ -13992,6 +14292,7 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-home-timeline > header h2 {
   font-size: clamp(40px, 4.4vw, 64px);
 }
+
 @media (max-width: 900px) {
   .lux-home-timeline > header {
     grid-template-columns: 1fr;
@@ -14009,12 +14310,15 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
     border-left: 0;
   }
 }
+
 @media (max-width: 720px) {
   .lux-home-partnership-process {
     background-image: linear-gradient(rgba(9, 12, 13, .76), rgba(9, 12, 13, .86)), var(--lux-home-bg, none);
     background-position: center;
   }
 }
+
+/* Gallery, event, and editorial refinements. */
 .lux-event-reader-intro { border-top: 0; }
 .lux-past-events { border-top: 0; padding-top: 0; }
 .lux-news-card .lux-narrative-link { border-bottom: 0; text-decoration: none; }
@@ -14027,6 +14331,8 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   .lux-journal-season-head { display: grid; justify-items: center; gap: 16px; }
   .lux-journal-season-head > div:last-child { position: static; }
 }
+
+
 .lux-recipe-video {
   width: min(100%, 720px);
   margin: 32px auto 0;
@@ -14047,6 +14353,8 @@ html[lang^="zh"] body .lux-brand-news-reader .lux-brand-news-copy p {
   font-style: oblique 10deg !important;
   font-synthesis: style;
 }
+
+/* Keep the requested Chinese editorial lines visibly slanted with the site's custom fonts. */
 html[lang^="zh"] .lux-about-story .lux-reader-summary {
   color: #8f6928 !important;
   font-style: oblique 14deg !important;
@@ -14093,9 +14401,11 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-cms-prose .lux-recipe-video {
   margin: 32px auto 0;
 }
+
 .lux-recipe-extra-videos { display: flex; align-items: flex-start; gap: 8px; width: min(100%, 720px); margin: 20px auto; }
 .lux-recipe-extra-videos video { display: block; width: 0; min-width: 0; height: auto; flex-basis: 0; object-fit: contain; background: transparent; }
 @media (max-width: 640px) { .lux-recipe-extra-videos { gap: 6px; } }
+
 .lux-catalogue-switch { display: inline-flex; align-items: stretch; width: fit-content; max-width: 100%; margin: 16px auto 0; padding: 4px; gap: 4px; border: .5px solid #fff; background: rgba(0, 28, 26, .55); }
 .lux-catalogue-switch a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 22px; color: #e5f7f4; font-size: 14px; line-height: 1.4; text-decoration: none; white-space: nowrap; }
 .lux-catalogue-switch a[aria-current="page"] { background: #9df5ec; color: #004b47; }
@@ -14104,15 +14414,42 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-catalogue-switch a:focus-visible { outline: 2px solid #9df5ec; outline-offset: 3px; }
 .lux-page-hero-content > .lux-catalogue-switch { margin-top: 0; }
 .lux-new-hero .lux-hero-support::before { display: none; }
+.lux-product-video-notes, .lux-product-storage-notes { display: grid; gap: 24px; margin-top: 32px; }
+.lux-product-video-notes > p, .lux-product-storage-notes > p { margin: 0; }
+.lux-product-storage-gallery { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 960px; margin: 32px auto 0; }
+.lux-product-storage-gallery picture { display: block; min-width: 0; }
+.lux-product-storage-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.lux-product-storage-thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.lux-product-storage-thumbs button { display: block; min-width: 0; padding: 0; border: 2px solid transparent; border-radius: 0; background: transparent; cursor: pointer; line-height: 0; }
+.lux-product-storage-thumbs button[aria-pressed="true"] { border-color: #005b50; }
+.lux-product-storage-thumbs button:focus-visible { outline: 2px solid #005b50; outline-offset: 3px; }
+.lux-product-storage-thumbs button img { aspect-ratio: 1; }
+@media (min-width: 721px) {
+  .lux-product-storage-gallery > picture:not(.is-active) { display: none; }
+}
+@media (max-width: 720px) {
+  .lux-product-storage-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .lux-product-storage-thumbs { display: none; }
+}
 @media (max-width: 640px) {
   .lux-catalogue-switch a { padding-inline: 16px; }
 }
+
+/* Current page remains visible in the footer without waiting for interaction. */
+.lux-footer nav a[aria-current="page"] { color: #9df5ec !important; }
 @media (max-width: 720px) {
   .lux-home-page .lux-feature-intro,
   .lux-home-page .lux-home-partnership-manufacturing-head-copy,
   .lux-home-page .lux-home-partnership-process header,
   .lux-home-page .lux-home-partnership-manufacturing-advantages,
-  .lux-about-program,
+  #consumer-needs :is(h2, h3),
+  #consumer-needs .lux-about-program-kicker,
+  #luxureat-china .lux-about-program-kicker,
+  #consumer-needs .lux-about-program-grid article > span,
+  #mission-objectives .lux-about-program-grid :is(h3, article > span),
+  #mission-objectives > .lux-about-program-inner > .lux-about-program-kicker,
+  #mission-objectives .lux-about-program-lead h2,
+  .lux-product-characteristics-note strong,
   .lux-recipe-library > header,
   .lux-recipe-theme > header,
   .lux-recent-events-head,
@@ -14122,66 +14459,83 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   #certification-system > div:last-child {
     text-align: center;
   }
+
   .lux-home-page .lux-feature-intro p,
   .lux-home-page .lux-home-partnership-manufacturing-head-copy p,
   .lux-home-page .lux-home-partnership-process header p,
-  .lux-about-program p,
   #quality-system > div.max-w-3xl p,
   #certification-system > div:last-child p {
     margin-inline: auto;
   }
+
   .lux-home-page .lux-feature-intro a { justify-content: center; }
   .lux-home-page .lux-feature-intro .lux-feature-values-link { margin-left: 0; }
   .lux-home-page .lux-home-partnership-manufacturing-advantages > div { text-align: center; }
   .lux-home-page .lux-home-partnership-manufacturing-advantages dt { justify-content: center; }
   .lux-home-page .lux-home-partnership-manufacturing-advantages dd { margin-inline: auto; }
-  .lux-home-page .lux-home-partnership-process ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .lux-home-page .lux-home-partnership-process ol > li:last-child { grid-column: 1 / -1; width: calc(50% - 8px); justify-self: center; }
-  .lux-academy-card-copy h2 { text-align: center; }
+  .lux-academy-card-copy h2 { text-align: left; }
   .lux-footer nav a { font-family: var(--lux-page-heading) !important; }
 }
+
+/* Mobile editorial alignment: keep copy and paired controls visually centered. */
 @media (max-width: 720px) {
   .lux-home-page .lux-feature-intro > span,
   .lux-home-page .lux-feature-intro h2,
   .lux-home-page .lux-feature-intro p,
-  .lux-home-page .lux-home-why-copy,
+  .lux-home-page .lux-home-why-copy > span,
   .lux-home-page .lux-home-why-copy h2,
-  .lux-home-page .lux-home-why-copy > p,
   .lux-home-page .lux-home-selected-products > div:first-of-type,
   .lux-home-page .lux-home-selected-products > div:first-of-type :is(span, h2, p),
   .lux-new-page .lux-page-hero-content,
   .lux-new-page .lux-new-editorial-intro,
-  .lux-about-story .lux-reader-hero-copy,
-  .lux-about-story .lux-reader-copy,
-  .lux-recipe-anchor > .grid > div:first-child,
-  .lux-journal-season-card,
-  .lux-brand-promise-copy,
-  .lux-brand-promise-card > div {
+  .lux-about-story .lux-reader-meta-grid,
+  .lux-about-story .lux-reader-hero-copy :is(h1, h2),
+  .lux-about-story .lux-reader-copy :is(h2, h3),
+  #featured :is(h2, span.font-label-lg),
+  #italian-flavor-recipes > .grid > div:first-child > :is(span, h2),
+  .lux-journal-season-card > :is(span, h4),
+  .lux-brand-promise-copy :is(small, h2),
+  .lux-brand-promise-card h3,
+  body.lux-new-page :is(h1, h2, h3),
+  .lux-new-space > div > p,
+  .lux-new-about-copy > p,
+  .lux-new-features header > p,
+  .lux-chef-advice-label,
+  body.lux-new-page .lux-new-categories .lux-recipe-theme-card > div > span,
+  body.lux-new-page .lux-chef-advice-slide > div > span,
+  body.lux-new-page .lux-new-features article strong,
+  .lux-recipe-theme-card > div > span,
+  .lux-recipe-library-copy small {
     text-align: center;
   }
+
   .lux-home-page .lux-feature-intro p,
-  .lux-home-page .lux-home-why-copy > p,
   .lux-home-page .lux-home-selected-products > div:first-of-type p,
-  .lux-about-story .lux-reader-summary,
-  .lux-about-story .lux-reader-copy p,
-  .lux-recipe-anchor > .grid > div:first-child p,
-  .lux-brand-promise-copy h2,
-  .lux-brand-promise-copy p,
-  .lux-brand-promise-card p {
+  .lux-brand-promise-copy h2 {
     margin-inline: auto;
   }
+
   .lux-home-page .lux-feature-intro .lux-feature-values-link { margin-left: 12px; }
   .lux-home-page .lux-home-why-copy h2 { margin-inline: auto; }
   .lux-home-page .lux-home-why-metrics > div { text-align: center; }
   .lux-home-page .lux-home-why-metrics > div::before { left: 50%; transform: translateX(-50%); }
-  .lux-home-page .lux-home-partnership-process ol > li:last-child {
-    width: calc((100% - 16px) / 2);
-    min-width: 0;
-  }
-  .lux-recipe-anchor > .grid > div:first-child .flex { justify-content: center; }
-  .lux-recipe-anchor > .grid > div:first-child .lux-recipe-jump-nav { justify-items: center; }
   .lux-about-story .lux-reader-hero-copy :is(h1, h2),
   .lux-about-story .lux-reader-copy :is(h2, h3) { margin-inline: auto; }
-  .lux-brand-promise-icon { margin-inline: auto; }
-  .lux-new-editorial-intro div { text-align: center; }
+  .lux-home-page .lux-home-why-copy > span { display: block; }
+  .lux-olive-recipe-stories article > div > span { display: block; text-align: center; }
+  body.lux-new-page .lux-new-copy h2 { text-align: left; }
+  body.lux-new-page .lux-new-categories .lux-recipe-theme-card > div > span,
+  body.lux-new-page .lux-chef-advice-slide > div > span,
+  .lux-recipe-theme-card > div > span { display: block; }
+}
+
+.lux-cert-partnership-gallery h2 { font-size: clamp(38px, 5vw, 72px); }
+#responsible-trade > div:last-child { padding: 0; }
+#responsible-trade [data-lux-bg] { background-size: cover !important; }
+@media (max-width: 767px) {
+  .lux-product-body { position: absolute; inset: 66px 0 0; height: auto; }
+  .lux-product-hero { padding-top: 0; align-content: start; }
+}
+@media (max-width: 640px) {
+  .lux-cert-partnership-gallery h2 { font-size: 40px; }
 }

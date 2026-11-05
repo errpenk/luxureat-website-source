@@ -44,11 +44,17 @@ function headerFor(page) {
 function footerFor(page) {
   const { lang } = page;
   const copy = footer[lang];
-  const nav = navigation.map((item) => `<a href="${link(slugFor(item, lang))}">${esc(item[lang])}</a>`).join("");
+  const nav = navigation.map((item) => `<a href="${link(slugFor(item, lang))}"${item.key === page.key || (page.key === "new" && item.key === "products") ? ' aria-current="page"' : ""}>${esc(item[lang])}</a>`).join("");
   const social = lang === "zh"
     ? '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a>'
     : '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/rednote.svg" alt="">Rednote</a><button type="button" data-footer-modal="wechat"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/wechat.svg" alt="">WeChat</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/douyin.svg" alt="">Douyin</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/weibo.svg" alt="">Weibo</a>';
-  const legal = copy.legal.map(([id, label]) => `<button type="button" data-footer-modal="${id}">${label}</button>`).join("");
+  const legalIcons = {
+  "privacy": "<svg class=\"lux-lucide lux-inline-icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z\"></path></svg>",
+  "cookie": "<svg class=\"lux-lucide lux-inline-icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5\"></path><circle cx=\"8.5\" cy=\"8.5\" r=\".5\" fill=\"currentColor\"></circle><circle cx=\"9\" cy=\"15\" r=\".5\" fill=\"currentColor\"></circle><circle cx=\"15\" cy=\"13\" r=\".5\" fill=\"currentColor\"></circle></svg>",
+  "terms": "<svg class=\"lux-lucide lux-inline-icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\"></path><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"></path><path d=\"M10 9H8\"></path><path d=\"M16 13H8\"></path><path d=\"M16 17H8\"></path></svg>",
+  "shipping": "<svg class=\"lux-lucide lux-inline-icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\"></path><path d=\"M15 18H9\"></path><path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14\"></path><circle cx=\"17\" cy=\"18\" r=\"2\"></circle><circle cx=\"7\" cy=\"18\" r=\"2\"></circle></svg>"
+};
+  const legal = copy.legal.map(([id, label]) => `<button type="button" class="lux-with-icon" data-footer-modal="${id}">${legalIcons[id]}${label}</button>`).join("");
   const newsletter = copy.newsletter;
   const strictEnglishFonts = page.key === "market-insights" && lang === "en";
   const newsletterHeading = strictEnglishFonts ? newsletter.heading.replace(/\s*\(露意膳\)/g, "") : newsletter.heading;
@@ -86,7 +92,7 @@ function scriptsFor(page) {
   const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions"].includes(handle)) : page.scripts;
   const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
-  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2-menu3-metrics1-wechat-contact1-back-to-top-scrollpane1" : handle === "home-interactions" ? "-flavour7" : handle === "journal" ? `-reader-date1-lead1${page.key === "rituals" ? "-recipe-videos4" : ""}` : page.key === "rituals" && handle === "journal-data" ? "-recipe-videos4" : page.key === "blog" && handle === "academy" ? "-related-cards3" : handle === "products" ? "-video-refresh2-wechat3-product-quote2" : page.key === "products" && handle === "product-data" ? "-video-refresh3" : handle === "brand" ? "-wechat-contact1" : ["gallery-data"].includes(handle) ? "-gallery21" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
+  const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2-menu3-metrics1-wechat-contact1-back-to-top-scrollpane1-media2-product-copy7" : handle === "home-interactions" ? "-flavour7" : handle === "journal" ? `-reader-date1-lead1-card-images2${page.key === "rituals" ? "-recipe-videos4" : ""}` : page.key === "rituals" && handle === "journal-data" ? "-recipe-videos4" : page.key === "blog" && handle === "academy" ? "-related-cards3" : handle === "products" ? "-video-refresh2-wechat3-product-quote2-product-copy7" : page.key === "products" && handle === "product-data" ? "-video-refresh3-product-copy7" : handle === "brand" ? "-wechat-contact1" : ["gallery-data"].includes(handle) ? "-gallery21" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
   const deferred = lazy.length
     ? '\n<script type="application/json" data-lux-deferred-scripts></script>'
     : "";
@@ -172,11 +178,13 @@ function addImageDimensions(html, dimensions) {
 }
 
 function deferHeroVideos(html) {
-  return html.replace(/<video\b[^>]*\blux-hero-video\b[^>]*>/gi, (tag) => {
+  return html.replace(/<video\b[\s\S]*?<\/video>/gi, (tag) => {
+    if (!/\blux-hero-video\b|\bdata-lux-autoplay\b|\sautoplay\b/i.test(tag)) return tag;
     const deferred = tag
       .replace(/\sautoplay(?:=["'][^"']*["'])?/i, "")
       .replace(/(?:\sdata-lux-autoplay)+/gi, " data-lux-autoplay")
-      .replace(/\spreload=["'][^"']*["']/i, ' preload="none"');
+      .replace(/\spreload=["'][^"']*["']/i, ' preload="none"')
+      .replace(/\ssrc=/gi, " data-src=");
     return /\bdata-lux-autoplay\b/i.test(deferred)
       ? deferred
       : deferred.replace(/^<video\b/i, '<video data-lux-autoplay');
@@ -281,8 +289,8 @@ function render(page, dimensions) {
   html = replaceRegion(html, "scripts", /(?:\s*<script src="\.\.\/assets\/[^\"]+"><\/script>)+(?=\s*<\/body>)/, `\n${scriptsFor(page)}`);
   html = html.replace(/\n+(?=<!-- lux:scripts:start -->)/, "\n");
   const italicPage = page.lang === "zh" && ["journal", "rituals", "gallery", "certification", "market-insights", "contact"].includes(page.key);
-  const integrationVersion = `${page.key === "rituals" ? "-recipe-pagination2-recipe-videos4" : ["gallery", "news"].includes(page.key) ? "-gallery18" : "-desktop-nav3"}-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1${italicPage ? "-final-italic1" : ""}`;
-  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("gallery-viewer.css") ? "-gallery21-final-italic1" : asset.endsWith("market-services.css") && page.lang === "zh" && page.key === "market-insights" ? "-final-italic1" : asset.endsWith("rituals.css") ? "-recipe2" : asset.endsWith("home-editorial.css") ? "-ugolini20" : ""}`);
+  const integrationVersion = `${page.key === "rituals" ? "-recipe-pagination2-recipe-videos4" : ["gallery", "news"].includes(page.key) ? "-gallery18" : "-desktop-nav3"}-menu-scroll1-reader-lead1-wechat-contact6-gallery-thumbs-center1-product-quote-row2-product-mobile-thumbs-center1-mobile-editorial10${italicPage ? "-final-italic1" : ""}`;
+  html = html.replace(/(\.\.\/(?:assets\/css\/[^"']+\.css|integration\.css))\?v=[^"']+/g, (_match, asset) => `${asset}?v=${assetVersion}${asset.endsWith("integration.css") ? integrationVersion : asset.endsWith("journal.css") ? "-featured-layout2" : asset.endsWith("import-export-catalogues.css") ? "-brand2" : asset.endsWith("gallery-viewer.css") ? "-gallery21-final-italic1" : asset.endsWith("market-services.css") && page.lang === "zh" && page.key === "market-insights" ? "-final-italic1" : asset.endsWith("rituals.css") ? "-recipe2" : asset.endsWith("home-editorial.css") ? "-ugolini20" : ""}`);
   if (!html.includes("assets/css/newsletter.css")) {
     html = html.replace(/(<link rel="stylesheet" href="\.\.\/integration\.css\?v=[^"]+">)/, `$1\n<link rel="stylesheet" href="../assets/css/newsletter.css?v=${assetVersion}">`);
   } else {
