@@ -272,7 +272,7 @@ if (luxDeferredScripts) {
   const deferredUrl = (path) => {
     const url = new URL(path, coreUrl);
     url.search = coreUrl.search;
-    url.searchParams.set("content", "20261105-product-copy5");
+    url.searchParams.set("content", "20261105-product-copy6");
     return url.href;
   };
   const data = ["../data/products.js", "../data/journal.js"].map(deferredUrl);
