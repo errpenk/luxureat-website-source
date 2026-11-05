@@ -318,7 +318,7 @@ function render(page, dimensions) {
     } else {
       html = html.replace(/(?=<link rel="stylesheet" href="\.\.\/assets\/css\/tailwind-home\.css)/, `${criticalMarkup}\n`);
     }
-    html = html.replace(/<link rel="stylesheet" href="(\.\.\/(?:integration\.css|assets\/css\/(?:tailwind-home|newsletter|home-watermarks-lock)\.css)\?v=[^"]+)">/g,
+    html = html.replace(/<link rel="stylesheet" href="(\.\.\/(?:integration\.css|assets\/css\/(?:tailwind-home|newsletter|home-watermarks-lock|home-editorial)\.css)\?v=[^"]+)">/g,
       (_, href) => `<link rel="stylesheet" href="${href}" media="print" onload="this.onload=null;this.media='all'"><noscript><link href="${href}" rel="stylesheet"></noscript>`);
   }
   html = html.replace(/<link rel="preload" href="\.\.\/assets\/fonts\/KingHwaOldSong-subset\.woff2" as="font" type="font\/woff2" crossorigin>\n?/g, "");
