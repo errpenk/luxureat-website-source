@@ -13619,7 +13619,7 @@ html[lang^="en"] .lux-home-partnership-process-inner > a {
   justify-self: center;
   padding: 0 24px;
   border: 1px solid rgba(8,127,120,.34);
-  border-radius: 999px;
+  border-radius: 0;
   color: #075f5a;
   background: transparent;
   font: 600 12px/1 var(--lux-page-heading);
@@ -14514,6 +14514,10 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-cert-partnership-gallery h2 { font-size: clamp(38px, 5vw, 72px); }
 #responsible-trade > div:last-child { padding: 0; }
 #responsible-trade [data-lux-bg] { background-size: cover !important; }
+@media (max-width: 767px) {
+  .lux-product-body { position: absolute; inset: 66px 0 0; height: auto; }
+  .lux-product-hero { padding-top: 0; align-content: start; }
+}
 @media (max-width: 640px) {
   .lux-cert-partnership-gallery h2 { font-size: 40px; }
 }

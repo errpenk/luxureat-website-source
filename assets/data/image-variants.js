@@ -120,6 +120,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand/contact-partnership-market.webp": "media/brand/contact-partnership-market-mobile.webp",
   "media/brand/contact-partnership-selection.webp": "media/brand/contact-partnership-selection-mobile.webp",
   "media/brand/contact-partnership-truffle-sauce.webp": "media/brand/contact-partnership-truffle-sauce-mobile.webp",
+  "media/brand/cooperation-business-team.webp": "media/brand/cooperation-business-team-720.webp",
   "media/brand/craftsmanship-truffle-chef.webp": "media/brand/craftsmanship-truffle-chef-720.webp",
   "media/brand/gifting-catalogue-texture.webp": "media/brand/gifting-catalogue-texture-720.webp",
   "media/brand/gifting-channel-truffle-sauce.webp": "media/brand/gifting-channel-truffle-sauce-mobile.webp",
