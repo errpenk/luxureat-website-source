@@ -6,7 +6,7 @@ const attributes = new Map([
   ['srcset', 'wrong-cover.webp 720w'], ['sizes', '100vw'],
   ['data-lux-mobile-src', 'wrong-mobile.webp'], ['data-lux-src', 'wrong-lazy.webp'],
 ]);
-const image = {style:{}, removeAttribute(name) { attributes.delete(name); }};
+const image = {style:{}, removeAttribute(name) { attributes.delete(name); }, hasAttribute:(name)=>attributes.has(name), setAttribute:(name,value)=>attributes.set(name,value)};
 const card = {
   closest:()=>null, matches:()=>false,
   querySelector:(selector)=>selector === 'img' ? image : null,
@@ -18,5 +18,6 @@ vm.runInNewContext(runtime.slice(runtime.indexOf('  const syncReaderCards ='), r
   document:{querySelectorAll:()=>[trigger]},
 });
 assert.equal(image.src, 'italian-caviar-market.webp');
-assert.equal(attributes.size, 0, 'Stale responsive and deferred sources must not override the selected article cover');
+assert.equal(attributes.size, 1, 'Stale responsive sources must not override the selected article cover');
+assert.equal(attributes.get('data-lux-src'), image.src, 'Pending lazy loading must use the corrected cover');
 console.log('Journal cards clear stale responsive and deferred cover sources.');

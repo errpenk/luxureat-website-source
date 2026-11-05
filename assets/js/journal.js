@@ -589,7 +589,7 @@ function initLuxReader() {
         image.removeAttribute("srcset");
         image.removeAttribute("sizes");
         image.removeAttribute("data-lux-mobile-src");
-        image.removeAttribute("data-lux-src");
+        if (image.hasAttribute("data-lux-src")) image.setAttribute("data-lux-src", article.cardImage || article.image);
         image.src = article.cardImage || article.image;
         image.alt = article.cardTitle || article.title;
         if (article.cardPosition || article.coverPosition) image.style.objectPosition = article.cardPosition || article.coverPosition;
