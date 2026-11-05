@@ -25,8 +25,8 @@ click({ target: { closest: () => null } });
 const css = fs.readFileSync('integration.css', 'utf8');
 assert.match(css, /@media \(min-width: 721px\)\s*{\s*\.lux-product-storage-gallery > picture:not\(\.is-active\) { display: none; }/);
 assert.match(css, /\.lux-product-storage-thumbs button img { aspect-ratio: 1; }/);
-assert.match(css, /\.lux-product-storage-thumbs button \{ display: block; min-width: 0; padding: 0; border: 1px solid transparent; border-radius: 0; background: transparent; cursor: pointer; line-height: 0; \}/);
-assert.match(css, /\.lux-product-storage-thumbs button\[aria-pressed="true"\] { border-color: #171717; }/);
+assert.match(css, /\.lux-product-storage-thumbs button \{ display: block; min-width: 0; padding: 0; border: 2px solid transparent; border-radius: 0; background: transparent; cursor: pointer; line-height: 0; \}/);
+assert.match(css, /\.lux-product-storage-thumbs button\[aria-pressed="true"\] { border-color: #005b50; }/);
 for (const lang of ['zh', 'en']) {
   const directory = `.deploy/luxureat-static/pages/${lang}/product`;
   const pages = fs.readdirSync(directory);
