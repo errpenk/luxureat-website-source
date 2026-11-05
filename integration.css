@@ -14425,6 +14425,8 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   #consumer-needs .lux-about-program-kicker,
   #consumer-needs .lux-about-program-grid article > span,
   #mission-objectives .lux-about-program-grid :is(h3, article > span),
+  #mission-objectives > .lux-about-program-inner > .lux-about-program-kicker,
+  #mission-objectives .lux-about-program-lead h2,
   .lux-product-characteristics-note strong,
   .lux-recipe-library > header,
   .lux-recipe-theme > header,

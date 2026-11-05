@@ -586,6 +586,10 @@ function initLuxReader() {
       const image = node.querySelector("img");
       const background = node.querySelector(".lux-dark-photo-bg, [style*='background-image']");
       if (image) {
+        image.removeAttribute("srcset");
+        image.removeAttribute("sizes");
+        image.removeAttribute("data-lux-mobile-src");
+        image.removeAttribute("data-lux-src");
         image.src = article.cardImage || article.image;
         image.alt = article.cardTitle || article.title;
         if (article.cardPosition || article.coverPosition) image.style.objectPosition = article.cardPosition || article.coverPosition;
