@@ -120,6 +120,12 @@ html[lang^="zh"] .lux-catalogue-toggle::after { content: "单击即可在线浏�
   text-align: center;
 }
 
+.lux-catalogue-copy:has(.is-tin) { background: #000; }
+.lux-catalogue-copy:has(.is-tin) h3 { color: #fff; }
+.lux-catalogue-copy:has(.is-tin) p,
+.lux-catalogue-copy:has(.is-tin) .lux-catalogue-pages { color: #d3cec5; }
+.lux-catalogue-copy:has(.is-tin) .lux-catalogue-actions a:last-child { color: #9df5ec; }
+
 .lux-catalogue-logo-link { display: inline-flex; align-items: center; justify-content: center; }
 .lux-catalogue-logo { display: block; object-fit: contain; transition: transform .3s ease; }
 .lux-catalogue-logo-link:hover .lux-catalogue-logo,
