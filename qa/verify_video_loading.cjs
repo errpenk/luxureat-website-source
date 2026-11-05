@@ -46,6 +46,19 @@ assert.equal(hero.loads,0);
 onLoad();
 assert(observers[0].targets.includes(hero),'After page load, hero playback follows viewport visibility');
 assert.equal(hero.loads,0,'An offscreen hero still must not load');
+for (const mode of [{luxIsMobile:true,luxSaveData:false}, {luxIsMobile:false,luxSaveData:true}]) {
+  const offset = observers.length;
+  const deferredSource = {dataset:{src:'mobile-video.mp4'}};
+  const deferredVideo = {...video, dataset:{}, loads:0, plays:0, querySelectorAll:()=>deferredSource.dataset.src ? [deferredSource] : []};
+  const limitedContext = vm.createContext({IntersectionObserver:Observer, window:{IntersectionObserver:Observer}, ...mode, video:deferredVideo, Promise});
+  vm.runInContext(core.slice(core.indexOf('const prepareLuxVideo'),core.indexOf('const luxAutoplaySelector')), limitedContext);
+  vm.runInContext('initLuxVideo(video)',limitedContext);
+  assert.equal(observers[offset+1].targets?.length || 0,0,'Mobile and data-saver videos must not preload offscreen');
+  assert.equal(deferredVideo.loads,0);
+  observers[offset].callback([{target:deferredVideo,isIntersecting:true}]);
+  assert.equal(deferredVideo.loads,1,'Visible mobile videos must still load');
+  assert.equal(deferredVideo.plays,1,'Visible mobile videos must still play');
+}
 for(const lang of ['zh','en']) {
   for(const file of fs.readdirSync(lang).filter(f=>f.endsWith('.html'))) {
     const html=fs.readFileSync(`${lang}/${file}`,'utf8');

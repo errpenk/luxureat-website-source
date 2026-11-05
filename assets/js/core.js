@@ -423,7 +423,7 @@ const initLuxVideo = (video) => {
     video.preload = "auto";
     startLuxVideo(video);
   } else {
-    luxVideoPreloadObserver?.observe(video);
+    if (!luxIsMobile && !luxSaveData) luxVideoPreloadObserver?.observe(video);
     luxVideoObserver.observe(video);
   }
 };
