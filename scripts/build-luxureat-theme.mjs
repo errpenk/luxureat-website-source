@@ -938,7 +938,7 @@ function luxureat_static_publish_root_metadata() {
         return;
     }
 
-    foreach (array('robots.txt', 'llms.txt', 'sitemap.xml') as $filename) {
+    foreach (array('robots.txt', 'llms.txt', 'sitemap.xml', '.well-known/ard.json') as $filename) {
         $source = get_template_directory() . '/' . $filename;
         $target = trailingslashit(ABSPATH) . $filename;
         if (!is_readable($source)) {
@@ -951,6 +951,9 @@ function luxureat_static_publish_root_metadata() {
             continue;
         }
 
+        if (strpos($filename, '/') !== false && !is_dir(dirname($target))) {
+            wp_mkdir_p(dirname($target));
+        }
         $temporary = $target . '.luxureat.tmp';
         if (file_put_contents($temporary, $contents, LOCK_EX) !== false) {
             @chmod($temporary, 0644);
