@@ -14452,8 +14452,6 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-home-partnership-manufacturing-advantages > div { text-align: center; }
   .lux-home-page .lux-home-partnership-manufacturing-advantages dt { justify-content: center; }
   .lux-home-page .lux-home-partnership-manufacturing-advantages dd { margin-inline: auto; }
-  .lux-home-page .lux-home-partnership-process ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .lux-home-page .lux-home-partnership-process ol > li:last-child { grid-column: 1 / -1; width: 100%; justify-self: stretch; }
   .lux-academy-card-copy h2 { text-align: left; }
   .lux-footer nav a { font-family: var(--lux-page-heading) !important; }
 }
@@ -14500,10 +14498,6 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-home-why-copy h2 { margin-inline: auto; }
   .lux-home-page .lux-home-why-metrics > div { text-align: center; }
   .lux-home-page .lux-home-why-metrics > div::before { left: 50%; transform: translateX(-50%); }
-  .lux-home-page .lux-home-partnership-process ol > li:last-child {
-    width: 100%;
-    min-width: 0;
-  }
   .lux-about-story .lux-reader-hero-copy :is(h1, h2),
   .lux-about-story .lux-reader-copy :is(h2, h3) { margin-inline: auto; }
   .lux-home-page .lux-home-why-copy > span { display: block; }
