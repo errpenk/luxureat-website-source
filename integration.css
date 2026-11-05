@@ -8766,6 +8766,9 @@ body {
 .lux-latest-event {
   padding-bottom: 0;
 }
+.lux-latest-event:has(.lux-meet-map) {
+  min-height: 0;
+}
 .lux-latest-event .lux-meet-map {
   width: 100vw;
   max-width: none;
