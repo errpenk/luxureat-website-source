@@ -66,7 +66,7 @@ const recipeRoute = (recipe) => `${recipe.lang === 'zh' ? '' : 'en/'}recipe/${re
 const brandNewsRoute = (item) => `${item.lang === 'zh' ? '' : 'en/'}news/${item.id}`;
 
 function ensureSource() {
-  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'llms.txt', 'google053137c136af2773.html', 'sogousiteverification.txt', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
+  const requiredFiles = ['README.md', '.htaccess', 'integration.css', 'robots.txt', 'llms.txt', '.well-known/ard.json', 'google053137c136af2773.html', 'sogousiteverification.txt', 'tools/generate-sitemap.mjs', 'assets/media/brand/luxureat-logo.png', 'assets/media/brand/wechat-qr.webp', ...new Set(Object.values(scripts).map(({ src }) => src))];
   for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(sourceDir, file))) {
       throw new Error(`Missing source file: ${path.join(sourceDir, file)}`);
@@ -970,6 +970,7 @@ function luxureat_static_search_metadata_endpoint() {
         '/google053137c136af2773.html' => array('google053137c136af2773.html', 'text/html; charset=UTF-8'),
         '/robots.txt' => array('robots.txt', 'text/plain; charset=UTF-8'),
         '/llms.txt' => array('llms.txt', 'text/plain; charset=UTF-8'),
+        '/.well-known/ard.json' => array('.well-known/ard.json', 'application/ard+json; charset=UTF-8'),
         '/sitemap.xml' => array('sitemap.xml', 'application/xml; charset=UTF-8'),
         '/catalogues/tin-caviar-brochure.pdf' => array('assets/documents/tin-caviar-brochure.pdf', 'application/pdf'),
         '/catalogues/luxureat-brochure.pdf' => array('assets/documents/luxureat-brochure.pdf', 'application/pdf'),
@@ -1732,6 +1733,8 @@ async function build() {
   fs.copyFileSync(path.join(sourceDir, '.htaccess'), path.join(themeDir, '.htaccess'));
   fs.copyFileSync(path.join(sourceDir, 'robots.txt'), path.join(themeDir, 'robots.txt'));
   fs.copyFileSync(path.join(sourceDir, 'llms.txt'), path.join(themeDir, 'llms.txt'));
+  mkdirp(path.join(themeDir, '.well-known'));
+  fs.copyFileSync(path.join(sourceDir, '.well-known/ard.json'), path.join(themeDir, '.well-known/ard.json'));
   fs.copyFileSync(path.join(sourceDir, 'google053137c136af2773.html'), path.join(themeDir, 'google053137c136af2773.html'));
   fs.copyFileSync(path.join(sourceDir, 'sogousiteverification.txt'), path.join(themeDir, 'sogousiteverification.txt'));
   execFileSync(process.execPath, [path.join(sourceDir, 'tools/generate-sitemap.mjs'), path.join(themeDir, 'sitemap.xml')]);

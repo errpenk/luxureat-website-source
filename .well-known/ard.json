@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:luxureat.cn:website:luxureat-china",
+      "displayName": "LuxurEat China website",
+      "type": "text/markdown",
+      "url": "https://luxureat.cn/llms.txt",
+      "description": "Bilingual Chinese and English information about premium Italian food, products, recipes, quality, events and China market services from LuxurEat.",
+      "tags": ["Italian food", "China market", "products", "recipes", "business partnerships"],
+      "capabilities": ["product-information", "recipe-information", "market-services", "business-partnerships"],
+      "representativeQueries": [
+        "Which Italian food products does LuxurEat offer in China?",
+        "What China import and market-entry services does LuxurEat provide?",
+        "Find LuxurEat recipes and product information."
+      ]
+    }
+  ]
+}

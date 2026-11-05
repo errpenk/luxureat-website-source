@@ -318,6 +318,9 @@ function render(page, dimensions) {
   if (!/<link\b[^>]*\brel=["'](?:shortcut )?icon["']/i.test(html)) {
     html = html.replace(/<\/head>/i, '<link rel="icon" type="image/png" href="../assets/media/brand/luxureat-logo.png">\n</head>');
   }
+  if (!/<link\b[^>]*\brel=["']ard["']/i.test(html)) {
+    html = html.replace(/<\/head>/i, '<link rel="ard" href="https://luxureat.cn/.well-known/ard.json">\n</head>');
+  }
   html = protectMaterialIconMarkup(html);
   html = addMobileImageSources(file, html, dimensions);
   html = addImageDimensions(html, dimensions);

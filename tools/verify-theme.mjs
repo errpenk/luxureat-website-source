@@ -352,7 +352,7 @@ assert(runtimeJs.includes('.tawk-min-chat-icon-down') && runtimeJs.includes('12.
 assert(!runtimeJs.includes('luxureat_checkout') && !runtimeJs.includes('LuxureatCheckout') && !runtimeJs.includes('add_to_cart'), 'checkout handoff and purchase analytics are removed');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(!runtimeJs.includes('requestIdleCallback') && runtimeJs.includes('const prefetched = new Set()'), 'runtime scripts avoid downloading every linked page during idle time');
-assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('rootMargin: "0px"') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts load background video when visible and suppress native media controls');
+assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('rootMargin: luxIsMobile ? "400px 0px" : "200px 0px"') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts prepare background video before visibility and suppress native media controls');
 assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
 assert(runtimeJs.includes('.hidden ='), 'runtime scripts hides filtered-out caviar product cards');

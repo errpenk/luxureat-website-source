@@ -1640,8 +1640,8 @@ body.lux-reader-open {
 }
 .lux-product-image:hover img { transform: scale(1.04); }
 .lux-product-gallery.is-elixir :is(.lux-product-image, .lux-product-thumb) { aspect-ratio: 4 / 3; background: #171a18; }
-.lux-product-seo-page.is-elixir .lux-reader-cover { aspect-ratio: 4 / 3; padding: 0; background: #171a18; }
-.lux-product-seo-page.is-elixir .lux-reader-cover img { width: 100%; height: auto; min-height: 0; aspect-ratio: 4 / 3; object-fit: contain; border: 0; }
+.lux-product-seo-page.is-elixir .lux-reader-cover { aspect-ratio: 4 / 3; padding: 0; background: #fff; }
+.lux-product-seo-page.is-elixir .lux-reader-cover img { display: block; width: 100%; height: 100%; min-height: 0; aspect-ratio: auto; object-fit: contain; border: 1px solid #171717; }
 .lux-product-image-lightbox {
   width: min(94vw, 1400px);
   height: min(92vh, 1000px);

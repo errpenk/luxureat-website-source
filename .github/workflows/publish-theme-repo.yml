@@ -14,6 +14,7 @@ on:
       - 'tools/**'
       - 'robots.txt'
       - 'llms.txt'
+      - '.well-known/ard.json'
       - 'google053137c136af2773.html'
       - 'sogousiteverification.txt'
       - 'package.json'

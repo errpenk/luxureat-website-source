@@ -393,7 +393,7 @@ const luxVideoObserver = "IntersectionObserver" in window
       delete target.dataset.luxVideoVisible;
       target.pause();
     }
-  }), { rootMargin: "0px", threshold: .01 })
+  }), { rootMargin: luxIsMobile ? "400px 0px" : "200px 0px", threshold: .01 })
   : null;
 const loadLuxVideo = (video) => {
   let changed = false;

@@ -15,6 +15,12 @@ assert.match(homeCritical, /width:auto!important/);
 const core = read("assets/js/core.js").toString();
 const chat = read("assets/js/chat.js").toString();
 const htaccess = read(".htaccess").toString();
+const ard = JSON.parse(read(".well-known/ard.json"));
+assert.ok(Array.isArray(ard.entries) && ard.entries.length > 0, "ARD manifest has no entries");
+for (const entry of ard.entries) {
+  assert.ok(entry.identifier && entry.displayName && entry.type && entry.url, "ARD entry is missing a required field");
+  assert.ok(Array.isArray(entry.representativeQueries) && entry.representativeQueries.length >= 2, "ARD entry lacks discovery queries");
+}
 
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
 assert.match(htaccess, /css\|js\|mjs\|ttf\|woff2/, "static TTF fonts do not receive the immutable cache lifetime");
@@ -197,6 +203,7 @@ for (const match of videoMarkup.matchAll(/<video\b[\s\S]*?<\/video>/g)) {
 const videoRuntime = read("assets/js/core.js").toString();
 assert.match(videoRuntime, /video\.setAttribute\("autoplay", ""\)/, "viewport videos are not promoted to autoplay before playback");
 assert.match(videoRuntime, /data-lux-play-blocked/, "blocked mobile autoplay is not retried after user interaction");
+assert.match(videoRuntime, /rootMargin: luxIsMobile \? "400px 0px" : "200px 0px"/, "videos are not prepared before entering the viewport");
 assert.match(css, /::-webkit-media-controls-enclosure/, "Safari's native video control enclosure is not hidden");
 
 console.log("Performance budgets passed.");
