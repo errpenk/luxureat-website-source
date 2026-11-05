@@ -375,7 +375,7 @@ const luxVideoObserver = "IntersectionObserver" in window
     } else {
       target.pause();
     }
-  }), { rootMargin: "0px", threshold: .01 })
+  }), { rootMargin: luxIsMobile ? "400px 0px" : "200px 0px", threshold: .01 })
   : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
