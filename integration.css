@@ -14423,6 +14423,7 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-home-partnership-manufacturing-advantages,
   #consumer-needs :is(h2, h3),
   #consumer-needs .lux-about-program-kicker,
+  #luxureat-china .lux-about-program-kicker,
   #consumer-needs .lux-about-program-grid article > span,
   #mission-objectives .lux-about-program-grid :is(h3, article > span),
   #mission-objectives > .lux-about-program-inner > .lux-about-program-kicker,
