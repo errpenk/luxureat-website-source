@@ -1,6 +1,18 @@
 const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-storage-index]");
+  if (!button) return;
+  const gallery = button.closest(".lux-product-storage-gallery");
+  gallery.querySelectorAll("[data-storage-image]").forEach((image) => {
+    image.classList.toggle("is-active", image.dataset.storageImage === button.dataset.storageIndex);
+  });
+  gallery.querySelectorAll("[data-storage-index]").forEach((thumb) => {
+    thumb.setAttribute("aria-pressed", String(thumb === button));
+  });
+});
+
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
@@ -142,6 +154,7 @@ if (luxDelayedAnalytics) {
 }
 
 const luxEngagementUrl = new URL("engagement.js", luxCoreUrl);
+luxEngagementUrl.searchParams.set("v", "wechat-contact1");
 luxEngagementUrl.search = luxCoreUrl.search;
 let luxEngagementLoading;
 const loadLuxEngagement = () => luxEngagementLoading ||= new Promise((resolve) => {
@@ -271,6 +284,7 @@ if (luxDeferredScripts) {
   const deferredUrl = (path) => {
     const url = new URL(path, coreUrl);
     url.search = coreUrl.search;
+    url.searchParams.set("content", "20261105-product-copy7");
     return url.href;
   };
   const data = ["../data/products.js", "../data/journal.js"].map(deferredUrl);
@@ -356,6 +370,7 @@ const prepareLuxVideo = (video) => {
   video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
 };
 const startLuxVideo = (video) => {
+  if (!video.isConnected || video.dataset.luxVideoVisible !== "true") return;
   prepareLuxVideo(video);
   if (video.dataset.luxPlayPending) return;
   video.dataset.luxPlayPending = "true";
@@ -370,12 +385,33 @@ const startLuxVideo = (video) => {
 const luxVideoObserver = "IntersectionObserver" in window
   ? new IntersectionObserver((entries) => entries.forEach(({ target, isIntersecting }) => {
     if (isIntersecting) {
+      target.dataset.luxVideoVisible = "true";
+      loadLuxVideo(target);
       target.preload = "auto";
       startLuxVideo(target);
     } else {
+      delete target.dataset.luxVideoVisible;
       target.pause();
     }
   }), { rootMargin: luxIsMobile ? "400px 0px" : "200px 0px", threshold: .01 })
+  : null;
+const loadLuxVideo = (video) => {
+  let changed = false;
+  [video, ...video.querySelectorAll("source[data-src]")].forEach((source) => {
+    if (!source.dataset.src) return;
+    source.src = source.dataset.src;
+    delete source.dataset.src;
+    changed = true;
+  });
+  if (changed) video.load();
+};
+const luxVideoPreloadObserver = "IntersectionObserver" in window
+  ? new IntersectionObserver((entries, observer) => entries.forEach(({ target, isIntersecting }) => {
+    if (!isIntersecting) return;
+    target.preload = target.dataset.luxVideoVisible === "true" ? "auto" : luxSaveData ? "none" : "metadata";
+    loadLuxVideo(target);
+    observer.unobserve(target);
+  }), { rootMargin: "300px", threshold: 0 })
   : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
@@ -385,15 +421,22 @@ const initLuxVideo = (video) => {
   if (video.matches(".lux-hero-video")) {
     const startHero = () => {
       if (luxIsMobile || luxSaveData) return;
-      video.preload = "auto";
-      startLuxVideo(video);
+      if (luxVideoObserver) luxVideoObserver.observe(video);
+      else {
+        video.dataset.luxVideoVisible = "true";
+        loadLuxVideo(video);
+        startLuxVideo(video);
+      }
     };
-    if (document.readyState === "complete") setTimeout(startHero, 2500);
-    else addEventListener("load", () => setTimeout(startHero, 2500), { once: true });
+    if (document.readyState === "complete") startHero();
+    else addEventListener("load", startHero, { once: true });
   } else if (!luxVideoObserver) {
+    video.dataset.luxVideoVisible = "true";
+    loadLuxVideo(video);
     video.preload = "auto";
     startLuxVideo(video);
   } else {
+    if (!luxIsMobile && !luxSaveData) luxVideoPreloadObserver?.observe(video);
     luxVideoObserver.observe(video);
   }
 };
@@ -605,10 +648,6 @@ document.querySelectorAll("[data-count-up]").forEach((counter) => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(({ intersectionRatio }) => {
         if (intersectionRatio >= .35) animate();
-        else {
-          window.cancelAnimationFrame(frameId);
-          counter.textContent = "0";
-        }
       });
     }, { threshold: .35 });
     observer.observe(counter);
@@ -624,11 +663,11 @@ const luxNavigation = {
   zh: [
     ["index.html", "首页", [["遇见我们", "meet-us"], ["甄选产品", "selected-products"], ["意式美食文化", "italian-food-culture"], ["我们的价值观", "market-system"], ["品牌历程", "brand-timeline"], ["中国合作伙伴", "china-partnership"], ["合作流程", "partnership-process"]]],
     ["about-us.html", "关于我们", [["关于我们", "about-us"], ["品牌传承", "featured"], ["品牌承诺", "brand-promise"], ["时令随笔", "seasonal-notes"]]],
-    ["new.html", "热门新品", [["橄榄油", "olive-oil"], ["披萨", "pizza"], ["意式手工冰淇淋", "gelato"]]],
-    ["product.html", "系列产品", [["全部分类", "product-catalogue"], ["鱼子酱", "?category=caviar#product-catalogue"], ["松露", "?category=truffle#product-catalogue"], ["披萨", "?category=pizza#product-catalogue"], ["橄榄油", "?category=olive-oil#product-catalogue"], ["意大利面", "?category=pasta#product-catalogue"], ["意式手工冰淇淋", "?category=gelato#product-catalogue"]]],
+    ["product.html", "我们的产品", [["热门新品", "new.html"], ["全部分类", "product-catalogue"], ["鱼子酱", "?category=caviar#product-catalogue"], ["松露", "?category=truffle#product-catalogue"], ["披萨", "?category=pizza#product-catalogue"], ["橄榄油", "?category=olive-oil#product-catalogue"], ["意大利面", "?category=pasta#product-catalogue"], ["意式手工冰淇淋", "?category=gelato#product-catalogue"]]],
     ["recipe.html", "食谱艺术", [["意式风味食谱", "italian-flavor-recipes"], ["橄榄油食谱", "olive-recipes"], ["松露食谱", "truffle-recipes"], ["健康轻食", "healthy-light-recipes"], ["适合中国家庭的意大利菜", "china-family-recipes"], ["食谱库", "recipe-library"]]],
     ["brand.html", "品牌新闻", [["展览活动", "recent-events"], ["展会地图", "exhibition-map"], ["新闻中心", "news-center"]]],
-    ["blog.html", "知识博客", [["探索意大利", "culture-academy"], ["鱼子酱学院", "caviar-academy"], ["橄榄油学院", "olive-academy"], ["披萨学院", "pizza-academy"], ["松露学院", "truffle-academy"], ["意式手工冰淇淋", "gelato-academy"], ["营养与配料指南", "nutrition-guide"], ["意大利美食词典", "italian-food-dictionary"], ["生产者、大师与产地故事", "producers-stories"]]],
+    ["gallery.html", "企业画廊", [["筛选素材", "gallery-filters"], ["全部影像", "gallery-results"]]],
+    ["blog.html", "知识博客", [["探索意大利", "culture-academy"], ["鱼子酱学院", "caviar-academy"], ["橄榄油学院", "olive-academy"], ["披萨学院", "pizza-academy"], ["松露学院", "truffle-academy"], ["意式手工冰淇淋", "gelato-academy"], ["营养与配料指南", "nutrition-guide"], ["意大利美食词典", "italian-food-dictionary"], ["生产者、工艺师与产地故事", "producers-stories"]]],
     ["certification.html", "品质认证", [["责任采购与全球合规", "responsible-trade"], ["全球品质体系", "quality-system"], ["认证体系", "certification-system"], ["品牌与行业合作", "award-proofs"], ["品质与认证", "certification-glossary"], ["合作图集", "partnership-gallery"]]],
     ["china-market-insights.html", "中国市场", [["市场概况", "market-overview"], ["城市与经济中心", "cities"], ["意中贸易", "italy-china-trade"], ["食品与饮料", "italian-food-beverage"], ["意大利葡萄酒", "italian-wine"], ["市场判断", "market-judgement"]]],
     ["import-export-services.html", "中国服务", [["产品目录", "catalogues"], ["进口中国", "import-into-china"], ["中国采购与出口", "sourcing-export"], ["中国市场落地", "market-entry"], ["品牌与数字化", "brand-digital"], ["商务拓展", "business-development"], ["为什么选择我们", "why-luxureat-china"], ["常见问题", "faq"]]],
@@ -638,10 +677,10 @@ const luxNavigation = {
   en: [
     ["index.html", "Home", [["Meet Us", "meet-us"], ["Curated Selection", "selected-products"], ["Italian Food Culture", "italian-food-culture"], ["Our Values", "market-system"], ["Brand Journey", "brand-timeline"], ["China Partnership", "china-partnership"], ["Partnership Process", "partnership-process"]]],
     ["about-us.html", "About Us", [["About Us", "about-us"], ["Brand Heritage", "featured"], ["Brand Promise", "brand-promise"], ["Seasonal Notes", "seasonal-notes"]]],
-    ["new.html", "New Arrivals", [["Olive Oil", "olive-oil"], ["Pizza", "pizza"], ["Gelato", "gelato"]]],
-    ["product.html", "Products", [["All Categories", "product-catalogue"], ["Caviar", "?category=caviar#product-catalogue"], ["Truffle", "?category=truffle#product-catalogue"], ["Pizza", "?category=pizza#product-catalogue"], ["Olive Oil", "?category=olive-oil#product-catalogue"], ["Italian Pasta", "?category=pasta#product-catalogue"], ["Italian Gelato", "?category=gelato#product-catalogue"]]],
+    ["product.html", "Our Products", [["New Arrivals", "new.html"], ["All Categories", "product-catalogue"], ["Caviar", "?category=caviar#product-catalogue"], ["Truffle", "?category=truffle#product-catalogue"], ["Pizza", "?category=pizza#product-catalogue"], ["Olive Oil", "?category=olive-oil#product-catalogue"], ["Italian Pasta", "?category=pasta#product-catalogue"], ["Italian Gelato", "?category=gelato#product-catalogue"]]],
     ["recipe.html", "Recipe Art", [["Italian Flavor Recipes", "italian-flavor-recipes"], ["Olive Oil Recipes", "olive-recipes"], ["Truffle Recipes", "truffle-recipes"], ["Healthy Light Meals", "healthy-light-recipes"], ["Italian Food for Chinese Homes", "china-family-recipes"], ["Recipe Library", "recipe-library"]]],
     ["brand.html", "Brand News", [["Exhibitions & Events", "recent-events"], ["Exhibition Map", "exhibition-map"], ["News Centre", "news-center"]]],
+    ["gallery.html", "Gallery", [["Filters", "gallery-filters"], ["All Media", "gallery-results"]]],
     ["blog.html", "Blog", [["Explore Italy", "culture-academy"], ["Caviar Academy", "caviar-academy"], ["Olive Oil Academy", "olive-academy"], ["Pizza Academy", "pizza-academy"], ["Truffle Academy", "truffle-academy"], ["Italian Gelato", "gelato-academy"], ["Nutrition & Ingredients", "nutrition-guide"], ["Italian Food Dictionary", "italian-food-dictionary"], ["Producers, Masters & Stories of Place", "producers-stories"]]],
     ["certification.html", "Certification", [["Responsible Trade", "responsible-trade"], ["Global Quality System", "quality-system"], ["Certification System", "certification-system"], ["Brand & Industry Partnerships", "award-proofs"], ["Quality & Certification", "certification-glossary"], ["Partnership Gallery", "partnership-gallery"]]],
     ["china-market-insights.html", "China Market", [["Market Overview", "market-overview"], ["Cities & Economic Centres", "cities"], ["Italy–China Trade", "italy-china-trade"], ["Food & Beverages", "italian-food-beverage"], ["Italian Wine", "italian-wine"], ["Market Assessment", "market-judgement"]]],
@@ -692,7 +731,7 @@ if (luxNav && luxMenu) {
     const link = document.createElement("a");
     link.href = pageHref(href);
     link.textContent = label;
-    link.classList.toggle("active", href === currentPage);
+    link.classList.toggle("active", href === currentPage || (href === "product.html" && currentPage === "new.html"));
     item.appendChild(link);
 
     const toggle = document.createElement("button");
@@ -712,9 +751,9 @@ if (luxNav && luxMenu) {
       const [sectionLabel, targetIndex] = Array.isArray(section) ? section : [section, index + 1];
       const sectionLink = document.createElement("a");
       const sectionHash = typeof targetIndex === "number" ? `section-${targetIndex}` : targetIndex;
-      sectionLink.href = typeof sectionHash === "string" && sectionHash.startsWith("?")
-        ? `${pageHref(href)}${sectionHash}`
-        : `${pageHref(href)}#${sectionHash}`;
+      sectionLink.href = sectionHash.endsWith(".html")
+        ? pageHref(sectionHash)
+        : sectionHash.startsWith("?") ? `${pageHref(href)}${sectionHash}` : `${pageHref(href)}#${sectionHash}`;
       sectionLink.textContent = sectionLabel;
       flyout.appendChild(sectionLink);
     });
@@ -738,18 +777,19 @@ if (luxNav && luxMenu) {
       const link = document.createElement("a");
       link.href = pageHref(href);
       link.textContent = label;
+      if (href === currentPage || (href === "product.html" && currentPage === "new.html") || pathParts.includes(href.replace(/\.html$/, ""))) link.setAttribute("aria-current", "page");
       return link;
     }));
   }
 
   const pairedPage = currentPage;
   const languageLinks = document.querySelectorAll(".lux-lang a");
-  if (languageLinks.length === 2 && pageItems.some(([href]) => href === pairedPage)) {
+  if (languageLinks.length === 2 && (pageItems.some(([href]) => href === pairedPage) || pairedPage === "new.html")) {
     languageLinks[0].href = language === "zh" ? "#" : pageHref(pairedPage, "zh");
     languageLinks[1].href = language === "en" ? "#" : pageHref(pairedPage, "en");
   }
 
-  if (pageItems.some(([href]) => href === currentPage)) {
+  if (pageItems.some(([href]) => href === currentPage) || currentPage === "new.html") {
     const headings = document.querySelectorAll("body > header:not(.lux-header) h1, body > section h1, body > section h2, main h1, main h2");
     headings.forEach((heading, index) => {
       heading.id ||= `section-${index + 1}`;
@@ -760,16 +800,21 @@ if (luxNav && luxMenu) {
     }
   }
 
+  let menuScrollY = 0;
   const setOpen = (open) => {
+    if (open) {
+      menuScrollY = window.scrollY;
+      document.body.style.setProperty("--lux-menu-scroll-top", `-${menuScrollY}px`);
+      document.body.classList.add("lux-menu-open");
+    } else if (document.body.classList.contains("lux-menu-open")) {
+      document.body.classList.remove("lux-menu-open");
+      document.body.style.removeProperty("--lux-menu-scroll-top");
+      window.scrollTo(0, menuScrollY);
+    }
     luxNav.classList.toggle("open", open);
     luxHeader?.classList.toggle("is-menu-open", open);
     luxMenu.setAttribute("aria-expanded", String(open));
     luxMenu.textContent = open ? luxMenu.dataset.open : luxMenu.dataset.closed;
-    if (open) {
-      const currentItem = luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item");
-      currentItem?.classList.add("is-expanded");
-      currentItem?.querySelector(".lux-nav-toggle")?.setAttribute("aria-expanded", "true");
-    }
     if (!open) {
       luxNav.querySelectorAll(".lux-nav-item.is-expanded").forEach((item) => item.classList.remove("is-expanded"));
       luxNav.querySelectorAll(".lux-nav-toggle").forEach((toggle) => toggle.setAttribute("aria-expanded", "false"));
@@ -778,6 +823,9 @@ if (luxNav && luxMenu) {
 
   luxMenu.addEventListener("click", () => {
     setOpen(!luxNav.classList.contains("open"));
+  });
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 1280 && luxNav.classList.contains("open")) setOpen(false);
   });
 
   luxNav.querySelectorAll("a").forEach((link) => {
@@ -830,6 +878,8 @@ if (luxNav && luxMenu) {
   const lang = () => document.documentElement.lang?.startsWith("zh") ? "返回顶部" : "Back to top";
 
   const init = () => {
+    const activeScroller = () => document.querySelector(".lux-product-detail:not([hidden]) .lux-product-body, .lux-reader:not([hidden]) .lux-reader-body, .lux-footer-modal:not([hidden]) .lux-footer-modal-body.is-legal");
+    const scrollPosition = () => activeScroller()?.scrollTop ?? window.scrollY;
     const sentinel = document.createElement("span");
     sentinel.setAttribute("aria-hidden", "true");
     sentinel.style.cssText = "position:absolute;top:360px;width:1px;height:1px;pointer-events:none;opacity:0";
@@ -842,15 +892,16 @@ if (luxNav && luxMenu) {
     document.body.appendChild(button);
 
     button.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      (activeScroller() || window).scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     });
-    const update = () => button.classList.toggle("visible", window.scrollY > 360);
+    const update = () => button.classList.toggle("visible", scrollPosition() > 360);
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([entry]) => {
-        button.classList.toggle("visible", window.scrollY > 360 || (!entry.isIntersecting && entry.boundingClientRect.top < 0));
+        button.classList.toggle("visible", scrollPosition() > 360 || (!entry.isIntersecting && entry.boundingClientRect.top < 0));
       }).observe(sentinel);
     }
     window.addEventListener("scroll", update, { passive: true });
+    document.addEventListener("scroll", update, { capture: true, passive: true });
     window.addEventListener("pageshow", update);
     update();
   };
@@ -1176,20 +1227,30 @@ function initLuxSectionFlips() {
     });
 
     if (reducedMotion || !("IntersectionObserver" in window)) return;
+    let autoFlipped = false;
     let timers = [];
     const resetAutoFlip = () => {
       timers.forEach(window.clearTimeout);
       timers = [];
       buttons.forEach((button) => button.classList.remove("is-auto-flipped"));
     };
-    new IntersectionObserver(([entry]) => {
+    const flipObserver = new IntersectionObserver(([entry]) => {
       resetAutoFlip();
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting || autoFlipped) return;
+      autoFlipped = true;
       buttons.forEach((button, index) => {
         timers.push(window.setTimeout(() => button.classList.add("is-auto-flipped"), 120 + index * 180));
         timers.push(window.setTimeout(() => button.classList.remove("is-auto-flipped"), 1050 + index * 180));
       });
-    }, { threshold: .45 }).observe(group);
+    }, { threshold: .45 });
+    flipObserver.observe(group);
+    addEventListener("pageshow", (event) => {
+      if (!event.persisted) return;
+      autoFlipped = false;
+      resetAutoFlip();
+      flipObserver.unobserve(group);
+      flipObserver.observe(group);
+    });
   });
 }
 

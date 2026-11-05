@@ -18,6 +18,7 @@ const context = {
   URL,
 };
 vm.runInNewContext(read("assets/data/events.js"), context);
+vm.runInNewContext(read("assets/data/gallery.js"), context);
 
 const events = context.window.LUXUREAT_EVENT_DATA?.events;
 const eventUtils = context.window.LUXUREAT_EVENT_UTILS;
@@ -27,11 +28,21 @@ const secondEvent = events?.find((item) => item.id === "marca-china-2026");
 const sialEvent = events?.find((item) => item.id === "sial-guangzhou-2026");
 const romaEvent = events?.find((item) => item.id === "roma-bar-show-2026");
 const parisEvent = events?.find((item) => item.id === "sial-paris-2026");
+const gallery = context.window.LUXUREAT_GALLERY_DATA || [];
+const collections = new Set(gallery.filter((media) => media.collection).map((media) => media.eventId));
 assert(fhcEvent, "FHC Shanghai 2026 event data is missing");
 assert(event, "Changsha 2026 event data is missing");
 assert(eventUtils, "shared Beijing event utilities are missing");
 assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma Bar Show event or cover dimensions are missing");
 assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
+assert(gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "video").length === 3 && gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "photo").length === 3, "SIAL Paris gallery must include three videos and three photos");
+for (const media of gallery) {
+  assert(media.id && (media.date || collections.has(media.eventId)) && media.zh?.title && media.en?.title && media.width && media.height, "gallery metadata is incomplete");
+  assert(!media.eventId || collections.has(media.eventId) || events.some((item) => item.id === media.eventId), `gallery event is missing: ${media.id}`);
+  for (const file of [media.src, media.poster].filter(Boolean)) {
+    assert(fs.existsSync(path.join(root, "assets", file.split("/assets/")[1])), `SIAL Paris gallery asset is missing: ${file}`);
+  }
+}
 assert(parisEvent.displayWidth === 520 && parisEvent.displayHeight === 530, "SIAL Paris poster dimensions are wrong");
 assert(parisEvent.zh.paragraphs.length === 3 && parisEvent.en.paragraphs.length === 3, "SIAL Paris homepage introductions are incomplete");
 assert(parisEvent.zh.sections.length === 4 && parisEvent.en.sections.length === 4, "SIAL Paris bilingual details are incomplete");
@@ -121,7 +132,9 @@ assert(latestEvent.includes("LUXUREAT_EVENT_DATA"), "home latest event does not 
 assert(latestEvent.includes("LUXUREAT_EVENT_UTILS?.getHomeEvents"), "home events do not use shared Beijing filtering and start-date sorting");
 assert(latestEvent.includes("section.hidden = true"), "home event section is not hidden when no active events remain");
 assert(journal.includes("LUXUREAT_EVENT_UTILS.groupBrandEvents"), "Brand News events do not use shared Beijing grouping and sorting");
-assert(journal.includes("luxCreatePagination(pageNav, { total: () => cards.length, pageSize: 4") && css.includes(".lux-news-grid [hidden] { display: none !important; }"), "Brand News article pagination is missing");
+assert(journal.includes("luxCreatePagination(pageNav, { total: () => cards.length, pageSize: 6") && css.includes(".lux-news-grid [hidden] { display: none !important; }") && css.includes("grid-template-columns: repeat(3, minmax(0, 1fr));"), "Brand News three-column pagination is missing");
+const shareCss = read("assets/css/reader-share.css");
+assert(["qq", "weibo", "wechat"].every((name) => journal.includes(`shareBrandIcon("${name}")`)) && !shareCss.includes("LuxChinaMedia") && shareCss.includes(".lux-share-brand"), "Reader share icons must render as SVGs without an icon font");
 assert(!css.includes(".lux-product-browser + .lux-pagination { margin-left:"), "Product pagination is offset from the page center");
 assert(!journal.includes("new Date(`${event.endDate}"), "Brand News still parses calendar dates as local timestamps");
 assert(latestEvent.includes("setInterval(() => show(index + 1), 2500)"), "home event autoplay is not set to 2.5 seconds");

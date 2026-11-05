@@ -331,7 +331,7 @@ function articlePageHtml(article, imageDimensions) {
   const pageBody = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'blog.html', article.lang === 'zh' ? '知识博客' : 'Knowledge Blog', article.title)}<article class="lux-reader-layout lux-academy-reader${article.wideCover ? ' is-wide-cover' : ''}">
     <div class="lux-reader-rule"></div>
     <section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(article.eyebrow)}</span><span>${escapeHtml(article.meta)}</span></div><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${cover ? `<figure class="lux-reader-cover"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>` : ''}</section>
-    <section class="lux-reader-content"><aside class="lux-reader-aside"><a href="${article.lang === 'zh' ? 'blog.html' : 'blog.html'}">${article.lang === 'zh' ? '返回知识博客' : 'Back to Knowledge Blog'}</a></aside><div class="lux-reader-copy">${(article.opening || []).length ? `<section class="lux-reader-section lux-reader-section-opening">${renderArticleContent(article.opening)}</section>` : ''}${sections}${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ''}</div></section>
+    <section class="lux-reader-content"><aside class="lux-reader-aside"><a href="${article.lang === 'zh' ? 'blog.html' : 'blog.html'}">${article.lang === 'zh' ? '返回知识博客' : 'Back to Knowledge Blog'}</a></aside><div class="lux-reader-copy${article.cmsHtml ? ' lux-cms-prose' : ''}">${article.cmsHtml || `${(article.opening || []).length ? `<section class="lux-reader-section lux-reader-section-opening">${renderArticleContent(article.opening)}</section>` : ''}${sections}${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ''}`}</div></section>
   </article></main>`;
   html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(article.title)} | LuxurEat</title>\n<meta name="description" content="${escapeHtml(article.intro)}">\n<!-- lux:seo:end -->`);
   const alternate = articleInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
@@ -340,7 +340,7 @@ function articlePageHtml(article, imageDimensions) {
     const currentBlogLink = article.lang === 'zh' ? '../en/blog.html' : '../zh/blog.html';
     html = html.replace(`href="${currentBlogLink}"`, `href="<?php echo esc_url(luxureat_static_url('${articleRoute(alternate)}')); ?>"`);
   }
-  html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n${pageBody}\n$2`);
+  html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n<?php if (!luxureat_cms_detail('${escapePhpString(`${article.lang}-academy-${article.slug}`)}', '${article.lang}', 'blog')): ?>${pageBody}<?php endif; ?>\n$2`);
   return convertHtmlSource(html, article.lang);
 }
 
@@ -363,7 +363,23 @@ function productPageHtml(product, imageDimensions) {
     ? { back: '返回产品系列', facts: '产品信息' }
     : { back: 'Back to Products', facts: 'Product information' };
   const facts = (product.details || []).map(({ label, value }) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
-  const body = `<main class="lux-article-page">${breadcrumbHtml(product.lang, 'product.html', product.lang === 'zh' ? '系列产品' : 'Products', product.title)}<article class="lux-reader-layout lux-product-seo-page"><div class="lux-reader-rule"></div><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(product.eyebrow)}</span><span>${escapeHtml(product.unit)}</span><span>${escapeHtml(product.manufacturer)}</span></div><h1 id="lux-reader-title">${escapeHtml(product.title)}</h1><p class="lux-reader-summary">${escapeHtml(product.desc)}</p></div><figure class="lux-reader-cover"><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}"></figure></section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="product.html">${labels.back}</a></aside><div class="lux-reader-copy"><section class="lux-reader-section"><h2>${labels.facts}</h2><dl class="lux-seo-facts">${facts}</dl></section></div></section></article></main>`;
+  const videos = (product.videoIds || []).map((videoId, index) => `<video data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" poster="${escapeHtml(image)}" aria-label="${escapeHtml(product.title)} ${product.lang === 'zh' ? '视频' : 'video'} ${index + 1}"><source data-src="../assets/media/products/videos/${videoId}.mp4" type="video/mp4"></video>`).join('');
+  const videoRow = videos ? `<div class="lux-product-videos" aria-label="${product.lang === 'zh' ? '产品视频' : 'Product videos'}">${videos}</div>` : '';
+  const showcaseVideos = (product.showcaseVideoIds || []).map((videoId, index) => `<video style="flex-grow: ${product.showcaseVideoRatios[index]}; aspect-ratio: ${product.showcaseVideoRatios[index]}" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" controls poster="${escapeHtml(image)}" aria-label="${escapeHtml(product.title)} ${product.lang === 'zh' ? '视频' : 'video'} ${index + 1}"><source data-src="../assets/media/products/videos/${videoId}.mp4" type="video/mp4"></video>`).join('');
+  const renderMediaContent = (items, story = false) => (items || []).map((media, index) => {
+    const style = story ? '' : `flex-grow: ${media.ratio}; aspect-ratio: ${media.ratio}`;
+    const label = escapeHtml(`${product.title} ${product.lang === 'zh' ? '风味示意' : 'flavour inspiration'} ${index + 1}`);
+    return media.type === 'image'
+      ? `<img style="${style}" src="${escapeHtml(articleAsset(media.src))}" alt="${label}" loading="lazy" decoding="async">`
+      : `<video style="${style}" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" controls poster="${escapeHtml(articleAsset(media.poster))}" aria-label="${label}"><source data-src="${escapeHtml(articleAsset(media.src))}" type="video/mp4"></video>`;
+  }).join('');
+  const showcaseContent = renderMediaContent(product.showcaseMedia) || showcaseVideos;
+  const showcaseRow = showcaseContent ? `<div class="lux-product-showcase-videos${product.showcaseMedia ? ' is-mixed-media' : product.showcaseLayout === 'portrait' ? ' is-portrait' : ''}" aria-label="${product.lang === 'zh' ? '产品影像' : 'Product media'}">${showcaseContent}</div>` : '';
+  const storyContent = renderMediaContent(product.storyMedia, true);
+  const storageGallery = product.storageImages?.length ? `<div class="lux-product-storage-gallery">${product.storageImages.map((image, index) => `<picture data-storage-image="${index}" class="${index === 0 ? 'is-active' : ''}"><source media="(max-width: 720px)" srcset="${escapeHtml(articleAsset(image.mobileSrc))}"><img width="1200" height="675" loading="lazy" decoding="async" src="${escapeHtml(articleAsset(image.src))}" alt="${escapeHtml(`${product.title} · ${product.lang === 'zh' ? '料理应用参考' : 'Serving inspiration'} ${index + 1}`)}"></picture>`).join('')}<div class="lux-product-storage-thumbs">${product.storageImages.map((image, index) => `<button type="button" data-storage-index="${index}" aria-pressed="${index === 0}" aria-label="${escapeHtml(`${product.title} · ${product.lang === 'zh' ? '料理应用参考' : 'Serving inspiration'} ${index + 1}`)}"><img width="120" height="120" loading="lazy" decoding="async" src="${escapeHtml(articleAsset(image.mobileSrc))}" alt=""></button>`).join("")}</div></div>` : '';
+  const storageNotes = product.storageNotes ? `<div class="lux-product-storage-notes">${product.storageNotes.split(/\n\s*\n/).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>` : '';
+  const storySection = product.detailDescription || storyContent ? `<section class="lux-reader-section lux-product-story-media"><h2>${product.lang === 'zh' ? '产品说明' : 'Product Information'}</h2>${(product.detailDescription || product.desc).split(/\n\s*\n/).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${storyContent ? `<div class="lux-product-videos lux-elixir-story-videos">${storyContent}</div>` : ''}${videoRow}${product.videoNotes ? `<div class="lux-product-video-notes">${product.videoNotes.split(/\n\s*\n/).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>` : ''}${storageGallery}${storageNotes}</section>` : '';
+  const body = `<main class="lux-article-page">${breadcrumbHtml(product.lang, 'product.html', product.lang === 'zh' ? '我们的产品' : 'Products', product.title)}<article class="lux-reader-layout lux-product-seo-page${product.series === 'TrufflElixir' ? ' is-elixir' : ''}"><div class="lux-reader-rule"></div><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(product.eyebrow)}</span><span>${escapeHtml(product.unit)}</span><span>${escapeHtml(product.manufacturer)}</span></div><h1 id="lux-reader-title">${escapeHtml(product.title)}</h1><p class="lux-reader-summary">${escapeHtml(product.desc)}</p></div><figure class="lux-reader-cover"><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}"></figure></section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="product.html">${labels.back}</a></aside><div class="lux-reader-copy"><section class="lux-reader-section"><h2>${labels.facts}</h2>${showcaseRow}<dl class="lux-seo-facts">${facts}</dl></section>${storySection}</div></section></article></main>`;
   return detailPageHtml({ lang: product.lang, pageKey: 'products', title: product.title, description: product.cardDesc || product.desc, route: productRoute(product), alternateRoute: productRoute(alternate || product), body });
 }
 
@@ -377,7 +393,7 @@ function brandNewsPageHtml(item, imageDimensions) {
     if (entry.type === 'video') {
       const video = articleAsset(item.video);
       const poster = articleAsset(item.videoPoster || item.cardImage);
-      return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(poster)}"><source src="${escapeHtml(video)}" type="video/mp4"></video></figure>`;
+      return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(poster)}"><source src="${escapeHtml(video)}" type="video/mp4"></video>${item.videoSourceUrl ? `<figcaption>${item.lang === 'zh' ? '视频来源：' : 'Video source: '}<a href="${escapeHtml(item.videoSourceUrl)}" target="_blank" rel="noopener">arsial.lazio</a></figcaption>` : ''}</figure>`;
     }
     const source = articleAsset(entry.src);
     const alt = entry.alt?.[item.lang] || article.title;
@@ -396,7 +412,7 @@ function brandNewsPageHtml(item, imageDimensions) {
     : '';
   const body = `<main class="lux-article-page">${breadcrumbHtml(item.lang, 'brand.html', item.lang === 'zh' ? '品牌新闻' : 'Brand News', article.title)}<article class="lux-brand-news-reader lux-brand-news-seo-page">
     <figure class="lux-brand-news-hero"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>
-    <div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)} ↗</a>` : ''}</header><div class="lux-brand-news-copy">${renderArticleContent(article.opening || [])}${sections}${item.imageNote?.[item.lang] ? `<p class="lux-brand-news-image-note">${escapeHtml(item.imageNote[item.lang])}</p>` : ''}${linkedEventHtml}${relatedStoryHtml}</div></div>
+    <div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)} ↗</a>` : ''}</header><div class="lux-brand-news-copy">${renderArticleContent(article.opening || [])}${sections}${linkedEventHtml}${relatedStoryHtml}</div></div>
   </article></main>`;
   return detailPageHtml({ lang: item.lang, pageKey: 'news', title: article.title, description: article.intro, route: brandNewsRoute(item), alternateRoute: brandNewsRoute(alternate || item), body });
 }
@@ -406,12 +422,14 @@ function recipePageHtml(article, imageDimensions) {
   const recipe = article.recipe;
   const image = articleAsset(article.image);
   const labels = article.lang === 'zh'
-    ? { time: '时间', difficulty: '难度', servings: '份量', ingredients: '食材', method: '准备', nutrition: '每份的估计营养成分', nutritionNote: '营养说明', region: '参考产区', oil: '推荐用油', professionalTip: '专业提示', foodSafety: '食品安全', allergens: '过敏原提示', substitutions: '可替换食材', products: '相关产品' }
-    : { time: 'Time', difficulty: 'Difficulty', servings: 'Serves', ingredients: 'Ingredients', method: 'Method', nutrition: 'Estimated nutrition per serving', nutritionNote: 'Nutrition note', region: 'Reference region', oil: 'Suggested oil', professionalTip: 'Professional tip', foodSafety: 'Food safety', allergens: 'Allergen note', substitutions: 'Substitutions', products: 'Related products' };
+    ? { time: '时间', difficulty: '难度', servings: '份量', ingredients: '食材', method: '准备', nutrition: '每份的估计营养成分', region: '参考产区', oil: '推荐用油', professionalTip: '专业提示', foodSafety: '食品安全', allergens: '过敏原提示', substitutions: '可替换食材', products: '相关产品' }
+    : { time: 'Time', difficulty: 'Difficulty', servings: 'Serves', ingredients: 'Ingredients', method: 'Method', nutrition: 'Estimated nutrition per serving', region: 'Reference region', oil: 'Suggested oil', professionalTip: 'Professional tip', foodSafety: 'Food safety', allergens: 'Allergen note', substitutions: 'Substitutions', products: 'Related products' };
   const productHref = `product.html${article.productCategory ? `?category=${encodeURIComponent(article.productCategory)}#product-catalogue` : ''}`;
   const details = [[labels.region, recipe.region], [labels.oil, recipe.oil], [labels.professionalTip, recipe.professionalTip], [labels.foodSafety, recipe.foodSafety], [labels.allergens, recipe.allergens], [labels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
-  const body = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'recipe.html', article.lang === 'zh' ? '食谱艺术' : 'Recipes', article.title)}<article class="lux-recipe-reader lux-recipe-seo-page"><section class="lux-recipe-hero"><figure><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(article.title)}"></figure><div class="lux-recipe-intro"><span>${escapeHtml(article.eyebrow)}</span><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p>${escapeHtml(article.intro)}</p><dl class="lux-recipe-facts"><div><dt>${labels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div><div><dt>${labels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div><div><dt>${labels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div></dl></div></section><section class="lux-recipe-body"><aside class="lux-recipe-ingredients"><h2>${labels.ingredients}</h2><ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside><div class="lux-recipe-method"><h2>${labels.method}</h2><ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></div></section><section class="lux-recipe-nutrition"><header><h2>${labels.nutrition}</h2></header><dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${labels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ''}</section><section class="lux-recipe-details">${details}${recipe.products ? `<div><dt>${labels.products}</dt><dd><a class="lux-recipe-product-link" href="${productHref}">${escapeHtml(recipe.products)}</a></dd></div>` : ''}</section></article></main>`;
-  return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body });
+  const videoHtml = article.video ? `<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="${escapeHtml(image)}" aria-label="${escapeHtml(article.title)}"><source src="${escapeHtml(articleAsset(article.video.src))}" type="video/mp4"></video><figcaption>${escapeHtml(article.video.description)}</figcaption></figure>` : '';
+  const extraVideoHtml = article.extraVideos?.length ? `<div class="lux-recipe-extra-videos">${article.extraVideos.map((src, index) => `<video style="flex-grow: ${article.extraVideoRatios[index]}; aspect-ratio: ${article.extraVideoRatios[index]}" data-lux-autoplay muted loop playsinline preload="none" controls aria-label="${escapeHtml(article.title)} ${index + 1}"><source data-src="${escapeHtml(articleAsset(src))}" type="video/mp4"></video>`).join('')}</div>` : '';
+  const body = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'recipe.html', article.lang === 'zh' ? '食谱艺术' : 'Recipes', article.title)}<article class="lux-recipe-reader lux-recipe-seo-page"><section class="lux-recipe-hero"><figure><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(article.title)}"></figure><div class="lux-recipe-intro"><span>${escapeHtml(article.eyebrow)}</span><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p>${escapeHtml(article.intro)}</p><dl class="lux-recipe-facts"><div><dt>${labels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div><div><dt>${labels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div><div><dt>${labels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div></dl></div></section><section class="lux-recipe-body"><aside class="lux-recipe-ingredients"><h2>${labels.ingredients}</h2><ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside><div class="lux-recipe-method"><h2>${labels.method}</h2><ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></div></section><section class="lux-recipe-nutrition"><header><h2>${labels.nutrition}</h2></header>${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote)}</p>` : ''}<dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>${videoHtml}${extraVideoHtml}</section><section class="lux-recipe-details">${details}${recipe.products ? `<div><dt>${labels.products}</dt><dd><a class="lux-recipe-product-link" href="${productHref}">${escapeHtml(recipe.products)}</a></dd></div>` : ''}</section></article></main>`;
+  return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body: `<?php if (!luxureat_cms_detail('${escapePhpString(article.id)}', '${article.lang}', 'recipe')): ?>${body}<?php endif; ?>` });
 }
 
 function buildRoutesPhp() {
@@ -462,8 +480,8 @@ function buildAssetCatalogPhp() {
     return `        '${escapePhpString(handle)}' => array('src' => '${escapePhpString(script.src)}', 'dependencies' => ${phpList(script.dependencies)}),`;
   }).join('\n');
   const byPath = [...pages.map((page) => {
-    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat'] : page.scripts)},`;
-  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('core'),`)].join('\n');
+    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat', 'home-interactions'] : page.scripts)},`;
+  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('image-variants', 'core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('image-variants', 'core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('image-variants', 'core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('image-variants', 'core'),`)].join('\n');
   return { catalog, byPath };
 }
 
@@ -501,14 +519,124 @@ function functionsPhp() {
   const { catalog, byPath } = buildAssetCatalogPhp();
   const seoCatalog = buildSeoCatalogPhp();
   const eventIds = [...new Set(eventInputs.map((event) => event.id))];
+  const recipeVideoRows = recipeInputs.filter((article) => article.video).map((article) =>
+    `        '${escapePhpString(article.id)}' => array('slug' => '${escapePhpString(article.slug)}', 'lang' => '${article.lang}', 'description' => '${escapePhpString(article.video.description)}', 'note' => '${escapePhpString(article.recipe.nutritionNote || '')}', 'ratios' => array(${(article.extraVideoRatios || []).join(', ')}), 'extras' => array(${(article.extraVideos || []).map((src) => "'" + escapePhpString(articleAsset(src).replace(/^(\.\.\/)+/, '/')) + "'").join(', ')})),`
+  ).join('\n');
   return `<?php
 if (!defined('ABSPATH')) {
     exit;
 }
 
+function luxureat_origin_upload_images($content) {
+    return preg_replace('~https?://i[0-9]+\\.wp\\.com/luxureat\\.cn/wp-content/uploads/~', 'https://luxureat.cn/wp-content/uploads/', $content);
+}
+add_filter('the_content', 'luxureat_origin_upload_images', PHP_INT_MAX);
+
 function luxureat_static_routes() {
     $routes = require get_template_directory() . '/routes.php';
     return is_array($routes) ? $routes : array();
+}
+
+function luxureat_cms_posts($kind) {
+    $posts = get_posts(array(
+        'post_type' => 'post', 'post_status' => array('publish', 'draft'),
+        'numberposts' => -1, 'meta_key' => '_luxureat_kind', 'meta_value' => $kind,
+    ));
+    $result = array();
+    foreach ($posts as $post) {
+        $source_id = get_post_meta($post->ID, '_luxureat_source_id', true);
+        if (!$source_id) continue;
+        $result[$source_id . ':' . get_post_meta($post->ID, '_luxureat_lang', true)] = $post;
+    }
+    return $result;
+}
+
+function luxureat_cms_post($source_id, $lang, $kind) {
+    static $cache = array();
+    if (!isset($cache[$kind])) $cache[$kind] = luxureat_cms_posts($kind);
+    return isset($cache[$kind][$source_id . ':' . $lang]) ? $cache[$kind][$source_id . ':' . $lang] : null;
+}
+
+function luxureat_cms_payload($kind) {
+    $result = array();
+    foreach (luxureat_cms_posts($kind) as $post) {
+        $id = get_post_meta($post->ID, '_luxureat_source_id', true);
+        $lang = get_post_meta($post->ID, '_luxureat_lang', true);
+        $image = get_the_post_thumbnail_url($post->ID, 'full');
+        $record = array(
+            'title' => get_the_title($post),
+            'intro' => get_the_excerpt($post),
+            'image' => $image ? $image : '',
+        );
+        if ($kind !== 'blog') {
+            $record['cmsHtml'] = luxureat_origin_upload_images(apply_filters('the_content', $post->post_content));
+        }
+        if ($kind === 'blog') $record['date'] = get_the_date('Y-m-d', $post);
+        if ($kind === 'gallery') {
+            $video_id = (int) get_post_meta($post->ID, '_luxureat_video_attachment_id', true);
+            $video_url = $video_id ? wp_get_attachment_url($video_id) : '';
+            if (preg_match('/<video\\b[^>]*\\bsrc=["\\\']([^"\\\']+)/i', $post->post_content, $video_match)) {
+                $video_url = esc_url_raw(html_entity_decode($video_match[1], ENT_QUOTES));
+            }
+            $record['src'] = $video_url ? $video_url : '';
+            $poster_url = $record['image'];
+            if (preg_match('/<video\\b[^>]*\\bposter=["\\\']([^"\\\']+)/i', $post->post_content, $poster_match)) {
+                $poster_url = esc_url_raw(html_entity_decode($poster_match[1], ENT_QUOTES));
+            }
+            $record['poster'] = $poster_url;
+            $record['eventId'] = get_post_meta($post->ID, '_luxureat_event_id', true);
+            $record['date'] = get_post_meta($post->ID, '_luxureat_date', true);
+            $record['lang'] = $lang;
+        }
+        $result[$id . ':' . $lang] = $record;
+    }
+    return $result;
+}
+
+function luxureat_cms_recipe_media($source_id, $image) {
+    $videos = array(
+${recipeVideoRows}
+    );
+    if (!isset($videos[$source_id])) return '';
+    $video = $videos[$source_id];
+    $src = get_template_directory_uri() . '/assets/media/recipes/' . $video['slug'] . '.mp4';
+    $extras = '<div class="lux-recipe-extra-videos">';
+    foreach ($video['extras'] as $index => $extra) {
+        $extras .= '<video style="flex-grow: ' . (float) $video['ratios'][$index] . '; aspect-ratio: ' . (float) $video['ratios'][$index] . '" data-lux-autoplay muted loop playsinline preload="none" controls><source data-src="' . esc_url(get_template_directory_uri() . $extra) . '" type="video/mp4"></video>';
+    }
+    $extras .= '</div>';
+    return array(
+        'video' => '<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="' . esc_url($image) . '" aria-label="' . esc_attr($video['description']) . '"><source src="' . esc_url($src) . '" type="video/mp4"></video><figcaption>' . esc_html($video['description']) . '</figcaption></figure>' . $extras,
+        'note' => $video['note'],
+    );
+}
+
+function luxureat_cms_recipe_content($content, $source_id, $image) {
+    $media = luxureat_cms_recipe_media($source_id, $image);
+    if (!$media) return $content;
+    $note = $media['note'] ? '<p class="lux-recipe-nutrition-note">' . esc_html($media['note']) . '</p>' : '';
+    $pattern = '~(<h[2-4]\\b[^>]*>\\s*(?:每份的估计营养成分|Estimated nutrition per serving)\\s*</h[2-4]>)(\\s*<dl\\b[^>]*>.*?</dl>)(?:\\s*<p>\\s*(?:<strong>)?\\s*(?:营养说明|Nutrition note).*?</p>)?~su';
+    if (preg_match($pattern, $content)) {
+        return preg_replace_callback($pattern, function ($match) use ($note, $media) {
+            return '<section class="lux-cms-recipe-nutrition">' . $match[1] . $note . $match[2] . $media['video'] . '</section>';
+        }, $content, 1);
+    }
+    return $content . '<section class="lux-cms-recipe-nutrition">' . $note . $media['video'] . '</section>';
+}
+function luxureat_cms_detail($source_id, $lang, $kind) {
+    $post = luxureat_cms_post($source_id, $lang, $kind);
+    if (!$post) return false;
+    $title = get_the_title($post);
+    $image = get_the_post_thumbnail_url($post->ID, 'full');
+    $parent = $kind === 'recipe' ? ($lang === 'zh' ? '食谱艺术' : 'Recipes') : ($lang === 'zh' ? '知识博客' : 'Knowledge Blog');
+    $parent_url = luxureat_static_url($lang . '/' . ($kind === 'recipe' ? 'recipe' : 'blog'));
+    echo '<main class="lux-article-page"><nav class="lux-breadcrumb"><a href="' . esc_url($parent_url) . '">' . esc_html($parent) . '</a><span> / </span><span>' . esc_html($title) . '</span></nav>';
+    echo '<article class="lux-reader-layout lux-academy-reader"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h1 id="lux-reader-title">' . esc_html($title) . '</h1><p class="lux-reader-summary">' . esc_html(get_the_excerpt($post)) . '</p></div>';
+    if ($image) echo '<figure class="lux-reader-cover"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '"></figure>';
+    $content = luxureat_origin_upload_images(apply_filters('the_content', $post->post_content));
+    if ($kind === 'recipe') $content = luxureat_cms_recipe_content($content, $source_id, $image);
+    echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . $content . '</div></section></article></main>';
+    return true;
 }
 
 function luxureat_static_aliases() {
@@ -524,6 +652,8 @@ function luxureat_static_aliases() {
         'zh/recipe.html' => 'zh/recipe',
         'zh/brand' => 'zh/brand',
         'zh/brand.html' => 'zh/brand',
+        'zh/gallery' => 'zh/gallery',
+        'zh/gallery.html' => 'zh/gallery',
         'zh/blog' => 'zh/blog',
         'zh/blog.html' => 'zh/blog',
         'zh/new' => 'zh/new',
@@ -542,6 +672,7 @@ function luxureat_static_aliases() {
         'en/product.html' => 'en/product',
         'en/recipe.html' => 'en/recipe',
         'en/brand.html' => 'en/brand',
+        'en/gallery.html' => 'en/gallery',
         'en/blog.html' => 'en/blog',
         'en/cooperation.html' => 'en/cooperation',
         'en/certification.html' => 'en/certification',
@@ -560,6 +691,8 @@ function luxureat_static_aliases() {
         'rituals.html' => 'zh/recipe',
         'brand' => 'zh/brand',
         'brand.html' => 'zh/brand',
+        'gallery' => 'zh/gallery',
+        'gallery.html' => 'zh/gallery',
         'news' => 'zh/brand',
         'news.html' => 'zh/brand',
         'blog' => 'zh/blog',
@@ -617,6 +750,7 @@ function luxureat_static_pretty_paths() {
         'zh/recipe' => '/recipe/',
         'zh/about-us' => '/about-us/',
         'zh/brand' => '/brand/',
+        'zh/gallery' => '/gallery/',
         'zh/blog' => '/blog/',
         'zh/new' => '/new/',
         'zh/cooperation' => '/cooperation/',
@@ -629,6 +763,7 @@ function luxureat_static_pretty_paths() {
         'en/recipe' => '/en/recipe/',
         'en/about-us' => '/en/about-us/',
         'en/brand' => '/en/brand/',
+        'en/gallery' => '/en/gallery/',
         'en/blog' => '/en/blog/',
         'en/new' => '/en/new/',
         'en/cooperation' => '/en/cooperation/',
@@ -803,7 +938,7 @@ function luxureat_static_publish_root_metadata() {
         return;
     }
 
-    foreach (array('robots.txt', 'llms.txt') as $filename) {
+    foreach (array('robots.txt', 'llms.txt', 'sitemap.xml') as $filename) {
         $source = get_template_directory() . '/' . $filename;
         $target = trailingslashit(ABSPATH) . $filename;
         if (!is_readable($source)) {
@@ -837,7 +972,7 @@ function luxureat_static_search_metadata_endpoint() {
         '/llms.txt' => array('llms.txt', 'text/plain; charset=UTF-8'),
         '/.well-known/ard.json' => array('.well-known/ard.json', 'application/ard+json; charset=UTF-8'),
         '/sitemap.xml' => array('sitemap.xml', 'application/xml; charset=UTF-8'),
-        '/catalogues/tin-caviar-academy.pdf' => array('assets/documents/tin-caviar-academy.pdf', 'application/pdf'),
+        '/catalogues/tin-caviar-brochure.pdf' => array('assets/documents/tin-caviar-brochure.pdf', 'application/pdf'),
         '/catalogues/luxureat-brochure.pdf' => array('assets/documents/luxureat-brochure.pdf', 'application/pdf'),
     );
 
@@ -943,7 +1078,6 @@ function luxureat_static_seo_head() {
         $en_route = $meta['lang'] === 'en' ? $route : $meta['alternate'];
         echo '<link rel="alternate" hreflang="en" href="' . esc_url(luxureat_static_url($en_route)) . '">' . "\n";
     }
-    echo '<link rel="alternate" hreflang="x-default" href="' . esc_url(luxureat_static_url($zh_route)) . '">' . "\n";
     $is_article = in_array($meta['type'], array('Article', 'NewsArticle'), true);
     $og_type = $is_article ? 'article' : ($meta['type'] === 'Product' ? 'product' : 'website');
     echo '<meta property="og:type" content="' . esc_attr($og_type) . '">' . "\n";
@@ -996,7 +1130,7 @@ function luxureat_static_seo_head() {
         $parent_names = array(
             'Article' => $is_zh ? '知识博客' : 'Knowledge Blog',
             'NewsArticle' => $is_zh ? '品牌新闻' : 'Brand News',
-            'Product' => $is_zh ? '系列产品' : 'Products',
+            'Product' => $is_zh ? '我们的产品' : 'Products',
             'Event' => $is_zh ? '品牌新闻' : 'Brand News',
             'Recipe' => $is_zh ? '食谱艺术' : 'Recipes',
         );
@@ -1029,6 +1163,9 @@ function luxureat_static_assets() {
         array(),
         filemtime($theme_dir . '/integration.css')
     );
+    if (preg_match('~^(?:blog|zh/blog|en/blog)/~', $path)) {
+        wp_enqueue_style('luxureat-reader-share', $theme_uri . '/assets/css/reader-share.css', array('luxureat-integration'), filemtime($theme_dir . '/assets/css/reader-share.css'));
+    }
 
     $catalog = array(
 ${catalog}
@@ -1037,7 +1174,7 @@ ${catalog}
 ${byPath}
     );
 
-    foreach (isset($assets_by_path[$path]) ? $assets_by_path[$path] : array('core') as $handle) {
+    foreach (isset($assets_by_path[$path]) ? $assets_by_path[$path] : array('image-variants', 'core') as $handle) {
         if (!isset($catalog[$handle])) {
             continue;
         }
@@ -1056,6 +1193,13 @@ ${byPath}
             filemtime($source),
             true
         );
+        $cms_kinds = array('journal-data' => 'recipe', 'academy-index' => 'blog', 'gallery-data' => 'gallery');
+        if (isset($cms_kinds[$handle])) {
+            $kind = $cms_kinds[$handle];
+            wp_add_inline_script('luxureat-' . $handle,
+                'window.LUXUREAT_CMS = window.LUXUREAT_CMS || {}; window.LUXUREAT_CMS[' . wp_json_encode($kind) . '] = ' . wp_json_encode(luxureat_cms_payload($kind), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';',
+                'after');
+        }
         if ($handle === 'core') {
             wp_localize_script('luxureat-core', 'LuxureatNewsletter', array(
                 'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -1274,13 +1418,13 @@ function luxureat_static_contact_ajax() {
         'Brand & Media Partnerships' => 'Collaborazioni con brand e media',
         'Other' => 'Altro',
     );
-    if ($name === '' || $raw_email === '' || $content === '' || !isset($inquiry_labels[$inquiry_type])) {
+    if ($name === '' || ($raw_email === '' && $phone === '') || $content === '' || !isset($inquiry_labels[$inquiry_type])) {
         wp_send_json_error(array('message' => $message('请填写所有必填信息。', 'Please complete all required fields.')), 400);
     }
     if ($is_b2b_quote && ($company === '' || $product_industry === '' || $estimated_quantity === '' || $delivery_market === '')) {
         wp_send_json_error(array('message' => $message('请填写所有必填报价信息。', 'Please complete all required quote details.')), 400);
     }
-    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($estimated_quantity) > 240 || strlen($delivery_market) > 360 || strlen($target_date) > 120 || strlen($phone) > 120 || strlen($content) > 12000 || !is_email($email)) {
+    if (strlen($name) > 240 || strlen($company) > 360 || strlen($product_industry) > 360 || strlen($estimated_quantity) > 240 || strlen($delivery_market) > 360 || strlen($target_date) > 120 || strlen($phone) > 120 || strlen($content) > 12000 || ($raw_email !== '' && !is_email($email))) {
         wp_send_json_error(array('message' => $message('请检查所填信息后重试。', 'Please check the information and try again.')), 400);
     }
 
@@ -1298,9 +1442,9 @@ function luxureat_static_contact_ajax() {
             . "Mercato di consegna: " . $delivery_market . "\n"
             . "Data di consegna desiderata: " . ($target_date ?: 'Non fornito') . "\n" : '')
         . "Telefono / WeChat: " . ($phone ?: 'Non fornito') . "\n"
-        . "E-mail: " . $email . "\n\n"
+        . "E-mail: " . ($email ?: 'Non fornito') . "\n\n"
         . "Messaggio:\n" . $content;
-    $headers = array('Reply-To: ' . $name . ' <' . $email . '>');
+    $headers = $email !== '' ? array('Reply-To: ' . $name . ' <' . $email . '>') : array();
     if (!wp_mail('roberto@ugolinigroup.com', $subject, $body, $headers)) {
         wp_send_json_error(array('message' => $message('暂时无法发送，请稍后再试。', 'Your message could not be sent. Please try again later.')), 500);
     }

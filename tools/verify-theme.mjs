@@ -93,7 +93,7 @@ for (const file of [
   'assets/data/events.js',
   'assets/data/journal.js',
   'assets/data/brand.js',
-  'assets/documents/tin-caviar-academy.pdf',
+  'assets/documents/tin-caviar-brochure.pdf',
   'assets/documents/luxureat-brochure.pdf',
   'screenshot.png',
   'README.md',
@@ -108,8 +108,13 @@ for (const file of [
 const styleCss = read(path.join(themeDir, 'style.css'));
 assert(/Theme Name:\s*LuxurEat Static/i.test(styleCss), 'style.css declares the LuxurEat Static theme name');
 const functionsPhp = read(path.join(themeDir, 'functions.php'));
+const assetsByPath = functionsPhp.match(/\$assets_by_path = array\(([\s\S]*?)\n    \);/)?.[1] || '';
+assert(assetsByPath.length > 0, 'generated route asset mapping exists');
+for (const [, route, handles] of assetsByPath.matchAll(/'([^']+)' => array\(([^)]*)\)/g)) {
+  if (handles.includes("'core'")) assert(handles.includes("'image-variants'") && handles.indexOf("'image-variants'") < handles.indexOf("'core'"), `${route} registers core's image dependency so WordPress prints the video runtime`);
+}
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
-for (const [page, count] of [['blog', 67], ['product', 47], ['recipe', 25], ['brand', 10]]) {
+for (const [page, count] of [['blog', 68], ['product', 53], ['recipe', 25], ['brand', 12]]) {
   for (const lang of ['zh', 'en']) {
     const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
     const links = html.match(/<nav class="lux-static-detail-links"[^>]*><ul>([\s\S]*?)<\/ul><\/nav>/)?.[1];
@@ -140,8 +145,8 @@ assert(functionsPhp.includes('luxureat_static_reject_noncanonical_requests') && 
 assert(functionsPhp.includes("define('DONOTCACHEPAGE', true);") && functionsPhp.indexOf("define('DONOTCACHEPAGE', true);") < functionsPhp.indexOf('status_header(410);'), '410 responses bypass WP Super Cache');
 assert(functionsPhp.includes("'product-category/uncategorized'"), 'obsolete WooCommerce uncategorized archive returns 410');
 assert(functionsPhp.includes('luxureat_static_disable_consumer_commerce') && functionsPhp.includes("in_array($path, array('cart', 'checkout', 'my-account', 'en/cart', 'en/checkout', 'en/my-account'), true)") && functionsPhp.includes("luxureat_static_url($language . '/product'), 301"), 'legacy WooCommerce consumer pages redirect to the product catalogue even without WooCommerce conditional tags');
-assert(functionsPhp.includes('luxureat_static_publish_root_metadata') && functionsPhp.includes("add_action('after_setup_theme', 'luxureat_static_publish_root_metadata', 1)") && functionsPhp.includes("array('robots.txt', 'llms.txt')") && functionsPhp.includes("trailingslashit(ABSPATH) . $filename") && functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes("header_remove('Set-Cookie')") && functionsPhp.includes("header('Vary: Accept-Encoding', true)") && functionsPhp.includes('luxureat_baidu_site_verification'), 'root search metadata publishing and cacheable fallbacks ship in the generated theme');
-assert(functionsPhp.includes("'/catalogues/tin-caviar-academy.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
+assert(functionsPhp.includes('luxureat_static_publish_root_metadata') && functionsPhp.includes("add_action('after_setup_theme', 'luxureat_static_publish_root_metadata', 1)") && functionsPhp.includes("array('robots.txt', 'llms.txt', 'sitemap.xml')") && functionsPhp.includes("trailingslashit(ABSPATH) . $filename") && functionsPhp.includes('luxureat_static_search_metadata_endpoint') && functionsPhp.includes("add_action('init', 'luxureat_static_search_metadata_endpoint', -100)") && functionsPhp.includes("'/robots.txt' =>") && functionsPhp.includes("'/llms.txt' =>") && functionsPhp.includes("'/sitemap.xml' =>") && functionsPhp.includes("header_remove('X-Robots-Tag')") && functionsPhp.includes("header_remove('Set-Cookie')") && functionsPhp.includes("header('Vary: Accept-Encoding', true)") && functionsPhp.includes('luxureat_baidu_site_verification'), 'root search metadata publishing and cacheable fallbacks ship in the generated theme');
+assert(functionsPhp.includes("'/catalogues/tin-caviar-brochure.pdf' =>") && functionsPhp.includes("'/catalogues/luxureat-brochure.pdf' =>") && functionsPhp.includes("'application/pdf'"), 'stable public catalogue PDF endpoints ship in the generated theme');
 assert(!/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(functionsPhp), 'functions.php contains no invalid control characters');
 assert(functionsPhp.includes("preg_replace('#/+#', '/', $path)"), 'functions.php normalizes repeated slashes with a valid PHP regex');
 assert(functionsPhp.includes('function luxureat_static_url('), 'functions.php provides host-compatible route URLs');
@@ -153,7 +158,7 @@ const enRecipePages = fs.readdirSync(path.join(themeDir, 'pages/en/recipe')).fil
 assert(zhRecipePages.length === 25 && enRecipePages.length === 25, 'theme contains all 25 bilingual recipe detail pairs');
 const zhNewsPages = fs.readdirSync(path.join(themeDir, 'pages/zh/news')).filter((file) => file.endsWith('.php'));
 const enNewsPages = fs.readdirSync(path.join(themeDir, 'pages/en/news')).filter((file) => file.endsWith('.php'));
-assert(zhNewsPages.length === 10 && enNewsPages.length === 10, 'theme contains all ten bilingual Brand News detail pairs');
+assert(zhNewsPages.length === 12 && enNewsPages.length === 12, 'theme contains all twelve bilingual Brand News detail pairs');
 const recipeDetail = read(path.join(themeDir, 'pages/zh/recipe/truffle-eggs.php'));
 assert(recipeDetail.includes('class="lux-breadcrumb"') && recipeDetail.includes('<h1 id="lux-reader-title">松露鸡蛋</h1>'), 'recipe details expose a visible breadcrumb and one primary heading');
 assert(functionsPhp.includes("get_option('home')"), 'route URLs use the unfiltered WordPress home option');
@@ -169,7 +174,7 @@ assert(functionsPhp.includes("'zh/brand.html' => 'zh/brand'") && functionsPhp.in
 assert(functionsPhp.includes("'en/certification' => '/en/certification/'"), 'functions.php maps the English certification route');
 assert(functionsPhp.includes("'en/caviar' => 'en/product'"), 'legacy English caviar route redirects to product');
 assert(functionsPhp.includes("'en/private' => 'en/cooperation'"), 'legacy English private route redirects to cooperation');
-assert(functionsPhp.includes('function luxureat_static_seo_head()') && functionsPhp.includes("rel=\"canonical\"") && functionsPhp.includes("hreflang=\"x-default\"") && functionsPhp.includes('application/ld+json'), 'functions.php emits canonical, alternate-language, social and structured SEO metadata');
+assert(functionsPhp.includes('function luxureat_static_seo_head()') && functionsPhp.includes("rel=\"canonical\"") && functionsPhp.includes("hreflang=\"zh-CN\"") && functionsPhp.includes('application/ld+json'), 'functions.php emits canonical, alternate-language, social and structured SEO metadata');
 assert(functionsPhp.includes('luxureat_static_disable_yoast_output') && functionsPhp.includes("remove_action('wpseo_head'") && functionsPhp.includes('Front_End_Integration::class'), 'static routes use the theme SEO output without duplicate Yoast metadata');
 assert(!functionsPhp.includes("add_query_arg('luxureat_path'"), 'functions.php does not generate query-based route URLs');
 assert(!functionsPhp.includes('wp_ajax_nopriv_luxureat_account') && !functionsPhp.includes('wc_create_new_customer') && !functionsPhp.includes('wp_signon('), 'functions.php does not expose consumer account registration or login endpoints');
@@ -178,7 +183,7 @@ assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_c
 assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"), 'contact email subjects contain only the name and Italian enquiry type');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true") && functionsPhp.includes('wp_ajax_nopriv_luxureat_newsletter'), 'functions.php preserves the standalone MailPoet double opt-in newsletter');
 assert(!functionsPhp.includes('woocommerce_store_api_cart_item_images') && !functionsPhp.includes('luxureat_static_woo_catalog') && !functionsPhp.includes('LuxureatWooCatalog'), 'legacy WooCommerce catalogue and checkout image bridges are removed');
-assert(functionsPhp.includes("'zh' => array('image-variants', 'core', 'chat')") && functionsPhp.includes("'en' => array('image-variants', 'core', 'chat')"), 'WordPress homepages enqueue responsive mappings and lightweight chat UI');
+assert(functionsPhp.includes("'zh' => array('image-variants', 'core', 'chat', 'home-interactions')") && functionsPhp.includes("'en' => array('image-variants', 'core', 'chat', 'home-interactions')"), 'WordPress homepages enqueue home interactions alongside responsive mappings and chat');
 assert(functionsPhp.includes('function luxureat_static_trim_plugin_assets()') && functionsPhp.includes("'jetpack-stats'") && !functionsPhp.includes("'google_gtagjs', 'jquery'"), 'static routes remove duplicate commerce analytics without removing Google Analytics');
 assert(functionsPhp.includes("add_action('wp_print_styles', 'luxureat_static_trim_plugin_assets', PHP_INT_MAX)") && functionsPhp.includes("remove_action('wp_head', 'print_emoji_detection_script', 7)"), 'late WooCommerce styles and emoji detection remain on static routes');
 assert(functionsPhp.includes("add_filter('wp_resource_hints', 'luxureat_static_resource_hints', PHP_INT_MAX, 2)") && functionsPhp.includes("[ic]0\\.wp\\.com"), 'unused WordPress CDN preconnects are not filtered after plugins add their hints');
@@ -478,21 +483,46 @@ assert(enRituals.includes('data-reader-open="en-recipe-truffle-eggs"'), 'English
 assert(zhRituals.includes('data-reader-open="zh-recipe-truffle-tagliolini"') && zhRituals.includes('data-reader-open="zh-recipe-truffle-ravioli"') && zhRituals.includes('data-reader-open="zh-recipe-black-truffle-risotto"'), 'Chinese rituals ceremony cards open reader details');
 assert(zhRituals.includes("luxureat_static_url('zh/product'"), 'Chinese rituals shopping CTA links to products');
 assert(enRituals.includes("luxureat_static_url('en/product'"), 'English rituals shopping CTA links to products');
-assert(zhRituals.includes('食材购买') && zhRituals.includes('系列产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
+assert(zhRituals.includes('食材购买') && zhRituals.includes('我们的产品') && !zhRituals.includes('>去购物<'), 'Chinese rituals shopping CTA uses the requested wording');
 assert(enRituals.includes('Buy Ingredients') && enRituals.includes('Products') && !enRituals.includes('>Shop Now<'), 'English rituals shopping CTA mirrors the requested wording');
 assert((zhRituals.match(/lux-dark-photo-block/g) || []).length >= 3, 'Chinese rituals ceremony cards use dark photo backgrounds');
 
 assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') && productDataJs.includes('products[`zh-${slug}`]'), 'Chinese product card opens product details from product data');
 assert(zhCaviar.includes("luxureat_static_url('zh/recipe'"), 'Chinese caviar ritual CTA links to rituals');
 assert(zhCaviar.includes('lux-dark-photo-block'), 'Chinese caviar page uses dark photo backgrounds');
-assert(zhCaviar.indexOf('从早餐、第一道主食到甜点') > zhCaviar.indexOf('>食谱艺术</h3>') && zhCaviar.indexOf('从早餐、第一道主食到甜点') < zhCaviar.indexOf('>探索食谱</a>'), 'Chinese recipe introduction stays between the recipe heading and CTA');
-assert(zhCaviar.includes('系列产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
+assert(zhCaviar.indexOf('从早餐、意式主食到甜点') > zhCaviar.indexOf('>食谱艺术</h3>') && zhCaviar.indexOf('从早餐、意式主食到甜点') < zhCaviar.indexOf('>探索食谱</a>'), 'Chinese recipe introduction stays between the recipe heading and CTA');
+assert(zhCaviar.includes('我们的产品') && !zhCaviar.includes('鱼子酱系列'), 'Chinese product listing uses the requested series label');
 assert(zhCaviar.includes('lux-products-main'), 'Chinese product listing hero starts flush below the fixed nav');
 const enProducts = read(path.join(themeDir, 'pages/en/product.php'));
 assert(enProducts.includes('Premium Products') && enProducts.includes('data-lux-caviar-controls'), 'English products page translates the Chinese product listing');
 assert(enProducts.includes('lux-products-main'), 'English product listing hero starts flush below the fixed nav');
 assert(runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"') && productDataJs.includes('products[`en-${slug}`]'), 'English product page renders registered product details from product data');
+for (const lang of ['zh', 'en']) {
+  const productPages = path.join(themeDir, `pages/${lang}/product`);
+  const files = fs.readdirSync(productPages).filter((file) => file.endsWith('.php'));
+  assert(files.length === 53, `${lang} standalone product route count`);
+  for (const file of files) {
+    const html = read(path.join(productPages, file));
+    const videoCount = (html.match(/assets\/media\/products\/videos\/[\w-]+\.mp4/g) || []).length;
+    if (file.startsWith('truffelixir-')) {
+      const elixirVideoCount = (html.match(/truffelixir\/videos\/[\w-]+\.mp4/g) || []).length;
+      assert(videoCount === 0 && html.includes('TE-ELX-100-') && html.includes('is-mixed-media') && elixirVideoCount === (file.includes('tamarind') ? 2 : 5), `${lang}/${file} includes the matching supplied Elixir media`);
+      continue;
+    }
+    assert(html.includes('lux-product-showcase-videos') && [5, 7].includes(videoCount), `${lang}/${file} adds related scenes to match description width and retains the original pair`);
+  }
+}
 assert(enProducts.includes("luxureat_static_url('en/recipe'"), 'English products ritual CTA links to rituals');
+for (const lang of ['zh', 'en']) {
+  const recipeDir = path.join(themeDir, 'pages', lang, 'recipe');
+  for (const file of fs.readdirSync(recipeDir)) {
+    const html = read(path.join(recipeDir, file));
+    const extra = html.match(/<div class="lux-recipe-extra-videos">([\s\S]*?)<\/div>/)?.[1] || '';
+    assert([2, 3, 4, 5].includes((extra.match(/<video /g) || []).length), `${lang}/${file} adds related recipe clips`);
+    assert(html.indexOf('lux-recipe-video') < html.indexOf('lux-recipe-extra-videos'), `${lang}/${file} keeps original video above added clips`);
+    assert((extra.match(/data-lux-autoplay muted loop playsinline/g) || []).length >= 2 && !/\ssrc=|\sautoplay\s/.test(extra) && extra.includes('preload="none"'), `${lang}/${file} added clips defer transfer and autoplay silently when visible`);
+  }
+}
 const zhCertification = read(path.join(themeDir, 'pages/zh/certification.php'));
 const enCertification = read(path.join(themeDir, 'pages/en/certification.php'));
 assert(enCertification.includes('Quality &amp; Certification') && enCertification.includes('Responsible Trade'), 'English certification page mirrors the Chinese certification page');
@@ -534,7 +564,7 @@ const enContact = read(path.join(themeDir, 'pages/en/contact.php'));
 assert(enContact.includes('Global Presence') && enContact.includes('Italy') && enContact.includes('Thailand') && enContact.includes('China'), 'English contact footprint lists the requested countries');
 assert(zhContact.includes('contact-partnership-dining.webp') && zhContact.includes('LuxurEat（露意膳）泰国团队') && zhContact.includes('曼谷 · 泰国') && zhContact.includes('上海 · 中国'), 'Chinese contact team stories keep the dining image and use the Thailand and China locations');
 assert(enContact.includes('contact-partnership-dining.webp') && enContact.includes('LuxurEat (露意膳) Thailand Team') && enContact.includes('Bangkok · Thailand') && enContact.includes('Shanghai · China'), 'English contact team stories keep the dining image and mirror the Thailand and China locations');
-assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat (露意膳) Ltd'), 'English contact footprint uses the requested entities');
+assert(enContact.includes('Truffleat Srl') && enContact.includes('Luxureat LLC') && enContact.includes('Truffleat Co., Ltd') && enContact.includes('LuxurEat (露意膳) Trading Co., Ltd.'), 'English contact footprint uses the requested entities');
 assert(enContact.includes('lux-footprint-heading') && !enContact.includes('<details class="lux-footprint-card'), 'English contact footprint cards are expanded by default');
 assert(enContact.includes('info@truffleat.com') && enContact.includes('info@luxureat.com') && enContact.includes('info@truffle.co.th'), 'English contact page restores the regional contacts');
 assert(hasExactHref(enContact, 'mailto:china@luxureat.com') && hasExactHref(enContact, 'mailto:roberto@ugolinigroup.com'), 'English contact China card routes each displayed email to itself');
@@ -584,9 +614,11 @@ assert(!zhGifting.includes('拥有食品进口资质') && !enGifting.includes('f
 const zhHome = read(path.join(themeDir, 'pages/zh/index.php'));
 const enHome = read(path.join(themeDir, 'pages/en/index.php'));
 assert(!zhHome.includes('embed.tawk.to') && !enHome.includes('embed.tawk.to'), 'bilingual pages do not connect to chat before user intent');
-assert(['EXPLORE LUXUREAT / 探索露意膳', 'CURATED SELECTION / 品质精选', 'BRAND JOURNEY / 品牌历程', 'CHINA PARTNERSHIP / 渠道合作', 'REAL PARTNERSHIP / 真实合作现场', 'HOW WE WORK / 合作流程'].every((label) => zhHome.includes(label)), 'Chinese homepage bilingual kickers keep English before Chinese');
+assert(['EXPLORE LUXUREAT / 探索露意膳', 'CURATED SELECTION / 品质精选', 'CHINA PARTNERSHIP / 渠道合作', 'REAL PARTNERSHIP / 真实合作现场', 'HOW WE WORK / 合作流程'].every((label) => zhHome.includes(label)), 'Chinese homepage bilingual kickers keep English before Chinese');
 assert(!zhHome.includes('OUR VALUES / 品牌根基') && !zhHome.includes('为卓越风味打造的') && !zhHome.includes('从意大利家族餐桌上的一份食谱'), 'Chinese homepage values section omits its introductory copy');
-assert(zhHome.indexOf('id="maison-overview"') < zhHome.indexOf('id="market-system"') && !zhHome.includes('lux-home-maison-details') && !zhHome.includes('Who We Are / 品牌概览') && !zhHome.includes('品味的奢华——'), 'Chinese homepage keeps the centered overview title and removes its retired details');
+const homeSections = ['id="meet-us"', 'id="services-overview"', 'id="selected-products"', 'id="italian-food-culture"', 'id="maison-overview"', 'class="lux-home-advantages"', 'id="market-system"', 'class="lux-home-global-reach"', 'id="brand-timeline"', 'class="lux-home-partnership-continuum"'];
+assert(homeSections.map((marker) => zhHome.indexOf(marker)).every((position, index, positions) => position >= 0 && (index === 0 || position > positions[index - 1])) && !zhHome.includes('lux-home-promises') && !zhHome.includes('lux-home-maison-details') && !zhHome.includes('Who We Are / 品牌概览') && !zhHome.includes('品味的奢华——'), 'Chinese homepage keeps its original section order with events directly after the hero');
+assert(homeSections.map((marker) => enHome.indexOf(marker)).every((position, index, positions) => position >= 0 && (index === 0 || position > positions[index - 1])) && !enHome.includes('lux-home-promises'), 'English homepage keeps its original section order with events directly after the hero');
 assert(zhHome.indexOf('class="lux-home-maison-reach"') > zhHome.indexOf('id="market-system"') && zhHome.indexOf('class="lux-home-maison-reach"') < zhHome.indexOf('class="lux-home-global-reach"'), 'Chinese homepage puts global offices at the bottom of the values section');
 assert(enHome.indexOf('class="lux-home-maison-reach"') > enHome.indexOf('id="market-system"') && enHome.indexOf('class="lux-home-maison-reach"') < enHome.indexOf('class="lux-home-global-reach"') && !enHome.includes('BRAND FOUNDATION / OUR VALUES') && !enHome.includes('lux-home-maison-intro'), 'English homepage matches the Chinese overview and values layout');
 assert(enHome.includes('lux-selected-products-kicker">Recommended For You</span>'), 'English homepage uses the requested recommendation kicker');
@@ -598,7 +630,7 @@ assert(runtimeJs.includes('data-home-timeline') && runtimeJs.includes('data-cert
 assert(runtimeJs.includes('initLuxScrollReveal') && runtimeJs.includes('"body > section"') && runtimeJs.includes('"main section"') && runtimeJs.includes('target.classList.toggle("is-in-view", isIntersecting)') && runtimeJs.includes('rootMargin: "0px 0px -8%", threshold: 0') && runtimeJs.includes('prefers-reduced-motion: reduce'), 'one shared observer covers tall inner-page sections with reversible, reduced-motion-safe scroll reveals');
 assert(runtimeJs.includes('if (document.querySelector(".lux-products-main")) return;'), 'product listing pages opt out of the global scroll reveal');
 assert(integrationCss.includes('.lux-scroll-reveal {') && integrationCss.includes('translate: 0 12px;') && integrationCss.includes('transition: opacity .38s ease-out, translate .38s'), 'scroll reveals use compositor-friendly opacity and translate transitions');
-assert(runtimeJs.includes('counter.textContent = "0"') && !runtimeJs.includes('observer.disconnect();\\n      animate();'), 'homepage counters reset offscreen and replay whenever they re-enter');
+assert(['20+</strong><span>年行业经验', '4</strong><span>个全球办公室', '7K+</strong><span>满意客户'].every((value) => zhHome.includes(value)) && ['20+</strong><span>Years of Expertise', '4</strong><span>Global Offices', '7K+</strong><span>Satisfied Clients'].every((value) => enHome.includes(value)) && runtimeJs.includes('if (intersectionRatio >= .35) animate();') && !runtimeJs.includes('counter.textContent = "0"'), 'homepage counters show their real values before JavaScript and keep them while offscreen');
 assert(runtimeJs.includes('grid.scrollTo({ left: 0, behavior: "auto" })') && runtimeJs.includes('grid.scrollTo({ left: limit, behavior: "smooth" })') && runtimeJs.includes('grid.scrollTo({ left: 0, behavior: "smooth" })') && runtimeJs.includes('entry.intersectionRatio >= .25'), 'partnership scroller runs from left to right and returns left on every viewport entry');
 assert(integrationCss.includes('.lux-home-timeline-visual') && integrationCss.includes('position: sticky'), 'homepage timeline keeps its image gallery visible while milestones scroll');
 assert(zhHome.includes('lux-home-maison-media') && enHome.includes('lux-home-maison-media') && zhHome.includes('home-maison-sturgeon-background.webp') && enHome.includes('home-maison-sturgeon-background.webp'), 'bilingual home overview sections use the isolated sturgeon background image');
@@ -620,7 +652,7 @@ assert(zhHome.includes('小红书') && zhHome.includes('data-footer-modal="wecha
 assert(enHome.includes('Rednote') && enHome.includes('WeChat') && enHome.includes('Weibo'), 'English footer exposes social actions');
 assert(['rednote.svg', 'wechat.svg', 'douyin.svg', 'weibo.svg'].every((icon) => zhHome.includes(`media/social/${icon}`) && enHome.includes(`media/social/${icon}`)), 'bilingual footers use all four supplied social SVG icons');
 assert(zhHome.includes('© 2026 LuxurEat（露意膳）｜露意膳（上海）贸易有限公司 版权所有 ｜ 统一社会信用代码：91310000MAERED2X1W'), 'Chinese footer keeps the copyright and social credit code on one line');
-assert(enHome.includes('© 2026 LuxurEat (露意膳)｜Luxureat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W'), 'English footer mirrors the one-line company copyright');
+assert(enHome.includes('© 2026 LuxurEat (露意膳)｜LuxurEat (Shanghai) Trading Co., Ltd. All Rights Reserved ｜ Unified Social Credit Code: 91310000MAERED2X1W'), 'English footer mirrors the one-line company copyright');
 assert(hasExactHref(zhHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(zhHome, 'https://v.douyin.com/9H5RI6LEdaU'), 'Chinese footer uses the updated Rednote and Douyin links');
 assert(hasExactHref(enHome, 'https://xhslink.com/m/AfATtrqiQvu') && hasExactHref(enHome, 'https://v.douyin.com/9H5RI6LEdaU'), 'English footer uses the updated Rednote and Douyin links');
 assert(hasExactHref(zhHome, 'mailto:china@luxureat.com') && hasExactHref(zhHome, 'mailto:roberto@ugolinigroup.com') && zhHome.includes('tel:+8615721452475'), 'Chinese footer routes each displayed email to itself');

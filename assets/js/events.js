@@ -84,7 +84,7 @@
       </div>` : ""}
     </div>
     <div class="lux-meet-map">
-      <video class="lux-meet-map-video" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback poster="${escapeHtml(asset("media/events/exhibition-atlas-globe-poster.webp"))}" aria-hidden="true" tabindex="-1"><source media="(max-width: 640px)" src="${escapeHtml(asset("media/events/exhibition-atlas-globe-mobile.m4v"))}" type="video/mp4"><source src="${escapeHtml(asset("media/events/exhibition-atlas-globe.mp4"))}" type="video/mp4"></video>
+      <video class="lux-meet-map-video" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" disablepictureinpicture disableremoteplayback poster="${escapeHtml(asset("media/events/exhibition-atlas-globe-poster.webp"))}" aria-hidden="true" tabindex="-1"><source media="(max-width: 640px)" data-src="${escapeHtml(asset("media/events/exhibition-atlas-globe-mobile.m4v"))}" type="video/mp4"><source data-src="${escapeHtml(asset("media/events/exhibition-atlas-globe.mp4"))}" type="video/mp4"></video>
       <div class="lux-meet-map-card">
         <span>EXHIBITION ATLAS</span>
         <h2>${escapeHtml(carouselLabels.meet)}</h2>

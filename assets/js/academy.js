@@ -14,11 +14,43 @@ const loadScript = (path) => new Promise((resolve) => {
   document.body.appendChild(script);
 });
 const loadAcademyReader = () => academyReaderLoading ||= loadScript("journal.js");
+const applyAcademyCms = () => {
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
+    const id = key.split(":")[0];
+    for (const articles of [window.LUXUREAT_ACADEMY_DATA?.articles, window.LUXUREAT_ARTICLE_DATA?.articles]) {
+      if (articles && Object.hasOwn(articles, id)) Object.assign(articles[id], { title: cms.title, intro: cms.intro, ...(cms.cmsHtml !== undefined ? { cmsHtml: cms.cmsHtml } : {}), ...(cms.image ? { image: cms.image } : {}) });
+    }
+  }
+};
+applyAcademyCms();
 const loadAcademyArticle = (id) => {
-  if (window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return Promise.resolve(true);
+  if (!/^(?:zh|en)-academy-[a-z0-9-]+$/.test(id)) return Promise.resolve(false);
+  const articles = window.LUXUREAT_ARTICLE_DATA?.articles || {};
+  const cached = Object.hasOwn(articles, id) ? articles[id] : undefined;
+  const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
+  if (cached?.sections && (!cms || cached.cmsHtml)) return Promise.resolve(true);
   if (academyArticleLoading.has(id)) return academyArticleLoading.get(id);
   const loading = (async () => {
     const ready = await loadScript(`../data/academy-articles/${encodeURIComponent(id)}.js`);
+    if (ready) {
+      applyAcademyCms();
+      if (!Object.hasOwn(window.LUXUREAT_ARTICLE_DATA?.articles || {}, id)) return false;
+      const article = window.LUXUREAT_ARTICLE_DATA.articles[id];
+      if (window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`]) {
+        try {
+          const url = new URL(`${id.startsWith('zh-') ? '' : 'en/'}blog/${encodeURIComponent(article.slug)}/`, location.origin);
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Article request failed');
+          const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+          const content = doc.querySelector('.lux-reader-copy');
+          if (!content) throw new Error('Article content missing');
+          article.cmsHtml = content.innerHTML;
+        } catch {
+          academyArticleLoading.delete(id);
+          return false;
+        }
+      }
+    }
     return ready && loadAcademyReader();
   })();
   academyArticleLoading.set(id, loading);
@@ -36,10 +68,16 @@ document.addEventListener("pointerover", (event) => {
 document.addEventListener("click", (event) => {
   const trigger = event.target.closest?.(academyTriggerSelector);
   const id = academyTriggerId(trigger);
-  if (!id || window.LUXUREAT_ARTICLE_DATA?.articles?.[id]?.sections) return;
+  if (!id) return;
+  const article = window.LUXUREAT_ARTICLE_DATA?.articles?.[id];
+  const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
+  if (article?.sections && (!cms || article.cmsHtml)) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  loadAcademyArticle(id).then((ready) => { if (ready) trigger.click(); });
+  loadAcademyArticle(id).then((ready) => {
+    if (ready) trigger.click();
+    else if (article?.slug) location.assign(new URL(`${id.startsWith('zh-') ? '' : 'en/'}blog/${encodeURIComponent(article.slug)}/`, location.origin));
+  });
 }, true);
 
 function initCaviarAcademy() {
@@ -54,7 +92,7 @@ function initCaviarAcademy() {
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const copy = lang === "zh"
-    ? { read: "阅读文章", latest: "最新文章", empty: "未找到相关文章", topics: "内容专题", all: "全部", culture: "探索意大利", caviar: "鱼子酱学院", olive: "橄榄油学院", pizza: "披萨学院", gelato: "意式手工冰淇淋", nutrition: "营养与配料", truffle: "松露学院", dictionary: "意大利美食词典", producers: "生产者、大师与产地故事" }
+    ? { read: "阅读文章", latest: "最新文章", empty: "未找到相关文章", topics: "内容专题", all: "全部", culture: "探索意大利", caviar: "鱼子酱学院", olive: "橄榄油学院", pizza: "披萨学院", gelato: "意式手工冰淇淋", nutrition: "营养与配料", truffle: "松露学院", dictionary: "意大利美食词典", producers: "生产者、工艺师与产地故事" }
     : { read: "Read article", latest: "Latest posts", empty: "No articles found", topics: "Topics", all: "All", culture: "Explore Italy", caviar: "Caviar Academy", olive: "Olive Oil Academy", pizza: "Pizza Academy", gelato: "Italian Gelato", nutrition: "Nutrition & Ingredients", truffle: "Truffle Academy", dictionary: "Italian Food Dictionary", producers: "Producers, Masters & Stories of Place" };
   const introCopy = lang === "zh" ? {
     all: ["全部内容", "知识、起源与工艺", "从地域文化、生产者与美食词典出发，再深入松露、橄榄油、鱼子酱、披萨、意式手工冰淇淋与营养配料。"],
@@ -66,7 +104,7 @@ function initCaviarAcademy() {
     nutrition: ["营养与配料", "标签、份量与安全", "学习阅读配料、营养、过敏原与无添加标签，把单项数字放回份量、饮食结构和具体产品资料中理解。"],
     truffle: ["松露学院", "生态、品种与风味", "从地下菌根生态、意大利产地与采集季节，到香气搭配和松露产品选购，系统理解松露。"],
     dictionary: ["意大利美食词典", "菜单、食材与标签", "读懂意大利菜单结构、意面形状、奶酪与腌肉、烹饪方法和食品标签中的关键词。"],
-    producers: ["生产者、大师与产地故事", "人、手艺与土地", "走近松露采集者、制酪师、传统醋坊、那不勒斯披萨师和意式冰淇淋师的真实工作与产地文化。"],
+    producers: ["生产者、工艺师与产地故事", "人、手艺与土地", "走近松露采集者、制酪师、传统醋坊、那不勒斯披萨师和意式冰淇淋师的真实工作与产地文化。"],
   } : {
     all: ["All topics", "Knowledge, origin and craft", "Begin with regions, producers and the Italian food dictionary, then explore truffles, olive oil, caviar, pizza, Italian gelato, nutrition and labels."],
     culture: ["Explore Italy", "Territory, tradition and table", "Read Italy through its twenty regions, local traditions, ingredient origins and the ways food is prepared and shared."],

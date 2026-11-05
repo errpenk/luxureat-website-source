@@ -3,7 +3,8 @@
   const asset = (path) => new URL(path, assetBase).href;
   const image = (name, altZh, altEn) => ({ type: "image", src: asset(`media/brand-news/${name}`), alt: { zh: altZh, en: altEn } });
   const media = {
-    fhcBreakfastFamily: image("fhc-breakfast-family-2026.webp", "一家人围坐餐桌享用松饼与华夫饼的早餐场景示意", "Illustrative family breakfast with pancakes and waffles"),
+    fhcBooth: image("fhc-shanghai-2026-booth.webp", "FHC 上海 2026 N3A10 展位设计，展示 TrufflElixir 与 PRO 8", "FHC Shanghai 2026 booth N3A10 featuring TrufflElixir and PRO 8"),
+    fhcIndustry: image("fhc-2026-food-industry.webp", "FHC 官网首页视频中的食品行业场景", "Food industry scene from the FHC homepage video"),
     fhcChefs: { ...image("fhc-chefs-shifair.webp", "FHC展会现场厨师演示", "Chefs demonstrating at an FHC event"), sourceUrl: "https://www.shifair.com/", sourceName: { zh: "世展网", en: "Shifair" } },
     fhcBreakfastPairings: image("fhc-breakfast-pairings-2026.webp", "松饼与华夫饼的不同淋酱搭配示意", "Illustrative pancake and waffle pairings"),
     fhcTradeConversations: { ...image("fhc-trade-conversations-2026.webp", "FHC展会现场的行业交流", "Industry conversations at FHC"), sourceUrl: "https://www.fhcchina.com/", sourceName: { zh: "FHC官网", en: "FHC official site" } },
@@ -38,12 +39,108 @@
 
   window.LUXUREAT_BRAND_NEWS = [
     {
+      id: "fhc-shanghai-2026-new-products",
+      eventId: "fhc-shanghai-2026",
+      date: "2026-10-29",
+      cardImage: media.fhcBooth.src,
+      zh: {
+        date: "2026年10月29日", author: "LuxurEat", category: "展会预告",
+        title: "FHC 上海 2026｜让松露从早餐开始融入日常",
+        intro: "我们将在上海带来一个全新的理念：让松露融入日常生活，从早餐开始。",
+        opening: [],
+        sections: [
+          ["TrufflElixir 松露糖浆", ["在2026年上海FHC展会上，我们将首次展示 TrufflElixir松露糖浆，可搭配华夫饼及其他早餐美食。我们希望让年轻一代也能品尝并喜爱松露，让这种珍贵食材不只出现在特别晚宴上。"]],
+          ["PRO 8 松露酱", ["我们还将展示 PRO 8松露酱，精选八种珍贵菌菇与松露制成，不添加双孢蘑菇。产品有两种口味：白松露款和Uncinatum松露款。"]],
+          ["美味与营养", ["我们在追求美味的同时，也注重营养：产品不含麸质、不含过敏原，与目前市场上的产品相比，热量减少50%以上。"]],
+          ["欢迎莅临", ["欢迎莅临我们的展位，了解新品，发现松露更多不同的享用方式。", "2026年上海FHC展会", "2026年11月10日至12日", "上海新国际博览中心", "N3馆 · N3A10展位"]],
+        ],
+      },
+      en: {
+        date: "October 29, 2026", author: "LuxurEat", category: "Exhibition Preview",
+        title: "FHC Shanghai 2026 | Bringing Truffles into Everyday Life, Starting with Breakfast",
+        intro: "In Shanghai, we will bring a new idea: making truffles part of everyday life, starting with breakfast.",
+        opening: [],
+        sections: [
+          ["TrufflElixir Truffle Syrup", ["At FHC Shanghai 2026, we will present TrufflElixir, our truffle syrup, created to accompany waffles and other breakfast favourites. We want younger generations to discover the taste of truffles and show that this ingredient can be enjoyed well before a special dinner."]],
+          ["PRO 8 Truffle Sauce", ["We will also present PRO 8, our truffle sauce made with eight selected mushrooms and truffle, without champignon mushrooms. The range includes two versions: one with white truffle and one with Uncinatum truffle."]],
+          ["Flavour and Nutritional Care", ["Our approach combines flavour with nutritional care: products that are gluten-free and allergen-free, with over 50% fewer calories than products currently on the market."]],
+          ["Visit Us", ["Visit our booth to explore the new products and discover more ways to enjoy truffles.", "FHC Shanghai 2026", "November 10–12, 2026", "Shanghai New International Expo Centre", "Hall N3 · Booth N3A10"]],
+        ],
+      },
+    },
+    {
+      id: "sial-paris-2026-lazio-global",
+      eventId: "sial-paris-2026",
+      date: "2026-10-26",
+      cardImage: asset("media/brand-news/sial-paris-2026-lazio-cover.webp"),
+      cardImageSourceUrl: "https://www.sialparis.com/",
+      cardImageSourceName: "SIAL Paris",
+      video: asset("media/brand-news/sial-paris-2026-arsial.mp4"),
+      videoPoster: asset("media/brand-news/sial-paris-2026-arsial-poster.webp"),
+      videoSourceUrl: "https://www.instagram.com/arsial.lazio/",
+      videoWidth: 720,
+      videoHeight: 1280,
+      zh: {
+        date: "2026年10月26日", author: "LuxurEat", category: "展会回顾",
+        title: "从拉齐奥到全球｜LuxurEat China 与 Ugolini Group 亮相 SIAL Paris 2026",
+        intro: "2026 年巴黎国际食品展再次成为连接意大利优质食品与全球市场的重要舞台。",
+        source: "SIAL Paris 官网", sourceUrl: "https://www.sialparis.com/",
+        opening: [
+          "2026 年巴黎国际食品展（SIAL Paris 2026）再次成为连接意大利优质食品与全球市场的重要舞台。作为意大利食品产业的重要产区之一，拉齐奥大区携 17 家生产主体——包括 16 家企业和 1 家合作社——亮相本届展会，向来自世界各地的专业观众展示当地食品产业的品质、传统与创新。",
+          "本届 SIAL Paris 汇聚约 8,000 家参展商，并预计吸引约 295,000 名专业人士，为食品企业与国际买家、经销商和行业合作伙伴建立联系提供了重要平台。"
+        ],
+        sections: [
+          ["从意大利出发，连接中国市场", [
+            "对于 Ugolini Group 与 LuxurEat China 而言，参加 SIAL Paris 不仅是一次品牌与产品展示，更是连接意大利生产端与国际市场的重要机会。",
+            "Ugolini Group 致力于将具有代表性的意大利食品与饮食文化带向更广阔的国际市场；而 LuxurEat China 则进一步面向中国市场，搭建意大利品牌、产品与中国消费者及商业合作伙伴之间的桥梁。",
+            "通过国际食品展会，我们能够与来自不同国家和地区的买家、经销商及行业伙伴直接交流，了解市场需求，并探索新的合作与渠道机会。"
+          ], [{ type: "video" }]],
+          ["拉齐奥食品产业走向国际", [
+            "2026 年，拉齐奥大区持续推动当地农业食品企业参与国内外重要行业展会，相关推广计划投入约 370 万欧元，覆盖超过 20 场专业展会。",
+            "SIAL Paris 正是这一国际化进程的重要组成部分。对于包括 Ugolini Group 在内的拉齐奥食品企业而言，国际展会不仅提供产品展示的窗口，也创造了与全球专业市场建立长期联系的机会。",
+            "今年，展会活动还通过与 AIC Lazio（意大利乳糜泻协会拉齐奥分会）的合作，将无麸质食品、合理膳食以及更加多元的消费需求带入现场烹饪展示与品鉴活动之中，进一步展现拉齐奥食品产业在传统之外对于品质、创新与包容性的关注。"
+          ]],
+          ["将意大利味道带向更远的地方", [
+            "从拉齐奥到巴黎，再到中国，国际化不仅意味着进入新的市场，也意味着建立新的连接。",
+            "通过 Ugolini Group 在意大利食品领域的产品与品牌基础，以及 LuxurEat China 对中国市场的持续拓展，我们希望让更多消费者、买家和合作伙伴认识来自意大利的优质食品，并为意大利品牌进入中国市场创造更多交流与合作机会。",
+            "SIAL Paris 2026 是这一过程中的重要一站，也是我们继续连接意大利与国际食品市场的新起点。"
+          ]]
+        ]
+      },
+      en: {
+        date: "October 26, 2026", author: "LuxurEat", category: "Event Review",
+        title: "From Lazio to Global Markets | LuxurEat China and Ugolini Group at SIAL Paris 2026",
+        intro: "SIAL Paris 2026 provided an international stage connecting Italian food excellence with global markets.",
+        source: "SIAL Paris official website", sourceUrl: "https://www.sialparis.com/",
+        opening: [
+          "SIAL Paris 2026 once again provided an important international stage connecting Italian food excellence with global markets. Representing one of Italy’s distinctive agri-food regions, Lazio brought 17 producers — including 16 companies and one cooperative — to the exhibition, showcasing the quality, tradition and innovation of the region’s food industry to an international professional audience.",
+          "With around 8,000 exhibitors and approximately 295,000 industry professionals expected to attend, SIAL Paris offers a major platform for food companies to connect with international buyers, distributors and business partners."
+        ],
+        sections: [
+          ["From Italy to the Chinese Market", [
+            "For Ugolini Group and LuxurEat China, SIAL Paris is more than an opportunity to showcase brands and products. It is an important meeting point between Italian producers and international markets.",
+            "Ugolini Group is committed to bringing distinctive Italian food products and culinary culture to a wider global audience, while LuxurEat China extends this vision towards the Chinese market, creating a bridge between Italian brands and Chinese consumers, buyers and business partners.",
+            "Through international trade fairs such as SIAL Paris, we can engage directly with buyers, distributors and professionals from different markets, better understand evolving consumer demand and explore new opportunities for commercial cooperation and distribution."
+          ], [{ type: "video" }]],
+          ["Bringing Lazio’s Food Industry to the World", [
+            "Throughout 2026, the Lazio Region has continued to support the international development of its agri-food sector, with approximately €3.7 million invested in a promotional programme covering more than 20 national and international trade events.",
+            "SIAL Paris represents an important part of this internationalisation strategy. For Lazio-based food businesses, including Ugolini Group, these events are not only showcases for their products, but also opportunities to establish lasting relationships across the global food industry.",
+            "This year’s programme also highlighted gluten-free products and more inclusive food choices through a collaboration with AIC Lazio, the Italian Coeliac Association’s Lazio branch. Show cooking sessions and tastings brought together quality, flavour and attention to increasingly diverse dietary needs."
+          ]],
+          ["Bringing Italian Flavours Further", [
+            "From Lazio to Paris, and from Italy to China, internationalisation is not simply about entering new markets — it is about creating new connections.",
+            "Building on Ugolini Group’s experience in Italian food and LuxurEat China’s growing presence in the Chinese market, our goal is to introduce more consumers, buyers and partners to quality Italian food while creating new opportunities for Italian brands to connect with China.",
+            "SIAL Paris 2026 represents another important step in this journey — and a new starting point for strengthening the connection between Italian food excellence and international markets."
+          ]]
+        ]
+      }
+    },
+    {
       id: "fhc-shanghai-2026-breakfast",
       eventId: "fhc-shanghai-2026",
       relatedNewsId: "fhc-shanghai-2026-pancakes",
-      imageNote: { zh: "封面早餐配图为场景示意，非产品实拍。", en: "The breakfast cover is illustrative, not a product photograph." },
       date: "2026-10-24",
-      cardImage: media.fhcBreakfastFamily.src,
+      cardImage: media.fhcIndustry.src,
       zh: {
         date: "2026年10月24日", author: "LuxurEat", category: "展会预告",
         title: "LuxurEat亮相2026 FHC上海环球食品展：从早餐开始，探索意式风味",
@@ -75,7 +172,6 @@
       id: "fhc-shanghai-2026-pancakes",
       eventId: "fhc-shanghai-2026",
       relatedNewsId: "fhc-shanghai-2026-breakfast",
-      imageNote: { zh: "封面早餐配图为场景示意，非产品实拍。", en: "The breakfast cover is illustrative, not a product photograph." },
       date: "2026-10-24",
       cardImage: media.fhcBreakfastPairings.src,
       zh: {

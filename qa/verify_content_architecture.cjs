@@ -43,6 +43,21 @@ const journal = load("assets/data/journal.js", "LUXUREAT_ARTICLE_DATA");
 const recipeProductCategories = new Set(["caviar", "truffle", "olive-oil", "pizza", "gelato"]);
 const recipeLinkedProductCategories = new Set([...recipeProductCategories, "pasta"]);
 const pastaProducts = Object.entries(products.products).filter(([key, product]) => key.startsWith("zh-") && product.category === "pasta");
+for (const lang of ["zh", "en"]) {
+  const elixirs = Object.entries(products.products).filter(([key, product]) => key.startsWith(`${lang}-`) && product.series === "TrufflElixir");
+  assert(elixirs.length === 6, `${lang} TrufflElixir catalogue must contain the six supplied flavours`);
+  assert(elixirs.every(([, product]) => product.unit === "100 ml" && product.typeKey === "syrup" && product.sku.startsWith("TE-ELX-100-") && product.details.some(({ label, value }) => label === "EAN-13" && /^\d{13}$/.test(value))), `${lang} TrufflElixir label identity is incomplete`);
+  assert(elixirs.every(([, product]) => !product.registration && !product.showcaseVideoIds?.length && !/gluten-free|无麸质/i.test(product.desc)), `${lang} TrufflElixir must not inherit unrelated videos or unverified claims`);
+  for (const [, product] of elixirs) {
+    const tamarind = product.id.includes("tamarind");
+    const mediaItems = [...product.showcaseMedia, ...product.storyMedia];
+    assert(mediaItems.length === (tamarind ? 6 : 5) && mediaItems.filter(({ type }) => type === "video").length === (tamarind ? 2 : 5), `${product.id} media must match its supplied folder`);
+    assert(new Set(mediaItems.map(({ src }) => src)).size === mediaItems.length && product.storyMedia.length === 2 && product.storyMedia.every(({ type }) => type === "video"), `${product.id} must keep two videos below its description without duplicating the upper media`);
+    for (const media of mediaItems) {
+      assert(media.ratio > 0 && [media.src, media.poster].filter(Boolean).every((url) => fs.existsSync(path.join(root, "assets", url.split("/assets/")[1]))), `${product.id} media file or aspect ratio is missing`);
+    }
+  }
+}
 assert(pastaProducts.length === 23, "bilingual pasta catalogue does not contain all 23 supplied products");
 assert(pastaProducts.every(([, product]) => product.typeKey === "pasta" && product.eyebrow === "面食" && product.gallery.length === 4), "pasta category, label type or four-image gallery is incomplete");
 assert(pastaProducts.every(([, product]) => product.gallery[0] === product.image && product.gallery.slice(1).every((image) => image.includes("/products/pasta/process-"))), "pasta gallery does not preserve each lead image before the three supplied process images");
@@ -50,7 +65,7 @@ assert(Object.keys(products.products).filter((key) => key.startsWith("en-") && p
 for (const locale of ["zh", "en"]) {
   const productPage = read(`${locale}/product.html`);
   assert(productPage.indexOf('data-caviar-filter="pasta"') < productPage.indexOf('data-caviar-filter="gelato"'), `${locale} Pasta category is not listed before Italian Gelato`);
-  assert(productPage.indexOf('data-caviar-filter="pasta"') < productPage.indexOf('data-caviar-filter="seasoning-oil"'), `${locale} Pasta label type is not listed before Seasoning Oil`);
+  assert(!productPage.includes('data-caviar-filter-group="type"'), `${locale} obsolete label-type filters remain`);
 }
 assert(read("zh/product.html").includes('"KingHwa Labels Critical"'), "mixed Chinese product titles do not keep KingHwa for Latin characters and numerals");
 for (const article of Object.values(journal.articles).filter((item) => item.type === "recipe")) {
@@ -104,7 +119,7 @@ const typographyCss = ["integration.css", ...fs.readdirSync(path.join(root, "ass
   .map((name) => `assets/css/${name}`)].map(read).join("\n");
 const allowedFontFamilies = new Set([
   "inherit", '"Material Symbols Outlined"', '"Nyght Serif"', '"Spectral"',
-  '"KingHwa Old Song Site"', '"LuxurEat ZhiSong Site"',
+  '"KingHwa Old Song Site"', '"LuxurEat ZhiSong Site"', '"LuxChinaMedia"',
 ]);
 const unapprovedFontFamilies = [...typographyCss.matchAll(/font-family\s*:\s*([^;}]+)/g)]
   .map((match) => match[1].replace(/\s*!important\s*$/, "").trim())
@@ -149,7 +164,7 @@ assert(marketServicesCss.includes("background: linear-gradient(#e9e6df 0 50%, #e
 assert(marketServicesCss.includes(".lux-faq-tools {\n    position: sticky;\n    top: 72px;") && marketServicesCss.includes("#italian-wine .lux-ms-heading .lux-ms-lead { color: #292621; }"), "mobile FAQ tools are not sticky or wine copy lacks light-background contrast");
 const marketInsightsRuntime = read("assets/js/market-insights.js");
 assert(marketInsightsRuntime.includes('document.querySelectorAll("[data-market-copy-group]")') && marketServicesCss.includes("content: attr(data-market-card-explanation)"), "market-card explanatory copy transitions are missing");
-assert(marketServicesCss.includes("grid-auto-rows: clamp(250px, 18vw, 330px)") && marketServicesCss.includes(".lux-service-bento a small {\n  position: absolute;"), "service bento cards do not keep a fixed hover footprint");
+assert(marketServicesCss.includes("grid-template-rows: auto auto") && marketServicesCss.includes(".lux-service-group > a small {\n  position: absolute;"), "service bento cards do not keep a fixed hover footprint");
 
 assert(!html.includes("assets/images/"), "HTML still references assets/images");
 assert(!html.includes("assets/article-images/"), "HTML still references assets/article-images");
@@ -189,11 +204,14 @@ assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM C
 assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
 assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
 assert(!/https:\/\/webapi\.amap\.com\//.test(journalRuntime), "legacy AMap loader is still present");
-assert(brandNews.length === 10 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
-const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026");
+assert(brandNews.length === 12 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
+const newFhcNews = brandNews.find((item) => item.id === "fhc-shanghai-2026-new-products");
+assert(newFhcNews?.eventId === "fhc-shanghai-2026" && newFhcNews.cardImage.endsWith("fhc-shanghai-2026-booth.webp") && newFhcNews.zh.sections.length === 4 && newFhcNews.en.sections.length === 4, "new FHC bilingual news is incomplete or uses the wrong image");
+const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026" && item.id !== newFhcNews.id);
 assert(fhcNews.length === 2 && fhcNews.every((item) => item.relatedNewsId && item.zh.sourceUrl === "https://www.fhcchina.com/" && item.zh.sections.some((section) => section[2]?.length) && item.en.sections.some((section) => section[2]?.length)), "FHC bilingual news, images or links are incomplete");
 assert(new Set(fhcNews.flatMap((item) => [item.cardImage, ...item.zh.sections.flatMap((section) => (section[2] || []).map((media) => media.src))])).size === 4, "FHC breakfast images must not repeat");
 assert(fhcNews.find((item) => item.id === "fhc-shanghai-2026-pancakes")?.cardImage.endsWith("fhc-breakfast-pairings-2026.webp"), "FHC pancake cover does not use the requested image");
+assert(fhcNews.find((item) => item.id === "fhc-shanghai-2026-breakfast")?.cardImage.endsWith("fhc-2026-food-industry.webp") && fhcNews.every((item) => !item.imageNote), "FHC cover or removed image note is incorrect");
 assert(fhcNews.find((item) => item.id === "fhc-shanghai-2026-breakfast")?.zh.sections[2][2][0].sourceUrl === "https://www.shifair.com/", "FHC chef image must credit Shifair");
 const parisNews = brandNews.find((item) => item.id === "sial-paris-2026-preview");
 assert(parisNews?.eventId === "sial-paris-2026" && parisNews.zh.sections.length === 5 && parisNews.en.sections.length === 5, "SIAL Paris bilingual news is not linked to its event");
@@ -204,7 +222,7 @@ assert(romaNews?.video.includes("roma-bar-show-2026.mp4") && romaNews.cardImage.
 assert(romaNews?.videoPoster.endsWith("roma-bar-show-2026-video-poster.jpg") && romaNews.videoWidth === 1080 && romaNews.videoHeight === 1920, "Roma Bar Show video poster or native dimensions are incomplete");
 const changshaEvent = events.events.find((item) => item.id === "cifie-changsha-2026");
 assert(changshaEvent?.video.includes("cifie-changsha-2026-video.mp4") && changshaEvent.videoSource?.en.includes("WeChat Channels"), "Changsha event video or source is incomplete");
-assert(brandNews.filter((item) => item.eventId).length === 9 && journalRuntime.includes("lux-brand-news-event-link") && journalRuntime.includes("lux-brand-news-links"), "Brand News and Exhibitions & Events are not cross-linked");
+assert(brandNews.filter((item) => item.eventId).length === 11 && journalRuntime.includes("lux-brand-news-event-link") && journalRuntime.includes("lux-brand-news-links"), "Brand News and Exhibitions & Events are not cross-linked");
 assert(brandNews.filter((item) => item.eventId).every((item) => events.events.some((event) => event.id === item.eventId)), "a Brand News event link has no matching shared event record");
 assert(journalRuntime.includes('data-news-open="${escapeHtml(item.id)}"') && journalRuntime.includes("renderBrandNews"), "News Centre previews do not open separate articles");
 assert(!journalRuntime.includes("data-news-search-form") && !journalRuntime.includes("data-news-search-text"), "removed Brand News search UI is still present");
@@ -242,7 +260,7 @@ assert(engagementRuntime.includes('panel.classList.toggle("is-legal", isLegal)')
 assert(!engagementRuntime.includes("data-account-form") && !engagementRuntime.includes("data-account-password"), "consumer account form UI remains in the optional runtime");
 assert(!accountRuntime.includes("luxProtectMaterialIcons"), "static Material Symbols still use a document-wide mutation observer");
 const integrationStyles = read("integration.css");
-assert(integrationStyles.includes("width: 90vw !important;") && integrationStyles.includes("height: 90dvh !important;") && integrationStyles.includes("width: 100vw !important;") && integrationStyles.includes("height: 100dvh !important;"), "article dialogs do not use one enforced desktop size and full-screen mobile sizing");
+assert(integrationStyles.includes("width: 95vw !important;") && integrationStyles.includes("height: 95dvh !important;") && integrationStyles.includes("width: 100vw !important;") && integrationStyles.includes("height: 100dvh !important;"), "article dialogs do not use one enforced desktop size and full-screen mobile sizing");
 assert(integrationStyles.includes("height: 45dvh;") && integrationStyles.includes("object-fit: contain;") && integrationStyles.includes("width: 75%;"), "Brand News hero or article-sheet proportions are incomplete");
 assert(integrationStyles.includes(".lux-home-process-card-link::after") && integrationStyles.includes('content: "查看详情  →"') && integrationStyles.includes('content: "View Details  →"'), "homepage process cards are missing their visible bilingual detail affordance");
 assert(/\.lux-footer-modal-panel\.is-legal \.lux-footer-modal-close\s*\{[^}]*top:\s*12px;[^}]*right:\s*14px;[^}]*border-color:\s*#101010;[^}]*border-width:\s*\.5px;/s.test(integrationStyles), "legal dialog close position or border does not match the blog reader close control");
@@ -285,7 +303,7 @@ for (const file of require("node:fs").readdirSync("zh").filter((name) => name.en
   const page = read(`zh/${file}`);
   assert(/@font-face\{font-family:"(?:KingHwa|ZhiSong|LuxurEat ZhiSong)[^}]+font-display:swap/.test(page) && !/font-display:block/.test(page), `${file} can hide Chinese text while fonts load`);
 }
-const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => family !== "Material Symbols Outlined");
+const registeredTextFonts = [...integrationStyles.matchAll(/@font-face\s*\{[^}]*font-family:\s*"([^"]+)"/g)].map((match) => match[1]).filter((family) => !["Material Symbols Outlined", "LuxChinaMedia"].includes(family));
 assert(registeredTextFonts.length === 0, "shared CSS still registers stale text fonts");
 for (const locale of ["zh", "en"]) {
   for (const name of require("node:fs").readdirSync(locale).filter((file) => file.endsWith(".html"))) {
@@ -304,7 +322,7 @@ assert(integrationStyles.includes(".lux-info-icon:hover") && integrationStyles.i
 assert(integrationStyles.includes('html[lang^="zh"] .lux-event-card-copy strong') && integrationStyles.includes("-webkit-text-stroke: .16px currentColor"), "Chinese event titles do not use the strengthened KingHwa treatment");
 assert(integrationStyles.includes('html[lang^="zh"] body p.lux-footprint-video-title') && integrationStyles.includes('html[lang^="en"] body p.lux-footprint-video-title'), "contact footer title does not use the locale heading font");
 assert(read("zh/index.html").includes('href="contact.html">联系我们</a>') && read("en/index.html").includes('href="contact.html">Contact Us</a>'), "homepage contact CTA is not localized");
-assert(read("zh/index.html").includes('<h3>系列产品</h3><p>浏览 LuxurEat') && read("zh/index.html").includes('<h3>商务合作</h3><p>面向经销、酒店餐饮、专业供应') && read("en/index.html").includes('<h3>Products</h3><p>Explore LuxurEat') && read("en/index.html").includes('<h3>Cooperation</h3><p>For distribution, hospitality, professional supply'), "homepage does not clearly distinguish the existing product and professional cooperation paths");
+assert(read("zh/index.html").includes('<h3>我们的产品</h3><p>浏览 LuxurEat') && read("zh/index.html").includes('<h3>商务合作</h3><p>面向经销、酒店餐饮、专业供应') && read("en/index.html").includes('<h3>Products</h3><p>Explore LuxurEat') && read("en/index.html").includes('<h3>Cooperation</h3><p>For distribution, hospitality, professional supply'), "homepage does not clearly distinguish the existing product and professional cooperation paths");
 assert(["zh", "en"].every((locale) => read(`${locale}/index.html`).includes('class="lux-home-service-card" href="product.html"') && read(`${locale}/index.html`).includes('class="lux-home-service-card" href="cooperation.html"')), "homepage B2C/B2B entries do not use the existing Products and Cooperation destinations");
 assert(integrationStyles.includes('.lux-home-topic-grid {') && integrationStyles.includes('grid-template-columns: repeat(3, minmax(0, 1fr))'), "homepage Italian food cards are not arranged in two desktop rows");
 assert(/\.lux-topic-preview-card \{[\s\S]*?border-radius: 0;/.test(integrationStyles) && /\.lux-topic-preview-card:hover,[\s\S]*?border-radius: 22px;/.test(integrationStyles), "homepage Italian food cards do not transition from square to rounded corners on interaction");

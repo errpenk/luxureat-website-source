@@ -4,6 +4,8 @@ const luxEscapeProductHtml = (value) => String(value).replace(/[&<>"']/g, (char)
 
 window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
+const luxProductVideoBase = new URL("../media/products/videos/", document.currentScript?.src || location.href);
+const luxWechatQrUrl = new URL("../media/brand/wechat-qr.webp", document.currentScript?.src || location.href);
 function renderLuxProductCatalog() {
   const grid = document.querySelector("[data-caviar-grid]");
   const data = window.LUXUREAT_PRODUCT_DATA;
@@ -333,6 +335,7 @@ function initLuxProductDetails() {
   const requestedProduct = new URLSearchParams(location.search).get("product");
   const localized = (zh, en) => lang === "zh" ? zh : en;
   const detailHref = (page, hash) => `${document.querySelector(`.lux-nav a[href$="${page}.html"], .lux-nav a[href$="/${page}/"]`)?.href || `${page}.html`}#${hash}`;
+  const quoteHref = detailHref("cooperation", "inquiry");
   const recipeRef = (slug, zh, en) => [localized(zh, en), detailHref("recipe", `reader-${lang}-recipe-${slug}`)];
   const guideRef = (slug, zh, en) => [localized(zh, en), detailHref("blog", `reader-${lang}-academy-${slug}`)];
   const related = (links) => ({
@@ -417,6 +420,11 @@ function initLuxProductDetails() {
     if (push && !detail.hidden && currentProductId && currentProductId !== id) productStack.push(currentProductId);
     currentProductId = id;
     const labels = copy();
+    const videos = product.videoIds || [];
+    const renderMediaRow = (items, story = false) => items?.length ? `<div class="${story ? "lux-product-videos lux-elixir-story-videos" : "lux-product-showcase-videos is-mixed-media"}" aria-label="${luxEscapeProductHtml(localized("产品影像", "Product media"))}">${items.map((media, index) => media.type === "image"
+      ? `<img style="flex-grow: ${media.ratio}; aspect-ratio: ${media.ratio}" src="${luxEscapeProductHtml(media.src)}" alt="${luxEscapeProductHtml(product.title)} ${luxEscapeProductHtml(localized("风味示意", "flavour inspiration"))} ${index + 1}" loading="lazy" decoding="async">`
+      : `<video style="${story ? "" : `flex-grow: ${media.ratio}; aspect-ratio: ${media.ratio}`}" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" controls poster="${luxEscapeProductHtml(media.poster)}" aria-label="${luxEscapeProductHtml(product.title)} ${luxEscapeProductHtml(localized("视频", "video"))} ${index + 1}"><source data-src="${luxEscapeProductHtml(media.src)}" type="video/mp4"></video>`).join("")}</div>` : "";
+    const mediaRow = renderMediaRow(product.showcaseMedia);
     const content = productContentRules.find(([pattern]) => pattern.test(product.id))?.[1]
       || (product.categories?.includes("caviar") || /(?:beluga|oscetra|caviar)/.test(product.id) ? caviarContent : null)
       || (product.categories?.includes("olive-oil") ? oliveContent : null)
@@ -429,7 +437,8 @@ function initLuxProductDetails() {
         key,
         item,
         index,
-        score: (productFamily(key) === productFamily(id) ? 100 : 0)
+        score: (product.series && item.series === product.series ? 200 : 0)
+          + (productFamily(key) === productFamily(id) ? 100 : 0)
           + (productUse(key) && productUse(key) === productUse(id) ? 40 : 0)
           + (item.categories?.some((category) => product.categories?.includes(category)) ? 10 : 0),
       }))
@@ -439,7 +448,7 @@ function initLuxProductDetails() {
     body.innerHTML = `
       <article>
         <section class="lux-product-hero">
-          <div class="lux-product-gallery">
+          <div class="lux-product-gallery${product.series === "TrufflElixir" ? " is-elixir" : ""}">
             <div class="lux-product-thumbs" aria-label="${luxEscapeProductHtml(product.title)} gallery">
               ${galleryImages.map((src, index) => `<button type="button" class="lux-product-thumb${index === 0 ? " is-active" : ""}" data-product-gallery="${index}" aria-label="${luxEscapeProductHtml(product.title)} ${index + 1}"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(src)}" alt="${luxEscapeProductHtml(product.title)} ${index + 1}"></button>`).join("")}
             </div>
@@ -453,16 +462,25 @@ function initLuxProductDetails() {
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
               <button type="button" data-purchase-cta${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
+              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(quoteHref)}">${luxEscapeProductHtml(localized("合作专属报价", "Partnership Quote"))}</a>
             </div>
+            <aside class="lux-product-wechat" aria-label="${luxEscapeProductHtml(localized("微信：LuxurEatChina", "WeChat: LuxurEatChina"))}"><img width="104" height="104" loading="lazy" decoding="async" src="${luxWechatQrUrl}" alt="${luxEscapeProductHtml(localized("微信二维码", "WeChat QR code"))}"><span class="lux-wechat-copy"><span lang="${lang}">${luxEscapeProductHtml(localized("更多详情与合作细节，也可搜索我们的微信号：", "More details or more information, you can also search for our WeChat ID:"))}</span><b lang="en">LuxurEatChina</b></span></aside>
           </div>
         </section>
+        ${mediaRow}
+        ${product.showcaseVideoIds?.length ? `<div class="lux-product-showcase-videos${product.showcaseLayout === "portrait" ? " is-portrait" : ""}" aria-label="${luxEscapeProductHtml(localized("产品视频", "Product videos"))}">${product.showcaseVideoIds.map((videoId, index) => `<video style="flex-grow: ${product.showcaseVideoRatios[index]}; aspect-ratio: ${product.showcaseVideoRatios[index]}" data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" controls poster="${luxEscapeProductHtml(product.image)}" aria-label="${luxEscapeProductHtml(product.title)} ${luxEscapeProductHtml(localized("视频", "video"))} ${index + 1}"><source data-src="${luxProductVideoBase}${videoId}.mp4" type="video/mp4"></video>`).join("")}</div>` : ""}
         <section class="lux-product-specs${product.details ? " has-label-details" : ""}">
           ${(product.details || product.specs.map((value, index) => ({ label: labels.specs[index], value }))).map((item) => `<div><span>${luxEscapeProductHtml(item.label)}</span><strong>${luxEscapeProductHtml(item.value)}</strong></div>`).join("")}
         </section>
         <section class="lux-product-story">
           <h3>${labels.story}</h3>
-          <p>${luxEscapeProductHtml(product.desc)}</p>
+          ${(product.detailDescription || product.desc).split(/\n\s*\n/).map((paragraph) => `<p>${luxEscapeProductHtml(paragraph)}</p>`).join("")}
+          ${renderMediaRow(product.storyMedia, true)}
           ${content ? `<nav class="lux-reader-article-links" aria-label="${luxEscapeProductHtml(content.title)}">${content.links.map(([label, href]) => `<a class="lux-recipe-product-link" href="${luxEscapeProductHtml(href)}" data-lux-cta data-lux-cta-type="content" data-lux-cta-id="${luxEscapeProductHtml(product.id)}" data-lux-cta-location="product-story-related">${luxEscapeProductHtml(label)}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`).join("")}</nav>` : ""}
+          ${videos.length ? `<div class="lux-product-videos" aria-label="${luxEscapeProductHtml(localized("产品视频", "Product videos"))}">${videos.map((videoId, index) => `<video data-lux-autoplay muted loop playsinline webkit-playsinline preload="none" poster="${luxEscapeProductHtml(product.image)}" aria-label="${luxEscapeProductHtml(product.title)} ${luxEscapeProductHtml(localized("视频", "video"))} ${index + 1}"><source data-src="${luxProductVideoBase}${videoId}.mp4" type="video/mp4"></video>`).join("")}</div>` : ""}
+          ${product.videoNotes ? `<div class="lux-product-video-notes">${product.videoNotes.split(/\n\s*\n/).map((paragraph) => `<p>${luxEscapeProductHtml(paragraph)}</p>`).join("")}</div>` : ""}
+          ${product.storageImages?.length ? `<div class="lux-product-storage-gallery">${product.storageImages.map((image, index) => `<picture data-storage-image="${index}" class="${index === 0 ? 'is-active' : ''}"><source media="(max-width: 720px)" srcset="${luxEscapeProductHtml(image.mobileSrc)}"><img width="1200" height="675" loading="lazy" decoding="async" src="${luxEscapeProductHtml(image.src)}" alt="${luxEscapeProductHtml(`${product.title} · ${localized("料理应用参考", "Serving inspiration")} ${index + 1}`)}"></picture>`).join("")}<div class="lux-product-storage-thumbs">${product.storageImages.map((image, index) => `<button type="button" data-storage-index="${index}" aria-pressed="${index === 0}" aria-label="${luxEscapeProductHtml(`${product.title} · ${localized("料理应用参考", "Serving inspiration")} ${index + 1}`)}"><img width="120" height="120" loading="lazy" decoding="async" src="${luxEscapeProductHtml(image.mobileSrc)}" alt=""></button>`).join("")}</div></div>` : ""}
+          ${product.storageNotes ? `<div class="lux-product-storage-notes">${product.storageNotes.split(/\n\s*\n/).map((paragraph) => `<p>${luxEscapeProductHtml(paragraph)}</p>`).join("")}</div>` : ""}
         </section>
         ${recommendations.length ? `<section class="lux-product-recent">
           <div class="lux-product-recent-inner">

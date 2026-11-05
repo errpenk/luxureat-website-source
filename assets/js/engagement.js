@@ -67,7 +67,7 @@ LuxurEat（露意膳）尊重并保护您的个人信息。本政策说明我们
 LuxurEat (露意膳) respects and protects your personal information. This policy explains how we collect, use, store, share and protect information when you visit our website, register an account, place an order, attend an event or contact us.
 
 1. Controller
-Luxureat (Shanghai) Trading Co., Ltd.; Unified Social Credit Code: 91310000MAERED2X1W; Legal representative: UGOLINI ROBERTO; Registered address: Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai; Email: info@luxureat.com.
+LuxurEat (Shanghai) Trading Co., Ltd.; Unified Social Credit Code: 91310000MAERED2X1W; Legal representative: UGOLINI ROBERTO; Registered address: Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai; Email: info@luxureat.com.
 
 2. Scope and updates
 This policy applies to the LuxurEat (露意膳) website and related online services. Material changes will be prominently notified, and separate consent will be obtained where required by law.
@@ -106,7 +106,7 @@ The site is intended primarily for adults. We do not knowingly collect personal 
 Third-party services follow their own privacy rules. For complaints, contact info@luxureat.com or the competent regulator.
 
 16. Contact
-Luxureat (Shanghai) Trading Co., Ltd.
+LuxurEat (Shanghai) Trading Co., Ltd.
 Room 5312, Lane 38, Caoli Road, Fengjing Town, Jinshan District, Shanghai
 info@luxureat.com`;
   const cookieZh = `最后更新日期：2026年8月12日
@@ -188,7 +188,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
       cookie: ["Cookie政策", cookieZh],
       terms: ["销售条款", termsZh],
       shipping: ["配送说明", shippingZh],
-      wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信ID：LuxurEatChina 与我们联系。"],
+      wechat: ["微信", "请扫描二维码联系 LuxurEat（露意膳） 中国顾问。", "您也可以通过微信 ID：", " 与我们联系。"],
     }
     : {
       close: "Close",
@@ -196,7 +196,7 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
       cookie: ["Cookie Policy", cookieEn],
       terms: ["Terms of Sale", termsEn],
       shipping: ["Shipping", shippingEn],
-      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: LuxurEatChina."],
+      wechat: ["WeChat", "Scan the QR code to contact the LuxurEat (露意膳) concierge.", "You can also reach us via WeChat ID: ", "."],
     };
 
   const modal = document.createElement("div");
@@ -218,7 +218,8 @@ Delivery, transfer of risk, loss handling and after-sales responsibility are det
     if (!item) return;
     const isLegal = ["privacy", "cookie", "terms", "shipping"].includes(key);
     const qr = key === "wechat" ? `<img loading="eager" fetchpriority="high" decoding="async" class="lux-footer-qr" src="${asset("wechat-qr.webp")}" alt="WeChat QR">` : "";
-    const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}</p>` : "";
+    const wechatId = key === "wechat" ? '<strong class="lux-footer-wechat-id-value" lang="en">LuxurEatChina</strong>' : "";
+    const note = item[2] ? `<p class="lux-footer-wechat-id">${luxEscapeCoreHtml(item[2])}${wechatId}${luxEscapeCoreHtml(item[3] || "")}</p>` : "";
     body.classList.toggle("is-wechat", key === "wechat");
     body.classList.toggle("is-legal", isLegal);
     panel.classList.toggle("is-legal", isLegal);

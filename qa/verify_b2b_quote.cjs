@@ -11,13 +11,14 @@ for (const lang of ["zh", "en"]) {
   assert.doesNotMatch(cooperation, /class="lux-quote-hero-cta"/);
   assert.match(cooperation, /class="lux-contact-form lux-quote-form lg:w-1\/2" data-contact-form novalidate/);
   assert.match(cooperation, /class="lux-quote-submit"/);
-  assert.equal((cooperation.match(/class="lux-required-star"/g) || []).length, 8);
+  assert.equal((cooperation.match(/class="lux-required-star"/g) || []).length, 7);
   for (const name of ["name", "company", "email", "phone", "product_industry", "estimated_quantity", "delivery_market", "target_date", "inquiry_type", "message", "form_context", "website"]) {
     assert.match(cooperation, new RegExp(`name="${name}"`), `${lang} B2B quote form is missing ${name}`);
   }
   for (const name of ["company", "product_industry", "estimated_quantity", "delivery_market"]) {
     assert.match(cooperation, new RegExp(`name="${name}"[^>]*required`), `${lang} B2B quote form should require ${name}`);
   }
+  assert.match(cooperation, /lux-quote-wechat[^>]*><img[^>]+wechat-qr\.webp[^>]+><span class="lux-wechat-copy"><span lang="(?:zh|en)">(?:更多详情与合作细节，也可搜索我们的微信号：|More details or more information, you can also search for our WeChat ID:)<\/span><b lang="en">LuxurEatChina<\/b><\/span>/);
   assert.match(contact, /class="lux-contact-b2b-cta" href="cooperation\.html#inquiry"/);
   assert.match(contact, /class="lux-contact-b2b-action"/);
 }
@@ -27,7 +28,20 @@ assert.ok(builder.includes("'zh/cooperation', 'en/cooperation'"), "quote pages d
 assert.ok(builder.includes("$estimated_quantity") && builder.includes("$delivery_market") && builder.includes("$is_b2b_quote"), "quote-specific fields are not handled by the server");
 const runtime = read("assets/js/brand.js");
 assert.ok(runtime.includes('"estimated_quantity", "delivery_market"') && runtime.includes("const quoteDetails = isQuoteForm"), "quote-specific fields are not validated or included in fallback email");
+assert.ok(runtime.includes('contactRequired: "请填写电子邮箱或电话/微信其中一种。"') && runtime.includes('email?.value') && runtime.includes('phone?.value'), "quote form does not allow either email or phone / WeChat contact");
+const products = read("assets/js/products.js");
+assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('More details or more information, you can also search for our WeChat ID:') && products.includes('更多详情与合作细节，也可搜索我们的微信号：') && products.includes('<b lang="en">LuxurEatChina</b>') && products.includes('lux-product-quote-link') && products.includes('合作专属报价') && products.includes('Partnership Quote') && !products.includes('Exclusive Partnership Quote') && products.includes('detailHref("cooperation", "inquiry")'));
+const productData = read("assets/data/products.js");
+assert.ok(productData.includes('"black-truffle-sauce-80g"') && productData.includes('"black-truffle-sauce-180g"') && productData.includes('"black-truffle-sauce-500g"'));
+assert.doesNotMatch(productData, /manufacturer:\s*"APPENNINO FOOD GROUP SPA"/);
 const css = read("integration.css");
+assert.ok(css.includes(".lux-product-wechat") && css.includes(".lux-quote-wechat") && css.includes('font: 700 17px/1.3 "Spectral", serif;') && css.includes("#e9c349"));
+assert.ok(css.includes(".lux-product-summary .lux-wechat-copy") && css.includes("text-transform: none;"), "WeChat ID should retain its mixed-case spelling");
+assert.ok(css.includes(".lux-product-wechat b { color: #af8d11; }") && css.includes(".lux-product-purchase > .lux-product-quote-link") && css.includes("flex-wrap: nowrap;"), "product WeChat ID should match price gold and quote CTA should stay beside Add to Cart");
+assert.ok(css.includes(".lux-product-purchase > .lux-product-quote-link,\n.lux-product-recent-actions button {\n  font-size: var(--lux-type-button) !important;"), "product quote link should use the same type scale as the purchase button");
+assert.ok(/\.lux-product-gallery\s*\{[^}]*align-items:\s*center/.test(css) && css.includes(".lux-product-gallery { grid-template-columns: 1fr; align-items: stretch; }"), "product thumbnails should center as a column beside the main image on desktop");
+assert.ok(css.includes(".lux-product-summary > p,\n.lux-product-summary .lux-wechat-copy > span { font-size: 18px !important; }") && css.includes(".lux-quote-copy .lux-wechat-copy > span { color: #fff; }") && css.includes("color: #e9c349") && css.includes("color: #e9c349 !important;") && css.includes("text-transform: none !important;"), "requested WeChat copy, ID and contact-choice colors or sizing are incomplete");
+assert.ok(css.includes('var(--lux-zh-body, "LuxurEat ZhiSong Site")'));
 assert.ok(css.includes("b2b-quotation-team.webp") && css.includes(".lux-quote-copy") && css.includes("position: sticky"));
 assert.ok(css.includes(".lux-quote-submit") && css.includes("rgba(157,245,236,.58)") && css.includes("place-content: center start"), "quote submit area is not vertically centered, left aligned, or glowing");
 assert.ok(css.includes(".lux-contact-b2b-action") && css.includes("place-items: center start"), "contact B2B CTA is not vertically centered and left aligned");

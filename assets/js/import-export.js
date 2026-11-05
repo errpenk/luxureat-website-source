@@ -2,7 +2,7 @@
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const touchMode = matchMedia("(hover: none), (pointer: coarse)");
   const deferredBackgrounds = document.querySelectorAll([
-    ".lux-service-bento a",
+    ".lux-service-group > a",
     "#import-into-china .lux-ms-process article",
     ".lux-flip-orbit-front",
     "#sourcing-export .lux-ms-card",
@@ -32,14 +32,15 @@
       card.classList.toggle("is-tapped");
     });
   });
-  const serviceLinks = [...document.querySelectorAll(".lux-service-bento a")];
-  serviceLinks.forEach((link) => link.addEventListener("click", (event) => {
-    if (!touchMode.matches || link.classList.contains("is-tapped")) return;
+  const serviceLinks = [...document.querySelectorAll(".lux-service-group > a")];
+  const expandableServiceLinks = touchMode.matches && !matchMedia("(max-width: 640px)").matches;
+  if (expandableServiceLinks) serviceLinks.forEach((link) => link.addEventListener("click", (event) => {
+    if (link.classList.contains("is-tapped")) return;
     event.preventDefault();
     serviceLinks.forEach((item) => item.classList.remove("is-tapped"));
     link.classList.add("is-tapped");
   }));
-  if (touchMode.matches && "IntersectionObserver" in window) {
+  if (expandableServiceLinks && "IntersectionObserver" in window) {
     const visibleServiceLinks = new Map();
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.isIntersecting
@@ -56,6 +57,7 @@
   });
   if (("IntersectionObserver" in window) && !reducedMotion) document.querySelectorAll("#sourcing-export .lux-ms-card-grid, #brand-digital .lux-ms-card-grid").forEach((group) => {
     const cards = [...group.querySelectorAll(".lux-ms-card")];
+    let autoRevealed = false;
     let timers = [];
     const reset = () => {
       timers.forEach(clearTimeout);
@@ -63,14 +65,23 @@
       cards.forEach((card) => card.classList.remove("is-auto-revealed"));
     };
 
-    new IntersectionObserver(([entry]) => {
+    const revealObserver = new IntersectionObserver(([entry]) => {
       reset();
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting || autoRevealed) return;
+      autoRevealed = true;
       cards.forEach((card, index) => {
         timers.push(setTimeout(() => card.classList.add("is-auto-revealed"), index * 140));
         timers.push(setTimeout(() => card.classList.remove("is-auto-revealed"), 1050 + index * 140));
       });
-    }, { threshold: .22 }).observe(group);
+    }, { threshold: .22 });
+    revealObserver.observe(group);
+    addEventListener("pageshow", (event) => {
+      if (!event.persisted) return;
+      autoRevealed = false;
+      reset();
+      revealObserver.unobserve(group);
+      revealObserver.observe(group);
+    });
   });
 
   document.querySelectorAll(".lux-flip-orbit").forEach((button) => {

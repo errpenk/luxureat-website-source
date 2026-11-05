@@ -1,12 +1,36 @@
 const luxJournalAssetBase = new URL("../", document.currentScript?.src || location.href);
 const luxJournalAsset = (path) => new URL(path, luxJournalAssetBase).href;
+const luxJournalScriptUrl = new URL(document.currentScript?.src || location.href);
+const luxJournalAssetVersion = luxJournalScriptUrl.searchParams.get("ver") || luxJournalScriptUrl.searchParams.get("v") || "1";
 
 function initLuxReader() {
   const articleData = window.LUXUREAT_ARTICLE_DATA || {};
   window.luxResponsiveData?.(articleData);
   window.luxResponsiveData?.(window.LUXUREAT_EVENT_DATA);
   const articles = articleData.articles || {};
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.recipe || {})) {
+    const id = key.split(":")[0];
+    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, cmsHtml: cms.cmsHtml, ...(cms.image ? { image: cms.image } : {}) });
+  }
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.blog || {})) {
+    const id = key.split(":")[0];
+    if (articles[id]) Object.assign(articles[id], { title: cms.title, intro: cms.intro, ...(cms.cmsHtml !== undefined ? { cmsHtml: cms.cmsHtml } : {}), ...(cms.date ? { date: cms.date } : {}), ...(cms.image ? { image: cms.image } : {}) });
+  }
   const events = window.LUXUREAT_EVENT_DATA?.events || [];
+  const galleryItems = window.LUXUREAT_GALLERY_DATA || [];
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.gallery || {})) {
+    const id = key.slice(0, key.lastIndexOf(":"));
+    let item = galleryItems.find((entry) => entry.id === id);
+    if (!item) {
+      item = { id, kind: "video", width: 768, height: 576, zh: { title: id }, en: { title: id } };
+      galleryItems.push(item);
+    }
+    item[cms.lang] = { title: cms.title };
+    if (cms.eventId) item.eventId = cms.eventId;
+    if (cms.date) item.date = cms.date;
+    if (cms.src) item.src = cms.src;
+    if (cms.poster) item.poster = cms.poster;
+  }
   const brandNews = window.LUXUREAT_BRAND_NEWS || [];
   const eventMount = document.querySelector("[data-recent-events]");
   const mapMount = document.querySelector("[data-exhibition-map]");
@@ -103,6 +127,7 @@ function initLuxReader() {
     "dictionary-food-labels": [productLink("product.html?product=summer-truffle-slices-water-350g", "用水浸夏季松露片练习阅读食品标签", "Practise Reading a Food Label with Summer Truffle Slices")],
     "dictionary-italian-menu": [recipeLink("family-chicken-cacciatora", "从猎人烩鸡认识意大利主菜", "Learn Italian Main-Course Terms with Chicken Cacciatora"), recipeLink("gelato-classic", "从意式手工冰淇淋认识甜点栏目", "Learn Dessert Menu Terms with Gelato")],
     "dictionary-pasta-risotto": [recipeLink("family-spaghetti-pomodoro", "用番茄意面理解意面形状与酱汁", "Understand Pasta Shapes with Spaghetti al Pomodoro"), recipeLink("black-truffle-risotto", "用黑松露烩饭理解 Risotto 技法", "Understand Risotto Technique with Black Truffle Risotto")],
+    "dictionary-spaghetti-history": [recipeLink("family-spaghetti-pomodoro", "从番茄意面认识今日的意大利餐桌", "Explore Today's Italian Table with Spaghetti al Pomodoro"), recipeLink("olive-pasta", "用蒜香橄榄油意面理解经典做法", "Explore a Classic with Garlic and Olive Oil Pasta")],
     "evo-chocolate-dessert": [recipeLink("gelato-classic", "在经典意式冰淇淋上尝试少量橄榄油", "Try a Small EVOO Finish on Classic Gelato"), productLink("new.html#olive-oil", "选择适合甜点的意大利橄榄油", "Explore Italian Olive Oils for Desserts")],
     "evo-vs-common-cooking-oil": [recipeLink("light-grilled-zucchini", "用烤西葫芦比较橄榄油的完成风味", "Compare Finishing Flavour on Grilled Courgettes"), recipeLink("olive-pasta", "观察橄榄油在意面乳化中的作用", "See EVOO's Role in Pasta Emulsification"), productLink("new.html#olive-oil", "查看意大利橄榄油产品方向", "Explore the Italian Olive Oil Range")],
     "gelato-flavours": [recipeLink("gelato-classic", "用基础配方练习牛奶、香草与坚果风味", "Practise Milk, Vanilla and Nut Flavours with a Classic Base"), productLink("new.html#gelato", "查看意式手工冰淇淋基底与新品", "Explore Gelato Bases and New Products")],
@@ -310,7 +335,6 @@ function initLuxReader() {
           }).join("")}
         </div>
         ${past.length ? `<div class="lux-past-events">
-          <h3>${eventLabels.past}</h3>
           <div class="lux-past-events-grid">${past.map((event) => {
             const copy = event[lang];
             return `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(event.brandCardImage || event.cardImage || event.image)}" alt="${escapeHtml(copy.cardTitle || copy.articleTitle)}"><span class="lux-event-card-copy"><small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small><strong>${formatTitle(copy.cardTitle || copy.articleTitle)}</strong></span></a>`;
@@ -323,7 +347,7 @@ function initLuxReader() {
   const renderExhibitionMap = () => {
     if (!mapMount) return;
     const mapLabels = lang === "zh"
-      ? { kicker: "展会图谱", title: "展会地图", intro: "查看 LuxurEat（露意膳）即将参与及已经结束的展会。将鼠标移至地点标记可预览，点击可打开对应活动详情。", upcoming: "即将开始", ended: "已结束", detail: "查看详情", reset: "返回中国地图视角", unavailable: "地图暂时无法加载，请稍后重试。" }
+      ? { kicker: "", title: "展会地图", intro: "查看 LuxurEat（露意膳）即将参与及已经结束的展会。将鼠标移至地点标记可预览，点击可打开对应活动详情。", upcoming: "即将开始", ended: "已结束", detail: "查看详情", reset: "返回中国地图视角", unavailable: "地图暂时无法加载，请稍后重试。" }
       : { kicker: "Exhibition Atlas", title: "Exhibition Map", intro: "Explore upcoming and completed LuxurEat (露意膳) exhibitions. Hover over a location to preview it, then select the marker to open the event article.", upcoming: "Upcoming", ended: "Ended", detail: "View details", reset: "Reset to China view", unavailable: "The map is temporarily unavailable. Please try again shortly." };
     const mappedEvents = events.filter((event) => Array.isArray(event.coordinates)).map((event) => ({
       ...event,
@@ -436,7 +460,7 @@ function initLuxReader() {
     const cards = [...grid.children];
     const pageNav = document.createElement("nav");
     grid.after(pageNav);
-    luxCreatePagination(pageNav, { total: () => cards.length, pageSize: 4, scrollTarget: newsMount, onChange: (page, size) => {
+    luxCreatePagination(pageNav, { total: () => cards.length, pageSize: 6, scrollTarget: newsMount, onChange: (page, size) => {
       const start = (page - 1) * size;
       cards.forEach((card, index) => { card.hidden = index < start || index >= start + size; });
     } });
@@ -562,6 +586,10 @@ function initLuxReader() {
       const image = node.querySelector("img");
       const background = node.querySelector(".lux-dark-photo-bg, [style*='background-image']");
       if (image) {
+        image.removeAttribute("srcset");
+        image.removeAttribute("sizes");
+        image.removeAttribute("data-lux-mobile-src");
+        if (image.hasAttribute("data-lux-src")) image.setAttribute("data-lux-src", article.cardImage || article.image);
         image.src = article.cardImage || article.image;
         image.alt = article.cardTitle || article.title;
         if (article.cardPosition || article.coverPosition) image.style.objectPosition = article.cardPosition || article.coverPosition;
@@ -589,6 +617,10 @@ function initLuxReader() {
   };
   syncReaderCards();
 
+  const shareStyles = document.createElement("link");
+  shareStyles.rel = "stylesheet";
+  shareStyles.href = `${luxJournalAsset("css/reader-share.css")}?ver=${encodeURIComponent(luxJournalAssetVersion)}`;
+  document.head.appendChild(shareStyles);
   const reader = document.createElement("div");
   reader.className = "lux-reader";
   reader.hidden = true;
@@ -597,9 +629,11 @@ function initLuxReader() {
     <section class="lux-reader-panel" role="dialog" aria-modal="true" aria-labelledby="lux-reader-title">
       <header class="lux-reader-header">
         <button type="button" class="lux-reader-back" data-reader-back hidden></button>
+        <div class="lux-reader-header-share" data-share-ui></div>
         <button type="button" class="lux-reader-close" data-reader-close></button>
       </header>
       <div class="lux-reader-body" tabindex="-1"></div>
+      <div class="lux-share-qr" data-share-qr hidden role="dialog" aria-modal="true" aria-label="${lang === "zh" ? "微信分享" : "Share with WeChat"}"><div><button type="button" data-share-qr-close aria-label="${lang === "zh" ? "关闭" : "Close"}">×</button><strong data-share-qr-title></strong><div data-share-qr-image></div><p data-share-qr-help></p></div></div>
     </section>`;
   document.body.appendChild(reader);
 
@@ -610,12 +644,88 @@ function initLuxReader() {
   let currentId = "";
   let archiveOrigin = false;
   const stack = [];
+  const caviarSpeciesSlugs = new Set(["white-sturgeon-caviar", "sevruga-caviar", "oscetra-caviar", "kaluga-amur-caviar", "beluga-caviar", "baerii-caviar"]);
+  const seasonalReaderIds = new Set(archiveGroups().flatMap(([, ids]) => ids));
+  const shareIcon = (path) => `<svg class="lux-lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
+  const shareBrandPaths = {
+    qq: "M21.395 15.035a40 40 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a39 39 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.472 2.103-2.472 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.189 1.6.18 7.14.389 7.483-.189.078-.132.132-.458-.301-.778-.483-.356-1.233-.646-1.846-.836 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.537 2.103 2.472.251-.03.581-1.39-.438-4.673",
+    weibo: "M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.601l.014-.028zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.57-.18-.405-.615.375-.977.42-1.804 0-2.404-.781-1.112-2.915-1.053-5.364-.03 0 0-.766.331-.571-.271.376-1.217.315-2.224-.27-2.809-1.338-1.337-4.869.045-7.888 3.08C1.309 10.87 0 13.273 0 15.348c0 3.981 5.099 6.395 10.086 6.395 6.536 0 10.888-3.801 10.888-6.82 0-1.822-1.547-2.854-2.915-3.284v.01zm1.908-5.092c-.766-.856-1.908-1.187-2.96-.962-.436.09-.706.511-.616.932.09.42.511.691.932.602.511-.105 1.067.044 1.442.465.376.421.466.977.316 1.473-.136.406.089.856.51.992.405.119.857-.105.992-.512.33-1.021.12-2.178-.646-3.035l.03.045zm2.418-2.195c-1.576-1.757-3.905-2.419-6.054-1.968-.496.104-.812.587-.706 1.081.104.496.586.813 1.082.707 1.532-.331 3.185.15 4.296 1.383 1.112 1.246 1.429 2.943.947 4.416-.165.48.106 1.007.586 1.157.479.165.991-.104 1.157-.586.675-2.088.241-4.478-1.338-6.235l.03.045z",
+    wechat: "M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z",
+  };
+  const shareBrandIcon = (name) => `<svg class="lux-share-brand" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${shareBrandPaths[name]}"/></svg>`;
+  const shareUi = () => `<nav class="lux-reader-share" aria-label="${lang === "zh" ? "分享文章" : "Share this page"}">
+    <button type="button" data-share="copy" aria-label="${lang === "zh" ? "复制链接" : "Copy link"}" title="${lang === "zh" ? "复制链接" : "Copy link"}">${shareIcon('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>')}</button>
+    <a data-share="qq" href="https://connect.qq.com/widget/shareqq/index.html" target="_blank" rel="noopener noreferrer" aria-label="QQ" title="QQ">${shareBrandIcon("qq")}</a>
+    <button type="button" data-share="weibo" aria-label="微博" title="微博">${shareBrandIcon("weibo")}</button>
+    <button type="button" data-share="wechat" aria-label="${lang === "zh" ? "微信" : "WeChat"}" title="${lang === "zh" ? "微信" : "WeChat"}">${shareBrandIcon("wechat")}</button>
+    <span class="lux-share-status" role="status" aria-live="polite"></span>
+  </nav>`;
+  reader.querySelector("[data-share-ui]").innerHTML = shareUi();
+  const shareUrl = () => location.href;
+  const shareTitle = () => body.querySelector("#lux-reader-title")?.textContent.trim() || document.title;
+  const showShareQr = async () => {
+    const qr = reader.querySelector("[data-share-qr]");
+    qr.hidden = false;
+    qr.querySelector("[data-share-qr-title]").textContent = lang === "zh" ? "分享到微信" : "Share to WeChat";
+    qr.querySelector("[data-share-qr-help]").textContent = lang === "zh" ? "用微信扫描二维码，打开后分享给好友或朋友圈。" : "Scan with WeChat, then share to a chat or Moments.";
+    const image = qr.querySelector("[data-share-qr-image]");
+    image.textContent = lang === "zh" ? "正在生成二维码…" : "Generating QR code…";
+    try {
+      if (!window.qrcode) {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = luxJournalAsset("js/vendor/qrcode.js");
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+      }
+      const code = window.qrcode(0, "M");
+      code.addData(shareUrl());
+      code.make();
+      image.innerHTML = code.createSvgTag({ cellSize: 5, margin: 4 });
+    } catch {
+      image.textContent = lang === "zh" ? "二维码暂不可用，请复制链接。" : "QR code unavailable. Please copy the link.";
+    }
+  };
+  let shareStatusTimer;
+  reader.addEventListener("click", async (event) => {
+    if (event.target.closest("[data-share-qr-close]") || event.target.matches("[data-share-qr]")) { reader.querySelector("[data-share-qr]").hidden = true; return; }
+    const button = event.target.closest("[data-share]");
+    if (!button) return;
+    const type = button.dataset.share;
+    const url = shareUrl();
+    const title = shareTitle();
+    if (type === "copy") {
+      try { await navigator.clipboard.writeText(url); }
+      catch {
+        const input = document.createElement("textarea");
+        input.value = url;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand("copy");
+        input.remove();
+      }
+      const status = button.closest(".lux-reader-share").querySelector(".lux-share-status");
+      status.textContent = lang === "zh" ? "已复制" : "Copied";
+      clearTimeout(shareStatusTimer);
+      shareStatusTimer = setTimeout(() => { status.textContent = ""; }, 2000);
+    } else if (type === "qq") {
+      button.href = `https://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+    } else if (type === "weibo") {
+      const target = `https://service.weibo.com/share/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+      window.open(target, "_blank", "noopener,noreferrer,width=700,height=600");
+    } else if (navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+      try { await navigator.share({ title, url }); } catch (error) { if (error.name !== "AbortError") showShareQr(); }
+    } else showShareQr();
+  });
   const syncReaderTop = () => {
     panel.classList.toggle("is-at-top", body.scrollTop <= 4);
   };
 
   const showReader = (copy) => {
     reader.hidden = false;
+    reader.querySelector("[data-share-qr]").hidden = true;
     document.body.classList.add("lux-reader-open");
     backButton.hidden = stack.length === 0 && !window.LuxureatHasInternalBack?.();
     backButton.textContent = copy.back;
@@ -666,13 +776,41 @@ function initLuxReader() {
     currentId = id;
     if (location.hash !== `#reader-${id}`) history.replaceState(history.state, "", `${location.pathname}${location.search}#reader-${id}`);
     const copy = labels();
+    if (article.cmsHtml && article.slug && article.type !== "recipe") {
+      const cmsDoc = document.createElement("div");
+      cmsDoc.innerHTML = article.cmsHtml.replaceAll(/https?:\/\/i\d\.wp\.com\/luxureat\.cn\/wp-content\/uploads\//g, "https://luxureat.cn/wp-content/uploads/");
+      const cmsHeadings = [...cmsDoc.querySelectorAll("h2, h3")];
+      cmsHeadings.forEach((heading, index) => { heading.id = `lux-reader-section-${index}`; });
+      const plainText = `${article.intro} ${cmsDoc.textContent}`;
+      const units = article.lang === "zh" ? plainText.replace(/\s/g, "").length / 300 : (plainText.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length / 200;
+      const readTime = article.lang === "zh" ? `${Math.max(1, Math.ceil(units))} 分钟阅读` : `${Math.max(1, Math.ceil(units))} min read`;
+      const metaParts = (article.meta || "").split("·").map((part) => part.trim()).filter(Boolean);
+      const date = article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "2026年10月28日" : "October 28, 2026"));
+      const metadata = [article.lang === "zh" ? "知识博客" : "Knowledge Blog", article.column || article.eyebrow, readTime, article.keyword || metaParts.find((part) => !/^(?:19|20)\d{2}/.test(part)) || article.topicLabel];
+      const sidebar = [[article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow], [article.lang === "zh" ? "档案" : "Series", article.archive || article.topicLabel], [article.lang === "zh" ? "日期" : "Date", date]];
+      const tocLabel = article.lang === "zh" ? "目录" : "Contents";
+      body.innerHTML = `<article class="lux-reader-layout lux-academy-reader${article.wideCover ? " is-wide-cover" : ""}"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid">${metadata.map((item) => `<span>${escapeHtml(item || "")}</span>`).join("")}</div><h2 id="lux-reader-title">${escapeHtml(article.title)}</h2><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${article.image ? `<figure class="lux-reader-cover"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"></figure>` : ""}</section><section class="lux-reader-content"><aside class="lux-reader-aside">${sidebar.map(([label, value]) => `<span>${escapeHtml(label)}：${escapeHtml(value)}</span>`).join("")}</aside><aside class="lux-reader-pull"><p>${escapeHtml(article.asideSummary || article.intro)}</p><nav class="lux-reader-toc" aria-label="${escapeHtml(tocLabel)}"><span>${escapeHtml(tocLabel)}</span>${cmsHeadings.map((heading) => `<a href="#${escapeHtml(heading.id)}">${escapeHtml(heading.textContent.trim())}</a>`).join("")}</nav></aside><div class="lux-reader-copy lux-cms-prose">${cmsDoc.innerHTML}</div></section>${article.related?.length ? `<section class="lux-reader-related"><div class="lux-reader-related-head"><h3>${copy.related}</h3></div><div class="lux-reader-related-grid">${article.related.map((relatedId) => { const related = articles[relatedId]; const isCaviarSpecies = caviarSpeciesSlugs.has(article.slug); return related ? `<button type="button"${related.wideCover || isCaviarSpecies ? ` class="${[related.wideCover && "is-wide-cover", isCaviarSpecies && "is-caviar-species-related"].filter(Boolean).join(" ")}"` : ""} data-reader-related="${escapeHtml(relatedId)}"><span class="lux-reader-related-media">${related.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(related.image)}" alt="">` : topicArt(related, true)}<span class="lux-reader-related-cta">${copy.read}</span></span><span>${escapeHtml(related.archive || related.eyebrow || related.topicLabel)}</span><strong>${escapeHtml(related.title)}</strong></button>` : ""; }).join("")}</div></section>` : ""}</article>`;
+      showReader(copy);
+      return;
+    }
     if (article.type === "recipe" && article.recipe) {
-      const recipe = article.recipe;
+      let recipe = article.recipe;
+      if (article.cmsHtml) {
+        const cms = document.createElement("div");
+        cms.innerHTML = article.cmsHtml;
+        const items = (selector) => [...(cms.querySelector(selector)?.querySelectorAll("li") || [])].map((node) => node.textContent.trim());
+        const factsText = [...cms.querySelectorAll("p")].map((node) => node.textContent).find((text) => /(?:时间|Time)[：:]/i.test(text) && /(?:难度|Difficulty)[：:]/i.test(text)) || "";
+        const facts = factsText.split("·").map((part) => part.split(/[：:]/).at(-1).trim());
+        const nutrition = [...cms.querySelectorAll("dl dt")].map((dt) => [dt.textContent.trim(), dt.nextElementSibling?.textContent.trim() || ""]);
+        const ingredients = items("ul");
+        const steps = items("ol");
+        recipe = { ...recipe, ingredients: ingredients.length ? ingredients : recipe.ingredients, steps: steps.length ? steps : recipe.steps, nutrition: nutrition.length ? nutrition : recipe.nutrition, time: facts[0] || recipe.time, difficulty: facts[1] || recipe.difficulty, servings: facts[2] || recipe.servings };
+      }
       const relatedContent = contentLinks[topicFor(id, article)] || {};
       const relatedKnowledge = knowledgeForRecipe(id, article, relatedContent.knowledge);
       const recipeLabels = article.lang === "zh"
-        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", nutritionNote: "营养说明", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", knowledge: "相关知识", products: "相关产品" }
-        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", nutritionNote: "Nutrition note", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", knowledge: "Related guide", products: "Related products" };
+        ? { time: "时间", difficulty: "难度", servings: "份量", ingredients: "食材", method: "准备", nutrition: "每份的估计营养成分", region: "参考产区", oil: "推荐用油", professionalTip: "专业提示", foodSafety: "食品安全", allergens: "过敏原提示", substitutions: "可替换食材", knowledge: "相关知识", products: "相关产品" }
+        : { time: "Time", difficulty: "Difficulty", servings: "Serves", ingredients: "Ingredients", method: "Method", nutrition: "Estimated nutrition per serving", region: "Reference region", oil: "Suggested oil", professionalTip: "Professional tip", foodSafety: "Food safety", allergens: "Allergen note", substitutions: "Substitutions", knowledge: "Related guide", products: "Related products" };
       const productCategories = article.productCategories?.length
         ? article.productCategories
         : [article.productCategory || relatedContent.productCategory].filter(Boolean);
@@ -709,8 +847,13 @@ function initLuxReader() {
           </section>
           <section class="lux-recipe-nutrition">
             <header><h3>${recipeLabels.nutrition}</h3></header>
+            ${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote)}</p>` : ""}
             <dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
-            ${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note"><strong>${recipeLabels.nutritionNote}</strong>${escapeHtml(recipe.nutritionNote)}</p>` : ""}
+            ${article.video ? `<figure class="lux-recipe-video">
+              <video controls playsinline preload="none" poster="${escapeHtml(article.image)}" aria-label="${escapeHtml(article.title)} — ${article.lang === "zh" ? "菜品相关素材画面" : "related stock footage"}"><source src="${escapeHtml(article.video.src)}" type="video/mp4"></video>
+              <figcaption>${escapeHtml(article.video.description)}</figcaption>
+            </figure>` : ""}
+            ${article.extraVideos?.length ? `<div class="lux-recipe-extra-videos">${article.extraVideos.map((src, index) => `<video style="flex-grow: ${article.extraVideoRatios[index]}; aspect-ratio: ${article.extraVideoRatios[index]}" data-lux-autoplay muted loop playsinline preload="none" controls aria-label="${escapeHtml(article.title)} ${index + 1}"><source data-src="${escapeHtml(src)}" type="video/mp4"></video>`).join("")}</div>` : ""}
           </section>
           <section class="lux-recipe-details">
             ${[[recipeLabels.region, recipe.region], [recipeLabels.oil, recipe.oil], [recipeLabels.professionalTip, recipe.professionalTip], [recipeLabels.foodSafety, recipe.foodSafety], [recipeLabels.allergens, recipe.allergens], [recipeLabels.substitutions, recipe.substitutions]].filter(([, value]) => value).map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}
@@ -765,7 +908,7 @@ function initLuxReader() {
     const asideRows = [
       [article.lang === "zh" ? "栏目" : "Column", article.column || article.eyebrow],
       [article.lang === "zh" ? "档案" : "Series", article.archive || localizeArchiveLabel(metaParts[0]) || copy.archive],
-      [article.lang === "zh" ? "日期" : "Date", metaParts[1] || ""],
+      [article.lang === "zh" ? "日期" : "Date", article.date || article.publishedAt || (metaParts.find((part) => /^(?:19|20)\d{2}(?:[-./年]\d{1,2})?/.test(part)) || (article.lang === "zh" ? "2026年10月28日" : "October 28, 2026"))],
     ].filter(([, value]) => value);
     const tocLabel = article.lang === "zh" ? "目录" : "Contents";
     const figureLabel = article.lang === "zh" ? "图" : "Figure";
@@ -794,7 +937,7 @@ function initLuxReader() {
     const tocHtml = articleSections.map(([heading], index) => `<a href="#lux-reader-section-${index}">${escapeHtml(article.tocLabels?.[index] || heading)}</a>`).join("");
 
     body.innerHTML = `
-      <article class="lux-reader-layout${article.slug ? " lux-academy-reader" : ""}${article.wideCover ? " is-wide-cover" : ""}">
+      <article class="lux-reader-layout${article.slug ? " lux-academy-reader" : ""}${seasonalReaderIds.has(id) ? " lux-seasonal-reader" : ""}${article.wideCover ? " is-wide-cover" : ""}">
         <div class="lux-reader-rule"></div>
         <section class="lux-reader-hero">
           <div class="lux-reader-hero-copy">
@@ -813,12 +956,6 @@ function initLuxReader() {
           <aside class="lux-reader-aside">
             ${asideRows.map(([label, value]) => `<span>${escapeHtml(label)}：${escapeHtml(value)}</span>`).join("")}
           </aside>
-          <div class="lux-reader-copy">
-            ${openingHtml}
-            ${sectionHtml}
-            ${secondaryArticleLinks.length ? `<nav class="lux-reader-article-links" aria-label="${escapeHtml(copy.related)}">${secondaryArticleLinks.map((link) => `<a class="lux-recipe-product-link" href="${escapeHtml(link.href)}" data-lux-cta data-lux-cta-type="${linkType(link.href)}" data-lux-cta-id="${escapeHtml(article.slug || id)}" data-lux-cta-location="article-related">${escapeHtml(link.label.replace(/\s*→\s*$/, ""))}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`).join("")}</nav>` : ""}
-            ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
-          </div>
           <aside class="lux-reader-pull">
             <p>${escapeHtml(article.asideSummary || article.quote || copy.noteText)}</p>
             <nav class="lux-reader-toc" aria-label="${escapeHtml(tocLabel)}">
@@ -826,6 +963,12 @@ function initLuxReader() {
               ${tocHtml}
             </nav>
           </aside>
+          <div class="lux-reader-copy">
+            ${openingHtml}
+            ${sectionHtml}
+            ${secondaryArticleLinks.length ? `<nav class="lux-reader-article-links" aria-label="${escapeHtml(copy.related)}">${secondaryArticleLinks.map((link) => `<a class="lux-recipe-product-link" href="${escapeHtml(link.href)}" data-lux-cta data-lux-cta-type="${linkType(link.href)}" data-lux-cta-id="${escapeHtml(article.slug || id)}" data-lux-cta-location="article-related">${escapeHtml(link.label.replace(/\s*→\s*$/, ""))}<svg class="lux-lucide" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>`).join("")}</nav>` : ""}
+            ${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ""}
+          </div>
         </section>
           <section class="lux-reader-related">
             <div class="lux-reader-related-head">
@@ -835,7 +978,7 @@ function initLuxReader() {
               ${article.related.map((relatedId) => {
                 const item = articles[relatedId];
                 return item ? `
-                  <button type="button"${item.wideCover ? ' class="is-wide-cover"' : ""} data-reader-related="${escapeHtml(relatedId)}">
+                  <button type="button"${item.wideCover || caviarSpeciesSlugs.has(article.slug) ? ` class="${[item.wideCover && "is-wide-cover", caviarSpeciesSlugs.has(article.slug) && "is-caviar-species-related"].filter(Boolean).join(" ")}"` : ""} data-reader-related="${escapeHtml(relatedId)}">
                     <span class="lux-reader-related-media">
                       ${item.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(item.image)}" alt="">` : topicArt(item, true)}
                       <span class="lux-reader-related-cta">${copy.read}</span>
@@ -863,6 +1006,9 @@ function initLuxReader() {
     const relatedNews = brandNews.filter((story) => story.eventId === id && story[lang]);
     const allEvents = events.map((item) => ({ item, copy: item[lang] })).filter(({ copy: itemCopy }) => itemCopy);
     const videoHtml = event.video ? `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${event.videoWidth || 720}" height="${event.videoHeight || 768}" poster="${escapeHtml(event.videoPoster || event.previewImage || event.image)}"><source src="${escapeHtml(event.video)}" type="video/mp4"></video><figcaption>${escapeHtml(event.videoSource?.[lang] || "")}</figcaption></figure>` : "";
+    const eventMedia = galleryItems.filter((media) => media.eventId === id);
+    const galleryRoute = location.protocol === "file:" || location.pathname.endsWith(".html") ? "gallery.html?v=20261025-gallery15" : lang === "zh" ? "/gallery/" : "/en/gallery/";
+    const galleryHref = `${galleryRoute}#event-${encodeURIComponent(id)}`;
     body.innerHTML = `
       <article class="lux-event-reader">
         <header class="lux-event-reader-intro">
@@ -886,13 +1032,13 @@ function initLuxReader() {
                 ${article.sections.map(([heading, text]) => `<section><h3>${escapeHtml(heading)}</h3>${(Array.isArray(text) ? text : [text]).map((paragraph) => `<p>${formatEmphasis(paragraph)}</p>`).join("")}</section>`).join("")}
                 ${videoHtml}
                 <blockquote>${escapeHtml(article.quote)}</blockquote>
-                ${relatedNews.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}</nav>` : ""}
+                ${relatedNews.length || eventMedia.length ? `<nav class="lux-brand-news-links" aria-label="${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}"><strong>${lang === "zh" ? "相关品牌新闻" : "Related Brand News"}</strong>${relatedNews.map((story) => `<a href="${newsHref(story.id)}" data-news-open="${escapeHtml(story.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(story.cardImage)}" alt=""><span><small>${lang === "zh" ? "新闻中心" : "News Centre"}</small><strong>${escapeHtml(story[lang].title)}</strong></span><span aria-hidden="true">→</span></a>`).join("")}${eventMedia.length ? `<a href="${galleryHref}"><img loading="lazy" decoding="async" src="${escapeHtml(eventMedia[0].poster || eventMedia[0].src)}" alt=""><span><small>${lang === "zh" ? "企业画廊" : "Company Gallery"}</small><strong>${lang === "zh" ? "查看这场展会的影像" : "Explore media from this exhibition"}</strong></span><span aria-hidden="true">→</span></a>` : ""}</nav>` : ""}
               </div>
             </div>
           </section>
           <aside class="lux-event-reader-index">
-            <div><h3>${lang === "zh" ? "所有活动" : "All Events"}</h3><span>${String(allEvents.length).padStart(2, "0")}</span></div>
-            ${allEvents.map(({ item, copy: itemCopy }, index) => `<a href="${eventHref(item.id)}" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${formatTitle(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span><small>${String(index + 1).padStart(2, "0")}</small></a>`).join("")}
+            <div><h3>${lang === "zh" ? "所有活动" : "All Events"}</h3></div>
+            ${allEvents.map(({ item, copy: itemCopy }) => `<a href="${eventHref(item.id)}" data-event-open="${escapeHtml(item.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(item.poster || item.image)}" alt=""><span><strong>${formatTitle(itemCopy.articleTitle)}</strong><small>${escapeHtml(itemCopy.city)} / ${escapeHtml(itemCopy.dateIso)}</small></span></a>`).join("")}
           </aside>
         </div>
       </article>`;
@@ -912,7 +1058,7 @@ function initLuxReader() {
     const linkedEvent = events.find((event) => event.id === item.eventId);
     const relatedStory = brandNews.find((story) => story.id === item.relatedNewsId);
     const renderMedia = (entry) => {
-      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${escapeHtml(lang === "zh" ? "视频来源：arsial.lazio" : "Video source: arsial.lazio")}</figcaption></figure>`;
+      if (entry.type === "video") return `<figure class="lux-brand-news-media is-video"><video controls playsinline webkit-playsinline preload="metadata" width="${item.videoWidth || 1080}" height="${item.videoHeight || 1920}" poster="${escapeHtml(item.videoPoster || item.cardImage)}"><source src="${escapeHtml(item.video)}" type="video/mp4"></video><figcaption>${lang === "zh" ? "视频来源：" : "Video source: "}${item.videoSourceUrl ? `<a href="${escapeHtml(item.videoSourceUrl)}" target="_blank" rel="noopener">arsial.lazio</a>` : "arsial.lazio"}</figcaption></figure>`;
       const alt = entry.alt?.[lang] || article.title;
       const imageCredit = entry.sourceUrl
         ? `<figcaption>${lang === "zh" ? "图片来源：" : "Image source: "}<a href="${escapeHtml(entry.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(entry.sourceName?.[lang] || entry.sourceUrl)}</a></figcaption>`
@@ -936,7 +1082,6 @@ function initLuxReader() {
               ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
               ${sectionMedia.map(renderMedia).join("")}
             </section>`).join("")}
-            ${item.imageNote?.[lang] ? `<p class="lux-brand-news-image-note">${escapeHtml(item.imageNote[lang])}</p>` : ""}
             ${linkedEvent ? `<a href="${eventHref(linkedEvent.id)}" class="lux-brand-news-event-link" data-event-open="${escapeHtml(linkedEvent.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${formatTitle(linkedEvent[lang].articleTitle)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
             ${relatedStory ? `<a href="${newsHref(relatedStory.id)}" class="lux-brand-news-event-link" data-news-open="${escapeHtml(relatedStory.id)}"><img loading="lazy" decoding="async" src="${escapeHtml(relatedStory.cardImage)}" alt=""><span><small>${lang === "zh" ? "相关阅读" : "Related Article"}</small><strong>${escapeHtml(relatedStory[lang].title)}</strong></span><span aria-hidden="true">→</span></a>` : ""}
           </div>
@@ -1055,7 +1200,7 @@ function initLuxReader() {
     if (event.key === "Escape" && !imageLightbox.open && !reader.hidden) close();
   });
   if (location.hash === "#archive") renderArchive(false);
-  else if (events.some((event) => event.id === eventHash)) renderEvent(eventHash);
+  else if (!document.body.classList.contains("lux-gallery-page") && events.some((event) => event.id === eventHash)) renderEvent(eventHash);
   else if (brandNews.some((story) => story.id === newsHash)) renderBrandNews(newsHash);
   else if (articles[readerHash]) open(readerHash);
   else if (requestedRecipe && articles[`${lang}-recipe-${requestedRecipe}`]) open(`${lang}-recipe-${requestedRecipe}`);

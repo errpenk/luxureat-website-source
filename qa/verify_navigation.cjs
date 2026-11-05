@@ -21,6 +21,7 @@ for (const lang of ["zh", "en"]) {
     const certificationLabel = lang === "zh" ? "品质认证" : "Certification";
     const productHref = 'href="product.html"';
     assert((header.match(/<a\b/g) || []).length === 12, `${lang}/${file} does not have the aligned twelve-page navigation`);
+    assert(header.includes(`href="gallery.html">${lang === "zh" ? "企业画廊" : "Gallery"}</a>`), `${lang}/${file} is missing Gallery navigation`);
     assert(header.includes(`href="brand.html">${newsLabel}</a>`), `${lang}/${file} is missing Brand News navigation`);
     assert(new RegExp(`(?:class="active" )?href="blog\\.html">${blogLabel}</a>`).test(header), `${lang}/${file} is missing Blog navigation`);
     assert(header.includes(`href="recipe.html">${recipeLabel}</a>`), `${lang}/${file} has the wrong Recipe Art label`);
@@ -29,7 +30,8 @@ for (const lang of ["zh", "en"]) {
     assert(new RegExp(`(?:class="active" )?href="china-market-insights\\.html">${lang === "zh" ? "中国市场" : "China Market"}</a>`).test(header), `${lang}/${file} is missing China Market navigation`);
     assert(header.includes(`href="import-export-services.html">${lang === "zh" ? "中国服务" : "China Services"}</a>`) || header.includes(`class="active" href="import-export-services.html">${lang === "zh" ? "中国服务" : "China Services"}</a>`), `${lang}/${file} is missing China Services navigation`);
     assert(header.indexOf('href="about-us.html"') > header.indexOf('href="index.html"') && header.indexOf('href="about-us.html"') < header.indexOf('href="recipe.html"'), `${lang}/${file} does not place About Us directly after Home`);
-    assert(header.indexOf('href="new.html"') > header.indexOf('href="about-us.html"') && header.indexOf('href="new.html"') < header.indexOf(productHref), `${lang}/${file} does not place New Arrivals before Products`);
+    assert(!header.includes('href="new.html"'), `${lang}/${file} still has a top-level New Arrivals link`);
+    assert(header.indexOf(productHref) > header.indexOf('href="about-us.html"'), `${lang}/${file} does not place Products after About Us`);
     assert(header.indexOf('href="blog.html"') > header.indexOf('href="brand.html"') && header.indexOf('href="blog.html"') < header.indexOf('href="certification.html"'), `${lang}/${file} does not place Blog directly after Brand News`);
     assert(header.indexOf('href="china-market-insights.html"') < header.indexOf('href="import-export-services.html"') && header.indexOf('href="import-export-services.html"') < header.indexOf('href="cooperation.html"'), `${lang}/${file} does not use the China Market, China Services, Cooperation order`);
     assert(!html.includes(lang === "zh" ? "品鉴艺术" : ">Rituals<"), `${lang}/${file} still contains the old ritual label`);
@@ -137,9 +139,12 @@ for (const file of ["journal.html", "caviar.html", "products.html", "rituals.htm
 assert(!fs.existsSync(path.join(root, "en/private.html")), "extra English private-selection page still exists");
 const core = fs.readFileSync(path.join(root, "assets/js/core.js"), "utf8");
 assert(core.includes('className = "lux-nav-flyout"'), "flyout navigation is missing");
+assert(core.includes('["product.html", "我们的产品", [["热门新品", "new.html"]') && core.includes('["product.html", "Our Products", [["New Arrivals", "new.html"]'), "New Arrivals is not nested under Our Products");
+assert(core.includes('sectionHash.endsWith(".html")') && core.includes('pageHref(sectionHash)'), "New Arrivals submenu does not keep its page link");
 assert(core.includes('["certification.html", "Certification"'), "English and Chinese navigation are not aligned");
 assert(core.includes('["china-market-insights.html", "中国市场"') && core.includes('["china-market-insights.html", "China Market"'), "bilingual China Market navigation is missing");
 assert(core.includes('["import-export-services.html", "中国服务"') && core.includes('["import-export-services.html", "China Services"'), "bilingual China Services navigation is missing");
+assert(core.includes('["gallery.html", "企业画廊"') && core.includes('["gallery.html", "Gallery"'), "bilingual Gallery navigation is missing");
 assert(core.includes('["blog.html", "知识博客"') && core.includes('["探索意大利", "culture-academy"]') && core.includes('["营养与配料指南", "nutrition-guide"]'), "Chinese Blog topics are incomplete");
 assert(!core.includes('["意大利美食学院", "?topic=academy"]') && !core.includes('["Italian Food Academy", "?topic=academy"]'), "Food Academy is still duplicated in Blog navigation");
 assert(core.includes('["意式手工冰淇淋", "gelato-academy"]') && !core.includes('["意式 Gelato", "gelato-academy"]'), "Chinese Gelato academy label is not localized");
@@ -154,7 +159,7 @@ for (const [label, category] of [["鱼子酱", "caviar"], ["松露", "truffle"],
 for (const [label, category] of [["Caviar", "caviar"], ["Truffle", "truffle"], ["Pizza", "pizza"], ["Olive Oil", "olive-oil"], ["Italian Pasta", "pasta"], ["Italian Gelato", "gelato"]]) {
   assert(core.includes(`["${label}", "?category=${category}#product-catalogue"]`), `English Products submenu is missing ${category}`);
 }
-assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && core.includes('luxNav.querySelector(".lux-nav-item > a.active")?.closest(".lux-nav-item")'), "mobile navigation does not expose the current page submenu without :has support");
+assert(core.includes('luxHeader?.classList.toggle("is-menu-open", open)') && !core.includes('currentItem?.classList.add("is-expanded")'), "mobile navigation opens a submenu by default");
 assert(core.includes('classList.toggle("is-scrolled", window.scrollY > 1)') && !core.includes('document.body.classList.contains("lux-home-page")'), "shared header does not react to the top scroll state on every page");
 assert(core.includes('body > section h2'), "navigation does not scan top-level section headings");
 assert(core.includes('luxureat_internal_trail') && core.includes('luxReturnScroll') && core.includes('LuxureatBackInternalLink') && core.includes('history.back()'), "internal content links do not preserve their multi-page trail and source reading position");
@@ -165,7 +170,6 @@ const submenuTargets = {
     "index.html": ["meet-us", "selected-products", "italian-food-culture", "market-system", "brand-timeline", "china-partnership", "partnership-process"],
     "about-us.html": ["about-us", "featured", "brand-promise", "seasonal-notes"],
     "product.html": ["product-catalogue"],
-    "new.html": ["olive-oil", "pizza", "gelato"],
     "recipe.html": ["italian-flavor-recipes", "olive-recipes", "truffle-recipes", "healthy-light-recipes", "china-family-recipes", "recipe-library"],
     "brand.html": ["recent-events", "exhibition-map", "news-center"],
     "blog.html": [],
@@ -179,7 +183,6 @@ const submenuTargets = {
     "index.html": ["meet-us", "selected-products", "italian-food-culture", "market-system", "brand-timeline", "china-partnership", "partnership-process"],
     "about-us.html": ["about-us", "featured", "brand-promise", "seasonal-notes"],
     "product.html": ["product-catalogue"],
-    "new.html": ["olive-oil", "pizza", "gelato"],
     "recipe.html": ["italian-flavor-recipes", "olive-recipes", "truffle-recipes", "healthy-light-recipes", "china-family-recipes", "recipe-library"],
     "brand.html": ["recent-events", "exhibition-map", "news-center"],
     "blog.html": [],
