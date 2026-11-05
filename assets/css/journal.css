@@ -2,7 +2,7 @@
 .lux-reader-article-cta{display:inline-flex;align-items:center;min-height:48px;margin-top:44px;padding:0 26px;border:1px solid currentColor;color:#006b68;font:500 16px/1 var(--lux-page-body);letter-spacing:.08em;transition:color .25s ease,border-color .25s ease,background-color .25s ease}
 .lux-brand-promise-feature,.lux-brand-promise-grid{box-sizing:border-box;padding-inline:clamp(28px,6vw,112px)}
 @media(max-width:720px){.lux-brand-promise-feature,.lux-brand-promise-grid{padding-inline:24px}}
-@media(max-width:720px){.lux-brand-promise-copy{padding-inline:18px;text-align:center}.lux-brand-promise-copy h2,.lux-brand-promise-copy p{margin-inline:auto}.lux-brand-promise-copy::after{margin-inline:auto}}
+@media(max-width:720px){.lux-brand-promise-copy{padding-inline:18px}.lux-brand-promise-copy h2{margin-inline:auto}.lux-brand-promise-copy::after{margin-inline:auto}}
 
 .lux-brand-promise-feature>img,.lux-brand-promise-card>img{clip-path:inset(0);transition:transform .85s cubic-bezier(.4,0,.2,1),clip-path .85s cubic-bezier(.4,0,.2,1)}.lux-brand-promise-feature>img:hover,.lux-brand-promise-card>img:hover{clip-path:inset(1.22%);transform:scale(1.025)}@media(prefers-reduced-motion:reduce){.lux-brand-promise-feature>img,.lux-brand-promise-card>img{transition:none}}
 .lux-reader-article-cta:is(:hover,:focus-visible){border-color:#81d8d0;background:#81d8d0;color:#101010}

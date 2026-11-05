@@ -14421,7 +14421,10 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-home-partnership-manufacturing-head-copy,
   .lux-home-page .lux-home-partnership-process header,
   .lux-home-page .lux-home-partnership-manufacturing-advantages,
-  .lux-about-program,
+  .lux-about-program :is(h2, h3),
+  .lux-about-program-kicker,
+  .lux-about-program-grid article > span,
+  .lux-product-characteristics-note strong,
   .lux-recipe-library > header,
   .lux-recipe-theme > header,
   .lux-recent-events-head,
@@ -14435,7 +14438,6 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-feature-intro p,
   .lux-home-page .lux-home-partnership-manufacturing-head-copy p,
   .lux-home-page .lux-home-partnership-process header p,
-  .lux-about-program p,
   #quality-system > div.max-w-3xl p,
   #certification-system > div:last-child p {
     margin-inline: auto;
@@ -14447,7 +14449,7 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-home-partnership-manufacturing-advantages dt { justify-content: center; }
   .lux-home-page .lux-home-partnership-manufacturing-advantages dd { margin-inline: auto; }
   .lux-home-page .lux-home-partnership-process ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .lux-home-page .lux-home-partnership-process ol > li:last-child { grid-column: 1 / -1; width: calc(50% - 8px); justify-self: center; }
+  .lux-home-page .lux-home-partnership-process ol > li:last-child { grid-column: 1 / -1; width: 100%; justify-self: stretch; }
   .lux-academy-card-copy h2 { text-align: center; }
   .lux-footer nav a { font-family: var(--lux-page-heading) !important; }
 }
@@ -14457,31 +14459,34 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-feature-intro > span,
   .lux-home-page .lux-feature-intro h2,
   .lux-home-page .lux-feature-intro p,
-  .lux-home-page .lux-home-why-copy,
+  .lux-home-page .lux-home-why-copy > span,
   .lux-home-page .lux-home-why-copy h2,
-  .lux-home-page .lux-home-why-copy > p,
   .lux-home-page .lux-home-selected-products > div:first-of-type,
   .lux-home-page .lux-home-selected-products > div:first-of-type :is(span, h2, p),
   .lux-new-page .lux-page-hero-content,
   .lux-new-page .lux-new-editorial-intro,
-  .lux-about-story .lux-reader-hero-copy,
-  .lux-about-story .lux-reader-copy,
-  .lux-recipe-anchor > .grid > div:first-child,
-  .lux-journal-season-card,
-  .lux-brand-promise-copy,
-  .lux-brand-promise-card > div {
+  .lux-about-story .lux-reader-meta-grid,
+  .lux-about-story .lux-reader-hero-copy :is(h1, h2),
+  .lux-about-story .lux-reader-copy :is(h2, h3),
+  #featured :is(h2, span.font-label-lg),
+  #italian-flavor-recipes > .grid > div:first-child > :is(span, h2),
+  .lux-journal-season-card > :is(span, h4),
+  .lux-brand-promise-copy :is(small, h2),
+  .lux-brand-promise-card h3,
+  body.lux-new-page :is(h1, h2, h3),
+  .lux-new-copy > p,
+  .lux-new-space > div > p,
+  .lux-new-about-copy > p,
+  .lux-new-features header > p,
+  .lux-chef-advice-label,
+  .lux-new-categories .lux-recipe-theme-card > div > span,
+  .lux-chef-advice-slide > div > span {
     text-align: center;
   }
 
   .lux-home-page .lux-feature-intro p,
-  .lux-home-page .lux-home-why-copy > p,
   .lux-home-page .lux-home-selected-products > div:first-of-type p,
-  .lux-about-story .lux-reader-summary,
-  .lux-about-story .lux-reader-copy p,
-  .lux-recipe-anchor > .grid > div:first-child p,
-  .lux-brand-promise-copy h2,
-  .lux-brand-promise-copy p,
-  .lux-brand-promise-card p {
+  .lux-brand-promise-copy h2 {
     margin-inline: auto;
   }
 
@@ -14490,13 +14495,10 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
   .lux-home-page .lux-home-why-metrics > div { text-align: center; }
   .lux-home-page .lux-home-why-metrics > div::before { left: 50%; transform: translateX(-50%); }
   .lux-home-page .lux-home-partnership-process ol > li:last-child {
-    width: calc((100% - 16px) / 2);
+    width: 100%;
     min-width: 0;
   }
-  .lux-recipe-anchor > .grid > div:first-child .flex { justify-content: center; }
-  .lux-recipe-anchor > .grid > div:first-child .lux-recipe-jump-nav { justify-items: center; }
   .lux-about-story .lux-reader-hero-copy :is(h1, h2),
   .lux-about-story .lux-reader-copy :is(h2, h3) { margin-inline: auto; }
-  .lux-brand-promise-icon { margin-inline: auto; }
-  .lux-new-editorial-intro div { text-align: center; }
+  .lux-home-page .lux-home-why-copy > span { display: block; }
 }
