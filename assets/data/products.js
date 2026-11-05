@@ -723,5 +723,33 @@
   };
   for (const [id, notes] of Object.entries(productVideoNotes)) products[id].videoNotes = notes;
 
+  const storageImageGroups = {};
+  for (const group of ["oil", "syrup", "honey", "sauce", "truffle", "juice", "pasta"]) {
+    storageImageGroups[group] = [1, 2, 3, 4].map((index) => {
+      const file = `media/products/storage/${group}-${String(index).padStart(2, "0")}`;
+      return { src: asset(`${file}.webp`), mobileSrc: asset(`${file}-mobile.webp`) };
+    });
+  }
+  const storageGroups = [
+    {"gallery":"oil","ids":["white-truffle-oil-60ml","white-truffle-oil-250ml","white-truffle-evoo-60ml","white-truffle-evoo-250ml"],"zh":"本品应避光、避热保存。使用时按需取用，倒取后及时盖紧瓶盖，并保持瓶口清洁。开封后继续按照上述方式保存，可在料理完成后少量加入。","en":"Store away from light and heat. Take the amount needed for use, close the cap promptly after pouring, and keep the bottle opening clean. After opening, continue to store the oil in the same way. It can be added in a small amount once the dish is finished."},
+    {"gallery":"truffle","ids":["summer-truffle-slices-50g","summer-truffle-slices-80g","summer-truffle-slices-180g","summer-truffle-slices-oil-350g"],"zh":"未开封时置于阴凉干燥处保存。开封后需在 2°C–4°C 冷藏保存，使用时按需取用，取用后及时盖紧容器。松露片可以直接用于料理表面，也可以切碎后加入酱汁或馅料。","en":"Before opening, store in a cool, dry place. After opening, refrigerate at 2°C–4°C. Take the amount needed and close the container promptly after use. The slices can be placed directly on a dish or chopped into a sauce or filling."},
+    {"gallery":"truffle","ids":["summer-truffle-slices-water-350g"],"zh":"未开封时置于阴凉干燥处保存。开封后需在 2°C–4°C 冷藏保存。使用时可以先取出需要的份量并沥去多余保存液，再按菜式切片或切碎；取用后及时盖紧容器。","en":"Before opening, store in a cool, dry place. After opening, refrigerate at 2°C–4°C. Take out the amount needed and drain off excess preserving liquid before slicing or chopping as required. Close the container promptly after use."},
+    {"gallery":"honey","ids":["truffle-honey-50g","truffle-honey-170g"],"zh":"本品应置于阴凉干燥处保存。使用时按需取用，取用后及时盖紧瓶盖，并保持瓶口清洁。可以在奶酪、烤面包、烤肉或甜点装盘后少量加入。","en":"Store in a cool, dry place. Take the amount needed for use, close the cap promptly after opening, and keep the bottle opening clean. It can be added in a small amount after plating cheese, toast, roasted meat or a dessert."},
+    {"gallery":"sauce","ids":["white-truffle-sauce-80g","white-truffle-sauce-500g","black-truffle-sauce-80g","black-truffle-sauce-180g","black-truffle-sauce-500g"],"zh":"未开封时置于阴凉干燥处保存。开封后需在 2°C–4°C 冷藏保存，使用时按需取用，取用后及时盖紧容器。酱料可以直接加入热的意面、烩饭或主菜，也可以先用少量面水、奶油、黄油或料理汁液调开。","en":"Before opening, store in a cool, dry place. After opening, refrigerate at 2°C–4°C. Take the amount needed and close the container promptly after use. The sauce can be added directly to hot pasta, risotto or a main dish, or loosened first with a little pasta water, cream, butter or cooking juices."},
+    {"gallery":"sauce","ids":["winter-black-truffle-sauce-80g","winter-black-truffle-sauce-180g","winter-black-truffle-sauce-500g"],"zh":"未开封时置于阴凉干燥处保存。开封后需冷藏保存，使用时按需取用，取用后及时盖紧容器。可以先用少量奶油、黄油或高汤调和，再加入意面、烩饭或肉汁中。","en":"Before opening, store in a cool, dry place. Refrigerate after opening. Take the amount needed and close the container promptly after use. It can be loosened with a little cream, butter or stock before being added to pasta, risotto or a meat sauce."},
+    {"gallery":"juice","ids":["winter-black-truffle-juice-350ml"],"zh":"未开封时置于阴凉干燥处保存。开封后需冷藏保存，使用时按需取用，取用后及时盖紧瓶盖。可以少量加入高汤、肉汁、酱汁或烩饭中，再根据整体风味调整用量。","en":"Before opening, store in a cool, dry place. Refrigerate after opening. Take the amount needed and close the cap promptly after use. It can be added in small amounts to stock, gravy, sauces or risotto, then adjusted to the overall flavour of the dish."},
+    {"gallery":"truffle","ids":["whole-summer-truffles-35g","whole-summer-truffles-55g","whole-summer-truffles-110g","whole-summer-truffles-275g"],"zh":"未开封时置于阴凉干燥处保存。开封后需在 2°C–4°C 冷藏保存。使用时可以按料理需要切片、刨削或切碎，取用后及时盖紧容器。","en":"Before opening, store in a cool, dry place. After opening, refrigerate at 2°C–4°C. Slice, shave or chop the amount needed for the dish, then close the container promptly after use."},
+    {"gallery":"pasta","ids":["maccheroncini-di-campofilone-pgi","linguine-di-campofilone","fettuccine-di-campofilone","tagliatelle-di-campofilone","chitarrine-di-campofilone","pappardelle-di-campofilone","sfoglia-di-campofilone","saffron-fettuccine","truffle-fettuccine","porcini-mushroom-fettuccine","squid-ink-fettuccine","chili-pepper-fettuccine","sage-fettuccine","spinach-fettuccine","nettle-fettuccine","lemon-fettuccine","rigatoni","penne-triangolari","mezze-maniche","fusilloni","spaghetti-ad-archetto","spaghetti-quadrati-ad-archetto","bucatini-ad-archetto"],"zh":"本品应置于阴凉干燥处保存，避免光照和潮湿。开封后可以按需取用，剩余面食保持包装封闭并继续放置于干燥处。烹煮时根据包装标示的时间操作，煮好后即可与酱汁翻拌或搭配使用。","en":"Store in a cool, dry place, protected from light and moisture. After opening, take the amount needed and keep the remaining pasta sealed in a dry place. Cook according to the time shown on the packaging, then toss with sauce or serve with the chosen ingredients."},
+    {"gallery":"syrup","ids":["truffelixir-dark-chocolate-100ml","truffelixir-strawberry-100ml","truffelixir-spicy-mango-100ml","truffelixir-pistachio-100ml","truffelixir-tamarind-100ml","truffelixir-madagascar-vanilla-100ml"],"zh":"目前产品资料中没有明确列出这组糖浆的保存条件，因此暂不补写“阴凉保存”“冷藏”或具体开封后期限。相关文字需要以产品包装或供应商确认资料为依据。","en":"The current product information does not specify storage conditions for this syrup range. For that reason, no additional wording about cool storage, refrigeration or an after-opening period has been added. Any such wording should be based on the product packaging or confirmed supplier information."},
+  ];
+  for (const group of storageGroups) {
+    for (const id of group.ids) {
+      for (const lang of ["zh", "en"]) {
+        products[`${lang}-${id}`].storageImages = storageImageGroups[group.gallery];
+        products[`${lang}-${id}`].storageNotes = group[lang];
+      }
+    }
+  }
+
   window.LUXUREAT_PRODUCT_DATA = { images, galleries, products };
 })();
