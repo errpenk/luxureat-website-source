@@ -3945,9 +3945,13 @@ html[lang^="zh"] .lux-event-card-copy strong {
   transform-origin: left center;
   transition: color .2s ease, transform .2s ease;
 }
+#featured a[data-reader-open]:not(.lux-narrative-link) .material-symbols-outlined,
+#featured a[data-reader-open]:not(.lux-narrative-link) .lux-lucide {
+  color: currentColor !important;
+}
 #featured a[data-reader-open]:not(.lux-narrative-link):hover,
 #featured a[data-reader-open]:not(.lux-narrative-link):focus-visible {
-  color: #9df5ec !important;
+  color: #006a64 !important;
   transform: scale(1.035);
 }
 #featured a[data-reader-open]:not(.lux-narrative-link):hover .material-symbols-outlined,
@@ -14416,8 +14420,8 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-product-storage-gallery picture { display: block; min-width: 0; }
 .lux-product-storage-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .lux-product-storage-thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.lux-product-storage-thumbs button { display: block; min-width: 0; padding: 0; border: 1px solid transparent; border-radius: 0; background: transparent; cursor: pointer; line-height: 0; }
-.lux-product-storage-thumbs button[aria-pressed="true"] { border-color: #171717; }
+.lux-product-storage-thumbs button { display: block; min-width: 0; padding: 0; border: 2px solid transparent; border-radius: 0; background: transparent; cursor: pointer; line-height: 0; }
+.lux-product-storage-thumbs button[aria-pressed="true"] { border-color: #005b50; }
 .lux-product-storage-thumbs button:focus-visible { outline: 2px solid #005b50; outline-offset: 3px; }
 .lux-product-storage-thumbs button img { aspect-ratio: 1; }
 @media (min-width: 721px) {
