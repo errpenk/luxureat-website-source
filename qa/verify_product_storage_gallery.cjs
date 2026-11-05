@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-const runtime = fs.readFileSync('assets/js/products.js', 'utf8');
+const runtime = fs.readFileSync('assets/js/core.js', 'utf8');
 let click;
 const images = [0, 1, 2, 3].map((index) => ({
   dataset: { storageImage: String(index) },
@@ -13,7 +13,7 @@ const buttons = [0, 1, 2, 3].map((index) => ({
   closest: () => gallery,
 }));
 const gallery = { querySelectorAll: (selector) => selector === '[data-storage-image]' ? images : buttons };
-vm.runInNewContext(runtime.slice(runtime.indexOf('document.addEventListener("click"'), runtime.indexOf('const luxProductVideoBase')), {
+vm.runInNewContext(runtime.slice(runtime.indexOf('document.addEventListener("click"'), runtime.indexOf('const luxIsMobile')), {
   document: { addEventListener(type, listener) { click = listener; } },
 });
 for (const selected of [2, 0, 3, 1]) {

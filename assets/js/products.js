@@ -4,18 +4,6 @@ const luxEscapeProductHtml = (value) => String(value).replace(/[&<>"']/g, (char)
 
 window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
-document.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-storage-index]");
-  if (!button) return;
-  const gallery = button.closest(".lux-product-storage-gallery");
-  gallery.querySelectorAll("[data-storage-image]").forEach((image) => {
-    image.classList.toggle("is-active", image.dataset.storageImage === button.dataset.storageIndex);
-  });
-  gallery.querySelectorAll("[data-storage-index]").forEach((thumb) => {
-    thumb.setAttribute("aria-pressed", String(thumb === button));
-  });
-});
-
 const luxProductVideoBase = new URL("../media/products/videos/", document.currentScript?.src || location.href);
 const luxWechatQrUrl = new URL("../media/brand/wechat-qr.webp", document.currentScript?.src || location.href);
 function renderLuxProductCatalog() {

@@ -1,6 +1,18 @@
 const luxEscapeCoreHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
 }[char]));
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-storage-index]");
+  if (!button) return;
+  const gallery = button.closest(".lux-product-storage-gallery");
+  gallery.querySelectorAll("[data-storage-image]").forEach((image) => {
+    image.classList.toggle("is-active", image.dataset.storageImage === button.dataset.storageIndex);
+  });
+  gallery.querySelectorAll("[data-storage-index]").forEach((thumb) => {
+    thumb.setAttribute("aria-pressed", String(thumb === button));
+  });
+});
+
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
