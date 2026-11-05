@@ -177,20 +177,6 @@ function addImageDimensions(html, dimensions) {
   });
 }
 
-function prioritizeFirstContentImage(html, page) {
-  if (page.key === "home") return html;
-  const headerEnd = html.indexOf("<!-- lux:header:end -->");
-  const footerStart = html.indexOf("<!-- lux:footer:start -->");
-  if (headerEnd < 0 || footerStart < 0 || footerStart <= headerEnd) return html;
-  const content = html.slice(headerEnd, footerStart);
-  const firstImage = content.match(/<img\b[^>]*>/i)?.[0];
-  if (!firstImage || !/\bdata-lux-mobile-src=["'][^"']+["']/i.test(firstImage) || /\bfetchpriority=["']high["']/i.test(firstImage)) return html;
-  const image = firstImage
-    .replace(/\sloading=["']lazy["']/i, ' loading="eager"')
-    .replace(/^<img\b/i, '<img fetchpriority="high"');
-  return html.slice(0, headerEnd) + content.replace(firstImage, image) + html.slice(footerStart);
-}
-
 function deferHeroVideos(html) {
   return html.replace(/<video\b[\s\S]*?<\/video>/gi, (tag) => {
     if (!/\blux-hero-video\b|\bdata-lux-autoplay\b|\sautoplay\b/i.test(tag)) return tag;
@@ -337,7 +323,6 @@ function render(page, dimensions) {
   }
   html = protectMaterialIconMarkup(html);
   html = addMobileImageSources(file, html, dimensions);
-  html = prioritizeFirstContentImage(html, page);
   html = addImageDimensions(html, dimensions);
   html = deferHeroVideos(html);
   html = html.replace(/(\.\.\/assets\/media\/[^"'\s,]+-(?:mobile|720)\.webp)(?:\?v=[^"'\s,]+)?/g, `$1?v=${assetVersion}`);

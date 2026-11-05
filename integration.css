@@ -9739,8 +9739,7 @@ body {
   }
 }
 @media (max-width: 767px) {
-  /* Reserve the async carousel/map block before events.js hydrates it. */
-  .lux-latest-event { min-height: 1800px; }
+  .lux-latest-event { min-height: 0; }
   .lux-latest-event .lux-meet-map {
     background-position: center;
     background-size: cover;
