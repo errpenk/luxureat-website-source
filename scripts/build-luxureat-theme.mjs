@@ -1486,22 +1486,7 @@ add_filter('wp_headers', 'luxureat_static_cache_headers');
 
 function luxureat_static_hide_server_version() {
     header_remove('X-Powered-By');
-    $path = luxureat_static_current_path();
-    $aliases = luxureat_static_aliases();
-    $path = isset($aliases[$path]) ? $aliases[$path] : ($path === '' ? 'zh' : $path);
-    if (!is_admin() && !is_user_logged_in() && !(function_exists('wp_doing_ajax') && wp_doing_ajax()) && isset(luxureat_static_routes()[$path])) {
-        $cookies = array();
-        foreach (headers_list() as $header) {
-            if (stripos($header, 'Set-Cookie:') === 0 && stripos($header, 'Set-Cookie: PHPSESSID=') !== 0) {
-                $cookies[] = $header;
-            }
-        }
-        header_remove('Set-Cookie');
-        foreach ($cookies as $cookie) {
-            header($cookie, false);
-        }
-        header_remove('Pragma');
-        header_remove('Expires');
+    if (!is_admin() && !is_user_logged_in()) {
         header('Cache-Control: public, max-age=300, s-maxage=1800, stale-while-revalidate=86400', true);
     }
 }
