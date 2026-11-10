@@ -532,7 +532,7 @@ function luxureat_origin_upload_images($content) {
     return preg_replace('~https?://i[0-9]+\\.wp\\.com/luxureat\\.cn/wp-content/uploads/~', 'https://luxureat.cn/wp-content/uploads/', $content);
 }
 add_filter('the_content', 'luxureat_origin_upload_images', PHP_INT_MAX);
-require_once __DIR__ . '/page-migration-pilot.php';
+require_once __DIR__ . '/page-migration.php';
 
 function luxureat_static_routes() {
     $routes = require get_template_directory() . '/routes.php';
@@ -1755,7 +1755,8 @@ async function build() {
 
   write(path.join(themeDir, 'style.css'), styleCss());
   write(path.join(themeDir, 'functions.php'), functionsPhp());
-  fs.copyFileSync(path.join(sourceDir, 'scripts/templates/page-migration-pilot.php'), path.join(themeDir, 'page-migration-pilot.php'));
+  fs.copyFileSync(path.join(sourceDir, 'scripts/templates/page-migration.php'), path.join(themeDir, 'page-migration.php'));
+  write(path.join(themeDir, 'migration-pages.json'), JSON.stringify(Object.fromEntries(pages.map((page) => [page.route, { title: `${page.lang === 'zh' ? '中文' : 'English'} · ${page.seo.title.split(' | ')[0]}`, file: `pages/${page.lang}/${page.slug}.php` }])), null, 2));
   write(path.join(themeDir, 'index.php'), indexPhp());
   write(path.join(themeDir, 'page.php'), pagePhp());
   write(path.join(themeDir, 'single.php'), pagePhp());
