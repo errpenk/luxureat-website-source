@@ -48,7 +48,7 @@ add_action('admin_menu', function () {
         $pages = luxureat_migration_pages();
         $enabled = (array) get_option('luxureat_migration_enabled', array());
         echo '<div class="wrap"><h1>LuxurEat 页面迁移</h1><p>沿用原主题的页头、页脚、样式和脚本。正文存入独立的 HTML 区块；编辑时请保留原有结构、类名和交互属性。</p>';
-        echo '<p>已迁入：<strong>' . count($pages) . ' / ' . count($manifest) . '</strong>；已启用：<strong>' . count($enabled) . '</strong>。撤销会恢复原始页面，保留草稿和糖浆更新。</p>';
+        echo '<p>已迁入：<strong>' . count($pages) . ' / ' . count($manifest) . '</strong>；已启用：<strong>' . count($enabled) . '</strong>。启用会发布页面；撤销会恢复原版并退回草稿，保留修改和糖浆更新。</p>';
         echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '"><input type="hidden" name="action" value="luxureat_page_migration">';
         wp_nonce_field('luxureat-page-migration');
         if (count($pages) < count($manifest)) echo '<button class="button button-primary" name="migration_action" value="import">迁入下一批页面（最多 4 页）</button> ';
@@ -99,6 +99,12 @@ add_action('admin_post_luxureat_page_migration', function () {
         $enabled = array_values(array_diff($enabled, array($match[2])));
         if ($match[1] === 'enable') $enabled[] = $match[2];
     } else wp_die('Invalid action.');
+    foreach ($pages as $route => $page) {
+        $status = in_array($route, $enabled, true) ? 'publish' : 'draft';
+        if ($page->post_status === $status) continue;
+        $updated = wp_update_post(array('ID' => $page->ID, 'post_status' => $status), true);
+        if (is_wp_error($updated)) wp_die(esc_html($updated->get_error_message()));
+    }
     update_option('luxureat_migration_enabled', $enabled, false);
     foreach (array_keys($manifest) as $route) luxureat_migration_purge($route);
     wp_safe_redirect(admin_url('tools.php?page=luxureat-page-pilot'));
@@ -117,7 +123,8 @@ add_filter('template_include', function ($template) {
     $preview_id = isset($_GET['luxureat_migration_preview']) ? absint($_GET['luxureat_migration_preview']) : 0;
     $preview = $preview_id === $page->ID && current_user_can('edit_post', $page->ID)
         && isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'luxureat-migration-preview-' . $page->ID);
-    if (!in_array($route, (array) get_option('luxureat_migration_enabled', array()), true) && !$preview) return $template;
+    $published = $page->post_status === 'publish' && in_array($route, (array) get_option('luxureat_migration_enabled', array()), true);
+    if (!$published && !$preview) return $template;
     if ($preview) {
         if (!defined('DONOTCACHEPAGE')) define('DONOTCACHEPAGE', true);
         nocache_headers();
