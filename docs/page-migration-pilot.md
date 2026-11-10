@@ -23,6 +23,7 @@ The page content is a native Custom HTML block to preserve markup and interactio
 - The final GitHub workflow passed generated-theme checks, PHP lint, all 26 template import tests, and regression checks preventing private/draft/pending content from rendering publicly.
 - Local pre-migration rendered-content baseline: `tmp/luxureat-26-pages-before-migration-20261110.json`.
 - Local route/editor mapping: `tmp/luxureat-migrated-page-records-20261110.json`.
+- Local post-migration WordPress page export: `tmp/luxureat-pages-after-migration-20261110.xml` (37 records, including the 26 managed pages).
 - Recheck the active site with `node qa/verify_live_page_migration.mjs verify /absolute/path/to/the/baseline.json`. After reverting, use `verify-original` instead. Never overwrite the original capture.
 
 To undo the migration, use the management panel's global revert button. It preserves the syrup release and all managed content. Remove migration code only in a separate reviewed change after disabling it; do not reset the source repository or restore the whole database just to undo this migration.
@@ -53,11 +54,11 @@ Related options: `luxureat_pilot_page_id`, `luxureat_pilot_enabled`. Draft metad
 
 Existing WordPress pages were exported before the pilot to the local workspace file `tmp/luxureat-pages-before-migration-20261110.xml` (10 page records). This is a content export, not a full database or media backup.
 
-## Verification
+## Historical pilot verification
 
 - Generated theme checks and PHP lint passed.
 - `qa/verify_migration_pilot.php` passed against the generated certification template, checking asset resolution, rejection of executable template expressions, literal replacement, and byte-identical preservation outside the main element.
 - Browser checks found the same 34 main-content headings and the same theme stylesheet/script paths before, during preview, and after enabling. The image lightbox opened and closed.
 - Theme asset cache-version parameters changed on deployment; this does not indicate a stylesheet change.
-- The pilot has not been tested across all browsers or viewport sizes. Full-site migration is not enabled.
+- The pilot was not tested across all browsers or viewport sizes. At that stage, only the certification pilot existed and was disabled.
 - The broader source check has an existing `Lux Catalogue Latin` font-allowlist failure; this release did not change that unrelated font rule.
