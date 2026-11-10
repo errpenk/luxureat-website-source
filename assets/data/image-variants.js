@@ -78,6 +78,7 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/brand-news/marca-recap-products.webp": "media/brand-news/marca-recap-products-720.webp",
   "media/brand-news/marca-recap-visitors.webp": "media/brand-news/marca-recap-visitors-720.webp",
   "media/brand-news/sial-paris-2026-lazio-cover.webp": "media/brand-news/sial-paris-2026-lazio-cover-720.webp",
+  "media/brand-news/truffelixir-sweet-world.webp": "media/brand-news/truffelixir-sweet-world-720.webp",
   "media/brand/about-aquaculture-divider.webp": "media/brand/about-aquaculture-divider-720.webp",
   "media/brand/about-mission-rome.webp": "media/brand/about-mission-rome-720.webp",
   "media/brand/b2b-quotation-team.webp": "media/brand/b2b-quotation-team-720.webp",
@@ -287,5 +288,8 @@ window.LUXUREAT_IMAGE_VARIANTS = {
   "media/products/storage/truffle-01.webp": "media/products/storage/truffle-01-mobile.webp",
   "media/products/storage/truffle-02.webp": "media/products/storage/truffle-02-mobile.webp",
   "media/products/storage/truffle-03.webp": "media/products/storage/truffle-03-mobile.webp",
-  "media/products/storage/truffle-04.webp": "media/products/storage/truffle-04-mobile.webp"
+  "media/products/storage/truffle-04.webp": "media/products/storage/truffle-04-mobile.webp",
+  "media/products/truffelixir/dark-chocolate.webp": "media/products/truffelixir/dark-chocolate-720.webp",
+  "media/products/truffelixir/pistachio.webp": "media/products/truffelixir/pistachio-720.webp",
+  "media/products/truffelixir/tamarind.webp": "media/products/truffelixir/tamarind-720.webp"
 };

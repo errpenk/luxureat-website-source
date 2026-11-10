@@ -402,8 +402,9 @@ function brandNewsPageHtml(item, imageDimensions) {
       : entry.note?.[item.lang] ? `<figcaption>${escapeHtml(entry.note[item.lang])}</figcaption>` : '';
     return `<figure class="lux-brand-news-media"><img${imageDimensions.get(source) || ''} loading="lazy" decoding="async" src="${escapeHtml(source)}" alt="${escapeHtml(alt)}">${imageCredit}</figure>`;
   };
-  const sections = (article.sections || []).map(([heading, paragraphs, media = []]) => `<section class="lux-reader-section"><h2>${escapeHtml(heading)}</h2>${renderArticleContent(paragraphs)}${media.map(renderMedia).join('')}</section>`).join('');
+  let sections = (article.sections || []).map(([heading, paragraphs, media = []]) => `<section class="lux-reader-section"><h2>${escapeHtml(heading)}</h2>${renderArticleContent(paragraphs)}${media.map(renderMedia).join('')}</section>`).join('');
   const linkedEventImage = linkedEvent ? articleAsset(linkedEvent.thumbnail || linkedEvent.poster || linkedEvent.image) : '';
+  sections += (item.relatedLinks || []).map((link) => `<p><a href="${escapeHtml(link[`${item.lang}Href`])}">${escapeHtml(link[item.lang])}</a></p>`).join('');
   const linkedEventHtml = linkedEvent
     ? `<a class="lux-brand-news-event-link" href="<?php echo esc_url(luxureat_static_url('${linkedEvent.lang}/brand', '#event-${linkedEvent.id}')); ?>"><img${imageDimensions.get(linkedEventImage) || ''} loading="lazy" decoding="async" src="${escapeHtml(linkedEventImage)}" alt=""><span><small>Exhibitions &amp; Events</small><strong>${escapeHtml(linkedEvent.copy.articleTitle)}</strong></span><span aria-hidden="true">→</span></a>`
     : '';
@@ -732,6 +733,7 @@ function luxureat_static_aliases() {
         'private-selection.html' => 'en/cooperation',
         'product-imperial-beluga' => 'zh/product',
         'product-imperial-beluga.html' => 'zh/product',
+        'trufflelixir-where-truffle-meets-the-world-of-sweets' => 'en/news/truffelixir-sweet-world',
     );
 }
 

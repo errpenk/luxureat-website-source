@@ -238,7 +238,7 @@
   ];
   elixirRows.forEach(([flavour, english, chinese, code, ean, ingredientsZh, ingredientsEn, kj, kcal, carbs]) => {
     const slug = `truffelixir-${flavour}-100ml`;
-    const image = asset(`media/products/truffelixir/${flavour}.svg`);
+    const image = asset(`media/products/truffelixir/${flavour}.webp`);
     const allMedia = elixirMedia[flavour].map(([id, ratio, type = "video"]) => ({ type, ratio,
       src: asset(`media/products/truffelixir/${type === "video" ? "videos" : "stills"}/${flavour}-${id}.${type === "video" ? "mp4" : "webp"}`),
       poster: type === "video" ? asset(`media/products/truffelixir/stills/${flavour}-${id}.webp`) : undefined,

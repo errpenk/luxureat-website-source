@@ -39,7 +39,42 @@
 
   window.LUXUREAT_BRAND_NEWS = [
     {
+      id: "truffelixir-sweet-world",
+      relatedLinks: [
+        { zh: "探索六款风味糖浆", en: "Explore the Six Syrups", zhHref: "/product/?category=truffelixir#product-catalogue", enHref: "/en/product/?category=truffelixir#product-catalogue" },
+        { zh: "松露提拉米苏：甜点搭配灵感", en: "Truffle Tiramisu: Dessert Inspiration", zhHref: "/recipe/truffle-tiramisu/", enHref: "/en/recipe/truffle-tiramisu/" },
+      ],
+      relatedNewsId: "fhc-shanghai-2026-new-products",
+      date: "2026-11-10",
+      cardImage: asset("media/brand-news/truffelixir-sweet-world.webp"),
+      zh: {
+        date: "2026年11月10日", author: "LuxurEat", category: "产品故事",
+        title: "TrufflElixir：当松露邂逅甜蜜世界",
+        intro: "提到松露，人们往往会联想到咸味菜肴和成人餐桌上的精致料理。而通过 TrufflElixir，我们希望开辟一条全新的道路：推出一款以甜点搭配为主要用途的松露风味糖浆，让松露独特的香气融入日常生活中的每一个简单时刻。",
+        opening: [
+          "我们的创意从早餐开始。只需在华夫饼上淋上一些 TrufflElixir，代替传统的枫糖浆，就能以一种新奇而愉悦的方式，让年轻一代也有机会探索松露的独特风味。",
+          "TrufflElixir 拥有丰富的搭配可能：无论是冰淇淋、鲜奶油、提拉米苏，还是各种烘焙甜点，都能与之巧妙融合。对于热爱创意料理的人来说，适量添加几滴 TrufflElixir，甚至可以为意式烩饭增添一抹别具一格的风味。",
+          "TrufflElixir 系列包含六种口味：黑巧克力、草莓、香辣芒果、开心果、罗望子和马达加斯加香草。六种不同的风味演绎，共同呈现甜蜜滋味与松露香气的独特交融。",
+          "通过 TrufflElixir，我们希望让松露变得更加亲切、触手可及，邀请每一个人，包括年轻一代，在熟悉的日常时刻发现它的魅力：无论是早餐、下午茶，还是餐后甜点。",
+          "原来，松露也能在甜蜜世界中带来惊喜。",
+        ], sections: [],
+      },
+      en: {
+        date: "November 10, 2026", author: "LuxurEat", category: "Product Story",
+        title: "TrufflElixir: Where Truffle Meets the World of Sweets",
+        intro: "When we think of truffles, we often associate them with savory dishes and sophisticated adult cuisine. With TrufflElixir, we want to explore a new direction: a sweet truffle-infused syrup designed primarily for desserts, bringing the distinctive aroma of truffles into the simple moments of everyday life.",
+        opening: [
+          "Our idea begins with breakfast. A drizzle over waffles, replacing traditional maple syrup, can offer a fun and delightful way to introduce younger generations to the unique flavor of truffles.",
+          "TrufflElixir offers endless pairing possibilities: over ice cream, with whipped cream, in tiramisu, and across a wide variety of pastries and desserts. For those who love experimenting in the kitchen, a few carefully measured drops can even complement a risotto, adding an unexpected and original touch to the dish.",
+          "The collection features six flavors: dark chocolate, strawberry, spicy mango, pistachio, tamarind, and Madagascar vanilla. Six distinctive interpretations, all united by the harmonious combination of sweetness and the unmistakable aroma of truffles.",
+          "With TrufflElixir, we aim to make truffles more approachable and accessible, inviting everyone — including younger generations — to discover their appeal in familiar everyday moments: at breakfast, during an afternoon snack, or as a sweet ending to a meal.",
+          "Truffles can bring delightful surprises to the world of sweets, too.",
+        ], sections: [],
+      },
+    },
+    {
       id: "fhc-shanghai-2026-new-products",
+      relatedNewsId: "truffelixir-sweet-world",
       eventId: "fhc-shanghai-2026",
       date: "2026-10-29",
       cardImage: media.fhcBooth.src,

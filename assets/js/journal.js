@@ -1077,6 +1077,7 @@ function initLuxReader() {
           </header>
           <div class="lux-brand-news-copy">
             ${article.opening.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+            ${(item.relatedLinks || []).map((link) => `<p><a href="${escapeHtml(link[`${lang}Href`])}">${escapeHtml(link[lang])}</a></p>`).join("")}
             ${article.sections.map(([heading, paragraphs, sectionMedia = []]) => `<section>
               <h3>${escapeHtml(heading)}</h3>
               ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}

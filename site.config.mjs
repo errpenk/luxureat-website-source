@@ -1,4 +1,4 @@
-export const assetVersion = "20261104-mobile-grids-flips";
+export const assetVersion = "20261110-truffelixir-photos-news";
 
 export const contact = {
   email: "china@luxureat.com",
