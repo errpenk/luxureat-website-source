@@ -1754,6 +1754,7 @@ async function build() {
   write(path.join(themeDir, 'functions.php'), functionsPhp());
   write(path.join(themeDir, 'index.php'), indexPhp());
   write(path.join(themeDir, 'page.php'), pagePhp());
+  write(path.join(themeDir, 'single.php'), pagePhp());
   write(path.join(themeDir, 'routes.php'), buildRoutesPhp());
   write(path.join(themeDir, 'README.md'), readme());
 
