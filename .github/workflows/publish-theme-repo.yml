@@ -54,6 +54,9 @@ jobs:
       - name: Check generated page structure
         run: npm run site:check
 
+      - name: Check media loading
+        run: node qa/verify_media_delivery.cjs && node qa/verify_video_loading.cjs
+
       - name: Build WordPress theme
         run: |
           node scripts/build-luxureat-theme.mjs "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE/.deploy"
@@ -65,6 +68,7 @@ jobs:
       - name: Lint generated PHP
         run: |
           find "$GITHUB_WORKSPACE/.deploy/luxureat-static" -name '*.php' -print0 | xargs -0 -n 1 php -l
+          php qa/verify_media_delivery.php
           php qa/verify_migration_pilot.php
 
       - name: Add GitHub deploy key

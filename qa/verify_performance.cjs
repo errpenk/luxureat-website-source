@@ -212,7 +212,7 @@ for (const match of videoMarkup.matchAll(/<video\b[\s\S]*?<\/video>/g)) {
 const videoRuntime = read("assets/js/core.js").toString();
 assert.match(videoRuntime, /video\.setAttribute\("autoplay", ""\)/, "viewport videos are not promoted to autoplay before playback");
 assert.match(videoRuntime, /data-lux-play-blocked/, "blocked mobile autoplay is not retried after user interaction");
-assert.match(videoRuntime, /rootMargin: luxIsMobile \? "400px 0px" : "200px 0px"/, "videos are not prepared before entering the viewport");
+assert.doesNotMatch(videoRuntime, /luxVideoPreloadObserver|rootMargin: luxIsMobile \? "400px 0px" : "200px 0px"/, "offscreen video transfer still competes with images");
 assert.match(css, /::-webkit-media-controls-enclosure/, "Safari's native video control enclosure is not hidden");
 
 console.log("Performance budgets passed.");

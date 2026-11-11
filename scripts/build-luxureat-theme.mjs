@@ -12,6 +12,8 @@ const themeDir = path.join(outputRoot, 'luxureat-static');
 const zipFile = path.join(outputRoot, 'luxureat-static-theme.zip');
 const leafletDistDir = path.join(sourceDir, 'node_modules', 'leaflet', 'dist');
 const buildIdentifier = String(process.env.GITHUB_SHA || 'local').replace(/[^a-f0-9]/gi, '').slice(0, 40) || 'local';
+const seoTitles = JSON.parse(fs.readFileSync(path.join(sourceDir, 'scripts/seo-titles.json'), 'utf8'));
+const seoTitle = (title, route) => `${seoTitles[route] || title} | LuxurEat`;
 
 const pageInputs = pages.map(({ lang, slug, file }) => [lang, slug, file]);
 
@@ -291,7 +293,14 @@ async function buildArticleImageDimensions() {
     const file = path.join(sourceDir, source.replace(/^\.\.\//, ''));
     if (!fs.existsSync(file)) return [source, ''];
     const { width, height } = await sharp(file).metadata();
-    return [source, width && height ? ` width="${width}" height="${height}"` : ''];
+    let attributes = width && height ? ` width="${width}" height="${height}"` : '';
+    const mobile = ['-mobile.webp', '-720.webp'].map((suffix) => source.replace(/\.(?:webp|png|jpe?g)$/i, suffix))
+      .find((candidate) => candidate !== source && fs.existsSync(path.join(sourceDir, candidate.replace(/^\.\.\//, ''))));
+    if (mobile) {
+      const { width: mobileWidth } = await sharp(path.join(sourceDir, mobile.replace(/^\.\.\//, ''))).metadata();
+      if (mobileWidth < width) attributes += ` srcset="${mobile} ${mobileWidth}w, ${source} ${width}w" sizes="(max-width: 767px) 100vw, 960px"`;
+    }
+    return [source, attributes];
   }));
   return new Map(entries);
 }
@@ -333,7 +342,7 @@ function articlePageHtml(article, imageDimensions) {
     <section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(article.eyebrow)}</span><span>${escapeHtml(article.meta)}</span></div><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-reader-summary">${escapeHtml(article.intro)}</p></div>${cover ? `<figure class="lux-reader-cover"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>` : ''}</section>
     <section class="lux-reader-content"><aside class="lux-reader-aside"><a href="${article.lang === 'zh' ? 'blog.html' : 'blog.html'}">${article.lang === 'zh' ? '返回知识博客' : 'Back to Knowledge Blog'}</a></aside><div class="lux-reader-copy${article.cmsHtml ? ' lux-cms-prose' : ''}">${article.cmsHtml || `${(article.opening || []).length ? `<section class="lux-reader-section lux-reader-section-opening">${renderArticleContent(article.opening)}</section>` : ''}${sections}${article.quote ? `<blockquote class="lux-reader-quote">${escapeHtml(article.quote)}</blockquote>` : ''}`}</div></section>
   </article></main>`;
-  html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(article.title)} | LuxurEat</title>\n<meta name="description" content="${escapeHtml(article.intro)}">\n<!-- lux:seo:end -->`);
+  html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(seoTitle(article.title, articleRoute(article)))}</title>\n<meta name="description" content="${escapeHtml(article.intro)}">\n<!-- lux:seo:end -->`);
   const alternate = articleInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
   html = html.replace(`<a class="active" href="#">${article.lang === 'zh' ? 'ZH' : 'EN'}</a>`, `<a class="active" href="<?php echo esc_url(luxureat_static_url('${articleRoute(article)}')); ?>">${article.lang === 'zh' ? 'ZH' : 'EN'}</a>`);
   if (alternate) {
@@ -347,7 +356,7 @@ function articlePageHtml(article, imageDimensions) {
 function detailPageHtml({ lang, pageKey, title, description, route, alternateRoute, body }) {
   const sourcePage = pages.find((page) => page.lang === lang && page.key === pageKey);
   let html = fs.readFileSync(path.join(sourceDir, sourcePage.file), 'utf8');
-  html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(title)} | LuxurEat</title>\n<meta name="description" content="${escapeHtml(description)}">\n<!-- lux:seo:end -->`);
+  html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(seoTitle(title, route))}</title>\n<meta name="description" content="${escapeHtml(description)}">\n<!-- lux:seo:end -->`);
   const otherLang = lang === 'zh' ? 'en' : 'zh';
   html = html.replace(`<a class="active" href="#">${lang === 'zh' ? 'ZH' : 'EN'}</a>`, `<a class="active" href="<?php echo esc_url(luxureat_static_url('${route}')); ?>">${lang === 'zh' ? 'ZH' : 'EN'}</a>`);
   const oldLanguageLink = lang === 'zh' ? `../en/${sourcePage.slug}.html` : `../zh/${sourcePage.slug}.html`;
@@ -466,7 +475,7 @@ Theme URI: https://github.com/errpenk/luxureat-website-source
 Author: LuxurEat
 Description: Static LuxurEat bilingual prototype packaged as a WordPress theme.
 Version: 1.0.9
-Requires at least: 6.0
+Requires at least: 6.2
 Text Domain: luxureat-static
 */
 `;
@@ -494,7 +503,7 @@ function buildSeoCatalogPhp() {
   const articleRows = articleInputs.map((article) => {
     const alternate = articleInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
     const image = String(article.image || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
-    return `        '${articleRoute(article)}' => array('title' => '${escapePhpString(article.title)} | LuxurEat', 'description' => '${escapePhpString(article.intro)}', 'lang' => '${article.lang}', 'alternate' => '${alternate ? articleRoute(alternate) : articleRoute(article)}', 'indexable' => true, 'type' => 'Article', 'image' => '${escapePhpString(image)}', 'author' => 'LuxurEat'),`;
+    return `        '${articleRoute(article)}' => array('title' => '${escapePhpString(seoTitle(article.title, articleRoute(article)))}', 'description' => '${escapePhpString(article.intro)}', 'lang' => '${article.lang}', 'alternate' => '${alternate ? articleRoute(alternate) : articleRoute(article)}', 'indexable' => true, 'type' => 'Article', 'image' => '${escapePhpString(image)}', 'author' => 'LuxurEat'),`;
   });
   const productRows = productInputs.map((product) => {
     const alternate = productInputs.find((candidate) => candidate.lang !== product.lang && candidate.id === product.id);
@@ -511,7 +520,7 @@ function buildSeoCatalogPhp() {
   const brandNewsRows = brandNewsInputs.map((item) => {
     const alternate = brandNewsInputs.find((candidate) => candidate.lang !== item.lang && candidate.id === item.id);
     const image = String(item.cardImage || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
-    return `        '${brandNewsRoute(item)}' => array('title' => '${escapePhpString(item.article.title)} | LuxurEat', 'description' => '${escapePhpString(item.article.intro)}', 'lang' => '${item.lang}', 'alternate' => '${brandNewsRoute(alternate || item)}', 'indexable' => true, 'type' => 'NewsArticle', 'image' => '${escapePhpString(image)}', 'datePublished' => '${escapePhpString(item.date)}', 'author' => '${escapePhpString(item.article.author || 'LuxurEat')}'),`;
+    return `        '${brandNewsRoute(item)}' => array('title' => '${escapePhpString(seoTitle(item.article.title, brandNewsRoute(item)))}', 'description' => '${escapePhpString(item.article.intro)}', 'lang' => '${item.lang}', 'alternate' => '${brandNewsRoute(alternate || item)}', 'indexable' => true, 'type' => 'NewsArticle', 'image' => '${escapePhpString(image)}', 'datePublished' => '${escapePhpString(item.date)}', 'author' => '${escapePhpString(item.article.author || 'LuxurEat')}'),`;
   });
   return [...pageRows, ...articleRows, ...productRows, ...recipeRows, ...brandNewsRows].join('\n');
 }
@@ -532,6 +541,32 @@ function luxureat_origin_upload_images($content) {
     return preg_replace('~https?://i[0-9]+\\.wp\\.com/luxureat\\.cn/wp-content/uploads/~', 'https://luxureat.cn/wp-content/uploads/', $content);
 }
 add_filter('the_content', 'luxureat_origin_upload_images', PHP_INT_MAX);
+
+function luxureat_cms_responsive_images($content) {
+    $tags = new WP_HTML_Tag_Processor(luxureat_origin_upload_images($content));
+    while ($tags->next_tag('IMG')) {
+        $src = $tags->get_attribute('src');
+        if (!is_string($src) || strpos($src, home_url('/wp-content/uploads/')) !== 0) continue;
+        $id = attachment_url_to_postid(strtok($src, '?'));
+        if (!$id) continue;
+        $meta = wp_get_attachment_metadata($id);
+        if (!$meta || empty($meta['width']) || empty($meta['height'])) continue;
+        if (!$tags->get_attribute('width')) $tags->set_attribute('width', $meta['width']);
+        if (!$tags->get_attribute('height')) $tags->set_attribute('height', $meta['height']);
+        if (!$tags->get_attribute('srcset')) {
+            $srcset = wp_get_attachment_image_srcset($id, 'full', $meta);
+            if ($srcset) {
+                $tags->set_attribute('srcset', $srcset);
+                $tags->set_attribute('sizes', '(max-width: 767px) 100vw, 960px');
+            }
+        }
+        if ($tags->get_attribute('alt') === null) $tags->set_attribute('alt', get_post_meta($id, '_wp_attachment_image_alt', true));
+        if (!$tags->get_attribute('loading')) $tags->set_attribute('loading', 'lazy');
+        $tags->set_attribute('decoding', 'async');
+    }
+    return $tags->get_updated_html();
+}
+add_filter('the_content', 'luxureat_cms_responsive_images', PHP_INT_MAX);
 require_once __DIR__ . '/page-migration.php';
 
 function luxureat_static_routes() {
@@ -571,7 +606,7 @@ function luxureat_cms_payload($kind) {
             'image' => $image ? $image : '',
         );
         if ($kind !== 'blog') {
-            $record['cmsHtml'] = luxureat_origin_upload_images(apply_filters('the_content', $post->post_content));
+            $record['cmsHtml'] = apply_filters('the_content', $post->post_content);
         }
         if ($kind === 'blog') $record['date'] = get_the_date('Y-m-d', $post);
         if ($kind === 'gallery') {
@@ -634,7 +669,7 @@ function luxureat_cms_detail($source_id, $lang, $kind) {
     $parent_url = luxureat_static_url($lang . '/' . ($kind === 'recipe' ? 'recipe' : 'blog'));
     echo '<main class="lux-article-page"><nav class="lux-breadcrumb"><a href="' . esc_url($parent_url) . '">' . esc_html($parent) . '</a><span> / </span><span>' . esc_html($title) . '</span></nav>';
     echo '<article class="lux-reader-layout lux-academy-reader"><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><h1 id="lux-reader-title">' . esc_html($title) . '</h1><p class="lux-reader-summary">' . esc_html(get_the_excerpt($post)) . '</p></div>';
-    if ($image) echo '<figure class="lux-reader-cover"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '"></figure>';
+    if ($image) echo '<figure class="lux-reader-cover">' . luxureat_origin_upload_images(wp_get_attachment_image(get_post_thumbnail_id($post->ID), 'large', false, array('alt' => $title, 'loading' => 'eager', 'fetchpriority' => 'high', 'decoding' => 'async', 'sizes' => '(max-width: 767px) 100vw, 960px'))) . '</figure>';
     $content = luxureat_origin_upload_images(apply_filters('the_content', $post->post_content));
     if ($kind === 'recipe') $content = luxureat_cms_recipe_content($content, $source_id, $image);
     echo '</section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '返回' . $parent : 'Back to ' . $parent) . '</a></aside><div class="lux-reader-copy lux-cms-prose">' . $content . '</div></section></article></main>';
@@ -1063,6 +1098,34 @@ function luxureat_static_disable_yoast_output() {
 }
 add_action('template_redirect', 'luxureat_static_disable_yoast_output', -20);
 
+function luxureat_static_public_plugin_output() {
+    $path = luxureat_static_current_path();
+    $path = $path === '' || $path === '__home' ? 'zh' : $path;
+    $aliases = luxureat_static_aliases();
+    $route = isset($aliases[$path]) ? $aliases[$path] : $path;
+    if (!isset(luxureat_static_seo_catalog()[$route])) return;
+    add_filter('jetpack_photon_skip_image', '__return_true');
+    if (!is_user_logged_in() && in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', array('GET', 'HEAD'), true)) {
+        // Newsletter proofs expire in 15 minutes, so cached HTML must stay younger.
+        do_action('litespeed_control_set_ttl', 300);
+    }
+    global $wp_filter;
+    foreach (array('wp' => 'baiduseo_init_session', 'wp_head' => 'baiduseo_mainpage') as $hook => $method) {
+        if ($hook === 'wp' && (is_user_logged_in() || !in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', array('GET', 'HEAD'), true))) continue;
+        if (!isset($wp_filter[$hook])) continue;
+        // The theme owns public metadata; anonymous content needs no SEO-plugin session.
+        foreach ($wp_filter[$hook]->callbacks as $priority => $callbacks) {
+            foreach ($callbacks as $entry) {
+                $callback = $entry['function'];
+                if (is_array($callback) && $callback[0] instanceof baiduseo_common && $callback[1] === $method) {
+                    remove_action($hook, $callback, $priority);
+                }
+            }
+        }
+    }
+}
+add_action('wp', 'luxureat_static_public_plugin_output', 0);
+
 function luxureat_static_seo_head() {
     $path = luxureat_static_current_path();
     $path = $path === '' || $path === '__home' ? 'zh' : $path;
@@ -1476,7 +1539,7 @@ function luxureat_static_cache_headers($headers) {
     $headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()';
     $headers['Cross-Origin-Opener-Policy'] = 'same-origin-allow-popups';
     if (!is_admin() && !is_user_logged_in()) {
-        $headers['Cache-Control'] = 'public, max-age=300, stale-while-revalidate=86400';
+        $headers['Cache-Control'] = 'public, max-age=300, stale-while-revalidate=300';
     }
 
     return $headers;
@@ -1486,7 +1549,7 @@ add_filter('wp_headers', 'luxureat_static_cache_headers');
 function luxureat_static_hide_server_version() {
     header_remove('X-Powered-By');
     if (!is_admin() && !is_user_logged_in()) {
-        header('Cache-Control: public, max-age=300, s-maxage=1800, stale-while-revalidate=86400', true);
+        header('Cache-Control: public, max-age=300, s-maxage=300, stale-while-revalidate=300', true);
     }
 }
 add_action('send_headers', 'luxureat_static_hide_server_version', PHP_INT_MAX);
@@ -1586,6 +1649,7 @@ function luxureat_static_refresh_changed_routes() {
     if (function_exists('wp_cache_clear_cache')) {
         wp_cache_clear_cache();
     }
+    do_action('litespeed_purge_all');
     update_option('luxureat_static_route_version', $route_version, false);
 }
 add_action('init', 'luxureat_static_refresh_changed_routes', 20);

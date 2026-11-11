@@ -33,3 +33,13 @@ jobs:
         run: |
           node tools/build-github-sync-plugin.mjs "$GITHUB_WORKSPACE"
           node tools/verify-github-sync-plugin.mjs "$GITHUB_WORKSPACE"
+
+      - name: Verify theme media and anonymous page integration
+        run: |
+          npm ci
+          node qa/verify_media_delivery.cjs
+          node qa/verify_video_loading.cjs
+          npm run theme:check
+          find .deploy/luxureat-static -name '*.php' -print0 | xargs -0 -n 1 php -l
+          php qa/verify_media_delivery.php
+          php qa/verify_migration_pilot.php

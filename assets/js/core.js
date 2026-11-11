@@ -16,19 +16,16 @@ document.addEventListener("click", (event) => {
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
-const luxMobileImageVersion = "20261008-mobile-images-1";
-const luxVersionedMobileSource = (source) => {
-  const url = new URL(source, document.baseURI);
-  url.searchParams.set("v", luxMobileImageVersion);
-  return url.href;
-};
 const luxImageSource = (source) => {
   if (!luxIsMobile || !source) return source;
   try {
     const url = new URL(source, document.baseURI);
     const marker = url.pathname.indexOf("/assets/");
     const variant = marker < 0 ? null : window.LUXUREAT_IMAGE_VARIANTS?.[url.pathname.slice(marker + 8)];
-    return variant ? luxVersionedMobileSource(new URL(`../${variant}`, luxCoreUrl).href) : source;
+    if (!variant) return source;
+    const mobile = new URL(`../${variant}`, luxCoreUrl);
+    mobile.search = url.search;
+    return mobile.href;
   } catch { return source; }
 };
 window.luxImageSource = luxImageSource;
@@ -243,9 +240,8 @@ if ("IntersectionObserver" in window) {
 
 if (luxIsMobile) {
   document.querySelectorAll("img[data-lux-mobile-src]").forEach((image) => {
-    image.srcset = "";
-    if (image.dataset.luxSrc) image.dataset.luxSrc = luxVersionedMobileSource(image.dataset.luxMobileSrc);
-    else image.src = luxVersionedMobileSource(image.dataset.luxMobileSrc);
+    if (image.dataset.luxSrc) image.dataset.luxSrc = image.dataset.luxMobileSrc;
+    else if (!image.srcset && !image.closest("picture")) image.src = image.dataset.luxMobileSrc;
     delete image.dataset.luxMobileSrc;
   });
 }
@@ -393,7 +389,7 @@ const luxVideoObserver = "IntersectionObserver" in window
       delete target.dataset.luxVideoVisible;
       target.pause();
     }
-  }), { rootMargin: luxIsMobile ? "400px 0px" : "200px 0px", threshold: .01 })
+  }), { threshold: .01 })
   : null;
 const loadLuxVideo = (video) => {
   let changed = false;
@@ -405,14 +401,6 @@ const loadLuxVideo = (video) => {
   });
   if (changed) video.load();
 };
-const luxVideoPreloadObserver = "IntersectionObserver" in window
-  ? new IntersectionObserver((entries, observer) => entries.forEach(({ target, isIntersecting }) => {
-    if (!isIntersecting) return;
-    target.preload = target.dataset.luxVideoVisible === "true" ? "auto" : luxSaveData ? "none" : "metadata";
-    loadLuxVideo(target);
-    observer.unobserve(target);
-  }), { rootMargin: "300px", threshold: 0 })
-  : null;
 const initLuxVideo = (video) => {
   if (video.dataset.luxVideoReady) return;
   video.dataset.luxVideoReady = "true";
@@ -436,7 +424,6 @@ const initLuxVideo = (video) => {
     video.preload = "auto";
     startLuxVideo(video);
   } else {
-    if (!luxIsMobile && !luxSaveData) luxVideoPreloadObserver?.observe(video);
     luxVideoObserver.observe(video);
   }
 };
