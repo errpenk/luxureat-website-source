@@ -263,7 +263,7 @@ if ("IntersectionObserver" in window) {
 }
 
 // Start native lazy images before they enter the viewport so fast scrolling never outruns the network.
-const luxNativeLazyImages = document.querySelectorAll('img[loading="lazy"]:not([data-lux-src])');
+const luxNativeLazyImages = document.querySelectorAll('img[loading="lazy"]:not([data-lux-src]):not([sizes^="auto"])');
 if ("IntersectionObserver" in window) {
   const nativeImageObserver = new IntersectionObserver((entries, observer) => {
     entries.filter(({ isIntersecting }) => isIntersecting).forEach(({ target }) => {

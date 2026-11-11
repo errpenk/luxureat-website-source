@@ -23,6 +23,22 @@ function luxureat_migration_replace($html, $content) {
     }, $html, 1);
 }
 
+function luxureat_page_image_sizes($content) {
+    $tags = new WP_HTML_Tag_Processor($content);
+    while ($tags->next_tag('IMG')) {
+        $src = $tags->get_attribute('src');
+        if (is_string($src) && strpos($src, '/new-arrivals/feature-olive-oil.webp') !== false) {
+            $tags->set_attribute('loading', 'lazy');
+            $tags->remove_attribute('fetchpriority');
+        }
+        if ($tags->get_attribute('loading') !== 'lazy' || !$tags->get_attribute('srcset')) continue;
+        $sizes = $tags->get_attribute('sizes') ?: '100vw';
+        // Native auto sizing uses the real card width, including narrow gallery thumbnails.
+        if (strpos($sizes, 'auto') !== 0) $tags->set_attribute('sizes', 'auto, ' . $sizes);
+    }
+    return $tags->get_updated_html();
+}
+
 function luxureat_migration_pages() {
     $result = array();
     $manifest = luxureat_migration_manifest();
@@ -131,6 +147,7 @@ add_filter('template_include', function ($template) {
     }
     $content = do_blocks($page->post_content);
     if (!trim($content) || strpos($content, '<?') !== false) return $template;
+    if (in_array($route, array('zh/new', 'en/new', 'zh/certification', 'en/certification'), true)) $content = luxureat_page_image_sizes($content);
     header('X-LuxurEat-Content-Source: wordpress');
     ob_start(function ($html) use ($content) { return luxureat_migration_replace($html, $content); });
     return $template;
