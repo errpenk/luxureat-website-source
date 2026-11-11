@@ -215,6 +215,8 @@ function convertHtmlSource(html, lang) {
   html = stripKnownLocalIncludes(html);
   html = html.replace(/<meta\b(?=[^>]*\bname=["']robots["'])[^>]*>\s*/gi, '');
   html = html.replace(/(<figure class="lux-reader-cover"><img\b[^>]*\bsizes=)"[^"]*"/g, '$1"(max-width: 708px) calc(100vw - 28px), (max-width: 840px) 680px, (max-width: 1220px) calc(42.5vw - 34px), 485px"');
+  html = html.replace(/<img\b[^>]*>/g, (tag) => /\bloading="lazy"/.test(tag)
+    ? tag.replace(/\bsizes="(?!auto)([^"]*)"/, 'sizes="auto, $1"') : tag);
 
   html = html.replace(/\bsrcset=(["'])([^"']+)\1/g, (_match, quote, value) => {
     return `srcset=${quote}${value.replace(/\.\.\/assets\/([^\s,]+)/g, (_asset, assetPath) => phpThemeAsset(assetPath))}${quote}`;
@@ -563,6 +565,10 @@ function luxureat_cms_responsive_images($content) {
         }
         if ($tags->get_attribute('alt') === null) $tags->set_attribute('alt', get_post_meta($id, '_wp_attachment_image_alt', true));
         if (!$tags->get_attribute('loading')) $tags->set_attribute('loading', 'lazy');
+        if ($tags->get_attribute('loading') === 'lazy' && $tags->get_attribute('srcset')) {
+            $sizes = $tags->get_attribute('sizes') ?: '100vw';
+            if (strpos($sizes, 'auto') !== 0) $tags->set_attribute('sizes', 'auto, ' . $sizes);
+        }
         $tags->set_attribute('decoding', 'async');
     }
     return $tags->get_updated_html();

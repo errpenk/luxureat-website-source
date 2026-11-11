@@ -55,7 +55,7 @@ jobs:
         run: npm run site:check
 
       - name: Check media loading
-        run: node qa/verify_media_delivery.cjs && node qa/verify_video_loading.cjs
+        run: node qa/verify_media_delivery.cjs && node qa/verify_home_delivery.cjs && node qa/verify_video_loading.cjs
 
       - name: Build WordPress theme
         run: |

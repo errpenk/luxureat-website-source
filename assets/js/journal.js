@@ -249,7 +249,7 @@ function initLuxReader() {
         const href = location.pathname.endsWith(".html") ? `recipe.html?recipe=${encodeURIComponent(slug)}` : `${encodeURIComponent(slug)}/`;
         return `
         <a href="${href}" class="lux-recipe-library-card" data-reader-open="${escapeHtml(id)}">
-          <span class="lux-recipe-library-media"><img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}"><span class="lux-reader-cta">${copy.read}</span></span>
+          <span class="lux-recipe-library-media"><img loading="lazy" decoding="async" src="${escapeHtml(window.luxImageSource(article.image, true))}" alt="${escapeHtml(article.title)}"><span class="lux-reader-cta">${copy.read}</span></span>
           <span class="lux-recipe-library-copy"><small>${escapeHtml(article.recipe.region || article.eyebrow)}</small><strong>${escapeHtml(article.title)}</strong><span>${escapeHtml(article.recipe.time)} · ${escapeHtml(article.recipe.difficulty)}</span><span class="lux-recipe-library-tags">${ingredients.map((key) => `<i>${escapeHtml(ingredientGroups.find(([groupKey]) => groupKey === key)?.[1] || key)}</i>`).join("")}</span></span>
         </a>`;
       }).join("");
@@ -324,7 +324,7 @@ function initLuxReader() {
           ${latest.map((event) => {
             const copy = event[lang];
             return copy ? `<a href="${eventHref(event.id)}" class="lux-event-card" data-event-open="${escapeHtml(event.id)}">
-              <img loading="lazy" decoding="async" src="${escapeHtml(event.brandCardImage || event.cardImage || event.image)}" alt="${escapeHtml(copy.cardTitle || copy.articleTitle)}">
+              <img loading="lazy" decoding="async" src="${escapeHtml(window.luxImageSource(event.brandCardImage || event.cardImage || event.image, true))}" alt="${escapeHtml(copy.cardTitle || copy.articleTitle)}">
               <span class="lux-event-card-copy">
                 <small>${escapeHtml(copy.dateIso)} · ${escapeHtml(copy.city)}</small>
                 <strong>${formatTitle(copy.cardTitle || copy.articleTitle)}</strong>
@@ -445,7 +445,7 @@ function initLuxReader() {
           ${stories.map((item, index) => {
             const story = item[lang];
             return `<a href="${newsHref(item.id)}" class="lux-event-card lux-news-card${index === 0 ? " lux-news-feature" : ""}" data-news-open="${escapeHtml(item.id)}">
-            <img loading="lazy" decoding="async" src="${escapeHtml(item.cardImage)}" alt="${escapeHtml(story.title)}">
+            <img loading="lazy" decoding="async" src="${escapeHtml(window.luxImageSource(item.cardImage, true))}" alt="${escapeHtml(story.title)}">
             <span class="lux-event-card-copy">
               <small>${escapeHtml(story.date)} · ${escapeHtml(story.category)}</small>
               <strong>${escapeHtml(story.title)}</strong>
@@ -586,11 +586,16 @@ function initLuxReader() {
       const image = node.querySelector("img");
       const background = node.querySelector(".lux-dark-photo-bg, [style*='background-image']");
       if (image) {
-        image.removeAttribute("srcset");
-        image.removeAttribute("sizes");
-        image.removeAttribute("data-lux-mobile-src");
-        if (image.hasAttribute("data-lux-src")) image.setAttribute("data-lux-src", article.cardImage || article.image);
-        image.src = article.cardImage || article.image;
+        const source = article.cardImage || article.image;
+        const existing = image.getAttribute("data-lux-src") || image.getAttribute("src");
+        const sameImage = existing && new URL(window.luxImageSource(existing), document.baseURI).pathname === new URL(source, document.baseURI).pathname;
+        if (!sameImage) {
+          image.removeAttribute("srcset");
+          image.removeAttribute("sizes");
+          image.removeAttribute("data-lux-mobile-src");
+          if (image.hasAttribute("data-lux-src")) image.setAttribute("data-lux-src", window.luxImageSource(source, true));
+          else image.src = window.luxImageSource(source, true);
+        }
         image.alt = article.cardTitle || article.title;
         if (article.cardPosition || article.coverPosition) image.style.objectPosition = article.cardPosition || article.coverPosition;
       } else if (background) {

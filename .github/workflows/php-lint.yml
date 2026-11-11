@@ -38,6 +38,7 @@ jobs:
         run: |
           npm ci
           node qa/verify_media_delivery.cjs
+          node qa/verify_home_delivery.cjs
           node qa/verify_video_loading.cjs
           npm run theme:check
           find .deploy/luxureat-static -name '*.php' -print0 | xargs -0 -n 1 php -l
