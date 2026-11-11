@@ -49,3 +49,15 @@ for (const changed of [false, true]) {
   }
 }
 console.log('Homepage catalog deferral and responsive card hydration passed.');
+const products = fs.readFileSync('assets/js/products.js', 'utf8');
+const catalog = {innerHTML: ''};
+const product = {id:'test',title:'Example product',image:'full.webp',desc:'Original description',amount:1,unit:'jar'};
+const productContext = vm.createContext({document:{documentElement:{lang:'en'},querySelector:()=>catalog},location:{pathname:'/product/'},
+  window:{LUXUREAT_PRODUCT_DATA:{products:{'en-test':product}},luxImageSource:(source,thumbnail)=>thumbnail?'small.webp':source}});
+vm.runInContext(products.slice(0,products.indexOf('window.luxResponsiveData')),productContext);
+vm.runInContext(products.slice(products.indexOf('function renderLuxProductCatalog()'),products.indexOf('function syncLuxProductBindings()'))+'\nrenderLuxProductCatalog();',productContext);
+assert.match(catalog.innerHTML, /<img[^>]+loading="lazy"[^>]+src="small\.webp"/, 'Paginated product images must use lazy preview downloads');
+assert.doesNotMatch(catalog.innerHTML, /background-image/, 'Hidden catalog pages must not eagerly fetch CSS backgrounds');
+assert.match(catalog.innerHTML, /data-product-open="en-test"/);
+assert.equal(product.image,'full.webp','Product details keep their full-size source');
+console.log('Product catalog lazy previews and full-size detail data passed.');
