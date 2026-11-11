@@ -114,6 +114,12 @@ for (const [, route, handles] of assetsByPath.matchAll(/'([^']+)' => array\(([^)
   if (handles.includes("'core'")) assert(handles.includes("'image-variants'") && handles.indexOf("'image-variants'") < handles.indexOf("'core'"), `${route} registers core's image dependency so WordPress prints the video runtime`);
 }
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
+for (const file of walk(path.join(themeDir, 'pages/en')).filter((file) => file.endsWith('.php'))) {
+  const html = read(file).replace(/<\?php[\s\S]*?\?>/g, '');
+  const title = html.match(/<title>(.*?)<\/title>/)?.[1];
+  assert(title && title.length <= 70, `${file} has a concise search title`);
+  for (const image of html.matchAll(/<img\b[^>]*>/gi)) assert(/\balt\s*=/.test(image[0]), `${file} image has an alt attribute`);
+}
 for (const [page, count] of [['blog', 68], ['product', 53], ['recipe', 25], ['brand', 13]]) {
   for (const lang of ['zh', 'en']) {
     const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
@@ -136,7 +142,7 @@ assert(functionsPhp.includes("'chat' => array('src' => 'assets/js/chat.js', 'dep
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
 assert(functionsPhp.includes('luxureat_static_defer_scripts') && functionsPhp.includes("add_filter('script_loader_tag'"), 'functions.php defers theme scripts without changing dependency order');
 assert(functionsPhp.includes('luxureat_static_cache_headers') && functionsPhp.includes('stale-while-revalidate=86400'), 'functions.php enables short anonymous page caching');
-assert(functionsPhp.includes('s-maxage=1800') && functionsPhp.includes("add_action('send_headers', 'luxureat_static_hide_server_version', PHP_INT_MAX)"), 'functions.php reapplies anonymous browser and edge caching after plugins');
+assert(functionsPhp.includes('s-maxage=300, stale-while-revalidate=300') && functionsPhp.includes("add_action('send_headers', 'luxureat_static_hide_server_version', PHP_INT_MAX)"), 'functions.php bounds anonymous HTML cache age below newsletter proof expiration');
 assert(functionsPhp.includes('add_rewrite_rule'), 'functions.php registers rewrite rules');
 assert(functionsPhp.includes('flush_rewrite_rules'), 'functions.php flushes rewrite rules on theme switch');
 assert(functionsPhp.includes('luxureat_static_refresh_changed_routes') && functionsPhp.includes('luxureat_static_route_version'), 'theme updates refresh changed WordPress routes once');
@@ -352,7 +358,7 @@ assert(runtimeJs.includes('.tawk-min-chat-icon-down') && runtimeJs.includes('12.
 assert(!runtimeJs.includes('luxureat_checkout') && !runtimeJs.includes('LuxureatCheckout') && !runtimeJs.includes('add_to_cart'), 'checkout handoff and purchase analytics are removed');
 assert(runtimeJs.includes('link.rel = "prefetch"') && runtimeJs.includes('pointerover') && runtimeJs.includes('touchstart'), 'runtime scripts prefetches internal pages when users hover, focus, or touch links');
 assert(!runtimeJs.includes('requestIdleCallback') && runtimeJs.includes('const prefetched = new Set()'), 'runtime scripts avoid downloading every linked page during idle time');
-assert(runtimeJs.includes('video[data-lux-autoplay]') && runtimeJs.includes('rootMargin: luxIsMobile ? "400px 0px" : "200px 0px"') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts prepare background video before visibility and suppress native media controls');
+assert(runtimeJs.includes('video[data-lux-autoplay]') && !runtimeJs.includes('luxVideoPreloadObserver') && runtimeJs.includes('disablePictureInPicture'), 'runtime scripts wait for video visibility and suppress native media controls');
 assert(runtimeJs.includes('const pageHref =') && runtimeJs.includes('location.pathname.endsWith(".html")') && runtimeJs.includes('`/en/${slug}/`'), 'runtime navigation keeps static links relative and WordPress links root-based');
 assert(runtimeJs.includes('aria-pressed'), 'runtime scripts updates pressed states for caviar toolbar buttons');
 assert(runtimeJs.includes('.hidden ='), 'runtime scripts hides filtered-out caviar product cards');

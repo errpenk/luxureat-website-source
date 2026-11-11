@@ -22,14 +22,13 @@ vm.runInContext(core.slice(core.indexOf('const prepareLuxVideo'),core.indexOf('c
 vm.runInContext('initLuxVideo(video)', context);
 assert.equal(video.loads,0,'Offscreen videos must not request their source');
 assert.equal(video.plays,0);
-observers[1].callback([{target:video,isIntersecting:true}],observers[1]);
-assert.equal(video.loads,1,'Nearby videos load their source once');
-assert.equal(source.src,'video.mp4');
-assert.equal(video.preload,'metadata');
+assert.equal(observers.length,1,'Offscreen videos have no preload observer');
+assert.equal(observers[0].options.rootMargin,undefined,'Playback starts only inside the real viewport');
 events.loadeddata();
 assert.equal(video.plays,0,'Preloaded videos must stay paused offscreen');
 observers[0].callback([{target:video,isIntersecting:true}]);
 assert.equal(video.loads,1);
+assert.equal(source.src,'video.mp4');
 assert.equal(video.plays,1,'Visible videos autoplay');
 observers[0].callback([{target:video,isIntersecting:false}]);
 events.canplay();
@@ -53,7 +52,7 @@ for (const mode of [{luxIsMobile:true,luxSaveData:false}, {luxIsMobile:false,lux
   const limitedContext = vm.createContext({IntersectionObserver:Observer, window:{IntersectionObserver:Observer}, ...mode, video:deferredVideo, Promise});
   vm.runInContext(core.slice(core.indexOf('const prepareLuxVideo'),core.indexOf('const luxAutoplaySelector')), limitedContext);
   vm.runInContext('initLuxVideo(video)',limitedContext);
-  assert.equal(observers[offset+1].targets?.length || 0,0,'Mobile and data-saver videos must not preload offscreen');
+  assert.equal(observers.length,offset+1,'Mobile and data-saver videos have no preload observer');
   assert.equal(deferredVideo.loads,0);
   observers[offset].callback([{target:deferredVideo,isIntersecting:true}]);
   assert.equal(deferredVideo.loads,1,'Visible mobile videos must still load');
