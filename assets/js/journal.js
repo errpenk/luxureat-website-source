@@ -1078,11 +1078,11 @@ function initLuxReader() {
             <p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p>
             <h2 id="lux-reader-title">${escapeHtml(article.title)}</h2>
             <p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>
-            ${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)} ↗</a>` : ""}
+            ${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)}<svg class="lux-lucide notranslate" translate="no" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>` : ""}
           </header>
           <div class="lux-brand-news-copy">
             ${article.opening.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
-            ${(item.relatedLinks || []).map((link) => `<p><a href="${escapeHtml(link[`${lang}Href`])}">${escapeHtml(link[lang])}</a></p>`).join("")}
+            ${(item.relatedLinks || []).map((link) => `<p><a class="lux-brand-news-source" href="${escapeHtml(link[`${lang}Href`])}">${escapeHtml(link[lang])}<svg class="lux-lucide notranslate" translate="no" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></p>`).join("")}
             ${article.sections.map(([heading, paragraphs, sectionMedia = []]) => `<section>
               <h3>${escapeHtml(heading)}</h3>
               ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}

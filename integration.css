@@ -13896,7 +13896,9 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-intro {
   line-height: 1.85 !important;
 }
 .lux-brand-news-source {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
   margin-top: 18px;
   color: #77726c;
   font: 500 12px/1.5 var(--lux-page-body);
@@ -13905,11 +13907,13 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-intro {
   transition: color .2s ease, transform .2s ease, text-decoration-thickness .2s ease;
 }
 .lux-brand-news-source:is(:hover, :focus-visible) {
-  color: #006a64;
+  color: #003f3c;
   text-decoration-thickness: 2px;
   transform: translateY(-2px);
 }
 .lux-brand-news-source:focus-visible { outline: 2px solid #006a64; outline-offset: 4px; }
+.lux-brand-news-source .lux-lucide { width: 1em; height: 1em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.lux-brand-news-copy .lux-brand-news-source { margin-top: 0; font: inherit; }
 .lux-brand-news-copy section { margin-top: 50px; }
 html[lang] body .lux-brand-news-reader .lux-brand-news-copy h3 {
   margin: 0 0 18px;
