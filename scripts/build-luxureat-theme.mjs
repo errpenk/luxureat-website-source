@@ -599,7 +599,7 @@ function luxureat_cms_payload($kind) {
     foreach (luxureat_cms_posts($kind) as $post) {
         $id = get_post_meta($post->ID, '_luxureat_source_id', true);
         $lang = get_post_meta($post->ID, '_luxureat_lang', true);
-        $image = get_the_post_thumbnail_url($post->ID, 'full');
+        $image = get_the_post_thumbnail_url($post->ID, 'medium_large');
         $record = array(
             'title' => get_the_title($post),
             'intro' => get_the_excerpt($post),
