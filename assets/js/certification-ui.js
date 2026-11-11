@@ -19,6 +19,7 @@
 
 document.querySelectorAll("[data-cert-partnership-gallery]").forEach((gallery) => {
   const main = gallery.querySelector("[data-cert-partnership-main]");
+  const mainSizes = main?.sizes || "auto, 100vw";
   const thumbs = [...gallery.querySelectorAll("[data-cert-partnership-thumb]")];
   const status = gallery.querySelector("[data-cert-partnership-status]");
   const thumbsGrid = gallery.querySelector(".lux-cert-partnership-thumbs");
@@ -55,7 +56,7 @@ document.querySelectorAll("[data-cert-partnership-gallery]").forEach((gallery) =
     main.classList.add("is-changing");
     if (preview?.srcset) {
       main.srcset = preview.srcset;
-      main.sizes = preview.sizes || "100vw";
+      main.sizes = mainSizes;
     } else {
       main.removeAttribute("srcset");
       main.removeAttribute("sizes");
