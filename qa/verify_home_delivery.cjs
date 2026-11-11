@@ -1,0 +1,51 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const core = fs.readFileSync('assets/js/core.js', 'utf8');
+let loads = 0;
+let observer;
+class Observer {
+  constructor(callback) { this.callback = callback; observer = this; }
+  observe() {}
+  disconnect() { this.disconnected = true; }
+}
+const start = core.indexOf('  if (!luxIsMobile && "IntersectionObserver" in window) {');
+const scheduling = core.slice(start, core.indexOf('  loadHomeEvents().catch', start));
+for (const mobile of [false, true]) {
+  observer = undefined;
+  vm.runInNewContext(scheduling, { luxIsMobile: mobile, window: {IntersectionObserver: Observer}, IntersectionObserver: Observer,
+    document: {querySelectorAll: () => [{}]}, loadDeferredScripts: () => { loads++; } });
+  if (mobile) assert.equal(observer, undefined, 'Mobile catalog data remains click-to-load');
+  else {
+    assert.equal(loads, 0, 'Desktop catalog data must not compete with the initial media');
+    observer.callback([{isIntersecting: false}], observer);
+    assert.equal(loads, 0);
+    observer.callback([{isIntersecting: true}], observer);
+    assert.equal(loads, 1);
+    assert.ok(observer.disconnected);
+  }
+}
+const journal = fs.readFileSync('assets/js/journal.js', 'utf8');
+const syncStart = journal.indexOf('  const syncReaderCards = () => {');
+const syncCode = journal.slice(syncStart, journal.indexOf('  syncReaderCards();', syncStart) + '  syncReaderCards();'.length);
+for (const changed of [false, true]) {
+  const attrs = {src: 'https://example.test/original.webp?v=old', srcset: 'small.webp 720w, original.webp 1800w', sizes: 'auto, 100vw'};
+  const image = {style: {}, get src() {return attrs.src;}, set src(value) {attrs.src=value;},
+    getAttribute: key => attrs[key], hasAttribute: key => key in attrs,
+    setAttribute: (key,value) => {attrs[key]=value;}, removeAttribute: key => {delete attrs[key];}};
+  const node = {closest: () => null, matches: () => false, querySelector: selector => selector === 'img' ? image : null, querySelectorAll: () => []};
+  const trigger = {dataset: {readerOpen: 'article'}, closest: selector => selector.includes('market-collage') ? null : node};
+  const source = changed ? 'https://example.test/new.webp' : 'https://example.test/original.webp?v=current';
+  vm.runInNewContext(syncCode, {URL, document: {baseURI: 'https://example.test/', querySelectorAll: () => [trigger]},
+    articles: {article: {image: source, title: 'Current title'}}, window: {luxImageSource: (url, thumbnail) => thumbnail ? url.replace('new.webp','new-small.webp') : url}});
+  assert.equal(image.alt, 'Current title');
+  if (changed) {
+    assert.equal(attrs.src, 'https://example.test/new-small.webp', 'Changed CMS images must replace stale candidates');
+    assert.equal(attrs.srcset, undefined);
+  } else {
+    assert.equal(attrs.srcset, 'small.webp 720w, original.webp 1800w', 'Reader hydration must preserve native responsive candidates');
+    assert.equal(attrs.sizes, 'auto, 100vw');
+    assert.equal(attrs.src, 'https://example.test/original.webp?v=old', 'Hydration must not restart the same image download');
+  }
+}
+console.log('Homepage catalog deferral and responsive card hydration passed.');

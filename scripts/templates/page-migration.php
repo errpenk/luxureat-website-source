@@ -27,6 +27,30 @@ function luxureat_page_image_sizes($content) {
     $tags = new WP_HTML_Tag_Processor($content);
     while ($tags->next_tag('IMG')) {
         $src = $tags->get_attribute('src');
+        $deferred = $tags->get_attribute('data-lux-src');
+        if (!$src && is_string($deferred) && $deferred !== '') {
+            $src = $deferred;
+            $tags->set_attribute('src', $src);
+            $tags->remove_attribute('data-lux-src');
+        }
+        $mobile = $tags->get_attribute('data-lux-mobile-src');
+        if (!$tags->get_attribute('srcset') && is_string($src) && is_string($mobile)) {
+            $candidates = array();
+            $prefix = get_template_directory_uri() . '/assets/media/';
+            foreach (array($src, $mobile) as $url) {
+                if (strpos($url, $prefix) !== 0) continue;
+                $relative = strtok(substr($url, strlen($prefix)), '?');
+                if (strpos($relative, '..') !== false || !preg_match('~^[a-zA-Z0-9/_-]+\\.(?:webp|png|jpe?g)$~', $relative)) continue;
+                $info = @getimagesize(get_template_directory() . '/assets/media/' . $relative);
+                if ($info) $candidates[$info[0]] = $url;
+            }
+            if (count($candidates) > 1) {
+                ksort($candidates);
+                $srcset = array();
+                foreach ($candidates as $width => $url) $srcset[] = $url . ' ' . $width . 'w';
+                $tags->set_attribute('srcset', implode(', ', $srcset));
+            }
+        }
         if (is_string($src) && strpos($src, '/new-arrivals/feature-olive-oil.webp') !== false) {
             $tags->set_attribute('loading', 'lazy');
             $tags->remove_attribute('fetchpriority');
@@ -147,7 +171,7 @@ add_filter('template_include', function ($template) {
     }
     $content = do_blocks($page->post_content);
     if (!trim($content) || strpos($content, '<?') !== false) return $template;
-    if (in_array($route, array('zh/new', 'en/new', 'zh/certification', 'en/certification'), true)) $content = luxureat_page_image_sizes($content);
+    $content = luxureat_page_image_sizes($content);
     header('X-LuxurEat-Content-Source: wordpress');
     ob_start(function ($html) use ($content) { return luxureat_migration_replace($html, $content); });
     return $template;

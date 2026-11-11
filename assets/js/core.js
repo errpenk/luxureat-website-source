@@ -16,8 +16,8 @@ document.addEventListener("click", (event) => {
 const luxIsMobile = matchMedia("(max-width: 640px)").matches;
 const luxSaveData = navigator.connection?.saveData || /(^|-)2g$/.test(navigator.connection?.effectiveType || "");
 const luxCoreUrl = new URL(document.currentScript.src);
-const luxImageSource = (source) => {
-  if (!luxIsMobile || !source) return source;
+const luxImageSource = (source, thumbnail = false) => {
+  if ((!luxIsMobile && !luxSaveData && !thumbnail) || !source) return source;
   try {
     const url = new URL(source, document.baseURI);
     const marker = url.pathname.indexOf("/assets/");
@@ -247,6 +247,7 @@ if (luxIsMobile) {
 }
 const luxLazyImages = document.querySelectorAll("img[data-lux-src]");
 const loadLuxImage = (image) => {
+  image.loading = "eager";
   image.src = image.dataset.luxSrc;
   delete image.dataset.luxSrc;
 };
@@ -308,9 +309,14 @@ if (luxDeferredScripts) {
       .catch(() => false);
     return loading;
   };
-  const scheduleDeferredScripts = () => { if (!luxIsMobile) setTimeout(loadDeferredScripts, 800); };
-  if (document.readyState === "complete") scheduleDeferredScripts();
-  else addEventListener("load", scheduleDeferredScripts, { once: true });
+  if (!luxIsMobile && "IntersectionObserver" in window) {
+    const readerObserver = new IntersectionObserver((entries, observer) => {
+      if (!entries.some(({ isIntersecting }) => isIntersecting)) return;
+      observer.disconnect();
+      loadDeferredScripts();
+    }, { rootMargin: "600px" });
+    document.querySelectorAll("[data-reader-open]").forEach((trigger) => readerObserver.observe(trigger));
+  }
   loadHomeEvents().catch(() => {});
   document.addEventListener("click", (event) => {
     const trigger = event.target.closest?.("[data-reader-open]");

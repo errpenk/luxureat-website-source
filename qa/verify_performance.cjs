@@ -77,7 +77,8 @@ assert.ok(gzipSize("assets/js/engagement.js") <= 17 * 1024, "optional newsletter
 assert.ok(size("assets/data/academy-index.js") <= 70 * 1024, "academy listing index exceeds 70 KB");
 assert.match(core, /rootMargin: luxIsMobile \? "600px 0px" : "1200px 0px"/, "mobile images start loading too late for scrolling");
 assert.doesNotMatch(read("assets/js/core.js").toString(), /image\.loading = "eager"/);
-assert.match(read("assets/js/core.js").toString(), /if \(!luxIsMobile\) setTimeout\(loadDeferredScripts, 800\)/, "mobile home data still auto-loads without interaction");
+assert.match(core, /readerObserver\.observe\(trigger\)/, "desktop reader data must wait until its cards approach the viewport");
+assert.doesNotMatch(core, /setTimeout\(loadDeferredScripts/, "homepage reader data must not compete with media on a fixed timer");
 assert.match(core, /const loadHomeEvents = \(\) => eventLoading \|\|=/, "homepage events still pull the product and journal data into the first view");
 assert.doesNotMatch(core, /addEventListener\("scroll", loadDeferredScripts/, "scrolling starts the heavy product and journal scripts");
 assert.match(read("assets/js/core.js").toString(), /if \(luxIsMobile \|\| luxSaveData\) return/, "mobile hero video still competes with first-screen content");

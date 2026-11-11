@@ -94,7 +94,7 @@
     const title = media[lang].title;
     return `<article class="lux-gallery-card">
       <button type="button" class="lux-gallery-card-media" data-gallery-open="${escapeHtml(media.id)}" aria-label="${escapeHtml(`${lang === "zh" ? "查看" : "View"} ${title}`)}">
-        <img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(window.luxImageSource(media.poster || media.thumb || media.src))}" alt="">
+        <img loading="lazy" decoding="async" width="${media.width}" height="${media.height}" src="${escapeHtml(window.luxImageSource(media.poster || media.thumb || media.src, true))}" alt="">
         ${media.kind === "video" ? '<span class="lux-gallery-play" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5 19 12 8 19Z"/></svg></span>' : ""}
       </button>
     </article>`;

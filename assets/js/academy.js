@@ -126,12 +126,12 @@ function initCaviarAcademy() {
     : `${encodeURIComponent(article.slug)}/`;
 
   const art = (article, compact = false) => article.image
-    ? `<img ${!compact && articles.indexOf(article) === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">`
+    ? `<img ${!compact && articles.indexOf(article) === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" src="${escapeHtml(window.luxImageSource(article.image, true))}" alt="${escapeHtml(article.title)}">`
     : `<span class="lux-academy-card-art ${escapeHtml(article.artClass || "is-caviar")}" role="img" aria-label="${escapeHtml(article.title)}"></span>`;
   list.innerHTML = articles.map((article, index) => `
     <article class="lux-academy-card lux-reader-card${article.wideCover ? " is-wide-cover" : ""}" data-academy-item data-academy-topic="${escapeHtml(article.topic || "caviar")}" data-academy-search-text="${escapeHtml(`${article.title} ${article.intro} ${article.topicLabel || ""}`.toLowerCase())}">
       <button class="lux-academy-card-media lux-reader-media" type="button" data-reader-open="${lang}-academy-${escapeHtml(article.slug)}" aria-label="${copy.read}: ${escapeHtml(article.title)}">
-        ${article.image ? `<img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" src="${escapeHtml(article.image)}" alt="${escapeHtml(article.title)}">` : art(article)}
+        ${article.image ? `<img ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} decoding="async" src="${escapeHtml(window.luxImageSource(article.image, true))}" alt="${escapeHtml(article.title)}">` : art(article)}
         <span class="lux-reader-cta">${copy.read}</span>
       </button>
       <div class="lux-academy-card-copy">
@@ -154,7 +154,7 @@ function initCaviarAcademy() {
     const latestArticles = (topic === "all" ? articles : articles.filter((article) => article.topic === topic)).slice(0, 4);
     latest.innerHTML = `<h2>${copy.latest}</h2>${latestArticles.map((article) => `
       <button class="lux-reader-card${article.wideCover ? " is-wide-cover" : ""}" type="button" data-reader-open="${lang}-academy-${escapeHtml(article.slug)}">
-        ${article.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(article.image)}" alt="">` : art(article, true)}
+        ${article.image ? `<img loading="lazy" decoding="async" src="${escapeHtml(window.luxImageSource(article.image, true))}" alt="">` : art(article, true)}
         <span><strong>${escapeHtml(article.title)}</strong></span>
       </button>`).join("")}`;
   };
