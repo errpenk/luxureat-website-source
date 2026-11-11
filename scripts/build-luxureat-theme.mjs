@@ -248,6 +248,9 @@ function convertHtmlSource(html, lang) {
 
 function convertHtml(file, lang) {
   let html = convertHtmlSource(fs.readFileSync(path.join(sourceDir, file), 'utf8'), lang);
+  if (lang === 'en' && path.basename(file) === 'import-export-services.html') {
+    html = html.replace(/<summary>(.*?)<\/summary>/g, '<summary><h3>$1</h3></summary>');
+  }
   const detailIndexes = {
     'blog.html': [articleInputs, 'data-academy-list', articleRoute, (item) => item.title],
     'product.html': [productInputs, 'data-caviar-grid', productRoute, (item) => item.title],
@@ -257,8 +260,11 @@ function convertHtml(file, lang) {
   const detailIndex = detailIndexes[path.basename(file)];
   if (detailIndex) {
     const [items, mount, routeFor, titleFor] = detailIndex;
-    const links = items.filter((item) => item.lang === lang).map((item) =>
-      `<li><a href="<?php echo esc_url(luxureat_static_url('${routeFor(item)}')); ?>">${escapeHtml(titleFor(item))}</a></li>`).join('');
+    const withHeading = lang === 'en' && ['blog.html', 'product.html'].includes(path.basename(file));
+    const links = items.filter((item) => item.lang === lang).map((item) => {
+      const link = `<a href="<?php echo esc_url(luxureat_static_url('${routeFor(item)}')); ?>">${escapeHtml(titleFor(item))}</a>`;
+      return `<li>${withHeading ? `<h3>${link}</h3>` : link}</li>`;
+    }).join('');
     const pattern = new RegExp(`(<(?:div|section)\\b[^>]*\\b${mount}\\b[^>]*>)(</(?:div|section)>)`);
     if (!pattern.test(html)) throw new Error(`Missing ${mount} in ${file}`);
     html = html.replace(pattern, `$1<nav class="lux-static-detail-links" aria-label="${lang === 'zh' ? '全部内容' : 'All content'}"><ul>${links}</ul></nav>$2`);
