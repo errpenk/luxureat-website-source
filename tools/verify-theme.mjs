@@ -125,7 +125,8 @@ for (const [page, count] of [['blog', 68], ['product', 53], ['recipe', 25], ['br
     const html = read(path.join(themeDir, `pages/${lang}/${page}.php`));
     const links = html.match(/<nav class="lux-static-detail-links"[^>]*><ul>([\s\S]*?)<\/ul><\/nav>/)?.[1];
     assert(links, `${lang}/${page} needs server-rendered detail links`);
-    assert((links.match(/<li><a href=/g) || []).length === count, `${lang}/${page} detail links are incomplete`);
+    assert((links.match(/<li>(?:<h3>)?<a href=/g) || []).length === count, `${lang}/${page} detail links are incomplete`);
+    if (lang === 'en' && ['blog', 'product'].includes(page)) assert((links.match(/<h3>/g) || []).length === count, `${lang}/${page} fallback entries need descriptive headings`);
   }
 }
 assert(!/srcset="[^"\n]*get_template_directory_uri\(\) \. '\/assets\/[^']+ \d+w/.test(generatedPages), 'generated srcset descriptors remain outside PHP asset paths');

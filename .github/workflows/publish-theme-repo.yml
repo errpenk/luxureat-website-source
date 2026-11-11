@@ -64,6 +64,7 @@ jobs:
       - name: Verify built theme
         run: |
           node tools/verify-theme.mjs "$GITHUB_WORKSPACE/.deploy"
+          python3 qa/verify_readability.py
 
       - name: Lint generated PHP
         run: |

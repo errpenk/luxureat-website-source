@@ -242,6 +242,7 @@ function initLuxCaviarControls() {
       const group = button.dataset.caviarFilterGroup === "type" ? "type" : "category";
       const selected = activeFilters[group];
       if (filter === "all") selected.clear();
+      else if (group === "category") { selected.clear(); selected.add(filter); }
       else if (selected.has(filter)) selected.delete(filter);
       else selected.add(filter);
       filterButtons.forEach((item) => {
@@ -313,9 +314,8 @@ function initLuxCaviarControls() {
     .flatMap((value) => value.split(","))
     .map((value) => value.trim())
     .filter(Boolean);
-  requestedCategories.forEach((category) => {
-    filterButtons.find((button) => button.dataset.caviarFilterGroup === "category" && button.dataset.caviarFilter === category)?.click();
-  });
+  const requestedCategory = requestedCategories.map((category) => filterButtons.find((button) => button.dataset.caviarFilterGroup === "category" && button.dataset.caviarFilter === category)).find(Boolean);
+  requestedCategory?.click();
   applyFilter();
   applyView();
   applySort();

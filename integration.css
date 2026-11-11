@@ -1054,6 +1054,11 @@ header:has(.lux-hero-fade-both) {
   border-top: 0 !important;
   min-width: 0;
 }
+.lux-ms-faq summary > h3 {
+  margin: 0;
+  font: inherit !important;
+  letter-spacing: inherit;
+}
 .lux-product-catalog [data-caviar-item] > div:last-child > div:first-child {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr);
