@@ -1041,16 +1041,14 @@ header:has(.lux-hero-fade-both) {
   aspect-ratio: auto !important;
   background: #fff !important;
 }
-.lux-product-catalog [data-caviar-item] > div:first-child > div:first-child {
+.lux-product-catalog [data-caviar-item] > div:first-child > :is(div, img):first-child {
+  object-fit: contain;
   background-color: #fff;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
-  filter: grayscale(.35) brightness(.82) contrast(1.08) !important;
+  filter: none !important;
   transform: none !important;
-}
-.lux-product-catalog [data-caviar-item]:hover > div:first-child > div:first-child {
-  filter: grayscale(0) brightness(.96) contrast(1.08) !important;
 }
 .lux-product-catalog [data-caviar-item] > div:last-child {
   padding: 18px;
@@ -10225,6 +10223,7 @@ html[lang^="en"] .lux-home-timeline-steps article::after {
   clip-path: polygon(0 36%, 31% 0, 100% 0, 100% 57%, 68% 100%, 0 100%);
 }
 #selected-products > .grid > .group > img {
+  filter: none !important;
   opacity: .78 !important;
   transition: transform .8s cubic-bezier(.4,0,.2,1), opacity .8s ease;
 }

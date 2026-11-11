@@ -37,7 +37,7 @@ function renderLuxProductCatalog() {
   grid.innerHTML = entries.map(([key, product], index) => `
     <article class="group cursor-pointer flex flex-col gap-6${product.catalogOnly ? " is-catalog-only" : ""}" data-caviar-item data-species="${luxEscapeProductHtml((product.categories || [product.category || speciesFor(key)]).join(" "))}" data-product-type="${luxEscapeProductHtml(product.typeKey || "")}" data-price="${Number(product.amount) || 0}" data-recommendation="${index + 1}" data-title="${luxEscapeProductHtml(product.title)}">
       <div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container-low" data-product-open="${luxEscapeProductHtml(key)}" role="button" tabindex="0" aria-label="${luxEscapeProductHtml(labels.detail)}: ${luxEscapeProductHtml(product.title)}">
-        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0" width="720" height="540" loading="lazy" decoding="async" src="${luxEscapeProductHtml(window.luxImageSource(product.image, true))}" alt="">
+        <img class="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" width="720" height="540" loading="lazy" decoding="async" src="${luxEscapeProductHtml(window.luxImageSource(product.image, true))}" alt="">
       </div>
       <div class="flex flex-col gap-2 border-t border-secondary/20 pt-4">
         <div class="flex justify-between items-start">
