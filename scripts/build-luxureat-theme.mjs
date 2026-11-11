@@ -608,8 +608,8 @@ function luxureat_cms_payload($kind) {
         $lang = get_post_meta($post->ID, '_luxureat_lang', true);
         $image = get_the_post_thumbnail_url($post->ID, 'medium_large');
         $record = array(
-            'title' => get_the_title($post),
-            'intro' => get_the_excerpt($post),
+            'title' => html_entity_decode(get_the_title($post), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+            'intro' => html_entity_decode(get_the_excerpt($post), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
             'image' => $image ? $image : '',
         );
         if ($kind !== 'blog') {
