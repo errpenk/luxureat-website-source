@@ -25,6 +25,14 @@ vm.runInContext(core.slice(core.indexOf('const luxIsMobile'),core.indexOf('windo
 assert.equal(desktop.window.luxImageSource('https://example.test/assets/media/test.webp?v=1'),'https://example.test/assets/media/test.webp?v=1','Full-size viewers keep their original desktop images');
 assert.equal(desktop.window.luxImageSource('https://example.test/assets/media/test.webp?v=1',true),'https://example.test/assets/media/test-720.webp?v=1','Desktop previews use the existing smaller asset');
 assert.equal(desktop.window.luxImageSource('https://outside.test/image.webp',true),'https://outside.test/image.webp','Unknown images keep their source');
+const backgroundStart = core.indexOf('const loadLuxBackground =');
+vm.runInContext(core.slice(backgroundStart,core.indexOf('\nif ("IntersectionObserver" in window)',backgroundStart)),desktop);
+for (const width of [300, 1440]) {
+  const background = {dataset:{luxBg:'https://example.test/assets/media/test.webp?v=1'},style:{},getBoundingClientRect:()=>({width})};
+  desktop.background=background;
+  vm.runInContext('loadLuxBackground(background)',desktop);
+  assert.equal(background.style.backgroundImage,`url("https://example.test/assets/media/${width === 300 ? 'test-720' : 'test'}.webp?v=1")`,'Narrow product backgrounds use previews while wide backgrounds retain detail');
+}
 let nativeSelector;
 context.document.querySelectorAll = (selector) => { nativeSelector = selector; return []; };
 vm.runInContext(core.slice(core.indexOf('const luxNativeLazyImages'), core.indexOf('const luxDeferredScripts')), context);

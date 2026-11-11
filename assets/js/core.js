@@ -222,7 +222,7 @@ const loadLuxBackground = (element) => {
     delete element.dataset.luxHomeBg;
     return;
   }
-  element.style.backgroundImage = `url("${luxImageSource(element.dataset.luxBg)}")`;
+  element.style.backgroundImage = `url("${luxImageSource(element.dataset.luxBg, element.getBoundingClientRect().width <= 720)}")`;
   delete element.dataset.luxBg;
 };
 
