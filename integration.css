@@ -1048,7 +1048,6 @@ header:has(.lux-hero-fade-both) {
   background-repeat: no-repeat !important;
   background-size: contain !important;
   filter: none !important;
-  transform: none !important;
 }
 .lux-product-catalog [data-caviar-item] > div:last-child {
   padding: 18px;
