@@ -116,7 +116,8 @@ for (const [, route, handles] of assetsByPath.matchAll(/'([^']+)' => array\(([^)
 const generatedPages = walk(path.join(themeDir, 'pages')).filter((file) => file.endsWith('.php')).map(read).join('\n');
 for (const file of walk(path.join(themeDir, 'pages/en')).filter((file) => file.endsWith('.php'))) {
   const html = read(file).replace(/<\?php[\s\S]*?\?>/g, '');
-  const title = html.match(/<title>(.*?)<\/title>/)?.[1];
+  const titleMarkup = read(file).match(/<title>(.*?)<\/title>/)?.[1];
+  const title = titleMarkup?.match(/seo_value\('title', '(.*)'\)/)?.[1]?.replace(/\\(['\\])/g, '$1') || titleMarkup;
   assert(title && title.length <= 70, `${file} has a concise search title`);
   for (const image of html.matchAll(/<img\b[^>]*>/gi)) assert(/\balt\s*=/.test(image[0]), `${file} image has an alt attribute`);
 }

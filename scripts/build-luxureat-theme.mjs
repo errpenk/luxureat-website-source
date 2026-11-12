@@ -213,6 +213,8 @@ function rewriteHref(href, currentLang) {
 
 function convertHtmlSource(html, lang) {
   html = stripKnownLocalIncludes(html);
+  html = html.replace(/<title>([^<]*)<\/title>/i, (_tag, title) => `<title><?php echo esc_html(luxureat_static_seo_value('title', '${escapePhpString(title)}')); ?></title>`);
+  html = html.replace(/<meta name="description" content="([^"]*)">/i, (_tag, description) => `<meta name="description" content="<?php echo esc_attr(luxureat_static_seo_value('description', '${escapePhpString(description)}')); ?>">`);
   html = html.replace(/<meta\b(?=[^>]*\bname=["']robots["'])[^>]*>\s*/gi, '');
   html = html.replace(/(<figure class="lux-reader-cover"><img\b[^>]*\bsizes=)"[^"]*"/g, '$1"(max-width: 708px) calc(100vw - 28px), (max-width: 840px) 680px, (max-width: 1220px) calc(42.5vw - 34px), 485px"');
   html = html.replace(/<img\b[^>]*>/g, (tag) => /\bloading="lazy"/.test(tag)
@@ -512,7 +514,7 @@ function buildSeoCatalogPhp() {
   const articleRows = articleInputs.map((article) => {
     const alternate = articleInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
     const image = String(article.image || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
-    return `        '${articleRoute(article)}' => array('title' => '${escapePhpString(seoTitle(article.title, articleRoute(article)))}', 'description' => '${escapePhpString(article.intro)}', 'lang' => '${article.lang}', 'alternate' => '${alternate ? articleRoute(alternate) : articleRoute(article)}', 'indexable' => true, 'type' => 'Article', 'image' => '${escapePhpString(image)}', 'author' => 'LuxurEat'),`;
+    return `        '${articleRoute(article)}' => array('title' => '${escapePhpString(seoTitle(article.title, articleRoute(article)))}', 'description' => '${escapePhpString(article.intro)}', 'lang' => '${article.lang}', 'alternate' => '${alternate ? articleRoute(alternate) : articleRoute(article)}', 'indexable' => true, 'type' => 'Article', 'cms_kind' => 'blog', 'cms_source' => '${escapePhpString(`${article.lang}-academy-${article.slug}`)}', 'image' => '${escapePhpString(image)}', 'author' => 'LuxurEat'),`;
   });
   const productRows = productInputs.map((product) => {
     const alternate = productInputs.find((candidate) => candidate.lang !== product.lang && candidate.id === product.id);
@@ -524,7 +526,7 @@ function buildSeoCatalogPhp() {
     const image = String(article.image || '').split('/assets/')[1] || 'media/brand/home-hero-truffle-poster.webp';
     const minutes = String(article.recipe.time).match(/\d+/)?.[0];
     const nutrition = (article.recipe.nutrition || []).map(([label, value]) => `${label}: ${value}`).join('; ');
-    return `        '${recipeRoute(article)}' => array('title' => '${escapePhpString(article.title)} | LuxurEat', 'description' => '${escapePhpString(article.intro)}', 'lang' => '${article.lang}', 'alternate' => '${recipeRoute(alternate || article)}', 'indexable' => true, 'type' => 'Recipe', 'image' => '${escapePhpString(image)}', 'category' => '${escapePhpString(article.eyebrow)}', 'totalTime' => '${minutes ? `PT${minutes}M` : ''}', 'yield' => '${escapePhpString(article.recipe.servings)}', 'ingredients' => ${phpList(article.recipe.ingredients)}, 'instructions' => ${phpList(article.recipe.steps)}, 'nutrition' => '${escapePhpString(nutrition)}'),`;
+    return `        '${recipeRoute(article)}' => array('title' => '${escapePhpString(article.title)} | LuxurEat', 'description' => '${escapePhpString(article.intro)}', 'lang' => '${article.lang}', 'alternate' => '${recipeRoute(alternate || article)}', 'indexable' => true, 'type' => 'Recipe', 'cms_kind' => 'recipe', 'cms_source' => '${escapePhpString(article.id)}', 'image' => '${escapePhpString(image)}', 'category' => '${escapePhpString(article.eyebrow)}', 'totalTime' => '${minutes ? `PT${minutes}M` : ''}', 'yield' => '${escapePhpString(article.recipe.servings)}', 'ingredients' => ${phpList(article.recipe.ingredients)}, 'instructions' => ${phpList(article.recipe.steps)}, 'nutrition' => '${escapePhpString(nutrition)}'),`;
   });
   const brandNewsRows = brandNewsInputs.map((item) => {
     const alternate = brandNewsInputs.find((candidate) => candidate.lang !== item.lang && candidate.id === item.id);
@@ -1097,6 +1099,41 @@ ${seoCatalog}
     );
 }
 
+function luxureat_cms_seo_overrides($route) {
+    static $cache = array();
+    if (isset($cache[$route])) return $cache[$route];
+    $cache[$route] = array();
+    $catalog = luxureat_static_seo_catalog();
+    if (!isset($catalog[$route])) return $cache[$route];
+    $meta = $catalog[$route];
+    $post = null;
+    if (isset($meta['cms_source'], $meta['cms_kind'])) {
+        $post = luxureat_cms_post($meta['cms_source'], $meta['lang'], $meta['cms_kind']);
+    } elseif ($route === 'en/news/truffelixir-sweet-world') {
+        $post = get_page_by_path('trufflelixir-where-truffle-meets-the-world-of-sweets', OBJECT, 'post');
+    }
+    // Draft metadata must never replace a published page's search appearance.
+    if (!$post || $post->post_status !== 'publish') return $cache[$route];
+    foreach (array('title' => '_yoast_wpseo_title', 'description' => '_yoast_wpseo_metadesc') as $field => $key) {
+        $value = get_post_meta($post->ID, $key, true);
+        if (!is_string($value) || trim($value) === '') continue;
+        if (function_exists('wpseo_replace_vars')) $value = wpseo_replace_vars($value, $post);
+        $value = trim(wp_strip_all_tags($value));
+        if ($value !== '') $cache[$route][$field] = $value;
+    }
+    $tags = wp_get_post_terms($post->ID, 'post_tag', array('fields' => 'names'));
+    if (!is_wp_error($tags) && $tags) $cache[$route]['keywords'] = $tags;
+    return $cache[$route];
+}
+
+function luxureat_static_seo_value($field, $fallback) {
+    $path = luxureat_static_current_path();
+    $aliases = luxureat_static_aliases();
+    $route = isset($aliases[$path]) ? $aliases[$path] : $path;
+    $values = luxureat_cms_seo_overrides($route);
+    return isset($values[$field]) ? $values[$field] : html_entity_decode($fallback, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+}
+
 function luxureat_static_disable_yoast_output() {
     $path = luxureat_static_current_path();
     $path = $path === '' || $path === '__home' ? 'zh' : $path;
@@ -1149,7 +1186,7 @@ function luxureat_static_seo_head() {
         return;
     }
 
-    $meta = $catalog[$route];
+    $meta = array_replace($catalog[$route], luxureat_cms_seo_overrides($route));
     $alternate = isset($catalog[$meta['alternate']]) ? $catalog[$meta['alternate']] : null;
     $zh_route = $meta['lang'] === 'zh' ? $route : $meta['alternate'];
     $canonical = luxureat_static_url($route);
@@ -1179,6 +1216,7 @@ function luxureat_static_seo_head() {
         'name' => $meta['title'],
         'headline' => $is_article ? $meta['title'] : null,
         'description' => $meta['description'],
+        'keywords' => ($is_article || $meta['type'] === 'Recipe') && isset($meta['keywords']) ? $meta['keywords'] : null,
         'url' => $canonical,
         'image' => $image,
         'inLanguage' => $meta['lang'] === 'zh' ? 'zh-CN' : 'en',
