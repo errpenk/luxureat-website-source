@@ -1134,6 +1134,24 @@ function luxureat_static_seo_value($field, $fallback) {
     return isset($values[$field]) ? $values[$field] : html_entity_decode($fallback, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }
 
+function luxureat_cms_canonical($canonical) {
+    if (!is_singular('post') || is_preview()) return $canonical;
+    $post = get_queried_object();
+    if (!$post || $post->post_status !== 'publish') return $canonical;
+    $source = get_post_meta($post->ID, '_luxureat_source_id', true);
+    $lang = get_post_meta($post->ID, '_luxureat_lang', true);
+    $kind = get_post_meta($post->ID, '_luxureat_kind', true);
+    if (!$source || !$lang || !$kind) return $canonical;
+    foreach (luxureat_static_seo_catalog() as $route => $meta) {
+        if (($meta['cms_source'] ?? '') === $source && ($meta['cms_kind'] ?? '') === $kind && $meta['lang'] === $lang) {
+            return luxureat_static_url($route);
+        }
+    }
+    return $canonical;
+}
+add_filter('wpseo_canonical', 'luxureat_cms_canonical');
+add_filter('wpseo_opengraph_url', 'luxureat_cms_canonical');
+
 function luxureat_static_disable_yoast_output() {
     $path = luxureat_static_current_path();
     $path = $path === '' || $path === '__home' ? 'zh' : $path;
@@ -1153,7 +1171,7 @@ function luxureat_static_public_plugin_output() {
     $path = $path === '' || $path === '__home' ? 'zh' : $path;
     $aliases = luxureat_static_aliases();
     $route = isset($aliases[$path]) ? $aliases[$path] : $path;
-    if (!isset(luxureat_static_seo_catalog()[$route])) return;
+    if (!isset(luxureat_static_seo_catalog()[$route]) && !is_singular('post')) return;
     add_filter('jetpack_photon_skip_image', '__return_true');
     if (!is_user_logged_in() && in_array($_SERVER['REQUEST_METHOD'] ?? 'GET', array('GET', 'HEAD'), true)) {
         // Newsletter proofs expire in 15 minutes, so cached HTML must stay younger.
@@ -1786,6 +1804,7 @@ $is_zh_page = $page_language === 'zh';
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo esc_html(wp_get_document_title()); ?></title>
     <?php wp_head(); ?>
 </head>
 <body <?php body_class('lux-wp-page-shell'); ?>>
