@@ -509,7 +509,7 @@ function buildAssetCatalogPhp() {
 function buildSeoCatalogPhp() {
   const pageRows = pages.map((page) => {
     const alternate = pages.find((candidate) => candidate.key === page.key && candidate.lang !== page.lang);
-    return `        '${escapePhpString(page.route)}' => array('title' => '${escapePhpString(page.seo.title)}', 'description' => '${escapePhpString(page.seo.description)}', 'lang' => '${page.lang}', 'alternate' => '${escapePhpString(alternate?.route || page.route)}', 'indexable' => ${page.indexable === false ? 'false' : 'true'}, 'type' => 'WebPage', 'image' => 'media/brand/home-hero-truffle-poster.webp'),`;
+    return `        '${escapePhpString(page.route)}' => array('title' => '${escapePhpString(page.seo.title)}', 'description' => '${escapePhpString(page.seo.description)}', 'lang' => '${page.lang}', 'alternate' => '${escapePhpString(alternate?.route || page.route)}', 'indexable' => ${page.indexable === false ? 'false' : 'true'}, 'type' => 'WebPage', 'cms_kind' => 'page', 'cms_source' => '${escapePhpString(page.route)}', 'image' => 'media/brand/home-hero-truffle-poster.webp'),`;
   });
   const articleRows = articleInputs.map((article) => {
     const alternate = articleInputs.find((candidate) => candidate.lang !== article.lang && candidate.slug === article.slug);
@@ -1108,7 +1108,13 @@ function luxureat_cms_seo_overrides($route) {
     $meta = $catalog[$route];
     $post = null;
     if (isset($meta['cms_source'], $meta['cms_kind'])) {
-        $post = luxureat_cms_post($meta['cms_source'], $meta['lang'], $meta['cms_kind']);
+        if ($meta['cms_kind'] === 'page') {
+            static $pages = null;
+            if ($pages === null) $pages = function_exists('luxureat_migration_pages') ? luxureat_migration_pages() : array();
+            if (in_array($route, (array) get_option('luxureat_migration_enabled', array()), true)) $post = $pages[$route] ?? null;
+        } else {
+            $post = luxureat_cms_post($meta['cms_source'], $meta['lang'], $meta['cms_kind']);
+        }
     } elseif ($route === 'en/news/truffelixir-sweet-world') {
         $post = get_page_by_path('trufflelixir-where-truffle-meets-the-world-of-sweets', OBJECT, 'post');
     }
@@ -1121,8 +1127,10 @@ function luxureat_cms_seo_overrides($route) {
         $value = trim(wp_strip_all_tags($value));
         if ($value !== '') $cache[$route][$field] = $value;
     }
-    $tags = wp_get_post_terms($post->ID, 'post_tag', array('fields' => 'names'));
-    if (!is_wp_error($tags) && $tags) $cache[$route]['keywords'] = $tags;
+    if (($meta['cms_kind'] ?? '') !== 'page') {
+        $tags = wp_get_post_terms($post->ID, 'post_tag', array('fields' => 'names'));
+        if (!is_wp_error($tags) && $tags) $cache[$route]['keywords'] = $tags;
+    }
     return $cache[$route];
 }
 
@@ -1130,6 +1138,7 @@ function luxureat_static_seo_value($field, $fallback) {
     $path = luxureat_static_current_path();
     $aliases = luxureat_static_aliases();
     $route = isset($aliases[$path]) ? $aliases[$path] : $path;
+    if ($route === '' || $route === '__home') $route = 'zh';
     $values = luxureat_cms_seo_overrides($route);
     return isset($values[$field]) ? $values[$field] : html_entity_decode($fallback, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }
