@@ -43,6 +43,7 @@ jobs:
           npm run theme:check
           python3 qa/verify_readability.py
           find .deploy/luxureat-static -name '*.php' -print0 | xargs -0 -n 1 php -l
+          php qa/verify_cms_seo.php
           php qa/verify_media_delivery.php
           php qa/verify_page_image_sizes.php
           php qa/verify_migration_pilot.php
