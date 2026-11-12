@@ -13,6 +13,9 @@ function luxureat_cms_post($source, $lang, $kind) {
     return (object) array('ID' => $source, 'post_status' => $source === 'draft' ? 'draft' : 'publish', 'post_title' => 'A real article');
 }
 function get_post_meta($id, $key, $single) {
+    if ($key === '_luxureat_source_id') return 'published';
+    if ($key === '_luxureat_lang') return 'en';
+    if ($key === '_luxureat_kind') return 'blog';
     if ($id === 'empty') return '';
     if ($id === 'template') return $key === '_yoast_wpseo_title' ? '%%title%% | LuxurEat' : '';
     return $key === '_yoast_wpseo_title' ? '<b>Curated title</b>' : 'Curated description';
@@ -24,6 +27,11 @@ function is_wp_error($value) { return $value instanceof stdClass; }
 function luxureat_static_current_path() { return $GLOBALS['route']; }
 function luxureat_static_aliases() { return array('legacy' => 'published'); }
 define('OBJECT', 'OBJECT');
+function add_filter(...$args) {}
+function is_singular($type) { return $GLOBALS['singular'] ?? true; }
+function is_preview() { return $GLOBALS['preview'] ?? false; }
+function get_queried_object() { return (object) array('ID' => 'published', 'post_status' => 'publish'); }
+function luxureat_static_url($route) { return 'https://example.test/' . $route . '/'; }
 function get_page_by_path($path, $output, $type) { return luxureat_cms_post('published', 'en', 'news'); }
 eval($match[0]);
 function check($condition, $message) { if (!$condition) throw new RuntimeException($message); }
@@ -38,4 +46,10 @@ $GLOBALS['route'] = 'legacy';
 check(luxureat_static_seo_value('title', 'Fallback') === 'Curated title', 'Aliases use the same SEO metadata.');
 $GLOBALS['route'] = 'empty';
 check(luxureat_static_seo_value('title', 'Tom &amp; Olive&#039;s') === "Tom & Olive's", 'Empty metadata retains the decoded fallback.');
+check(luxureat_cms_canonical('native') === 'https://example.test/published/', 'Native post uses its matching public canonical route.');
+$GLOBALS['preview'] = true;
+check(luxureat_cms_canonical('native') === 'native', 'Preview canonical stays unchanged.');
+$GLOBALS['preview'] = false;
+$GLOBALS['singular'] = false;
+check(luxureat_cms_canonical('native') === 'native', 'Unrelated pages stay unchanged.');
 echo "CMS SEO fields, aliases, tags, templates and draft isolation passed.\n";

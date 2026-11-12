@@ -8,6 +8,7 @@ function luxureat_static_current_path() { return $GLOBALS['route']; }
 function luxureat_static_aliases() { return array(); }
 function luxureat_static_seo_catalog() { return array('zh' => array()); }
 function is_user_logged_in() { return $GLOBALS['logged_in']; }
+function is_singular($type) { return $GLOBALS['route'] === 'native-post'; }
 function add_filter(...$args) {}
 function do_action($hook, $ttl) { if ($hook !== 'litespeed_control_set_ttl' || $ttl !== 300) throw new RuntimeException('HTML cache TTL exceeds proof lifetime.'); }
 function remove_action($hook, $callback, $priority) { $GLOBALS['removed'][] = $callback[1]; }
@@ -22,6 +23,8 @@ foreach (array(
     array('zh', true, 'GET', false, true),
     array('zh', false, 'POST', false, true),
     array('unknown', false, 'GET', false, false),
+    array('native-post', false, 'GET', true, true),
+    array('native-post', true, 'POST', false, true),
 ) as $case) {
     list($route, $logged_in, $_SERVER['REQUEST_METHOD'], $session, $head) = $case;
     $removed = array();

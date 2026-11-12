@@ -17,7 +17,7 @@ register_activation_hook(__FILE__, function () {
     $replaced = array();
     try {
         foreach ($manifest as $file => $hash) {
-            if (!preg_match('~^(?:functions\\.php|page-migration\\.php|(?:style|integration)\\.css|assets/js/(?:core|gallery|certification-ui|journal|academy|products)\\.js|pages/(?:zh|en)/[a-z0-9/_-]+\\.php)$~D', $file) || strpos($file, '..') !== false) {
+            if (!preg_match('~^(?:functions\\.php|(?:page-migration|page|single)\\.php|(?:style|integration)\\.css|assets/js/(?:core|gallery|certification-ui|journal|academy|products)\\.js|pages/(?:zh|en)/[a-z0-9/_-]+\\.php)$~D', $file) || strpos($file, '..') !== false) {
                 throw new RuntimeException('Invalid release path.');
             }
             $source = __DIR__ . '/payload/' . $file;
