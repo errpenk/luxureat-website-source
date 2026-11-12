@@ -4,6 +4,7 @@ if (!preg_match('/function luxureat_cms_seo_overrides\(.*?(?=function luxureat_s
 function luxureat_static_seo_catalog() {
     $rows = array();
     foreach (array('published', 'empty', 'draft', 'missing', 'template', 'tag-error') as $route) $rows[$route] = array('cms_source' => $route, 'cms_kind' => 'blog', 'lang' => 'en');
+    foreach (array('zh', 'page-live', 'page-draft', 'page-disabled') as $route) $rows[$route] = array('cms_source' => $route, 'cms_kind' => 'page', 'lang' => 'zh');
     $rows['product'] = array('type' => 'Product');
     $rows['en/news/truffelixir-sweet-world'] = array('type' => 'NewsArticle');
     return $rows;
@@ -11,6 +12,12 @@ function luxureat_static_seo_catalog() {
 function luxureat_cms_post($source, $lang, $kind) {
     if ($source === 'missing') return null;
     return (object) array('ID' => $source, 'post_status' => $source === 'draft' ? 'draft' : 'publish', 'post_title' => 'A real article');
+}
+function get_option($key, $fallback) { return array('zh', 'page-live', 'page-draft'); }
+function luxureat_migration_pages() {
+    $pages = array();
+    foreach (array('zh', 'page-live', 'page-draft', 'page-disabled') as $route) $pages[$route] = (object) array('ID' => $route, 'post_status' => $route === 'page-draft' ? 'draft' : 'publish');
+    return $pages;
 }
 function get_post_meta($id, $key, $single) {
     if ($key === '_luxureat_source_id') return 'published';
@@ -42,6 +49,13 @@ foreach (array('draft', 'missing', 'product', 'unknown') as $route) check(luxure
 check(luxureat_cms_seo_overrides('template')['title'] === 'A real article | LuxurEat', 'Expand supported Yoast template variables.');
 check(!isset(luxureat_cms_seo_overrides('tag-error')['keywords']), 'Ignore tag query errors.');
 check(luxureat_cms_seo_overrides('en/news/truffelixir-sweet-world')['title'] === 'Curated title', 'News alias uses its published source.');
+check(luxureat_cms_seo_overrides('page-live')['title'] === 'Curated title', 'Published enabled pages use native SEO.');
+foreach (array('page-draft', 'page-disabled') as $route) check(luxureat_cms_seo_overrides($route) === array(), 'Inactive page retains static fallback.');
+check(!isset(luxureat_cms_seo_overrides('page-live')['keywords']), 'Page SEO does not query post tags.');
+foreach (array('', '__home', 'zh') as $route) {
+    $GLOBALS['route'] = $route;
+    check(luxureat_static_seo_value('title', 'Fallback') === 'Curated title', 'Homepage paths share native SEO.');
+}
 $GLOBALS['route'] = 'legacy';
 check(luxureat_static_seo_value('title', 'Fallback') === 'Curated title', 'Aliases use the same SEO metadata.');
 $GLOBALS['route'] = 'empty';
