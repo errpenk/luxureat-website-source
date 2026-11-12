@@ -14000,9 +14000,11 @@ html[lang] body .lux-brand-news-reader .lux-brand-news-copy p {
 .lux-brand-news-event-link:focus-visible,
 .lux-brand-news-links > a:focus-visible { outline: 2px solid #006a64; outline-offset: 3px; }
 .lux-brand-news-event-link { margin-top: 54px; cursor: pointer; }
+.lux-brand-news-event-link + .lux-brand-news-event-link { margin-top: 0; border-top: 0; }
 .lux-brand-news-links { display: grid; margin-top: 42px; }
 .lux-brand-news-links > strong { margin-bottom: 12px; color: #4f4b46; }
 .lux-brand-news-links > a { cursor: pointer; }
+.lux-brand-news-links > a + a { border-top: 0; }
 .lux-brand-news-media figcaption {
   margin-top: 10px;
   color: #99938c;
