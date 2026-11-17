@@ -1125,6 +1125,7 @@ function luxureat_cms_seo_overrides($route) {
         if (!is_string($value) || trim($value) === '') continue;
         if (function_exists('wpseo_replace_vars')) $value = wpseo_replace_vars($value, $post);
         $value = trim(wp_strip_all_tags($value));
+        if ($field === 'description' && in_array($route, array('zh', 'zh/product', 'zh/about-us', 'zh/contact', 'en/brand', 'en/about-us'), true) && strlen($value) < strlen($meta['description'])) continue;
         if ($value !== '') $cache[$route][$field] = $value;
     }
     if (($meta['cms_kind'] ?? '') !== 'page') {
