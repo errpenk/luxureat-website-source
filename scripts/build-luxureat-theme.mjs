@@ -618,7 +618,7 @@ function luxureat_cms_payload($kind) {
         $record = array(
             'title' => html_entity_decode(get_the_title($post), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
             'intro' => html_entity_decode(get_the_excerpt($post), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
-            'image' => $image ? $image : '',
+            'image' => $image ? luxureat_origin_upload_images($image) : '',
         );
         if ($kind !== 'blog') {
             $record['cmsHtml'] = apply_filters('the_content', $post->post_content);
