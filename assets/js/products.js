@@ -453,7 +453,7 @@ function initLuxProductDetails() {
             <div class="lux-product-thumbs" aria-label="${luxEscapeProductHtml(product.title)} gallery">
               ${galleryImages.map((src, index) => `<button type="button" class="lux-product-thumb${index === 0 ? " is-active" : ""}" data-product-gallery="${index}" aria-label="${luxEscapeProductHtml(product.title)} ${index + 1}"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(src)}" alt="${luxEscapeProductHtml(product.title)} ${index + 1}"></button>`).join("")}
             </div>
-            <button type="button" class="lux-product-image" data-product-image-zoom aria-label="${luxEscapeProductHtml(localized("放大查看", "Enlarge"))}：${luxEscapeProductHtml(product.title)}"><img loading="lazy" decoding="async" data-product-main-image src="${luxEscapeProductHtml(galleryImages[0] || product.image)}" alt="${luxEscapeProductHtml(product.title)}"></button>
+            <button type="button" class="lux-product-image" data-product-image-zoom aria-label="${luxEscapeProductHtml(localized("放大查看", "Enlarge"))}：${luxEscapeProductHtml(product.title)}"><img loading="eager" fetchpriority="high" decoding="async" data-product-main-image src="${luxEscapeProductHtml(galleryImages[0] || product.image)}" alt="${luxEscapeProductHtml(product.title)}"></button>
           </div>
           <div class="lux-product-summary">
             <span>${luxEscapeProductHtml(product.eyebrow)}</span>

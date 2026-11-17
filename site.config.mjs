@@ -1,4 +1,4 @@
-export const assetVersion = "20261110-truffelixir-photos-news";
+export const assetVersion = "20261117-fhc-gallery-seo1";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -24,10 +24,10 @@ export const navigation = [
 
 export const seo = {
   zh: {
-    home: ["LuxurEat（露意膳） | 意大利高端美食与品牌合作", "LuxurEat（露意膳）Group 专注意大利高端美食、地道风味与中国市场合作，提供产品、食谱、品牌内容与专业服务。"],
-    journal: ["关于我们 | LuxurEat（露意膳）", "了解 LuxurEat（露意膳）的品牌传承、产地故事、品质承诺与时令观察。"],
+    home: ["LuxurEat（露意膳） | 意大利高端美食与品牌合作", "LuxurEat（露意膳）连接意大利高端美食与中国市场。探索松露、鱼子酱、意式食谱、品牌故事与展会动态，了解产品供应、品牌合作及进出口市场服务。"],
+    journal: ["关于我们 | LuxurEat（露意膳）", "认识 LuxurEat（露意膳）的品牌传承与意大利产地故事。了解我们如何甄选松露、鱼子酱等高端食材，以品质、安全和真实风味连接意大利生产者与中国市场。"],
     new: ["热门新品 | LuxurEat（露意膳）", "发现 LuxurEat（露意膳）的意大利橄榄油、披萨与意式手工冰淇淋等热门新品。"],
-    products: ["我们的产品 | LuxurEat（露意膳）", "浏览 LuxurEat（露意膳）精选意大利高端美食，包括松露、鱼子酱等产品。"],
+    products: ["我们的产品 | LuxurEat（露意膳）", "探索 LuxurEat（露意膳）精选意大利高端食材，浏览松露、鱼子酱及意式美食系列。按产品分类了解风味、规格与使用场景，为餐饮选品和品牌合作寻找灵感。"],
     rituals: ["食谱艺术 | LuxurEat（露意膳）", "从意大利地域风味到家庭餐桌，探索 LuxurEat（露意膳）的中英文食谱与烹饪灵感。"],
     news: ["品牌新闻 | LuxurEat（露意膳）", "查看 LuxurEat（露意膳）最新品牌活动、行业展会、合作动态与现场故事。"],
     gallery: ["企业画廊 | LuxurEat（露意膳）", "按时间、地点、展会与名称浏览 LuxurEat（露意膳）的现场图片和视频。"],
@@ -36,15 +36,15 @@ export const seo = {
     gifting: ["商务合作 | LuxurEat（露意膳）", "探索 LuxurEat（露意膳）的国际市场定制、品牌合作、渠道方案与中国市场服务。"],
     "market-insights": ["中国市场洞察 | LuxurEat（露意膳）", "了解中国市场规模、城市与经济中心、意中贸易，以及意大利食品、饮料和葡萄酒的市场数据。"],
     "import-export": ["中国进出口与市场服务 | LuxurEat（露意膳）", "了解 LuxurEat China 的进口中国、中国采购与出口、市场落地、品牌数字化与商务拓展服务。"],
-    contact: ["联系我们 | LuxurEat（露意膳）", "联系 LuxurEat（露意膳），咨询品牌、产品、渠道与商务合作。"],
+    contact: ["联系我们 | LuxurEat（露意膳）", "联系 LuxurEat（露意膳）团队，咨询意大利松露、鱼子酱等高端食材的产品供应、渠道合作、品牌推广与中国市场服务。通过页面表单或电子邮件告诉我们您的需求。"],
   },
   en: {
     home: ["LuxurEat Group | Premium Italian Food & Brand Partnerships", "Discover premium Italian food, authentic regional flavours, recipes, brand stories and professional market partnerships from LuxurEat Group."],
-    journal: ["About Us | LuxurEat", "Discover LuxurEat's brand heritage, stories of place, quality promise and seasonal observations."],
+    journal: ["About Us | LuxurEat", "Meet LuxurEat and the Italian producers behind our premium food selection. Explore our brand story, approach to quality and safety, and work connecting authentic regional flavours with China."],
     new: ["New Arrivals | LuxurEat", "Discover new Italian olive oil, pizza and artisan Gelato selections from LuxurEat."],
     products: ["Our Products | LuxurEat", "Browse LuxurEat's selected premium Italian foods, truffle products, caviar and culinary collections."],
     rituals: ["Recipe Art | LuxurEat", "Explore bilingual Italian recipes, regional flavours and practical inspiration for the family table from LuxurEat."],
-    news: ["Brand News | LuxurEat", "Read the latest LuxurEat events, trade exhibitions, partnerships and stories from the field."],
+    news: ["Brand News | LuxurEat", "Read LuxurEat brand news from Italian food exhibitions and trade events, including product launches, producer stories and partnerships connecting premium Italian gastronomy with China."],
     gallery: ["Company Gallery | LuxurEat", "Explore LuxurEat exhibition photos and videos by date, location, event and name."],
     blog: ["Knowledge Blog | LuxurEat", "Explore the Truffle Academy, Italian Food Dictionary, producers and stories of place, caviar, olive oil and Italian craft."],
     certification: ["Quality & Certification | LuxurEat", "Explore LuxurEat's origin records, quality systems, certification documents, responsible trade and partnership projects."],

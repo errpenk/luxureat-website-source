@@ -118,7 +118,7 @@ const typographyCss = ["integration.css", ...fs.readdirSync(path.join(root, "ass
   .filter((name) => name.endsWith(".css") && !name.startsWith("tailwind-"))
   .map((name) => `assets/css/${name}`)].map(read).join("\n");
 const allowedFontFamilies = new Set([
-  "inherit", '"Material Symbols Outlined"', '"Nyght Serif"', '"Spectral"',
+  "inherit", '"Material Symbols Outlined"', '"Nyght Serif"', '"Spectral"', '"Lux Catalogue Latin"', '"Lux Catalogue Latin", serif',
   '"KingHwa Old Song Site"', '"LuxurEat ZhiSong Site"', '"LuxChinaMedia"',
 ]);
 const unapprovedFontFamilies = [...typographyCss.matchAll(/font-family\s*:\s*([^;}]+)/g)]
@@ -179,7 +179,7 @@ assert(event?.poster?.endsWith("/marca-china-2026-poster.webp"), "latest event h
 const productRuntime = read("assets/js/products.js");
 assert(productRuntime.includes("const activeFilters = { category: new Set(), type: new Set() }"), "product filters do not expose category and label-type multi-select state");
 assert(productRuntime.includes('item.dataset.species.split(" ").some((category) => activeFilters.category.has(category))') && productRuntime.includes("activeFilters.type.has(item.dataset.productType)"), "product cards do not combine multi-category and label-type filters");
-assert(productRuntime.includes('new URLSearchParams(location.search).getAll("category")') && productRuntime.includes("requestedCategories.forEach") && productRuntime.includes('button.dataset.caviarFilter === category'), "single or multi-category product links do not initialize the matching catalogue filters");
+assert(productRuntime.includes('new URLSearchParams(location.search).getAll("category")') && productRuntime.includes("requestedCategory?.click()") && productRuntime.includes('button.dataset.caviarFilter === category'), "product links do not initialize the matching catalogue filter");
 assert(productRuntime.includes("<strong>即将上新</strong><span>未找到相关产品</span>") && productRuntime.includes("<strong>Coming Soon</strong><span>No related products found</span>") && productRuntime.includes("empty.hidden = visibleCount !== 0"), "bilingual product empty-search state is missing");
 assert(productRuntime.includes("shouldCenterEmpty") && productRuntime.includes('empty.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" })'), "empty product state does not center itself when first shown");
 assert(productRuntime.includes("data-product-image-zoom") && productRuntime.includes("imageLightbox.showModal()"), "product detail image lightbox is missing");
@@ -204,7 +204,7 @@ assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM C
 assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
 assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
 assert(!/https:\/\/webapi\.amap\.com\//.test(journalRuntime), "legacy AMap loader is still present");
-assert(brandNews.length === 12 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
+assert(brandNews.length === 13 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
 const newFhcNews = brandNews.find((item) => item.id === "fhc-shanghai-2026-new-products");
 assert(newFhcNews?.eventId === "fhc-shanghai-2026" && newFhcNews.cardImage.endsWith("fhc-shanghai-2026-booth.webp") && newFhcNews.zh.sections.length === 4 && newFhcNews.en.sections.length === 4, "new FHC bilingual news is incomplete or uses the wrong image");
 const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026" && item.id !== newFhcNews.id);
@@ -273,7 +273,7 @@ assert(/\.lux-product-thumb:not\(:first-child\) img,[\s\S]*?\.lux-product-image\
 assert(/\.lux-product-recent-media\s*\{[^}]*background:\s*#fff;/s.test(integrationStyles) && /\.lux-product-recent-media > img\s*\{[^}]*object-fit:\s*contain;[^}]*object-position:\s*center;/s.test(integrationStyles), "recommended product thumbnails are not fully contained on white");
 assert(/\.lux-product-recent-media:hover > img,[\s\S]*?transform:\s*scale\(1\.025\);/s.test(integrationStyles), "recommended product thumbnails do not provide the subtle hover zoom");
 assert(!productRuntime.includes('"TEST"') && read("assets/data/products.js").includes('priceLabel: "PRICE"'), "product catalogue labels are not uniformly PRICE");
-assert(/\.lux-product-catalog \[data-caviar-item\] > div:first-child > div:first-child\s*\{[^}]*background-repeat:\s*no-repeat\s*!important;[^}]*background-size:\s*contain\s*!important;/s.test(integrationStyles), "product catalogue images are still cropped");
+assert(/\.lux-product-catalog \[data-caviar-item\] > div:first-child > :is\(div, img\):first-child\s*\{[^}]*background-repeat:\s*no-repeat\s*!important;[^}]*background-size:\s*contain\s*!important;/s.test(integrationStyles), "product catalogue images are still cropped");
 const newsletterStyles = read("assets/css/newsletter.css");
 const coreScript = read("assets/js/core.js");
 assert(integrationStyles.includes(".lux-header.is-scrolled") && integrationStyles.includes(".lux-header:has(.lux-nav.open)") && integrationStyles.includes("mix-blend-mode: difference"), "shared header contrast or mobile-menu surface styling is incomplete");

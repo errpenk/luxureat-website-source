@@ -42,10 +42,10 @@
   const pageHref = (page) => location.protocol === "file:" || location.pathname.endsWith(".html")
     ? `${page}.html`
     : `${lang === "zh" ? "/" : "/en/"}${page}/`;
-  const relatedLinks = (collection, className) => {
+  const relatedLinks = (collection, className, eventId = "sial-paris-2026") => {
     const links = collection
       ? [[`${pageHref("blog")}#olive-academy`, lang === "zh" ? "橄榄油学院" : "Olive Oil Academy"], [`${pageHref("product")}?category=olive-oil#product-catalogue`, lang === "zh" ? "橄榄油产品" : "Olive Oil Products"]]
-      : [[eventHref({ eventId: "sial-paris-2026" }), lang === "zh" ? "展会详情" : "Event details"], [pageHref("product"), lang === "zh" ? "我们的产品" : "Our Products"]];
+      : [[eventHref({ eventId }), lang === "zh" ? "展会详情" : "Event details"], [pageHref("product"), lang === "zh" ? "我们的产品" : "Our Products"]];
     const label = className === "lux-gallery-caption-related" ? "" : `<span>${lang === "zh" ? "相关搜索：" : "Related searches: "}</span>`;
     return `<nav class="${className}" aria-label="${lang === "zh" ? "相关搜索" : "Related searches"}">${label}${links.map(([href, name]) => `<a href="${escapeHtml(href)}">${escapeHtml(name)} <span aria-hidden="true">→</span></a>`).join("")}</nav>`;
   };
@@ -108,11 +108,11 @@
     const subtitle = eventFor(media)?.[lang]?.subtitle;
     const headingDetail = collection
       ? `<p class="lux-gallery-collection-subtitle">${escapeHtml(subtitle)}</p>`
-      : media.eventId === "sial-paris-2026"
-        ? `<p>${lang === "zh" ? "记录 SIAL Paris 2026 巴黎展会的意大利美食与现场交流。" : "Italian food and conversations at SIAL Paris 2026."}</p>`
+      : media.eventId === "sial-paris-2026" || media.eventId === "fhc-shanghai-2026"
+        ? `<p>${media.eventId === "sial-paris-2026" ? (lang === "zh" ? "记录 SIAL Paris 2026 巴黎展会的意大利美食与现场交流。" : "Italian food and conversations at SIAL Paris 2026.") : (lang === "zh" ? "记录 FHC 上海 2026 展台的产品品鉴与现场交流。" : "Product tastings and conversations at FHC Shanghai 2026.")}</p>`
         : `<p>${escapeHtml(placeName(media))} · ${escapeHtml(count)} ${lang === "zh" ? "条记录" : count === 1 ? "record" : "records"}</p>`;
-    const related = collection || media.eventId === "sial-paris-2026" ? relatedLinks(collection, "lux-gallery-related") : "";
-    const flag = collection ? "italy.svg" : media.eventId === "sial-paris-2026" ? "france.svg" : "";
+    const related = collection || ["sial-paris-2026", "fhc-shanghai-2026"].includes(media.eventId) ? relatedLinks(collection, "lux-gallery-related", media.eventId) : "";
+    const flag = collection ? "italy.svg" : media.eventId === "sial-paris-2026" ? "france.svg" : media.eventId === "fhc-shanghai-2026" ? "china.svg" : "";
     return `<section class="lux-gallery-event${collection ? " lux-gallery-collection" : ""}" id="${collection ? "olive-oil-origin" : escapeHtml(`event-${media.eventId}`)}" aria-label="${escapeHtml(name)}"><div class="lux-gallery-event-heading"><div>${flag ? `<img class="lux-gallery-event-flag" src="${escapeHtml(new URL(flag, flagBase).href)}" alt="" width="52" height="52">` : ""}<h2>${escapeHtml(name)}</h2>${headingDetail}</div></div><div class="lux-gallery-grid">${items.map(card).join("")}</div>${related}</section>`;
   };
 
