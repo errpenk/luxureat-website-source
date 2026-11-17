@@ -304,7 +304,7 @@ assert(runtimeJs.includes('data-reader-archive') && runtimeJs.includes('lux-read
 assert(runtimeJs.includes('data-reader-archive-filter') && runtimeJs.includes('syncReaderTop'), 'runtime scripts filters the journal archive and hides reader glass at the top');
 assert(runtimeJs.includes('initLuxProductDetails'), 'runtime scripts initializes shared product-detail views');
 assert(runtimeJs.includes('data-product-open'), 'runtime scripts listens to product-detail triggers');
-assert(runtimeJs.includes('data-purchase-cta') && runtimeJs.includes('加入购物袋') && runtimeJs.includes('Add to Cart'), 'reserved bilingual left product CTAs remain');
+assert(runtimeJs.includes('luxQuoteHref(product)') && runtimeJs.includes('咨询报价') && runtimeJs.includes('Request a Quote'), 'bilingual product quote CTAs are missing');
 assert(runtimeJs.includes('data-product-gallery'), 'runtime scripts supports product-detail gallery thumbnails');
 assert(runtimeJs.includes('data-product-main-image'), 'runtime scripts switches the product-detail main image');
 assert(runtimeJs.includes('lux-product-recent'), 'runtime scripts renders product-detail recommendations');
@@ -371,7 +371,7 @@ assert(productDataJs.includes('products[`zh-${slug}`]') && productDataJs.include
 assert(productDataJs.includes('white-truffle-oil-60ml') && productDataJs.includes('winter-black-truffle-juice-350ml'), 'bilingual product records cover the registered Appennino catalogue');
 assert(productDataJs.includes('const productImageOrder = [2, 1, 4, 3, 6, 7, 5, 8, 9, 11, 10, 13, 12, 16, 14, 15, 18, 19, 20, 17, 23, 21, 22, 24]') && productDataJs.includes('priceLabel: "PRICE"'), 'Appennino catalogue maps 24 Italian-labelled mockups by product and uses PRICE labels');
 assert(productDataJs.includes('categories: index < 4 ? ["truffle", "olive-oil"] : ["truffle"]'), 'Appennino catalogue assigns PDF rows 1-4 to both truffle and olive-oil categories');
-assert(runtimeJs.includes('<strong>即将上新</strong><span>未找到相关产品</span>') && runtimeJs.includes('<strong>Coming Soon</strong><span>No related products found</span>'), 'bilingual empty product states announce upcoming products');
+assert(runtimeJs.includes('暂无可浏览的相关产品') && runtimeJs.includes('No matching products are listed') && runtimeJs.includes('Ask about availability'), 'bilingual empty product states offer an inquiry');
 const articleDataJs = read(path.join(themeDir, 'assets/data/journal.js'));
 assert(articleDataJs.includes('window.LUXUREAT_ARTICLE_DATA') && articleDataJs.includes('media/journal'), 'journal data is separated into assets/data/journal.js');
 assert(!walk(themeDir).some((file) => /\.(php|css|js)$/i.test(file) && /googleusercontent|transparenttextures/.test(read(file))), 'theme uses local image assets instead of external prototype image URLs');
@@ -421,7 +421,7 @@ assert(!integrationCss.includes('.lux-bag-item') && !integrationCss.includes('.l
 assert(!integrationCss.includes('background: rgba(143,47,36,.08)'), 'remove actions do not add a tinted background on hover');
 assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles global footprint cards');
 assert(integrationCss.includes('.lux-footprint-card .lux-with-icon'), 'global footprint contact links receive mail and phone icons');
-assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] [data-purchase-cta]'), 'integration.css preserves the left product-card CTA border');
+assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] .lux-product-quote-link'), 'integration.css styles the product-card quote link');
 assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] button[data-product-open]'), 'integration.css gives product-card detail buttons a matching border');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
 assert(integrationCss.includes('.lux-full-bleed'), 'integration.css supports full-width dark photo sections');
@@ -460,8 +460,8 @@ assert(!zhGifting.includes('>批发采购</strong>') && !zhGifting.includes('>�
 
 assert(!fs.existsSync(path.join(themeDir, 'pages/zh/bag.php')) && !fs.existsSync(path.join(themeDir, 'pages/en/bag.php')), 'dedicated bilingual bag pages are absent from the theme');
 assert(integrationCss.includes('.lux-product-recent-media:hover > img') && integrationCss.includes('transform: scale(1.035);'), 'product-detail recommendation images enlarge gently on hover');
-assert(runtimeJs.includes('data-purchase-cta') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations preserve both purchase and detail CTA controls');
-assert(integrationCss.includes('.lux-product-recent-card > .is-test-price') && integrationCss.includes('color: #b48700 !important'), 'catalogue PRICE labels retain their enlarged gold treatment');
+assert(runtimeJs.includes('luxQuoteHref(item)') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations need quote and detail CTAs');
+assert(runtimeJs.includes('价格请询价') && runtimeJs.includes('Price on request'), 'catalogue products need truthful price labels');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/about-us.php'));
 const enJournal = read(path.join(themeDir, 'pages/en/about-us.php'));

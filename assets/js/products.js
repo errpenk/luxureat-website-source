@@ -6,6 +6,12 @@ window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
 const luxProductVideoBase = new URL("../media/products/videos/", document.currentScript?.src || location.href);
 const luxWechatQrUrl = new URL("../media/brand/wechat-qr.webp", document.currentScript?.src || location.href);
+const luxQuoteHref = (product) => {
+  const url = new URL(document.querySelector('.lux-nav a[href$="/cooperation/"]')?.href || (document.documentElement.lang?.startsWith("zh") ? "/cooperation/" : "/en/cooperation/"), location.href);
+  url.searchParams.set("product", product.title);
+  url.hash = "inquiry";
+  return url.href;
+};
 function renderLuxProductCatalog() {
   const grid = document.querySelector("[data-caviar-grid]");
   const data = window.LUXUREAT_PRODUCT_DATA;
@@ -13,11 +19,11 @@ function renderLuxProductCatalog() {
 
   const lang = document.documentElement.lang?.startsWith("zh") ? "zh" : "en";
   const labels = lang === "zh"
-    ? { add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情" }
-    : { add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details" };
+    ? { add: "咨询报价", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情" }
+    : { add: "Request a Quote", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details" };
   const formatMoney = (product) => product.priceLabel || `${product.currency || ""}${Math.round(Number(product.amount) || 0)}`;
   const formatPreviewPrice = (product) => product.catalogOnly
-    ? `${product.priceLabel || "PRICE"} / ${lang === "zh" ? "份" : "unit"}`
+    ? (lang === "zh" ? "价格请询价" : "Price on request")
     : `${formatMoney(product)} / ${product.unit}`;
   const stockLabel = (product) => product.available === false
     ? labels.unavailable
@@ -48,7 +54,7 @@ function renderLuxProductCatalog() {
         ${product.mainIngredients ? `<small class="lux-product-registration-line font-label-sm text-label-sm"><strong>${luxEscapeProductHtml(product.eyebrow)}</strong><b aria-hidden="true">/</b><span>${luxEscapeProductHtml(product.mainIngredients)}</span></small>` : ""}
         ${stockLabel(product) ? `<small class="font-label-sm text-label-sm uppercase tracking-widest ${product.available === false ? "text-error" : "text-primary"}">${luxEscapeProductHtml(stockLabel(product))}</small>` : ""}
         <div class="mt-4 flex items-center gap-4">
-          <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto disabled:cursor-not-allowed disabled:opacity-45" data-purchase-cta type="button"${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
+          ${product.available === false ? `<button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm w-full md:w-auto" type="button" disabled>${labels.unavailable}</button>` : `<a class="lux-product-quote-link border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto text-center" href="${luxEscapeProductHtml(luxQuoteHref(product))}">${labels.add}</a>`}
           <button class="border border-primary text-primary px-6 py-2 uppercase tracking-widest font-label-sm text-label-sm hover:bg-primary hover:text-surface-container-lowest transition-all duration-300 w-full md:w-auto" data-product-open="${luxEscapeProductHtml(key)}" type="button">${labels.detail}</button>
         </div>
       </div>
@@ -86,6 +92,7 @@ function initLuxCaviarControls() {
   if (!controls || !grid || !items.length) {
     return;
   }
+  if (items.every((item) => item.classList.contains("is-catalog-only"))) controls.querySelector(".lux-sort-wrap")?.remove();
 
   const filterButtons = Array.from(document.querySelectorAll("[data-caviar-filter]"));
   const viewButtons = Array.from(controls.querySelectorAll("[data-caviar-view]"));
@@ -103,8 +110,8 @@ function initLuxCaviarControls() {
   const empty = document.createElement("p");
   empty.className = "lux-caviar-empty";
   empty.innerHTML = lang === "zh"
-    ? "<strong>即将上新</strong><span>未找到相关产品</span>"
-    : "<strong>Coming Soon</strong><span>No related products found</span>";
+    ? `<strong>暂无可浏览的相关产品</strong><a href="${luxEscapeProductHtml(luxQuoteHref({ title: "产品供应咨询" }))}">咨询产品供应</a>`
+    : `<strong>No matching products are listed</strong><a href="${luxEscapeProductHtml(luxQuoteHref({ title: "Product availability" }))}">Ask about availability</a>`;
   empty.hidden = true;
   grid.insertAdjacentElement("afterend", empty);
   const pageNav = document.createElement("nav");
@@ -335,7 +342,6 @@ function initLuxProductDetails() {
   const requestedProduct = new URLSearchParams(location.search).get("product");
   const localized = (zh, en) => lang === "zh" ? zh : en;
   const detailHref = (page, hash) => `${document.querySelector(`.lux-nav a[href$="${page}.html"], .lux-nav a[href$="/${page}/"]`)?.href || `${page}.html`}#${hash}`;
-  const quoteHref = detailHref("cooperation", "inquiry");
   const recipeRef = (slug, zh, en) => [localized(zh, en), detailHref("recipe", `reader-${lang}-recipe-${slug}`)];
   const guideRef = (slug, zh, en) => [localized(zh, en), detailHref("blog", `reader-${lang}-academy-${slug}`)];
   const related = (links) => ({
@@ -357,10 +363,9 @@ function initLuxProductDetails() {
   const pastaContent = related([recipeRef("olive-pasta", "用意面实践酱汁乳化与出锅收汁", "Practise Sauce Emulsification and Finishing with Pasta"), guideRef("pasta-academy", "根据意面形状、酱汁与火候做选择", "Choose by Pasta Shape, Sauce and Cooking Time"), guideRef("dictionary-pasta-risotto", "认识长面、宽面与管状意面的区别", "Understand Long, Ribbon and Tubular Pasta Shapes"), guideRef("cooking-techniques", "掌握面水、火候与乳化的基础技巧", "Master Pasta Water, Timing and Emulsification")]);
 
   const formatMoney = (currency, amount) => `${currency}${Math.round(Number(amount) || 0)}`;
-  const catalogUnit = () => document.documentElement.lang?.startsWith("zh") ? "份" : "unit";
   const copy = () => document.documentElement.lang?.startsWith("zh")
-    ? { back: "返回", close: "关闭", add: "加入购物袋", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", recent: "更多推荐", specs: ["生产企业", "中国注册号", "产品类别 / HS", "有效期至"], story: "产品说明" }
-    : { back: "Back", close: "Close", add: "Add to Cart", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", recent: "More Recommendations", specs: ["Manufacturer", "China Registration", "Category / HS", "Valid Until"], story: "Product Information" };
+    ? { back: "返回", close: "关闭", add: "咨询报价", unavailable: "暂时无货", inStock: "有货", stock: "库存", detail: "查看详情", recent: "更多推荐", specs: ["生产企业", "中国注册号", "产品类别 / HS", "有效期至"], story: "产品说明" }
+    : { back: "Back", close: "Close", add: "Request a Quote", unavailable: "Out of Stock", inStock: "In Stock", stock: "in stock", detail: "View Details", recent: "More Recommendations", specs: ["Manufacturer", "China Registration", "Category / HS", "Valid Until"], story: "Product Information" };
   const galleryFor = (product) => {
     if (product.gallery?.length) return product.gallery;
     if (product.id.includes("truffle")) return galleries.truffle;
@@ -459,11 +464,10 @@ function initLuxProductDetails() {
             <span>${luxEscapeProductHtml(product.eyebrow)}</span>
             <h2 id="lux-product-title">${luxEscapeProductHtml(product.title)}</h2>
             <p>${luxEscapeProductHtml(product.desc)}</p>
-            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(product.priceLabel || "PRICE") : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small>`}</strong>
+            <strong class="lux-product-price">${product.catalogOnly ? luxEscapeProductHtml(localized("价格请询价", "Price on request")) : `${luxEscapeProductHtml(formatMoney(product.currency, product.amount))} <small>/ ${luxEscapeProductHtml(product.unit)}</small>`}</strong>
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
-              <button type="button" data-purchase-cta${product.available === false ? " disabled aria-disabled=\"true\"" : ""}>${product.available === false ? labels.unavailable : labels.add}</button>
-              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(quoteHref)}">${luxEscapeProductHtml(localized("合作专属报价", "Partnership Quote"))}</a>
+              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(luxQuoteHref(product))}">${luxEscapeProductHtml(localized("咨询此产品", "Request a Quote"))}</a>
             </div>
             <aside class="lux-product-wechat" aria-label="${luxEscapeProductHtml(localized("微信：LuxurEatChina", "WeChat: LuxurEatChina"))}"><img width="104" height="104" loading="lazy" decoding="async" src="${luxWechatQrUrl}" alt="${luxEscapeProductHtml(localized("微信二维码", "WeChat QR code"))}"><span class="lux-wechat-copy"><span lang="${lang}">${luxEscapeProductHtml(localized("更多详情与合作细节，也可搜索我们的微信号：", "More details or more information, you can also search for our WeChat ID:"))}</span><b lang="en">LuxurEatChina</b></span></aside>
           </div>
@@ -490,9 +494,9 @@ function initLuxProductDetails() {
             ${recommendations.map(([key, item]) => `<article class="lux-product-recent-card">
               <div class="lux-product-recent-media"><img loading="lazy" decoding="async" src="${luxEscapeProductHtml(item.image)}" alt="${luxEscapeProductHtml(item.title)}"></div>
               <strong>${luxEscapeProductHtml(item.title)}</strong>
-              <small${item.catalogOnly ? ' class="is-test-price"' : ""}>${item.catalogOnly ? `${luxEscapeProductHtml(item.priceLabel || "PRICE")} / ${luxEscapeProductHtml(catalogUnit())}` : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
+              <small>${item.catalogOnly ? luxEscapeProductHtml(localized("价格请询价", "Price on request")) : `${luxEscapeProductHtml(formatMoney(item.currency, item.amount))} / ${luxEscapeProductHtml(item.unit)}`}</small>
               <div class="lux-product-recent-actions">
-                <button type="button" data-purchase-cta${item.available === false ? " disabled aria-disabled=\"true\"" : ""}>${luxEscapeProductHtml(item.available === false ? labels.unavailable : labels.add)}</button>
+                ${item.available === false ? `<button type="button" disabled>${labels.unavailable}</button>` : `<a href="${luxEscapeProductHtml(luxQuoteHref(item))}">${labels.add}</a>`}
                 <button type="button" data-product-open="${luxEscapeProductHtml(key)}">${luxEscapeProductHtml(labels.detail)}</button>
               </div>
             </article>`).join("")}

@@ -1096,12 +1096,12 @@ header:has(.lux-hero-fade-both) {
   color: #4f5655;
   font: 400 13px/1.5 var(--lux-page-heading);
 }
-.lux-product-catalog [data-caviar-item] [data-purchase-cta] {
+.lux-product-catalog [data-caviar-item] .lux-product-quote-link {
   border-width: 2px !important;
   border-color: #00726b !important;
   color: #00726b !important;
 }
-.lux-product-catalog [data-caviar-item] [data-purchase-cta]:hover {
+.lux-product-catalog [data-caviar-item] .lux-product-quote-link:hover {
   background: #9df5ec !important;
   color: #003734 !important;
 }
@@ -1861,7 +1861,9 @@ body.lux-reader-open {
   gap: 10px;
   flex-wrap: wrap;
 }
-.lux-product-recent-actions button {
+.lux-product-recent-actions :is(button, a) {
+  display: inline-flex;
+  align-items: center;
   min-height: 38px;
   padding: 10px 14px;
   border: 1px solid rgba(0,106,100,.46);
@@ -1870,11 +1872,11 @@ body.lux-reader-open {
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.lux-product-recent-actions button:hover {
+.lux-product-recent-actions :is(button, a):hover {
   background: #006a64;
   color: #fff;
 }
-.lux-product-recent-actions button:last-child {
+.lux-product-recent-actions :is(button, a):last-child {
   border: 1px solid rgba(62,73,71,.62);
 }
 .lux-product-recent-nav {
@@ -2425,7 +2427,7 @@ button,
 .lux-product-summary > button,
 .lux-product-purchase > button,
 .lux-product-purchase > .lux-product-quote-link,
-.lux-product-recent-actions button {
+.lux-product-recent-actions :is(button, a) {
   font-size: var(--lux-type-button) !important;
   line-height: 1 !important;
 }
@@ -4451,6 +4453,7 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   color: #2b2a28;
   font: 400 20px/1.35 var(--lux-page-heading);
 }
+.lux-product-seo-page .lux-reader-hero-copy .lux-product-purchase { margin-top: 24px; }
 .lux-reader-cover {
   margin: 0;
 }
@@ -4581,7 +4584,8 @@ html[lang^="zh"] .lux-event-reader-intro h2 {
   font: 700 18px/1.5 var(--lux-page-heading);
 }
 .lux-caviar-empty strong,
-.lux-caviar-empty span { display: block; }
+.lux-caviar-empty :is(span, a) { display: block; }
+.lux-caviar-empty a { color: #9df5ec; text-decoration: underline; }
 .lux-caviar-empty strong {
   margin-bottom: 6px;
   color: #9df5ec;

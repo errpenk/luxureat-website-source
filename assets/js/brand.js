@@ -39,6 +39,9 @@
   const submitLabel = submit.textContent;
   const field = (name) => form.elements.namedItem(name);
   const isQuoteForm = form.classList.contains("lux-quote-form");
+  if (isQuoteForm && field("product_industry")) {
+    field("product_industry").value = new URLSearchParams(location.search).get("product")?.slice(0, 120) || "";
+  }
 
   const shake = (node) => {
     if (!node) return;
@@ -69,7 +72,7 @@
   const validate = () => {
     let firstInvalid = null;
     const requiredFields = isQuoteForm
-      ? ["name", "company", "product_industry", "estimated_quantity", "delivery_market", "inquiry_type", "message"]
+      ? ["name", "product_industry", "inquiry_type"]
       : ["name", "inquiry_type", "message"];
     requiredFields.forEach((name) => {
       clearError(name);

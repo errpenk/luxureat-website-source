@@ -1250,6 +1250,24 @@ function initLuxSectionFlips() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  const productHero = document.querySelector(".lux-product-seo-page .lux-reader-hero-copy");
+  if (productHero) {
+    const title = productHero.querySelector("h1")?.textContent.trim();
+    const cooperation = document.querySelector('.lux-nav a[href$="/cooperation/"]');
+    if (title && cooperation) {
+      const url = new URL(cooperation.href);
+      url.searchParams.set("product", title);
+      url.hash = "inquiry";
+      const actions = document.createElement("div");
+      actions.className = "lux-product-purchase";
+      const link = document.createElement("a");
+      link.className = "lux-product-quote-link";
+      link.href = url.href;
+      link.textContent = document.documentElement.lang?.startsWith("zh") ? "咨询此产品" : "Request a Quote";
+      actions.append(link);
+      productHero.append(actions);
+    }
+  }
   initLuxScrollReveal();
   initLuxInfoPopovers();
   initLuxGiftScroller();
