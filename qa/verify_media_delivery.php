@@ -36,10 +36,14 @@ foreach (array(
 echo "Anonymous page sessions and metadata ownership passed; POST and logged-in sessions preserved.\n";
 preg_match('/function luxureat_cms_payload\(\$kind\) \{.*?\n\}/s', $php, $payload_function);
 if (!$payload_function) throw new RuntimeException('Missing CMS payload integration.');
+preg_match('/function luxureat_origin_upload_images\(\$content\) \{.*?\n\}/s', $php, $origin_function);
+if (!$origin_function) throw new RuntimeException('Missing upload origin normalization.');
+eval($origin_function[0]);
 eval($payload_function[0]);
 function luxureat_cms_posts($kind) { return array((object) array('ID' => 1, 'post_content' => '<p>Original &amp; HTML</p>')); }
 function get_post_meta($id, $key, $single) { return $key === '_luxureat_lang' ? 'en' : 'sample'; }
-function get_the_post_thumbnail_url(...$args) { return 'https://example.test/image.webp'; }
+function get_the_post_thumbnail_url(...$args) { return $GLOBALS['cms_test_image']; }
+$cms_test_image = 'https://i0.wp.com/luxureat.cn/wp-content/uploads/2026/10/story.webp?fit=768%2C432&ssl=1';
 function get_the_title($post) { return $GLOBALS['cms_test_title']; }
 function get_the_excerpt($post) { return '&quot;Flavour&quot; &amp; tradition &#x2014; Italy&#8217;s table'; }
 function apply_filters($hook, $content) { return $content; }
@@ -49,3 +53,12 @@ if ($payload['title'] !== 'Italy’s Olive Oil & Food' || $payload['intro'] !== 
 $cms_test_title = '&lt;img src=x onerror=alert(1)&gt;';
 if (strpos(json_encode(luxureat_cms_payload('recipe'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT), '<img') !== false) throw new RuntimeException('Plain title data must retain safe JSON serialization.');
 echo "CMS title and excerpt entities decode once; content HTML and safe serialization are preserved.\n";
+
+foreach (array(
+    'https://i0.wp.com/luxureat.cn/wp-content/uploads/2026/10/story.webp?fit=768%2C432&ssl=1' => 'https://luxureat.cn/wp-content/uploads/2026/10/story.webp?fit=768%2C432&ssl=1',
+    'https://example.test/image.webp' => 'https://example.test/image.webp',
+    '' => '',
+) as $cms_test_image => $expected) {
+    if (luxureat_cms_payload('recipe')['sample:en']['image'] !== $expected) throw new RuntimeException('CMS covers must use the site origin without changing other hosts or empty covers.');
+}
+echo "CMS cover origin normalization passed.\n";
