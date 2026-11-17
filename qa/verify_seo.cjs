@@ -12,12 +12,13 @@ const sitemapFile = path.join(temporary, "sitemap.xml");
 try {
   execFileSync(process.execPath, [path.join(root, "tools/generate-sitemap.mjs"), sitemapFile]);
   const sitemap = fs.readFileSync(sitemapFile, "utf8");
-  assert.equal((sitemap.match(/<url>/g) || []).length, 342, "sitemap must contain every public bilingual page and detail route");
+  assert.equal((sitemap.match(/<url>/g) || []).length, 344, "sitemap must contain every public bilingual page and detail route");
   assert.doesNotMatch(sitemap, /\/bag\//, "shopping bags must not be indexed");
   assert.doesNotMatch(sitemap, /hreflang="x-default"/, "sitemap language alternates must match the live Chinese and English pairs");
   for (const route of [
     "/blog/caviar-after-opening/",
     "/blog/dictionary-spaghetti-history/",
+    "/blog/sevruga-caviar/",
     "/en/blog/dictionary-spaghetti-history/",
     "/product/white-truffle-oil-60ml/",
     "/recipe/truffle-eggs/",
@@ -39,7 +40,7 @@ try {
   }
   assert.doesNotMatch(sitemap, /\/(?:en\/)?events\//, "removed standalone event layouts must not remain in the sitemap");
   for (const language of ["zh-CN", "en"]) {
-    assert.equal((sitemap.match(new RegExp(`hreflang="${language}"`, "g")) || []).length, 342, `${language} alternates are incomplete`);
+    assert.equal((sitemap.match(new RegExp(`hreflang="${language}"`, "g")) || []).length, 344, `${language} alternates are incomplete`);
   }
 
   const robots = read("robots.txt");
@@ -67,6 +68,7 @@ try {
       const html = read(`${language}/${name}`);
       assert.equal((html.match(/<title>/g) || []).length, 1, `${language}/${name} needs one title`);
       assert.equal((html.match(/<meta name="description"/g) || []).length, 1, `${language}/${name} needs one description`);
+      for (const image of html.match(/<img\b[^>]*>/gi) || []) assert.match(image, /\salt=/i, `${language}/${name} has an image without alt`);
       const visibleText = (html.split(/<body\b[^>]*>/i)[1] || "")
         .split("</body>")[0]
         .replace(/<[^>]+>/g, " ");

@@ -36,11 +36,16 @@ assert(eventUtils, "shared Beijing event utilities are missing");
 assert(romaEvent?.displayWidth === 820 && romaEvent.displayHeight === 547, "Roma Bar Show event or cover dimensions are missing");
 assert(parisEvent?.startDate === "2026-10-17" && parisEvent.endDate === "2026-10-21", "SIAL Paris dates are missing");
 assert(gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "video").length === 3 && gallery.filter((media) => media.eventId === parisEvent.id && media.kind === "photo").length === 3, "SIAL Paris gallery must include three videos and three photos");
+assert(fhcEvent && gallery.filter((media) => media.eventId === fhcEvent.id && media.kind === "photo").length === 6, "FHC Shanghai gallery must include six photos");
+for (const media of gallery.filter((item) => item.eventId === fhcEvent.id)) {
+  assert(media.src.startsWith("https://luxureat.cn/wp-content/uploads/2026/11/fhc-shanghai-2026-gallery-"), `FHC full image must be in WordPress media library: ${media.src}`);
+  assert(media.thumb.startsWith("https://i0.wp.com/luxureat.cn/wp-content/uploads/2026/11/fhc-shanghai-2026-gallery-"), `FHC thumbnail must use WordPress media delivery: ${media.thumb}`);
+}
 for (const media of gallery) {
   assert(media.id && (media.date || collections.has(media.eventId)) && media.zh?.title && media.en?.title && media.width && media.height, "gallery metadata is incomplete");
   assert(!media.eventId || collections.has(media.eventId) || events.some((item) => item.id === media.eventId), `gallery event is missing: ${media.id}`);
   for (const file of [media.src, media.poster].filter(Boolean)) {
-    assert(fs.existsSync(path.join(root, "assets", file.split("/assets/")[1])), `SIAL Paris gallery asset is missing: ${file}`);
+    if (file.includes("/assets/")) assert(fs.existsSync(path.join(root, "assets", file.split("/assets/")[1])), `gallery asset is missing: ${file}`);
   }
 }
 assert(parisEvent.displayWidth === 520 && parisEvent.displayHeight === 530, "SIAL Paris poster dimensions are wrong");
