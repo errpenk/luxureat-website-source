@@ -273,9 +273,8 @@ html.dark body.lux-academy-page {
 }
 .lux-academy-card-copy > button {
   margin-top: 18px;
-  padding: 0 0 5px;
+  padding: 0;
   border: 0;
-  border-bottom: 1px solid #006a64;
   background: transparent;
   color: #006a64;
   font: 700 12px/1.4 var(--lux-page-heading);
@@ -283,7 +282,7 @@ html.dark body.lux-academy-page {
   text-transform: uppercase;
   cursor: pointer;
   transform-origin: left center;
-  transition: color .2s ease, border-color .2s ease, transform .2s ease;
+  transition: color .2s ease, transform .2s ease;
 }
 .lux-academy-card-copy h2 a {
   color: inherit;
@@ -297,7 +296,6 @@ html.dark body.lux-academy-page {
 .lux-academy-card-copy > button:hover,
 .lux-academy-card-copy > button:focus-visible {
   color: #89670f;
-  border-color: #89670f;
   transform: scale(1.055);
 }
 .lux-academy-card-copy > button span {
