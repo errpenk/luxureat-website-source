@@ -1,6 +1,7 @@
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
+const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
@@ -47,6 +48,15 @@ assert.ok(runtime.includes('data.get("name")') && runtime.includes('data.get("in
 assert.ok(runtime.includes('["name", "inquiry_type", "message"]'));
 assert.ok(runtime.includes('contactRequired: "请填写电子邮箱或电话/微信其中一种。"') && runtime.includes('Please provide either an email address or a phone / WeChat contact.'));
 assert.ok(runtime.includes('email?.value') && runtime.includes('phone?.value'));
+const prefill = runtime.slice(runtime.indexOf('  if (field("product_industry")) {'), runtime.indexOf('\n  const shake ='));
+for (const [hash, expected] of [["#product=%E6%9D%BE%E9%9C%B2%E9%85%B1", "松露酱"], ["#product=Truffle%20sauce", "Truffle sauce"]]) {
+  const input = { value: "" };
+  let scrolled = false;
+  vm.runInNewContext(prefill, { URLSearchParams, location: { hash, search: "" }, isQuoteForm: false, field: () => input,
+    document: { getElementById: () => ({ scrollIntoView: () => { scrolled = true; } }) } });
+  assert.equal(input.value, expected);
+  assert.equal(scrolled, true);
+}
 assert.ok(runtime.includes('"酒店餐饮与专业供应": "Fornitura per hotel, ristorazione e professionisti"'));
 assert.ok(runtime.includes('const subject = `${data.get("name")} + ${inquiryLabels[data.get("inquiry_type")]}`'));
 assert.ok(css.includes('.lux-contact-field-error.is-shaking'));

@@ -7,9 +7,8 @@ window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 const luxProductVideoBase = new URL("../media/products/videos/", document.currentScript?.src || location.href);
 const luxWechatQrUrl = new URL("../media/brand/wechat-qr.webp", document.currentScript?.src || location.href);
 const luxQuoteHref = (product) => {
-  const url = new URL(document.querySelector('.lux-nav a[href$="/cooperation/"]')?.href || (document.documentElement.lang?.startsWith("zh") ? "/cooperation/" : "/en/cooperation/"), location.href);
-  url.searchParams.set("product", product.title);
-  url.hash = "inquiry";
+  const url = new URL(document.querySelector('.lux-nav a[href$="/contact/"]')?.href || (document.documentElement.lang?.startsWith("zh") ? "/contact/" : "/en/contact/"), location.href);
+  url.hash = `product=${encodeURIComponent(product.title)}`;
   return url.href;
 };
 function renderLuxProductCatalog() {

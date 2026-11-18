@@ -39,8 +39,10 @@
   const submitLabel = submit.textContent;
   const field = (name) => form.elements.namedItem(name);
   const isQuoteForm = form.classList.contains("lux-quote-form");
-  if (isQuoteForm && field("product_industry")) {
-    field("product_industry").value = new URLSearchParams(location.search).get("product")?.slice(0, 120) || "";
+  if (field("product_industry")) {
+    const product = new URLSearchParams(location.hash.slice(1)).get("product") || (isQuoteForm ? new URLSearchParams(location.search).get("product") : "");
+    if (product) field("product_industry").value = product.slice(0, 120);
+    if (product && !isQuoteForm) document.getElementById("brand-consultation")?.scrollIntoView();
   }
 
   const shake = (node) => {
