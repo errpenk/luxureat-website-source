@@ -227,7 +227,6 @@
 }
 
 @media (max-width: 900px) {
-  .lux-home-page .lux-home-topic-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
   .lux-home-page .lux-home-market-system-layout { grid-template-columns: 1fr; gap: 40px; }
   .lux-home-page .lux-home-advantages-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .lux-home-page .lux-home-advantages-grid article:nth-child(odd) { border-left: 0; }
