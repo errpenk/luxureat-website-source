@@ -65,7 +65,7 @@
 .lux-home-page .lux-topic-preview-card > div { flex: 1; min-width: 0; min-height: 0; padding: 0; }
 .lux-home-page .lux-topic-preview-card > div > span { display: none; }
 .lux-home-page .lux-topic-preview-card > div > h3 { margin: 0 0 7px; color: #171b19; font-size: clamp(20px, 2vw, 27px); line-height: 1.2; transition: color .2s ease; }
-.lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) > div > h3 { color: #003f3c; }
+.lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) > div > h3 { color: #89670f; }
 .lux-home-page .lux-topic-preview-card > div > p { display: -webkit-box; max-width: none; overflow: hidden; color: #656b67; font-size: 12px; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
 .lux-home-page .lux-topic-preview-card > div > b { display: none; }
 .lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) figure img { transform: scale(1.05); }

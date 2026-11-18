@@ -52,7 +52,7 @@ console.log('Homepage catalog deferral and responsive card hydration passed.');
 const products = fs.readFileSync('assets/js/products.js', 'utf8');
 const catalog = {innerHTML: ''};
 const product = {id:'test',title:'Example product',image:'full.webp',desc:'Original description',amount:1,unit:'jar'};
-const productContext = vm.createContext({URL,document:{documentElement:{lang:'en'},querySelector:selector=>selector==='[data-caviar-grid]'?catalog:{href:'https://example.test/en/contact/'}},location:{pathname:'/product/',href:'https://example.test/product/'},
+const productContext = vm.createContext({URL,document:{documentElement:{lang:'en'},querySelector:selector=>selector==='[data-caviar-grid]'?catalog:{href:'https://example.test/en/cooperation/'}},location:{pathname:'/product/',href:'https://example.test/product/'},
   window:{LUXUREAT_PRODUCT_DATA:{products:{'en-test':product}},luxImageSource:(source,thumbnail)=>thumbnail?'small.webp':source}});
 vm.runInContext(products.slice(0,products.indexOf('window.luxResponsiveData')),productContext);
 vm.runInContext(products.slice(products.indexOf('const luxQuoteHref'),products.indexOf('function renderLuxProductCatalog()')),productContext);
@@ -60,7 +60,7 @@ vm.runInContext(products.slice(products.indexOf('function renderLuxProductCatalo
 assert.match(catalog.innerHTML, /<img[^>]+loading="lazy"[^>]+src="small\.webp"/, 'Paginated product images must use lazy preview downloads');
 assert.doesNotMatch(catalog.innerHTML, /background-image/, 'Hidden catalog pages must not eagerly fetch CSS backgrounds');
 assert.match(catalog.innerHTML, /data-product-open="en-test"/);
-assert.match(catalog.innerHTML, /href="https:\/\/example\.test\/en\/contact\/#product=Example%20product"/);
+assert.match(catalog.innerHTML, /href="https:\/\/example\.test\/en\/cooperation\/#inquiry"/);
 assert.equal(product.image,'full.webp','Product details keep their full-size source');
 console.log('Product catalog lazy previews and full-size detail data passed.');
 const filterButtons = ['all','caviar','truffle'].map(value => ({dataset:{caviarFilterGroup:'category',caviarFilter:value},attrs:{},classList:{toggle(){}},setAttribute(key,value){this.attrs[key]=value;},addEventListener(event,callback){this.click=callback;}}));

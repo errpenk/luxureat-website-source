@@ -5871,6 +5871,7 @@ html[lang^="en"] .lux-wechat-copy > span { font-family: var(--lux-en-body); }
   overflow-wrap: anywhere;
 }
 .lux-product-wechat b { color: #af8d11; }
+.lux-footer-wechat-id-value { color: #89670f; }
 .lux-product-wechat b,
 .lux-quote-wechat b { letter-spacing: 0 !important; text-transform: none !important; }
 .lux-contact-choice-note {

@@ -1253,16 +1253,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const productHero = document.querySelector(".lux-product-seo-page .lux-reader-hero-copy");
   if (productHero) {
     const title = productHero.querySelector("h1")?.textContent.trim();
-    const contact = document.querySelector('.lux-nav a[href$="/contact/"]');
-    if (title && contact) {
-      const url = new URL(contact.href);
-      url.hash = `product=${encodeURIComponent(title)}`;
+    const cooperation = document.querySelector('.lux-nav a[href$="/cooperation/"]');
+    if (title && cooperation) {
+      const url = new URL(cooperation.href);
+      url.hash = "inquiry";
       const actions = document.createElement("div");
       actions.className = "lux-product-purchase";
       const link = document.createElement("a");
       link.className = "lux-product-quote-link";
       link.href = url.href;
-      link.textContent = document.documentElement.lang?.startsWith("zh") ? "咨询此产品" : "Request a Quote";
+      link.textContent = document.documentElement.lang?.startsWith("zh") ? "咨询报价" : "Request a Quote";
       actions.append(link);
       productHero.append(actions);
     }
