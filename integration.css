@@ -1096,21 +1096,12 @@ header:has(.lux-hero-fade-both) {
   color: #4f5655;
   font: 400 13px/1.5 var(--lux-page-heading);
 }
-.lux-product-catalog [data-caviar-item] .lux-product-quote-link {
+.lux-product-catalog [data-caviar-item] :is(.lux-product-quote-link, button[data-product-open]) {
   border-width: 2px !important;
   border-color: #00726b !important;
   color: #00726b !important;
 }
-.lux-product-catalog [data-caviar-item] .lux-product-quote-link:hover {
-  background: #9df5ec !important;
-  color: #003734 !important;
-}
-.lux-product-catalog [data-caviar-item] button[data-product-open] {
-  border-width: 2px !important;
-  border-color: #00726b !important;
-  color: #00726b !important;
-}
-.lux-product-catalog [data-caviar-item] button[data-product-open]:hover {
+.lux-product-catalog [data-caviar-item] :is(.lux-product-quote-link, button[data-product-open]):hover {
   border-color: #00726b !important;
   background: #9df5ec !important;
   color: #00726b !important;
@@ -1876,9 +1867,6 @@ body.lux-reader-open {
   background: #006a64;
   color: #fff;
 }
-.lux-product-recent-actions :is(button, a):last-child {
-  border: 1px solid rgba(62,73,71,.62);
-}
 .lux-product-recent-nav {
   position: absolute;
   inset: 0 -86px auto;
@@ -2421,6 +2409,7 @@ small,
 button,
 [data-purchase-cta],
 [data-product-open],
+.lux-product-catalog .lux-product-quote-link,
 .lux-reader-cta,
 .lux-reader-related-cta,
 .lux-reader-archive-cta,

@@ -421,8 +421,8 @@ assert(!integrationCss.includes('.lux-bag-item') && !integrationCss.includes('.l
 assert(!integrationCss.includes('background: rgba(143,47,36,.08)'), 'remove actions do not add a tinted background on hover');
 assert(integrationCss.includes('.lux-footprint-card'), 'integration.css styles global footprint cards');
 assert(integrationCss.includes('.lux-footprint-card .lux-with-icon'), 'global footprint contact links receive mail and phone icons');
-assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] .lux-product-quote-link'), 'integration.css styles the product-card quote link');
-assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] button[data-product-open]'), 'integration.css gives product-card detail buttons a matching border');
+assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] :is(.lux-product-quote-link, button[data-product-open])'), 'integration.css styles product-card actions equally');
+assert(integrationCss.includes('.lux-product-catalog [data-caviar-item] :is(.lux-product-quote-link, button[data-product-open]):hover'), 'product-card actions share a hover treatment');
 assert(integrationCss.includes('.lux-dark-photo-block'), 'integration.css provides reusable dark photo backgrounds');
 assert(integrationCss.includes('.lux-full-bleed'), 'integration.css supports full-width dark photo sections');
 assert(integrationCss.includes('.lux-hero-fade-both'), 'integration.css supports top-and-bottom hero fades');
