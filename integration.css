@@ -1100,6 +1100,7 @@ header:has(.lux-hero-fade-both) {
   border-width: 2px !important;
   border-color: #00726b !important;
   color: #00726b !important;
+  text-align: center;
 }
 .lux-product-catalog [data-caviar-item] :is(.lux-product-quote-link, button[data-product-open]):hover {
   border-color: #00726b !important;
@@ -1855,6 +1856,8 @@ body.lux-reader-open {
 .lux-product-recent-actions :is(button, a) {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   min-height: 38px;
   padding: 10px 14px;
   border: 1px solid rgba(0,106,100,.46);
