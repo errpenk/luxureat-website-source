@@ -1253,7 +1253,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productHero = document.querySelector(".lux-product-seo-page .lux-reader-hero-copy");
   if (productHero) {
     const title = productHero.querySelector("h1")?.textContent.trim();
-    const cooperation = document.querySelector('.lux-nav a[href$="/cooperation/"]');
+    const cooperation = document.querySelector('.lux-nav a[href$="/cooperation/"], .lux-nav a[href$="cooperation.html"]');
     if (title && cooperation) {
       const url = new URL(cooperation.href);
       url.hash = "inquiry";
@@ -1262,17 +1262,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const link = document.createElement("a");
       link.className = "lux-product-quote-link";
       link.href = url.href;
-      link.textContent = document.documentElement.lang?.startsWith("zh") ? "咨询报价" : "Request a Quote";
-      const buy = link.cloneNode();
+      link.textContent = document.documentElement.lang?.startsWith("zh") ? "专属报价" : "Exclusive Quote";
+      const buy = document.createElement("button");
+      buy.type = "button";
       buy.className = "lux-product-buy-link";
+      buy.dataset.buySoon = "";
       buy.textContent = document.documentElement.lang?.startsWith("zh") ? "立即购买" : "Buy Now";
-      const desktopLabel = document.createElement("span");
-      desktopLabel.className = "lux-desktop-cta";
-      desktopLabel.textContent = link.textContent;
-      const mobileLabel = document.createElement("span");
-      mobileLabel.className = "lux-mobile-cta";
-      mobileLabel.textContent = document.documentElement.lang?.startsWith("zh") ? "专属报价" : "Exclusive Quote";
-      link.replaceChildren(desktopLabel, mobileLabel);
       actions.append(buy, link);
       productHero.append(actions);
     }
@@ -1286,4 +1281,20 @@ document.addEventListener("DOMContentLoaded", () => {
   initLuxRecipeCtas();
   initLuxAwardLightbox();
   initLuxSectionFlips();
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest("[data-buy-soon]")) return;
+  const dialog = document.createElement("dialog");
+  dialog.className = "lux-buy-soon-dialog";
+  dialog.textContent = document.documentElement.lang?.startsWith("zh")
+    ? "在线购买功能即将上线，感谢您的支持！您可以先联系我们获取专属服务。"
+    : "Buy online soon. Thanks! Contact us for personal service.";
+  const close = document.createElement("button");
+  close.textContent = document.documentElement.lang?.startsWith("zh") ? "关闭" : "Close";
+  close.onclick = () => dialog.close();
+  dialog.onclose = () => dialog.remove();
+  dialog.append(close);
+  document.body.append(dialog);
+  dialog.showModal();
 });
