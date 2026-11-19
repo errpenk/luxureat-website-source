@@ -460,7 +460,7 @@ assert(!zhGifting.includes('>批发采购</strong>') && !zhGifting.includes('>�
 
 assert(!fs.existsSync(path.join(themeDir, 'pages/zh/bag.php')) && !fs.existsSync(path.join(themeDir, 'pages/en/bag.php')), 'dedicated bilingual bag pages are absent from the theme');
 assert(integrationCss.includes('.lux-product-recent-media:hover > img') && integrationCss.includes('transform: scale(1.035);'), 'product-detail recommendation images enlarge gently on hover');
-assert(runtimeJs.includes('luxQuoteHref(item)') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations need quote and detail CTAs');
+assert(runtimeJs.includes('luxContactHref(item)') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations need contact and detail CTAs');
 assert(runtimeJs.includes('价格请询价') && runtimeJs.includes('Price on request'), 'catalogue products need truthful price labels');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/about-us.php'));
