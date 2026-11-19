@@ -1263,7 +1263,17 @@ document.addEventListener("DOMContentLoaded", () => {
       link.className = "lux-product-quote-link";
       link.href = url.href;
       link.textContent = document.documentElement.lang?.startsWith("zh") ? "咨询报价" : "Request a Quote";
-      actions.append(link);
+      const buy = link.cloneNode();
+      buy.className = "lux-product-buy-link";
+      buy.textContent = document.documentElement.lang?.startsWith("zh") ? "立即购买" : "Buy Now";
+      const desktopLabel = document.createElement("span");
+      desktopLabel.className = "lux-desktop-cta";
+      desktopLabel.textContent = link.textContent;
+      const mobileLabel = document.createElement("span");
+      mobileLabel.className = "lux-mobile-cta";
+      mobileLabel.textContent = document.documentElement.lang?.startsWith("zh") ? "专属报价" : "Exclusive Quote";
+      link.replaceChildren(desktopLabel, mobileLabel);
+      actions.append(buy, link);
       productHero.append(actions);
     }
   }

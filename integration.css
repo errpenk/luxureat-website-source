@@ -14545,3 +14545,24 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 @media (max-width: 640px) {
   .lux-cert-partnership-gallery h2 { font-size: 40px; }
 }
+
+/* Editorial headings carry their meaning without the small eyebrow above them. */
+:is(.lux-hero-kicker, .lux-ms-eyebrow, .lux-home-editorial-kicker, .lux-about-program-kicker, .lux-selected-products-kicker, .lux-quote-kicker, .lux-gallery-kicker, .lux-academy-hero-kicker, .lux-home-advantages-kicker, .lux-home-topic-preview header > span, .lux-feature-intro > span, .lux-brand-promise-copy > small),
+:is(header, .lux-page-hero-content) > :is(span, small):has(+ :is(h1, h2, h3)),
+:is(span, p, small):is([class*="tracking"], [class*="uppercase"]):has(+ :is(h1, h2, h3)) { display: none !important; }
+.lux-home-timeline-steps article > span { margin: 0; font-size: 0; line-height: 0; }
+.lux-reader-body .lux-cms-prose a,
+.lux-reader-body .lux-reader-article-links a { display: inline-block; color: #173b70; transition: transform .2s ease, color .2s ease; transform-origin: left center; }
+.lux-reader-body .lux-cms-prose a:is(:hover, :focus-visible),
+.lux-reader-body .lux-reader-article-links a:is(:hover, :focus-visible) { color: #102c54; transform: scale(1.025); }
+.lux-product-purchase > .lux-product-buy-link,
+.lux-product-purchase > .lux-product-quote-link { box-sizing: border-box; }
+.lux-product-purchase > .lux-product-buy-link,
+.lux-product-purchase .lux-mobile-cta { display: none; }
+@media (max-width: 720px) {
+  .lux-product-purchase > .lux-product-buy-link { display: inline-flex; flex: 1 1 0; align-items: center; justify-content: center; min-width: 0; min-height: 48px; padding: 12px 10px; border: 2px solid #006a64; color: #fff; background: #006a64; font: 700 var(--lux-type-button)/1 var(--lux-page-heading); letter-spacing: .04em; text-align: center; white-space: nowrap; }
+  .lux-product-purchase > .lux-product-buy-link:is(:hover, :focus-visible) { background: #004e49; }
+  .lux-product-purchase .lux-desktop-cta { display: none; }
+  .lux-product-purchase .lux-mobile-cta { display: inline; }
+  .lux-product-purchase > .lux-product-quote-link { min-height: 48px; padding: 12px 10px; }
+}

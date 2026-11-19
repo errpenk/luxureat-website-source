@@ -28,7 +28,7 @@ const loadAcademyArticle = (id) => {
   const articles = window.LUXUREAT_ARTICLE_DATA?.articles || {};
   const cached = Object.hasOwn(articles, id) ? articles[id] : undefined;
   const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
-  if (cached?.sections && (!cms || cached.cmsHtml)) return Promise.resolve(true);
+  if (cached?.sections && (!cms || cached.cmsHtml || cached.cmsFallback)) return Promise.resolve(true);
   if (academyArticleLoading.has(id)) return academyArticleLoading.get(id);
   const loading = (async () => {
     const ready = await loadScript(`../data/academy-articles/${encodeURIComponent(id)}.js`);
@@ -46,8 +46,7 @@ const loadAcademyArticle = (id) => {
           if (!content) throw new Error('Article content missing');
           article.cmsHtml = content.innerHTML;
         } catch {
-          academyArticleLoading.delete(id);
-          return false;
+          article.cmsFallback = true; // Use bundled sections if WordPress content cannot be fetched.
         }
       }
     }
@@ -71,7 +70,7 @@ document.addEventListener("click", (event) => {
   if (!id) return;
   const article = window.LUXUREAT_ARTICLE_DATA?.articles?.[id];
   const cms = window.LUXUREAT_CMS?.blog?.[`${id}:${id.startsWith('zh-') ? 'zh' : 'en'}`];
-  if (article?.sections && (!cms || article.cmsHtml)) return;
+  if (article?.sections && (!cms || article.cmsHtml || article.cmsFallback)) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   loadAcademyArticle(id).then((ready) => {

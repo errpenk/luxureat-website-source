@@ -1149,6 +1149,19 @@ function initLuxReader() {
     open(trigger.dataset.readerOpen);
   });
   body.addEventListener("click", (event) => {
+    const articleLink = event.target.closest('a[href]');
+    if (articleLink && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && articleLink.target !== "_blank") {
+      const target = new URL(articleLink.href, location.href);
+      const match = target.origin === location.origin && target.pathname.match(/^\/(?:en\/)?blog\/([a-z0-9-]+)\/?$/);
+      const id = match && `${lang}-academy-${match[1]}`;
+      if (id && (articles[id] || window.luxLoadAcademyArticle)) {
+        event.preventDefault();
+        const show = () => { if (articles[id]) render(id, true); };
+        if (window.luxLoadAcademyArticle) window.luxLoadAcademyArticle(id).then(show);
+        else show();
+        return;
+      }
+    }
     const detailLink = event.target.closest('a[href*="#reader-"]');
     if (detailLink) {
       const target = new URL(detailLink.href, location.href);

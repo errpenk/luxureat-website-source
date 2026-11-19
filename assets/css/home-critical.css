@@ -39,3 +39,5 @@ html[lang^="en"] .lux-hero-support{font-family:"Spectral";font-weight:400;line-h
 /* Keep below-the-fold layout deferred while full stylesheets load. */
 .lux-home-page > :is(section, aside, footer){content-visibility:auto;contain-intrinsic-size:auto 900px}
 .lux-home-page > .lux-home-partnership-continuum{contain-intrinsic-size:auto 1800px}
+
+.lux-hero-kicker{display:none!important}
