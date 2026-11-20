@@ -3,6 +3,7 @@ document.addEventListener("click", (event) => {
   const zh = document.documentElement.lang?.startsWith("zh");
   const dialog = document.createElement("dialog");
   dialog.className = "lux-buy-soon-dialog";
+  dialog.tabIndex = -1;
   const message = document.createElement("p");
   message.append(zh
     ? "在线购买功能即将上线，感谢您的支持！您可以先联系我们获取"
@@ -21,4 +22,5 @@ document.addEventListener("click", (event) => {
   dialog.append(message, close);
   document.body.append(dialog);
   dialog.showModal();
+  dialog.focus();
 });

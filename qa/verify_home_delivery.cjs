@@ -56,6 +56,7 @@ const productContext = vm.createContext({URL,document:{documentElement:{lang:'en
   window:{LUXUREAT_PRODUCT_DATA:{products:{'en-test':product}},luxImageSource:(source,thumbnail)=>thumbnail?'small.webp':source}});
 vm.runInContext(products.slice(0,products.indexOf('window.luxResponsiveData')),productContext);
 vm.runInContext(products.slice(products.indexOf('const luxQuoteHref'),products.indexOf('function renderLuxProductCatalog()')),productContext);
+assert.equal(vm.runInContext('luxQuoteHref()', productContext), 'https://example.test/en/cooperation/#inquiry', 'Business quote must avoid query parameters rejected by the live WordPress route');
 vm.runInContext(products.slice(products.indexOf('function renderLuxProductCatalog()'),products.indexOf('function syncLuxProductBindings()'))+'\nrenderLuxProductCatalog();',productContext);
 assert.match(catalog.innerHTML, /<img[^>]+loading="lazy"[^>]+src="small\.webp"/, 'Paginated product images must use lazy preview downloads');
 assert.doesNotMatch(catalog.innerHTML, /background-image/, 'Hidden catalog pages must not eagerly fetch CSS backgrounds');
