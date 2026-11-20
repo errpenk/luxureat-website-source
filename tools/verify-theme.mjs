@@ -304,7 +304,7 @@ assert(runtimeJs.includes('data-reader-archive') && runtimeJs.includes('lux-read
 assert(runtimeJs.includes('data-reader-archive-filter') && runtimeJs.includes('syncReaderTop'), 'runtime scripts filters the journal archive and hides reader glass at the top');
 assert(runtimeJs.includes('initLuxProductDetails'), 'runtime scripts initializes shared product-detail views');
 assert(runtimeJs.includes('data-product-open'), 'runtime scripts listens to product-detail triggers');
-assert(runtimeJs.includes('luxQuoteHref(product)') && runtimeJs.includes('企业报价') && runtimeJs.includes('Business Quote') && runtimeJs.includes('data-buy-soon'), 'bilingual product purchase and business quote CTAs are missing');
+assert(runtimeJs.includes('luxQuoteHref()') && runtimeJs.includes('企业报价') && runtimeJs.includes('Business Quote') && runtimeJs.includes('data-buy-soon'), 'bilingual product purchase and business quote CTAs are missing');
 assert(runtimeJs.includes('data-product-gallery'), 'runtime scripts supports product-detail gallery thumbnails');
 assert(runtimeJs.includes('data-product-main-image'), 'runtime scripts switches the product-detail main image');
 assert(runtimeJs.includes('lux-product-recent'), 'runtime scripts renders product-detail recommendations');
