@@ -45,15 +45,15 @@ function footerFor(page) {
   const { lang } = page;
   const copy = footer[lang];
   const relatedKeys = {
-    home: ["products", "new", "blog", "gallery", "gifting", "contact"], journal: ["certification", "gallery", "news", "blog", "gifting", "contact"],
-    products: ["new", "rituals", "blog", "certification", "gifting", "contact"], new: ["products", "rituals", "blog", "gifting", "contact"],
-    rituals: ["products", "blog", "new", "gallery", "contact"], news: ["gallery", "blog", "journal", "gifting", "contact"],
-    gallery: ["news", "journal", "blog", "gifting", "contact"], blog: ["products", "rituals", "certification", "gallery", "contact"],
-    certification: ["products", "import-export", "journal", "gifting", "contact"],
-    "market-insights": ["import-export", "gifting", "news", "gallery", "contact"],
-    "import-export": ["market-insights", "certification", "products", "gifting", "contact"],
-    gifting: ["import-export", "contact", "gallery", "products", "news"],
-    contact: ["gifting", "products", "journal", "gallery", "news"],
+    home: ["products", "new", "blog"], journal: ["certification", "gallery", "gifting"],
+    products: ["new", "rituals", "blog"], new: ["products", "rituals", "gifting"],
+    rituals: ["products", "blog", "new"], news: ["gallery", "blog", "journal"],
+    gallery: ["news", "journal", "gifting"], blog: ["products", "rituals", "certification"],
+    certification: ["products", "import-export", "gifting"],
+    "market-insights": ["import-export", "gifting", "blog"],
+    "import-export": ["market-insights", "certification", "gifting"],
+    gifting: ["import-export", "contact", "gallery"],
+    contact: ["gifting", "products", "journal"],
   };
   const related = relatedKeys[page.key].map((key) => pages.find((item) => item.lang === lang && item.key === key));
   const relatedNav = `<!-- lux:related:start --><nav class="lux-related-pages" aria-label="${lang === "zh" ? "相关页面" : "Related pages"}"><strong>${lang === "zh" ? "继续探索" : "Explore More"}</strong><div>${related.map((item) => `<a href="${item.slug}.html">${esc(item.seo.title.split(" | ")[0])}</a>`).join("")}</div></nav><!-- lux:related:end -->`;
