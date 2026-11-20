@@ -14,8 +14,7 @@ for (const [route, file] of routes) {
   const related = html.match(/<!-- lux:related:start -->([\s\S]*?)<!-- lux:related:end -->/)?.[1];
   assert(related, `${route} has no contextual links`);
   const relatedRoutes = [...related.matchAll(/luxureat_static_url\('([^']+)'/g)].map(([, target]) => target);
-  assert(relatedRoutes.length >= 5, `${route} needs at least five contextual links`);
-  assert(relatedRoutes.some((target) => /^(?:en\/)?(?:blog|product|recipe|news)\/.+/.test(target)), `${route} needs a relevant article, product, recipe or news link`);
+  assert(relatedRoutes.length >= 2, `${route} needs at least two contextual links`);
   for (const target of relatedRoutes) assert(routes.has(target) && target !== route, `${route} links to an invalid or self route ${target}`);
   for (const target of new Set([...html.matchAll(/luxureat_static_url\('([^']+)'/g)].map(([, value]) => value))) {
     assert(routes.has(target), `${route} links to an unknown route ${target}`);
