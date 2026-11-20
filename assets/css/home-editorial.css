@@ -59,7 +59,7 @@
 .lux-home-page .lux-home-topic-grid::before { display: none; }
 .lux-home-page .lux-topic-preview-card,
 .lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) { display: flex; min-height: 160px; align-items: center; gap: 22px; padding: 20px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-.lux-home-page .lux-topic-preview-card figure { flex: 0 0 104px; width: 104px; height: 104px; border-radius: 50%; background: #e8e7e2; opacity: 1; translate: none; transition: none; }
+.lux-home-page .lux-topic-preview-card figure { flex: 0 0 104px; width: 104px; height: 104px; border-radius: 16px; background: #e8e7e2; opacity: 1; translate: none; transition: none; }
 .lux-home-page .lux-topic-preview-card figure img { width: 100%; height: 100%; object-fit: cover; }
 .lux-home-page .lux-topic-preview-card:is(:hover, :focus-visible) { transform: none; border-radius: 0; }
 .lux-home-page .lux-topic-preview-card > div { flex: 1; min-width: 0; min-height: 0; padding: 0; }
@@ -261,6 +261,6 @@
   .lux-home-page .lux-advantage-flip { height: 180px; }
   .lux-home-page .lux-advantage-front img { width: 136px; }
   .lux-home-page .lux-home-advantages-grid .lux-lucide { margin: 0 0 14px; }
-  .lux-home-page .lux-home-maison { min-height: 580px; }
+  .lux-home-page .lux-home-maison { display: flex; min-height: 580px; align-items: center; justify-content: center; }
   .lux-home-page .lux-partnership-parallax-real { background-image: linear-gradient(rgba(0, 0, 0, .56), rgba(0, 0, 0, .56)), var(--lux-home-bg, none); }
 }

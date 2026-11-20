@@ -250,6 +250,13 @@ function convertHtmlSource(html, lang) {
 
 function convertHtml(file, lang) {
   let html = convertHtmlSource(fs.readFileSync(path.join(sourceDir, file), 'utf8'), lang);
+  const route = pages.find((page) => page.file === file)?.route;
+  const existingRelated = html.match(/<!-- lux:related:start -->([\s\S]*?)<!-- lux:related:end -->/);
+  if (route && existingRelated) {
+    const links = [...existingRelated[1].matchAll(/luxureat_static_url\('([^']+)'(?:,\s*'[^']*')?\)/g)]
+      .map(([, target]) => [target, pages.find((page) => page.route === target)?.seo.title.split(' | ')[0]]).filter(([, title]) => title);
+    html = html.replace(existingRelated[0], relatedNavHtml(lang, links, route));
+  }
   if (lang === 'en' && path.basename(file) === 'import-export-services.html') {
     html = html.replace(/<summary>(.*?)<\/summary>/g, '<summary><h3>$1</h3></summary>');
   }
@@ -280,8 +287,53 @@ function escapeHtml(value) {
   })[char]);
 }
 
-function relatedNavHtml(lang, links) {
-  const items = [...new Map(links.filter(Boolean).map(([route, title]) => [route, title])).entries()];
+function crossContentLinks(route, lang) {
+  const slug = route.replace(/^(?:zh|en)\//, '');
+  const family = slug === lang ? 'index' : slug.split('/')[0];
+  const article = articleInputs.find((item) => articleRoute(item) === route);
+  const product = productInputs.find((item) => productRoute(item) === route);
+  const recipe = recipeInputs.find((item) => recipeRoute(item) === route);
+  const category = product?.categories?.find((item) => ['truffle', 'olive-oil', 'pasta'].includes(item)) || recipe?.productCategory || ({ olive: 'olive-oil' })[article?.topic] || article?.topic;
+  const topic = category === 'olive-oil' ? 'olive' : category === 'pasta' ? 'truffle' : category;
+  const byPage = {
+    index: ['article:truffle', 'recipe:truffle', 'news', 'page:gallery', 'page:cooperation', 'page:contact'],
+    'about-us': ['article:culture', 'news', 'page:gallery', 'page:cooperation', 'page:contact'],
+    product: ['article:truffle', 'recipe:truffle', 'page:gallery', 'page:cooperation', 'page:contact'],
+    new: ['article:olive', 'recipe:olive-oil', 'page:gallery', 'page:cooperation', 'page:contact'],
+    recipe: ['article:truffle', 'product:truffle', 'page:gallery', 'page:cooperation', 'page:contact'],
+    brand: ['news', 'article:culture', 'page:gallery', 'page:cooperation', 'page:contact'],
+    gallery: ['news', 'article:culture', 'page:brand', 'page:cooperation', 'page:contact'],
+    blog: ['article:caviar', 'article:olive', 'article:truffle', 'page:gallery', 'page:cooperation', 'page:contact'],
+    certification: ['article:nutrition', 'product:truffle', 'page:gallery', 'page:cooperation', 'page:contact'],
+    'china-market-insights': ['news', 'article:culture', 'page:gallery', 'page:cooperation', 'page:contact'],
+    'import-export-services': ['news', 'product:truffle', 'page:gallery', 'page:cooperation', 'page:contact'],
+    cooperation: ['news', 'product:truffle', 'page:gallery', 'page:contact'],
+    contact: ['news', 'article:culture', 'page:gallery', 'page:cooperation'],
+  };
+  const tokens = family === 'blog' && article ? [`recipe:${category}`, `product:${category}`, 'page:gallery', 'page:cooperation', 'page:contact']
+    : family === 'product' && product ? [`article:${topic}`, `recipe:${category}`, 'page:gallery', 'page:cooperation', 'page:contact']
+    : family === 'recipe' && recipe ? [`article:${topic}`, `product:${category}`, 'page:gallery', 'page:cooperation', 'page:contact']
+    : family === 'news' ? ['article:culture', 'page:gallery', 'page:cooperation', 'page:contact']
+    : byPage[family] || [];
+  return tokens.map((token) => {
+    if (token === 'news') {
+      const item = brandNewsInputs.find((candidate) => candidate.lang === lang && /fhc/i.test(candidate.id)) || brandNewsInputs.find((candidate) => candidate.lang === lang);
+      return item && [brandNewsRoute(item), item.article.title];
+    }
+    const [type, value] = token.split(':');
+    if (type === 'page') {
+      const page = pages.find((candidate) => candidate.lang === lang && candidate.slug === value);
+      return page && [page.route, page.seo.title.split(' | ')[0]];
+    }
+    const item = type === 'article' ? articleInputs.find((candidate) => candidate.lang === lang && candidate.topic === value)
+      : type === 'product' ? productInputs.find((candidate) => candidate.lang === lang && candidate.categories?.includes(value))
+      : recipeInputs.find((candidate) => candidate.lang === lang && candidate.productCategory === value);
+    return item && [type === 'article' ? articleRoute(item) : type === 'product' ? productRoute(item) : recipeRoute(item), item.title];
+  }).filter((item) => item && item[0] !== route);
+}
+
+function relatedNavHtml(lang, links, route) {
+  const items = [...new Map([...links, ...crossContentLinks(route, lang)].filter(Boolean).map(([target, title]) => [target, title])).entries()];
   return `<!-- lux:related:start --><nav class="lux-related-pages" aria-label="${lang === 'zh' ? '相关页面' : 'Related pages'}"><strong>${lang === 'zh' ? '继续探索' : 'Explore More'}</strong><div>${items.map(([route, title]) => `<a href="<?php echo esc_url(luxureat_static_url('${escapePhpString(route)}')); ?>">${escapeHtml(title)}</a>`).join('')}</div></nav><!-- lux:related:end -->`;
 }
 
@@ -374,7 +426,7 @@ function articlePageHtml(article, imageDimensions) {
     ...related.map((item) => [articleRoute(item), item.title]),
     [article.lang === 'zh' ? 'zh/product' : 'en/product', article.lang === 'zh' ? '探索相关产品' : 'Explore related products'],
     [article.lang === 'zh' ? 'zh/blog' : 'en/blog', article.lang === 'zh' ? '更多知识文章' : 'More knowledge articles'],
-  ]));
+  ], articleRoute(article)));
   return convertHtmlSource(html, article.lang);
 }
 
@@ -387,7 +439,7 @@ function detailPageHtml({ lang, pageKey, title, description, route, alternateRou
   const oldLanguageLink = lang === 'zh' ? `../en/${sourcePage.slug}.html` : `../zh/${sourcePage.slug}.html`;
   html = html.replace(`href="${oldLanguageLink}"`, `href="<?php echo esc_url(luxureat_static_url('${alternateRoute}')); ?>"`);
   html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n${body}\n$2`);
-  if (related?.length) html = html.replace(/<!-- lux:related:start -->[\s\S]*?<!-- lux:related:end -->/, relatedNavHtml(lang, related));
+  if (related?.length) html = html.replace(/<!-- lux:related:start -->[\s\S]*?<!-- lux:related:end -->/, relatedNavHtml(lang, related, route));
   return convertHtmlSource(html, lang);
 }
 
