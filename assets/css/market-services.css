@@ -1075,8 +1075,14 @@ html[lang="en"] .lux-service-group > a small { font-family: var(--lux-en-body); 
   gap: clamp(30px, 5vw, 76px);
   align-items: stretch;
 }
-.lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) .lux-ms-heading { grid-column: 1 / -1; }
-.lux-import-export-page :is(#import-into-china, #brand-digital) .lux-ms-heading { align-items: end; }
+.lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) .lux-ms-heading {
+  grid-column: 1 / -1;
+  grid-template-columns: 1fr;
+  max-width: 1100px;
+  margin-inline: auto;
+  text-align: center;
+}
+.lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) .lux-ms-heading .lux-ms-lead { max-width: 900px; margin-inline: auto; }
 .lux-service-media {
   min-height: 430px;
   margin: 0;
@@ -1098,7 +1104,7 @@ html[lang="en"] .lux-service-group > a small { font-family: var(--lux-en-body); 
   background: #fff;
 }
 .lux-import-export-page #import-into-china > .lux-ms-shell > .lux-ms-card { background: transparent; }
-.lux-import-export-page #import-into-china .lux-ms-card-label { font-size: clamp(20px, 2vw, 26px); font-weight: 700; letter-spacing: .06em; }
+.lux-import-export-page :is(#import-into-china, #market-entry) .lux-ms-card-label { font-size: clamp(20px, 2vw, 26px); font-weight: 700; letter-spacing: .06em; }
 .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-service-media { grid-column: 2; grid-row: 2; }
 .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-ms-card-grid {
   grid-column: 1;
@@ -1168,9 +1174,6 @@ html[lang="en"] .lux-service-group > a small { font-family: var(--lux-en-body); 
 .lux-import-export-page :is(#sourcing-export, #market-entry),
 .lux-import-export-page #sourcing-export.is-muted {
   background: #111514;
-}
-.lux-import-export-page :is(#sourcing-export, #market-entry) .lux-ms-heading {
-  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
 }
 .lux-import-export-page :is(#sourcing-export, #market-entry) :is(.lux-ms-heading h2, .lux-ms-heading > div:last-child > h3, .lux-ms-card h3) {
   color: #f4f1eb !important;
@@ -1610,8 +1613,6 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
 }
 
 @media (max-width: 900px) {
-  .lux-import-export-page :is(#import-into-china, #brand-digital) .lux-ms-heading { align-items: start; }
-  .lux-import-export-page :is(#sourcing-export, #market-entry) .lux-ms-heading { grid-template-columns: 1fr; }
   .lux-import-export-page :is(#import-into-china, #sourcing-export, #market-entry, #brand-digital) > .lux-ms-shell,
   .lux-import-export-page #faq > .lux-ms-shell { grid-template-columns: 1fr; }
   .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > :is(.lux-service-media, .lux-ms-card-grid) { grid-column: 1; grid-row: auto; }
