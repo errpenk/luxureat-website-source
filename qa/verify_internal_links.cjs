@@ -11,15 +11,11 @@ const incoming = new Map([...routes.keys()].map((route) => [route, 0]));
 
 for (const [route, file] of routes) {
   const html = read(file);
-  const related = html.match(/<!-- lux:related:start -->([\s\S]*?)<!-- lux:related:end -->/)?.[1];
-  assert(related, `${route} has no contextual links`);
-  const relatedRoutes = [...related.matchAll(/luxureat_static_url\('([^']+)'/g)].map(([, target]) => target);
-  assert(relatedRoutes.length >= 2, `${route} needs at least two contextual links`);
-  for (const target of relatedRoutes) assert(routes.has(target) && target !== route, `${route} links to an invalid or self route ${target}`);
+  assert(!html.includes('lux-related-pages') && !html.includes('lux:related:'), `${route} still renders Explore More`);
   for (const target of new Set([...html.matchAll(/luxureat_static_url\('([^']+)'/g)].map(([, value]) => value))) {
     assert(routes.has(target), `${route} links to an unknown route ${target}`);
     if (target !== route) incoming.set(target, incoming.get(target) + 1);
   }
 }
 assert.deepEqual([...incoming].filter(([, count]) => count === 0), [], "Public routes must not be orphaned");
-console.log(`${routes.size} public routes have contextual links and no orphan pages.`);
+console.log(`${routes.size} public routes have no Explore More block or orphan pages.`);
