@@ -6,9 +6,8 @@ window.luxResponsiveData?.(window.LUXUREAT_PRODUCT_DATA);
 
 const luxProductVideoBase = new URL("../media/products/videos/", document.currentScript?.src || location.href);
 const luxWechatQrUrl = new URL("../media/brand/wechat-qr.webp", document.currentScript?.src || location.href);
-const luxQuoteHref = (product) => {
+const luxQuoteHref = () => {
   const url = new URL(document.querySelector('.lux-nav a[href$="/cooperation/"], .lux-nav a[href$="cooperation.html"]')?.href || (document.documentElement.lang?.startsWith("zh") ? "/cooperation/" : "/en/cooperation/"), location.href);
-  if (product?.title) url.searchParams.set("product", product.title);
   url.hash = "inquiry";
   return url.href;
 };
@@ -110,8 +109,8 @@ function initLuxCaviarControls() {
   const empty = document.createElement("p");
   empty.className = "lux-caviar-empty";
   empty.innerHTML = lang === "zh"
-    ? `<strong>暂无可浏览的相关产品</strong><a href="${luxEscapeProductHtml(luxQuoteHref({ title: "产品供应咨询" }))}">咨询产品供应</a>`
-    : `<strong>No matching products are listed</strong><a href="${luxEscapeProductHtml(luxQuoteHref({ title: "Product availability" }))}">Ask about availability</a>`;
+    ? `<strong>暂无可浏览的相关产品</strong><a href="${luxEscapeProductHtml(luxQuoteHref())}">咨询产品供应</a>`
+    : `<strong>No matching products are listed</strong><a href="${luxEscapeProductHtml(luxQuoteHref())}">Ask about availability</a>`;
   empty.hidden = true;
   grid.insertAdjacentElement("afterend", empty);
   const pageNav = document.createElement("nav");
@@ -468,7 +467,7 @@ function initLuxProductDetails() {
             ${product.available === false || Number.isFinite(product.stockQuantity) ? `<small class="lux-product-stock">${luxEscapeProductHtml(product.available === false ? labels.unavailable : `${product.stockQuantity} ${labels.stock}`)}</small>` : ""}
             <div class="lux-product-purchase">
               <button type="button" class="lux-product-buy-link" data-buy-soon>${luxEscapeProductHtml(localized("立即购买", "Buy Now"))}</button>
-              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(luxQuoteHref(product))}">${luxEscapeProductHtml(localized("企业报价", "Business Quote"))}</a>
+              <a class="lux-product-quote-link" href="${luxEscapeProductHtml(luxQuoteHref())}">${luxEscapeProductHtml(localized("企业报价", "Business Quote"))}</a>
             </div>
             <aside class="lux-product-wechat" aria-label="${luxEscapeProductHtml(localized("微信：LuxurEatChina", "WeChat: LuxurEatChina"))}"><img width="104" height="104" loading="lazy" decoding="async" src="${luxWechatQrUrl}" alt="${luxEscapeProductHtml(localized("微信二维码", "WeChat QR code"))}"><span class="lux-wechat-copy"><span lang="${lang}">${luxEscapeProductHtml(localized("更多详情与合作细节，也可搜索我们的微信号：", "More details or more information, you can also search for our WeChat ID:"))}</span><b lang="en">LuxurEatChina</b></span></aside>
           </div>
