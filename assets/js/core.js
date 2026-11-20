@@ -1262,7 +1262,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const link = document.createElement("a");
       link.className = "lux-product-quote-link";
       link.href = url.href;
-      link.textContent = document.documentElement.lang?.startsWith("zh") ? "专属报价" : "Exclusive Quote";
+      link.textContent = document.documentElement.lang?.startsWith("zh") ? "企业报价" : "Business Quote";
       const buy = document.createElement("button");
       buy.type = "button";
       buy.className = "lux-product-buy-link";
@@ -1281,20 +1281,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initLuxRecipeCtas();
   initLuxAwardLightbox();
   initLuxSectionFlips();
-});
-
-document.addEventListener("click", (event) => {
-  if (!event.target.closest("[data-buy-soon]")) return;
-  const dialog = document.createElement("dialog");
-  dialog.className = "lux-buy-soon-dialog";
-  dialog.textContent = document.documentElement.lang?.startsWith("zh")
-    ? "在线购买功能即将上线，感谢您的支持！您可以先联系我们获取专属服务。"
-    : "Buy online soon. Thanks! Contact us for personal service.";
-  const close = document.createElement("button");
-  close.textContent = document.documentElement.lang?.startsWith("zh") ? "关闭" : "Close";
-  close.onclick = () => dialog.close();
-  dialog.onclose = () => dialog.remove();
-  dialog.append(close);
-  document.body.append(dialog);
-  dialog.showModal();
 });

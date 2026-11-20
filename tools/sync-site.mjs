@@ -44,6 +44,19 @@ function headerFor(page) {
 function footerFor(page) {
   const { lang } = page;
   const copy = footer[lang];
+  const relatedKeys = {
+    home: ["products", "new", "blog"], journal: ["certification", "gallery", "gifting"],
+    products: ["new", "rituals", "blog"], new: ["products", "rituals", "gifting"],
+    rituals: ["products", "blog", "new"], news: ["gallery", "blog", "journal"],
+    gallery: ["news", "journal", "gifting"], blog: ["products", "rituals", "certification"],
+    certification: ["products", "import-export", "gifting"],
+    "market-insights": ["import-export", "gifting", "blog"],
+    "import-export": ["market-insights", "certification", "gifting"],
+    gifting: ["import-export", "contact", "gallery"],
+    contact: ["gifting", "products", "journal"],
+  };
+  const related = relatedKeys[page.key].map((key) => pages.find((item) => item.lang === lang && item.key === key));
+  const relatedNav = `<!-- lux:related:start --><nav class="lux-related-pages" aria-label="${lang === "zh" ? "相关页面" : "Related pages"}"><strong>${lang === "zh" ? "继续探索" : "Explore More"}</strong><div>${related.map((item) => `<a href="${item.slug}.html">${esc(item.seo.title.split(" | ")[0])}</a>`).join("")}</div></nav><!-- lux:related:end -->`;
   const nav = navigation.map((item) => `<a href="${link(slugFor(item, lang))}"${item.key === page.key || (page.key === "new" && item.key === "products") ? ' aria-current="page"' : ""}>${esc(item[lang])}</a>`).join("");
   const social = lang === "zh"
     ? '<a href="https://xhslink.com/m/AfATtrqiQvu" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/rednote.svg" alt="">小红书</a><button type="button" data-footer-modal="wechat"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/wechat.svg" alt="">微信</button><a href="https://v.douyin.com/9H5RI6LEdaU" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/douyin.svg" alt="">抖音</a><a href="https://weibo.com/u/6353448966" target="_blank" rel="noopener"><img loading="eager" fetchpriority="low" decoding="async" src="../assets/media/social/weibo.svg" alt="">微博</a>'
@@ -62,6 +75,7 @@ function footerFor(page) {
   const newsletterIcon = "newsletter-envelope.svg";
 
   const markup = `<!-- lux:footer:start -->
+${relatedNav}
 <section class="lux-newsletter" aria-labelledby="lux-newsletter-title-${lang}">
   <div class="lux-newsletter-inner">
     <div class="lux-newsletter-intro"><img class="lux-newsletter-icon" loading="eager" fetchpriority="low" decoding="async" src="../assets/media/brand/${newsletterIcon}" alt="" aria-hidden="true"><div class="lux-newsletter-copy"><h2 id="lux-newsletter-title-${lang}">${newsletterHeading}</h2><p>${newsletter.body}</p></div></div>
@@ -89,8 +103,8 @@ function footerFor(page) {
 }
 
 function scriptsFor(page) {
-  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions"].includes(handle)) : page.scripts;
-  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions"].includes(handle)) : [];
+  const eager = page.key === "home" ? page.scripts.filter((handle) => ["image-variants", "core", "chat", "home-interactions", "buy-soon"].includes(handle)) : page.scripts;
+  const lazy = page.key === "home" ? page.scripts.filter((handle) => !["image-variants", "core", "chat", "home-interactions", "buy-soon"].includes(handle)) : [];
   const galleryPage = ["gallery", "news"].includes(page.key);
   const tags = eager.map((handle) => `<script defer src="../${scripts[handle].src}?v=${assetVersion}${handle === "core" ? "-mobile-prefetch2-menu3-metrics1-wechat-contact1-back-to-top-scrollpane1-media2-product-copy7" : handle === "home-interactions" ? "-flavour7" : handle === "journal" ? `-reader-date1-lead1-card-images2${page.key === "rituals" ? "-recipe-videos4" : ""}` : page.key === "rituals" && handle === "journal-data" ? "-recipe-videos4" : page.key === "blog" && handle === "academy" ? "-related-cards3" : handle === "products" ? "-video-refresh2-wechat3-product-quote2-product-copy7" : page.key === "products" && handle === "product-data" ? "-video-refresh3-product-copy7" : handle === "brand" ? "-wechat-contact1" : ["gallery-data"].includes(handle) ? "-gallery21" : galleryPage && ["event-data", "brand-news-data", "journal"].includes(handle) ? "-gallery17" : ""}"></script>`).join("\n");
   const deferred = lazy.length
