@@ -138,7 +138,7 @@ assert(functionsPhp.includes('wp_enqueue_style'), 'functions.php enqueues styles
 assert(!functionsPhp.includes("media='print' onload"), 'WordPress applies the final shared stylesheet before first paint');
 assert(functionsPhp.includes("'products' => array('src' => 'assets/js/products.js', 'dependencies' => array('product-data'))"), 'functions.php loads product data before product behavior');
 assert(functionsPhp.includes("'events' => array('src' => 'assets/js/events.js'") && functionsPhp.includes("'journal' => array('src' => 'assets/js/journal.js'"), 'functions.php registers event and journal domain scripts');
-assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'chat', 'product-data', 'products')"), 'functions.php loads shared and product behavior in dependency order');
+assert(functionsPhp.includes("'zh/product' => array('image-variants', 'core', 'chat', 'product-data', 'products', 'buy-soon')"), 'functions.php loads shared and product behavior in dependency order');
 assert(functionsPhp.includes("'core' => array('src' => 'assets/js/core.js', 'dependencies' => array('image-variants'))"), 'core runtime does not depend on responsive image mappings');
 assert(functionsPhp.includes("'chat' => array('src' => 'assets/js/chat.js', 'dependencies' => array('core'))"), 'lightweight chat UI loads after the critical runtime');
 assert(functionsPhp.includes('wp_enqueue_script'), 'functions.php enqueues scripts');
@@ -191,7 +191,7 @@ assert(functionsPhp.includes("'LuxureatContact'") && functionsPhp.includes("wp_c
 assert(functionsPhp.includes("$subject = $name . ' + ' . $inquiry_labels[$inquiry_type]"), 'contact email subjects contain only the name and Italian enquiry type');
 assert(functionsPhp.includes('luxureat_static_mailpoet_subscribe') && functionsPhp.includes("'send_confirmation_email' => true") && functionsPhp.includes('wp_ajax_nopriv_luxureat_newsletter'), 'functions.php preserves the standalone MailPoet double opt-in newsletter');
 assert(!functionsPhp.includes('woocommerce_store_api_cart_item_images') && !functionsPhp.includes('luxureat_static_woo_catalog') && !functionsPhp.includes('LuxureatWooCatalog'), 'legacy WooCommerce catalogue and checkout image bridges are removed');
-assert(functionsPhp.includes("'zh' => array('image-variants', 'core', 'chat', 'home-interactions')") && functionsPhp.includes("'en' => array('image-variants', 'core', 'chat', 'home-interactions')"), 'WordPress homepages enqueue home interactions alongside responsive mappings and chat');
+assert(functionsPhp.includes("'zh' => array('image-variants', 'core', 'chat', 'home-interactions', 'buy-soon')") && functionsPhp.includes("'en' => array('image-variants', 'core', 'chat', 'home-interactions', 'buy-soon')"), 'WordPress homepages enqueue home interactions alongside responsive mappings and chat');
 assert(functionsPhp.includes('function luxureat_static_trim_plugin_assets()') && functionsPhp.includes("'jetpack-stats'") && !functionsPhp.includes("'google_gtagjs', 'jquery'"), 'static routes remove duplicate commerce analytics without removing Google Analytics');
 assert(functionsPhp.includes("add_action('wp_print_styles', 'luxureat_static_trim_plugin_assets', PHP_INT_MAX)") && functionsPhp.includes("remove_action('wp_head', 'print_emoji_detection_script', 7)"), 'late WooCommerce styles and emoji detection remain on static routes');
 assert(functionsPhp.includes("add_filter('wp_resource_hints', 'luxureat_static_resource_hints', PHP_INT_MAX, 2)") && functionsPhp.includes("[ic]0\\.wp\\.com"), 'unused WordPress CDN preconnects are not filtered after plugins add their hints');
@@ -304,7 +304,7 @@ assert(runtimeJs.includes('data-reader-archive') && runtimeJs.includes('lux-read
 assert(runtimeJs.includes('data-reader-archive-filter') && runtimeJs.includes('syncReaderTop'), 'runtime scripts filters the journal archive and hides reader glass at the top');
 assert(runtimeJs.includes('initLuxProductDetails'), 'runtime scripts initializes shared product-detail views');
 assert(runtimeJs.includes('data-product-open'), 'runtime scripts listens to product-detail triggers');
-assert(runtimeJs.includes('luxQuoteHref(product)') && runtimeJs.includes('咨询报价') && runtimeJs.includes('Request a Quote'), 'bilingual product quote CTAs are missing');
+assert(runtimeJs.includes('luxQuoteHref(product)') && runtimeJs.includes('企业报价') && runtimeJs.includes('Business Quote') && runtimeJs.includes('data-buy-soon'), 'bilingual product purchase and business quote CTAs are missing');
 assert(runtimeJs.includes('data-product-gallery'), 'runtime scripts supports product-detail gallery thumbnails');
 assert(runtimeJs.includes('data-product-main-image'), 'runtime scripts switches the product-detail main image');
 assert(runtimeJs.includes('lux-product-recent'), 'runtime scripts renders product-detail recommendations');
@@ -460,7 +460,7 @@ assert(!zhGifting.includes('>批发采购</strong>') && !zhGifting.includes('>�
 
 assert(!fs.existsSync(path.join(themeDir, 'pages/zh/bag.php')) && !fs.existsSync(path.join(themeDir, 'pages/en/bag.php')), 'dedicated bilingual bag pages are absent from the theme');
 assert(integrationCss.includes('.lux-product-recent-media:hover > img') && integrationCss.includes('transform: scale(1.035);'), 'product-detail recommendation images enlarge gently on hover');
-assert(runtimeJs.includes('luxContactHref(item)') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations need contact and detail CTAs');
+assert(runtimeJs.includes('data-buy-soon') && runtimeJs.includes('data-product-open="${luxEscapeProductHtml(key)}"'), 'product recommendations need buy and detail CTAs');
 assert(runtimeJs.includes('价格请询价') && runtimeJs.includes('Price on request'), 'catalogue products need truthful price labels');
 
 const zhJournal = read(path.join(themeDir, 'pages/zh/about-us.php'));

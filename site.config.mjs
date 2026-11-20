@@ -1,4 +1,4 @@
-export const assetVersion = "20261119-cta-eyebrow3";
+export const assetVersion = "20261120-links-buy1";
 
 export const contact = {
   email: "china@luxureat.com",
@@ -67,9 +67,9 @@ const page = (lang, slug, key, scripts, indexable = true) => ({
 });
 
 export const pages = [
-  page("zh", "index", "home", ["home-interactions", "product-data", "event-data", "events", "journal-data", "journal", "products"]),
+  page("zh", "index", "home", ["home-interactions", "product-data", "event-data", "events", "journal-data", "journal", "products", "buy-soon"]),
   page("zh", "about-us", "journal", ["journal-data", "journal"]),
-  page("zh", "product", "products", ["product-data", "products"]),
+  page("zh", "product", "products", ["product-data", "products", "buy-soon"]),
   page("zh", "new", "new", ["journal-data", "journal", "new-arrivals"]),
   page("zh", "recipe", "rituals", ["journal-data", "journal"]),
   page("zh", "brand", "news", ["event-data", "gallery-data", "brand-news-data", "journal-data", "journal"]),
@@ -80,9 +80,9 @@ export const pages = [
   page("zh", "china-market-insights", "market-insights", ["market-insights-ui"]),
   page("zh", "import-export-services", "import-export", ["import-export-ui"]),
   page("zh", "contact", "contact", ["brand-data", "brand"]),
-  page("en", "index", "home", ["home-interactions", "product-data", "event-data", "events", "journal-data", "journal", "products"]),
+  page("en", "index", "home", ["home-interactions", "product-data", "event-data", "events", "journal-data", "journal", "products", "buy-soon"]),
   page("en", "about-us", "journal", ["journal-data", "journal"]),
-  page("en", "product", "products", ["product-data", "products"]),
+  page("en", "product", "products", ["product-data", "products", "buy-soon"]),
   page("en", "new", "new", ["journal-data", "journal", "new-arrivals"]),
   page("en", "recipe", "rituals", ["journal-data", "journal"]),
   page("en", "brand", "news", ["event-data", "gallery-data", "brand-news-data", "journal-data", "journal"]),
@@ -112,6 +112,7 @@ export const scripts = {
   "home-interactions": { src: "assets/js/home-interactions.js", dependencies: [] },
   "new-arrivals": { src: "assets/js/new-arrivals.js", dependencies: [] },
   products: { src: "assets/js/products.js", dependencies: ["product-data"] },
+  "buy-soon": { src: "assets/js/buy-soon.js", dependencies: [] },
   events: { src: "assets/js/events.js", dependencies: ["event-data"] },
   gallery: { src: "assets/js/gallery.js", dependencies: ["event-data", "gallery-data"] },
   journal: { src: "assets/js/journal.js", dependencies: ["journal-data"] },

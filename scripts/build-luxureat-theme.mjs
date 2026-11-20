@@ -280,6 +280,11 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function relatedNavHtml(lang, links) {
+  const items = [...new Map(links.filter(Boolean).map(([route, title]) => [route, title])).entries()];
+  return `<!-- lux:related:start --><nav class="lux-related-pages" aria-label="${lang === 'zh' ? '相关页面' : 'Related pages'}"><strong>${lang === 'zh' ? '继续探索' : 'Explore More'}</strong><div>${items.map(([route, title]) => `<a href="<?php echo esc_url(luxureat_static_url('${escapePhpString(route)}')); ?>">${escapeHtml(title)}</a>`).join('')}</div></nav><!-- lux:related:end -->`;
+}
+
 function articleAsset(value) {
   const source = decodeURIComponent(String(value || ''));
   const marker = source.indexOf('/assets/');
@@ -361,10 +366,19 @@ function articlePageHtml(article, imageDimensions) {
     html = html.replace(`href="${currentBlogLink}"`, `href="<?php echo esc_url(luxureat_static_url('${articleRoute(alternate)}')); ?>"`);
   }
   html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n<?php if (!luxureat_cms_detail('${escapePhpString(`${article.lang}-academy-${article.slug}`)}', '${article.lang}', 'blog')): ?>${pageBody}<?php endif; ?>\n$2`);
+  const related = [...new Map([
+    ...(article.relatedSlugs || []).map((slug) => articleInputs.find((item) => item.lang === article.lang && item.slug === slug)),
+    ...articleInputs.filter((item) => item.lang === article.lang && item.slug !== article.slug && (item.topic || item.eyebrow) === (article.topic || article.eyebrow)),
+  ].filter(Boolean).map((item) => [item.slug, item])).values()].slice(0, 3);
+  html = html.replace(/<!-- lux:related:start -->[\s\S]*?<!-- lux:related:end -->/, relatedNavHtml(article.lang, [
+    ...related.map((item) => [articleRoute(item), item.title]),
+    [article.lang === 'zh' ? 'zh/product' : 'en/product', article.lang === 'zh' ? '探索相关产品' : 'Explore related products'],
+    [article.lang === 'zh' ? 'zh/blog' : 'en/blog', article.lang === 'zh' ? '更多知识文章' : 'More knowledge articles'],
+  ]));
   return convertHtmlSource(html, article.lang);
 }
 
-function detailPageHtml({ lang, pageKey, title, description, route, alternateRoute, body }) {
+function detailPageHtml({ lang, pageKey, title, description, route, alternateRoute, body, related }) {
   const sourcePage = pages.find((page) => page.lang === lang && page.key === pageKey);
   let html = fs.readFileSync(path.join(sourceDir, sourcePage.file), 'utf8');
   html = html.replace(/<!-- lux:seo:start -->[\s\S]*?<!-- lux:seo:end -->/, `<!-- lux:seo:start -->\n<title>${escapeHtml(seoTitle(title, route))}</title>\n<meta name="description" content="${escapeHtml(description)}">\n<!-- lux:seo:end -->`);
@@ -373,6 +387,7 @@ function detailPageHtml({ lang, pageKey, title, description, route, alternateRou
   const oldLanguageLink = lang === 'zh' ? `../en/${sourcePage.slug}.html` : `../zh/${sourcePage.slug}.html`;
   html = html.replace(`href="${oldLanguageLink}"`, `href="<?php echo esc_url(luxureat_static_url('${alternateRoute}')); ?>"`);
   html = html.replace(/(<!-- lux:header:end -->)[\s\S]*?(<!-- lux:footer:start -->)/, `$1\n${body}\n$2`);
+  if (related?.length) html = html.replace(/<!-- lux:related:start -->[\s\S]*?<!-- lux:related:end -->/, relatedNavHtml(lang, related));
   return convertHtmlSource(html, lang);
 }
 
@@ -400,7 +415,12 @@ function productPageHtml(product, imageDimensions) {
   const storageNotes = product.storageNotes ? `<div class="lux-product-storage-notes">${product.storageNotes.split(/\n\s*\n/).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>` : '';
   const storySection = product.detailDescription || storyContent ? `<section class="lux-reader-section lux-product-story-media"><h2>${product.lang === 'zh' ? '产品说明' : 'Product Information'}</h2>${(product.detailDescription || product.desc).split(/\n\s*\n/).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}${storyContent ? `<div class="lux-product-videos lux-elixir-story-videos">${storyContent}</div>` : ''}${videoRow}${product.videoNotes ? `<div class="lux-product-video-notes">${product.videoNotes.split(/\n\s*\n/).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>` : ''}${storageGallery}${storageNotes}</section>` : '';
   const body = `<main class="lux-article-page">${breadcrumbHtml(product.lang, 'product.html', product.lang === 'zh' ? '我们的产品' : 'Products', product.title)}<article class="lux-reader-layout lux-product-seo-page${product.series === 'TrufflElixir' ? ' is-elixir' : ''}"><div class="lux-reader-rule"></div><section class="lux-reader-hero"><div class="lux-reader-hero-copy"><div class="lux-reader-meta-grid"><span>${escapeHtml(product.eyebrow)}</span><span>${escapeHtml(product.unit)}</span><span>${escapeHtml(product.manufacturer)}</span></div><h1 id="lux-reader-title">${escapeHtml(product.title)}</h1><p class="lux-reader-summary">${escapeHtml(product.desc)}</p></div><figure class="lux-reader-cover"><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}"></figure></section><section class="lux-reader-content"><aside class="lux-reader-aside"><a href="product.html">${labels.back}</a></aside><div class="lux-reader-copy"><section class="lux-reader-section"><h2>${labels.facts}</h2>${showcaseRow}<dl class="lux-seo-facts">${facts}</dl></section>${storySection}</div></section></article></main>`;
-  return detailPageHtml({ lang: product.lang, pageKey: 'products', title: product.title, description: product.cardDesc || product.desc, route: productRoute(product), alternateRoute: productRoute(alternate || product), body });
+  const related = productInputs.filter((item) => item.lang === product.lang && item.id !== product.id && item.categories?.some((category) => product.categories?.includes(category))).slice(0, 3);
+  return detailPageHtml({ lang: product.lang, pageKey: 'products', title: product.title, description: product.cardDesc || product.desc, route: productRoute(product), alternateRoute: productRoute(alternate || product), body, related: [
+    ...related.map((item) => [productRoute(item), item.title]),
+    [product.lang === 'zh' ? 'zh/recipe' : 'en/recipe', product.lang === 'zh' ? '探索食谱搭配' : 'Explore recipes'],
+    [product.lang === 'zh' ? 'zh/product' : 'en/product', product.lang === 'zh' ? '浏览产品系列' : 'Browse products'],
+  ] });
 }
 
 function brandNewsPageHtml(item, imageDimensions) {
@@ -435,7 +455,12 @@ function brandNewsPageHtml(item, imageDimensions) {
     <figure class="lux-brand-news-hero"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>
     <div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)}<svg class="lux-lucide notranslate" translate="no" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>` : ''}</header><div class="lux-brand-news-copy">${renderArticleContent(article.opening || [])}${sections}${linkedEventHtml}${relatedStoryHtml}</div></div>
   </article></main>`;
-  return detailPageHtml({ lang: item.lang, pageKey: 'news', title: article.title, description: article.intro, route: brandNewsRoute(item), alternateRoute: brandNewsRoute(alternate || item), body });
+  const related = brandNewsInputs.filter((other) => other.lang === item.lang && other.id !== item.id && other.article.category === article.category).slice(0, 2);
+  return detailPageHtml({ lang: item.lang, pageKey: 'news', title: article.title, description: article.intro, route: brandNewsRoute(item), alternateRoute: brandNewsRoute(alternate || item), body, related: [
+    ...related.map((other) => [brandNewsRoute(other), other.article.title]),
+    [item.lang === 'zh' ? 'zh/gallery' : 'en/gallery', item.lang === 'zh' ? '浏览企业画廊' : 'Explore the gallery'],
+    [item.lang === 'zh' ? 'zh/brand' : 'en/brand', item.lang === 'zh' ? '更多品牌新闻' : 'More brand news'],
+  ] });
 }
 
 function recipePageHtml(article, imageDimensions) {
@@ -450,7 +475,12 @@ function recipePageHtml(article, imageDimensions) {
   const videoHtml = article.video ? `<figure class="lux-recipe-video"><video controls playsinline preload="none" poster="${escapeHtml(image)}" aria-label="${escapeHtml(article.title)}"><source src="${escapeHtml(articleAsset(article.video.src))}" type="video/mp4"></video><figcaption>${escapeHtml(article.video.description)}</figcaption></figure>` : '';
   const extraVideoHtml = article.extraVideos?.length ? `<div class="lux-recipe-extra-videos">${article.extraVideos.map((src, index) => `<video style="flex-grow: ${article.extraVideoRatios[index]}; aspect-ratio: ${article.extraVideoRatios[index]}" data-lux-autoplay muted loop playsinline preload="none" controls aria-label="${escapeHtml(article.title)} ${index + 1}"><source data-src="${escapeHtml(articleAsset(src))}" type="video/mp4"></video>`).join('')}</div>` : '';
   const body = `<main class="lux-article-page">${breadcrumbHtml(article.lang, 'recipe.html', article.lang === 'zh' ? '食谱艺术' : 'Recipes', article.title)}<article class="lux-recipe-reader lux-recipe-seo-page"><section class="lux-recipe-hero"><figure><img${imageDimensions.get(image) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(image)}" alt="${escapeHtml(article.title)}"></figure><div class="lux-recipe-intro"><span>${escapeHtml(article.eyebrow)}</span><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p>${escapeHtml(article.intro)}</p><dl class="lux-recipe-facts"><div><dt>${labels.time}</dt><dd>${escapeHtml(recipe.time)}</dd></div><div><dt>${labels.difficulty}</dt><dd>${escapeHtml(recipe.difficulty)}</dd></div><div><dt>${labels.servings}</dt><dd>${escapeHtml(recipe.servings)}</dd></div></dl></div></section><section class="lux-recipe-body"><aside class="lux-recipe-ingredients"><h2>${labels.ingredients}</h2><ul>${recipe.ingredients.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul></aside><div class="lux-recipe-method"><h2>${labels.method}</h2><ol>${recipe.steps.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></div></section><section class="lux-recipe-nutrition"><header><h2>${labels.nutrition}</h2></header>${recipe.nutritionNote ? `<p class="lux-recipe-nutrition-note">${escapeHtml(recipe.nutritionNote)}</p>` : ''}<dl>${recipe.nutrition.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>${videoHtml}${extraVideoHtml}</section><section class="lux-recipe-details">${details}${recipe.products ? `<div><dt>${labels.products}</dt><dd><a class="lux-recipe-product-link" href="${productHref}">${escapeHtml(recipe.products)}</a></dd></div>` : ''}</section></article></main>`;
-  return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body: `<?php if (!luxureat_cms_detail('${escapePhpString(article.id)}', '${article.lang}', 'recipe')): ?>${body}<?php endif; ?>` });
+  const related = recipeInputs.filter((item) => item.lang === article.lang && item.slug !== article.slug && (item.productCategory || item.eyebrow) === (article.productCategory || article.eyebrow)).slice(0, 2);
+  return detailPageHtml({ lang: article.lang, pageKey: 'rituals', title: article.title, description: article.intro, route: recipeRoute(article), alternateRoute: recipeRoute(alternate || article), body: `<?php if (!luxureat_cms_detail('${escapePhpString(article.id)}', '${article.lang}', 'recipe')): ?>${body}<?php endif; ?>`, related: [
+    ...related.map((item) => [recipeRoute(item), item.title]),
+    [article.lang === 'zh' ? 'zh/product' : 'en/product', article.lang === 'zh' ? '浏览相关食材' : 'Explore ingredients'],
+    [article.lang === 'zh' ? 'zh/recipe' : 'en/recipe', article.lang === 'zh' ? '更多食谱' : 'More recipes'],
+  ] });
 }
 
 function buildRoutesPhp() {
@@ -501,8 +531,8 @@ function buildAssetCatalogPhp() {
     return `        '${escapePhpString(handle)}' => array('src' => '${escapePhpString(script.src)}', 'dependencies' => ${phpList(script.dependencies)}),`;
   }).join('\n');
   const byPath = [...pages.map((page) => {
-    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat', 'home-interactions'] : page.scripts)},`;
-  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('image-variants', 'core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('image-variants', 'core'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('image-variants', 'core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('image-variants', 'core'),`)].join('\n');
+    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat', 'home-interactions', 'buy-soon'] : page.scripts)},`;
+  }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('image-variants', 'core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('image-variants', 'core', 'buy-soon'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('image-variants', 'core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('image-variants', 'core'),`)].join('\n');
   return { catalog, byPath };
 }
 
