@@ -3,7 +3,7 @@ import fs from 'node:fs';
 
 const runtime = fs.readFileSync('assets/js/products.js', 'utf8');
 
-assert.match(runtime, /luxQuoteHref\(product\)/, 'the product quote link is missing');
+assert.match(runtime, /luxQuoteHref\(\)/, 'the product quote link is missing');
 assert.match(runtime, /立即购买/, 'the Chinese buy CTA label is missing');
 assert.match(runtime, /Buy Now/, 'the English buy CTA label is missing');
 assert.match(runtime, /企业报价/, 'the Chinese business quote CTA label is missing');

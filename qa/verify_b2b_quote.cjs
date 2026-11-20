@@ -33,7 +33,7 @@ const runtime = read("assets/js/brand.js");
 assert.ok(runtime.includes('? ["name", "product_industry", "inquiry_type"]') && runtime.includes("const quoteDetails = isQuoteForm") && runtime.includes('get("product")'), "quote fields or product prefill are incomplete");
 assert.ok(runtime.includes('contactRequired: "请填写电子邮箱或电话/微信其中一种。"') && runtime.includes('email?.value') && runtime.includes('phone?.value'), "quote form does not allow either email or phone / WeChat contact");
 const products = read("assets/js/products.js");
-assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('More details or more information, you can also search for our WeChat ID:') && products.includes('更多详情与合作细节，也可搜索我们的微信号：') && products.includes('<b lang="en">LuxurEatChina</b>') && products.includes('lux-product-quote-link') && products.includes('luxQuoteHref(product)') && products.includes('data-buy-soon') && products.includes('企业报价'));
+assert.ok(products.includes('class="lux-product-wechat"') && products.includes('src="${luxWechatQrUrl}"') && products.includes('More details or more information, you can also search for our WeChat ID:') && products.includes('更多详情与合作细节，也可搜索我们的微信号：') && products.includes('<b lang="en">LuxurEatChina</b>') && products.includes('lux-product-quote-link') && products.includes('luxQuoteHref()') && products.includes('data-buy-soon') && products.includes('企业报价'));
 assert.match(read("assets/js/buy-soon.js"), /brand-consultation/);
 const productData = read("assets/data/products.js");
 assert.ok(productData.includes('"black-truffle-sauce-80g"') && productData.includes('"black-truffle-sauce-180g"') && productData.includes('"black-truffle-sauce-500g"'));
