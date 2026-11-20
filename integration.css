@@ -14580,8 +14580,3 @@ html[lang^="zh"] .lux-cert-quote-slides [data-cert-quote] {
 .lux-buy-soon-dialog :is(a, button):focus-visible { outline: 2px solid #006a64; outline-offset: 3px; }
 .lux-buy-soon-dialog button { display: block; margin: 22px auto 0; padding: 10px 24px; border: 1px solid #006a64; background: transparent; color: #006a64; cursor: pointer; }
 .lux-buy-soon-dialog button:hover { background: #006a64; color: #fff; }
-.lux-related-pages { padding: 28px clamp(20px, 5vw, 80px); background: #f5f2ec; color: #1b2e2c; }
-.lux-related-pages strong { display: block; margin-bottom: 12px; font-size: 18px; }
-.lux-related-pages div { display: flex; flex-wrap: wrap; gap: 12px 28px; }
-.lux-related-pages a { color: #006a64; text-decoration: underline; text-underline-offset: 4px; }
-.lux-related-pages a:hover { color: #004e49; }

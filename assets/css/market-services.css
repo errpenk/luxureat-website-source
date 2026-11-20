@@ -1097,6 +1097,8 @@ html[lang="en"] .lux-service-group > a small { font-family: var(--lux-en-body); 
   border: 0;
   background: #fff;
 }
+.lux-import-export-page #import-into-china > .lux-ms-shell > .lux-ms-card { background: transparent; }
+.lux-import-export-page #import-into-china .lux-ms-card-label { font-size: clamp(20px, 2vw, 26px); font-weight: 700; letter-spacing: .06em; }
 .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-service-media { grid-column: 2; grid-row: 2; }
 .lux-import-export-page :is(#sourcing-export, #brand-digital) > .lux-ms-shell > .lux-ms-card-grid {
   grid-column: 1;

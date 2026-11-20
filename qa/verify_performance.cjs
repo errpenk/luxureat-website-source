@@ -28,7 +28,6 @@ for (const entry of ard.entries) {
 assert.ok(size("assets/media/brand/luxureat-logo.png") <= 8 * 1024, "shared first-screen logo exceeds 8 KB");
 assert.match(htaccess, /css\|js\|mjs\|ttf\|woff2/, "static TTF fonts do not receive the immutable cache lifetime");
 assert.ok(size("assets/media/brand/home-hero-truffle-poster-lite-v2.webp") <= 9 * 1024, "homepage delivery poster exceeds 9 KB");
-assert.ok(size("assets/media/brand/home-topic-01-olive-mobile.webp") <= 20 * 1024, "mobile olive card exceeds 20 KB");
 assert.ok(size("assets/media/brand/luxureat-logo-144.webp") <= 5 * 1024, "homepage delivery logo exceeds 5 KB");
 assert.ok(size("assets/media/brand/luxureat-logo-64.webp") <= 2 * 1024 && size("assets/media/brand/luxureat-logo-96.webp") <= 3 * 1024, "navigation logos exceed their delivery budgets");
 for (const service of ["selection", "partnership", "foodservice"]) {
@@ -110,7 +109,7 @@ for (const lang of ["zh", "en"]) {
   assert.doesNotMatch(home, /(?:preconnect|dns-prefetch)[^>]+embed\.tawk\.to/, "homepage still connects to chat before user intent");
   assert.match(home, /assets\/js\/chat\.js/, "homepage does not load the lightweight local chat greeting");
   assert.match(home, /rel="preload"[^>]+home-hero-truffle-poster-lite-v2\.webp/);
-  assert.match(home, /home-topic-01-olive-mobile\.webp\?v=[^ ]+ 720w/, `${lang} home lacks the mobile olive card`);
+  for (const image of ["knowledge", "quality", "arrivals"]) assert.match(home, new RegExp(`wp-content/uploads/2026/11/lux-home-italian-${image}\\.webp`), `${lang} home lacks the optimized WordPress ${image} image`);
   assert.match(home, /assets\/js\/core\.js\?v=[^"']+-mobile-prefetch2/, `${lang} home still references cached image loading code`);
   assert.match(home, /lux-home-hero-mark[^>]+luxureat-logo-144\.webp/);
   assert.match(home, /data-lux-autoplay[^>]+class="lux-hero-video"[^>]+preload="none"/);
