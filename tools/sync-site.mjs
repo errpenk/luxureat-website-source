@@ -247,7 +247,7 @@ function fontPreloads(page) {
         ["Spectral-Light.woff2", "Spectral", 300, "normal", false],
         ["Spectral-SemiBold.woff2", "Spectral", 600, "normal", false],
       ];
-  const versionFor = (font) => font === "KingHwaOldSong-home-reader-extra.woff2" ? `${assetVersion}-home-reader1` : ["KingHwaOldSong-site.woff2", "LuxurEatZhiSong-site.woff2"].includes(font) ? `${assetVersion}-site-font7` : ["KingHwaOldSong-home-complete.woff2", "LuxurEatZhiSong-home-complete.woff2"].includes(font) ? `${assetVersion}-home-font6` : ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
+  const versionFor = (font) => font === "KingHwaOldSong-gifting-critical.woff2" ? `${assetVersion}-china1` : font === "KingHwaOldSong-home-reader-extra.woff2" ? `${assetVersion}-home-reader1` : ["KingHwaOldSong-site.woff2", "LuxurEatZhiSong-site.woff2"].includes(font) ? `${assetVersion}-site-font7` : ["KingHwaOldSong-home-complete.woff2", "LuxurEatZhiSong-home-complete.woff2"].includes(font) ? `${assetVersion}-home-font6` : ["KingHwaOldSong-home-critical.woff2", "LuxurEatZhiSong-hero-critical.woff2", "KingHwaOldSong-hero-critical.woff2"].includes(font) ? `${assetVersion}-home-font5` : assetVersion;
   const preloadFonts = fonts.filter(([, , , , preload = true]) => preload);
   const links = [
     ...(page.key === "market-insights" ? [
