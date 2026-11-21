@@ -12,7 +12,7 @@ const sitemapFile = path.join(temporary, "sitemap.xml");
 try {
   execFileSync(process.execPath, [path.join(root, "tools/generate-sitemap.mjs"), sitemapFile]);
   const sitemap = fs.readFileSync(sitemapFile, "utf8");
-  assert.equal((sitemap.match(/<url>/g) || []).length, 344, "sitemap must contain every public bilingual page and detail route");
+  assert.equal((sitemap.match(/<url>/g) || []).length, 346, "sitemap must contain every public bilingual page and detail route");
   assert.doesNotMatch(sitemap, /\/bag\//, "shopping bags must not be indexed");
   assert.doesNotMatch(sitemap, /hreflang="x-default"/, "sitemap language alternates must match the live Chinese and English pairs");
   for (const route of [
@@ -23,6 +23,8 @@ try {
     "/product/white-truffle-oil-60ml/",
     "/recipe/truffle-eggs/",
     "/news/cicc-member-luxureat-2025/",
+    "/news/thai-durian-white-truffle/",
+    "/en/news/thai-durian-white-truffle/",
     "/news/sial-paris-2026-preview/",
     "/en/news/sial-paris-2026-preview/",
     "/news/sial-paris-2026-lazio-global/",
@@ -40,7 +42,7 @@ try {
   }
   assert.doesNotMatch(sitemap, /\/(?:en\/)?events\//, "removed standalone event layouts must not remain in the sitemap");
   for (const language of ["zh-CN", "en"]) {
-    assert.equal((sitemap.match(new RegExp(`hreflang="${language}"`, "g")) || []).length, 344, `${language} alternates are incomplete`);
+    assert.equal((sitemap.match(new RegExp(`hreflang="${language}"`, "g")) || []).length, 346, `${language} alternates are incomplete`);
   }
 
   const robots = read("robots.txt");

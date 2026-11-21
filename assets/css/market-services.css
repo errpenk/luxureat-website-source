@@ -947,6 +947,7 @@ html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--l
 .lux-import-export-page .lux-ms-eyebrow,
 .lux-import-export-page .lux-ms-card-label { color: #9c7415; }
 .lux-import-export-page .lux-ms-heading h2 em { color: #9c7415; }
+.lux-import-export-page #market-entry .lux-ms-card-label { color: #e9c349; }
 .lux-import-export-page .lux-ms-card li::before { background: #0c847d; }
 .lux-import-export-page .lux-ms-card,
 .lux-import-export-page .lux-ms-process article { border-top-color: rgba(41, 38, 33, .2); }
@@ -1005,10 +1006,8 @@ html[lang="en"] .lux-section-flip-back :is(strong, small) { font-family: var(--l
 .lux-service-bento > .lux-service-group:nth-child(4) a.is-media-ready { background-image: url("../media/market-services/service-nav-brand-digital.webp"); }
 .lux-service-bento > .lux-service-group:nth-child(5) a.is-media-ready { background-image: url("../media/market-services/service-nav-business-development.webp"); background-position: center 60%; }
 .lux-service-group > a span {
-  color: #e9c349;
-  font: 600 11px/1.4 var(--lux-page-heading);
-  letter-spacing: .14em;
-  text-transform: uppercase;
+  color: #fff;
+  font: 400 clamp(25px, 3vw, 42px)/1.12 var(--lux-page-heading);
   transition: opacity .28s ease, transform .35s ease;
 }
 .lux-service-group > a strong {
@@ -1626,7 +1625,7 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
   }
   .lux-faq-tools::before { height: 72px; }
   .lux-faq-scroll-visual { height: 320px; min-height: 0; }
-  .lux-import-export-page #market-entry > .lux-ms-shell > .lux-ms-card { min-height: 0; padding-right: 0; }
+  .lux-import-export-page #market-entry > .lux-ms-shell > .lux-ms-card { min-height: 0; padding: clamp(30px, 4vw, 58px); }
   .lux-market-entry-orbits { position: static; display: flex; justify-content: center; margin-top: 30px; transform: none; }
 }
 @media (max-width: 640px) {
@@ -1635,7 +1634,7 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
   .lux-import-export-page .lux-ms-section.is-light { padding: 64px 0; }
   .lux-service-bento { grid-template-columns: 1fr; grid-template-rows: none; }
   .lux-service-bento > .lux-service-group:nth-child(n) { grid-column: 1; }
-  .lux-service-group > a { height: 220px; min-height: 0; padding: 26px; }
+  .lux-service-group > a { height: auto; min-height: 260px; padding: 26px; }
   .lux-service-group > a strong,
   .lux-service-group > a span,
   .lux-service-group > a small { opacity: 1 !important; transform: none !important; }
@@ -1660,7 +1659,8 @@ html[lang="en"] :is(.lux-faq-popular button, .lux-faq-suggestion button) { font-
   .lux-import-export-page #faq .lux-ms-faq summary { padding-inline: 14px; }
   .lux-import-export-page #faq .lux-ms-faq details > div { padding-inline: 14px; }
   .lux-why-image-strip { height: 112px; }
-  .lux-flip-orbit { width: 104px; height: 104px; }
+  .lux-market-entry-orbits { gap: 8px; }
+  .lux-flip-orbit { width: 88px; height: 88px; }
   .lux-faq-search { padding-inline: 14px; }
   .lux-section-flip-zone { padding-inline: 20px; }
   .lux-section-flip-zone.is-service { min-height: 184px; gap: 18px; padding-block: 14px; }

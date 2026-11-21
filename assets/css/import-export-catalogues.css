@@ -126,6 +126,10 @@ html[lang^="zh"] .lux-catalogue-toggle::after { content: "单击即可在线浏�
 .lux-catalogue-copy:has(.is-tin) .lux-catalogue-pages { color: #d3cec5; }
 .lux-catalogue-copy:has(.is-tin) .lux-catalogue-actions a:last-child { color: #9df5ec; }
 
+.lux-catalogue-row:nth-child(2) .lux-catalogue-copy { background: #111514; }
+.lux-catalogue-row:nth-child(2) .lux-catalogue-logo { filter: invert(1); }
+.lux-catalogue-row:nth-child(2) :is(h3, p, .lux-catalogue-pages) { color: #fff; }
+
 .lux-catalogue-logo-link { display: inline-flex; align-items: center; justify-content: center; }
 @font-face { font-family: "Lux Catalogue Latin"; src: url("../fonts/NyghtSerif-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 html[lang] body .lux-catalogue-copy h3 .lux-catalogue-brand { font-family: "Lux Catalogue Latin", serif !important; font-size: inherit; font-weight: 400 !important; -webkit-text-stroke: 0; }
@@ -159,8 +163,10 @@ html[lang] body .lux-catalogue-copy h3 .lux-catalogue-brand { font-family: "Lux 
 }
 
 .lux-catalogue-actions a:first-child { color: #fff; background: #006f68; }
+.lux-catalogue-row:nth-child(2) .lux-catalogue-actions a:last-child { color: #fff; border-color: #fff; }
 .lux-catalogue-actions a:hover,
 .lux-catalogue-actions a:focus-visible { color: #292621; border-color: #9c7415; background: #e9c349; }
+.lux-catalogue-row:nth-child(2) .lux-catalogue-actions a:last-child:is(:hover, :focus-visible) { color: #292621; border-color: #9c7415; }
 
 @media (max-width: 900px) {
   .lux-catalogue-row { grid-template-columns: 1fr; }

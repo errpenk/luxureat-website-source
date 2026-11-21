@@ -39,6 +39,43 @@
 
   window.LUXUREAT_BRAND_NEWS = [
     {
+      id: "thai-durian-white-truffle",
+      date: "2026-11-21",
+      cardImage: asset("media/brand-news/durian-news-cover.webp"),
+      zh: {
+        date: "2026年11月21日", author: "LuxurEat", category: "产品故事",
+        title: "泰国榴莲与意大利白松露：开启一天的惊喜风味",
+        intro: "以两种来自不同传统的香气开启新一天，别有一番滋味。一边是泰国榴莲，果肉柔软细腻；另一边是意大利白松露，以优雅而独特的香气备受珍视。",
+        opening: ["TrufflElixir 泰国榴莲与意大利白松露风味糖浆由此诞生，为早餐、甜点和味觉享受增添一抹异国风情与精致气息。"],
+        sections: [
+          ["灵感搭配：甜米饭、椰奶与榴莲", [
+            "在泰国，榴莲常用于制作香甜浓郁的美食。想要体验一款充满泰式风情的早餐，可以将甜米饭与椰奶、榴莲果肉搭配，再淋上少许 TrufflElixir。榴莲的香甜与椰奶的柔滑相融合，最后带出意大利白松露的独特香气。",
+            "这款糖浆也适合搭配华夫饼、冰淇淋、酸奶、奶油及其他甜点。只需几滴，便能增添别具一格的芳香风味。",
+          ], [image("truffelixir-durian-pairing.webp", "TrufflElixir 榴莲风味糖浆搭配榴莲糯米饭", "TrufflElixir durian syrup served with durian sticky rice")]],
+          ["榴莲的营养特点", [
+            "除了风味独特，榴莲也具有一定的营养价值。根据美国农业部（USDA）关于新鲜或冷冻榴莲果肉的数据，每 100 克榴莲约含 147 千卡能量、27.1 克碳水化合物、3.8 克膳食纤维和 1.47 克蛋白质。榴莲果肉还含有钾和维生素 C，以及包括硫胺素（维生素 B1）在内的 B 族维生素。具体数值会因品种和成熟度而有所不同。",
+            "这款产品将泰国榴莲的热带甜香与意大利白松露的馥郁香气融为一体，为喜爱探索新风味的人带来别致搭配，也让早餐成为一场充满风味的体验。",
+          ]],
+        ],
+      },
+      en: {
+        date: "November 21, 2026", author: "LuxurEat", category: "Product Story",
+        title: "Thai Durian and Italian White Truffle: A Surprising Way to Start the Day",
+        intro: "There is a special way to start the day: with the aromas of two distant traditions. On one side, Thai durian, a tropical fruit with soft, creamy flesh; on the other, Italian White Truffle, prized for its elegant, unmistakable aroma.",
+        opening: ["Their meeting gives us TrufflElixir with Thai Durian and Italian White Truffle: an original syrup created to add an exotic, refined touch to breakfast, desserts and moments of indulgence."],
+        sections: [
+          ["Inspired by sweet rice, coconut and durian", [
+            "In Thailand, durian lends itself to sweet, comforting dishes. For a breakfast inspired by local traditions, serve it with sweet rice and coconut milk, add fresh durian flesh and finish with a drizzle of TrufflElixir. The fruit’s sweetness and the coconut’s creaminess meet the aromatic notes of Italian White Truffle.",
+            "The syrup can also be enjoyed with waffles, ice cream, yogurt, cream and other desserts. Just a few drops add a distinctive aromatic touch.",
+          ], [image("truffelixir-durian-pairing.webp", "TrufflElixir 榴莲风味糖浆搭配榴莲糯米饭", "TrufflElixir durian syrup served with durian sticky rice")]],
+          ["Durian’s nutritional profile", [
+            "Beyond its distinctive taste, durian has an interesting nutritional profile. According to USDA data for fresh or frozen flesh, 100 grams of durian provide approximately 147 kcal, 27.1 g of carbohydrates, 3.8 g of fibre and 1.47 g of protein. The flesh also contains potassium and vitamin C, as well as B vitamins, including thiamine (vitamin B1). Values may vary depending on the cultivar and degree of ripeness.",
+            "The result is a product that brings together the tropical sweetness of Thai durian and the aromatic richness of Italian White Truffle: an unexpected combination for anyone who enjoys discovering new pairings and turning breakfast into a flavour experience.",
+          ]],
+        ],
+      },
+    },
+    {
       id: "truffelixir-sweet-world",
       relatedLinks: [
         { zh: "探索六款风味糖浆", en: "Explore the Six Syrups", zhHref: "/product/?category=truffelixir#product-catalogue", enHref: "/en/product/?category=truffelixir#product-catalogue" },

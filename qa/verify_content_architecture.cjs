@@ -204,7 +204,7 @@ assert(journalRuntime.includes("tile.openstreetmap.org/{z}/{x}/{y}.png"), "OSM C
 assert(journalRuntime.includes("data-map-reset"), "OSM China reset control is missing");
 assert(journalRuntime.includes('marker.on("mouseover"'), "map marker hover previews are missing");
 assert(!/https:\/\/webapi\.amap\.com\//.test(journalRuntime), "legacy AMap loader is still present");
-assert(brandNews.length === 13 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
+assert(brandNews.length === 14 && brandNews.every((item) => item.zh && item.en), "bilingual News Centre articles are incomplete");
 const newFhcNews = brandNews.find((item) => item.id === "fhc-shanghai-2026-new-products");
 assert(newFhcNews?.eventId === "fhc-shanghai-2026" && newFhcNews.cardImage.endsWith("fhc-shanghai-2026-booth.webp") && newFhcNews.zh.sections.length === 4 && newFhcNews.en.sections.length === 4, "new FHC bilingual news is incomplete or uses the wrong image");
 const fhcNews = brandNews.filter((item) => item.eventId === "fhc-shanghai-2026" && item.id !== newFhcNews.id);
