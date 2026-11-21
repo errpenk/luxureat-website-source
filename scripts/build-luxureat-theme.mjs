@@ -435,7 +435,7 @@ function brandNewsPageHtml(item, imageDimensions) {
     <figure class="lux-brand-news-hero"><img${imageDimensions.get(cover) || ''} loading="eager" fetchpriority="high" decoding="async" src="${escapeHtml(cover)}" alt="${escapeHtml(article.title)}"></figure>
     <div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>${escapeHtml(article.date)}</span><span>${escapeHtml(article.category)}</span><span>${escapeHtml(article.author)}</span></p><h1 id="lux-reader-title">${escapeHtml(article.title)}</h1><p class="lux-brand-news-intro">${escapeHtml(article.intro)}</p>${article.sourceUrl ? `<a class="lux-brand-news-source" href="${escapeHtml(article.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(article.source)}<svg class="lux-lucide notranslate" translate="no" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>` : ''}</header><div class="lux-brand-news-copy">${renderArticleContent(article.opening || [])}${sections}${linkedEventHtml}${relatedStoryHtml}</div></div>
   </article></main>`;
-  return detailPageHtml({ lang: item.lang, pageKey: 'news', title: article.title, description: article.intro, route: brandNewsRoute(item), alternateRoute: brandNewsRoute(alternate || item), body });
+  return detailPageHtml({ lang: item.lang, pageKey: 'news', title: article.title, description: article.intro, route: brandNewsRoute(item), alternateRoute: brandNewsRoute(alternate || item), body: `<?php if (!luxureat_cms_detail('${escapePhpString(item.id)}', '${item.lang}', 'news')): ?>${body}<?php endif; ?>` });
 }
 
 function recipePageHtml(article, imageDimensions) {
@@ -583,6 +583,7 @@ function luxureat_cms_responsive_images($content) {
 }
 add_filter('the_content', 'luxureat_cms_responsive_images', PHP_INT_MAX);
 require_once __DIR__ . '/page-migration.php';
+require_once __DIR__ . '/news-migration.php';
 
 function luxureat_static_routes() {
     $routes = require get_template_directory() . '/routes.php';
@@ -623,7 +624,8 @@ function luxureat_cms_payload($kind) {
         if ($kind !== 'blog') {
             $record['cmsHtml'] = apply_filters('the_content', $post->post_content);
         }
-        if ($kind === 'blog') $record['date'] = get_the_date('Y-m-d', $post);
+        if ($kind === 'blog' || $kind === 'news') $record['date'] = get_the_date('Y-m-d', $post);
+        if ($kind === 'news') $record['category'] = get_post_meta($post->ID, '_luxureat_news_category', true);
         if ($kind === 'gallery') {
             $video_id = (int) get_post_meta($post->ID, '_luxureat_video_attachment_id', true);
             $video_url = $video_id ? wp_get_attachment_url($video_id) : '';
@@ -678,6 +680,16 @@ function luxureat_cms_recipe_content($content, $source_id, $image) {
 function luxureat_cms_detail($source_id, $lang, $kind) {
     $post = luxureat_cms_post($source_id, $lang, $kind);
     if (!$post) return false;
+    if ($kind === 'news') {
+        $image = get_the_post_thumbnail_url($post->ID, 'full');
+        $title = get_the_title($post);
+        $parent_url = luxureat_static_url($lang . '/brand');
+        $category = get_post_meta($post->ID, '_luxureat_news_category', true);
+        echo '<main class="lux-article-page"><nav class="lux-breadcrumb"><a href="' . esc_url($parent_url) . '">' . esc_html($lang === 'zh' ? '品牌新闻' : 'Brand News') . '</a><span> / </span><span>' . esc_html($title) . '</span></nav><article class="lux-brand-news-reader lux-brand-news-seo-page">';
+        if ($image) echo '<figure class="lux-brand-news-hero"><img src="' . esc_url($image) . '" alt="' . esc_attr($title) . '" loading="eager" fetchpriority="high" decoding="async"></figure>';
+        echo '<div class="lux-brand-news-sheet"><header><p class="lux-brand-news-meta"><span>' . esc_html(get_the_date($lang === 'zh' ? 'Y年n月j日' : 'F j, Y', $post)) . '</span><span>' . esc_html($category) . '</span><span>LuxurEat</span></p><h1 id="lux-reader-title">' . esc_html($title) . '</h1><p class="lux-brand-news-intro">' . esc_html(get_the_excerpt($post)) . '</p></header><div class="lux-brand-news-copy lux-cms-prose">' . luxureat_origin_upload_images(apply_filters('the_content', $post->post_content)) . '</div></div></article></main>';
+        return true;
+    }
     $title = get_the_title($post);
     $image = get_the_post_thumbnail_url($post->ID, 'full');
     $parent = $kind === 'recipe' ? ($lang === 'zh' ? '食谱艺术' : 'Recipes') : ($lang === 'zh' ? '知识博客' : 'Knowledge Blog');
@@ -1340,7 +1352,7 @@ ${byPath}
             filemtime($source),
             true
         );
-        $cms_kinds = array('journal-data' => 'recipe', 'academy-index' => 'blog', 'gallery-data' => 'gallery');
+        $cms_kinds = array('journal-data' => 'recipe', 'academy-index' => 'blog', 'gallery-data' => 'gallery', 'brand-news-data' => 'news');
         if (isset($cms_kinds[$handle])) {
             $kind = $cms_kinds[$handle];
             wp_add_inline_script('luxureat-' . $handle,
@@ -1899,6 +1911,16 @@ async function build() {
   write(path.join(themeDir, 'style.css'), styleCss());
   write(path.join(themeDir, 'functions.php'), functionsPhp());
   fs.copyFileSync(path.join(sourceDir, 'scripts/templates/page-migration.php'), path.join(themeDir, 'page-migration.php'));
+  fs.copyFileSync(path.join(sourceDir, 'scripts/templates/news-migration.php'), path.join(themeDir, 'news-migration.php'));
+  const newsManifest = brandNewsInputs.map((item) => {
+    const mediaPath = (url) => String(url || '').split('/assets/')[1]?.split('?')[0] || '';
+    const renderMedia = (entry) => entry.type === 'video'
+      ? `<figure class="lux-brand-news-media is-video"><video controls playsinline preload="metadata" poster="__LUX_MEDIA__${mediaPath(item.videoPoster || item.cardImage)}"><source src="__LUX_MEDIA__${mediaPath(item.video)}" type="video/mp4"></video></figure>`
+      : `<figure class="lux-brand-news-media"><img src="__LUX_MEDIA__${mediaPath(entry.src)}" alt="${escapeHtml(entry.alt?.[item.lang] || item.article.title)}" loading="lazy"></figure>`;
+    const body = `${renderArticleContent(item.article.opening || [])}${(item.article.sections || []).map(([heading, paragraphs, media = []]) => `<section class="lux-reader-section"><h2>${escapeHtml(heading)}</h2>${renderArticleContent(paragraphs)}${media.map(renderMedia).join('')}</section>`).join('')}`;
+    return { id: item.id, lang: item.lang, date: item.date, title: item.article.title, intro: item.article.intro, category: item.article.category, cover: mediaPath(item.cardImage), body };
+  });
+  write(path.join(themeDir, 'news-manifest.json'), JSON.stringify(newsManifest));
   write(path.join(themeDir, 'migration-pages.json'), JSON.stringify(Object.fromEntries(pages.map((page) => [page.route, { title: `${page.lang === 'zh' ? '中文' : 'English'} · ${page.seo.title.split(' | ')[0]}`, file: `pages/${page.lang}/${page.slug}.php` }])), null, 2));
   write(path.join(themeDir, 'index.php'), indexPhp());
   write(path.join(themeDir, 'page.php'), pagePhp());

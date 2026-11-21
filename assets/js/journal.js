@@ -32,6 +32,14 @@ function initLuxReader() {
     if (cms.poster) item.poster = cms.poster;
   }
   const brandNews = window.LUXUREAT_BRAND_NEWS || [];
+  for (const [key, cms] of Object.entries(window.LUXUREAT_CMS?.news || {})) {
+    const [id, newsLang] = key.split(":");
+    const item = brandNews.find((story) => story.id === id);
+    if (!item || !item[newsLang]) continue;
+    Object.assign(item[newsLang], { title: cms.title, intro: cms.intro, category: cms.category || item[newsLang].category });
+    if (cms.image) item.cardImage = cms.image;
+    if (cms.date) item.date = cms.date;
+  }
   const eventMount = document.querySelector("[data-recent-events]");
   const mapMount = document.querySelector("[data-exhibition-map]");
   const newsMount = document.querySelector("[data-news-center]");
