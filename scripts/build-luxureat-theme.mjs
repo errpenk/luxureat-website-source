@@ -250,6 +250,9 @@ function convertHtmlSource(html, lang) {
 
 function convertHtml(file, lang) {
   let html = convertHtmlSource(fs.readFileSync(path.join(sourceDir, file), 'utf8'), lang);
+  if (lang === 'zh' && path.basename(file) === 'index.html') {
+    html = html.replace('<!-- lux:scripts:start -->', '<?php if(class_exists("baiduseo_seo")){echo baiduseo_seo::baiduseo_friends_hh("681729343d0d5902cf9f70b4bc97feef");}?>\n<!-- lux:scripts:start -->');
+  }
   if (lang === 'en' && path.basename(file) === 'import-export-services.html') {
     html = html.replace(/<summary>(.*?)<\/summary>/g, '<summary><h3>$1</h3></summary>');
   }
