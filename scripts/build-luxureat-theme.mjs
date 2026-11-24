@@ -1285,6 +1285,9 @@ function luxureat_static_seo_head() {
     );
     $schema = array_filter($schema, function ($value) { return $value !== null; });
     echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+    if ($route === 'zh') {
+        echo '<script type="application/ld+json">' . wp_json_encode(array('@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => 'LuxurEat', 'alternateName' => array('LuxurEat China', '露意膳'), 'url' => luxureat_static_url('zh')), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
+    }
     $parent_slugs = array('Article' => 'blog', 'NewsArticle' => 'brand', 'Product' => 'product', 'Event' => 'brand', 'Recipe' => 'recipe');
     if (isset($parent_slugs[$content_type])) {
         $is_zh = $meta['lang'] === 'zh';
