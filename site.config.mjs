@@ -39,7 +39,7 @@ export const seo = {
     contact: ["联系我们 | LuxurEat（露意膳）", "联系 LuxurEat（露意膳）团队，咨询意大利松露、鱼子酱等高端食材的产品供应、渠道合作、品牌推广与中国市场服务。通过页面表单或电子邮件告诉我们您的需求。"],
   },
   en: {
-    home: ["LuxurEat Group | Premium Italian Food & Brand Partnerships", "Discover premium Italian food, authentic regional flavours, recipes, brand stories and professional market partnerships from LuxurEat Group."],
+    home: ["LuxurEat Group | Premium Italian Food & Brand Partnerships", "LuxurEat specializes in supplying and promoting premium Italian foods in China, including truffles, truffle products, caviar, pasta, specialty condiments and olive oil. We help restaurants, hotels, importers, distributors and retailers with product sourcing, import and export trade, and China market development."],
     journal: ["About Us | LuxurEat", "Meet LuxurEat and the Italian producers behind our premium food selection. Explore our brand story, approach to quality and safety, and work connecting authentic regional flavours with China."],
     new: ["New Arrivals | LuxurEat", "Discover new Italian olive oil, pizza and artisan Gelato selections from LuxurEat."],
     products: ["Our Products | LuxurEat", "Browse LuxurEat's selected premium Italian foods, truffle products, caviar and culinary collections."],
