@@ -1745,6 +1745,10 @@ function luxureat_static_refresh_changed_routes() {
     if (function_exists('wp_cache_clear_cache')) {
         wp_cache_clear_cache();
     }
+    if (function_exists('opcache_invalidate')) {
+        opcache_invalidate(get_template_directory() . '/pages/zh/index.php', true);
+        opcache_invalidate(get_template_directory() . '/pages/en/index.php', true);
+    }
     do_action('litespeed_purge_all');
     update_option('luxureat_static_route_version', $route_version, false);
 }
