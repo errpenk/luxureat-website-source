@@ -504,7 +504,7 @@ function buildAssetCatalogPhp() {
     return `        '${escapePhpString(handle)}' => array('src' => '${escapePhpString(script.src)}', 'dependencies' => ${phpList(script.dependencies)}),`;
   }).join('\n');
   const byPath = [...pages.map((page) => {
-    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'chat', 'home-interactions', 'buy-soon'] : page.scripts)},`;
+    return `        '${escapePhpString(page.route)}' => ${phpList(page.key === 'home' ? ['image-variants', 'core', 'home-interactions', 'buy-soon'] : page.scripts)},`;
   }), ...articleInputs.map((article) => `        '${articleRoute(article)}' => array('image-variants', 'core'),`), ...productInputs.map((product) => `        '${productRoute(product)}' => array('image-variants', 'core', 'buy-soon'),`), ...recipeInputs.map((recipe) => `        '${recipeRoute(recipe)}' => array('image-variants', 'core'),`), ...brandNewsInputs.map((item) => `        '${brandNewsRoute(item)}' => array('image-variants', 'core'),`)].join('\n');
   return { catalog, byPath };
 }

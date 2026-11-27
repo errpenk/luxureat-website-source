@@ -63,7 +63,7 @@ const page = (lang, slug, key, scripts, indexable = true) => ({
   route: slug === "index" ? lang : `${lang}/${slug}`,
   seo: { title: seo[lang][key][0], description: seo[lang][key][1] },
   indexable,
-  scripts: ["image-variants", "core", "chat", ...scripts],
+  scripts: ["image-variants", "core", ...(key === "home" ? [] : ["chat"]), ...scripts],
 });
 
 export const pages = [
