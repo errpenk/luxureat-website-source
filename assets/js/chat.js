@@ -98,9 +98,7 @@
         set("transform", "scale(.9333333333)");
         set("transform-origin", "left bottom");
       } else if (frame.parentElement?.id === "message-preview") {
-        set("left", edge);
-        set("right", "auto");
-        set("bottom", `calc(${edge} + 68px)`);
+        set("display", "none");
       } else if (frame.parentElement?.id === "max-widget") {
         if (innerWidth <= 767) {
           const width = `${innerWidth}px`;
